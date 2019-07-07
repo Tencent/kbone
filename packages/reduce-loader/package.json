@@ -1,0 +1,15 @@
+{
+	"name": "reduce-loader",
+	"version": "0.0.1",
+	"description": "a tool for develop miniprogram with vue",
+	"main": "src/index.js",
+	"miniprogram": "src",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/wechat-miniprogram/miniprogram-vue.git"
+	},
+	"author": "wechat-miniprogram",
+	"license": "MIT",
+	"devDependencies": {},
+	"dependencies": {}
+}
