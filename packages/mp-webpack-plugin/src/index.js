@@ -5,10 +5,12 @@ const ModuleFilenameHelpers = require('webpack/lib/ModuleFilenameHelpers')
 const { RawSource } = require('webpack-sources')
 const pathToRegexp = require('path-to-regexp')
 const adjustCss = require('./tool/adjust-css')
+const _ = require('./tool/utils')
 
 const PluginName = 'MpPlugin'
 const pageJsTmpl = fs.readFileSync(path.resolve(__dirname, './tmpl/page.tmpl.js'), 'utf8')
 const appWxssTmpl = fs.readFileSync(path.resolve(__dirname, './tmpl/app.tmpl.wxss'), 'utf8')
+const projectConfigJsonTmpl = require('./tmpl/project.config.tmpl.json')
 
 const globalVars = ['navigator', 'HTMLElement', 'localStorage', 'sessionStorage', 'location']
 
@@ -196,7 +198,13 @@ class MpPlugin {
         redirect: options.redirect || {},
         optimization: options.optimization || {},
       }, null, '\t')
-      addFile(compilation, `../config.js`, configJsContent)      
+      addFile(compilation, `../config.js`, configJsContent)
+
+      // project.config.json
+      const userPorjectConfigJson = options.projectConfig || {}
+      const projectConfigJson = Object.assign({}, projectConfigJsonTmpl)
+      const projectConfigJsonContent = JSON.stringify(_.merge(projectConfigJson, userPorjectConfigJson), null, '\t')
+      addFile(compilation, `../project.config.json`, projectConfigJsonContent)
 
       callback()
     })
