@@ -82,7 +82,7 @@ Page({
         }
 
         // 处理 body 更新
-        this.document.documentElement.addEventListener('$_childNodesUpdate', () => {
+        this.document.documentElement.addEventListener('$$childNodesUpdate', () => {
             const domInfo = this.document.body.$$domInfo
             const data = {
                 bodyClass: `${domInfo.class || ''} h5-body miniprogram-root`, // 增加默认 class
