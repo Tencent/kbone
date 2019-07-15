@@ -11,7 +11,9 @@ const PluginName = 'MpPlugin'
 const pageJsTmpl = fs.readFileSync(path.resolve(__dirname, './tmpl/page.tmpl.js'), 'utf8')
 const appWxssTmpl = fs.readFileSync(path.resolve(__dirname, './tmpl/app.tmpl.wxss'), 'utf8')
 const projectConfigJsonTmpl = require('./tmpl/project.config.tmpl.json')
+const packageConfigJsonTmpl = require('./tmpl/package.tmpl.json')
 
+process.env.isMiniprogram = true // 设置环境变量
 const globalVars = ['navigator', 'HTMLElement', 'localStorage', 'sessionStorage', 'location']
 
 /**
@@ -205,6 +207,12 @@ class MpPlugin {
       const projectConfigJson = Object.assign({}, projectConfigJsonTmpl)
       const projectConfigJsonContent = JSON.stringify(_.merge(projectConfigJson, userPorjectConfigJson), null, '\t')
       addFile(compilation, `../project.config.json`, projectConfigJsonContent)
+
+      // package.json
+      const userPackageConfigJson = options.packageConfig || {}
+      const packageConfigJson = Object.assign({}, packageConfigJsonTmpl)
+      const packageConfigJsonContent = JSON.stringify(_.merge(packageConfigJson, userPackageConfigJson), null, '\t')
+      addFile(compilation, `../package.json`, packageConfigJsonContent)
 
       callback()
     })
