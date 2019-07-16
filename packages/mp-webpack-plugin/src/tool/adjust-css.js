@@ -59,7 +59,7 @@ const replaceTagNamePlugin = postcss.plugin('replaceTagName', () => root => {
   })
 })
 
-module.exports = function(code) {
+module.exports = function (code) {
   code = postcss([replaceTagNamePlugin]).process(code, {
     from: undefined, // 主要是不想看到那个 warning
     map: null,

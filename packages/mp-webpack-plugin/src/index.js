@@ -2,7 +2,7 @@ const path = require('path')
 const fs = require('fs')
 const ConcatSource = require('webpack-sources').ConcatSource
 const ModuleFilenameHelpers = require('webpack/lib/ModuleFilenameHelpers')
-const { RawSource } = require('webpack-sources')
+const {RawSource} = require('webpack-sources')
 const pathToRegexp = require('path-to-regexp')
 const adjustCss = require('./tool/adjust-css')
 const _ = require('./tool/utils')
@@ -32,9 +32,9 @@ function addFile(compilation, filename, content) {
 function wrapChunks(compilation, chunks) {
   chunks.forEach(chunk => {
     chunk.files.forEach(fileName => {
-      if (ModuleFilenameHelpers.matchObject({ test: /\.js$/ }, fileName)) {
-        const headerContent = `module.exports = function(window, document) {` + globalVars.map(item => `var ${item} = window.${item}`).join(';') + ';'
-        const footerContent = `}`
+      if (ModuleFilenameHelpers.matchObject({test: /\.js$/}, fileName)) {
+        const headerContent = 'module.exports = function(window, document) {' + globalVars.map(item => `var ${item} = window.${item}`).join(';') + ';'
+        const footerContent = '}'
 
         compilation.assets[fileName] = new ConcatSource(headerContent, compilation.assets[fileName], footerContent)
       }
@@ -67,13 +67,13 @@ class MpPlugin {
           css: [],
         }
 
-        const filePathMap = {};
-        const extRegex = /\.(css|js|wxss)(\?|$)/;
-        const entryFiles = compilation.entrypoints.get(entryName).getFiles();
+        const filePathMap = {}
+        const extRegex = /\.(css|js|wxss)(\?|$)/
+        const entryFiles = compilation.entrypoints.get(entryName).getFiles()
 
         entryFiles.forEach(filePath => {
           // 跳过非 css 和 js
-          const extMatch = extRegex.exec(filePath);
+          const extMatch = extRegex.exec(filePath)
           if (!extMatch) return
 
           // 跳过已记录的
@@ -89,7 +89,7 @@ class MpPlugin {
           if (ext === 'css') {
             compilation.assets[filePath] = new RawSource(adjustCss(compilation.assets[filePath].source()))
           }
-        });
+        })
 
         const addPageScroll = pageConfigMap[entryName] && pageConfigMap[entryName].windowScroll
         const pageBackgroundColor = pageConfigMap[entryName] && pageConfigMap[entryName].backgroundColor
@@ -98,33 +98,33 @@ class MpPlugin {
         const pullDownRefresh = pageConfigMap[entryName] && pageConfigMap[entryName].pullDownRefresh
 
         // 页面 js
-        let pageJsContent = pageJsTmpl.replace('{{INIT_FUNCTION}}', `function init(window, document) {${assets.js.map(js => 'require(\'../../common/' + js + '\')(window, document)').join(';')}}`)
+        let pageJsContent = pageJsTmpl.replace('/* INIT_FUNCTION */', `function init(window, document) {${assets.js.map(js => 'require(\'../../common/' + js + '\')(window, document)').join(';')}}`)
         let pageScrollFunction = ''
         let reachBottomFunction = ''
         let pullDownRefreshFunction = ''
         if (addPageScroll) {
-          pageScrollFunction = () => `onPageScroll({ scrollTop }) {if (this.window) {this.window.document.documentElement.scrollTop = scrollTop || 0;this.window.$$trigger('scroll');}},`
+          pageScrollFunction = () => 'onPageScroll({ scrollTop }) {if (this.window) {this.window.document.documentElement.scrollTop = scrollTop || 0;this.window.$$trigger(\'scroll\');}},'
         }
         if (reachBottom) {
-          reachBottomFunction = () => `onReachBottom() {if (this.window) {this.window.$$trigger('reachbottom');}},`
+          reachBottomFunction = () => 'onReachBottom() {if (this.window) {this.window.$$trigger(\'reachbottom\');}},'
         }
         if (pullDownRefresh) {
-          pullDownRefreshFunction = () => `onPullDownRefresh() {if (this.window) {this.window.$$trigger('pulldownrefresh');}},`
+          pullDownRefreshFunction = () => 'onPullDownRefresh() {if (this.window) {this.window.$$trigger(\'pulldownrefresh\');}},'
         }
-        pageJsContent = pageJsContent.replace('{{PAGE_SCROLL_FUNCTION}}', pageScrollFunction)
-        pageJsContent = pageJsContent.replace('{{REACH_BOTTOM_FUNCTION}}', reachBottomFunction)
-        pageJsContent = pageJsContent.replace('{{PULL_DOWN_REFRESH_FUNCTION}}', pullDownRefreshFunction)
+        pageJsContent = pageJsContent.replace('/* PAGE_SCROLL_FUNCTION */', pageScrollFunction)
+        pageJsContent = pageJsContent.replace('/* REACH_BOTTOM_FUNCTION */', reachBottomFunction)
+        pageJsContent = pageJsContent.replace('/* PULL_DOWN_REFRESH_FUNCTION */', pullDownRefreshFunction)
         addFile(compilation, `../pages/${entryName}/index.js`, pageJsContent)
 
         // 页面 wxml
-        const pageWxmlContent = `<element wx:if="{{pageId}}" class="{{bodyClass}}" style="{{bodyStyle}}" data-private-node-id="e-body" data-private-page-id="{{pageId}}"></element>`
+        const pageWxmlContent = '<element wx:if="{{pageId}}" class="{{bodyClass}}" style="{{bodyStyle}}" data-private-node-id="e-body" data-private-page-id="{{pageId}}"></element>'
         addFile(compilation, `../pages/${entryName}/index.wxml`, pageWxmlContent)
 
         // 页面 wxss
-        let pageWxssContent = assets.css.map(css => `@import \"../../common/${css}\";`).join('\n')
+        let pageWxssContent = assets.css.map(css => `@import "../../common/${css}";`).join('\n')
         if (pageBackgroundColor) pageWxssContent = `page { background-color: ${pageBackgroundColor}; }\n` + pageWxssContent
         addFile(compilation, `../pages/${entryName}/index.wxss`, adjustCss(pageWxssContent))
-        
+
         // 页面 json
         const pageJson = {
           usingComponents: {
@@ -145,7 +145,7 @@ class MpPlugin {
 
       // 追加 webview 页面
       if (options.redirect && (options.redirect.notFound === 'webview' || options.redirect.accessDenied === 'webview')) {
-        addFile(compilation, '../pages/webview/index.js', `Page({data:{url:''},onLoad: function(query){this.setData({url:decodeURIComponent(query.url)})}})`)
+        addFile(compilation, '../pages/webview/index.js', 'Page({data:{url:\'\'},onLoad: function(query){this.setData({url:decodeURIComponent(query.url)})}})')
         addFile(compilation, '../pages/webview/index.wxml', '<web-view src="{{url}}"></web-view>')
         addFile(compilation, '../pages/webview/index.wxss', '')
         addFile(compilation, '../pages/webview/index.json', '{"usingComponents":{}}')
@@ -153,19 +153,19 @@ class MpPlugin {
       }
 
       // app js
-      const appJsContent = `App({})`
-      addFile(compilation, `../app.js`, appJsContent)
+      const appJsContent = 'App({})'
+      addFile(compilation, '../app.js', appJsContent)
 
       // app wxss
       const appWxssContent = appWxssTmpl
-      addFile(compilation, `../app.wxss`, adjustCss(appWxssContent))
+      addFile(compilation, '../app.wxss', adjustCss(appWxssContent))
 
       // app json
       const appJsonContent = JSON.stringify({
         pages,
         window: options.app || {},
       }, null, '\t')
-      addFile(compilation, `../app.json`, appJsonContent)
+      addFile(compilation, '../app.json', appJsonContent)
 
       // config js
       const router = {}
@@ -183,7 +183,7 @@ class MpPlugin {
             const keys = []
             const regexp = pathToRegexp(pathItem, keys)
             const pattern = regexp.valueOf()
-            
+
             pathObjList.push({
               regexp: pattern.source,
               options: `${pattern.global ? 'g' : ''}${pattern.ignoreCase ? 'i' : ''}${pattern.multiline ? 'm' : ''}`,
@@ -200,19 +200,19 @@ class MpPlugin {
         redirect: options.redirect || {},
         optimization: options.optimization || {},
       }, null, '\t')
-      addFile(compilation, `../config.js`, configJsContent)
+      addFile(compilation, '../config.js', configJsContent)
 
       // project.config.json
       const userPorjectConfigJson = options.projectConfig || {}
       const projectConfigJson = Object.assign({}, projectConfigJsonTmpl)
       const projectConfigJsonContent = JSON.stringify(_.merge(projectConfigJson, userPorjectConfigJson), null, '\t')
-      addFile(compilation, `../project.config.json`, projectConfigJsonContent)
+      addFile(compilation, '../project.config.json', projectConfigJsonContent)
 
       // package.json
       const userPackageConfigJson = options.packageConfig || {}
       const packageConfigJson = Object.assign({}, packageConfigJsonTmpl)
       const packageConfigJsonContent = JSON.stringify(_.merge(packageConfigJson, userPackageConfigJson), null, '\t')
-      addFile(compilation, `../package.json`, packageConfigJsonContent)
+      addFile(compilation, '../package.json', packageConfigJsonContent)
 
       callback()
     })

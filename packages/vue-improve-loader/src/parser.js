@@ -142,7 +142,7 @@ function tokenize(content, handler) {
     } else {
       // 找到同名的开始标签
       for (pos = stack.length - 1; pos >= 0; pos--) {
-        if (stack[pos] ===  tagName) break
+        if (stack[pos] === tagName) break
       }
     }
 
@@ -186,8 +186,8 @@ function parse(html) {
         stack.push(node)
       }
     },
-    end(tagName) {
-      const node = stack.pop()
+    end() {
+      stack.pop()
     },
     text(content) {
       content = content.trim()
