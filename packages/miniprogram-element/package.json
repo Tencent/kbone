@@ -1,6 +1,6 @@
 {
 	"name": "miniprogram-element",
-	"version": "0.0.1",
+	"version": "0.0.5",
 	"description": "web's adapter for miniprogram",
 	"main": "miniprogram_dist/index.js",
 	"scripts": {
@@ -16,7 +16,7 @@
 		"lint": "eslint \"src/**/*.js\" --fix",
 		"lint-tools": "eslint \"tools/**/*.js\" --rule \"import/no-extraneous-dependencies: false\" --fix"
 	},
-	"miniprogram": "miniprogram_dist",
+	"miniprogram": "src",
 	"jest": {
 		"testEnvironment": "jsdom",
 		"testURL": "https://jest.test",

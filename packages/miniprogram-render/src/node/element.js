@@ -333,6 +333,7 @@ class Element extends Node {
 
   /**
    * 小程序端的 getBoundingClientRect 实现
+   * https://developers.weixin.qq.com/miniprogram/dev/api/wxml/NodesRef.scrollOffset.html
    * https://developers.weixin.qq.com/miniprogram/dev/api/wxml/NodesRef.boundingClientRect.html
    */
   $$getBoundingClientRect() {

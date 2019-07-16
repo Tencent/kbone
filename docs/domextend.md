@@ -54,6 +54,33 @@ window.$$trigger('beforeunload', {
 | eventName | String | 事件名称 |
 | isCapture | Boolean | 是否清空捕获事件句柄，默认是 false |
 
+#### window.$$getComputedStyle
+
+小程序中 window.getComputedStyle 的替代实现，返回一个 promise。
+
+| 参数 | 类型 | 描述 |
+|---|---|---|
+| dom | String | dom 节点 |
+| computedStyle | Array<String> | 指定样式名列表 |
+
+```js
+window.$$getComputedStyle(document.body, ['backgroundColor']).then(res => {
+    console.log(res.backgroundColor)
+})
+
+window.$$getComputedStyle(document.querySelector('div'), ['backgroundColor']).then(res => {
+    console.log(res.backgroundColor)
+})
+```
+
+#### window.$$createSelectorQuery
+
+相当于 wx.createSelectorQuery，用法可参考[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/wxml/wx.createSelectorQuery.html)。
+
+#### window.$$createIntersectionObserver
+
+相当于 wx.createIntersectionObserver，用法可参考[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/wxml/wx.createIntersectionObserver.html)。
+
 #### window.onShareAppMessage
 
 开启 share 配置后，当进行页面分享时会执行的回调。此回调可以返回一个对象，作为小程序处理分享的参数。
@@ -145,9 +172,25 @@ wx.request({
 
 同 [window.$$trigger](##windowtrigger)。
 
-#### document.$$clearEvent
+#### dom.$$clearEvent
 
 同 [window.$$clearEvent](##windowclearevent)。
+
+#### dom.$$getBoundingClientRect
+
+小程序中 dom.getBoundingClientRect 的替代实现，返回一个 promise。
+
+> PS：此接口本质上是小程序的 SelectorQuery 的二次封装，如果是 dom 是 document.body，会默认走 scrollOffset 接口，如果是其他 dom 则走 boundingClientRect 接口。
+
+```js
+document.body.$$getBoundingClientRect().then(res => {
+    // res 的内容可以参考官方文档：https://developers.weixin.qq.com/miniprogram/dev/api/wxml/NodesRef.scrollOffset.html
+})
+
+document.querySelector('div').$$getBoundingClientRect().then(res => {
+    // res 的内容可以参考官方文档：https://developers.weixin.qq.com/miniprogram/dev/api/wxml/NodesRef.boundingClientRect.html
+})
+```
 
 #### dom: $$domNodeUpdate 事件
 

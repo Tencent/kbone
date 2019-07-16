@@ -24,8 +24,6 @@ class Window extends EventTarget {
     this.$_innerHeight = 0
     this.$_innerWidth = 0
 
-    this.$$config = {} // 对外配置对象，在业务代码中进行配置
-
     this.$_location = new Location(pageId)
     this.$_navigator = new Navigator()
     this.$_screen = new Screen()
@@ -106,6 +104,20 @@ class Window extends EventTarget {
    */
   get $$miniprogram() {
     return this.$_miniprogram
+  }
+
+  /**
+   * 小程序端的 getComputedStyle 实现
+   * https://developers.weixin.qq.com/miniprogram/dev/api/wxml/NodesRef.fields.html
+   */
+  $$getComputedStyle(dom, computedStyle = []) {
+    return new Promise((resolve, reject) => {
+      if (dom.tagName === 'BODY') {
+        this.$$createSelectorQuery().select('.miniprogram-root').fields({computedStyle}, res => (res ? resolve(res) : reject())).exec()
+      } else {
+        this.$$createSelectorQuery().select(`.miniprogram-root >>> .node-${dom.$$nodeId}`).fields({computedStyle}, res => (res ? resolve(res) : reject())).exec()
+      }
+    })
   }
 
   /**

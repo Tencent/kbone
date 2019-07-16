@@ -214,6 +214,9 @@ class MpPlugin {
       const packageConfigJsonContent = JSON.stringify(_.merge(packageConfigJson, userPackageConfigJson), null, '\t')
       addFile(compilation, '../package.json', packageConfigJsonContent)
 
+      // node_modules
+      addFile(compilation, '../node_modules/.miniprogram', '')
+
       callback()
     })
 
