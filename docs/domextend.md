@@ -160,21 +160,21 @@ wx.request({
 
 #### document.$$trigger
 
-同 [window.$$trigger](##windowtrigger)。
+同 [window.$$trigger](#windowtrigger)。
 
 #### document.$$clearEvent
 
-同 [window.$$clearEvent](##windowclearevent)。
+同 [window.$$clearEvent](#windowclearevent)。
 
 ### dom 对象
 
 #### dom.$$trigger
 
-同 [window.$$trigger](##windowtrigger)。
+同 [window.$$trigger](#windowtrigger)。
 
 #### dom.$$clearEvent
 
-同 [window.$$clearEvent](##windowclearevent)。
+同 [window.$$clearEvent](#windowclearevent)。
 
 #### dom.$$getBoundingClientRect
 
