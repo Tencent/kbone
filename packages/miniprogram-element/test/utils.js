@@ -79,4 +79,11 @@ simulate.load = function (componentPath, ...args) {
   return oldLoad(componentPath, ...args)
 }
 
+/**
+ * 获取单行 html 代码
+ */
+simulate.getSimpleHTML = function (html) {
+  return html.trim().replace(/(?:(>)[\n\r\s\t]+)|(?:[\n\r\s\t]+(<))/g, '$1$2').replace(/[\n\r\t]+/g, '')
+}
+
 module.exports = simulate
