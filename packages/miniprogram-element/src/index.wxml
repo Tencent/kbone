@@ -1,0 +1,45 @@
+<image wx:if="{{wxCompName === 'image'}}" class="wx-comp-image" src="{{src}}" rendering-mode="img" mode="widthFix" bindload="onImgLoad" binderror="onImgError" />
+<input wx:elif="{{wxCompName === 'input'}}" class="wx-comp-input" type="{{mpType}}" focus="{{focus}}" value="{{value}}" disabled="{{disabled}}" maxlength="{{maxlength}}" placeholder="{{placeholder}}" placeholder-class="{{placeholderClass}}" cursor-spacing="{{cursorSpacing}}" password="{{type === 'password'}}" bindinput="onInputInput" bindblur="onInputBlur" bindfocus="onInputFocus" bindconfirm="onInputConfirm"></input>
+<video wx:elif="{{wxCompName === 'video'}}" class="wx-comp-video" src="{{src}}" autoplay="{{autoplay}}" loop="{{loop}}" muted="{{muted}}" controls="{{controls}}" poster="{{poster}}" bindplay="onVideoPlay" bindpause="onVideoPause" bindended="onVideoEnded" bindtimeupdate="onVideoTimeUpdate" bindwaiting="onVideoWaiting" binderror="onVideoError" bindprogress="onVideoProgress"></video>
+<button wx:elif="{{wxCompName === 'button'}}" class="{{class}}" style="{{style}}" open-type="{{openType}}" disabled="{{disabled}}">{{content}}</button>
+<view wx:elif="{{wxCompName === 'view'}}" class="{{class}}" style="{{style}}">{{content}}</view>
+<picker wx:elif="{{wxCompName === 'picker'}}" class="{{class}}" style="{{style}}" mode="{{mode}}" disabled="{{disabled}}" range="{{range}}" range-key="{{rangeKey}}" value="{{value}}" start="{{start}}" end="{{end}}" fields="{{fields}}" custom-item="{{customItem}}" bindchange="onPickerChange" bindcolumnchange="onPickerColumnChange" bindcancel="onPickerCancel">{{content}}</picker>
+<!-- 第 1 层 start -->
+<block wx:for="{{childNodes}}" wx:key="nodeId">
+  <block wx:if="{{item.type === 'text'}}">{{item.content}}</block>
+  <view wx:elif="{{item.isLeaf || item.isSimple}}" data-private-node-id="{{item.nodeId}}" data-private-page-id="{{item.pageId}}" id="{{item.id}}" class="{{item.class || ''}}" style="{{item.style || ''}}" bindtouchstart="onTouchStart" bindtouchmove="onTouchMove" bindtouchend="onTouchEnd" bindtouchcancel="onTouchCancel" bindtap="onTap">{{item.content}}
+    <!-- 第 2 层 start -->
+    <block wx:for="{{item.childNodes}}" wx:key="nodeId" wx:for-item="item2">
+      <block wx:if="{{item2.type === 'text'}}">{{item2.content}}</block>
+      <view wx:elif="{{item2.isLeaf || item2.isSimple}}" data-private-node-id="{{item2.nodeId}}" data-private-page-id="{{item2.pageId}}" id="{{item2.id}}" class="{{item2.class || ''}}" style="{{item2.style || ''}}" bindtouchstart="onTouchStart" bindtouchmove="onTouchMove" bindtouchend="onTouchEnd" bindtouchcancel="onTouchCancel" bindtap="onTap">{{item2.content}}
+        <!-- 第 3 层 start -->
+        <block wx:for="{{item2.childNodes}}" wx:key="nodeId" wx:for-item="item3">
+          <block wx:if="{{item3.type === 'text'}}">{{item3.content}}</block>
+          <view wx:elif="{{item3.isLeaf || item3.isSimple}}" data-private-node-id="{{item3.nodeId}}" data-private-page-id="{{item3.pageId}}" id="{{item3.id}}" class="{{item3.class || ''}}" style="{{item3.style || ''}}" bindtouchstart="onTouchStart" bindtouchmove="onTouchMove" bindtouchend="onTouchEnd" bindtouchcancel="onTouchCancel" bindtap="onTap">{{item3.content}}
+            <!-- 第 4 层 start -->
+            <block wx:for="{{item3.childNodes}}" wx:key="nodeId" wx:for-item="item4">
+              <block wx:if="{{item4.type === 'text'}}">{{item4.content}}</block>
+              <view wx:elif="{{item4.isLeaf || item4.isSimple}}" data-private-node-id="{{item4.nodeId}}" data-private-page-id="{{item4.pageId}}" id="{{item4.id}}" class="{{item4.class || ''}}" style="{{item4.style || ''}}" bindtouchstart="onTouchStart" bindtouchmove="onTouchMove" bindtouchend="onTouchEnd" bindtouchcancel="onTouchCancel" bindtap="onTap">{{item4.content}}
+                <!-- 第 5 层 start -->
+                <block wx:for="{{item4.childNodes}}" wx:key="nodeId" wx:for-item="item5">
+                  <block wx:if="{{item5.type === 'text'}}">{{item5.content}}</block>
+                  <view wx:elif="{{item5.isLeaf}}" data-private-node-id="{{item5.nodeId}}" data-private-page-id="{{item5.pageId}}" id="{{item5.id}}" class="{{item5.class || ''}}" style="{{item5.style || ''}}" bindtouchstart="onTouchStart" bindtouchmove="onTouchMove" bindtouchend="onTouchEnd" bindtouchcancel="onTouchCancel" bindtap="onTap">{{item5.content}}</view>
+                  <element wx:elif="{{item5.type === 'element'}}" data-private-node-id="{{item5.nodeId}}" data-private-page-id="{{item5.pageId}}" id="{{item5.id}}" class="{{item5.class || ''}}" style="{{item5.style || ''}}" bindtouchstart="onTouchStart" bindtouchmove="onTouchMove" bindtouchend="onTouchEnd" bindtouchcancel="onTouchCancel" bindtap="onTap" />
+                </block>
+                <!-- 第 5 层 end -->
+              </view>
+              <element wx:elif="{{item4.type === 'element'}}" data-private-node-id="{{item4.nodeId}}" data-private-page-id="{{item4.pageId}}" id="{{item4.id}}" class="{{item4.class || ''}}" style="{{item4.style || ''}}" bindtouchstart="onTouchStart" bindtouchmove="onTouchMove" bindtouchend="onTouchEnd" bindtouchcancel="onTouchCancel" bindtap="onTap" />
+            </block>
+            <!-- 第 4 层 end -->
+          </view>
+          <element wx:elif="{{item3.type === 'element'}}" data-private-node-id="{{item3.nodeId}}" data-private-page-id="{{item3.pageId}}" id="{{item3.id}}" class="{{item3.class || ''}}" style="{{item3.style || ''}}" bindtouchstart="onTouchStart" bindtouchmove="onTouchMove" bindtouchend="onTouchEnd" bindtouchcancel="onTouchCancel" bindtap="onTap" />
+        </block>
+        <!-- 第 3 层 end -->
+      </view>
+      <element wx:elif="{{item2.type === 'element'}}" data-private-node-id="{{item2.nodeId}}" data-private-page-id="{{item2.pageId}}" id="{{item2.id}}" class="{{item2.class || ''}}" style="{{item2.style || ''}}" bindtouchstart="onTouchStart" bindtouchmove="onTouchMove" bindtouchend="onTouchEnd" bindtouchcancel="onTouchCancel" bindtap="onTap" />
+    </block>
+    <!-- 第 2 层 end -->
+  </view>
+  <element wx:elif="{{item.type === 'element'}}" data-private-node-id="{{item.nodeId}}" data-private-page-id="{{item.pageId}}" id="{{item.id}}" class="{{item.class || ''}}" style="{{item.style || ''}}" bindtouchstart="onTouchStart" bindtouchmove="onTouchMove" bindtouchend="onTouchEnd" bindtouchcancel="onTouchCancel" bindtap="onTap" />
+</block>
+<!-- 第 1 层 end -->
