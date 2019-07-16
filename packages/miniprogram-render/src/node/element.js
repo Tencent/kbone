@@ -341,9 +341,9 @@ class Element extends Node {
       if (!window) reject()
 
       if (this.tagName === 'BODY') {
-        window._$createSelectorQuery().selectViewport().scrollOffset(res => (res ? resolve(res) : reject())).exec()
+        window.$$createSelectorQuery().selectViewport().scrollOffset(res => (res ? resolve(res) : reject())).exec()
       } else {
-        window._$createSelectorQuery().select(`.miniprogram-root >>> .node-${this.$_nodeId}`).boundingClientRect(res => (res ? resolve(res) : reject())).exec()
+        window.$$createSelectorQuery().select(`.miniprogram-root >>> .node-${this.$_nodeId}`).boundingClientRect(res => (res ? resolve(res) : reject())).exec()
       }
     })
   }

@@ -32,7 +32,7 @@ class NotSupport extends Element {
 
     // 处理特殊节点
     const window = cache.getWindow(this.$_pageId)
-    if (window.$$config.dealWithNotSupportDom) window.$$config.dealWithNotSupportDom(this)
+    if (window.onDealWithNotSupportDom) window.onDealWithNotSupportDom(this)
   }
 
   /**

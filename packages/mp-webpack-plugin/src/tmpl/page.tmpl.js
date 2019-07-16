@@ -95,10 +95,10 @@ Page({
     })
 
     // 处理 selectorQuery 获取
-    this.window._$createSelectorQuery = () => wx.createSelectorQuery().in(this)
+    this.window.$$createSelectorQuery = () => wx.createSelectorQuery().in(this)
 
     // 处理 intersectionObserver 获取
-    this.window._$createIntersectionObserver = options => wx.createIntersectionObserver(this, options)
+    this.window.$$createIntersectionObserver = options => wx.createIntersectionObserver(this, options)
 
     this.setData({
       pageId: this.pageId

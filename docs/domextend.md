@@ -26,24 +26,67 @@
 
 根据传入的 url pathname 来获取匹配的小程序页面路由。
 
+#### window.$$trigger
+
+触发当前节点事件。与 dispatchEvent 不同的是，$$trigger 不会触发事件的捕获、冒泡阶段，只对绑定在节点上的事件句柄按顺序执行一遍。
+
+| 参数 | 类型 | 描述 |
+|---|---|---|
+| eventName | String | 事件名称 |
+| options | Object | 配置 |
+| options.event | Object | 事件句柄接收到的事件对象 |
+| options.isCapture | Boolean | 是否触发捕获事件句柄，默认是 false |
+
+```js
+window.$$trigger('ready')
+window.$$trigger('beforeunload', {
+    event: new window.CustomEvent('beforeunload'),
+    isCapture: false,
+})
+```
+
+#### window.$$clearEvent
+
+清空某个事件的所有句柄。
+
+| 参数 | 类型 | 描述 |
+|---|---|---|
+| eventName | String | 事件名称 |
+| isCapture | Boolean | 是否清空捕获事件句柄，默认是 false |
+
 #### window.onShareAppMessage
 
-开启 share 配置后，当进行页面分享时会执行的回调。
+开启 share 配置后，当进行页面分享时会执行的回调。此回调可以返回一个对象，作为小程序处理分享的参数。
 
 | 属性名 | 类型 | 描述 |
 |---|---|---|
 | data | Object | 小程序被分享页面 onShareAppMessage 回调传入的参数，可参考[官方文档](https://developers.weixin.qq.com/miniprogram/dev/reference/api/Page.html#onShareAppMessage-Object-object) |
 | currentPagePath | String | 小程序被分享页面的路由 |
 
-示例：
-
 ```js
 window.onShareAppMessage = function(data, currentPagePath) {
     // 当页面被分享时会进入这个回调
-    // 此处可以返回一个对象，作为小程序处理分享的参数，对象内容和小程序页面 onShareAppMessage 回调可返回对象内容一致，具体可参考官方文档：https://developers.weixin.qq.com/miniprogram/dev/reference/api/Page.html#onShareAppMessage-Object-object
+    // 返回一个对象，作为小程序处理分享的参数，对象内容和小程序页面 onShareAppMessage 回调可返回对象内容一致，具体可参考官方文档：https://developers.weixin.qq.com/miniprogram/dev/reference/api/Page.html#onShareAppMessage-Object-object
     return {
         title: 'test title',
         path: currentPagePath,
+    }
+}
+```
+
+#### window.onDealWithNotSupportDom
+
+渲染时遇到不支持的 dom 节点会执行的回调。
+
+| 属性名 | 类型 | 描述 |
+|---|---|---|
+| dom | Object | 不支持的 dom 节点 |
+
+```js
+window.onDealWithNotSupportDom = function(dom) {
+    // 渲染时遇到不支持的 dom 节点时会进入这个回调
+    if (dom.tagName === 'IFRAME') {
+        dom.textContent = '当前小程序版本暂不支持 iframe'
     }
 }
 ```
@@ -70,7 +113,41 @@ window.onShareAppMessage = function(data, currentPagePath) {
 
 开启 pullDownRefresh 配置后，当下拉刷新页面时会触发此事件。
 
+### document 对象
+
+#### document.$$cookie
+
+获取完整的 cookie，相当于请求头附带的 cookie。
+
+```js
+// 给请求头设置 cookie
+wx.request({
+    method: 'GET',
+    url: '/cgi/xxx',
+    header: {
+        cookie: window.document.$$cookie,
+    },
+    success() {},
+})
+```
+
+#### document.$$trigger
+
+同 [window.$$trigger](##windowtrigger)。
+
+#### document.$$clearEvent
+
+同 [window.$$clearEvent](##windowclearevent)。
+
 ### dom 对象
+
+#### dom.$$trigger
+
+同 [window.$$trigger](##windowtrigger)。
+
+#### document.$$clearEvent
+
+同 [window.$$clearEvent](##windowclearevent)。
 
 #### dom: $$domNodeUpdate 事件
 
