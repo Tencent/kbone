@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div>
     <ul class="tabbar">
       <li><router-link class="link" to="/test/aaa">aaa</router-link></li>
       <li><router-link class="link" to="/test/bbb">bbb</router-link></li>
@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import Footer from '../common/Footer.vue';
+import Footer from '../common/Footer.vue'
 
 export default {
   name: 'App',

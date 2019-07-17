@@ -14,6 +14,9 @@ module.exports = {
     filename: '[name].js'
   },
   target: 'web',
+  resolveLoader: {
+    modules: ['node_modules', path.join(__dirname, '../../../packages')],
+  },
   module: {
     rules: [
       {
