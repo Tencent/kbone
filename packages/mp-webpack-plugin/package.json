@@ -9,7 +9,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/wechat-miniprogram/miniprogram-vue.git"
+		"url": "https://github.com/wechat-miniprogram/kbone.git"
 	},
 	"author": "wechat-miniprogram",
 	"license": "MIT",

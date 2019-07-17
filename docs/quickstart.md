@@ -290,6 +290,20 @@ npm install --save-dev vue-improve-loader
 
 > PS：vue-improve-loader 必须在 vue-loader 之前执行，这样 vue-loader 才会接收到被删减后的代码。
 
+### 使用小程序内置组件
+
+基本用法如下：
+
+```html
+<wx-component behavior="picker" mode="region" @change="onChange">选择城市</wx-component>
+<wx-component behavior="button" open-type="share" @click="onClickShare">分享</wx-component>
+```
+
+使用 `wx-component` 标签表示要渲染小程序内置组件，然后 behavior 字段表示要渲染的组件名，其他组件属性传入和官方文档一致，事件则采用 vue 的绑定方式。
+
+> PS：当前仅支持了 picker 组件和分享按钮。
+> PS：当前内置组件子节点仅支持渲染文本。
+
 ### 开发建议
 
 1. 虽然此方案将完整的 vue runtime 包含进来了，但必然存在一些无法直接适配的接口，比如 getBoundingClientRect，一部分会通过 dom/bom 扩展 api 间接实现，一部分则完全无法支持。**[查看 dom/bom 扩展 api 文档](./domextend.md)**。
