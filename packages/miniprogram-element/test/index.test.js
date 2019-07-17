@@ -57,7 +57,7 @@ test('render', async () => {
   await _.sleep(10)
   expect(_.getSimpleHTML(component.dom.innerHTML)).toBe(_.getSimpleHTML(`<element class="h5-body" style="width: 100%; height: 100%;" data-private-node-id="e-body" data-private-page-id="${page.pageId}">
     <wx-view class="h5-article node-${node1.$$nodeId}" data-private-node-id="${node1.$$nodeId}" data-private-page-id="${page.pageId}" style="display:flex;">
-      <wx-view class="test-node2 h5-span node-${node2.$$nodeId}" data-private-node-id="${node2.$$nodeId}" data-private-page-id="${page.pageId}" style=""></wx-view>
+      <wx-view class="h5-span node-${node2.$$nodeId} test-node2" data-private-node-id="${node2.$$nodeId}" data-private-page-id="${page.pageId}" style=""></wx-view>
       123
     </wx-view>
   </element>`))

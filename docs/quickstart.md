@@ -186,6 +186,43 @@ const mpPluginConfig = {
 }
 ```
 
+## 新增入口文件
+
+此处小程序 webpack 配置所使用的入口文件和 web 端有一定区别，假设 web 端是这样的：
+
+```js
+import Vue from 'vue'
+import App from './App.vue'
+
+// 注入到页面上的 id 为 app 的 dom 节点上
+new Vue({
+    el: '#app',
+    render: h => h(App)
+})
+```
+
+那么小程序端所用到的入口则需要调整成如下：
+
+```js
+import Vue from 'vue'
+import App from './App.vue'
+
+// 需要将创建根组件实例的逻辑封装成方法
+export default function createApp() {
+    // 在小程序中如果要注入到 id 为 app 的 dom 节点上，需要主动创建
+    const container = document.createElement('div')
+    container.id = 'app'
+    document.body.appendChild(container)
+
+    return new Vue({
+        el: '#app',
+        render: h => h(App)
+    })
+}
+```
+
+这是因为小程序中各个页面的逻辑端是统一跑在 appService 上的，需要对各个页面做隔离。为了方便做后续操作，需要将创建根组件实例的逻辑封装成方法暴露给适配层，调用此方法时会返回根组件实例。
+
 ## 执行构建
 
 1. 构建小程序代码：

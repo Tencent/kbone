@@ -1,6 +1,6 @@
 {
 	"name": "miniprogram-element",
-	"version": "0.0.5",
+	"version": "0.0.7",
 	"description": "web's adapter for miniprogram",
 	"main": "miniprogram_dist/index.js",
 	"scripts": {
@@ -60,7 +60,5 @@
 		"webpack": "^4.29.5",
 		"webpack-node-externals": "^1.7.2"
 	},
-	"dependencies": {
-		"miniprogram-render": "latest"
-	}
+	"dependencies": {}
 }
