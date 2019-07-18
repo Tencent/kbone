@@ -88,18 +88,19 @@ window.$$getComputedStyle(document.querySelector('div'), ['backgroundColor']).th
 | 属性名 | 类型 | 描述 |
 |---|---|---|
 | data | Object | 小程序被分享页面 onShareAppMessage 回调传入的参数，可参考[官方文档](https://developers.weixin.qq.com/miniprogram/dev/reference/api/Page.html#onShareAppMessage-Object-object) |
-| currentPagePath | String | 小程序被分享页面的路由 |
 
 ```js
-window.onShareAppMessage = function(data, currentPagePath) {
+window.onShareAppMessage = function(data) {
     // 当页面被分享时会进入这个回调
-    // 返回一个对象，作为小程序处理分享的参数，对象内容和小程序页面 onShareAppMessage 回调可返回对象内容一致，具体可参考官方文档：https://developers.weixin.qq.com/miniprogram/dev/reference/api/Page.html#onShareAppMessage-Object-object
+    // 返回一个对象，作为小程序处理分享的参数，对象内容和小程序页面 onShareAppMessage 回调可返回对象内容基本一致，具体可参考官方文档：https://developers.weixin.qq.com/miniprogram/dev/reference/api/Page.html#onShareAppMessage-Object-object
     return {
         title: 'test title',
-        path: currentPagePath,
+        path: '/home/index', // 这里的 path 是页面 url，而不是小程序路由
     }
 }
 ```
+
+> PS：返回的对象中，path 是要分享页面的 url，而不是页面路由。如果不返回默认取 window.locaiton.href
 
 #### window.onDealWithNotSupportDom
 

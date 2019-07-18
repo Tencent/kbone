@@ -135,19 +135,26 @@ Page({
   },
   onShareAppMessage(data) {
     if (this.window.onShareAppMessage) {
-      // 组装当前页面路径
-      const query = Object.assign({}, this.query || {})
-      const location = this.window.location
+      const shareOptions = this.window.onShareAppMessage(data)
+      const query = Object.assign(query, this.query || {})
 
-      query.targeturl = encodeURIComponent(location.href)
-      query.search = encodeURIComponent(location.search)
-      query.hash = encodeURIComponent(location.hash)
+      if (shareOptions.path) {
+        query.targeturl = encodeURIComponent(shareOptions.path)
+      } else {
+        // 组装当前页面路径
+        const location = this.window.location
+
+        query.targeturl = encodeURIComponent(location.href)
+        query.search = encodeURIComponent(location.search)
+        query.hash = encodeURIComponent(location.hash)
+      }
+      
       query.type = 'share'
-
       const queryString = Object.keys(query).map(key => `${key}=${query[key] || ''}`).join('&')
       const currentPagePath = `${this.route}?${queryString}`
+      shareOptions.path = currentPagePath
 
-      return this.window.onShareAppMessage(data, currentPagePath)
+      return shareOptions
     }
   },
   /* PAGE_SCROLL_FUNCTION */
