@@ -242,6 +242,10 @@ npm install
 
 > PS：建议使用工具的 RC 版本或者 Nightly 版本，以支持 babelSetting 的 ignore 配置。
 
+## 例子
+
+我们准备了若干 demo，可以[点此查看](../examples)。
+
 ## 其他
 
 ### 代码优化
@@ -338,8 +342,12 @@ npm install --save-dev vue-improve-loader
 
 使用 `wx-component` 标签表示要渲染小程序内置组件，然后 behavior 字段表示要渲染的组件名，其他组件属性传入和官方文档一致，事件则采用 vue 的绑定方式。
 
-> PS：当前仅支持了 picker 组件和分享按钮。
 > PS：当前内置组件子节点仅支持渲染文本。
+
+已支持内置组件：
+
+* picker
+* 分享按钮
 
 ### 开发建议
 

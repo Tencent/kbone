@@ -2,7 +2,7 @@
 
 目前提供了若干例子方便接入参考。
 
-## 例子目录
+## 目录结构
 
 ```
 |---build
@@ -28,8 +28,23 @@
 npm run build
 ```
 
+在 dist/web 目录下会输出 web 端目标代码。
+
 ## 构建小程序端代码
 
 ```
 npm run mp
 ```
+
+然后进入 dist/mp 目录下执行：
+
+```
+npm install
+```
+
+用开发者工具将 dist/mp 目录作为小程序项目导入之后，点击工具栏下的`构建 npm`，即可预览效果。
+
+## demo 列表
+
+* demo1：vue-router
+* demo2：reduce-loader + vue-improve-loader
