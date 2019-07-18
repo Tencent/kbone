@@ -121,7 +121,7 @@ Component({
         }
       } if (tagName === 'IMG') {
         const oldSrc = data.src
-        const newSrc = tool.completeURL(domNode.src, window.location.origin)
+        const newSrc = tool.completeURL(domNode.src, window.location.origin, true)
         if (newSrc !== oldSrc) newData.src = newSrc
       } else if (tagName === 'INPUT') {
         if (typeof domNode.$$focus === 'boolean') newData.focus = domNode.$$focus
@@ -130,11 +130,11 @@ Component({
         _.checkAttrUpdate(data, domNode, newData, ['disabled', 'type', 'value', 'maxlength', 'placeholder', 'placeholderClass', 'cursorSpacing'])
       } else if (tagName === 'VIDEO') {
         const oldSrc = data.src
-        const newSrc = tool.completeURL(domNode.src, window.location.origin)
+        const newSrc = tool.completeURL(domNode.src, window.location.origin, true)
         if (newSrc !== oldSrc) newData.src = newSrc
 
         const oldPoster = data.poster
-        const newPoster = tool.completeURL(domNode.poster, window.location.origin)
+        const newPoster = tool.completeURL(domNode.poster, window.location.origin, true)
         if (newPoster !== oldPoster) newData.poster = newPoster
 
         _.checkAttrUpdate(data, domNode, newData, ['autoplay', 'loop', 'muted', 'controls'])
