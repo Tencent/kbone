@@ -148,7 +148,7 @@ Page({
         query.search = encodeURIComponent(location.search)
         query.hash = encodeURIComponent(location.hash)
       }
-      
+
       query.type = 'share'
       const queryString = Object.keys(query).map(key => `${key}=${query[key] || ''}`).join('&')
       const currentPagePath = `${this.route}?${queryString}`
