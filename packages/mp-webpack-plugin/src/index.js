@@ -161,9 +161,11 @@ class MpPlugin {
       addFile(compilation, '../app.wxss', adjustCss(appWxssContent))
 
       // app json
+      const userAppJson = options.appExtraConfig || {}
       const appJsonContent = JSON.stringify({
         pages,
         window: options.app || {},
+        ...userAppJson,
       }, null, '\t')
       addFile(compilation, '../app.json', appJsonContent)
 
@@ -213,6 +215,13 @@ class MpPlugin {
       const packageConfigJson = Object.assign({}, packageConfigJsonTmpl)
       const packageConfigJsonContent = JSON.stringify(_.merge(packageConfigJson, userPackageConfigJson), null, '\t')
       addFile(compilation, '../package.json', packageConfigJsonContent)
+
+      // sitemap.json
+      const userSitemapConfigJson = options.sitemapConfig
+      if (userSitemapConfigJson) {
+        const sitemapConfigJsonContent = JSON.stringify(userSitemapConfigJson, null, '\t')
+        addFile(compilation, '../sitemap.json', sitemapConfigJsonContent)
+      }
 
       // node_modules
       addFile(compilation, '../node_modules/.miniprogram', '')
