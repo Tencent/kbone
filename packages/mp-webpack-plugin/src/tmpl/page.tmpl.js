@@ -136,7 +136,7 @@ Page({
   onShareAppMessage(data) {
     if (this.window.onShareAppMessage) {
       const shareOptions = this.window.onShareAppMessage(data)
-      const query = Object.assign(query, this.query || {})
+      const query = Object.assign({}, this.query || {})
 
       if (shareOptions.path) {
         query.targeturl = encodeURIComponent(shareOptions.path)
