@@ -32,7 +32,7 @@ module.exports = {
     target: 'web', // 必需字段，不能修改
     optimization: {
         runtimeChunk: false, // 必需字段，不能修改
-        splitChunks: { // 代码分隔配置，不建议修改
+        splitChunks: { // 代码分割配置，不建议修改
             chunks: 'all',
             minSize: 1000,
             maxSize: 0,
