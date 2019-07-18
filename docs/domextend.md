@@ -100,7 +100,7 @@ window.onShareAppMessage = function(data) {
 }
 ```
 
-> PS：返回的对象中，path 是要分享页面的 url，而不是页面路由。如果不返回默认取 window.locaiton.href
+> PS：返回的对象中，path 是要分享页面的 url，而不是页面路由。如果不返回默认取 window.locaiton.href。
 
 #### window.onDealWithNotSupportDom
 
