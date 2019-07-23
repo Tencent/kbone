@@ -1,12 +1,11 @@
 body {
     display: block;
-    /*margin: 8px;*/
 }
 
 p {
     display: block;
-    -webkit-margin-before: 1__qem;
-    -webkit-margin-after: 1__qem;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
     -webkit-margin-start: 0;
     -webkit-margin-end: 0;
 }
@@ -17,7 +16,7 @@ address, article, aside, div, footer, header, hgroup, main, nav, section {
 
 blockquote {
     display: block;
-    -webkit-margin-before: 1__qem;
+    -webkit-margin-before: 1em;
     -webkit-margin-after: 1em;
     -webkit-margin-start: 40px;
     -webkit-margin-end: 40px;
@@ -41,8 +40,7 @@ q {
 
 center {
     display: block;
-    /* special centering to be able to emulate the html4/netscape behaviour */
-    text-align: -webkit-center;
+    text-align: center;
 }
 
 hr {
@@ -65,7 +63,7 @@ video {
 h1 {
     display: block;
     font-size: 2em;
-    -webkit-margin-before: 0.67__qem;
+    -webkit-margin-before: 0.67em;
     -webkit-margin-after: 0.67em;
     -webkit-margin-start: 0;
     -webkit-margin-end: 0;
@@ -75,7 +73,7 @@ h1 {
 h2 {
     display: block;
     font-size: 1.5em;
-    -webkit-margin-before: 0.83__qem;
+    -webkit-margin-before: 0.83em;
     -webkit-margin-after: 0.83em;
     -webkit-margin-start: 0;
     -webkit-margin-end: 0;
@@ -85,7 +83,7 @@ h2 {
 h3 {
     display: block;
     font-size: 1.17em;
-    -webkit-margin-before: 1__qem;
+    -webkit-margin-before: 1em;
     -webkit-margin-after: 1em;
     -webkit-margin-start: 0;
     -webkit-margin-end: 0;
@@ -94,7 +92,7 @@ h3 {
 
 h4 {
     display: block;
-    -webkit-margin-before: 1.33__qem;
+    -webkit-margin-before: 1.33em;
     -webkit-margin-after: 1.33em;
     -webkit-margin-start: 0;
     -webkit-margin-end: 0;
@@ -104,7 +102,7 @@ h4 {
 h5 {
     display: block;
     font-size: .83em;
-    -webkit-margin-before: 1.67__qem;
+    -webkit-margin-before: 1.67em;
     -webkit-margin-after: 1.67em;
     -webkit-margin-start: 0;
     -webkit-margin-end: 0;
@@ -114,7 +112,7 @@ h5 {
 h6 {
     display: block;
     font-size: .67em;
-    -webkit-margin-before: 2.33__qem;
+    -webkit-margin-before: 2.33em;
     -webkit-margin-after: 2.33em;
     -webkit-margin-start: 0;
     -webkit-margin-end: 0;
@@ -178,7 +176,7 @@ th {
 
 caption {
     display: table-caption;
-    text-align: -webkit-center;
+    text-align: center;
 }
 
 /* lists */
@@ -186,7 +184,7 @@ caption {
 ul, menu, dir {
     display: block;
     list-style-type: disc;
-    -webkit-margin-before: 1__qem;
+    -webkit-margin-before: 1em;
     -webkit-margin-after: 1em;
     -webkit-margin-start: 0;
     -webkit-margin-end: 0;
@@ -196,7 +194,7 @@ ul, menu, dir {
 ol {
     display: block;
     list-style-type: decimal;
-    -webkit-margin-before: 1__qem;
+    -webkit-margin-before: 1em;
     -webkit-margin-after: 1em;
     -webkit-margin-start: 0;
     -webkit-margin-end: 0;
@@ -215,7 +213,7 @@ dd {
 
 dl {
     display: block;
-    -webkit-margin-before: 1__qem;
+    -webkit-margin-before: 1em;
     -webkit-margin-after: 1em;
     -webkit-margin-start: 0;
     -webkit-margin-end: 0;
@@ -229,7 +227,7 @@ dt {
 
 form {
     display: block;
-    margin-top: 0__qem;
+    margin-top: 0em;
 }
 
 label {
@@ -255,17 +253,13 @@ fieldset {
     min-width: min-content;
 }
 
-button {
-    -webkit-appearance: button;
-}
-
 /* Form controls don't go vertical. */
 input, textarea, keygen, select, button, progress {
     -webkit-writing-mode: horizontal-tb !important;
 }
 
 input, textarea, keygen, select, button {
-    margin: 0__qem;
+    margin: 0em;
     font: -webkit-small-control;
     color: initial;
     letter-spacing: normal;
@@ -292,7 +286,6 @@ area, param {
 
 select {
     box-sizing: border-box;
-    -webkit-appearance: menulist-button;
     letter-spacing: normal;
     word-spacing: normal;
     line-height: normal;
@@ -301,7 +294,6 @@ select {
     background-color: rgba(255, 255, 255, 0.01);
     font: 11px Helvetica;
     padding: 0 0.4em 0 0.4em;
-    -webkit-appearance: menulist;
     border: 1px solid;
     color: text;
     background-color: -apple-system-control-background;
@@ -347,7 +339,7 @@ pre {
     display: block;
     font-family: monospace;
     white-space: pre;
-    margin: 1__qem 0;
+    margin: 1em 0;
 }
 
 mark {
