@@ -337,7 +337,13 @@ npm install --save-dev vue-improve-loader
 
 ### 使用小程序内置组件
 
-基本用法如下：
+部分内置组件可以直接使用 html 标签替代，比如 view 组件可以使用 div 标签替代。目前已支持的可替代组件列表：
+
+* image 组件 --> img 标签
+* input 组件 --> input 标签
+* video 组件 --> video 标签
+
+还有一部分内置组件在 html 中没有标签可替代，那就需要使用 `wx-component` 标签，基本用法如下：
 
 ```html
 <wx-component behavior="picker" mode="region" @change="onChange">选择城市</wx-component>
@@ -346,11 +352,11 @@ npm install --save-dev vue-improve-loader
 
 使用 `wx-component` 标签表示要渲染小程序内置组件，然后 behavior 字段表示要渲染的组件名，其他组件属性传入和官方文档一致，事件则采用 vue 的绑定方式。
 
-> PS：当前内置组件子节点仅支持渲染文本。
+> PS：当前 wx-component 子节点仅支持渲染文本。
 
-已支持内置组件：
+`wx-component` 已支持内置组件列表：
 
-* picker
+* picker 组件
 * 分享按钮
 
 ### 开发建议
