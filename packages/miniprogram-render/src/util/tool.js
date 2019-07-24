@@ -39,7 +39,7 @@ function getPageName(pageRoute) {
 /**
  * 节流，一个同步流中只调用一次该函数
  */
-const waitFuncSet = new WeakSet()
+const waitFuncSet = new Set()
 function throttle(func) {
   return () => {
     if (waitFuncSet.has(func)) return
@@ -47,12 +47,22 @@ function throttle(func) {
     waitFuncSet.add(func)
 
     Promise.resolve().then(() => {
-      waitFuncSet.delete(func)
-      func()
+      if (waitFuncSet.has(func)) {
+        waitFuncSet.delete(func)
+        func()
+      }
     }).catch(() => {
       // ignore
     })
   }
+}
+
+/**
+ * 清空节流缓存
+ */
+function flushThrottleCache() {
+  waitFuncSet.forEach(waitFunc => waitFunc && waitFunc())
+  waitFuncSet.clear()
 }
 
 /**
@@ -105,6 +115,7 @@ module.exports = {
   getPageRoute,
   getPageName,
   throttle,
+  flushThrottleCache,
   completeURL,
   decodeContent,
   isTagNameSupport,

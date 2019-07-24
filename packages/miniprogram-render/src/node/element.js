@@ -337,6 +337,7 @@ class Element extends Node {
    * https://developers.weixin.qq.com/miniprogram/dev/api/wxml/NodesRef.boundingClientRect.html
    */
   $$getBoundingClientRect() {
+    tool.flushThrottleCache() // 先清空 setData
     const window = cache.getWindow(this.$_pageId)
     return new Promise((resolve, reject) => {
       if (!window) reject()
@@ -848,6 +849,12 @@ class Element extends Node {
     }
 
     return false
+  }
+
+  getBoundingClientRect() {
+    // 不作任何实现，只作兼容使用
+    console.warn('getBoundingClientRect is not supported')
+    return {}
   }
 }
 

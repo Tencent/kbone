@@ -3,12 +3,14 @@ const Event = require('./event/event')
 const Location = require('./bom/location')
 const Navigator = require('./bom/navigator')
 const cache = require('./util/cache')
+const tool = require('./util/tool')
 const Screen = require('./bom/screen')
 const History = require('./bom/history')
 const Miniprogram = require('./bom/miniprogram')
 const LocalStorage = require('./bom/local-storage')
 const SessionStorage = require('./bom/session-storage')
 const CustomEvent = require('./event/custom-event')
+const Node = require('./node/node')
 const Element = require('./node/element')
 
 let lastRafTime = 0
@@ -111,6 +113,7 @@ class Window extends EventTarget {
    * https://developers.weixin.qq.com/miniprogram/dev/api/wxml/NodesRef.fields.html
    */
   $$getComputedStyle(dom, computedStyle = []) {
+    tool.flushThrottleCache() // 先清空 setData
     return new Promise((resolve, reject) => {
       if (dom.tagName === 'BODY') {
         this.$$createSelectorQuery().select('.miniprogram-root').fields({computedStyle}, res => (res ? resolve(res) : reject())).exec()
@@ -203,6 +206,14 @@ class Window extends EventTarget {
     return this.$_elementConstructor
   }
 
+  get Element() {
+    return Element
+  }
+
+  get Node() {
+    return Node
+  }
+
   open(url) {
     // 不支持 windowName 和 windowFeatures
     this.location.$$open(url)
@@ -210,7 +221,7 @@ class Window extends EventTarget {
 
   getComputedStyle() {
     // 不作任何实现，只作兼容使用
-    console.warn('window.getComputedStyle not support')
+    console.warn('window.getComputedStyle is not supported')
     return {
       // vue transition 组件使用
       transitionDelay: '',

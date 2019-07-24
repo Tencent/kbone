@@ -30,7 +30,7 @@ test('tool: getPageRoute/getPageName', () => {
     expect(tool.getPageName('pages/detail/index')).toBe('detail')
 })
 
-test('tool: throttle', async () => {
+test('tool: throttle/flushThrottleCache', async () => {
     let count = 0
     const func = tool.throttle(() => count++)
     func()
@@ -38,6 +38,13 @@ test('tool: throttle', async () => {
     func()
     await mock.sleep(10)
     expect(count).toBe(1)
+    func()
+    func()
+    expect(count).toBe(1)
+    tool.flushThrottleCache()
+    expect(count).toBe(2)
+    await mock.sleep(10)
+    expect(count).toBe(2)
 })
 
 test('tool: completeURL', () => {

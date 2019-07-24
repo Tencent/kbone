@@ -7,6 +7,8 @@ const SessionStorage = require('../src/bom/session-storage')
 const History = require('../src/bom/history')
 const Screen = require('../src/bom/screen')
 const CustomEvent = require('../src/event/custom-event')
+const Element = require('../src/node/element')
+const Node = require('../src/node/node')
 const Image = require('../src/node/element/image')
 
 let window
@@ -92,6 +94,14 @@ test('window: setTimeout/clearTimeout/setInterval/clearInterval', async () => {
 
 test('window: HTMLElement', () => {
   // TODO
+})
+
+test('window: Element', () => {
+  expect(window.Element).toBe(Element)
+})
+
+test('window: Node', () => {
+  expect(window.Node).toBe(Node)
 })
 
 test('window: open', () => {
