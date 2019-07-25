@@ -15,7 +15,7 @@ class LocalStorage {
       const info = wx.getStorageInfoSync()
 
       this.$_keys = info.keys
-      this.$_length = info.currentSize
+      this.$_length = info.keys.length
     } catch (err) {
       console.warn('getStorageInfoSync fail')
     }
@@ -56,7 +56,7 @@ class LocalStorage {
 
     if (!key) return null
 
-    return wx.getStorageSync(key) || null
+    return key
   }
 
   getItem(key) {
