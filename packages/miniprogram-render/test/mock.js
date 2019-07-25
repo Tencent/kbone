@@ -88,7 +88,7 @@ global.wx = {
     },
     getStorageInfoSync() {
         const keys = Object.keys(storageMap)
-        const currentSize = keys.length
+        const currentSize = 12345
     
         return {keys, currentSize}
     },

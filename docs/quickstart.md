@@ -179,13 +179,13 @@ const mpPluginConfig = {
     appExtraConfig: {
         debug: true,
     },
-	// 项目配置，会被合并到 project.config.json
-	projectConfig: {
-		appid: 'wx1234567890',
-	},
-	// 包配置，会被合并到 package.json
-	packageConfig: {
-		author: 'wechat-miniprogram',
+    // 项目配置，会被合并到 project.config.json
+    projectConfig: {
+        appid: 'wx1234567890',
+    },
+    // 包配置，会被合并到 package.json
+    packageConfig: {
+        author: 'wechat-miniprogram',
     },
 }
 ```

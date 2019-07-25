@@ -46,14 +46,14 @@ test('storage', () => {
   expect(sessionStorage.length).toBe(3)
 
   // key
-  expect(localStorage.key(0)).toBe('1')
-  expect(localStorage.key(1)).toBe('3')
-  expect(localStorage.key(2)).toBe('5')
-  expect(localStorage.key(3)).toBe('7')
+  expect(localStorage.key(0)).toBe('a')
+  expect(localStorage.key(1)).toBe('c')
+  expect(localStorage.key(2)).toBe('e')
+  expect(localStorage.key(3)).toBe('g')
   expect(localStorage.key(4)).toBe(null)
-  expect(sessionStorage.key(0)).toBe('2')
-  expect(sessionStorage.key(1)).toBe('4')
-  expect(sessionStorage.key(2)).toBe('6')
+  expect(sessionStorage.key(0)).toBe('b')
+  expect(sessionStorage.key(1)).toBe('d')
+  expect(sessionStorage.key(2)).toBe('f')
   expect(sessionStorage.key(3)).toBe(null)
 
   // getItem
@@ -76,13 +76,13 @@ test('storage', () => {
   expect(localStorage.length).toBe(3)
   expect(sessionStorage.length).toBe(2)
 
-  expect(localStorage.key(0)).toBe('1')
-  expect(localStorage.key(1)).toBe('5')
-  expect(localStorage.key(2)).toBe('7')
+  expect(localStorage.key(0)).toBe('a')
+  expect(localStorage.key(1)).toBe('e')
+  expect(localStorage.key(2)).toBe('g')
   expect(localStorage.key(3)).toBe(null)
   expect(localStorage.key(4)).toBe(null)
-  expect(sessionStorage.key(0)).toBe('2')
-  expect(sessionStorage.key(1)).toBe('6')
+  expect(sessionStorage.key(0)).toBe('b')
+  expect(sessionStorage.key(1)).toBe('f')
   expect(sessionStorage.key(2)).toBe(null)
   expect(sessionStorage.key(3)).toBe(null)
 

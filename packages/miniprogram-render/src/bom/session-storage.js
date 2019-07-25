@@ -38,11 +38,7 @@ class SessionStorage {
   key(num) {
     if (typeof num !== 'number' || !isFinite(num) || num < 0) return null
 
-    const key = this.$_keys[num]
-
-    if (!key) return null
-
-    return this.$_map[key] || null
+    return this.$_keys[num] || null
   }
 
   getItem(key) {

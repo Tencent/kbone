@@ -3,7 +3,6 @@ const Event = require('../event/event')
 class LocalStorage {
   constructor(window) {
     this.$_keys = []
-    this.$_length = 0
     this.$_window = window
   }
 
@@ -15,7 +14,6 @@ class LocalStorage {
       const info = wx.getStorageInfoSync()
 
       this.$_keys = info.keys
-      this.$_length = info.currentSize
     } catch (err) {
       console.warn('getStorageInfoSync fail')
     }
@@ -46,17 +44,13 @@ class LocalStorage {
      * 对外属性和方法
      */
   get length() {
-    return this.$_length
+    return this.$_keys && this.$_keys.length || 0
   }
 
   key(num) {
     if (typeof num !== 'number' || !isFinite(num) || num < 0) return null
 
-    const key = this.$_keys[num]
-
-    if (!key) return null
-
-    return wx.getStorageSync(key) || null
+    return this.$_keys[num] || null
   }
 
   getItem(key) {
