@@ -96,27 +96,6 @@ class HTMLInputElement extends Element {
   }
 
   /**
-   * 特殊对外字段，用于小程序内置组件的特有属性
-   */
-  get placeholderClass() {
-    return this.$_attrs.get('placeholder-class')
-  }
-
-  set placeholderClass(value) {
-    value = '' + value
-    this.$_attrs.set('placeholder-class', value)
-  }
-
-  get cursorSpacing() {
-    return this.$_attrs.get('cursor-spacing')
-  }
-
-  set cursorSpacing(value) {
-    value = '' + value
-    this.$_attrs.set('cursor-spacing', value)
-  }
-
-  /**
    * 对外属性和方法
    */
   get type() {

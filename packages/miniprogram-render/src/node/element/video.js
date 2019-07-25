@@ -40,13 +40,6 @@ class Video extends Element {
   }
 
   /**
-   * 覆写父类的 $$destroy 方法
-   */
-  $$destroy() {
-    super.$$destroy()
-  }
-
-  /**
    * 覆写父类的回收实例方法
    */
   $$recycle() {
@@ -58,6 +51,14 @@ class Video extends Element {
       // 复用 element 节点
       pool.add(this)
     }
+  }
+
+  /**
+   * 更新父组件树
+   */
+  $_triggerParentUpdate() {
+    this.$_initRect()
+    super.$_triggerParentUpdate()
   }
 
   /**

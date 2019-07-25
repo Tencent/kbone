@@ -1,7 +1,9 @@
+const initData = require('./init-data')
+
 const ELEMENT_DIFF_KEYS = ['nodeId', 'pageId', 'tagName', 'compName', 'id', 'class', 'style', 'isLeaf', 'isSimple', 'content']
 const TEXT_NODE_DIFF_KEYS = ['nodeId', 'pageId', 'content']
-const NOT_RENDER_CHILDREN_NODE = ['IFRAME', 'CANVAS', 'IMG', 'VIDEO', 'WX-COMPONENT'] // 无需渲染子节点的节点，WX-COMPONENT 的子节点要特殊渲染
-const NEET_RENDER_TO_CUSTOM_ELEMENT = ['IFRAME', 'IMG', 'INPUT', 'WX-COMPONENT'] // 必须渲染成自定义组件的节点
+const NOT_RENDER_CHILDREN_NODE = ['IFRAME', 'CANVAS', 'IMG', 'INPUT', 'VIDEO', 'WX-COMPONENT'] // 无需渲染子节点的节点，WX-COMPONENT 的子节点要特殊渲染
+const NEET_RENDER_TO_CUSTOM_ELEMENT = ['IFRAME', 'IMG', 'INPUT', 'VIDEO', 'WX-COMPONENT'] // 必须渲染成自定义组件的节点
 
 /**
  * 过滤子节点，只获取儿子节点
@@ -83,6 +85,22 @@ function checkAttrUpdate(oldData, newData, destData, attrs) {
 }
 
 /**
+ * 检查组件属性
+ */
+function checkComponentAttr(name, domNode, destData, oldData) {
+  const attrs = initData[name]
+
+  destData.wxCompName = name
+
+  if (attrs && attrs.length) {
+    for (const { name, get } of attrs) {
+      const newValue = get(domNode)
+      if (!oldData || (oldData && oldData[attr] !== newValue)) destData[name] = newValue
+    }
+  }
+}
+
+/**
  * 处理不需要渲染成自定义组件的节点
  */
 function dealWithLeafAndSimple(childNodes, onChildNodesUpdate) {
@@ -109,5 +127,6 @@ module.exports = {
   filterNodes,
   checkDiffChildNodes,
   checkAttrUpdate,
+  checkComponentAttr,
   dealWithLeafAndSimple,
 }

@@ -1,9 +1,114 @@
-<image wx:if="{{wxCompName === 'image'}}" class="wx-comp-image" src="{{src}}" rendering-mode="img" mode="widthFix" bindload="onImgLoad" binderror="onImgError" />
-<input wx:elif="{{wxCompName === 'input'}}" class="wx-comp-input" type="{{mpType}}" focus="{{focus}}" value="{{value}}" disabled="{{disabled}}" maxlength="{{maxlength}}" placeholder="{{placeholder}}" placeholder-class="{{placeholderClass}}" cursor-spacing="{{cursorSpacing}}" password="{{type === 'password'}}" bindinput="onInputInput" bindblur="onInputBlur" bindfocus="onInputFocus" bindconfirm="onInputConfirm"></input>
-<video wx:elif="{{wxCompName === 'video'}}" class="wx-comp-video" src="{{src}}" autoplay="{{autoplay}}" loop="{{loop}}" muted="{{muted}}" controls="{{controls}}" poster="{{poster}}" bindplay="onVideoPlay" bindpause="onVideoPause" bindended="onVideoEnded" bindtimeupdate="onVideoTimeUpdate" bindwaiting="onVideoWaiting" binderror="onVideoError" bindprogress="onVideoProgress"></video>
-<button wx:elif="{{wxCompName === 'button'}}" class="{{class}}" style="{{style}}" open-type="{{openType}}" disabled="{{disabled}}">{{content}}</button>
-<view wx:elif="{{wxCompName === 'view'}}" class="{{class}}" style="{{style}}">{{content}}</view>
-<picker wx:elif="{{wxCompName === 'picker'}}" class="{{class}}" style="{{style}}" mode="{{mode}}" disabled="{{disabled}}" range="{{range}}" range-key="{{rangeKey}}" value="{{value}}" start="{{start}}" end="{{end}}" fields="{{fields}}" custom-item="{{customItem}}" bindchange="onPickerChange" bindcolumnchange="onPickerColumnChange" bindcancel="onPickerCancel">{{content}}</picker>
+
+<view
+  wx:if="{{wxCompName === 'view'}}"
+  class="{{class}}"
+  style="{{style}}"
+  hover-class="{{hoverClass}}"
+  hover-stop-propagation="{{hoverStopPropagation}}"
+  hover-start-time="{{hoverStayTime}}"
+  hover-stay-time="{{hoverStayTime}}"
+>{{content}}</view>
+<image
+  wx:elif="{{wxCompName === 'image'}}"
+  class="wx-comp-image"
+  rendering-mode="{{renderingMode}}"
+  src="{{src}}"
+  mode="{{mode}}"
+  lazy-load="{{lazyLoad}}"
+  show-menu-by-longpress="{{showMenuByLongpress}}"
+  bindload="onImgLoad"
+  binderror="onImgError">
+></image>
+<input
+  wx:elif="{{wxCompName === 'input'}}"
+  class="wx-comp-input"
+  value="{{value}}"
+  type="{{type}}"
+  password="{{password}}"
+  placeholder="{{placeholder}}"
+  placeholder-style="{{placeholderStyle}}"
+  placeholder-class="{{placeholderClass}}"
+  disabled="{{disabled}}"
+  maxlength="{{maxlength}}"
+  cursor-spacing="{{cursorSpacing}}"
+  auto-focus="{{autoFocus}}"
+  focus="{{focus}}"
+  confirm-type="{{confirmType}}"
+  confirm-hold="{{confirmHold}}"
+  cursor="{{cursor}}"
+  selection-start="{{selectionStart}}"
+  selection-end="{{selectionEnd}}"
+  adjust-position="{{adjustPosition}}"
+  bindinput="onInputInput"
+  bindblur="onInputBlur"
+  bindfocus="onInputFocus"
+  bindconfirm="onInputConfirm"
+></input>
+<textarea
+  wx:elif="{{wxCompName === 'textarea'}}"
+  class="wx-comp-textarea"
+  value="{{value}}"
+  placeholder="{{placeholder}}"
+  placeholder-style="{{placeholderStyle}}"
+  placeholder-class="{{placeholderClass}}"
+  disabled="{{disabled}}"
+  maxlength="{{maxlength}}"
+  auto-focus="{{autoFocus}}"
+  focus="{{focus}}"
+  fixed="{{fixed}}"
+  cursor-spacing="{{cursorSpacing}}"
+  cursor="{{cursor}}"
+  show-confirm-bar="showConfirmBar"
+  selection-start="selectionStart"
+  selection-end="{{selectionEnd}}"
+  adjust-position="adjustPosition"
+  bindfocus="onTextareaFocus"
+  bindblur="onTextareaBlur"
+  bindlinechange="onTextareaLineChange"
+  bindinput="onTextareaInput"
+  bindconfirm="onTextareaConfirm"
+  bindkeyboardheightchange="onTextareaKeyBoardHeightChange"
+></textarea>
+<video wx:elif="{{wxCompName === 'video'}}"
+  class="wx-comp-video"
+  src="{{src}}"
+  autoplay="{{autoplay}}"
+  loop="{{loop}}"
+  muted="{{muted}}"
+  controls="{{controls}}"
+  poster="{{poster}}"
+  bindplay="onVideoPlay"
+  bindpause="onVideoPause"
+  bindended="onVideoEnded"
+  bindtimeupdate="onVideoTimeUpdate"
+  bindwaiting="onVideoWaiting"
+  binderror="onVideoError"
+  bindprogress="onVideoProgress"
+></video>
+<button
+  wx:elif="{{wxCompName === 'button'}}"
+  class="{{class}}"
+  style="{{style}}"
+  open-type="{{openType}}"
+  disabled="{{disabled}}"
+>{{content}}</button>
+<picker
+  wx:elif="{{wxCompName === 'picker'}}"
+  class="{{class}}"
+  style="{{style}}"
+  mode="{{mode}}"
+  disabled="{{disabled}}"
+  range="{{range}}"
+  range-key="{{rangeKey}}"
+  value="{{value}}"
+  start="{{start}}"
+  end="{{end}}"
+  fields="{{fields}}"
+  custom-item="{{customItem}}"
+  bindchange="onPickerChange"
+  bindcolumnchange="onPickerColumnChange"
+  bindcancel="onPickerCancel"
+>{{content}}</picker>
 <!-- 第 1 层 start -->
 <block wx:for="{{childNodes}}" wx:key="nodeId">
   <block wx:if="{{item.type === 'text'}}">{{item.content}}</block>

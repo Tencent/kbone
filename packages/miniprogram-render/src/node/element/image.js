@@ -68,6 +68,14 @@ class Image extends Element {
   }
 
   /**
+   * 更新父组件树
+   */
+  $_triggerParentUpdate() {
+    this.$_initRect()
+    super.$_triggerParentUpdate()
+  }
+
+  /**
    * 初始化长宽
    */
   $_initRect() {
