@@ -73,7 +73,7 @@ test('input', async() => {
     await _.checkNumber(input, node, 'cursorSpacing', 'cursor-spacing', 0)
 
     // autoFocus
-    await _.checkBoolean(input, node, 'autoFocus', 'auto-focus', false)
+    await _.checkBoolean(input, node, 'autoFocus', 'autofocus', false)
 
     // focus
     await _.checkBoolean(input, node, 'focus', 'focus', false)

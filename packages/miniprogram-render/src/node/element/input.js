@@ -46,7 +46,7 @@ class HTMLInputElement extends Element {
         if (type) html += ` type="${type}"`
 
         const value = node.value
-        if (value) html += ` type="${value}"`
+        if (value) html += ` value="${value}"`
 
         const disabled = node.disabled
         if (disabled) html += ' disabled'
@@ -136,6 +136,15 @@ class HTMLInputElement extends Element {
     set placeholder(value) {
         value = '' + value
         this.$_attrs.set('placeholder', value)
+    }
+
+    get autofocus() {
+        return !!this.$_attrs.get('autofocus')
+    }
+
+    set autofocus(value)  {
+        value = !!value
+        this.$_attrs.set('autofocus', value)
     }
 
     focus() {

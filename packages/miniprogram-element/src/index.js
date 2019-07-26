@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 const mp = require('miniprogram-render')
-const _ = require('./utils')
-const initHandle = require('./init-handle')
+const _ = require('./util/tool')
+const initHandle = require('./util/init-handle')
 
 const {
     cache,
@@ -121,6 +121,8 @@ Component({
                 _.checkComponentAttr('image', domNode, newData, data)
             } else if (tagName === 'INPUT') {
                 _.checkComponentAttr('input', domNode, newData, data)
+            } else if (tagName === 'TEXTAREA') {
+                _.checkComponentAttr('textarea', domNode, newData, data)
             } else if (tagName === 'VIDEO') {
                 _.checkComponentAttr('video', domNode, newData, data)
             } else if (tagName === 'IFRAME') {

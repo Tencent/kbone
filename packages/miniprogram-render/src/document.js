@@ -9,6 +9,7 @@ const cache = require('./util/cache')
 const A = require('./node/element/a')
 const Image = require('./node/element/image')
 const Input = require('./node/element/input')
+const Textarea = require('./node/element/textarea')
 const Video = require('./node/element/video')
 const NotSupport = require('./node/element/not-support')
 const WxComponent = require('./node/element/wx-component')
@@ -97,6 +98,8 @@ class Document extends EventTarget {
             return Image.$$create(options, tree)
         } else if (tagName === 'INPUT') {
             return Input.$$create(options, tree)
+        } else if (tagName === 'TEXTAREA') {
+            return Textarea.$$create(options, tree)
         } else if (tagName === 'VIDEO') {
             return Video.$$create(options, tree)
         } else if (!tool.isTagNameSupport(tagName)) {

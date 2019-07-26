@@ -2,8 +2,8 @@ const initData = require('./init-data')
 
 const ELEMENT_DIFF_KEYS = ['nodeId', 'pageId', 'tagName', 'compName', 'id', 'class', 'style', 'isLeaf', 'isSimple', 'content']
 const TEXT_NODE_DIFF_KEYS = ['nodeId', 'pageId', 'content']
-const NOT_RENDER_CHILDREN_NODE = ['IFRAME', 'CANVAS', 'IMG', 'INPUT', 'VIDEO', 'WX-COMPONENT'] // 无需渲染子节点的节点，WX-COMPONENT 的子节点要特殊渲染
-const NEET_RENDER_TO_CUSTOM_ELEMENT = ['IFRAME', 'IMG', 'INPUT', 'VIDEO', 'WX-COMPONENT'] // 必须渲染成自定义组件的节点
+const NOT_RENDER_CHILDREN_NODE = ['IFRAME', 'CANVAS', 'IMG', 'INPUT', 'TEXTAREA', 'VIDEO', 'WX-COMPONENT'] // 无需渲染子节点的节点，WX-COMPONENT 的子节点要特殊渲染
+const NEET_RENDER_TO_CUSTOM_ELEMENT = ['IFRAME', 'IMG', 'INPUT', 'TEXTAREA', 'VIDEO', 'WX-COMPONENT'] // 必须渲染成自定义组件的节点
 
 /**
  * 过滤子节点，只获取儿子节点

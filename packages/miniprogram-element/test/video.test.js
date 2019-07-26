@@ -25,13 +25,13 @@ test('video', async() => {
     await _.checkUrl(video, node, 'src', 'src', '')
 
     // duration
-    await _.checkNumber(video, node, 'duration', 'duration', undefined)
+    await _.checkNumber(video, node, 'duration', 'duration', 0)
 
     // controls
     await _.checkBoolean(video, node, 'controls', 'controls', true)
 
     // danmuList
-    expect(video.data.danmuList).toBe(undefined)
+    expect(video.data.danmuList).toEqual([])
     const danmuList = [{
         text: '第 1s 出现的弹幕',
         color: '#ff0000',
@@ -49,7 +49,7 @@ test('video', async() => {
     expect(video.data.danmuList).toEqual([])
     node.setAttribute('danmu-list', undefined)
     await _.sleep(10)
-    expect(video.data.danmuList).toBe(undefined)
+    expect(video.data.danmuList).toEqual([])
 
     // danmuBtn
     await _.checkBoolean(video, node, 'danmuBtn', 'danmu-btn', false)
@@ -70,7 +70,7 @@ test('video', async() => {
     await _.checkNumber(video, node, 'initialTime', 'initial-time', 0)
 
     // direction
-    await _.checkNumber(video, node, 'direction', 'direction', undefined)
+    await _.checkNumber(video, node, 'direction', 'direction', -1)
 
     // showProgress
     await _.checkBoolean(video, node, 'showProgress', 'show-progress', true)
