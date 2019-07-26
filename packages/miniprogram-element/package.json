@@ -32,7 +32,7 @@
 	},
 	"devDependencies": {
 		"jest": "^23.5.0",
-		"miniprogram-simulate": "^1.0.0",
-		"miniprogram-render": "*"
+		"miniprogram-render": "^0.0.7",
+		"miniprogram-simulate": "^1.0.0"
 	}
 }
