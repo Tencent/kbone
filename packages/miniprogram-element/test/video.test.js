@@ -22,7 +22,7 @@ test('video', async() => {
     const video = body.querySelector('.h5-video')
 
     // src
-    // TODO
+    await _.checkUrl(video, node, 'src', 'src', '')
 
     // duration
     await _.checkNumber(video, node, 'duration', 'duration', undefined)
@@ -31,7 +31,25 @@ test('video', async() => {
     await _.checkBoolean(video, node, 'controls', 'controls', true)
 
     // danmuList
-    // TODO
+    expect(video.data.danmuList).toBe(undefined)
+    const danmuList = [{
+        text: '第 1s 出现的弹幕',
+        color: '#ff0000',
+        time: 1
+    }, {
+        text: '第 3s 出现的弹幕',
+        color: '#ff00ff',
+        time: 3
+    }]
+    node.setAttribute('danmu-list', danmuList)
+    await _.sleep(10)
+    expect(video.data.danmuList).toEqual(danmuList)
+    node.setAttribute('danmu-list', [])
+    await _.sleep(10)
+    expect(video.data.danmuList).toEqual([])
+    node.setAttribute('danmu-list', undefined)
+    await _.sleep(10)
+    expect(video.data.danmuList).toBe(undefined)
 
     // danmuBtn
     await _.checkBoolean(video, node, 'danmuBtn', 'danmu-btn', false)
@@ -73,7 +91,7 @@ test('video', async() => {
     await _.checkString(video, node, 'objectFit', 'object-fit', 'contain')
 
     // poster
-    // TODO
+    await _.checkUrl(video, node, 'poster', 'poster', '')
 
     // showMuteBtn
     await _.checkBoolean(video, node, 'showMuteBtn', 'show-mute-btn', false)

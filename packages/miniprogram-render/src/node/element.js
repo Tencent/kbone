@@ -813,9 +813,9 @@ class Element extends Node {
     setAttribute(name, value) {
         if (typeof name !== 'string') return
 
-        // 保留对象/数组/布尔值原始内容，方便处理小程序内置组件的使用
+        // 保留对象/数组/布尔值/undefined 原始内容，方便处理小程序内置组件的使用
         const valueType = typeof value
-        if (valueType !== 'object' && valueType !== 'boolean' && !Array.isArray(value)) value = '' + value
+        if (valueType !== 'object' && valueType !== 'boolean' && value !== undefined && !Array.isArray(value)) value = '' + value
 
         if (name === 'id') {
             // id 要提前到此处特殊处理

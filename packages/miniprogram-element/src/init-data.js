@@ -142,7 +142,7 @@ module.exports = {
         name: 'src',
         get(domNode) {
             const window = cache.getWindow(domNode.$$pageId)
-            return tool.completeURL(domNode.src, window.location.origin, true)
+            return domNode.src ? tool.completeURL(domNode.src, window.location.origin, true) : ''
         },
     }, {
         name: 'duration',

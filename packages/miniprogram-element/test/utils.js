@@ -178,6 +178,39 @@ simulate.checkString = async function(component, node, attrName, attributeName, 
 }
 
 /**
+ * 检查 url
+ */
+simulate.checkUrl = async function(component, node, attrName, attributeName, defaultValue) {
+    if (component.data[attrName] !== defaultValue) err(`${node.tagName}.${attrName}`)
+    expect(component.data[attrName]).toBe(defaultValue)
+
+    node.setAttribute(attributeName, '12345')
+    await simulate.sleep(10)
+    if (component.data[attrName] !== '12345') err(`${node.tagName}.${attrName}`)
+    expect(component.data[attrName]).toBe('12345')
+
+    node.setAttribute(attributeName, '//54321')
+    await simulate.sleep(10)
+    if (component.data[attrName] !== 'https://54321') err(`${node.tagName}.${attrName}`)
+    expect(component.data[attrName]).toBe('https://54321')
+
+    node.setAttribute(attributeName, 'http://11111')
+    await simulate.sleep(10)
+    if (component.data[attrName] !== 'http://11111') err(`${node.tagName}.${attrName}`)
+    expect(component.data[attrName]).toBe('http://11111')
+
+    node.setAttribute(attributeName, 'https://22222')
+    await simulate.sleep(10)
+    if (component.data[attrName] !== 'https://22222') err(`${node.tagName}.${attrName}`)
+    expect(component.data[attrName]).toBe('https://22222')
+
+    node.setAttribute(attributeName, '')
+    await simulate.sleep(10)
+    if (component.data[attrName] !== defaultValue) err(`${node.tagName}.${attrName}`)
+    expect(component.data[attrName]).toBe(defaultValue)
+}
+
+/**
  * 检查事件
  */
 simulate.checkEvent = async function(component, node, eventNameList) {
