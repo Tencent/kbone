@@ -157,37 +157,37 @@ module.exports = {
         onVideoPlay(evt) {
             this.callSimpleEvent('play', evt)
         },
-    
+
         onVideoPause(evt) {
             this.callSimpleEvent('pause', evt)
         },
-    
+
         onVideoEnded(evt) {
             this.callSimpleEvent('ended', evt)
         },
-    
+
         onVideoTimeUpdate(evt) {
             if (!this.domNode) return
-    
+
             this.domNode.$$setAttributeWithoutUpdate('currentTime', evt.detail.currentTime)
             this.callSimpleEvent('timeupdate', evt)
         },
-    
+
         onVideoFullScreenChange(evt) {
             this.callSimpleEvent('fullscreenchange', evt)
         },
-    
+
         onVideoWaiting(evt) {
             this.callSimpleEvent('waiting', evt)
         },
-    
+
         onVideoError(evt) {
             this.callSimpleEvent('error', evt)
         },
-    
+
         onVideoProgress(evt) {
             if (!this.domNode) return
-    
+
             this.domNode.$$setAttributeWithoutUpdate('buffered', evt.detail.buffered)
             this.callSimpleEvent('progress', evt)
         },

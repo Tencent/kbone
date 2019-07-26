@@ -10,6 +10,7 @@ const {
 } = mp.$$adapter
 
 let DOM_SUB_TREE_LEVEL = 5 // dom 子树作为自定义组件渲染的层级数
+const WX_COMP_NAME_MAP = initHandle.WX_COMP_NAME_MAP
 
 Component({
     data: {
@@ -114,19 +115,15 @@ Component({
 
                 if (domNode.$$behavior === 'button') {
                     _.checkAttrUpdate(data, domNode, newData, ['disabled', 'openType'])
-                } else if (domNode.$$behavior === 'picker') {
-                    _.checkComponentAttr('picker', domNode, newData, data)
+                } else {
+                    const wxCompName = WX_COMP_NAME_MAP[domNode.$$behavior]
+                    if (wxCompName) _.checkComponentAttr(wxCompName, domNode, newData, data)
                 }
-            } if (tagName === 'IMG') {
-                _.checkComponentAttr('image', domNode, newData, data)
-            } else if (tagName === 'INPUT') {
-                _.checkComponentAttr('input', domNode, newData, data)
-            } else if (tagName === 'TEXTAREA') {
-                _.checkComponentAttr('textarea', domNode, newData, data)
-            } else if (tagName === 'VIDEO') {
-                _.checkComponentAttr('video', domNode, newData, data)
             } else if (tagName === 'IFRAME') {
                 if (data.content !== domNode.content) newData.content = domNode.$$content
+            } else {
+                const wxCompName = WX_COMP_NAME_MAP[tagName]
+                if (wxCompName) _.checkComponentAttr(wxCompName, domNode, newData, data)
             }
 
             this.setData(newData)

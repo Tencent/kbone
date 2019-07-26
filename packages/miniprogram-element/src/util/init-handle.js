@@ -10,19 +10,30 @@ const picker = require('../component/picker')
 const {
     Event,
 } = mp.$$adapter
+const WX_COMP_NAME_MAP = {
+    picker: 'picker',
+    IMG: 'image',
+    INPUT: 'input',
+    TEXTAREA: 'textarea',
+    VIDEO: 'video',
+}
 
 module.exports = {
+    WX_COMP_NAME_MAP,
+
     /**
      * 初始化
      */
     init(data) {
         const tagName = this.domNode.tagName
-        if (tagName === 'WX-COMPONENT') this.initWxComponent(data)
-        else if (tagName === 'IMG') _.checkComponentAttr('image', this.domNode, data)
-        else if (tagName === 'INPUT') _.checkComponentAttr('input', this.domNode, data)
-        else if (tagName === 'TEXTAREA') _.checkComponentAttr('textarea', this.domNode, data)
-        else if (tagName === 'VIDEO') _.checkComponentAttr('video', this.domNode, data)
-        else if (tagName === 'IFRAME') this.initNotSupport(data) // 因为无法支持 iframe，所以需要显示提示文字
+        if (tagName === 'WX-COMPONENT') {
+            this.initWxComponent(data)
+        } else if (tagName === 'IFRAME') {
+            this.initNotSupport(data) // 因为无法支持 iframe，所以需要显示提示文字
+        } else {
+            const wxCompName = WX_COMP_NAME_MAP[tagName]
+            if (wxCompName) _.checkComponentAttr(wxCompName, this.domNode, data)
+        }
     },
 
     /**
@@ -46,17 +57,16 @@ module.exports = {
      * 特殊内置组件
      */
     initWxComponent(data) {
-        const wxCompName = this.domNode.$$behavior
-
         data.wxCompName = this.domNode.$$behavior
         data.content = this.domNode.$$content
         data.class = this.domNode.$$domInfo.class || ''
         data.style = this.domNode.style.cssText
 
-        if (data.wxCompName === 'button') {
+        if (this.domNode.$$behavior === 'button') {
             _.checkAttrUpdate(this.data, this.domNode, data, ['disabled', 'openType'])
-        } else if (wxCompName === 'picker') {
-            _.checkComponentAttr('picker', this.domNode, data)
+        } else {
+            const wxCompName = WX_COMP_NAME_MAP[this.domNode.$$behavior]
+            if (wxCompName) _.checkComponentAttr(wxCompName, this.domNode, data)
         }
     },
 

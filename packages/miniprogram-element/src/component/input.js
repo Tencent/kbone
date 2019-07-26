@@ -74,7 +74,7 @@ module.exports = {
         name: 'cursor',
         get(domNode) {
             const value = +domNode.getAttribute('cursor')
-            return !isNaN(value) ? value : undefined
+            return !isNaN(value) ? value : -1
         },
     }, {
         name: 'selectionStart',
@@ -98,23 +98,23 @@ module.exports = {
     handles: {
         onInputInput(evt) {
             if (!this.domNode) return
-    
+
             this.domNode.value = evt.detail.value
             this.callSimpleEvent('input', evt)
         },
-    
+
         onInputFocus(evt) {
             this.callSimpleEvent('focus', evt)
         },
-    
+
         onInputBlur(evt) {
             this.callSimpleEvent('blur', evt)
         },
-    
+
         onInputConfirm(evt) {
             this.callSimpleEvent('confirm', evt)
         },
-    
+
         onInputKeyBoardHeightChange(evt) {
             this.callSimpleEvent('keyboardheightchange', evt)
         },

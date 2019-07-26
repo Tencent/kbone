@@ -108,7 +108,9 @@ class Attribute {
         const element = this.$_element
         const map = this.$_map
 
-        if (name === 'class') {
+        if (name === 'id') {
+            return map.id || ''
+        } if (name === 'class') {
             return element.className
         } else if (name === 'style') {
             return element.style.cssText

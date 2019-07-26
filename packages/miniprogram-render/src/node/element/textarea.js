@@ -67,7 +67,7 @@ class HTMLTextAreaElement extends Element {
         this.type = node.type || ''
         this.value = node.value || ''
         this.disabled = node.disabled || ''
-        this.maxlength = node.maxlength || DEFAULT_MAX_LENGTH
+        this.maxlength = node.maxlength
         this.placeholder = node.placeholder || ''
 
         // 特殊字段
@@ -125,7 +125,6 @@ class HTMLTextAreaElement extends Element {
     }
 
     set maxlength(value) {
-        value = '' + value
         this.$_attrs.set('maxlength', value)
     }
 
@@ -142,7 +141,7 @@ class HTMLTextAreaElement extends Element {
         return !!this.$_attrs.get('autofocus')
     }
 
-    set autofocus(value)  {
+    set autofocus(value) {
         value = !!value
         this.$_attrs.set('autofocus', value)
     }
@@ -152,7 +151,7 @@ class HTMLTextAreaElement extends Element {
         return value !== undefined ? value : -1
     }
 
-    set selectionStart(value)  {
+    set selectionStart(value) {
         this.$_attrs.set('selection-start', value)
     }
 
@@ -161,7 +160,7 @@ class HTMLTextAreaElement extends Element {
         return value !== undefined ? value : -1
     }
 
-    set selectionEnd(value)  {
+    set selectionEnd(value) {
         this.$_attrs.set('selection-end', value)
     }
 

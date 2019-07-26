@@ -93,26 +93,26 @@ module.exports = {
         onTextareaFocus(evt) {
             this.callSimpleEvent('focus', evt)
         },
-    
+
         onTextareaBlur(evt) {
             this.callSimpleEvent('blur', evt)
         },
-    
+
         onTextareaLineChange(evt) {
             this.callSimpleEvent('linechange', evt)
         },
-    
+
         onTextareaInput(evt) {
             if (!this.domNode) return
-    
+
             this.domNode.value = evt.detail.value
             this.callSimpleEvent('input', evt)
         },
-    
+
         onTextareaConfirm(evt) {
             this.callSimpleEvent('confirm', evt)
         },
-    
+
         onTextareaKeyBoardHeightChange(evt) {
             this.callSimpleEvent('keyboardheightchange', evt)
         },

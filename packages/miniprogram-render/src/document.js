@@ -15,6 +15,15 @@ const NotSupport = require('./node/element/not-support')
 const WxComponent = require('./node/element/wx-component')
 const Cookie = require('./bom/cookie')
 
+const CONSTRUCTOR_MAP = {
+    A,
+    IMG: Image,
+    INPUT: Input,
+    TEXTAREA: Textarea,
+    VIDEO: Video,
+    'WX-COMPONENT': WxComponent,
+}
+
 class Document extends EventTarget {
     constructor(pageId, nodeIdMap) {
         super()
@@ -92,20 +101,11 @@ class Document extends EventTarget {
         const tagName = options.tagName.toUpperCase()
         tree = tree || this.$_tree
 
-        if (tagName === 'A') {
-            return A.$$create(options, tree)
-        } else if (tagName === 'IMG') {
-            return Image.$$create(options, tree)
-        } else if (tagName === 'INPUT') {
-            return Input.$$create(options, tree)
-        } else if (tagName === 'TEXTAREA') {
-            return Textarea.$$create(options, tree)
-        } else if (tagName === 'VIDEO') {
-            return Video.$$create(options, tree)
+        const constructorClass = CONSTRUCTOR_MAP[tagName]
+        if (constructorClass) {
+            return constructorClass.$$create(options, tree)
         } else if (!tool.isTagNameSupport(tagName)) {
             return NotSupport.$$create(options, tree)
-        } else if (tagName === 'WX-COMPONENT') {
-            return WxComponent.$$create(options, tree)
         } else {
             return Element.$$create(options, tree)
         }

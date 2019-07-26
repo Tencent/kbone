@@ -67,7 +67,7 @@ class HTMLInputElement extends Element {
         this.type = node.type || ''
         this.value = node.value || ''
         this.disabled = node.disabled || ''
-        this.maxlength = node.maxlength || DEFAULT_MAX_LENGTH
+        this.maxlength = node.maxlength
         this.placeholder = node.placeholder || ''
 
         // 特殊字段
@@ -125,7 +125,6 @@ class HTMLInputElement extends Element {
     }
 
     set maxlength(value) {
-        value = '' + value
         this.$_attrs.set('maxlength', value)
     }
 
@@ -142,7 +141,7 @@ class HTMLInputElement extends Element {
         return !!this.$_attrs.get('autofocus')
     }
 
-    set autofocus(value)  {
+    set autofocus(value) {
         value = !!value
         this.$_attrs.set('autofocus', value)
     }

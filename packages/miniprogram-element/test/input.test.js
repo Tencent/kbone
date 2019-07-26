@@ -91,7 +91,7 @@ test('input', async() => {
     await _.checkBoolean(input, node, 'confirmHold', 'confirm-hold', false)
 
     // cursor
-    await _.checkNumber(input, node, 'cursor', 'cursor', undefined)
+    await _.checkNumber(input, node, 'cursor', 'cursor', -1)
 
     // selectionStart
     await _.checkNumber(input, node, 'selectionStart', 'selection-start', -1)
