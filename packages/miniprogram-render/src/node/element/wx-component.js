@@ -66,7 +66,6 @@ class WxComponent extends Element {
         value = '' + value
         this.$_attrs.set('open-type', value)
     }
-
 }
 
 module.exports = WxComponent

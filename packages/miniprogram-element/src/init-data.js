@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 const mp = require('miniprogram-render')
 
 const {
@@ -7,9 +8,9 @@ const {
 
 module.exports = {
     'wx-component': [
-        { name: 'class', value: '' },
-        { name: 'style', value: '' },
-        { name: 'content', value: '' },
+        {name: 'class', value: ''},
+        {name: 'style', value: ''},
+        {name: 'content', value: ''},
     ],
     /**
      * https://developers.weixin.qq.com/miniprogram/dev/component/view.html
@@ -44,21 +45,18 @@ module.exports = {
     input: [{
         name: 'value',
         get(domNode) {
-            return domNode.value
+            return domNode.value || ''
         },
     }, {
         name: 'type',
         get(domNode) {
-            const value = domNode.type
-            if (value === 'number') return 'digit' // 调整为带小数点
-            return value || 'text'
+            const value = domNode.type || 'text'
+            return value !== 'password' ? value : 'text'
         },
     }, {
         name: 'password',
         get(domNode) {
-            const value = domNode.getAttribute('password')
-            const typeValue = domNode.getAttribute('type')
-            return value !== undefined ? !!value : (typeValue === 'password')
+            return domNode.type !== 'password' ? !!domNode.getAttribute('password') : true
         },
     }, {
         name: 'placeholder',
@@ -83,12 +81,14 @@ module.exports = {
     }, {
         name: 'maxlength',
         get(domNode) {
-            return +domNode.maxlength
+            const value = +domNode.maxlength
+            return !isNaN(value) ? value : 140
         },
     }, {
         name: 'cursorSpacing',
         get(domNode) {
-            return domNode.getAttribute('cursor-spacing') || 0
+            const value = +domNode.getAttribute('cursor-spacing')
+            return !isNaN(value) ? value : 0
         },
     }, {
         name: 'autoFocus',
@@ -98,8 +98,7 @@ module.exports = {
     }, {
         name: 'focus',
         get(domNode) {
-            if (typeof domNode.$$focus === 'boolean') return domNode.$$focus
-            return false
+            return !!domNode.getAttribute('focus')
         },
     }, {
         name: 'confirmType',
@@ -120,13 +119,13 @@ module.exports = {
     }, {
         name: 'selectionStart',
         get(domNode) {
-            const value = domNode.getAttribute('selection-start')
+            const value = +domNode.getAttribute('selection-start')
             return !isNaN(value) ? value : -1
         },
     }, {
         name: 'selectionEnd',
         get(domNode) {
-            const value = domNode.getAttribute('selection-end')
+            const value = +domNode.getAttribute('selection-end')
             return !isNaN(value) ? value : -1
         },
     }, {
@@ -138,14 +137,39 @@ module.exports = {
     }],
     /**
      * https://developers.weixin.qq.com/miniprogram/dev/component/video.html
-     * TODO
      */
-    video: [
-    {
+    video: [{
         name: 'src',
         get(domNode) {
             const window = cache.getWindow(domNode.$$pageId)
             return tool.completeURL(domNode.src, window.location.origin, true)
+        },
+    }, {
+        name: 'duration',
+        get(domNode) {
+            const value = +domNode.getAttribute('duration')
+            return !isNaN(value) ? value : undefined
+        },
+    }, {
+        name: 'controls',
+        get(domNode) {
+            return domNode.controls
+        },
+    }, {
+        name: 'danmuList',
+        get(domNode) {
+            const value = domNode.getAttribute('danmu-list')
+            return value !== undefined ? value : undefined
+        },
+    }, {
+        name: 'danmuBtn',
+        get(domNode) {
+            return !!domNode.getAttribute('danmu-btn')
+        },
+    }, {
+        name: 'enableDanmu',
+        get(domNode) {
+            return !!domNode.getAttribute('enable-danmu')
         },
     }, {
         name: 'autoplay',
@@ -163,24 +187,101 @@ module.exports = {
             return domNode.muted
         },
     }, {
-        name: 'controls',
+        name: 'initialTime',
         get(domNode) {
-            return domNode.controls
+            return +domNode.getAttribute('initial-time') || 0
+        },
+    }, {
+        name: 'direction',
+        get(domNode) {
+            const value = +domNode.getAttribute('direction')
+            return !isNaN(value) ? value : undefined
+        },
+    }, {
+        name: 'showProgress',
+        get(domNode) {
+            const value = domNode.getAttribute('show-progress')
+            return value !== undefined ? !!value : true
+        },
+    }, {
+        name: 'showFullscreenBtn',
+        get(domNode) {
+            const value = domNode.getAttribute('show-fullscreen-btn')
+            return value !== undefined ? !!value : true
+        },
+    }, {
+        name: 'showPlayBtn',
+        get(domNode) {
+            const value = domNode.getAttribute('show-play-btn')
+            return value !== undefined ? !!value : true
+        },
+    }, {
+        name: 'showCenterPlayBtn',
+        get(domNode) {
+            const value = domNode.getAttribute('show-center-play-btn')
+            return value !== undefined ? !!value : true
+        },
+    }, {
+        name: 'enableProgressGesture',
+        get(domNode) {
+            const value = domNode.getAttribute('enable-progress-gesture')
+            return value !== undefined ? !!value : true
+        },
+    }, {
+        name: 'objectFit',
+        get(domNode) {
+            return domNode.getAttribute('object-fit') || 'contain'
         },
     }, {
         name: 'poster',
         get(domNode) {
             const window = cache.getWindow(domNode.$$pageId)
-            return tool.completeURL(domNode.src, window.location.origin, true)
+            return domNode.poster ? tool.completeURL(domNode.poster, window.location.origin, true) : ''
+        },
+    }, {
+        name: 'showMuteBtn',
+        get(domNode) {
+            return !!domNode.getAttribute('show-mute-btn')
+        },
+    }, {
+        name: 'title',
+        get(domNode) {
+            return domNode.getAttribute('title') || ''
+        },
+    }, {
+        name: 'playBtnPosition',
+        get(domNode) {
+            return domNode.getAttribute('play-btn-position') || 'bottom'
+        },
+    }, {
+        name: 'enablePlayGesture',
+        get(domNode) {
+            return !!domNode.getAttribute('enable-play-gesture')
+        },
+    }, {
+        name: 'autoPauseIfNavigate',
+        get(domNode) {
+            const value = domNode.getAttribute('auto-pause-if-navigate')
+            return value !== undefined ? !!value : true
+        },
+    }, {
+        name: 'autoPauseIfOpenNative',
+        get(domNode) {
+            const value = domNode.getAttribute('auto-pause-if-open-native')
+            return value !== undefined ? !!value : true
+        },
+    }, {
+        name: 'vslideGesture',
+        get(domNode) {
+            return !!domNode.getAttribute('vslide-gesture')
+        },
+    }, {
+        name: 'vslideGestureInFullscreen',
+        get(domNode) {
+            const value = domNode.getAttribute('vslide-gesture-in-fullscreen')
+            return value !== undefined ? !!value : true
         },
     }],
-    /**
-     * TODO
-     */
-    button: [
-        { name: 'openType', value: undefined },
-        { name: 'disabled', value: false },
-    ],
     /**
      * https://developers.weixin.qq.com/miniprogram/dev/component/picker.html
      */
@@ -243,12 +344,6 @@ module.exports = {
         }
     }],
     /**
-     * TODO
-     */
-    iframe: [
-        { name: 'content', value: '' },
-    ],
-    /**
      * https://developers.weixin.qq.com/miniprogram/dev/component/image.html
      */
     image: [{
@@ -278,5 +373,18 @@ module.exports = {
         get(domNode) {
             return !!domNode.getAttribute('show-menu-by-longpress')
         },
-    }]
+    }],
+    /**
+     * TODO
+     */
+    iframe: [
+        {name: 'content', value: ''},
+    ],
+    /**
+     * TODO
+     */
+    button: [
+        {name: 'openType', value: undefined},
+        {name: 'disabled', value: false},
+    ],
 }

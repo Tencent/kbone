@@ -5,53 +5,53 @@ const config = {
     entry: '/',
     router: {
         home: [
-            { regexp: '^(?:\\/home)?(?:\\/)?$', options: 'i' },
-            { regexp: '^\\/index\\/(aaa|bbb)(?:\\/)?$', options: 'i' }
+            {regexp: '^(?:\\/home)?(?:\\/)?$', options: 'i'},
+            {regexp: '^\\/index\\/(aaa|bbb)(?:\\/)?$', options: 'i'}
         ],
         list: [
-            { regexp: '^\\/index\\/aaa\\/list\\/([^\\/]+?)(?:\\/)?$', options: 'i' },
-            { regexp: '^\\/index\\/bbb\\/list\\/([^\\/]+?)(?:\\/)?$', options: 'i' }
+            {regexp: '^\\/index\\/aaa\\/list\\/([^\\/]+?)(?:\\/)?$', options: 'i'},
+            {regexp: '^\\/index\\/bbb\\/list\\/([^\\/]+?)(?:\\/)?$', options: 'i'}
         ],
         detail: [
-            { regexp: '^\\/index\\/aaa\\/detail\\/([^\\/]+?)(?:\\/)?$', options: 'i' },
-            { regexp: '^\\/index\\/bbb\\/detail\\/([^\\/]+?)(?:\\/)?$', options: 'i' }
+            {regexp: '^\\/index\\/aaa\\/detail\\/([^\\/]+?)(?:\\/)?$', options: 'i'},
+            {regexp: '^\\/index\\/bbb\\/detail\\/([^\\/]+?)(?:\\/)?$', options: 'i'}
         ],
     },
     pages: {
         home: {
             loadingText: '拼命加载页面中...',
-			share: true,
-			windowScroll: false,
-			backgroundColor: '#F7F7F7',
-			reachBottom: true,
-			reachBottomDistance: 200,
-			pullDownRefresh: true
+            share: true,
+            windowScroll: false,
+            backgroundColor: '#F7F7F7',
+            reachBottom: true,
+            reachBottomDistance: 200,
+            pullDownRefresh: true
         },
         list: {
-			loadingText: '拼命加载页面中...',
-			share: true,
-			windowScroll: false,
-			backgroundColor: '#F7F7F7'
-		},
-		detail: {
-			loadingText: '拼命加载页面中...',
-			share: true,
-			windowScroll: false,
-			backgroundColor: '#F7F7F7'
-		},
+            loadingText: '拼命加载页面中...',
+            share: true,
+            windowScroll: false,
+            backgroundColor: '#F7F7F7'
+        },
+        detail: {
+            loadingText: '拼命加载页面中...',
+            share: true,
+            windowScroll: false,
+            backgroundColor: '#F7F7F7'
+        },
     },
     redirect: {
-		notFound: 'home',
-		accessDenied: 'home'
-	},
-	optimization: {
-		elementMultiplexing: true,
-		textMultiplexing: true,
-		commentMultiplexing: true,
+        notFound: 'home',
+        accessDenied: 'home'
+    },
+    optimization: {
+        elementMultiplexing: true,
+        textMultiplexing: true,
+        commentMultiplexing: true,
         domExtendMultiplexing: true,
         styleValueReduce: 1000,
         attrValueReduce: 1000,
-	}
+    }
 }
 
 const html = `<div class="aa">
@@ -89,7 +89,7 @@ global.wx = {
     getStorageInfoSync() {
         const keys = Object.keys(storageMap)
         const currentSize = 12345
-    
+
         return {keys, currentSize}
     },
     getStorageSync(key) {

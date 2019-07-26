@@ -3,11 +3,11 @@ const mock = require('../../mock')
 let window
 
 beforeAll(() => {
-  const res = mock.createPage('home')
-  window = res.window
+    const res = mock.createPage('home')
+    window = res.window
 })
 
-test('image', async () => {
+test('image', async() => {
     global.expectSuccess = false
     const Image = window.Image
 

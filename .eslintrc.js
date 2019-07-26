@@ -82,7 +82,8 @@ module.exports = {
       'error',
       'never'
     ],
-    // 补充
+    'indent': ['error', 4],
+    'space-before-function-paren': ['error', 'never'],
     'no-return-assign': 'off',
     'complexity': 'off',
     'no-use-before-define': 'off',

@@ -31,229 +31,229 @@ let seed = 0
  * 分词
  */
 function tokenize(content, handler) {
-  const stack = []
-  let last = content
+    const stack = []
+    let last = content
 
-  stack.last = function () {
-    return this[this.length - 1]
-  }
+    stack.last = function() {
+        return this[this.length - 1]
+    }
 
-  while (content) {
-    let isText = true
+    while (content) {
+        let isText = true
 
-    if (!stack.last() || !rawTextMap[stack.last()]) {
-      if (content.indexOf('<!--') === 0) {
-        // comment
-        const index = content.indexOf('-->')
+        if (!stack.last() || !rawTextMap[stack.last()]) {
+            if (content.indexOf('<!--') === 0) {
+                // comment
+                const index = content.indexOf('-->')
 
-        if (index >= 0) {
-          content = content.substring(index + 3)
-          isText = false
-        }
-      } else if (content.indexOf('</') === 0) {
-        // end tag
-        const match = content.match(endTagReg)
+                if (index >= 0) {
+                    content = content.substring(index + 3)
+                    isText = false
+                }
+            } else if (content.indexOf('</') === 0) {
+                // end tag
+                const match = content.match(endTagReg)
 
-        if (match) {
-          content = content.substring(match[0].length)
-          match[0].replace(endTagReg, parseEndTag)
-          isText = false
-        }
-      } else if (content.indexOf('<') === 0) {
-        // start tag
-        let match = content.match(startTagReg)
+                if (match) {
+                    content = content.substring(match[0].length)
+                    match[0].replace(endTagReg, parseEndTag)
+                    isText = false
+                }
+            } else if (content.indexOf('<') === 0) {
+                // start tag
+                let match = content.match(startTagReg)
 
-        if (match) {
-          content = content.substring(match[0].length)
-          match[0].replace(startTagReg, parseStartTag)
-          isText = false
+                if (match) {
+                    content = content.substring(match[0].length)
+                    match[0].replace(startTagReg, parseStartTag)
+                    isText = false
+                } else {
+                    // 检测 doctype
+                    match = content.match(doctypeReg)
+
+                    if (match) {
+                        content = content.substring(match[0].length)
+                        isText = false
+                    }
+                }
+            }
+
+            if (isText) {
+                const index = content.indexOf('<')
+
+                const text = index < 0 ? content : content.substring(0, index)
+                content = index < 0 ? '' : content.substring(index)
+
+                if (handler.text) handler.text(text)
+            }
         } else {
-          // 检测 doctype
-          match = content.match(doctypeReg)
+            const execRes = (new RegExp(`</${stack.last()}[^>]*>`)).exec(content)
 
-          if (match) {
-            content = content.substring(match[0].length)
-            isText = false
-          }
+            if (execRes) {
+                const text = content.substring(0, execRes.index)
+                content = content.substring(execRes.index + execRes[0].length)
+
+                text.replace(/<!--(.*?)-->/g, '')
+                if (text && handler.text) handler.text(text)
+            }
+
+            parseEndTag('', stack.last())
         }
-      }
 
-      if (isText) {
-        const index = content.indexOf('<')
-
-        const text = index < 0 ? content : content.substring(0, index)
-        content = index < 0 ? '' : content.substring(index)
-
-        if (handler.text) handler.text(text)
-      }
-    } else {
-      const execRes = (new RegExp(`</${stack.last()}[^>]*>`)).exec(content)
-
-      if (execRes) {
-        const text = content.substring(0, execRes.index)
-        content = content.substring(execRes.index + execRes[0].length)
-
-        text.replace(/<!--(.*?)-->/g, '')
-        if (text && handler.text) handler.text(text)
-      }
-
-      parseEndTag('', stack.last())
+        if (content === last) throw new Error(`parse error: ${content}`)
+        last = content
     }
 
-    if (content === last) throw new Error(`parse error: ${content}`)
-    last = content
-  }
+    // 关闭栈内的标签
+    parseEndTag()
 
-  // 关闭栈内的标签
-  parseEndTag()
+    function parseStartTag(tag, tagName, rest, unary) {
+        tagName = tagName.toLowerCase()
+        unary = !!unary
 
-  function parseStartTag(tag, tagName, rest, unary) {
-    tagName = tagName.toLowerCase()
-    unary = !!unary
+        if (blockMap[tagName]) {
+            while (stack.last() && inlineMap[stack.last()]) {
+                // 自动关闭栈内的行内元素
+                parseEndTag('', stack.last())
+            }
+        }
 
-    if (blockMap[tagName]) {
-      while (stack.last() && inlineMap[stack.last()]) {
-        // 自动关闭栈内的行内元素
-        parseEndTag('', stack.last())
-      }
+        unary = voidMap[tagName] || !!unary
+
+        if (!unary) stack.push(tagName)
+
+        if (handler.start) {
+            const attrs = []
+
+            try {
+                rest.replace(attrReg, (all, $1, $2, $3, $4) => {
+                    const value = $2 || $3 || $4
+
+                    attrs.push({
+                        name: $1,
+                        value,
+                    })
+                })
+            } catch (err) {
+                // 某些安卓机遇到过长的字符串执行属性正则替换会跪（主要是 base 64），这里就先临时过滤掉这种特殊情况
+                rest = rest.replace(/url\([^)]+\)/ig, all => {
+                    const id = `url(:#|${++seed}|#:)`
+                    longAttributeCache[id] = all
+                    return id
+                })
+                rest.replace(attrReg, (all, $1, $2, $3, $4) => {
+                    const value = $2 || $3 || $4
+
+                    attrs.push({
+                        name: $1,
+                        value: value.replace(/url\(:#\|\d+\|#:\)/ig, all => longAttributeCache[all] || 'url()'),
+                    })
+                })
+            }
+
+            handler.start(tagName, attrs, unary)
+        }
     }
 
-    unary = voidMap[tagName] || !!unary
+    function parseEndTag(tag, tagName) {
+        let pos
 
-    if (!unary) stack.push(tagName)
+        if (!tagName) {
+            pos = 0
+        } else {
+            // 找到同名的开始标签
+            tagName = tagName.toLowerCase()
 
-    if (handler.start) {
-      const attrs = []
+            for (pos = stack.length - 1; pos >= 0; pos--) {
+                if (stack[pos] === tagName) break
+            }
+        }
 
-      try {
-        rest.replace(attrReg, (all, $1, $2, $3, $4) => {
-          const value = $2 || $3 || $4
+        if (pos >= 0) {
+            // 关闭开始标签和结束标签中的所有标签
+            for (let i = stack.length - 1; i >= pos; i--) {
+                if (handler.end) handler.end(stack[i])
+            }
 
-          attrs.push({
-            name: $1,
-            value,
-          })
-        })
-      } catch (err) {
-        // 某些安卓机遇到过长的字符串执行属性正则替换会跪（主要是 base 64），这里就先临时过滤掉这种特殊情况
-        rest = rest.replace(/url\([^)]+\)/ig, all => {
-          const id = `url(:#|${++seed}|#:)`
-          longAttributeCache[id] = all
-          return id
-        })
-        rest.replace(attrReg, (all, $1, $2, $3, $4) => {
-          const value = $2 || $3 || $4
-
-          attrs.push({
-            name: $1,
-            value: value.replace(/url\(:#\|\d+\|#:\)/ig, all => longAttributeCache[all] || 'url()'),
-          })
-        })
-      }
-
-      handler.start(tagName, attrs, unary)
+            stack.length = pos
+        }
     }
-  }
-
-  function parseEndTag(tag, tagName) {
-    let pos
-
-    if (!tagName) {
-      pos = 0
-    } else {
-      // 找到同名的开始标签
-      tagName = tagName.toLowerCase()
-
-      for (pos = stack.length - 1; pos >= 0; pos--) {
-        if (stack[pos] === tagName) break
-      }
-    }
-
-    if (pos >= 0) {
-      // 关闭开始标签和结束标签中的所有标签
-      for (let i = stack.length - 1; i >= pos; i--) {
-        if (handler.end) handler.end(stack[i])
-      }
-
-      stack.length = pos
-    }
-  }
 }
 
 /**
  * 解析
  */
 function parse(html) {
-  const r = {
-    children: [],
-  }
-  const stack = [r]
-
-  stack.last = function () {
-    return this[this.length - 1]
-  }
-
-  tokenize(html, {
-    start(tagName, attrs, unary) {
-      const node = {
-        type: 'element',
-        tagName,
-        attrs,
-        unary,
+    const r = {
         children: [],
-      }
+    }
+    const stack = [r]
 
-      stack.last().children.push(node)
+    stack.last = function() {
+        return this[this.length - 1]
+    }
 
-      if (!unary) {
-        stack.push(node)
-      }
-    },
-    // eslint-disable-next-line no-unused-vars
-    end(tagName) {
-      const node = stack.pop()
+    tokenize(html, {
+        start(tagName, attrs, unary) {
+            const node = {
+                type: 'element',
+                tagName,
+                attrs,
+                unary,
+                children: [],
+            }
 
-      if (node.tagName === 'table') {
-        // 补充插入 tbody
-        let hasTbody = false
+            stack.last().children.push(node)
 
-        for (const child of node.children) {
-          if (child.tagName === 'tbody') {
-            hasTbody = true
-            break
-          }
-        }
+            if (!unary) {
+                stack.push(node)
+            }
+        },
+        // eslint-disable-next-line no-unused-vars
+        end(tagName) {
+            const node = stack.pop()
 
-        if (!hasTbody) {
-          node.children = [{
-            type: 'element',
-            tagName: 'tbody',
-            attrs: [],
-            unary: false,
-            children: node.children,
-          }]
-        }
-      }
-    },
-    text(content) {
-      content = content.trim()
-      if (!content) return
+            if (node.tagName === 'table') {
+                // 补充插入 tbody
+                let hasTbody = false
 
-      stack.last().children.push({
-        type: 'text',
-        content,
-      })
-    },
-  })
+                for (const child of node.children) {
+                    if (child.tagName === 'tbody') {
+                        hasTbody = true
+                        break
+                    }
+                }
 
-  return r.children
+                if (!hasTbody) {
+                    node.children = [{
+                        type: 'element',
+                        tagName: 'tbody',
+                        attrs: [],
+                        unary: false,
+                        children: node.children,
+                    }]
+                }
+            }
+        },
+        text(content) {
+            content = content.trim()
+            if (!content) return
+
+            stack.last().children.push({
+                type: 'text',
+                content,
+            })
+        },
+    })
+
+    return r.children
 }
 
 module.exports = {
-  tokenize,
-  parse,
-  voidMap,
-  blockMap,
-  inlineMap,
-  rawTextMap,
+    tokenize,
+    parse,
+    voidMap,
+    blockMap,
+    inlineMap,
+    rawTextMap,
 }

@@ -7,147 +7,147 @@ const cache = require('../util/cache')
 const pool = new Pool()
 
 function ClassList(onUpdate) {
-  this.$$init(onUpdate)
+    this.$$init(onUpdate)
 }
 
 /**
  * 创建实例
  */
-ClassList.$$create = function (onUpdate) {
-  const config = cache.getConfig()
-
-  if (config.optimization.domExtendMultiplexing) {
-    // 复用 dom 扩展对象
-    const instance = pool.get()
-
-    if (instance) {
-      instance.$$init(onUpdate)
-      return instance
-    }
-  }
-
-  return new ClassList(onUpdate)
-}
-
-ClassList.prototype = Object.assign([], {
-  /**
-   * 初始化实例
-   */
-  $$init(onUpdate) {
-    this.$_doUpdate = onUpdate
-  },
-
-  /**
-   * 销毁实例
-   */
-  $$destroy() {
-    this.$_doUpdate = null
-    this.length = 0
-  },
-
-  /**
-   * 回收实例
-   */
-  $$recycle() {
-    this.$$destroy()
-
+ClassList.$$create = function(onUpdate) {
     const config = cache.getConfig()
 
     if (config.optimization.domExtendMultiplexing) {
-      // 复用 dom 扩展对象
-      pool.add(this)
-    }
-  },
+    // 复用 dom 扩展对象
+        const instance = pool.get()
 
-  /**
-   * 解析 className
-   */
-  $$parse(className = '') {
-    this.length = 0 // 置空当前内容
-
-    className = className.trim()
-    className = className ? className.split(/\s+/) : []
-
-    for (const item of className) {
-      this.push(item)
+        if (instance) {
+            instance.$$init(onUpdate)
+            return instance
+        }
     }
 
-    this.$_doUpdate()
-  },
+    return new ClassList(onUpdate)
+}
 
-  /**
-   * 对外属性和方法
-   */
-  item(index) {
-    return this[index]
-  },
+ClassList.prototype = Object.assign([], {
+    /**
+     * 初始化实例
+     */
+    $$init(onUpdate) {
+        this.$_doUpdate = onUpdate
+    },
 
-  contains(className) {
-    if (typeof className !== 'string') return false
+    /**
+     * 销毁实例
+     */
+    $$destroy() {
+        this.$_doUpdate = null
+        this.length = 0
+    },
 
-    return this.indexOf(className) !== -1
-  },
+    /**
+     * 回收实例
+     */
+    $$recycle() {
+        this.$$destroy()
 
-  add(...args) {
-    let isUpdate = false
+        const config = cache.getConfig()
 
-    for (let className of args) {
-      if (typeof className !== 'string') continue
+        if (config.optimization.domExtendMultiplexing) {
+            // 复用 dom 扩展对象
+            pool.add(this)
+        }
+    },
 
-      className = className.trim()
+    /**
+     * 解析 className
+     */
+    $$parse(className = '') {
+        this.length = 0 // 置空当前内容
 
-      if (className && this.indexOf(className) === -1) {
-        this.push(className)
-        isUpdate = true
-      }
-    }
+        className = className.trim()
+        className = className ? className.split(/\s+/) : []
 
-    if (isUpdate) this.$_doUpdate()
-  },
+        for (const item of className) {
+            this.push(item)
+        }
 
-  remove(...args) {
-    let isUpdate = false
+        this.$_doUpdate()
+    },
 
-    for (let className of args) {
-      if (typeof className !== 'string') continue
+    /**
+     * 对外属性和方法
+     */
+    item(index) {
+        return this[index]
+    },
 
-      className = className.trim()
+    contains(className) {
+        if (typeof className !== 'string') return false
 
-      if (!className) continue
+        return this.indexOf(className) !== -1
+    },
 
-      const index = this.indexOf(className)
-      if (index >= 0) {
-        this.splice(index, 1)
-        isUpdate = true
-      }
-    }
+    add(...args) {
+        let isUpdate = false
 
-    if (isUpdate) this.$_doUpdate()
-  },
+        for (let className of args) {
+            if (typeof className !== 'string') continue
 
-  toggle(className, force) {
-    if (typeof className !== 'string') return false
+            className = className.trim()
 
-    className = className.trim()
+            if (className && this.indexOf(className) === -1) {
+                this.push(className)
+                isUpdate = true
+            }
+        }
 
-    if (!className) return false
+        if (isUpdate) this.$_doUpdate()
+    },
 
-    const isNotContain = this.indexOf(className) === -1
-    let action = isNotContain ? 'add' : 'remove'
-    action = force === true ? 'add' : force === false ? 'remove' : action
+    remove(...args) {
+        let isUpdate = false
 
-    if (action === 'add') {
-      this.add(className)
-    } else {
-      this.remove(className)
-    }
+        for (let className of args) {
+            if (typeof className !== 'string') continue
 
-    return force === true || force === false ? force : isNotContain
-  },
+            className = className.trim()
 
-  toString() {
-    return this.join(' ')
-  },
+            if (!className) continue
+
+            const index = this.indexOf(className)
+            if (index >= 0) {
+                this.splice(index, 1)
+                isUpdate = true
+            }
+        }
+
+        if (isUpdate) this.$_doUpdate()
+    },
+
+    toggle(className, force) {
+        if (typeof className !== 'string') return false
+
+        className = className.trim()
+
+        if (!className) return false
+
+        const isNotContain = this.indexOf(className) === -1
+        let action = isNotContain ? 'add' : 'remove'
+        action = force === true ? 'add' : force === false ? 'remove' : action
+
+        if (action === 'add') {
+            this.add(className)
+        } else {
+            this.remove(className)
+        }
+
+        return force === true || force === false ? force : isNotContain
+    },
+
+    toString() {
+        return this.join(' ')
+    },
 })
 
 module.exports = ClassList

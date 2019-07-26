@@ -1,11 +1,11 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 const mp = require('miniprogram-render')
 const _ = require('./utils')
-const componentHandle = require('./component-handle')
+const initHandle = require('./init-handle')
 
 const {
     cache,
     EventTarget,
-    Event,
     tool,
 } = mp.$$adapter
 
@@ -103,7 +103,6 @@ Component({
             const newData = {}
             const domNode = this.domNode
             const data = this.data
-            const window = cache.getWindow(this.pageId)
             const tagName = domNode.tagName
 
             if (tagName === 'WX-COMPONENT') {
@@ -123,15 +122,7 @@ Component({
             } else if (tagName === 'INPUT') {
                 _.checkComponentAttr('input', domNode, newData, data)
             } else if (tagName === 'VIDEO') {
-                const oldSrc = data.src
-                const newSrc = tool.completeURL(domNode.src, window.location.origin, true)
-                if (newSrc !== oldSrc) newData.src = newSrc
-
-                const oldPoster = data.poster
-                const newPoster = tool.completeURL(domNode.poster, window.location.origin, true)
-                if (newPoster !== oldPoster) newData.poster = newPoster
-
-                _.checkAttrUpdate(data, domNode, newData, ['autoplay', 'loop', 'muted', 'controls'])
+                _.checkComponentAttr('video', domNode, newData, data)
             } else if (tagName === 'IFRAME') {
                 if (data.content !== domNode.content) newData.content = domNode.$$content
             }
@@ -172,23 +163,6 @@ Component({
         },
 
         /**
-         * 触发简单节点事件
-         */
-        callSimpleEvent(eventName, evt) {
-            if (!this.domNode) return
-
-            this.domNode.$$trigger(eventName, {
-                event: new Event({
-                    name: eventName,
-                    target: this.domNode,
-                    eventPhase: Event.AT_TARGET,
-                    detail: evt && evt.detail,
-                }),
-                currentTarget: this.domNode,
-            })
-        },
-
-        /**
          * 监听节点事件
          */
         onTouchStart(evt) {
@@ -217,10 +191,10 @@ Component({
 
         onTap(evt) {
             if (this.document.$$checkEvent(evt)) {
-                this.callEvent(evt, 'click', { button: 0 }) // 默认左键
+                this.callEvent(evt, 'click', {button: 0}) // 默认左键
             }
         },
 
-        ...componentHandle,
+        ...initHandle,
     }
 })

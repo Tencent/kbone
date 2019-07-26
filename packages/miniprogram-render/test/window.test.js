@@ -15,158 +15,154 @@ let window
 let document
 
 beforeAll(() => {
-  const res = mock.createPage('home')
-  window = res.window
-  document = res.document
+    const res = mock.createPage('home')
+    window = res.window
+    document = res.document
 })
 
 test('window: document', () => {
-  expect(window.document).toBe(document)
-  expect(window.document).toBeInstanceOf(Document)
+    expect(window.document).toBe(document)
+    expect(window.document).toBeInstanceOf(Document)
 })
 
 test('window: location', () => {
-  expect(window.location).toBeInstanceOf(Location)
+    expect(window.location).toBeInstanceOf(Location)
 
-  // TODO seter
+    // TODO seter
 })
 
 test('window: navigator', () => {
-  expect(window.navigator).toBeInstanceOf(Navigator)
+    expect(window.navigator).toBeInstanceOf(Navigator)
 })
 
 test('window: CustomEvent', () => {
-  expect(window.CustomEvent).toBe(CustomEvent)
+    expect(window.CustomEvent).toBe(CustomEvent)
 })
 
 test('window: self', () => {
-  expect(window.self).toBe(window)
+    expect(window.self).toBe(window)
 })
 
 test('window: localStorage', () => {
-  expect(window.localStorage).toBeInstanceOf(LocalStorage)
+    expect(window.localStorage).toBeInstanceOf(LocalStorage)
 })
 
 test('window: sessionStorage', () => {
-  expect(window.sessionStorage).toBeInstanceOf(SessionStorage)
+    expect(window.sessionStorage).toBeInstanceOf(SessionStorage)
 })
 
 test('window: screen', () => {
-  expect(window.screen).toBeInstanceOf(Screen)
+    expect(window.screen).toBeInstanceOf(Screen)
 })
 
 test('window: history', () => {
-  expect(window.history).toBeInstanceOf(History)
+    expect(window.history).toBeInstanceOf(History)
 })
 
 test('window: outerHeight/outerWidth/innerHeight/innerWidth', () => {
-  expect(window.outerHeight).toBe(300)
-  expect(window.outerWidth).toBe(200)
-  expect(window.innerHeight).toBe(280)
-  expect(window.innerWidth).toBe(190)
+    expect(window.outerHeight).toBe(300)
+    expect(window.outerWidth).toBe(200)
+    expect(window.innerHeight).toBe(280)
+    expect(window.innerWidth).toBe(190)
 })
 
 test('window: Image', () => {
-  const image = new window.Image()
-  expect(image).toBeInstanceOf(Image)
+    const image = new window.Image()
+    expect(image).toBeInstanceOf(Image)
 })
 
-test('window: setTimeout/clearTimeout/setInterval/clearInterval', async () => {
-  const res = []
-  let timer
-  let timer2
+test('window: setTimeout/clearTimeout/setInterval/clearInterval', async() => {
+    const res = []
+    let timer
 
-  timer = window.setTimeout(() => res.push(1), 50)
-  window.setTimeout(() => res.push(2), 50)
-  window.clearTimeout(timer)
+    timer = window.setTimeout(() => res.push(1), 50)
+    window.setTimeout(() => res.push(2), 50)
+    window.clearTimeout(timer)
 
-  await mock.sleep(100)
-  expect(res).toEqual([2])
+    await mock.sleep(100)
+    expect(res).toEqual([2])
 
-  timer = window.setInterval(() => res.push(3), 50)
-  timer2 = window.setInterval(() => res.push(4), 50)
-  window.clearInterval(timer)
+    timer = window.setInterval(() => res.push(3), 50)
+    const timer2 = window.setInterval(() => res.push(4), 50)
+    window.clearInterval(timer)
 
-  await mock.sleep(200)
-  window.clearInterval(timer2)
-  expect(res.splice(0, 3)).toEqual([2, 4, 4])
+    await mock.sleep(200)
+    window.clearInterval(timer2)
+    expect(res.splice(0, 3)).toEqual([2, 4, 4])
 })
 
 test('window: HTMLElement', () => {
-  // TODO
+    // TODO
 })
 
 test('window: Element', () => {
-  expect(window.Element).toBe(Element)
+    expect(window.Element).toBe(Element)
 })
 
 test('window: Node', () => {
-  expect(window.Node).toBe(Node)
+    expect(window.Node).toBe(Node)
 })
 
 test('window: open', () => {
-  const location = window.location
+    const location = window.location
 
-  let hashChangeCount = 0
-  let pageAccessDeniedCount = 0
-  let pageNotFoundCount = 0
-  let tempURL = ''
-  let tempType = ''
-  const onHashChange = evt => {
-    hashChangeCount++
-  }
-  const onPageAccessDenied = evt => {
-    tempURL = evt.url
-    tempType = evt.type
-    pageAccessDeniedCount++
-  }
-  const onPageNotFound = evt => {
-    tempURL = evt.url
-    tempType = evt.type
-    pageNotFoundCount++
-  }
-  location.addEventListener('hashchange', onHashChange)
-  window.addEventListener('pageaccessdenied', onPageAccessDenied)
-  window.addEventListener('pagenotfound', onPageNotFound)
+    let hashChangeCount = 0
+    let pageAccessDeniedCount = 0
+    let pageNotFoundCount = 0
+    let tempURL = ''
+    let tempType = ''
+    const onHashChange = () => {
+        hashChangeCount++
+    }
+    const onPageAccessDenied = evt => {
+        tempURL = evt.url
+        tempType = evt.type
+        pageAccessDeniedCount++
+    }
+    const onPageNotFound = evt => {
+        tempURL = evt.url
+        tempType = evt.type
+        pageNotFoundCount++
+    }
+    location.addEventListener('hashchange', onHashChange)
+    window.addEventListener('pageaccessdenied', onPageAccessDenied)
+    window.addEventListener('pagenotfound', onPageNotFound)
 
-  window.$$miniprogram.init('https://test.miniprogram.com/p/a/t/h?query=string#hash')
-  global.expectPagePath = `/pages/detail/index?type=open&targeturl=${encodeURIComponent('https://test.miniprogram.com/index/aaa/detail/123?query=string#hash')}&search=${encodeURIComponent('?query=string')}&hash=${encodeURIComponent('#hash')}`
-  global.expectWxCallMethod = 'navigateTo'
-  window.open('https://test.miniprogram.com/index/aaa/detail/123?query=string#hash')
-  expect(location.href).toBe('https://test.miniprogram.com/p/a/t/h?query=string#hash')
-  window.open('https://test.miniprogram.com/index/hahaha?query=string#321')
-  expect(location.href).toBe('https://test.miniprogram.com/p/a/t/h?query=string#hash')
-  expect(pageNotFoundCount).toBe(1)
-  expect(tempURL).toBe('https://test.miniprogram.com/index/hahaha?query=string#321')
-  expect(tempType).toBe('open')
-  debugger
-  window.open('http://test.miniprogram.com/index/aaa/detail/123?query=string#hash')
-  expect(location.href).toBe('https://test.miniprogram.com/p/a/t/h?query=string#hash')
-  expect(pageAccessDeniedCount).toBe(1)
-  expect(tempURL).toBe('http://test.miniprogram.com/index/aaa/detail/123?query=string#hash')
-  expect(tempType).toBe('open')
+    window.$$miniprogram.init('https://test.miniprogram.com/p/a/t/h?query=string#hash')
+    global.expectPagePath = `/pages/detail/index?type=open&targeturl=${encodeURIComponent('https://test.miniprogram.com/index/aaa/detail/123?query=string#hash')}&search=${encodeURIComponent('?query=string')}&hash=${encodeURIComponent('#hash')}`
+    global.expectWxCallMethod = 'navigateTo'
+    window.open('https://test.miniprogram.com/index/aaa/detail/123?query=string#hash')
+    expect(location.href).toBe('https://test.miniprogram.com/p/a/t/h?query=string#hash')
+    window.open('https://test.miniprogram.com/index/hahaha?query=string#321')
+    expect(location.href).toBe('https://test.miniprogram.com/p/a/t/h?query=string#hash')
+    expect(pageNotFoundCount).toBe(1)
+    expect(tempURL).toBe('https://test.miniprogram.com/index/hahaha?query=string#321')
+    expect(tempType).toBe('open')
+    window.open('http://test.miniprogram.com/index/aaa/detail/123?query=string#hash')
+    expect(location.href).toBe('https://test.miniprogram.com/p/a/t/h?query=string#hash')
+    expect(pageAccessDeniedCount).toBe(1)
+    expect(tempURL).toBe('http://test.miniprogram.com/index/aaa/detail/123?query=string#hash')
+    expect(tempType).toBe('open')
 
-  expect(hashChangeCount).toBe(0)
-  expect(pageAccessDeniedCount).toBe(1)
-  expect(pageNotFoundCount).toBe(1)
+    expect(hashChangeCount).toBe(0)
+    expect(pageAccessDeniedCount).toBe(1)
+    expect(pageNotFoundCount).toBe(1)
 
-  location.removeEventListener('hashchange', onHashChange)
-  window.removeEventListener('pageaccessdenied', onPageAccessDenied)
-  window.removeEventListener('pagenotfound', onPageNotFound)
+    location.removeEventListener('hashchange', onHashChange)
+    window.removeEventListener('pageaccessdenied', onPageAccessDenied)
+    window.removeEventListener('pagenotfound', onPageNotFound)
 })
 
 test('window: getComputedStyle', () => {
-  // TODO
+    // TODO
 })
 
-test('window: requestAnimationFrame/cancelAnimationFrame', async () => {
-  const res = []
-  let timer
+test('window: requestAnimationFrame/cancelAnimationFrame', async() => {
+    const res = []
+    const timer = window.requestAnimationFrame(() => res.push(1))
+    window.requestAnimationFrame(() => res.push(2))
+    window.cancelAnimationFrame(timer)
 
-  timer = window.requestAnimationFrame(() => res.push(1))
-  window.requestAnimationFrame(() => res.push(2))
-  window.cancelAnimationFrame(timer)
-
-  await mock.sleep(100)
-  expect(res).toEqual([2])
+    await mock.sleep(100)
+    expect(res).toEqual([2])
 })

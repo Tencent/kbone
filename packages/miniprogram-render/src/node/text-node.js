@@ -6,114 +6,114 @@ const cache = require('../util/cache')
 const pool = new Pool()
 
 class TextNode extends Node {
-  /**
-   * 创建实例
-   */
-  static $$create(options, tree) {
-    const config = cache.getConfig()
+    /**
+     * 创建实例
+     */
+    static $$create(options, tree) {
+        const config = cache.getConfig()
 
-    if (config.optimization.textMultiplexing) {
-      // 复用 text 节点
-      const instance = pool.get()
+        if (config.optimization.textMultiplexing) {
+            // 复用 text 节点
+            const instance = pool.get()
 
-      if (instance) {
-        instance.$$init(options, tree)
-        return instance
-      }
+            if (instance) {
+                instance.$$init(options, tree)
+                return instance
+            }
+        }
+
+        return new TextNode(options, tree)
     }
 
-    return new TextNode(options, tree)
-  }
+    /**
+     * 覆写父类的 $$init 方法
+     */
+    $$init(options, tree) {
+        options.type = 'text'
 
-  /**
-   * 覆写父类的 $$init 方法
-   */
-  $$init(options, tree) {
-    options.type = 'text'
+        super.$$init(options, tree)
 
-    super.$$init(options, tree)
-
-    this.$_content = options.content || ''
-  }
-
-  /**
-   * 覆写父类的 $$destroy 方法
-   */
-  $$destroy() {
-    super.$$destroy()
-
-    this.$_content = null
-  }
-
-  /**
-   * 回收实例
-   */
-  $$recycle() {
-    this.$$destroy()
-
-    const config = cache.getConfig()
-
-    if (config.optimization.textMultiplexing) {
-      // 复用 text 节点
-      pool.add(this)
+        this.$_content = options.content || ''
     }
-  }
 
-  /**
-   * 更新父组件树
-   */
-  $_triggerParentUpdate() {
-    if (this.parentNode) this.parentNode.$$trigger('$$childNodesUpdate')
-  }
+    /**
+     * 覆写父类的 $$destroy 方法
+     */
+    $$destroy() {
+        super.$$destroy()
 
-  /**
-   * 对应的 dom 信息
-   */
-  get $$domInfo() {
-    return {
-      nodeId: this.$_nodeId,
-      pageId: this.$_pageId,
-      type: this.$_type,
-      content: this.$_content,
+        this.$_content = null
     }
-  }
 
-  /**
-   * 对外属性和方法
-   */
-  get nodeName() {
-    return '#text'
-  }
+    /**
+     * 回收实例
+     */
+    $$recycle() {
+        this.$$destroy()
 
-  get nodeType() {
-    return Node.TEXT_NODE
-  }
+        const config = cache.getConfig()
 
-  get nodeValue() {
-    return this.textContent
-  }
+        if (config.optimization.textMultiplexing) {
+            // 复用 text 节点
+            pool.add(this)
+        }
+    }
 
-  set nodeValue(value) {
-    this.textContent = value
-  }
+    /**
+     * 更新父组件树
+     */
+    $_triggerParentUpdate() {
+        if (this.parentNode) this.parentNode.$$trigger('$$childNodesUpdate')
+    }
 
-  get textContent() {
-    return this.$_content
-  }
+    /**
+     * 对应的 dom 信息
+     */
+    get $$domInfo() {
+        return {
+            nodeId: this.$_nodeId,
+            pageId: this.$_pageId,
+            type: this.$_type,
+            content: this.$_content,
+        }
+    }
 
-  set textContent(value) {
-    value += ''
+    /**
+     * 对外属性和方法
+     */
+    get nodeName() {
+        return '#text'
+    }
 
-    this.$_content = value
-    this.$_triggerParentUpdate()
-  }
+    get nodeType() {
+        return Node.TEXT_NODE
+    }
 
-  cloneNode() {
-    return this.ownerDocument.$$createTextNode({
-      content: this.$_content,
-      nodeId: `b-${tool.getId()}`, // 运行时生成，使用 b- 前缀
-    })
-  }
+    get nodeValue() {
+        return this.textContent
+    }
+
+    set nodeValue(value) {
+        this.textContent = value
+    }
+
+    get textContent() {
+        return this.$_content
+    }
+
+    set textContent(value) {
+        value += ''
+
+        this.$_content = value
+        this.$_triggerParentUpdate()
+    }
+
+    cloneNode() {
+        return this.ownerDocument.$$createTextNode({
+            content: this.$_content,
+            nodeId: `b-${tool.getId()}`, // 运行时生成，使用 b- 前缀
+        })
+    }
 }
 
 module.exports = TextNode

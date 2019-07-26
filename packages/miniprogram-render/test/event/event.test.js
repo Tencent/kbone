@@ -6,9 +6,9 @@ let window
 let document
 
 beforeAll(() => {
-  const res = mock.createPage('home')
-  window = res.window
-  document = res.document
+    const res = mock.createPage('home')
+    window = res.window
+    document = res.document
 })
 
 test('event', () => {
@@ -22,17 +22,17 @@ test('event', () => {
     const seqList = []
 
     // addEventListener/removeEventListener
-    const countMap = {doc: 0, a: 0, b: 0, c: 0, d: 0, e: 0}
+    const countMap = {
+        doc: 0, a: 0, b: 0, c: 0, d: 0, e: 0
+    }
     let target = null
-    const onEvent = (node, type) => {
-        return function(evt) {
-            expect(this).toBe(node)
-            expect(evt).toBeInstanceOf(Event)
-            expect(evt.currentTarget).toBe(node)
-            expect(evt.target).toBe(target)
-            countMap[type]++
-            seqList.push(type)
-        }
+    const onEvent = (node, type) => function(evt) {
+        expect(this).toBe(node)
+        expect(evt).toBeInstanceOf(Event)
+        expect(evt.currentTarget).toBe(node)
+        expect(evt.target).toBe(target)
+        countMap[type]++
+        seqList.push(type)
     }
     const onDocEvent = onEvent(document.documentElement, 'doc')
     const onAEvent = onEvent(a, 'a')
@@ -187,13 +187,11 @@ test('event: CustomEvent/dispatchEvent', () => {
     const seqList = []
     let customEvent
     let detail = null
-    const onEvent = (node, type) => {
-        return function(evt) {
-            expect(this).toBe(node)
-            expect(evt).toBe(customEvent)
-            expect(evt.detail).toEqual(detail)
-            seqList.push(type)
-        }
+    const onEvent = (node, type) => function(evt) {
+        expect(this).toBe(node)
+        expect(evt).toBe(customEvent)
+        expect(evt.detail).toEqual(detail)
+        seqList.push(type)
     }
 
     const onAEvent = onEvent(a, 'a')

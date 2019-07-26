@@ -30,7 +30,7 @@ test('tool: getPageRoute/getPageName', () => {
     expect(tool.getPageName('pages/detail/index')).toBe('detail')
 })
 
-test('tool: throttle/flushThrottleCache', async () => {
+test('tool: throttle/flushThrottleCache', async() => {
     let count = 0
     const func = tool.throttle(() => count++)
     func()

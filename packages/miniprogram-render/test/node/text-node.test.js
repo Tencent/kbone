@@ -4,8 +4,8 @@ const Node = require('../../src/node/node')
 let document
 
 beforeAll(() => {
-  const res = mock.createPage('home')
-  document = res.document
+    const res = mock.createPage('home')
+    document = res.document
 })
 
 test('text-node: nodeName/nodeType', () => {
@@ -20,7 +20,7 @@ test('text-node: nodeValue/textContent', () => {
     document.body.appendChild(node1)
 
     let updateCount = 0
-    const onUpdate = function () {
+    const onUpdate = function() {
         updateCount++
     }
     node1.addEventListener('$$childNodesUpdate', onUpdate)

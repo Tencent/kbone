@@ -3,8 +3,8 @@ const mock = require('../mock')
 let window
 
 beforeAll(() => {
-  const res = mock.createPage('home')
-  window = res.window
+    const res = mock.createPage('home')
+    window = res.window
 })
 
 test('screen: width/height', () => {

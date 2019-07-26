@@ -4,14 +4,13 @@ const TextNode = require('../../src/node/text-node')
 const Node = require('../../src/node/node')
 const ClassList = require('../../src/node/class-list')
 const Style = require('../../src/node/style')
-const Attribute = require('../../src/node/attribute')
 const cache = require('../../src/util/cache')
 
 let document
 
 beforeAll(() => {
-  const res = mock.createPage('home')
-  document = res.document
+    const res = mock.createPage('home')
+    document = res.document
 })
 
 test('element: id/tagName', () => {
@@ -125,10 +124,10 @@ test('element: innerHTML/outerHTML', () => {
 
     let parentUpdateCount = 0
     let node1UpdateCount = 0
-    const onParentUpdate = function () {
+    const onParentUpdate = function() {
         parentUpdateCount++
     }
-    const onNode1Update = function () {
+    const onNode1Update = function() {
         node1UpdateCount++
     }
     node1.parentNode.addEventListener('$$childNodesUpdate', onParentUpdate)
@@ -148,7 +147,7 @@ test('element: innerHTML/outerHTML', () => {
     expect(node1.id).toBe('outer')
     expect(node1.innerHTML).toBe('<span id="abc"></span><div id="cc" class="a b c" style="position:absolute;top:10px;left:20px;">123<span id="cba">555</span>321</div><br />')
     expect(node1.outerHTML).toBe('<article id="outer"><span id="abc"></span><div id="cc" class="a b c" style="position:absolute;top:10px;left:20px;">123<span id="cba">555</span>321</div><br /></article>')
-    
+
     node1.innerHTML = '<div id="a">321<span id="inner" b="inner">765</span>123</div><div id="c">555</div><p style="color: green; text-align: center;">I am content</p>'
     expect(node1.childNodes.length).toBe(3)
     expect(node1.childNodes[0].id).toBe('a')
@@ -204,7 +203,7 @@ test('element: innerText/textContent', () => {
     document.body.appendChild(node1)
 
     let updateCount = 0
-    const onUpdate = function () {
+    const onUpdate = function() {
         updateCount++
     }
     node1.addEventListener('$$childNodesUpdate', onUpdate)
@@ -242,19 +241,19 @@ test('element: dataset', () => {
     const node2 = node1.childNodes[0]
 
     expect(node2.dataset).toEqual({
-        'a': 'abc',
-        'bcDEfg': 'efg',
-        'hiJ': '123',
+        a: 'abc',
+        bcDEfg: 'efg',
+        hiJ: '123',
     })
 
     node2.dataset.bcDEfg = 'hij'
     node2.dataset.kLmNOpQr = 'klm'
 
     expect(node2.dataset).toEqual({
-        'a': 'abc',
-        'bcDEfg': 'hij',
-        'hiJ': '123',
-        'kLmNOpQr': 'klm'
+        a: 'abc',
+        bcDEfg: 'hij',
+        hiJ: '123',
+        kLmNOpQr: 'klm'
     })
     expect(node1.innerHTML).toEqual('<div data-a="abc" data-bc-d-efg="hij" data-hi-j="123" data-k-lm-n-op-qr="klm"></div>')
     expect(node2.outerHTML).toEqual('<div data-a="abc" data-bc-d-efg="hij" data-hi-j="123" data-k-lm-n-op-qr="klm"></div>')
@@ -262,10 +261,10 @@ test('element: dataset', () => {
     const node3 = node2.cloneNode()
     node3.dataset.hiJ = '321'
     expect(node3.dataset).toEqual({
-        'a': 'abc',
-        'bcDEfg': 'hij',
-        'hiJ': '321',
-        'kLmNOpQr': 'klm'
+        a: 'abc',
+        bcDEfg: 'hij',
+        hiJ: '321',
+        kLmNOpQr: 'klm'
     })
     expect(node3.outerHTML).toEqual('<div data-a="abc" data-bc-d-efg="hij" data-hi-j="321" data-k-lm-n-op-qr="klm"></div>')
 })
@@ -346,7 +345,7 @@ test('element: appendChild/removeChild/insertBefore/replaceChild', () => {
     expect(node1.childNodes).toEqual([])
 
     let updateCount = 0
-    const onUpdate = function () {
+    const onUpdate = function() {
         updateCount++
     }
     node1.addEventListener('$$childNodesUpdate', onUpdate)
@@ -535,7 +534,7 @@ test('element: setAttribute/getAttribute/hasAttribute/removeAttribute', () => {
     const attributes = node.attributes
 
     let updateCount = 0
-    const onUpdate = function () {
+    const onUpdate = function() {
         updateCount++
     }
     node.parentNode.addEventListener('$$childNodesUpdate', onUpdate)
@@ -558,10 +557,12 @@ test('element: setAttribute/getAttribute/hasAttribute/removeAttribute', () => {
     node.id = 'abc'
     node.className = 'a b'
     node.style.display = 'block'
+    // eslint-disable-next-line no-script-url
     node.src = 'javascript: void(0);'
     expect(node.getAttribute('id')).toBe('abc')
     expect(node.getAttribute('class')).toBe('a b')
     expect(node.getAttribute('style')).toBe('display:block;')
+    // eslint-disable-next-line no-script-url
     expect(node.getAttribute('src')).toBe('javascript: void(0);')
     expect(node.hasAttribute('id')).toBe(true)
     expect(node.hasAttribute('class')).toBe(true)
@@ -575,6 +576,7 @@ test('element: setAttribute/getAttribute/hasAttribute/removeAttribute', () => {
     expect(attributes.style).toBe(attributes[3])
     expect(attributes.style).toEqual({name: 'style', value: 'display:block;'})
     expect(attributes.src).toBe(attributes[0])
+    // eslint-disable-next-line no-script-url
     expect(attributes.src).toEqual({name: 'src', value: 'javascript: void(0);'})
     expect(updateCount).toBe(4)
 
@@ -625,12 +627,12 @@ test('element: setAttribute/getAttribute/hasAttribute/removeAttribute', () => {
     expect(updateCount).toBe(12)
 
     // object/array
-    const obj = { a: 123, b: { c: 321, d: [1, 2, 3] } }
+    const obj = {a: 123, b: {c: 321, d: [1, 2, 3]}}
     node.setAttribute('object-attr', obj)
     expect(node.getAttribute('object-attr')).toBe(obj)
     expect(attributes.length).toEqual(1)
     expect(updateCount).toBe(13)
-    const arr = [{ a: obj }, 123, null, 'haha']
+    const arr = [{a: obj}, 123, null, 'haha']
     node.setAttribute('array-attr', arr)
     expect(node.getAttribute('array-attr')).toBe(arr)
     expect(attributes.length).toEqual(2)

@@ -6,196 +6,196 @@ const cache = require('../../util/cache')
 const pool = new Pool()
 
 class Image extends Element {
-  /**
-   * 创建实例
-   */
-  static $$create(options, tree) {
-    const config = cache.getConfig()
+    /**
+     * 创建实例
+     */
+    static $$create(options, tree) {
+        const config = cache.getConfig()
 
-    if (config.optimization.elementMultiplexing) {
-      // 复用 element 节点
-      const instance = pool.get()
+        if (config.optimization.elementMultiplexing) {
+            // 复用 element 节点
+            const instance = pool.get()
 
-      if (instance) {
-        instance.$$init(options, tree)
-        return instance
-      }
+            if (instance) {
+                instance.$$init(options, tree)
+                return instance
+            }
+        }
+
+        return new Image(options, tree)
     }
 
-    return new Image(options, tree)
-  }
+    /**
+     * 覆写父类的 $$init 方法
+     */
+    $$init(options, tree) {
+        const width = options.width
+        const height = options.height
 
-  /**
-   * 覆写父类的 $$init 方法
-   */
-  $$init(options, tree) {
-    const width = options.width
-    const height = options.height
+        if (typeof width === 'number' && width >= 0) options.attrs.width = width
+        if (typeof height === 'number' && height >= 0) options.attrs.height = height
 
-    if (typeof width === 'number' && width >= 0) options.attrs.width = width
-    if (typeof height === 'number' && height >= 0) options.attrs.height = height
+        super.$$init(options, tree)
 
-    super.$$init(options, tree)
+        this.$_naturalWidth = 0
+        this.$_naturalHeight = 0
 
-    this.$_naturalWidth = 0
-    this.$_naturalHeight = 0
-
-    this.$_initRect()
-  }
-
-  /**
-   * 覆写父类的 $$destroy 方法
-   */
-  $$destroy() {
-    super.$$destroy()
-
-    this.$_naturalWidth = null
-    this.$_naturalHeight = null
-  }
-
-  /**
-   * 覆写父类的回收实例方法
-   */
-  $$recycle() {
-    this.$$destroy()
-
-    const config = cache.getConfig()
-
-    if (config.optimization.elementMultiplexing) {
-      // 复用 element 节点
-      pool.add(this)
+        this.$_initRect()
     }
-  }
 
-  /**
-   * 更新父组件树
-   */
-  $_triggerParentUpdate() {
-    this.$_initRect()
-    super.$_triggerParentUpdate()
-  }
+    /**
+     * 覆写父类的 $$destroy 方法
+     */
+    $$destroy() {
+        super.$$destroy()
 
-  /**
-   * 初始化长宽
-   */
-  $_initRect() {
-    const width = parseInt(this.getAttribute('width'), 10)
-    const height = parseInt(this.getAttribute('height'), 10)
+        this.$_naturalWidth = null
+        this.$_naturalHeight = null
+    }
 
-    if (typeof width === 'number' && width >= 0) this.$_style.width = `${width}px`
-    if (typeof height === 'number' && height >= 0) this.$_style.height = `${height}px`
-  }
+    /**
+     * 覆写父类的回收实例方法
+     */
+    $$recycle() {
+        this.$$destroy()
 
-  /**
-   * 重置长宽
-   */
-  $_resetRect(rect = {}) {
-    const width = parseInt(this.getAttribute('width'), 10)
-    const height = parseInt(this.getAttribute('height'), 10)
+        const config = cache.getConfig()
 
-    if (typeof width !== 'number' || !isFinite(width) || width <= 0) this.setAttribute('width', rect.width || 0)
-    if (typeof height !== 'number' || !isFinite(height) || height <= 0) this.setAttribute('height', rect.height || 0)
+        if (config.optimization.elementMultiplexing) {
+            // 复用 element 节点
+            pool.add(this)
+        }
+    }
 
-    this.$_naturalWidth = rect.width || 0
-    this.$_naturalHeight = rect.height || 0
+    /**
+     * 更新父组件树
+     */
+    $_triggerParentUpdate() {
+        this.$_initRect()
+        super.$_triggerParentUpdate()
+    }
 
-    this.$_initRect()
-  }
+    /**
+     * 初始化长宽
+     */
+    $_initRect() {
+        const width = parseInt(this.getAttribute('width'), 10)
+        const height = parseInt(this.getAttribute('height'), 10)
 
-  /**
-   * 用于图片加载回调后设置
-   */
-  set $$width(value) {
-    const width = this.getAttribute('width')
+        if (typeof width === 'number' && width >= 0) this.$_style.width = `${width}px`
+        if (typeof height === 'number' && height >= 0) this.$_style.height = `${height}px`
+    }
 
-    if (!width && width !== 0) this.setAttribute('width', value)
-  }
+    /**
+     * 重置长宽
+     */
+    $_resetRect(rect = {}) {
+        const width = parseInt(this.getAttribute('width'), 10)
+        const height = parseInt(this.getAttribute('height'), 10)
 
-  /**
-   * 用于图片加载回调后设置
-   */
-  set $$height(value) {
-    const height = this.getAttribute('width')
+        if (typeof width !== 'number' || !isFinite(width) || width <= 0) this.setAttribute('width', rect.width || 0)
+        if (typeof height !== 'number' || !isFinite(height) || height <= 0) this.setAttribute('height', rect.height || 0)
 
-    if (!height && height !== 0) this.setAttribute('height', value)
-  }
+        this.$_naturalWidth = rect.width || 0
+        this.$_naturalHeight = rect.height || 0
 
-  /**
-   * 对外属性和方法
-   */
-  get src() {
-    return this.getAttribute('src') || ''
-  }
+        this.$_initRect()
+    }
 
-  set src(value) {
-    if (!value || typeof value !== 'string') return
+    /**
+     * 用于图片加载回调后设置
+     */
+    set $$width(value) {
+        const width = this.getAttribute('width')
 
-    this.setAttribute('src', value)
+        if (!width && width !== 0) this.setAttribute('width', value)
+    }
 
-    setTimeout(() => {
-      wx.getImageInfo({
-        src: this.src,
-        success: res => {
-          // 加载成功，调整图片的宽高
-          this.$_resetRect(res)
+    /**
+     * 用于图片加载回调后设置
+     */
+    set $$height(value) {
+        const height = this.getAttribute('width')
 
-          // 触发 load 事件
-          this.$$trigger('load', {
-            event: new Event({
-              name: 'load',
-              target: this,
-              eventPhase: Event.AT_TARGET
-            }),
-            currentTarget: this,
-          })
-        },
-        fail: () => {
-          // 加载失败，调整图片的宽高
-          this.$_resetRect({width: 0, height: 0})
+        if (!height && height !== 0) this.setAttribute('height', value)
+    }
 
-          // 触发 error 事件
-          this.$$trigger('error', {
-            event: new Event({
-              name: 'error',
-              target: this,
-              eventPhase: Event.AT_TARGET
-            }),
-            currentTarget: this,
-          })
-        },
-      })
-    }, 0)
-  }
+    /**
+     * 对外属性和方法
+     */
+    get src() {
+        return this.getAttribute('src') || ''
+    }
 
-  get width() {
-    return +this.getAttribute('width') || 0
-  }
+    set src(value) {
+        if (!value || typeof value !== 'string') return
 
-  set width(value) {
-    if (typeof value !== 'number' || !isFinite(value) || value < 0) return
+        this.setAttribute('src', value)
 
-    this.setAttribute('width', value)
-    this.$_initRect()
-  }
+        setTimeout(() => {
+            wx.getImageInfo({
+                src: this.src,
+                success: res => {
+                    // 加载成功，调整图片的宽高
+                    this.$_resetRect(res)
 
-  get height() {
-    return +this.getAttribute('height') || 0
-  }
+                    // 触发 load 事件
+                    this.$$trigger('load', {
+                        event: new Event({
+                            name: 'load',
+                            target: this,
+                            eventPhase: Event.AT_TARGET
+                        }),
+                        currentTarget: this,
+                    })
+                },
+                fail: () => {
+                    // 加载失败，调整图片的宽高
+                    this.$_resetRect({width: 0, height: 0})
 
-  set height(value) {
-    if (typeof value !== 'number' || !isFinite(value) || value < 0) return
+                    // 触发 error 事件
+                    this.$$trigger('error', {
+                        event: new Event({
+                            name: 'error',
+                            target: this,
+                            eventPhase: Event.AT_TARGET
+                        }),
+                        currentTarget: this,
+                    })
+                },
+            })
+        }, 0)
+    }
 
-    this.setAttribute('height', value)
-    this.$_initRect()
-  }
+    get width() {
+        return +this.getAttribute('width') || 0
+    }
 
-  get naturalWidth() {
-    return this.$_naturalWidth
-  }
+    set width(value) {
+        if (typeof value !== 'number' || !isFinite(value) || value < 0) return
 
-  get naturalHeight() {
-    return this.$_naturalHeight
-  }
+        this.setAttribute('width', value)
+        this.$_initRect()
+    }
+
+    get height() {
+        return +this.getAttribute('height') || 0
+    }
+
+    set height(value) {
+        if (typeof value !== 'number' || !isFinite(value) || value < 0) return
+
+        this.setAttribute('height', value)
+        this.$_initRect()
+    }
+
+    get naturalWidth() {
+        return this.$_naturalWidth
+    }
+
+    get naturalHeight() {
+        return this.$_naturalHeight
+    }
 }
 
 module.exports = Image

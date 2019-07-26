@@ -1,9 +1,9 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 const mp = require('miniprogram-render')
 const _ = require('./utils')
 
 const {
-    cache,
-    tool,
+    Event,
 } = mp.$$adapter
 
 module.exports = {
@@ -15,10 +15,27 @@ module.exports = {
         if (tagName === 'WX-COMPONENT') this.initWxComponent(data)
         if (tagName === 'IMG') _.checkComponentAttr('image', this.domNode, data)
         if (tagName === 'INPUT') _.checkComponentAttr('input', this.domNode, data)
-        if (tagName === 'VIDEO') this.initVideo(data)
+        if (tagName === 'VIDEO') _.checkComponentAttr('video', this.domNode, data)
 
         // 因为无法支持 iframe，所以需要显示提示文字
         if (tagName === 'IFRAME') this.initNotSupport(data)
+    },
+
+    /**
+     * 触发简单节点事件
+     */
+    callSimpleEvent(eventName, evt) {
+        if (!this.domNode) return
+
+        this.domNode.$$trigger(eventName, {
+            event: new Event({
+                name: eventName,
+                target: this.domNode,
+                eventPhase: Event.AT_TARGET,
+                detail: evt && evt.detail,
+            }),
+            currentTarget: this.domNode,
+        })
     },
 
     /**
@@ -44,7 +61,7 @@ module.exports = {
      */
     initNotSupport(data) {
         _.checkComponentAttr('view', this.domNode, data)
-        
+
         // TODO: remove
         data.content = this.domNode.$$content
     },
@@ -62,8 +79,8 @@ module.exports = {
         this.callSimpleEvent('load', evt)
     },
 
-    onImgError() {
-        this.callSimpleEvent('error')
+    onImgError(evt) {
+        this.callSimpleEvent('error', evt)
     },
 
     /**
@@ -76,62 +93,60 @@ module.exports = {
         this.callSimpleEvent('input', evt)
     },
 
-    onInputBlur() {
-        this.callSimpleEvent('blur')
+    onInputFocus(evt) {
+        this.callSimpleEvent('focus', evt)
     },
 
-    onInputFocus() {
-        this.callSimpleEvent('focus')
+    onInputBlur(evt) {
+        this.callSimpleEvent('blur', evt)
     },
 
-    onInputConfirm() {
-        this.callSimpleEvent('confirm')
+    onInputConfirm(evt) {
+        this.callSimpleEvent('confirm', evt)
+    },
+
+    onInputKeyBoardHeightChange(evt) {
+        this.callSimpleEvent('keyboardheightchange', evt)
     },
 
     /**
      * video
      */
-    initVideo(data) {
-        const window = cache.getWindow(this.pageId)
-
-        data.wxCompName = 'video'
-        data.src = tool.completeURL(this.domNode.src, window.location.origin, true)
-        data.poster = tool.completeURL(this.domNode.poster, window.location.origin, true)
-
-        _.checkAttrUpdate(this.data, this.domNode, data, ['autoplay', 'loop', 'muted', 'controls'])
+    onVideoPlay(evt) {
+        this.callSimpleEvent('play', evt)
     },
 
-    onVideoPlay() {
-        this.callSimpleEvent('play')
+    onVideoPause(evt) {
+        this.callSimpleEvent('pause', evt)
     },
 
-    onVideoPause() {
-        this.callSimpleEvent('pause')
-    },
-
-    onVideoEnded() {
-        this.callSimpleEvent('ended')
+    onVideoEnded(evt) {
+        this.callSimpleEvent('ended', evt)
     },
 
     onVideoTimeUpdate(evt) {
         if (!this.domNode) return
 
-        this.domNode.setAttribute('currentTime', evt.detail.currentTime)
+        this.domNode.$$setAttributeWithoutUpdate('currentTime', evt.detail.currentTime)
         this.callSimpleEvent('timeupdate', evt)
     },
 
-    onVideoWaiting() {
-        this.callSimpleEvent('waiting')
+    onVideoFullScreenChange(evt) {
+        this.callSimpleEvent('fullscreenchange', evt)
     },
 
-    onVideoError() {
-        this.callSimpleEvent('error')
+    onVideoWaiting(evt) {
+        this.callSimpleEvent('waiting', evt)
+    },
+
+    onVideoError(evt) {
+        this.callSimpleEvent('error', evt)
     },
 
     onVideoProgress(evt) {
         if (!this.domNode) return
 
-        this.domNode.setAttribute('buffered', evt.detail.buffered)
+        this.domNode.$$setAttributeWithoutUpdate('buffered', evt.detail.buffered)
         this.callSimpleEvent('progress', evt)
     },
 
@@ -141,15 +156,15 @@ module.exports = {
     onPickerChange(evt) {
         if (!this.domNode) return
 
-        this.domNode.setAttribute('value', evt.detail.value)
+        this.domNode.$$setAttributeWithoutUpdate('value', evt.detail.value)
         this.callSimpleEvent('change', evt)
     },
 
-    onPickerColumnChange() {
-        this.callSimpleEvent('columnchange')
+    onPickerColumnChange(evt) {
+        this.callSimpleEvent('columnchange', evt)
     },
 
-    onPickerCancel() {
-        this.callSimpleEvent('cancel')
+    onPickerCancel(evt) {
+        this.callSimpleEvent('cancel', evt)
     },
 }

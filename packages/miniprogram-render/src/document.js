@@ -15,244 +15,244 @@ const WxComponent = require('./node/element/wx-component')
 const Cookie = require('./bom/cookie')
 
 class Document extends EventTarget {
-  constructor(pageId, nodeIdMap) {
-    super()
+    constructor(pageId, nodeIdMap) {
+        super()
 
-    // 用于封装特殊标签和对应构造器
-    const that = this
-    this.$_imageConstructor = function HTMLImageElement(width, height) {
-      return Image.$$create({
-        tagName: 'img',
-        nodeId: `b-${tool.getId()}`, // 运行时生成，使用 b- 前缀
-        attrs: {},
-        width,
-        height,
-      }, that.$_tree)
+        // 用于封装特殊标签和对应构造器
+        const that = this
+        this.$_imageConstructor = function HTMLImageElement(width, height) {
+            return Image.$$create({
+                tagName: 'img',
+                nodeId: `b-${tool.getId()}`, // 运行时生成，使用 b- 前缀
+                attrs: {},
+                width,
+                height,
+            }, that.$_tree)
+        }
+
+        this.$_pageId = pageId
+        this.$_tree = new Tree(pageId, {
+            type: 'element',
+            tagName: 'body',
+            attrs: {},
+            unary: false,
+            nodeId: 'e-body',
+            children: [],
+        }, nodeIdMap, this)
+        this.$_cookie = new Cookie()
+
+        // documentElement
+        this.$_node = this.$$createElement({
+            tagName: 'html',
+            attrs: {},
+            nodeId: `a-${tool.getId()}`, // 运行前生成，使用 a- 前缀
+            type: Node.DOCUMENT_NODE,
+        })
+        this.$_node.$$updateParent(this) // documentElement 的 parentNode 是 document
+        this.$_node.scrollTop = 0
+
+        // head 元素
+        this.$_head = this.createElement('head')
+
+        // 更新 body 的 parentNode
+        this.$_tree.root.$$updateParent(this.$_node)
     }
 
-    this.$_pageId = pageId
-    this.$_tree = new Tree(pageId, {
-      type: 'element',
-      tagName: 'body',
-      attrs: {},
-      unary: false,
-      nodeId: 'e-body',
-      children: [],
-    }, nodeIdMap, this)
-    this.$_cookie = new Cookie()
-
-    // documentElement
-    this.$_node = this.$$createElement({
-      tagName: 'html',
-      attrs: {},
-      nodeId: `a-${tool.getId()}`, // 运行前生成，使用 a- 前缀
-      type: Node.DOCUMENT_NODE,
-    })
-    this.$_node.$$updateParent(this) // documentElement 的 parentNode 是 document
-    this.$_node.scrollTop = 0
-
-    // head 元素
-    this.$_head = this.createElement('head')
-
-    // 更新 body 的 parentNode
-    this.$_tree.root.$$updateParent(this.$_node)
-  }
-
-  /**
-   * Image 构造器
-   */
-  get $$imageConstructor() {
-    return this.$_imageConstructor
-  }
-
-  get $$pageId() {
-    return this.$_pageId
-  }
-
-  /**
-   * 完整的 cookie，包括 httpOnly 也能获取到
-   */
-  get $$cookie() {
-    return this.$_cookie.getCookie(this.URL, true)
-  }
-
-
-  /**
-   * 触发节点事件
-   */
-  $$trigger(eventName, options) {
-    this.documentElement.$$trigger(eventName, options)
-  }
-
-  /**
-   * 内部所有节点创建都走此接口，统一把控
-   */
-  $$createElement(options, tree) {
-    const tagName = options.tagName.toUpperCase()
-    tree = tree || this.$_tree
-
-    if (tagName === 'A') {
-      return A.$$create(options, tree)
-    } else if (tagName === 'IMG') {
-      return Image.$$create(options, tree)
-    } else if (tagName === 'INPUT') {
-      return Input.$$create(options, tree)
-    } else if (tagName === 'VIDEO') {
-      return Video.$$create(options, tree)
-    } else if (!tool.isTagNameSupport(tagName)) {
-      return NotSupport.$$create(options, tree)
-    } else if (tagName === 'WX-COMPONENT') {
-      return WxComponent.$$create(options, tree)
-    } else {
-      return Element.$$create(options, tree)
+    /**
+     * Image 构造器
+     */
+    get $$imageConstructor() {
+        return this.$_imageConstructor
     }
-  }
 
-  /**
-   * 内部所有文本节点创建都走此接口，统一把控
-   */
-  $$createTextNode(options, tree) {
-    return TextNode.$$create(options, tree || this.$_tree)
-  }
+    get $$pageId() {
+        return this.$_pageId
+    }
 
-  /**
-   * 内部所有注释节点创建都走此接口，统一把控
-   */
-  $$createComment(options, tree) {
-    return Comment.$$create(options, tree || this.$_tree)
-  }
+    /**
+     * 完整的 cookie，包括 httpOnly 也能获取到
+     */
+    get $$cookie() {
+        return this.$_cookie.getCookie(this.URL, true)
+    }
 
-  /**
-   * 对外属性和方法
-   */
-  get nodeType() {
-    return Node.DOCUMENT_NODE
-  }
 
-  get documentElement() {
-    return this.$_node
-  }
+    /**
+     * 触发节点事件
+     */
+    $$trigger(eventName, options) {
+        this.documentElement.$$trigger(eventName, options)
+    }
 
-  get body() {
-    return this.$_tree.root
-  }
+    /**
+     * 内部所有节点创建都走此接口，统一把控
+     */
+    $$createElement(options, tree) {
+        const tagName = options.tagName.toUpperCase()
+        tree = tree || this.$_tree
 
-  get nodeName() {
-    return '#document'
-  }
+        if (tagName === 'A') {
+            return A.$$create(options, tree)
+        } else if (tagName === 'IMG') {
+            return Image.$$create(options, tree)
+        } else if (tagName === 'INPUT') {
+            return Input.$$create(options, tree)
+        } else if (tagName === 'VIDEO') {
+            return Video.$$create(options, tree)
+        } else if (!tool.isTagNameSupport(tagName)) {
+            return NotSupport.$$create(options, tree)
+        } else if (tagName === 'WX-COMPONENT') {
+            return WxComponent.$$create(options, tree)
+        } else {
+            return Element.$$create(options, tree)
+        }
+    }
 
-  get head() {
-    return this.$_head
-  }
+    /**
+     * 内部所有文本节点创建都走此接口，统一把控
+     */
+    $$createTextNode(options, tree) {
+        return TextNode.$$create(options, tree || this.$_tree)
+    }
 
-  get defaultView() {
-    return cache.getWindow(this.$_pageId) || null
-  }
+    /**
+     * 内部所有注释节点创建都走此接口，统一把控
+     */
+    $$createComment(options, tree) {
+        return Comment.$$create(options, tree || this.$_tree)
+    }
 
-  get URL() {
-    if (this.defaultView) return this.defaultView.location.href
+    /**
+     * 对外属性和方法
+     */
+    get nodeType() {
+        return Node.DOCUMENT_NODE
+    }
 
-    return ''
-  }
+    get documentElement() {
+        return this.$_node
+    }
 
-  get cookie() {
-    return this.$_cookie.getCookie(this.URL)
-  }
+    get body() {
+        return this.$_tree.root
+    }
 
-  set cookie(value) {
-    if (!value || typeof value !== 'string') return
+    get nodeName() {
+        return '#document'
+    }
 
-    this.$_cookie.setCookie(value, this.URL)
-  }
+    get head() {
+        return this.$_head
+    }
 
-  getElementById(id) {
-    if (typeof id !== 'string') return
+    get defaultView() {
+        return cache.getWindow(this.$_pageId) || null
+    }
 
-    return this.$_tree.getById(id) || null
-  }
+    get URL() {
+        if (this.defaultView) return this.defaultView.location.href
 
-  getElementsByTagName(tagName) {
-    if (typeof tagName !== 'string') return []
+        return ''
+    }
 
-    return this.$_tree.getByTagName(tagName)
-  }
+    get cookie() {
+        return this.$_cookie.getCookie(this.URL)
+    }
 
-  getElementsByClassName(className) {
-    if (typeof className !== 'string') return []
+    set cookie(value) {
+        if (!value || typeof value !== 'string') return
 
-    return this.$_tree.getByClassName(className)
-  }
+        this.$_cookie.setCookie(value, this.URL)
+    }
 
-  querySelector(selector) {
-    if (typeof selector !== 'string') return
+    getElementById(id) {
+        if (typeof id !== 'string') return
 
-    return this.$_tree.query(selector)[0] || null
-  }
+        return this.$_tree.getById(id) || null
+    }
 
-  querySelectorAll(selector) {
-    if (typeof selector !== 'string') return []
+    getElementsByTagName(tagName) {
+        if (typeof tagName !== 'string') return []
 
-    return this.$_tree.query(selector)
-  }
+        return this.$_tree.getByTagName(tagName)
+    }
 
-  createElement(tagName) {
-    if (typeof tagName !== 'string') return
+    getElementsByClassName(className) {
+        if (typeof className !== 'string') return []
 
-    tagName = tagName.trim().toLowerCase()
-    if (!tagName) return
+        return this.$_tree.getByClassName(className)
+    }
 
-    return this.$$createElement({
-      tagName,
-      nodeId: `b-${tool.getId()}`, // 运行时生成，使用 b- 前缀
-    })
-  }
+    querySelector(selector) {
+        if (typeof selector !== 'string') return
 
-  createElementNS(ns, tagName) {
-    // 不支持真正意义上的 createElementNS，转成调用 createElement
-    return this.createElement(tagName)
-  }
+        return this.$_tree.query(selector)[0] || null
+    }
 
-  createTextNode(content) {
-    content = '' + content
+    querySelectorAll(selector) {
+        if (typeof selector !== 'string') return []
 
-    return this.$$createTextNode({
-      content,
-      nodeId: `b-${tool.getId()}`, // 运行时生成，使用 b- 前缀
-    })
-  }
+        return this.$_tree.query(selector)
+    }
 
-  createComment() {
-    // 忽略注释内容的传入
-    return this.$$createComment({
-      nodeId: `b-${tool.getId()}`, // 运行时生成，使用 b- 前缀
-    })
-  }
+    createElement(tagName) {
+        if (typeof tagName !== 'string') return
 
-  createDocumentFragment() {
-    return Element.$$create({
-      tagName: 'documentfragment',
-      nodeId: `b-${tool.getId()}`, // 运行时生成，使用 b- 前缀
-      nodeType: Node.DOCUMENT_FRAGMENT_NODE,
-    }, this.$_tree)
-  }
+        tagName = tagName.trim().toLowerCase()
+        if (!tagName) return
 
-  createEvent() {
-    const window = cache.getWindow(this.$_pageId)
+        return this.$$createElement({
+            tagName,
+            nodeId: `b-${tool.getId()}`, // 运行时生成，使用 b- 前缀
+        })
+    }
 
-    return new window.CustomEvent()
-  }
+    createElementNS(ns, tagName) {
+        // 不支持真正意义上的 createElementNS，转成调用 createElement
+        return this.createElement(tagName)
+    }
 
-  addEventListener(eventName, handler, options) {
-    this.documentElement.addEventListener(eventName, handler, options)
-  }
+    createTextNode(content) {
+        content = '' + content
 
-  removeEventListener(eventName, handler, isCapture) {
-    this.documentElement.removeEventListener(eventName, handler, isCapture)
-  }
+        return this.$$createTextNode({
+            content,
+            nodeId: `b-${tool.getId()}`, // 运行时生成，使用 b- 前缀
+        })
+    }
 
-  dispatchEvent(evt) {
-    this.documentElement.dispatchEvent(evt)
-  }
+    createComment() {
+        // 忽略注释内容的传入
+        return this.$$createComment({
+            nodeId: `b-${tool.getId()}`, // 运行时生成，使用 b- 前缀
+        })
+    }
+
+    createDocumentFragment() {
+        return Element.$$create({
+            tagName: 'documentfragment',
+            nodeId: `b-${tool.getId()}`, // 运行时生成，使用 b- 前缀
+            nodeType: Node.DOCUMENT_FRAGMENT_NODE,
+        }, this.$_tree)
+    }
+
+    createEvent() {
+        const window = cache.getWindow(this.$_pageId)
+
+        return new window.CustomEvent()
+    }
+
+    addEventListener(eventName, handler, options) {
+        this.documentElement.addEventListener(eventName, handler, options)
+    }
+
+    removeEventListener(eventName, handler, isCapture) {
+        this.documentElement.removeEventListener(eventName, handler, isCapture)
+    }
+
+    dispatchEvent(evt) {
+        this.documentElement.dispatchEvent(evt)
+    }
 }
 
 module.exports = Document

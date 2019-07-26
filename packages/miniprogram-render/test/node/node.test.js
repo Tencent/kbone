@@ -3,8 +3,8 @@ const mock = require('../mock')
 let document
 
 beforeAll(() => {
-  const res = mock.createPage('home')
-  document = res.document
+    const res = mock.createPage('home')
+    document = res.document
 })
 
 test('node: parentNode', () => {

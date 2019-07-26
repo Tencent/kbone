@@ -1,7 +1,7 @@
 const mock = require('../mock')
 const Cookie = require('../../src/bom/cookie')
 
-test('cookie', async () => {
+test('cookie', async() => {
     const cookie = new Cookie()
     const url1 = 'http://sub.host.com/p/a/t/h?query=string#hash'
     const url2 = 'http://xxx.sub.host.com/p/a/t/h?query=string#hash'
@@ -66,12 +66,12 @@ test('cookie', async () => {
     expect(cookie.getCookie(url1)).toBe('aaa=bbb; abc=cba; ggg=hhh')
     cookie.setCookie('kkk=lll; path=/p/a', url1)
     expect(cookie.getCookie(url1)).toBe('aaa=bbb; abc=cba; ggg=hhh; kkk=lll')
-    
+
     // secure
     cookie.setCookie('mmm=nnn; secure', url1)
     expect(cookie.getCookie(url1)).toBe('aaa=bbb; abc=cba; ggg=hhh; kkk=lll')
     expect(cookie.getCookie(url4)).toBe('aaa=bbb; abc=cba; ggg=hhh; kkk=lll; mmm=nnn')
-    
+
     // httpOnly
     cookie.setCookie('ooo=ppp; httpOnly', url1)
     expect(cookie.getCookie(url1)).toBe('aaa=bbb; abc=cba; ggg=hhh; kkk=lll; ooo=ppp')

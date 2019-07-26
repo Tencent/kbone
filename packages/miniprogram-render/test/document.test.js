@@ -8,9 +8,9 @@ let window
 let document
 
 beforeAll(() => {
-  const res = mock.createPage('home')
-  window = res.window
-  document = res.document
+    const res = mock.createPage('home')
+    window = res.window
+    document = res.document
 })
 
 test('document: nodeType', () => {

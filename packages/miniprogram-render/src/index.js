@@ -6,36 +6,36 @@ const EventTarget = require('./event/event-target')
 const Event = require('./event/event')
 
 module.exports = {
-  createPage(route, config) {
-    if (config) cache.setConfig(config)
+    createPage(route, config) {
+        if (config) cache.setConfig(config)
 
-    const pageId = `p-${tool.getId()}-/${route}`
-    const window = new Window(pageId)
-    const nodeIdMap = {}
-    const document = new Document(pageId, nodeIdMap)
+        const pageId = `p-${tool.getId()}-/${route}`
+        const window = new Window(pageId)
+        const nodeIdMap = {}
+        const document = new Document(pageId, nodeIdMap)
 
-    cache.init(pageId, {
-      window,
-      document,
-      nodeIdMap,
-    })
+        cache.init(pageId, {
+            window,
+            document,
+            nodeIdMap,
+        })
 
-    return {
-      pageId,
-      window,
-      document,
-    }
-  },
+        return {
+            pageId,
+            window,
+            document,
+        }
+    },
 
-  destroyPage(pageId) {
-    cache.destroy(pageId)
-  },
+    destroyPage(pageId) {
+        cache.destroy(pageId)
+    },
 
-  // 开放给 miniprogram-element
-  $$adapter: {
-    cache,
-    EventTarget,
-    Event,
-    tool,
-  },
+    // 开放给 miniprogram-element
+    $$adapter: {
+        cache,
+        EventTarget,
+        Event,
+        tool,
+    },
 }
