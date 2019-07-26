@@ -1,0 +1,24 @@
+{
+    "name": "kbone",
+    "description": "web's adapter for miniprogram",
+    "scripts": {
+        "test": "cd packages/miniprogram-element && npm run test && cd ../miniprogram-render && npm run test && cd ../..",
+        "lint": "eslint \"packages/**/src/**/*.js\" --fix && eslint \"packages/**/test/**/*.js\" --fix"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/wechat-miniprogram/kbone.git"
+    },
+    "author": "wechat-miniprogram",
+    "license": "MIT",
+    "devDependencies": {
+        "lerna": "3.16.4",
+        "eslint": "^5.14.1",
+        "eslint-config-airbnb-base": "13.1.0",
+        "eslint-loader": "^2.1.2",
+        "eslint-plugin-import": "^2.16.0",
+        "eslint-plugin-node": "^7.0.1",
+        "eslint-plugin-promise": "^3.8.0"
+    },
+    "dependencies": {}
+}

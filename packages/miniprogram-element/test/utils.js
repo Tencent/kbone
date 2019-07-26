@@ -2,7 +2,6 @@ const path = require('path')
 // eslint-disable-next-line import/no-extraneous-dependencies
 const mp = require('miniprogram-render')
 const simulate = require('miniprogram-simulate')
-const config = require('../tools/config')
 
 /**
  * 构建页面
@@ -71,7 +70,7 @@ createPage('home')
 /**
  * 重写 load 方法
  */
-const srcPath = config.srcPath
+const srcPath = path.resolve(__dirname, '../src')
 const oldLoad = simulate.load
 simulate.load = function(componentPath, ...args) {
     if (typeof componentPath === 'string') componentPath = path.join(srcPath, componentPath)

@@ -1,6 +1,6 @@
 {
 	"name": "miniprogram-render",
-	"version": "0.0.6",
+	"version": "0.0.7",
 	"description": "web's adapter for miniprogram",
 	"main": "src/index.js",
 	"miniprogram": "src",
@@ -8,8 +8,7 @@
 		"test": "jest --bail",
 		"test-debug": "node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand --bail",
 		"coverage": "jest --coverage --bail",
-		"codecov": "jest --coverage && codecov",
-		"lint": "eslint \"src/**/*.js\" --fix && eslint \"test/**/*.js\" --fix"
+		"codecov": "jest --coverage && codecov"
 	},
 	"jest": {
 		"testEnvironment": "node",
@@ -27,13 +26,7 @@
 	"author": "wechat-miniprogram",
 	"license": "MIT",
 	"devDependencies": {
-		"eslint": "^5.3.0",
-		"eslint-config-airbnb-base": "13.1.0",
-		"eslint-plugin-import": "^2.14.0",
-		"eslint-plugin-node": "^7.0.1",
-		"eslint-plugin-promise": "^3.8.0",
 		"jest": "^24.8.0",
 		"jsdom": "^15.1.1"
-	},
-	"dependencies": {}
+	}
 }

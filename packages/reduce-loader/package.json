@@ -1,25 +1,14 @@
 {
 	"name": "reduce-loader",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"description": "a tool for develop miniprogram with vue",
 	"main": "src/index.js",
 	"miniprogram": "src",
-	"scripts": {
-		"lint": "eslint \"src/**/*.js\" --fix"
-	},
+	"scripts": {},
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/wechat-miniprogram/kbone.git"
 	},
 	"author": "wechat-miniprogram",
-	"license": "MIT",
-	"devDependencies": {
-		"eslint": "^5.14.1",
-		"eslint-config-airbnb-base": "13.1.0",
-		"eslint-loader": "^2.1.2",
-		"eslint-plugin-import": "^2.16.0",
-		"eslint-plugin-node": "^7.0.1",
-		"eslint-plugin-promise": "^3.8.0"
-	},
-	"dependencies": {}
+	"license": "MIT"
 }
