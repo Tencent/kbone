@@ -1,6 +1,6 @@
 {
 	"name": "miniprogram-element",
-	"version": "0.0.9",
+	"version": "0.0.10",
 	"description": "web's adapter for miniprogram",
 	"main": "src/index.js",
 	"miniprogram": "src",
@@ -32,7 +32,7 @@
 	},
 	"devDependencies": {
 		"jest": "^23.5.0",
-		"miniprogram-render": "^0.0.7",
+		"miniprogram-render": "^0.0.8",
 		"miniprogram-simulate": "^1.0.0"
 	}
 }
