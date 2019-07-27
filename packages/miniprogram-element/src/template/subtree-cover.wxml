@@ -1,0 +1,41 @@
+<template name="subtree-cover">
+        <!-- 第 1 层 start -->
+        <block wx:for="{{childNodes}}" wx:key="nodeId">
+            <cover-view wx:if="{{item.type === 'text'}}">{{item.content}}</cover-view>
+            <cover-view wx:elif="{{item.isLeaf || item.isSimple}}" data-private-node-id="{{item.nodeId}}" data-private-page-id="{{item.pageId}}" id="{{item.id}}" class="{{item.class || ''}}" style="{{item.style || ''}}" bindtouchstart="onTouchStart" bindtouchmove="onTouchMove" bindtouchend="onTouchEnd" bindtouchcancel="onTouchCancel" bindtap="onTap">{{item.content}}
+                <!-- 第 2 层 start -->
+                <block wx:for="{{item.childNodes}}" wx:key="nodeId" wx:for-item="item2">
+                    <cover-view wx:if="{{item2.type === 'text'}}">{{item2.content}}</cover-view>
+                    <cover-view wx:elif="{{item2.isLeaf || item2.isSimple}}" data-private-node-id="{{item2.nodeId}}" data-private-page-id="{{item2.pageId}}" id="{{item2.id}}" class="{{item2.class || ''}}" style="{{item2.style || ''}}" bindtouchstart="onTouchStart" bindtouchmove="onTouchMove" bindtouchend="onTouchEnd" bindtouchcancel="onTouchCancel" bindtap="onTap">{{item2.content}}
+                        <!-- 第 3 层 start -->
+                        <block wx:for="{{item2.childNodes}}" wx:key="nodeId" wx:for-item="item3">
+                            <cover-view wx:if="{{item3.type === 'text'}}">{{item3.content}}</cover-view>
+                            <cover-view wx:elif="{{item3.isLeaf || item3.isSimple}}" data-private-node-id="{{item3.nodeId}}" data-private-page-id="{{item3.pageId}}" id="{{item3.id}}" class="{{item3.class || ''}}" style="{{item3.style || ''}}" bindtouchstart="onTouchStart" bindtouchmove="onTouchMove" bindtouchend="onTouchEnd" bindtouchcancel="onTouchCancel" bindtap="onTap">{{item3.content}}
+                                <!-- 第 4 层 start -->
+                                <block wx:for="{{item3.childNodes}}" wx:key="nodeId" wx:for-item="item4">
+                                    <cover-view wx:if="{{item4.type === 'text'}}">{{item4.content}}</cover-view>
+                                    <cover-view wx:elif="{{item4.isLeaf || item4.isSimple}}" data-private-node-id="{{item4.nodeId}}" data-private-page-id="{{item4.pageId}}" id="{{item4.id}}" class="{{item4.class || ''}}" style="{{item4.style || ''}}" bindtouchstart="onTouchStart" bindtouchmove="onTouchMove" bindtouchend="onTouchEnd" bindtouchcancel="onTouchCancel" bindtap="onTap">{{item4.content}}
+                                        <!-- 第 5 层 start -->
+                                        <block wx:for="{{item4.childNodes}}" wx:key="nodeId" wx:for-item="item5">
+                                            <cover-view wx:if="{{item5.type === 'text'}}">{{item5.content}}</cover-view>
+                                            <cover-view wx:elif="{{item5.isLeaf}}" data-private-node-id="{{item5.nodeId}}" data-private-page-id="{{item5.pageId}}" id="{{item5.id}}" class="{{item5.class || ''}}" style="{{item5.style || ''}}" bindtouchstart="onTouchStart" bindtouchmove="onTouchMove" bindtouchend="onTouchEnd" bindtouchcancel="onTouchCancel" bindtap="onTap">{{item5.content}}</cover-view>
+                                            <element wx:elif="{{item5.type === 'element'}}" data-private-node-id="{{item5.nodeId}}" data-private-page-id="{{item5.pageId}}" id="{{item5.id}}" class="{{item5.class || ''}}" style="{{item5.style || ''}}" bindtouchstart="onTouchStart" bindtouchmove="onTouchMove" bindtouchend="onTouchEnd" bindtouchcancel="onTouchCancel" bindtap="onTap" />
+                                        </block>
+                                        <!-- 第 5 层 end -->
+                                    </cover-view>
+                                    <element wx:elif="{{item4.type === 'element'}}" data-private-node-id="{{item4.nodeId}}" data-private-page-id="{{item4.pageId}}" id="{{item4.id}}" class="{{item4.class || ''}}" style="{{item4.style || ''}}" bindtouchstart="onTouchStart" bindtouchmove="onTouchMove" bindtouchend="onTouchEnd" bindtouchcancel="onTouchCancel" bindtap="onTap" />
+                                </block>
+                                <!-- 第 4 层 end -->
+                            </cover-view>
+                            <element wx:elif="{{item3.type === 'element'}}" data-private-node-id="{{item3.nodeId}}" data-private-page-id="{{item3.pageId}}" id="{{item3.id}}" class="{{item3.class || ''}}" style="{{item3.style || ''}}" bindtouchstart="onTouchStart" bindtouchmove="onTouchMove" bindtouchend="onTouchEnd" bindtouchcancel="onTouchCancel" bindtap="onTap" />
+                        </block>
+                        <!-- 第 3 层 end -->
+                    </cover-view>
+                    <element wx:elif="{{item2.type === 'element'}}" data-private-node-id="{{item2.nodeId}}" data-private-page-id="{{item2.pageId}}" id="{{item2.id}}" class="{{item2.class || ''}}" style="{{item2.style || ''}}" bindtouchstart="onTouchStart" bindtouchmove="onTouchMove" bindtouchend="onTouchEnd" bindtouchcancel="onTouchCancel" bindtap="onTap" />
+                </block>
+                <!-- 第 2 层 end -->
+            </cover-view>
+            <element wx:elif="{{item.type === 'element'}}" data-private-node-id="{{item.nodeId}}" data-private-page-id="{{item.pageId}}" id="{{item.id}}" class="{{item.class || ''}}" style="{{item.style || ''}}" bindtouchstart="onTouchStart" bindtouchmove="onTouchMove" bindtouchend="onTouchEnd" bindtouchcancel="onTouchCancel" bindtap="onTap" />
+        </block>
+        <!-- 第 1 层 end -->
+    </template>

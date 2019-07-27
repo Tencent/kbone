@@ -15,7 +15,8 @@ module.exports = {
     }, {
         name: 'range',
         get(domNode) {
-            return domNode.getAttribute('range') || []
+            const value = domNode.getAttribute('range')
+            return value !== undefined ? value : []
         },
     }, {
         name: 'rangeKey',

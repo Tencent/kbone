@@ -2,8 +2,18 @@ const initData = require('./init-data')
 
 const ELEMENT_DIFF_KEYS = ['nodeId', 'pageId', 'tagName', 'compName', 'id', 'class', 'style', 'isLeaf', 'isSimple', 'content']
 const TEXT_NODE_DIFF_KEYS = ['nodeId', 'pageId', 'content']
-const NOT_RENDER_CHILDREN_NODE = ['IFRAME', 'CANVAS', 'IMG', 'INPUT', 'TEXTAREA', 'VIDEO', 'WX-COMPONENT'] // 无需渲染子节点的节点，WX-COMPONENT 的子节点要特殊渲染
-const NEET_RENDER_TO_CUSTOM_ELEMENT = ['IFRAME', 'IMG', 'INPUT', 'TEXTAREA', 'VIDEO', 'WX-COMPONENT'] // 必须渲染成自定义组件的节点
+const NEET_SPLIT_CLASS_STYLE_FROM_CUSTOM_ELEMENT = ['IMG', 'INPUT', 'TEXTAREA', 'VIDEO', 'WX-COMPONENT'] // 需要分离 class 和 style 的节点
+const NEET_RENDER_TO_CUSTOM_ELEMENT = ['IFRAME', 'CANVAS', ...NEET_SPLIT_CLASS_STYLE_FROM_CUSTOM_ELEMENT] // 必须渲染成自定义组件的节点
+const WX_COMP_NAME_MAP = {
+    view: 'view',
+    picker: 'picker',
+    button: 'button',
+    IMG: 'image',
+    INPUT: 'input',
+    TEXTAREA: 'textarea',
+    VIDEO: 'video',
+}
+const NOT_SUPPORT = ['IFRAME']
 
 /**
  * 过滤子节点，只获取儿子节点
@@ -12,7 +22,7 @@ function filterNodes(domNode, level) {
     const childNodes = domNode.childNodes || []
 
     if (!childNodes.map) return []
-    if (NOT_RENDER_CHILDREN_NODE.indexOf(domNode.tagName) >= 0) return []
+    if (NOT_SUPPORT.indexOf(domNode.tagName) >= 0) return [] // 不支持标签，不渲染子节点
 
     return childNodes.map(child => {
         const domInfo = child.$$domInfo
@@ -23,7 +33,7 @@ function filterNodes(domNode, level) {
         domInfo.domNode = child
 
         // 特殊节点不需要处理样式
-        if (child.tagName === 'WX-COMPONENT') {
+        if (NEET_SPLIT_CLASS_STYLE_FROM_CUSTOM_ELEMENT.indexOf(child.tagName) >= 0) {
             domInfo.class = `h5-${domInfo.tagName} node-${domInfo.nodeId}`
             domInfo.style = ''
         }
@@ -76,15 +86,6 @@ function checkDiffChildNodes(newChildNodes, oldChildNodes) {
 }
 
 /**
- * 检查字段是否更新
- */
-function checkAttrUpdate(oldData, newData, destData, attrs) {
-    for (const attr of attrs) {
-        if (oldData[attr] !== newData[attr]) destData[attr] = newData[attr]
-    }
-}
-
-/**
  * 检查组件属性
  */
 function checkComponentAttr(name, domNode, destData, oldData) {
@@ -95,9 +96,15 @@ function checkComponentAttr(name, domNode, destData, oldData) {
     if (attrs && attrs.length) {
         for (const {name, get} of attrs) {
             const newValue = get(domNode)
-            if (!oldData || (oldData && oldData[name] !== newValue)) destData[name] = newValue
+            if (!oldData || oldData[name] !== newValue) destData[name] = newValue
         }
     }
+
+    // 补充 class 和 style
+    const newClass = `wx-comp-${name} ${domNode.$$domInfo.class || ''}`
+    if (!oldData || oldData.class !== newClass) destData.class = newClass
+    const newStyle = domNode.style.cssText
+    if (!oldData || oldData.style !== newStyle) destData.style = newStyle
 }
 
 /**
@@ -124,9 +131,10 @@ function dealWithLeafAndSimple(childNodes, onChildNodesUpdate) {
 }
 
 module.exports = {
+    WX_COMP_NAME_MAP,
+    NOT_SUPPORT,
     filterNodes,
     checkDiffChildNodes,
-    checkAttrUpdate,
     checkComponentAttr,
     dealWithLeafAndSimple,
 }

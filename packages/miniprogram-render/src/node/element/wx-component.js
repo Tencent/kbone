@@ -42,10 +42,6 @@ class WxComponent extends Element {
         return this.getAttribute('behavior') || ''
     }
 
-    get $$content() {
-        return this.textContent
-    }
-
     /**
      * 对外属性和方法
      */

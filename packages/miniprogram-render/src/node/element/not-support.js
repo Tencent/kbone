@@ -56,10 +56,6 @@ class NotSupport extends Element {
         }
     }
 
-    get $$content() {
-        return this.textContent
-    }
-
     /**
      * 对外属性和方法
      */

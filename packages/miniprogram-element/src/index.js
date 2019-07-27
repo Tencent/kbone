@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 const mp = require('miniprogram-render')
 const _ = require('./util/tool')
 const initHandle = require('./util/init-handle')
@@ -8,14 +7,18 @@ const {
     EventTarget,
     tool,
 } = mp.$$adapter
+const {
+    WX_COMP_NAME_MAP,
+    NOT_SUPPORT,
+} = _
 
 let DOM_SUB_TREE_LEVEL = 5 // dom 子树作为自定义组件渲染的层级数
-const WX_COMP_NAME_MAP = initHandle.WX_COMP_NAME_MAP
 
 Component({
     data: {
+        wxCompName: '', // 需要渲染的内置组件名
+        innerChildNodes: [], // 内置组件的孩子节点
         childNodes: [], // 孩子节点
-        wxCompName: '', // 替代的内置组件标签名
     },
     options: {
         addGlobalClass: true, // 开启全局样式
@@ -49,12 +52,21 @@ Component({
         this.domNode.$$clearEvent('$$domNodeUpdate')
         this.domNode.addEventListener('$$domNodeUpdate', this.onSelfNodeUpdate)
 
-        // 初始化孩子节点
-        const childNodes = _.filterNodes(this.domNode, DOM_SUB_TREE_LEVEL - 1)
-        data.childNodes = _.dealWithLeafAndSimple(childNodes, this.onChildNodesUpdate)
-
         // 初始化
         this.init(data)
+
+        // 初始化孩子节点
+        const childNodes = _.filterNodes(this.domNode, DOM_SUB_TREE_LEVEL - 1)
+        const dataChildNodes = _.dealWithLeafAndSimple(childNodes, this.onChildNodesUpdate)
+        if (data.wxCompName) {
+            // 内置组件
+            data.innerChildNodes = dataChildNodes
+            data.childNodes = []
+        } else {
+            // 非内置组件
+            data.innerChildNodes = []
+            data.childNodes = dataChildNodes
+        }
 
         // 执行一次 setData
         if (Object.keys(data).length) this.setData(data)
@@ -76,9 +88,19 @@ Component({
             // 儿子节点有变化
             const childNodes = _.filterNodes(this.domNode, DOM_SUB_TREE_LEVEL - 1)
             if (_.checkDiffChildNodes(childNodes, this.data.childNodes)) {
-                this.setData({
-                    childNodes: _.dealWithLeafAndSimple(childNodes, this.onChildNodesUpdate),
-                })
+                const dataChildNodes = _.dealWithLeafAndSimple(childNodes, this.onChildNodesUpdate)
+                const newData = {}
+                if (this.data.wxCompName) {
+                    // 内置组件
+                    newData.innerChildNodes = dataChildNodes
+                    newData.childNodes = []
+                } else {
+                    // 非内置组件
+                    newData.innerChildNodes = []
+                    newData.childNodes = dataChildNodes
+                }
+
+                this.setData(newData)
             }
 
             // 触发子节点变化
@@ -107,21 +129,16 @@ Component({
             const tagName = domNode.tagName
 
             if (tagName === 'WX-COMPONENT') {
-                newData.class = domNode.$$domInfo.class
-
+                // 无可替换 html 标签
                 if (data.wxCompName !== domNode.$$behavior) newData.wxCompName = domNode.$$behavior
-                if (data.content !== domNode.content) newData.content = domNode.$$content
-                if (data.style !== domNode.style.cssText) newData.style = domNode.style.cssText
-
-                if (domNode.$$behavior === 'button') {
-                    _.checkAttrUpdate(data, domNode, newData, ['disabled', 'openType'])
-                } else {
-                    const wxCompName = WX_COMP_NAME_MAP[domNode.$$behavior]
-                    if (wxCompName) _.checkComponentAttr(wxCompName, domNode, newData, data)
-                }
-            } else if (tagName === 'IFRAME') {
-                if (data.content !== domNode.content) newData.content = domNode.$$content
+                const wxCompName = WX_COMP_NAME_MAP[domNode.$$behavior]
+                if (wxCompName) _.checkComponentAttr(wxCompName, domNode, newData, data)
+            } else if (NOT_SUPPORT.indexOf(tagName) >= 0) {
+                // 不支持标签
+                newData.wxCompName = 'not-support'
+                if (data.content !== domNode.content) newData.content = domNode.textContent
             } else {
+                // 可替换 html 标签
                 const wxCompName = WX_COMP_NAME_MAP[tagName]
                 if (wxCompName) _.checkComponentAttr(wxCompName, domNode, newData, data)
             }

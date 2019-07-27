@@ -5,7 +5,7 @@
         "prepare": "lerna bootstrap",
         "publish": "lerna publish",
         "test": "cd packages/miniprogram-element && npm run test && cd ../miniprogram-render && npm run test && cd ../..",
-        "lint": "eslint \"packages/**/src/**/*.js\" --fix && eslint \"packages/**/test/**/*.js\" --fix"
+        "lint": "eslint \"packages/*/src/**/*.js\" --fix && eslint \"packages/*/test/**/*.js\" --fix"
     },
     "repository": {
         "type": "git",
