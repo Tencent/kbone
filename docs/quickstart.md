@@ -353,13 +353,15 @@ npm install --save-dev vue-improve-loader
 
 使用 `wx-component` 标签表示要渲染小程序内置组件，然后 behavior 字段表示要渲染的组件名，其他组件属性传入和官方文档一致，事件则采用 vue 的绑定方式。
 
-> PS：当前 wx-component 子节点仅支持渲染文本。
-
 `wx-component` 已支持内置组件列表：
 
 * view 组件
 * picker 组件
 * button 组件
+
+> PS：button 标签不会被渲染成 button 内置组件，如若需要请使用 wx-component。
+> PS：原生组件的表现在小程序中表现会和 web 端标签有些不一样，具体可[参考原生组件说明文档](https://developers.weixin.qq.com/miniprogram/dev/component/native-component.html)。
+> PS：原生组件下的子节点，div、span 等标签会被渲染成 cover-view，img 会被渲染成 cover-image，如若需要使用 button 内置组件请使用 wx-component。
 
 ### 开发建议
 

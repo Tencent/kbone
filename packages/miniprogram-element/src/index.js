@@ -15,6 +15,12 @@ const {
 let DOM_SUB_TREE_LEVEL = 5 // dom 子树作为自定义组件渲染的层级数
 
 Component({
+    properties: {
+        inCover: {
+            type: Boolean,
+            value: false,
+        },
+    },
     data: {
         wxCompName: '', // 需要渲染的内置组件名
         innerChildNodes: [], // 内置组件的孩子节点

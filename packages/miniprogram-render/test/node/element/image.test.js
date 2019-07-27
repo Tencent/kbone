@@ -56,8 +56,8 @@ test('image', async() => {
     let image2Count = 0
     let expectImage2Count = 0
     image2.onload = function() {
-        expect(image2.width).toBe(100)
-        expect(image2.height).toBe(88)
+        expect(image2.width).toBe(0)
+        expect(image2.height).toBe(0)
         expect(image2.naturalWidth).toBe(100)
         expect(image2.naturalHeight).toBe(88)
         expect(image2.src).toBe('https://f.e.d')

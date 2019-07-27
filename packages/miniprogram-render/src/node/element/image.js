@@ -90,34 +90,10 @@ class Image extends Element {
      * 重置长宽
      */
     $_resetRect(rect = {}) {
-        const width = parseInt(this.getAttribute('width'), 10)
-        const height = parseInt(this.getAttribute('height'), 10)
-
-        if (typeof width !== 'number' || !isFinite(width) || width <= 0) this.setAttribute('width', rect.width || 0)
-        if (typeof height !== 'number' || !isFinite(height) || height <= 0) this.setAttribute('height', rect.height || 0)
-
         this.$_naturalWidth = rect.width || 0
         this.$_naturalHeight = rect.height || 0
 
         this.$_initRect()
-    }
-
-    /**
-     * 用于图片加载回调后设置
-     */
-    set $$width(value) {
-        const width = this.getAttribute('width')
-
-        if (!width && width !== 0) this.setAttribute('width', value)
-    }
-
-    /**
-     * 用于图片加载回调后设置
-     */
-    set $$height(value) {
-        const height = this.getAttribute('width')
-
-        if (!height && height !== 0) this.setAttribute('height', value)
     }
 
     /**

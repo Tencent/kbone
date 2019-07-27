@@ -8,9 +8,9 @@
     hover-stop-propagation="{{hoverStopPropagation}}"
     hover-start-time="{{hoverStayTime}}"
     hover-stay-time="{{hoverStayTime}}"
-><template is="subtree" data="{{childNodes: innerChildNodes}}"/></view>
+><template is="subtree" data="{{childNodes: innerChildNodes, inCover}}"/></view>
 <image
-    wx:elif="{{wxCompName === 'image'}}"
+    wx:elif="{{wxCompName === 'image' && !inCover}}"
     class="{{class}}"
     style="{{style}}"
     rendering-mode="{{renderingMode}}"
@@ -19,8 +19,16 @@
     lazy-load="{{lazyLoad}}"
     show-menu-by-longpress="{{showMenuByLongpress}}"
     bindload="onImgLoad"
-    binderror="onImgError">
+    binderror="onImgError"
 ></image>
+<cover-image
+    wx:elif="{{wxCompName === 'image' && inCover}}"
+    class="{{class}}"
+    style="{{style}}"
+    src="{{src}}"
+    bindload="onImgLoad"
+    binderror="onImgError"
+></cover-image>
 <input
     wx:elif="{{wxCompName === 'input'}}"
     class="{{class}}"
@@ -113,7 +121,7 @@
     bindwaiting="onVideoWaiting"
     binderror="onVideoError"
     bindprogress="onVideoProgress"
-></video>
+><template is="subtree-cover" data="{{childNodes: innerChildNodes}}"/></video>
 <button
     wx:elif="{{wxCompName === 'button'}}"
     class="{{class}}"
@@ -142,7 +150,7 @@
     binderror="onButtonError"
     bindopensetting="onButtonOpenSetting"
     bindlaunchapp="onButtonLaunchApp"
-><template is="subtree" data="{{childNodes: innerChildNodes}}"/></button>
+><template is="subtree" data="{{childNodes: innerChildNodes, inCover}}"/></button>
 <picker
     wx:elif="{{wxCompName === 'picker'}}"
     class="{{class}}"
@@ -159,8 +167,8 @@
     bindchange="onPickerChange"
     bindcolumnchange="onPickerColumnChange"
     bindcancel="onPickerCancel"
-><template is="subtree" data="{{childNodes: innerChildNodes}}"/></picker>
+><template is="subtree" data="{{childNodes: innerChildNodes, inCover}}"/></picker>
 <block
     wx:elif="{{wxCompName === 'not-support'}}"
 >{{content}}</block>
-<template is="subtree" data="{{childNodes}}"/>
+<template is="subtree" data="{{childNodes, inCover}}"/>

@@ -38,12 +38,6 @@ module.exports = {
     }],
     handles: {
         onImgLoad(evt) {
-            if (!this.domNode) return
-
-            // 设置宽高
-            this.domNode.$$width = evt.detail.width
-            this.domNode.$$height = evt.detail.height
-
             this.callSimpleEvent('load', evt)
         },
 
