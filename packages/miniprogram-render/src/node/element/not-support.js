@@ -55,15 +55,6 @@ class NotSupport extends Element {
             pool.add(this)
         }
     }
-
-    /**
-     * 对外属性和方法
-     */
-
-    // iframe
-    get src() {
-        return this.getAttribute('src') || ''
-    }
 }
 
 module.exports = NotSupport

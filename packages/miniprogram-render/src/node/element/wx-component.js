@@ -41,27 +41,6 @@ class WxComponent extends Element {
     get $$behavior() {
         return this.getAttribute('behavior') || ''
     }
-
-    /**
-     * 对外属性和方法
-     */
-    get disabled() {
-        return !!this.$_attrs.get('disabled')
-    }
-
-    set disabled(value) {
-        value = !!value
-        this.$_attrs.set('disabled', value)
-    }
-
-    get openType() {
-        return this.getAttribute('open-type') || ''
-    }
-
-    set openType(value) {
-        value = '' + value
-        this.$_attrs.set('open-type', value)
-    }
 }
 
 module.exports = WxComponent

@@ -3,11 +3,14 @@ const initData = require('./init-data')
 const ELEMENT_DIFF_KEYS = ['nodeId', 'pageId', 'tagName', 'compName', 'id', 'class', 'style', 'isLeaf', 'isSimple', 'content']
 const TEXT_NODE_DIFF_KEYS = ['nodeId', 'pageId', 'content']
 const NEET_SPLIT_CLASS_STYLE_FROM_CUSTOM_ELEMENT = ['IMG', 'INPUT', 'TEXTAREA', 'VIDEO', 'WX-COMPONENT'] // 需要分离 class 和 style 的节点
-const NEET_RENDER_TO_CUSTOM_ELEMENT = ['IFRAME', 'CANVAS', ...NEET_SPLIT_CLASS_STYLE_FROM_CUSTOM_ELEMENT] // 必须渲染成自定义组件的节点
+const NEET_RENDER_TO_CUSTOM_ELEMENT = ['IFRAME', ...NEET_SPLIT_CLASS_STYLE_FROM_CUSTOM_ELEMENT] // 必须渲染成自定义组件的节点
 const WX_COMP_NAME_MAP = {
     view: 'view',
     picker: 'picker',
     button: 'button',
+    map: 'map',
+    'live-player': 'live-player',
+    'live-pusher': 'live-pusher',
     IMG: 'image',
     INPUT: 'input',
     TEXTAREA: 'textarea',

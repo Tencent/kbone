@@ -5,6 +5,9 @@ const input = require('../component/input')
 const textarea = require('../component/textarea')
 const picker = require('../component/picker')
 const button = require('../component/button')
+const map = require('../component/map')
+const livePlayer = require('../component/live-player')
+const livePusher = require('../component/live-pusher')
 
 module.exports = {
     view: view.properties,
@@ -14,4 +17,7 @@ module.exports = {
     picker: picker.properties,
     image: image.properties,
     button: button.properties,
+    map: map.properties,
+    'live-player': livePlayer.properties,
+    'live-pusher': livePusher.properties,
 }

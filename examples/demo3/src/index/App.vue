@@ -26,10 +26,16 @@
         <!-- 使用 wx-component 来创建内置组件 -->
         <wx-component v-else-if="item === 'view'" behavior="view">我是视图</wx-component>
         <wx-component v-else-if="item === 'button'" behavior="button" open-type="share">分享</wx-component>
-        <wx-component v-else-if="item === 'picker'" behavior="picker" mode="region" @change="onPickerChange">
-          <span>点击&nbsp;&nbsp;</span>
-          <span>选择城市</span>
-        </wx-component>
+        <div v-else-if="item === 'picker'">
+          <wx-component behavior="picker" :value="1" :range="['美国', '中国', '巴西', '日本']">点击&nbsp;&nbsp;选择国家</wx-component>
+          <wx-component behavior="picker" mode="region" @change="onPickerChange">
+            <span>点击&nbsp;&nbsp;</span>
+            <span>选择城市</span>
+          </wx-component>
+        </div>
+        <wx-component v-else-if="item === 'map'" behavior="map" class="map" :longitude="113.324520" :latitude="23.099994" :scale="14" :controls="map.controls" :markers="map.markers" :polyline="map.polyline" :show-location="true" @markertap="onMapMarkerTap" @regionchange="onMapRegionChange" @controltap="onMapControlTap"></wx-component>
+        <wx-component v-else-if="item === 'live-player'" behavior="live-player" class="live-player" mode="live" :autoplay="true" src="rtmp://live.hkstv.hk.lxdns.com/live/hks" @statechange="onLivePlayerStateChange"></wx-component>
+        <wx-component v-else-if="item === 'live-pusher'" behavior="live-pusher" class="live-pusher" mode="RTC" :autopush="true" url="https://domain/push_stream" @statechange="onLivePusherStateChange"></wx-component>
         <!-- 不支持标签 -->
         <iframe v-else-if="item === 'iframe'"></iframe>
       </div>
@@ -38,7 +44,6 @@
 </template>
 
 <script>
-
 export default {
   name: 'App',
   data() {
@@ -51,8 +56,44 @@ export default {
         'view',
         'button',
         'picker',
+        'map',
+        'live-player',
+        'live-pusher',
         'iframe',
       ],
+      map: {
+        markers: [{
+          iconPath: 'https://i.loli.net/2019/07/27/5d3c141367f2784840.jpg',
+          id: 0,
+          latitude: 23.099994,
+          longitude: 113.324520,
+          width: 50,
+          height: 50,
+        }],
+        polyline: [{
+          points: [{
+            longitude: 113.3245211,
+            latitude: 23.10229,
+          }, {
+            longitude: 113.324520,
+            latitude: 23.21229,
+          }],
+          color: '#FF0000DD',
+          width: 2,
+          dottedLine: true,
+        }],
+        controls: [{
+          id: 1,
+          iconPath: 'https://i.loli.net/2019/07/27/5d3c143497e6d38917.jpg',
+          position: {
+            left: 0,
+            top: 300 - 50,
+            width: 50,
+            height: 50,
+          },
+          clickable: true,
+        }],
+      }
     }
   },
   created() {
@@ -62,19 +103,39 @@ export default {
   },
   methods: {
     onInput(evt) {
-      console.log(evt.target.value)
+      console.log('onInput', evt.target.value)
     },
 
     onTextareaInput(evt) {
-      console.log(evt.target.value)
+      console.log('onTextareaInput', evt.target.value)
     },
 
     onPickerChange(evt) {
-      console.log(evt.detail)
+      console.log('onPickerChange', evt.detail)
     },
 
     onVideoControlsClick(evt) {
       console.log('onVideoControlsClick')
+    },
+
+    onMapMarkerTap(evt) {
+      console.log('onMapMarkerTap', evt.detail)
+    },
+
+    onMapRegionChange(evt) {
+      console.log('onMapRegionChange', evt.detail)
+    },
+
+    onMapControlTap(evt) {
+      console.log('onMapControlTap', evt.detail)
+    },
+
+    onLivePlayerStateChange(evt) {
+      console.log('onLivePlayerStateChange', evt.detail)
+    },
+
+    onLivePusherStateChange(evt) {
+      console.log('onLivePusherStateChange', evt.detail)
     },
   }
 }
@@ -124,5 +185,15 @@ export default {
   text-align: center;
   line-height: 30px;
   border-radius: 10px;
+}
+
+.map {
+  width: 300px;
+  height: 200px;
+}
+
+.live-player, .live-pusher {
+  width: 300px;
+  height: 225px;
 }
 </style>

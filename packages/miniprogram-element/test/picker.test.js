@@ -29,17 +29,7 @@ test('picker', async() => {
     await _.checkBoolean(picker, node, 'disabled', 'disabled', false)
 
     // range
-    expect(picker.data.range).toEqual([])
-    const range = ['美国', '中国', '巴西', '日本']
-    node.setAttribute('range', range)
-    await _.sleep(10)
-    expect(picker.data.range).toEqual(range)
-    node.setAttribute('range', [])
-    await _.sleep(10)
-    expect(picker.data.range).toEqual([])
-    node.setAttribute('range', undefined)
-    await _.sleep(10)
-    expect(picker.data.range).toEqual([])
+    await _.checkArray(picker, node, 'range', 'range', [], ['美国', '中国', '巴西', '日本'])
 
     // rangeKey
     await _.checkString(picker, node, 'rangeKey', 'range-key', '')

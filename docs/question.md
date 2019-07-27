@@ -31,8 +31,8 @@ A：transition 组件内部使用了同步接口 window.getComputedStyle，故�
 Q：对于异步请求要如何兼容？
 A：可以使用第三方请求库来实现，比如 axios 和 axios-miniprogram-adapter 就是一个不错的选择。当然，你也可以自己编写 adapter。
 
-Q：能否使用小程序原生组件？
-A：目前代码里预埋进了能力，但是仅支持了 `picker` 等组件，用法可阅读[开发文档](./quickstart.md#使用小程序内置组件)，后续会慢慢补齐。
+Q：能否使用小程序内置组件？
+A：目前代码里预埋进了能力，但是仅支持部分组件，用法可阅读[开发文档](./quickstart.md#使用小程序内置组件)，后续会慢慢补齐。
 
 Q：能否使用 rem？
 A：目前不可以，需要等小程序支持设置页面 root 节点的 font-size 属性才行。

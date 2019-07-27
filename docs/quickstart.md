@@ -358,6 +358,9 @@ npm install --save-dev vue-improve-loader
 * view 组件
 * picker 组件
 * button 组件
+* live-player 组件
+* live-pusher 组件
+* map 组件
 
 > PS：button 标签不会被渲染成 button 内置组件，如若需要请使用 wx-component。
 > PS：原生组件的表现在小程序中表现会和 web 端标签有些不一样，具体可[参考原生组件说明文档](https://developers.weixin.qq.com/miniprogram/dev/component/native-component.html)。

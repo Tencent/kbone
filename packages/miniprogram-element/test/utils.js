@@ -210,6 +210,25 @@ simulate.checkUrl = async function(component, node, attrName, attributeName, def
 }
 
 /**
+ * 检查数组
+ */
+simulate.checkArray = async function(component, node, attrName, attributeName, defaultValue, testData) {
+    expect(component.data[attrName]).toEqual(defaultValue)
+
+    node.setAttribute(attributeName, testData)
+    await simulate.sleep(10)
+    expect(component.data[attrName]).toEqual(testData)
+
+    node.setAttribute(attributeName, [])
+    await simulate.sleep(10)
+    expect(component.data[attrName]).toEqual([])
+
+    node.setAttribute(attributeName, undefined)
+    await simulate.sleep(10)
+    expect(component.data[attrName]).toEqual(defaultValue)
+}
+
+/**
  * 检查事件
  */
 simulate.checkEvent = async function(component, node, eventNameList) {

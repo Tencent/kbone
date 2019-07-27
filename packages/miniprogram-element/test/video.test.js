@@ -31,8 +31,7 @@ test('video', async() => {
     await _.checkBoolean(video, node, 'controls', 'controls', true)
 
     // danmuList
-    expect(video.data.danmuList).toEqual([])
-    const danmuList = [{
+    await _.checkArray(video, node, 'danmuList', 'danmu-list', [], [{
         text: '第 1s 出现的弹幕',
         color: '#ff0000',
         time: 1
@@ -40,16 +39,7 @@ test('video', async() => {
         text: '第 3s 出现的弹幕',
         color: '#ff00ff',
         time: 3
-    }]
-    node.setAttribute('danmu-list', danmuList)
-    await _.sleep(10)
-    expect(video.data.danmuList).toEqual(danmuList)
-    node.setAttribute('danmu-list', [])
-    await _.sleep(10)
-    expect(video.data.danmuList).toEqual([])
-    node.setAttribute('danmu-list', undefined)
-    await _.sleep(10)
-    expect(video.data.danmuList).toEqual([])
+    }])
 
     // danmuBtn
     await _.checkBoolean(video, node, 'danmuBtn', 'danmu-btn', false)

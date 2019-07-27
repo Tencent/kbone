@@ -13,4 +13,10 @@
 * 支持完整的 button 内置组件
 * 支持内置组件嵌入子节点
 
+## 0.0.11
+
+* 支持 live-player 内置组件
+* 支持 live-pusher 内置组件
+* 支持 map 内置组件
+
 ## next version
