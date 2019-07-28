@@ -104,7 +104,7 @@ function checkComponentAttr(name, domNode, destData, oldData) {
     }
 
     // 补充 class 和 style
-    const newClass = `wx-comp-${name} ${domNode.$$domInfo.class || ''}`
+    const newClass = `wx-comp-${name} ${domNode.className || ''}`
     if (!oldData || oldData.class !== newClass) destData.class = newClass
     const newStyle = domNode.style.cssText
     if (!oldData || oldData.style !== newStyle) destData.style = newStyle

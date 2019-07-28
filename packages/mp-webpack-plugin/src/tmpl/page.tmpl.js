@@ -83,10 +83,10 @@ Page({
 
         // 处理 body 更新
         this.document.documentElement.addEventListener('$$childNodesUpdate', () => {
-            const domInfo = this.document.body.$$domInfo
+            const domNode = this.document.body
             const data = {
-                bodyClass: `${domInfo.class || ''} h5-body miniprogram-root`, // 增加默认 class
-                bodyStyle: domInfo.style || ''
+                bodyClass: `${domNode.className || ''} h5-body miniprogram-root`, // 增加默认 class
+                bodyStyle: domNode.style.cssText || ''
             }
 
             if (data.bodyClass !== this.data.bodyClass || data.bodyStyle !== this.data.bodyStyle) {
