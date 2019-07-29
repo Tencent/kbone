@@ -215,7 +215,7 @@ class Window extends EventTarget {
     }
 
     get RegExp() {
-        return RegExp 
+        return RegExp
     }
 
     get Math() {
