@@ -24,4 +24,9 @@
 * 修复 a 标签 href 属性为空时跳转报错的问题
 * 支持直接渲染 cover-view 内置组件
 
+## 0.0.15
+
+* 支持直接渲染 cover-image 内置组件
+* 支持通过 wx-component 渲染 image 内置组件
+
 ## next version

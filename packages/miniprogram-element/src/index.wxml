@@ -10,7 +10,7 @@
     hover-stay-time="{{hoverStayTime}}"
 ><template is="subtree" data="{{childNodes: innerChildNodes, inCover}}"/></view>
 <image
-    wx:elif="{{wxCompName === 'image' && !inCover}}"
+    wx:elif="{{wxCompName === 'image'}}"
     class="{{class}}"
     style="{{style}}"
     rendering-mode="{{renderingMode}}"
@@ -18,16 +18,16 @@
     mode="{{mode}}"
     lazy-load="{{lazyLoad}}"
     show-menu-by-longpress="{{showMenuByLongpress}}"
-    bindload="onImgLoad"
-    binderror="onImgError"
+    bindload="onImageLoad"
+    binderror="onImageError"
 ></image>
 <cover-image
-    wx:elif="{{wxCompName === 'image' && inCover}}"
+    wx:elif="{{wxCompName === 'cover-image'}}"
     class="{{class}}"
     style="{{style}}"
     src="{{src}}"
-    bindload="onImgLoad"
-    binderror="onImgError"
+    bindload="onCoverImageLoad"
+    binderror="onCoverImageError"
 ></cover-image>
 <input
     wx:elif="{{wxCompName === 'input'}}"

@@ -12,7 +12,7 @@ module.exports = {
     properties: [{
         name: 'renderingMode',
         get(domNode) {
-            return domNode.getAttribute('rendering-mode') || 'img'
+            return domNode.getAttribute('rendering-mode') || ''
         },
     }, {
         name: 'src',
@@ -37,11 +37,11 @@ module.exports = {
         },
     }],
     handles: {
-        onImgLoad(evt) {
+        onImageLoad(evt) {
             this.callSimpleEvent('load', evt)
         },
 
-        onImgError(evt) {
+        onImageError(evt) {
             this.callSimpleEvent('error', evt)
         },
     },

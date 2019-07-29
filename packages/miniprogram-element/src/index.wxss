@@ -1,8 +1,4 @@
-.wx-comp-image {
-    width: 100%;
-    height: 100%;
-}
-
+/* 去除 button 组件默认样式 */
 button {
     position: relative;
     display: block;

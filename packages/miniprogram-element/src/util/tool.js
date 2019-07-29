@@ -1,18 +1,25 @@
+const mp = require('miniprogram-render')
 const initData = require('./init-data')
 
-const ELEMENT_DIFF_KEYS = ['nodeId', 'pageId', 'tagName', 'compName', 'id', 'class', 'style', 'isLeaf', 'isSimple', 'content']
+const {
+    cache,
+    tool,
+} = mp.$$adapter
+
+const ELEMENT_DIFF_KEYS = ['nodeId', 'pageId', 'tagName', 'compName', 'id', 'class', 'style', 'src', 'isImage', 'isLeaf', 'isSimple', 'content']
 const TEXT_NODE_DIFF_KEYS = ['nodeId', 'pageId', 'content']
-const NEET_SPLIT_CLASS_STYLE_FROM_CUSTOM_ELEMENT = ['IMG', 'INPUT', 'TEXTAREA', 'VIDEO', 'WX-COMPONENT'] // 需要分离 class 和 style 的节点
+const NEET_SPLIT_CLASS_STYLE_FROM_CUSTOM_ELEMENT = ['INPUT', 'TEXTAREA', 'VIDEO', 'WX-COMPONENT'] // 需要分离 class 和 style 的节点
 const NEET_RENDER_TO_CUSTOM_ELEMENT = ['IFRAME', ...NEET_SPLIT_CLASS_STYLE_FROM_CUSTOM_ELEMENT] // 必须渲染成自定义组件的节点
 const WX_COMP_NAME_MAP = {
     view: 'view',
     picker: 'picker',
     button: 'button',
+    image: 'image',
     map: 'map',
     'cover-view': 'cover-view',
+    'cover-image': 'cover-image',
     'live-player': 'live-player',
     'live-pusher': 'live-pusher',
-    IMG: 'image',
     INPUT: 'input',
     TEXTAREA: 'textarea',
     VIDEO: 'video',
@@ -23,6 +30,7 @@ const NOT_SUPPORT = ['IFRAME']
  * 过滤子节点，只获取儿子节点
  */
 function filterNodes(domNode, level) {
+    const window = cache.getWindow(domNode.$$pageId)
     const childNodes = domNode.childNodes || []
 
     if (!childNodes.map) return []
@@ -42,8 +50,16 @@ function filterNodes(domNode, level) {
             domInfo.style = ''
         }
 
+        // 判断图片节点
+        domInfo.isImage = domInfo.type === 'element' && domInfo.tagName === 'img'
+        if (domInfo.isImage) {
+            domInfo.src = child.src ? tool.completeURL(child.src, window.location.origin, true) : ''
+        } else {
+            domInfo.src = ''
+        }
+
         // 判断叶子节点
-        domInfo.isLeaf = domInfo.type === 'element' && !child.children.length && NEET_RENDER_TO_CUSTOM_ELEMENT.indexOf(child.tagName.toUpperCase()) === -1
+        domInfo.isLeaf = !domInfo.isImage && domInfo.type === 'element' && !child.children.length && NEET_RENDER_TO_CUSTOM_ELEMENT.indexOf(child.tagName.toUpperCase()) === -1
         if (domInfo.isLeaf) {
             domInfo.content = child.childNodes.map(childNode => (childNode.$$domInfo.type === 'text' ? childNode.textContent : '')).join('')
         }

@@ -1,6 +1,6 @@
 const _ = require('./utils')
 
-test('image', async() => {
+test('cover-image', async() => {
     const page = global.$$page
     const componentId = _.load({
         template: `<element class="h5-body" style="width: 100%; height: 100%;" data-private-node-id="e-body" data-private-page-id="${page.pageId}"></element>`,
@@ -17,29 +17,17 @@ test('image', async() => {
 
     const body = component.querySelector('.h5-body')
     const node = page.document.createElement('wx-component')
-    node.setAttribute('behavior', 'image')
+    node.setAttribute('behavior', 'cover-image')
     page.document.body.appendChild(node)
     await _.sleep(10)
-    const image = body.querySelector('.h5-wx-component')
-
-    // renderingMode
-    await _.checkString(image, node, 'renderingMode', 'rendering-mode', '')
+    const coverImage = body.querySelector('.h5-wx-component')
 
     // src
-    await _.checkUrl(image, node, 'src', 'src', '')
-
-    // mode
-    await _.checkString(image, node, 'mode', 'mode', 'scaleToFill')
-
-    // lazyLoad
-    await _.checkBoolean(image, node, 'lazyLoad', 'lazy-load', false)
-
-    // showMenuByLongpress
-    await _.checkBoolean(image, node, 'showMenuByLongpress', 'show-menu-by-longpress', false)
+    await _.checkUrl(coverImage, node, 'src', 'src', '')
 
     // event
-    const wxImage = image.querySelector('.wx-comp-image')
-    await _.checkEvent(wxImage, node, ['error', 'load'])
+    const wxCoverImage = coverImage.querySelector('.wx-comp-cover-image')
+    await _.checkEvent(wxCoverImage, node, ['error', 'load'])
 
     page.document.body.removeChild(node)
     document.body.removeChild(wrapper)
