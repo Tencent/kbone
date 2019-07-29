@@ -119,7 +119,7 @@ export default {
     },
 
     onImgLoad(evt) {
-      console.log('onImgLoad', evt.detail)
+      console.log('onImgLoad')
     },
 
     onPickerChange(evt) {

@@ -219,7 +219,7 @@ Component({
 
         onImgLoad(evt) {
             if (this.document.$$checkEvent(evt)) {
-                this.callEvent(evt, 'load', {width: evt.detail.width, height: evt.detail.height})
+                this.callEvent(evt, 'load')
             }
         },
 
