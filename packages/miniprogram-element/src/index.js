@@ -175,7 +175,7 @@ Component({
                         const href = domNode.href
                         const target = domNode.target
 
-                        if (href.indexOf('javascript') !== -1) return
+                        if (!href || href.indexOf('javascript') !== -1) return
 
                         if (target === '_blank') window.open(href)
                         else window.location.href = href

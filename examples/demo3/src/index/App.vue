@@ -34,6 +34,7 @@
           </wx-component>
         </div>
         <wx-component v-else-if="item === 'map'" behavior="map" class="map" :longitude="113.324520" :latitude="23.099994" :scale="14" :controls="map.controls" :markers="map.markers" :polyline="map.polyline" :show-location="true" @markertap="onMapMarkerTap" @regionchange="onMapRegionChange" @controltap="onMapControlTap"></wx-component>
+        <wx-compoennt v-else-if="item === 'cover-view'">测试 cover-view</wx-compoennt>
         <wx-component v-else-if="item === 'live-player'" behavior="live-player" class="live-player" mode="live" :autoplay="true" src="rtmp://live.hkstv.hk.lxdns.com/live/hks" @statechange="onLivePlayerStateChange"></wx-component>
         <wx-component v-else-if="item === 'live-pusher'" behavior="live-pusher" class="live-pusher" mode="RTC" :autopush="true" url="https://domain/push_stream" @statechange="onLivePusherStateChange"></wx-component>
         <!-- 不支持标签 -->
@@ -57,6 +58,7 @@ export default {
         'button',
         'picker',
         'map',
+        'cover-view',
         'live-player',
         'live-pusher',
         'iframe',

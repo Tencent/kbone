@@ -9,6 +9,7 @@ const WX_COMP_NAME_MAP = {
     picker: 'picker',
     button: 'button',
     map: 'map',
+    'cover-view': 'cover-view',
     'live-player': 'live-player',
     'live-pusher': 'live-pusher',
     IMG: 'image',

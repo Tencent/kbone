@@ -251,6 +251,12 @@
     bindregionchange="onMapRegionChange"
     bindpoitap="onMapPoiTap"
 ><template is="subtree-cover" data="{{childNodes: innerChildNodes}}"/></map>
+<cover-view
+    wx:elif="{{wxCompName === 'cover-view'}}"
+    class="{{class}}"
+    style="{{style}}"
+    scroll-top="{{scrollTop}}"
+><template is="subtree-cover" data="{{childNodes: innerChildNodes}}"/></cover-view>
 <block
     wx:elif="{{wxCompName === 'not-support'}}"
 >{{content}}</block>

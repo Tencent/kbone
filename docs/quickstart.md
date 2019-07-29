@@ -358,6 +358,7 @@ npm install --save-dev vue-improve-loader
 * view 组件
 * picker 组件
 * button 组件
+* cover-view 组件
 * live-player 组件
 * live-pusher 组件
 * map 组件

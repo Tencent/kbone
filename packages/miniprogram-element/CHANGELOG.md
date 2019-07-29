@@ -19,4 +19,9 @@
 * 支持 live-pusher 内置组件
 * 支持 map 内置组件
 
+## 0.0.14
+
+* 修复 a 标签 href 属性为空时跳转报错的问题
+* 支持直接渲染 cover-view 内置组件
+
 ## next version
