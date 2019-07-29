@@ -16,4 +16,8 @@
 * 废弃不支持节点和 wx-component 节点的 $$content 属性
 * 废弃图片拉取到真实宽高调用 setAttribute 设置 width/height 的逻辑
 
+## 0.0.10
+
+* 补充 window 对象下的 RegExp/Math/Number/Boolean/String/Date 属性
+
 ## next version

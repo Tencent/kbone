@@ -103,6 +103,15 @@ test('window: Node', () => {
     expect(window.Node).toBe(Node)
 })
 
+test('window: RegExp/Math/Number/Boolean/String/Date', () => {
+    expect(window.RegExp).toBe(RegExp)
+    expect(window.Math).toBe(Math)
+    expect(window.Number).toBe(Number)
+    expect(window.Boolean).toBe(Boolean)
+    expect(window.String).toBe(String)
+    expect(window.Date).toBe(Date)
+})
+
 test('window: open', () => {
     const location = window.location
 

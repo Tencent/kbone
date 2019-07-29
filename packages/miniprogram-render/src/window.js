@@ -214,6 +214,30 @@ class Window extends EventTarget {
         return Node
     }
 
+    get RegExp() {
+        return RegExp 
+    }
+
+    get Math() {
+        return Math
+    }
+
+    get Number() {
+        return Number
+    }
+
+    get Boolean() {
+        return Boolean
+    }
+
+    get String() {
+        return String
+    }
+
+    get Date() {
+        return Date
+    }
+
     open(url) {
         // 不支持 windowName 和 windowFeatures
         this.location.$$open(url)
