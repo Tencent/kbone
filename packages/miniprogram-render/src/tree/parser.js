@@ -111,12 +111,13 @@ function tokenize(content, handler) {
         tagName = tagName.toLowerCase()
         unary = !!unary
 
-        if (blockMap[tagName]) {
-            while (stack.last() && inlineMap[stack.last()]) {
-                // 自动关闭栈内的行内元素
-                parseEndTag('', stack.last())
-            }
-        }
+        // 放宽规则，允许行内元素包含块级元素
+        // if (blockMap[tagName]) {
+        //     while (stack.last() && inlineMap[stack.last()]) {
+        //         // 自动关闭栈内的行内元素
+        //         parseEndTag('', stack.last())
+        //     }
+        // }
 
         unary = voidMap[tagName] || !!unary
 

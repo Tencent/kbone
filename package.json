@@ -3,6 +3,7 @@
     "description": "web's adapter for miniprogram",
     "scripts": {
         "prepare": "lerna bootstrap",
+        "check": "npm run lint && npm run test",
         "publish": "lerna publish",
         "test": "cd packages/vue-improve-loader && npm run test && cd ../miniprogram-render && npm run test && cd ../miniprogram-element && npm run test && cd ../..",
         "lint": "eslint \"packages/*/src/**/*.js\" --fix && eslint \"packages/*/test/**/*.js\" --fix"
