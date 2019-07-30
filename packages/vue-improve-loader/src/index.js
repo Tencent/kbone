@@ -8,7 +8,7 @@ function generateHtml(node) {
 
     // 判断节点属性
     for (const attr of node.attrs) {
-    // 检查是否需要删减
+        // 检查是否需要删减
         if (attr.name === 'check-reduce') {
             noCheckReduce = false
             return ''

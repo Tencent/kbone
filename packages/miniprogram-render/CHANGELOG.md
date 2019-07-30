@@ -20,4 +20,8 @@
 
 * 补充 window 对象下的 RegExp/Math/Number/Boolean/String/Date 属性
 
+## 0.0.11
+
+* 放宽 parser 的规则，允许行内元素包含块级元素
+
 ## next version
