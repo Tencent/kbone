@@ -2,6 +2,11 @@
     "lerna": "3.16.4",
     "version": "independent",
     "npmClient": "npm",
+    "command": {
+        "publish": {
+            "ignoreChanges": ["packages/*/test/**/*", "*.md", ".npmignore"]
+        }
+    },
     "packages":[
         "packages/*"
     ]

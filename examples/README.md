@@ -49,3 +49,4 @@ npm install
 * demo1：vue-router
 * demo2：reduce-loader + vue-improve-loader
 * demo3：内置组件
+* demo4：vue-cli-plugin-kbone

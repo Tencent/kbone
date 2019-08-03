@@ -9,3 +9,14 @@
 ```
 vue add kbone
 ```
+
+## 生成文件
+
+* kbone 配置文件：`miniprogram.config.js`
+* 页面入口文件
+
+## 构建
+
+```
+npm run mp-build
+```
