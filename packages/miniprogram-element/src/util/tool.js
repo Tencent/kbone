@@ -20,6 +20,7 @@ const WX_COMP_NAME_MAP = {
     'cover-image': 'cover-image',
     'live-player': 'live-player',
     'live-pusher': 'live-pusher',
+    'web-view': 'web-view',
     INPUT: 'input',
     TEXTAREA: 'textarea',
     VIDEO: 'video',

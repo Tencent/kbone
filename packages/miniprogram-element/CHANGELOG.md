@@ -29,4 +29,9 @@
 * 支持直接渲染 cover-image 内置组件
 * 支持通过 wx-component 渲染 image 内置组件
 
+## 0.0.18
+
+* video 内置组件子组件调整为默认使用非原生组件渲染
+* 支持 web-view 内置组件
+
 ## next version

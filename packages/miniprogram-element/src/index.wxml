@@ -121,7 +121,7 @@
     bindwaiting="onVideoWaiting"
     binderror="onVideoError"
     bindprogress="onVideoProgress"
-><template is="subtree-cover" data="{{childNodes: innerChildNodes}}"/></video>
+><template is="subtree" data="{{childNodes: innerChildNodes, inCover}}"/></video>
 <button
     wx:elif="{{wxCompName === 'button'}}"
     class="{{class}}"
@@ -217,6 +217,15 @@
     bindbgmprogress="onLivePusherBgmProgress"
     bindbgmcomplete="onLivePusherBgmComplete"
 ><template is="subtree-cover" data="{{childNodes: innerChildNodes}}"/></live-pusher>
+<web-view
+    wx:elif="{{wxCompName === 'web-view'}}"
+    class="{{class}}"
+    style="{{style}}"
+    src="{{src}}"
+    bindmessage="onWebviewMessage"
+    bindload="onWebviewLoad"
+    binderror="onWebviewError"
+></web-view>
 <map
     wx:elif="{{wxCompName === 'map'}}"
     class="{{class}}"

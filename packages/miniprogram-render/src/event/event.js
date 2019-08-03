@@ -136,6 +136,10 @@ class Event {
         return this.$_changedTouches
     }
 
+    set detail(value) {
+        this.$_detail = value
+    }
+
     get detail() {
         return this.$_detail
     }

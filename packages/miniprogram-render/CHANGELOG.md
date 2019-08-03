@@ -24,4 +24,8 @@
 
 * 放宽 parser 的规则，允许行内元素包含块级元素
 
+## 0.0.13
+
+* 补充 event 对象 detail 属性的 setter
+
 ## next version
