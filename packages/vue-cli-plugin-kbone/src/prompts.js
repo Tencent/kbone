@@ -80,7 +80,7 @@ module.exports = [
         name: 'domSubTreeLevel',
         type: 'number',
         default: defaultOptions.domSubTreeLevel,
-        message: '将多少层级的 dom 子树作为一个自定义组件渲染，支持 1 - 5:',
+        message: '将多少层级的 dom 子树作为一个自定义组件渲染，支持 1 - 10:',
     }, {
         when: answers => answers.configType === 'custom',
         name: 'elementMultiplexing',

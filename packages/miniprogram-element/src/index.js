@@ -12,7 +12,9 @@ const {
     NOT_SUPPORT,
 } = _
 
-let DOM_SUB_TREE_LEVEL = 5 // dom 子树作为自定义组件渲染的层级数
+// dom 子树作为自定义组件渲染的层级数
+const MAX_DOM_SUB_TREE_LEVEL = 10
+let DOM_SUB_TREE_LEVEL = 10
 
 Component({
     properties: {
@@ -34,7 +36,7 @@ Component({
 
         // 根据配置重置全局变量
         const domSubTreeLevel = +config.optimization.domSubTreeLevel
-        if (domSubTreeLevel >= 1 && domSubTreeLevel <= 5) DOM_SUB_TREE_LEVEL = domSubTreeLevel
+        if (domSubTreeLevel >= 1 && domSubTreeLevel <= MAX_DOM_SUB_TREE_LEVEL) DOM_SUB_TREE_LEVEL = domSubTreeLevel
     },
     attached() {
         const nodeId = this.dataset.privateNodeId
@@ -188,43 +190,43 @@ Component({
          * 监听节点事件
          */
         onTouchStart(evt) {
-            if (this.document.$$checkEvent(evt)) {
+            if (this.document && this.document.$$checkEvent(evt)) {
                 this.callEvent(evt, 'touchstart')
             }
         },
 
         onTouchMove(evt) {
-            if (this.document.$$checkEvent(evt)) {
+            if (this.document && this.document.$$checkEvent(evt)) {
                 this.callEvent(evt, 'touchmove')
             }
         },
 
         onTouchEnd(evt) {
-            if (this.document.$$checkEvent(evt)) {
+            if (this.document && this.document.$$checkEvent(evt)) {
                 this.callEvent(evt, 'touchend')
             }
         },
 
         onTouchCancel(evt) {
-            if (this.document.$$checkEvent(evt)) {
+            if (this.document && this.document.$$checkEvent(evt)) {
                 this.callEvent(evt, 'touchcancel')
             }
         },
 
         onTap(evt) {
-            if (this.document.$$checkEvent(evt)) {
+            if (this.document && this.document.$$checkEvent(evt)) {
                 this.callEvent(evt, 'click', {button: 0}) // 默认左键
             }
         },
 
         onImgLoad(evt) {
-            if (this.document.$$checkEvent(evt)) {
+            if (this.document && this.document.$$checkEvent(evt)) {
                 this.callEvent(evt, 'load')
             }
         },
 
         onImgError(evt) {
-            if (this.document.$$checkEvent(evt)) {
+            if (this.document && this.document.$$checkEvent(evt)) {
                 this.callEvent(evt, 'error')
             }
         },

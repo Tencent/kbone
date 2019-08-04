@@ -5,6 +5,7 @@
 	"main": "src/index.js",
 	"miniprogram": "src",
 	"scripts": {
+		"build": "node tool/index.js",
 		"test": "jest --bail",
 		"test-debug": "node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand --bail",
 		"coverage": "jest --coverage --bail",

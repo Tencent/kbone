@@ -8,7 +8,7 @@ module.exports = {
     entryFiles: true,
     entryFileName: 'main.mp.js',
     entry: '/',
-    domSubTreeLevel: 5,
+    domSubTreeLevel: 10,
     elementMultiplexing: true,
     textMultiplexing: true,
     commentMultiplexing: true,

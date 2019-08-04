@@ -34,4 +34,9 @@
 * video 内置组件子组件调整为默认使用非原生组件渲染
 * 支持 web-view 内置组件
 
+## 0.0.19
+
+* 调整 domSubTreeLevel 参数默认值为 10，支持范围为 1-10
+* 修复基本事件（如图片 load 事件）在组件 detached 之后才触发的报错提示
+
 ## next version

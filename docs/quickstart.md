@@ -164,7 +164,7 @@ const mpPluginConfig = {
 	},
 	// 优化
 	optimization: {
-		domSubTreeLevel: 5, // 将多少层级的 dom 子树作为一个自定义组件渲染，支持 1 - 5，默认值为 5
+		domSubTreeLevel: 10, // 将多少层级的 dom 子树作为一个自定义组件渲染，支持 1 - 10，默认值为 10
 
 		// 对象复用，当页面被关闭时会回收对象，但是如果有地方保留有对象引用的话，注意要关闭此项，否则可能出问题
 		elementMultiplexing: true, // element 节点复用
