@@ -1,5 +1,6 @@
 const EventTarget = require('./event/event-target')
 const Event = require('./event/event')
+const OriginalCustomEvent = require('./event/custom-event')
 const Location = require('./bom/location')
 const Navigator = require('./bom/navigator')
 const cache = require('./util/cache')
@@ -9,7 +10,6 @@ const History = require('./bom/history')
 const Miniprogram = require('./bom/miniprogram')
 const LocalStorage = require('./bom/local-storage')
 const SessionStorage = require('./bom/session-storage')
-const CustomEvent = require('./event/custom-event')
 const Node = require('./node/node')
 const Element = require('./node/element')
 
@@ -18,6 +18,8 @@ let lastRafTime = 0
 class Window extends EventTarget {
     constructor(pageId) {
         super()
+
+        const timeOrigin = +new Date()
 
         this.$_pageId = pageId
 
@@ -45,6 +47,12 @@ class Window extends EventTarget {
 
         this.$_elementConstructor = function HTMLElement(...args) {
             return Element.$$create(...args)
+        }
+        this.$_customEventConstructor = class CustomEvent extends OriginalCustomEvent {
+            constructor(name = '', options = {}) {
+                options.timeStamp = +new Date() - timeOrigin
+                super(name, options)
+            }
         }
     }
 
@@ -143,7 +151,7 @@ class Window extends EventTarget {
     }
 
     get CustomEvent() {
-        return CustomEvent
+        return this.$_customEventConstructor
     }
 
     get self() {

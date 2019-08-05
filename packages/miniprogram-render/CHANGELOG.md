@@ -28,4 +28,8 @@
 
 * 补充 event 对象 detail 属性的 setter
 
+## 0.0.14
+
+* 修复事件对象的 timeStamp 属性，对齐 web 标准
+
 ## next version

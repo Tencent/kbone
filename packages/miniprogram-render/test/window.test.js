@@ -36,7 +36,10 @@ test('window: navigator', () => {
 })
 
 test('window: CustomEvent', () => {
-    expect(window.CustomEvent).toBe(CustomEvent)
+    const evt = new window.CustomEvent('click')
+    expect(evt.timeStamp < 3600000).toBe(true)
+    expect(evt).toBeInstanceOf(window.CustomEvent)
+    expect(evt).toBeInstanceOf(CustomEvent)
 })
 
 test('window: self', () => {

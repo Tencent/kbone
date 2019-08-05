@@ -197,6 +197,7 @@ test('document: createDocumentFragment', () => {
 test('document: createEvent', () => {
     const evt = document.createEvent('EVENT')
 
+    expect(evt.timeStamp < 3600000).toBe(true)
     expect(evt).toBeInstanceOf(window.CustomEvent)
 
     evt.initEvent('test1')
