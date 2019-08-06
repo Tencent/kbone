@@ -260,6 +260,20 @@
     bindregionchange="onMapRegionChange"
     bindpoitap="onMapPoiTap"
 ><template is="subtree-cover" data="{{childNodes: innerChildNodes}}"/></map>
+<canvas
+    wx:elif="{{wxCompName === 'canvas'}}"
+    class="{{class}}"
+    style="{{style}}"
+    type="{{type}}"
+    canvas-id="{{canvasId}}"
+    disable-scroll="{{disableScroll}}"
+    bindtouchstart="onTouchStart"
+    bindtouchmove="onTouchMove"
+    bindtouchend="onTouchEnd"
+    bindtouchcancel="onTouchCancel"
+    bindlongtap="onCanvasLongTap"
+    binderror="onCanvasError"
+><template is="subtree-cover" data="{{childNodes: innerChildNodes}}"/></canvas>
 <cover-view
     wx:elif="{{wxCompName === 'cover-view'}}"
     class="{{class}}"

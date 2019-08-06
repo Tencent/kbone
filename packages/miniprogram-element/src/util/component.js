@@ -1,5 +1,6 @@
 const view = require('../component/view')
 const video = require('../component/video')
+const canvas = require('../component/canvas')
 const image = require('../component/image')
 const input = require('../component/input')
 const textarea = require('../component/textarea')
@@ -18,6 +19,7 @@ module.exports = {
         input: input.properties,
         textarea: textarea.properties,
         video: video.properties,
+        canvas: canvas.properties,
         picker: picker.properties,
         image: image.properties,
         button: button.properties,
@@ -33,6 +35,7 @@ module.exports = {
         ...input.handles,
         ...textarea.handles,
         ...video.handles,
+        ...canvas.handles,
         ...picker.handles,
         ...image.handles,
         ...button.handles,

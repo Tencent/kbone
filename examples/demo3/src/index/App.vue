@@ -10,6 +10,9 @@
         <video class="video" v-else-if="item === 'video'" src="http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400" :muted="true" :show-mute-btn="true" :controls="true">
           <Inner></Inner>
         </video>
+        <canvas class="canvas" canvas-id="canvas" width="300" height="225" v-else-if="item === 'canvas'">
+          <Inner></Inner>
+        </canvas>
         <!-- 使用 wx-component 来创建内置组件 -->
         <wx-component v-else-if="item === 'view'" :behavior="item">我是视图</wx-component>
         <wx-component v-else-if="item === 'button'" :behavior="item" open-type="share">分享</wx-component>
@@ -57,6 +60,7 @@ export default {
         'input',
         'textarea',
         'video',
+        'canvas',
         'view',
         'button',
         'picker',
