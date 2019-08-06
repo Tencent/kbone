@@ -38,10 +38,10 @@ module.exports = {
     appExtraConfig: {},
     projectConfig: {
         appid: '',
-        projectname: 'demo4',
+        projectname: 'kbone-demo4',
     },
     packageConfig: {
-        name: 'demo4',
+        name: 'kbone-demo4',
     },
     // vue-cli 相关配置
     vue: {

@@ -50,3 +50,4 @@ npm install
 * demo2：reduce-loader + vue-improve-loader
 * demo3：内置组件
 * demo4：vue-cli-plugin-kbone
+* demo5：多页

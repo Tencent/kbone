@@ -1,5 +1,5 @@
 <template>
-  <div class="header">
+  <div class="footer">
     <p>wechat-miniprogram</p>
   </div>
 </template>
@@ -9,8 +9,8 @@ export default {}
 </script>
 
 <style>
-.header {
-  margin-bottom: 10px;
+.footer {
+  margin-top: 10px;
   width: 100%;
   text-align: center;
 }
