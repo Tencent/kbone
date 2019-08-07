@@ -44,3 +44,7 @@
 * 支持 canvas 内置组件
 
 ## next version
+
+* 补充内置组件 id 字段
+* 支持 text 内置组件
+* 支持 label 内置组件

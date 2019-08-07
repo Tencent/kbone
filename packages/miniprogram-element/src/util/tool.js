@@ -8,7 +8,7 @@ const {
 
 const ELEMENT_DIFF_KEYS = ['nodeId', 'pageId', 'tagName', 'compName', 'id', 'class', 'style', 'src', 'isImage', 'isLeaf', 'isSimple', 'content']
 const TEXT_NODE_DIFF_KEYS = ['nodeId', 'pageId', 'content']
-const NEET_SPLIT_CLASS_STYLE_FROM_CUSTOM_ELEMENT = ['INPUT', 'TEXTAREA', 'VIDEO', 'CANVAS', 'WX-COMPONENT'] // 需要分离 class 和 style 的节点
+const NEET_SPLIT_CLASS_STYLE_FROM_CUSTOM_ELEMENT = ['INPUT', 'TEXTAREA', 'VIDEO', 'CANVAS', 'LABEL', 'WX-COMPONENT'] // 需要分离 class 和 style 的节点
 const NEET_RENDER_TO_CUSTOM_ELEMENT = ['IFRAME', ...NEET_SPLIT_CLASS_STYLE_FROM_CUSTOM_ELEMENT] // 必须渲染成自定义组件的节点
 const WX_COMP_NAME_MAP = {
     view: 'view',
@@ -16,6 +16,7 @@ const WX_COMP_NAME_MAP = {
     button: 'button',
     image: 'image',
     map: 'map',
+    text: 'text',
     'cover-view': 'cover-view',
     'cover-image': 'cover-image',
     'live-player': 'live-player',
@@ -25,6 +26,7 @@ const WX_COMP_NAME_MAP = {
     TEXTAREA: 'textarea',
     VIDEO: 'video',
     CANVAS: 'canvas',
+    LABEL: 'label',
 }
 const NOT_SUPPORT = ['IFRAME']
 
@@ -46,8 +48,9 @@ function filterNodes(domNode, level) {
         domInfo.class = `h5-${domInfo.tagName} node-${domInfo.nodeId} ${domInfo.class || ''}` // 增加默认 class
         domInfo.domNode = child
 
-        // 特殊节点不需要处理样式
+        // 特殊节点不需要处理 id 和样式
         if (NEET_SPLIT_CLASS_STYLE_FROM_CUSTOM_ELEMENT.indexOf(child.tagName) >= 0) {
+            domInfo.id = ''
             domInfo.class = `h5-${domInfo.tagName}`
             domInfo.style = ''
         }
@@ -122,7 +125,9 @@ function checkComponentAttr(name, domNode, destData, oldData) {
         }
     }
 
-    // 补充 class 和 style
+    // 补充 id、class 和 style
+    const newId = domNode.id
+    if (!oldData || oldData.id !== newId) destData.id = newId
     const newClass = `wx-comp-${name} node-${domNode.$$nodeId} ${domNode.className || ''}`
     if (!oldData || oldData.class !== newClass) destData.class = newClass
     const newStyle = domNode.style.cssText

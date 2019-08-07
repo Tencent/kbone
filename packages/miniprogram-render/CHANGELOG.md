@@ -38,3 +38,5 @@
 * 提供 dom.$$getContext 方法，用于获取小程序组件的 context 对象
 
 ## next version
+
+* 支持 label 节点

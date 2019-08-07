@@ -2,6 +2,7 @@
 <import src="./template/subtree-cover.wxml"/>
 <view
     wx:if="{{wxCompName === 'view'}}"
+    id="{{id}}"
     class="{{class}}"
     style="{{style}}"
     hover-class="{{hoverClass}}"
@@ -9,8 +10,18 @@
     hover-start-time="{{hoverStayTime}}"
     hover-stay-time="{{hoverStayTime}}"
 ><template is="subtree" data="{{childNodes: innerChildNodes, inCover}}"/></view>
+<text
+    wx:elif="{{wxCompName === 'text'}}"
+    id="{{id}}"
+    class="{{class}}"
+    style="{{style}}"
+    selectable="{{selectable}}"
+    space="{{space}}"
+    decode="{{decode}}"
+><template is="subtree" data="{{childNodes: innerChildNodes, inCover}}"/></text>
 <image
     wx:elif="{{wxCompName === 'image'}}"
+    id="{{id}}"
     class="{{class}}"
     style="{{style}}"
     rendering-mode="{{renderingMode}}"
@@ -23,6 +34,7 @@
 ></image>
 <cover-image
     wx:elif="{{wxCompName === 'cover-image'}}"
+    id="{{id}}"
     class="{{class}}"
     style="{{style}}"
     src="{{src}}"
@@ -31,6 +43,7 @@
 ></cover-image>
 <input
     wx:elif="{{wxCompName === 'input'}}"
+    id="{{id}}"
     class="{{class}}"
     style="{{style}}"
     value="{{value}}"
@@ -58,6 +71,7 @@
 ></input>
 <textarea
     wx:elif="{{wxCompName === 'textarea'}}"
+    id="{{id}}"
     class="{{class}}"
     style="{{style}}"
     value="{{value}}"
@@ -85,6 +99,7 @@
 ></textarea>
 <video 
     wx:elif="{{wxCompName === 'video'}}"
+    id="{{id}}"
     class="{{class}}"
     style="{{style}}"
     src="{{src}}"
@@ -124,6 +139,7 @@
 ><template is="subtree" data="{{childNodes: innerChildNodes, inCover}}"/></video>
 <button
     wx:elif="{{wxCompName === 'button'}}"
+    id="{{id}}"
     class="{{class}}"
     style="{{style}}"
     size="{{size}}"
@@ -151,8 +167,16 @@
     bindopensetting="onButtonOpenSetting"
     bindlaunchapp="onButtonLaunchApp"
 ><template is="subtree" data="{{childNodes: innerChildNodes, inCover}}"/></button>
+<label
+    wx:elif="{{wxCompName === 'label'}}"
+    id="{{id}}"
+    class="{{class}}"
+    style="{{style}}"
+    for="{{for}}"
+><template is="subtree" data="{{childNodes: innerChildNodes, inCover}}"/></label>
 <picker
     wx:elif="{{wxCompName === 'picker'}}"
+    id="{{id}}"
     class="{{class}}"
     style="{{style}}"
     mode="{{mode}}"
@@ -170,6 +194,7 @@
 ><template is="subtree" data="{{childNodes: innerChildNodes, inCover}}"/></picker>
 <live-player
     wx:elif="{{wxCompName === 'live-player'}}"
+    id="{{id}}"
     class="{{class}}"
     style="{{style}}"
     src="{{src}}"
@@ -190,6 +215,7 @@
 ><template is="subtree-cover" data="{{childNodes: innerChildNodes}}"/></live-player>
 <live-pusher
     wx:elif="{{wxCompName === 'live-pusher'}}"
+    id="{{id}}"
     class="{{class}}"
     style="{{style}}"
     url="{{url}}"
@@ -219,6 +245,7 @@
 ><template is="subtree-cover" data="{{childNodes: innerChildNodes}}"/></live-pusher>
 <web-view
     wx:elif="{{wxCompName === 'web-view'}}"
+    id="{{id}}"
     class="{{class}}"
     style="{{style}}"
     src="{{src}}"
@@ -228,6 +255,7 @@
 ></web-view>
 <map
     wx:elif="{{wxCompName === 'map'}}"
+    id="{{id}}"
     class="{{class}}"
     style="{{style}}"
     longitude="{{longitude}}"
@@ -262,6 +290,7 @@
 ><template is="subtree-cover" data="{{childNodes: innerChildNodes}}"/></map>
 <canvas
     wx:elif="{{wxCompName === 'canvas'}}"
+    id="{{id}}"
     class="{{class}}"
     style="{{style}}"
     type="{{type}}"
@@ -276,6 +305,7 @@
 ><template is="subtree-cover" data="{{childNodes: innerChildNodes}}"/></canvas>
 <cover-view
     wx:elif="{{wxCompName === 'cover-view'}}"
+    id="{{id}}"
     class="{{class}}"
     style="{{style}}"
     scroll-top="{{scrollTop}}"
