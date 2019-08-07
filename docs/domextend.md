@@ -81,6 +81,10 @@ window.$$getComputedStyle(document.querySelector('div'), ['backgroundColor']).th
 
 相当于 wx.createIntersectionObserver，用法可参考[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/wxml/wx.createIntersectionObserver.html)。
 
+#### window.$$forceRender
+
+强制清空 setData 队列进行渲染。
+
 #### window.onShareAppMessage
 
 开启 share 配置后，当进行页面分享时会执行的回调。此回调可以返回一个对象，作为小程序处理分享的参数。
@@ -190,6 +194,18 @@ document.body.$$getBoundingClientRect().then(res => {
 
 document.querySelector('div').$$getBoundingClientRect().then(res => {
     // res 的内容可以参考官方文档：https://developers.weixin.qq.com/miniprogram/dev/api/wxml/NodesRef.boundingClientRect.html
+})
+```
+
+#### dom.$$getContext
+
+获取小程序组件的 context 对象，返回一个 promise。
+
+> PS：此接口是小程序的 SelectorQuery 的二次封装
+
+```js
+document.querySelector('video').$$getContext().then(context => {
+    // 这里的 context 仅限于文档中支持的那些：https://developers.weixin.qq.com/miniprogram/dev/api/wxml/NodesRef.context.html
 })
 ```
 

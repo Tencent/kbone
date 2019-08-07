@@ -359,7 +359,12 @@ class Element extends Node {
         return new Promise((resolve, reject) => {
             if (!window) reject()
 
-            window.$$createSelectorQuery().select(`.miniprogram-root >>> .node-${this.$_nodeId}`).context(res => (res && res.context ? resolve(res.context) : reject())).exec()
+            if (this.tagName === 'CANVAS') {
+                // TODO，为了兼容基础库的一个 bug，暂且如此实现
+                wx.createSelectorQuery().in(this._wxComponent).select(`.node-${this.$_nodeId}`).context(res => (res && res.context ? resolve(res.context) : reject())).exec()
+            } else {
+                window.$$createSelectorQuery().select(`.miniprogram-root >>> .node-${this.$_nodeId}`).context(res => (res && res.context ? resolve(res.context) : reject())).exec()
+            }
         })
     }
 

@@ -132,6 +132,13 @@ class Window extends EventTarget {
     }
 
     /**
+     * 强制清空 setData 缓存
+     */
+    $$forceRender() {
+        tool.flushThrottleCache()
+    }
+
+    /**
      * 对外属性和方法
      */
     get document() {

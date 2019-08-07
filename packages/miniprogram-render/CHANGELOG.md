@@ -32,4 +32,9 @@
 
 * 修复事件对象的 timeStamp 属性，对齐 web 标准
 
+## 0.0.15
+
+* 提供 window.$$forceRender 方法，用于强制清空 setData 缓存
+* 提供 dom.$$getContext 方法，用于获取小程序组件的 context 对象
+
 ## next version
