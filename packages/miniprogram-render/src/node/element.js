@@ -351,6 +351,19 @@ class Element extends Node {
     }
 
     /**
+     * 获取对应小程序组件的 context 对象
+     */
+    $$getContext() {
+        tool.flushThrottleCache() // 先清空 setData
+        const window = cache.getWindow(this.$_pageId)
+        return new Promise((resolve, reject) => {
+            if (!window) reject()
+
+            window.$$createSelectorQuery().select(`.miniprogram-root >>> .node-${this.$_nodeId}`).context(res => (res && res.context ? resolve(res.context) : reject())).exec()
+        })
+    }
+
+    /**
      * 设置属性，但不触发更新
      */
     $$setAttributeWithoutUpdate(name, value) {

@@ -48,7 +48,7 @@ function filterNodes(domNode, level) {
 
         // 特殊节点不需要处理样式
         if (NEET_SPLIT_CLASS_STYLE_FROM_CUSTOM_ELEMENT.indexOf(child.tagName) >= 0) {
-            domInfo.class = `h5-${domInfo.tagName} node-${domInfo.nodeId}`
+            domInfo.class = `h5-${domInfo.tagName}`
             domInfo.style = ''
         }
 
@@ -123,7 +123,7 @@ function checkComponentAttr(name, domNode, destData, oldData) {
     }
 
     // 补充 class 和 style
-    const newClass = `wx-comp-${name} ${domNode.className || ''}`
+    const newClass = `wx-comp-${name} node-${domNode.$$nodeId} ${domNode.className || ''}`
     if (!oldData || oldData.class !== newClass) destData.class = newClass
     const newStyle = domNode.style.cssText
     if (!oldData || oldData.style !== newStyle) destData.style = newStyle

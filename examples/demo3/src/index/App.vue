@@ -7,11 +7,11 @@
         <img v-if="item === 'img'" src="https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg" width="50" height="50" @load="onImgLoad" />
         <input v-else-if="item === 'input'" type="number" placeholder="请输入内容" @input="onInput" />
         <textarea v-else-if="item === 'textarea'" placeholder="请输入内容" maxlength="50" :auto-height="true" value="我是 textarea" @input="onTextareaInput" />
-        <video class="video" v-else-if="item === 'video'" src="http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400" :muted="true" :show-mute-btn="true" :controls="true">
+        <video v-else-if="item === 'video'" class="video" src="http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400" :muted="true" :show-mute-btn="true" :controls="true">
           <Inner></Inner>
         </video>
-        <canvas class="canvas" canvas-id="canvas" width="300" height="225" v-else-if="item === 'canvas'">
-          <Inner></Inner>
+        <canvas v-else-if="item === 'canvas'" class="canvas" ref="canvas" canvas-id="canvas" width="300" height="200">
+          <Inner style="margin-top: 100px;"></Inner>
         </canvas>
         <!-- 使用 wx-component 来创建内置组件 -->
         <wx-component v-else-if="item === 'view'" :behavior="item">我是视图</wx-component>
@@ -112,6 +112,27 @@ export default {
     window.onDealWithNotSupportDom = dom => {
       dom.textContent = `标签 ${dom.tagName.toLowerCase()} 暂不支持`
     }
+  },
+  mounted() {
+    const canvas = this.$refs.canvas[0]
+    canvas.$$getContext().then(context => {
+      context.setStrokeStyle("#00ff00")
+      context.setLineWidth(5)
+      context.rect(0, 0, 200, 200)
+      context.stroke()
+      context.setStrokeStyle("#ff0000")
+      context.setLineWidth(2)
+      context.moveTo(160, 100)
+      context.arc(100, 100, 60, 0, 2 * Math.PI, true)
+      context.moveTo(140, 100)
+      context.arc(100, 100, 40, 0, Math.PI, false)
+      context.moveTo(85, 80)
+      context.arc(80, 80, 5, 0, 2 * Math.PI, true)
+      context.moveTo(125, 80)
+      context.arc(120, 80, 5, 0, 2 * Math.PI, true)
+      context.stroke()
+      context.draw()
+    })
   },
   methods: {
     onInput(evt) {
