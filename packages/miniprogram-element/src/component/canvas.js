@@ -15,7 +15,7 @@ module.exports = {
     }, {
         name: 'disableScroll',
         get(domNode) {
-            return !!domNode.getAttribute('disable-scroll') 
+            return !!domNode.getAttribute('disable-scroll')
         },
     }],
     handles: {
