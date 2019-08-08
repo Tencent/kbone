@@ -4,7 +4,10 @@
       <div class="label">{{item}}</div>
       <div class="comp">
         <!-- 可使用 html 标签替代的内置组件 -->
-        <img v-if="item === 'img'" src="https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg" width="50" height="50" @load="onImgLoad" />
+        <div v-if="item === 'img'">
+          <img src="https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg" width="50" height="50" @load="onImgLoad" />
+          <img src="https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg" mode="top" width="50" height="50" @load="onImgLoad" />
+        </div>
         <input v-else-if="item === 'input'" type="number" placeholder="请输入内容" @input="onInput" />
         <textarea v-else-if="item === 'textarea'" placeholder="请输入内容" maxlength="50" :auto-height="true" value="我是 textarea" @input="onTextareaInput" />
         <div v-else-if="item === 'label'">

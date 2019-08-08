@@ -43,8 +43,11 @@
 
 * 支持 canvas 内置组件
 
-## next version
+## 0.0.22
 
 * 补充内置组件 id 字段
 * 支持 text 内置组件
 * 支持 label 内置组件
+* img 标签调整为携带 mode 则使用初始的小程序 image 组件渲染方式渲染
+
+## next version

@@ -6,7 +6,7 @@ const {
     tool,
 } = mp.$$adapter
 
-const ELEMENT_DIFF_KEYS = ['nodeId', 'pageId', 'tagName', 'compName', 'id', 'class', 'style', 'src', 'isImage', 'isLeaf', 'isSimple', 'content']
+const ELEMENT_DIFF_KEYS = ['nodeId', 'pageId', 'tagName', 'compName', 'id', 'class', 'style', 'src', 'mode', 'lazyLoad', 'showMenuByLongpress', 'isImage', 'isLeaf', 'isSimple', 'content']
 const TEXT_NODE_DIFF_KEYS = ['nodeId', 'pageId', 'content']
 const NEET_SPLIT_CLASS_STYLE_FROM_CUSTOM_ELEMENT = ['INPUT', 'TEXTAREA', 'VIDEO', 'CANVAS', 'LABEL', 'WX-COMPONENT'] // 需要分离 class 和 style 的节点
 const NEET_RENDER_TO_CUSTOM_ELEMENT = ['IFRAME', ...NEET_SPLIT_CLASS_STYLE_FROM_CUSTOM_ELEMENT] // 必须渲染成自定义组件的节点
@@ -59,8 +59,14 @@ function filterNodes(domNode, level) {
         domInfo.isImage = domInfo.type === 'element' && domInfo.tagName === 'img'
         if (domInfo.isImage) {
             domInfo.src = child.src ? tool.completeURL(child.src, window.location.origin, true) : ''
+            domInfo.mode = child.getAttribute('mode') || ''
+            domInfo.lazyLoad = !!child.getAttribute('lazy-load')
+            domInfo.showMenuByLongpress = !!child.getAttribute('show-menu-by-longpress')
         } else {
             domInfo.src = ''
+            domInfo.mode = ''
+            domInfo.lazyLoad = false
+            domInfo.showMenuByLongpress = false
         }
 
         // 判断叶子节点

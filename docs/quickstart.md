@@ -340,9 +340,11 @@ npm install --save-dev vue-improve-loader
 部分内置组件可以直接使用 html 标签替代，比如 view 组件可以使用 div 标签替代。目前已支持的可替代组件列表：
 
 * input 组件 --> input 标签
+* image 组件 --> img 标签
 * textarea 组件 --> textarea 标签
 * video 组件 --> video 标签
 * canvas 组件 --> canvas 标签
+* label 组件 --> label 标签
 
 还有一部分内置组件在 html 中没有标签可替代，那就需要使用 `wx-component` 标签，基本用法如下：
 
@@ -365,6 +367,7 @@ npm install --save-dev vue-improve-loader
 * live-pusher 组件
 * web-view 组件
 * map 组件
+* text 组件
 
 > PS：button 标签不会被渲染成 button 内置组件，如若需要请使用 wx-component。
 > PS：原生组件的表现在小程序中表现会和 web 端标签有些不一样，具体可[参考原生组件说明文档](https://developers.weixin.qq.com/miniprogram/dev/component/native-component.html)。
