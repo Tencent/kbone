@@ -1,4 +1,13 @@
 {
+  "name": "omi-kbone",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [
+    "omi",
+    "kbone",
+    "mp"
+  ],
   "scripts": {
     "build": "rimraf build/web && cross-env NODE_ENV=production webpack --config scripts/webpack.config.js --progress --hide-modules",
     "mp": "cross-env NODE_ENV=production webpack --config scripts/webpack.mp.config.js --progress --hide-modules"
@@ -27,6 +36,7 @@
     "stylehacks": "^4.0.3",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.2.3",
-    "mp-webpack-plugin": "latest"
-  }
+    "mp-webpack-plugin2": "latest"
+  },
+  "license": "MIT"
 }
