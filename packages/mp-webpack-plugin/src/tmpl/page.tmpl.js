@@ -120,7 +120,7 @@ Page({
     },
     onUnload() {
         this.window.$$trigger('beforeunload')
-        this.app.$destroy()
+        this.app.$destroy && this.app.$destroy()
         this.document.body.$$recycle() // 回收 dom 节点
 
         mp.destroyPage(this.pageId)
