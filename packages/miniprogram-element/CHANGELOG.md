@@ -51,3 +51,5 @@
 * img 标签调整为携带 mode 则使用初始的小程序 image 组件渲染方式渲染
 
 ## next version
+
+* 支持 checkbox 内置组件

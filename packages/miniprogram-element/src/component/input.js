@@ -130,7 +130,13 @@ module.exports = {
         },
 
         onCheckboxChange(evt) {
-            console.log(evt.detail)
+            const value = evt.detail.value || []
+            if (value.indexOf(this.domNode.value) >= 0) {
+                this.domNode.checked = true
+            } else {
+                this.domNode.checked = false
+            }
+            this.callSimpleEvent('change', evt)
         },
     },
 }

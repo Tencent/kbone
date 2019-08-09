@@ -8,7 +8,11 @@
           <img src="https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg" width="50" height="50" @load="onImgLoad" />
           <img src="https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg" mode="top" width="50" height="50" @load="onImgLoad" />
         </div>
-        <input v-else-if="item === 'input'" type="number" placeholder="请输入内容" @input="onInput" />
+        <div v-else-if="item === 'input'">
+          <input type="text" placeholder="请输入文本内容" @input="onInput" v-model="input.inputText" />
+          <input type="number" placeholder="请输入数字内容" @input="onInput" v-model="input.inputNumber" />
+          <input type="checkbox" @input="onInput" v-model="input.inputCheckbox" />
+        </div>
         <textarea v-else-if="item === 'textarea'" placeholder="请输入内容" maxlength="50" :auto-height="true" value="我是 textarea" @input="onTextareaInput" />
         <div v-else-if="item === 'label'">
           <label>
@@ -89,6 +93,11 @@ export default {
         // 'web-view',
         'iframe',
       ],
+      input: {
+        inputText: '',
+        inputNumber: '',
+        inputCheckbox: true,
+      },
       map: {
         markers: [{
           iconPath: 'https://i.loli.net/2019/07/27/5d3c141367f2784840.jpg',
@@ -123,6 +132,17 @@ export default {
         }],
       }
     }
+  },
+  watch: {
+    'input.inputText'(value) {
+      console.log('input.inputText', value)
+    },
+    'input.inputNumber'(value) {
+      console.log('input.inputNumber', value)
+    },
+    'input.inputCheckbox'(value) {
+      console.log('input.inputCheckbox', value)
+    },
   },
   created() {
     window.onDealWithNotSupportDom = dom => {

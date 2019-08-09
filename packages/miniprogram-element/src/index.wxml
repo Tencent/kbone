@@ -41,7 +41,7 @@
     bindload="onCoverImageLoad"
     binderror="onCoverImageError"
 ></cover-image>
-<template wx:elif="{{wxCompName === 'input'}}">
+<block wx:elif="{{wxCompName === 'input'}}">
     <checkbox-group wx-if="{{type === 'checkbox'}}" bindchange="onCheckboxChange"><checkbox
         id="{{id}}"
         class="{{class}}"
@@ -79,7 +79,7 @@
         bindconfirm="onInputConfirm"
         bindkeyboardheightchange="onInputKeyBoardHeightChange"
     ></input>
-</template>
+</block>
 <textarea
     wx:elif="{{wxCompName === 'textarea'}}"
     id="{{id}}"

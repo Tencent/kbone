@@ -20,7 +20,7 @@ module.exports = {
         onWebviewMessage(evt) {
             this.callSimpleEvent('message', evt)
         },
-        
+
         onWebviewLoad(evt) {
             this.callSimpleEvent('load', evt)
         },

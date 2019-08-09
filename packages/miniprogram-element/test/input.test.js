@@ -23,6 +23,13 @@ test('input', async() => {
 
     // value
     await _.checkString(input, node, 'value', 'value', '')
+    node.setAttribute('type', 'checkbox')
+    node.setAttribute('value', undefined)
+    await _.sleep(10)
+    expect(node.value).toBe('on')
+    expect(input.data.value).toBe('on')
+    node.setAttribute('type', undefined)
+    await _.sleep(10)
 
     // type
     expect(input.data.type).toBe('text')
@@ -101,6 +108,9 @@ test('input', async() => {
 
     // adjustPosition
     await _.checkBoolean(input, node, 'adjustPosition', 'adjust-position', true)
+
+    // checked
+    await _.checkBoolean(input, node, 'checked', 'checked', false)
 
     // event
     const wxInput = input.querySelector('.wx-comp-input')

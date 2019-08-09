@@ -340,6 +340,7 @@ npm install --save-dev vue-improve-loader
 部分内置组件可以直接使用 html 标签替代，比如 view 组件可以使用 div 标签替代。目前已支持的可替代组件列表：
 
 * input 组件 --> input 标签
+* checkbox 组件 --> input 标签（type = checkbox）
 * image 组件 --> img 标签
 * textarea 组件 --> textarea 标签
 * video 组件 --> video 标签

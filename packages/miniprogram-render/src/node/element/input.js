@@ -103,9 +103,9 @@ class HTMLInputElement extends Element {
     }
 
     get value() {
-        const type = this.type
+        const type = this.$_attrs.get('type')
         const value = this.$_attrs.get('value')
-        
+
         if (type === 'checkbox' && value === undefined) return 'on'
         return value
     }
