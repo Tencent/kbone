@@ -41,7 +41,9 @@
 
 * 支持 label 节点
 
-## next version
+## 0.0.17
 
 * 废弃 label 节点
 * 支持 label 标签
+
+## next version

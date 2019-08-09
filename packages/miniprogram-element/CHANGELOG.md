@@ -50,7 +50,9 @@
 * 支持 label 内置组件
 * img 标签调整为携带 mode 则使用初始的小程序 image 组件渲染方式渲染
 
-## next version
+## 0.0.23
 
 * 支持 checkbox 内置组件
 * 废弃 label 内置组件，使用 label 标签替代支持
+
+## next version
