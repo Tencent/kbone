@@ -94,6 +94,16 @@ module.exports = {
             const value = domNode.getAttribute('adjust-position')
             return value !== undefined ? !!value : true
         },
+    }, {
+        name: 'checked',
+        get(domNode) {
+            return !!domNode.getAttribute('checked')
+        },
+    }, {
+        name: 'color',
+        get(domNode) {
+            return domNode.getAttribute('color') || '#09BB07'
+        },
     }],
     handles: {
         onInputInput(evt) {
@@ -117,6 +127,10 @@ module.exports = {
 
         onInputKeyBoardHeightChange(evt) {
             this.callSimpleEvent('keyboardheightchange', evt)
+        },
+
+        onCheckboxChange(evt) {
+            console.log(evt.detail)
         },
     },
 }
