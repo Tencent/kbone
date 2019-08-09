@@ -178,13 +178,6 @@
     bindopensetting="onButtonOpenSetting"
     bindlaunchapp="onButtonLaunchApp"
 ><template is="subtree" data="{{childNodes: innerChildNodes, inCover}}"/></button>
-<label
-    wx:elif="{{wxCompName === 'label'}}"
-    id="{{id}}"
-    class="{{class}}"
-    style="{{style}}"
-    for="{{for}}"
-><template is="subtree" data="{{childNodes: innerChildNodes, inCover}}"/></label>
 <picker
     wx:elif="{{wxCompName === 'picker'}}"
     id="{{id}}"

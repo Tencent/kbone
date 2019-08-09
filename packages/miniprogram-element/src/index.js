@@ -168,14 +168,13 @@ Component({
             if (!originNode) return
 
             EventTarget.$$process(originNode, eventName, evt, extra, (domNode, evt, isCapture) => {
-                // 处理特殊节点事件
-                if (domNode.tagName === 'A' && evt.type === 'click' && !isCapture) {
+                // 延迟触发跳转，先等所有同步回调处理完成
+                setTimeout(() => {
+                    if (evt.cancelable) return
                     const window = cache.getWindow(this.pageId)
 
-                    // 延迟触发跳转，先等所有同步回调处理完成
-                    setTimeout(() => {
-                        if (evt.cancelable) return
-
+                    // 处理特殊节点事件
+                    if (domNode.tagName === 'A' && evt.type === 'click' && !isCapture) {
                         // 处理 a 标签的跳转
                         const href = domNode.href
                         const target = domNode.target
@@ -184,8 +183,33 @@ Component({
 
                         if (target === '_blank') window.open(href)
                         else window.location.href = href
-                    }, 0)
-                }
+                    } else if (domNode.tagName === 'LABEL' && evt.type === 'click' && !isCapture) {
+                        // 处理 label 的点击
+                        const forValue = domNode.getAttribute('for')
+                        let targetDomNode
+                        if (forValue) {
+                            targetDomNode = window.document.getElementById(forValue)
+                        } else {
+                            targetDomNode = domNode.querySelector('input')
+                        }
+
+                        if (targetDomNode && targetDomNode.tagName === 'INPUT' && !targetDomNode.disabled) {
+                            // 找到了目标节点
+                            if (_.checkEventAccessDomNode(evt, targetDomNode, domNode)) return
+
+                            const type = targetDomNode.type
+                            switch (type) {
+                            case 'checkbox':
+                                targetDomNode.checked = !targetDomNode.checked
+                                this.callSimpleEvent('change', {detail: {value: targetDomNode.checked ? [targetDomNode.value] : []}}, targetDomNode)
+                                break
+                            default:
+                                targetDomNode.focus()
+                                break
+                            }
+                        }
+                    }
+                }, 0)
             })
         },
 

@@ -17,12 +17,20 @@
         <div v-else-if="item === 'label'">
           <label>
             <div>输入框1</div>
-            <input/>
+            <input placeholder="输入框1"/>
           </label>
           <label for="input2">
             <div>输入框2</div>
           </label>
-          <input id="input2"/>
+          <input id="input2" placeholder="输入框2"/>
+          <label>
+            <div>checkbox1</div>
+            <input type="checkbox"/>
+          </label>
+          <label for="input3">
+            <div>checkbox2</div>
+          </label>
+          <input type="checkbox" id="input3"/>
         </div>
         <video v-else-if="item === 'video'" class="video" src="http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400" :muted="true" :show-mute-btn="true" :controls="true">
           <Inner></Inner>

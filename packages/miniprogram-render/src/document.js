@@ -12,7 +12,6 @@ const Input = require('./node/element/input')
 const Textarea = require('./node/element/textarea')
 const Video = require('./node/element/video')
 const Canvas = require('./node/element/canvas')
-const Label = require('./node/element/label')
 const NotSupport = require('./node/element/not-support')
 const WxComponent = require('./node/element/wx-component')
 const Cookie = require('./bom/cookie')
@@ -24,7 +23,6 @@ const CONSTRUCTOR_MAP = {
     TEXTAREA: Textarea,
     VIDEO: Video,
     CANVAS: Canvas,
-    LABEL: Label,
     'WX-COMPONENT': WxComponent,
 }
 

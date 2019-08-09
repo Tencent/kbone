@@ -53,3 +53,4 @@
 ## next version
 
 * 支持 checkbox 内置组件
+* 废弃 label 内置组件，使用 label 标签替代支持

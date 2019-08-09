@@ -345,7 +345,6 @@ npm install --save-dev vue-improve-loader
 * textarea 组件 --> textarea 标签
 * video 组件 --> video 标签
 * canvas 组件 --> canvas 标签
-* label 组件 --> label 标签
 
 还有一部分内置组件在 html 中没有标签可替代，那就需要使用 `wx-component` 标签，基本用法如下：
 
