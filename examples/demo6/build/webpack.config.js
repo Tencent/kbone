@@ -5,7 +5,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 module.exports = {
   mode: 'production',
   entry: {
-    index: path.resolve(__dirname, '../src/index/main.js'),
+    index: path.resolve(__dirname, '../src/main.js'),
+    log: path.resolve(__dirname, '../src/log.js'),
   },
   output: {
     path: path.resolve(__dirname, '../dist/web'),
@@ -23,9 +24,14 @@ module.exports = {
         ],
       },
       {
-        test: /\.js$/,
+        test: /\.[t|j]sx?$/,
         loader: 'babel-loader',
-        exclude: /node_modules/
+        exclude: /node_modules/,
+        options: {
+          plugins : [ 
+            ['transform-react-jsx', {pragma: 'h'}]
+          ] 
+        }
       },
       {
         test: /\.(png|jpg|gif|svg)$/,

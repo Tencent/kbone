@@ -45,8 +45,8 @@ module.exports = {
 	},
 	// 项目配置，会被合并到 project.config.json
 	projectConfig: {
-		appid: 'wxfaf6dad43f57c6bd',
-        projectname: 'kbone-demo1',
+		appid: '',
+        projectname: 'kbone-demo6',
 	},
 	// 包配置，会被合并到 package.json
 	packageConfig: {
