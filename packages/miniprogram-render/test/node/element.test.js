@@ -267,6 +267,26 @@ test('element: dataset', () => {
         kLmNOpQr: 'klm'
     })
     expect(node3.outerHTML).toEqual('<div data-a="abc" data-bc-d-efg="hij" data-hi-j="321" data-k-lm-n-op-qr="klm"></div>')
+
+    const node4 = document.createElement('div')
+    node4.setAttribute('data-a', 'abc')
+    node4.setAttribute('data-bc-d-efg', 'hij')
+    node4.setAttribute('data-hi-j', '321')
+    node4.setAttribute('data-k-lm-n-op-qr', 'klm')
+    expect(node4.dataset).toEqual({
+        a: 'abc',
+        bcDEfg: 'hij',
+        hiJ: '321',
+        kLmNOpQr: 'klm'
+    })
+    expect(node4.outerHTML).toEqual('<div data-a="abc" data-bc-d-efg="hij" data-hi-j="321" data-k-lm-n-op-qr="klm"></div>')
+    node4.dataset.bcDEfg = 'haha'
+    expect(node4.getAttribute('data-bc-d-efg')).toBe('haha')
+    expect(node4.hasAttribute('data-bc-d-efg')).toBe(true)
+    expect(node4.hasAttribute('data-bc-d-efgh')).toBe(false)
+    node4.removeAttribute('data-bc-d-efg')
+    expect(node4.getAttribute('data-bc-d-efg')).toBe(undefined)
+    expect(node4.hasAttribute('data-bc-d-efg')).toBe(false)
 })
 
 test('element: attributes', () => {

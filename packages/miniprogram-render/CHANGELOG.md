@@ -46,4 +46,8 @@
 * 废弃 label 节点
 * 支持 label 标签
 
+## 0.0.18
+
+* 修复节点的 dataset 无法通过 setAttribute/getAttribute/hasAttribute/removeAttribute 操作的问题
+
 ## next version

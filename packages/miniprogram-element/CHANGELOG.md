@@ -55,4 +55,9 @@
 * 支持 checkbox 内置组件
 * 废弃 label 内置组件，使用 label 标签替代支持
 
+## 0.0.24
+
+* 支持 radio 内置组件
+* 修复组件 wxml 条件语句语法问题
+
 ## next version

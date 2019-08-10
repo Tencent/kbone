@@ -42,3 +42,9 @@ A：暂未支持，不过已经计划之中。
 
 Q：为什么 img 标签有 mode 属性和没有 mode 属性表现会不太一样？
 A：因为 img 标签有 mode 属性在底层会被渲染成 background-image 模式（即小程序 image 组件默认的形态），没有 mode 属性会被渲染成和 web 端相同的 img 模式。
+
+Q：为什么不支持 radio-group/checkbox-group 内置组件？
+A：因为 radio-group/checkbox-group 内置组件下的 radio/checkbox 不支持跨自定义组件，可以使用 input 的 change 事件来替代 radio-group/checkbox-group 的 change 事件，通过获取 input 的 checked/value 也可以获取到其状态（类似 web 端的表现）。
+
+Q：项目中用到的图片等静态资源要如何处理？
+A：目前暂不支持相对路径，故静态资源可以考虑转成 base64 或者使用网络地址。

@@ -42,7 +42,16 @@
     binderror="onCoverImageError"
 ></cover-image>
 <block wx:elif="{{wxCompName === 'input'}}">
-    <checkbox-group wx-if="{{type === 'checkbox'}}" bindchange="onCheckboxChange"><checkbox
+    <radio-group wx:if="{{type === 'radio'}}" bindchange="onRadioChange"><radio
+        id="{{id}}"
+        class="{{class}}"
+        style="{{style}}"
+        value="{{value}}"
+        disabled="{{disabled}}"
+        checked="{{checked}}"
+        color="{{color}}"
+    ><template is="subtree" data="{{childNodes: innerChildNodes, inCover}}"/></radio></radio-group>
+    <checkbox-group wx:elif="{{type === 'checkbox'}}" bindchange="onCheckboxChange"><checkbox
         id="{{id}}"
         class="{{class}}"
         style="{{style}}"

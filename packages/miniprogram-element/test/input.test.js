@@ -23,6 +23,11 @@ test('input', async() => {
 
     // value
     await _.checkString(input, node, 'value', 'value', '')
+    node.setAttribute('type', 'radio')
+    node.setAttribute('value', undefined)
+    await _.sleep(10)
+    expect(node.value).toBe('on')
+    expect(input.data.value).toBe('on')
     node.setAttribute('type', 'checkbox')
     node.setAttribute('value', undefined)
     await _.sleep(10)

@@ -10,7 +10,10 @@
         </div>
         <div v-else-if="item === 'input'">
           <input type="text" placeholder="请输入文本内容" @input="onInput" v-model="input.inputText" />
-          <input type="number" placeholder="请输入数字内容" @input="onInput" v-model="input.inputNumber" />
+          <input type="number" placeholder="请输入数字内容" @input="onInput" v-model="input.inputNumber" data-is-number="yes" />
+          <input type="radio" />
+          <input type="radio" name="radio" value="radio1" @input="onInput" v-model="input.inputRadio" />
+          <input type="radio" name="radio" value="radio2" @input="onInput" v-model="input.inputRadio" />
           <input type="checkbox" @input="onInput" v-model="input.inputCheckbox" />
         </div>
         <textarea v-else-if="item === 'textarea'" placeholder="请输入内容" maxlength="50" :auto-height="true" value="我是 textarea" @input="onTextareaInput" />
@@ -24,13 +27,21 @@
           </label>
           <input id="input2" placeholder="输入框2"/>
           <label>
+            <div>radio1</div>
+            <input name="label-radio" type="radio" checked="checked"/>
+          </label>
+          <label for="input3">
+            <div>radio2</div>
+          </label>
+          <input name="label-radio" type="radio" id="input3"/>
+          <label>
             <div>checkbox1</div>
             <input type="checkbox"/>
           </label>
-          <label for="input3">
+          <label for="input4">
             <div>checkbox2</div>
           </label>
-          <input type="checkbox" id="input3"/>
+          <input type="checkbox" id="input4"/>
         </div>
         <video v-else-if="item === 'video'" class="video" src="http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400" :muted="true" :show-mute-btn="true" :controls="true">
           <Inner></Inner>
@@ -104,6 +115,7 @@ export default {
       input: {
         inputText: '',
         inputNumber: '',
+        inputRadio: 'radio2',
         inputCheckbox: true,
       },
       map: {
@@ -148,6 +160,9 @@ export default {
     'input.inputNumber'(value) {
       console.log('input.inputNumber', value)
     },
+    'input.inputRadio'(value) {
+      console.log('input.inputRadio', value)
+    },
     'input.inputCheckbox'(value) {
       console.log('input.inputCheckbox', value)
     },
@@ -180,7 +195,7 @@ export default {
   },
   methods: {
     onInput(evt) {
-      console.log('onInput', evt.target.value)
+      console.log('onInput', evt.target.value, evt)
     },
 
     onTextareaInput(evt) {

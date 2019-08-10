@@ -198,14 +198,21 @@ Component({
                             if (_.checkEventAccessDomNode(evt, targetDomNode, domNode)) return
 
                             const type = targetDomNode.type
-                            switch (type) {
-                            case 'checkbox':
+                            if (type === 'radio') {
+                                targetDomNode.checked = true
+                                const name = targetDomNode.name
+                                const otherDomNodes = window.document.querySelectorAll(`input[name=${name}]`) || []
+                                for (const otherDomNode of otherDomNodes) {
+                                    if (otherDomNode.type === 'radio' && otherDomNode !== targetDomNode) {
+                                        otherDomNode.checked = false
+                                    }
+                                }
+                                this.callSimpleEvent('change', {detail: {value: targetDomNode.value}}, targetDomNode)
+                            } else if (type === 'checkbox') {
                                 targetDomNode.checked = !targetDomNode.checked
                                 this.callSimpleEvent('change', {detail: {value: targetDomNode.checked ? [targetDomNode.value] : []}}, targetDomNode)
-                                break
-                            default:
+                            } else {
                                 targetDomNode.focus()
-                                break
                             }
                         }
                     }

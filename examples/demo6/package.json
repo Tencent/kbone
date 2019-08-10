@@ -9,8 +9,8 @@
     "mp"
   ],
   "scripts": {
-    "build": "rimraf build/web && cross-env NODE_ENV=production webpack --config scripts/webpack.config.js --progress --hide-modules",
-    "mp": "cross-env NODE_ENV=production webpack --config scripts/webpack.mp.config.js --progress --hide-modules"
+    "build": "rimraf build/web && cross-env NODE_ENV=production webpack --config build/webpack.config.js --progress --hide-modules",
+    "mp": "cross-env NODE_ENV=production webpack --config build/webpack.mp.config.js --progress --hide-modules"
   },
   "dependencies": {
     "omis": "latest"

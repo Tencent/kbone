@@ -51,3 +51,4 @@ npm install
 * demo3：内置组件
 * demo4：vue-cli-plugin-kbone
 * demo5：多页
+* demo6：[omis](https://github.com/Tencent/omi/tree/master/packages/omis) + kbone

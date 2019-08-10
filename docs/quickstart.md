@@ -337,14 +337,15 @@ npm install --save-dev vue-improve-loader
 
 ### 使用小程序内置组件
 
-部分内置组件可以直接使用 html 标签替代，比如 view 组件可以使用 div 标签替代。目前已支持的可替代组件列表：
+部分内置组件可以直接使用 html 标签替代，比如 input 组件可以使用 input 标签替代。目前已支持的可替代组件列表：
 
-* input 组件 --> input 标签
-* checkbox 组件 --> input 标签（type = checkbox）
-* image 组件 --> img 标签
-* textarea 组件 --> textarea 标签
-* video 组件 --> video 标签
-* canvas 组件 --> canvas 标签
+* `<input />` --> input 组件
+* `<input type="radio" />` --> radio 组件
+* `<input type="checkbox" />` --> checkbox 组件
+* `<img />` --> image 组件
+* `<textarea></textarea>` --> textarea 组件
+* `<video></video>`  --> video 组件
+* `<canvas></canvas>` --> canvas 组件
 
 还有一部分内置组件在 html 中没有标签可替代，那就需要使用 `wx-component` 标签，基本用法如下：
 
@@ -399,3 +400,9 @@ if (!process.env.isMiniprogram && isIPhone) {
 3. 如果需要使用第三方库，尽量选择使用轻量的库，以缩减构建出来的代码体积。
 4. vue 组件命名尽量不要和小程序内置组件同名。
 5. 避免使用 id 选择器、属性选择器，尽量少用标签选择器和 * 选择器，尽可能使用 class 选择器代替。
+6. 为了确保模板解析不出问题，标签上布尔值属性建议使用 = 号赋值的写法，如下例子所示：
+
+```html
+<input type="checkbox" checked="checked" />
+<input type="checkbox" :checked="{{true}}" />
+```
