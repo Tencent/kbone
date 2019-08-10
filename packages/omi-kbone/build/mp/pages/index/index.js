@@ -1,7 +1,7 @@
 const mp = require('miniprogram-render')
 const config = require('../../config')
 
-/* INIT_FUNCTION */
+function init(window, document) {require('../../common/vendors~index~log.js')(window, document);require('../../common/index.js')(window, document)}
 
 /**
  * 处理一些特殊的页面
@@ -157,7 +157,7 @@ Page({
             return shareOptions
         }
     },
-    /* PAGE_SCROLL_FUNCTION */
-    /* REACH_BOTTOM_FUNCTION */
-    /* PULL_DOWN_REFRESH_FUNCTION */
+    
+    
+    
 })
