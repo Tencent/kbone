@@ -3,8 +3,17 @@
     <div class="group" v-for="item in list" :key="item">
       <div class="label">{{item}}</div>
       <div class="comp">
+        <div v-if="item === 'normal'">
+          <div>
+            <div class="inline">hello </div>
+            <div class="inline">world!</div>
+          </div>
+          <div>
+            <a class="margin-left-10 block" href="javascript: void(0)">fake jump</a>
+          </div>
+        </div>
         <!-- 可使用 html 标签替代的内置组件 -->
-        <div v-if="item === 'img'">
+        <div v-else-if="item === 'img'">
           <img src="https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg" width="50" height="50" @load="onImgLoad" />
           <img src="https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg" mode="top" width="50" height="50" @load="onImgLoad" />
         </div>
@@ -93,6 +102,7 @@ export default {
   data() {
     return {
       list: [
+        'normal',
         'img',
         'input',
         'textarea',
@@ -239,6 +249,18 @@ export default {
   height: 40px;
   line-height: 40px;
   background: rgba(7, 193, 96, 0.06);
+}
+
+.inline {
+  display: inline;
+}
+
+.block {
+  display: block;
+}
+
+.margin-left-10 {
+  margin-left: 10px;
 }
 
 .comp {
