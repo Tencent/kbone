@@ -115,7 +115,8 @@ function tokenize(content, handler) {
         //     }
         // }
 
-        unary = voidMap[tagName.toLowerCase()] || !!unary
+        // vue 组件名可能和 dom 标签相同拼写，所以区分大小写
+        unary = voidMap[tagName] || !!unary
 
         if (!unary) stack.push(tagName)
 
