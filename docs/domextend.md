@@ -1,4 +1,4 @@
-## dom/bom 扩展 api
+## DOM/BOM 扩展 API
 
 为了更好地适配小程序端接口，此方案在原有的 dom 接口之上进行了扩展。
 
@@ -61,7 +61,7 @@ window.$$trigger('beforeunload', {
 | 参数 | 类型 | 描述 |
 |---|---|---|
 | dom | String | dom 节点 |
-| computedStyle | Array<String> | 指定样式名列表 |
+| computedStyle | Array\<String\> | 指定样式名列表 |
 
 ```js
 window.$$getComputedStyle(document.body, ['backgroundColor']).then(res => {
