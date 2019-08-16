@@ -41,6 +41,23 @@ dom 树本身是没有固定模式可循的，它的层级、dom 节点数量都
 
 此方案虽然将整个 vue runtime 包含进来并提供了适配层，但是也不是银弹，无法满足所有场景，具体限制可参考[问题文档](./docs/question.md)。
 
+## 贡献者
+
+<table>
+  <tbody>
+    <tr>
+      <td><a target="_blank" href="https://github.com/JuneAndGreen"><img width="60px"
+            src="https://avatars2.githubusercontent.com/u/7931744?s=60&amp;v=4"></a></td>
+      <td><a target="_blank" href="https://github.com/dntzhang"><img width="60px"
+            src="https://avatars2.githubusercontent.com/u/7917954?s=60&amp;v=4"></a></td>
+      <td><a target="_blank" href="https://github.com/stephenml"><img width="60px"
+            src="https://avatars1.githubusercontent.com/u/11658803?s=60&amp;v=4"></a></td>
+      <td width="92px"><a target="_blank" href="https://github.com/wechat-miniprogram/kbone/graphs/contributors">感谢你们</a></td>
+    </tr>
+
+  </tbody>
+</table>
+
 ## 案例
 
 ![微信开放社区](./docs/images/code1.jpg)
