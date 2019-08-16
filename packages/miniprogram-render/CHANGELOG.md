@@ -50,4 +50,8 @@
 
 * 修复节点的 dataset 无法通过 setAttribute/getAttribute/hasAttribute/removeAttribute 操作的问题
 
+## 0.0.19
+
+* 兼容补充 window 对象的 HTMLIFrameElement 属性，用于支持 react 环境
+
 ## next version

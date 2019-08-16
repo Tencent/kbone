@@ -20,6 +20,10 @@ beforeAll(() => {
     document = res.document
 })
 
+test('window: init', () => {
+    expect(window.HTMLIFrameElement).toBeInstanceOf(Function)
+})
+
 test('window: document', () => {
     expect(window.document).toBe(document)
     expect(window.document).toBeInstanceOf(Document)

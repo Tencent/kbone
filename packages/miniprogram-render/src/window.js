@@ -54,6 +54,9 @@ class Window extends EventTarget {
                 super(name, options)
             }
         }
+
+        // react 环境兼容
+        this.HTMLIFrameElement = function() {}
     }
 
     /**
