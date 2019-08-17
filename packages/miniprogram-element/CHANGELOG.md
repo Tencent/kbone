@@ -61,3 +61,5 @@
 * 修复组件 wxml 条件语句语法问题
 
 ## next version
+
+* 支持 camera 内置组件

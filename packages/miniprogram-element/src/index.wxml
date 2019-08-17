@@ -1,7 +1,24 @@
 <import src="./template/subtree.wxml"/>
 <import src="./template/subtree-cover.wxml"/>
+<!-- 视图容器 -->
+<cover-image
+    wx:if="{{wxCompName === 'cover-image'}}"
+    id="{{id}}"
+    class="{{class}}"
+    style="{{style}}"
+    src="{{src}}"
+    bindload="onCoverImageLoad"
+    binderror="onCoverImageError"
+></cover-image>
+<cover-view
+    wx:elif="{{wxCompName === 'cover-view'}}"
+    id="{{id}}"
+    class="{{class}}"
+    style="{{style}}"
+    scroll-top="{{scrollTop}}"
+><template is="subtree-cover" data="{{childNodes: innerChildNodes}}"/></cover-view>
 <view
-    wx:if="{{wxCompName === 'view'}}"
+    wx:elif="{{wxCompName === 'view'}}"
     id="{{id}}"
     class="{{class}}"
     style="{{style}}"
@@ -10,6 +27,7 @@
     hover-start-time="{{hoverStayTime}}"
     hover-stay-time="{{hoverStayTime}}"
 ><template is="subtree" data="{{childNodes: innerChildNodes, inCover}}"/></view>
+<!-- 基础内容 -->
 <text
     wx:elif="{{wxCompName === 'text'}}"
     id="{{id}}"
@@ -19,28 +37,37 @@
     space="{{space}}"
     decode="{{decode}}"
 ><template is="subtree" data="{{childNodes: innerChildNodes, inCover}}"/></text>
-<image
-    wx:elif="{{wxCompName === 'image'}}"
+<!-- 表单组件 -->
+<button
+    wx:elif="{{wxCompName === 'button'}}"
     id="{{id}}"
     class="{{class}}"
     style="{{style}}"
-    rendering-mode="{{renderingMode}}"
-    src="{{src}}"
-    mode="{{mode}}"
-    lazy-load="{{lazyLoad}}"
-    show-menu-by-longpress="{{showMenuByLongpress}}"
-    bindload="onImageLoad"
-    binderror="onImageError"
-></image>
-<cover-image
-    wx:elif="{{wxCompName === 'cover-image'}}"
-    id="{{id}}"
-    class="{{class}}"
-    style="{{style}}"
-    src="{{src}}"
-    bindload="onCoverImageLoad"
-    binderror="onCoverImageError"
-></cover-image>
+    size="{{size}}"
+    type="{{type}}"
+    plain="{{plain}}"
+    disabled="{{disabled}}"
+    loading="{{loading}}"
+    form-type="{{formType}}"
+    open-type="{{openType}}"
+    hover-class="{{hoverClass}}"
+    hover-stop-propagation="{{hoverStopPropagation}}"
+    hover-start-time="{{hoverStartTime}}"
+    hover-stay-time="{{hoverStayTime}}"
+    lang="{{lang}}"
+    session-from="{{sessionFrom}}"
+    send-message-title="{{sendMessageTitle}}"
+    send-message-path="{{sendMessagePath}}"
+    send-message-img="{{sendMessageImg}}"
+    app-parameter="{{appParameter}}"
+    show-message-card="{{showMessageCard}}"
+    bindgetuserinfo="onButtonGetUserInfo"
+    bindcontact="onButtonContact"
+    bindgetphonenumber="onButtonGetPhoneNumber"
+    binderror="onButtonError"
+    bindopensetting="onButtonOpenSetting"
+    bindlaunchapp="onButtonLaunchApp"
+><template is="subtree" data="{{childNodes: innerChildNodes, inCover}}"/></button>
 <block wx:elif="{{wxCompName === 'input'}}">
     <radio-group wx:if="{{type === 'radio'}}" bindchange="onRadioChange"><radio
         id="{{id}}"
@@ -89,6 +116,24 @@
         bindkeyboardheightchange="onInputKeyBoardHeightChange"
     ></input>
 </block>
+<picker
+    wx:elif="{{wxCompName === 'picker'}}"
+    id="{{id}}"
+    class="{{class}}"
+    style="{{style}}"
+    mode="{{mode}}"
+    disabled="{{disabled}}"
+    range="{{range}}"
+    range-key="{{rangeKey}}"
+    value="{{value}}"
+    start="{{start}}"
+    end="{{end}}"
+    fields="{{fields}}"
+    custom-item="{{customItem}}"
+    bindchange="onPickerChange"
+    bindcolumnchange="onPickerColumnChange"
+    bindcancel="onPickerCancel"
+><template is="subtree" data="{{childNodes: innerChildNodes, inCover}}"/></picker>
 <textarea
     wx:elif="{{wxCompName === 'textarea'}}"
     id="{{id}}"
@@ -117,94 +162,34 @@
     bindconfirm="onTextareaConfirm"
     bindkeyboardheightchange="onTextareaKeyBoardHeightChange"
 ></textarea>
-<video 
-    wx:elif="{{wxCompName === 'video'}}"
-    id="{{id}}"
-    class="{{class}}"
-    style="{{style}}"
-    src="{{src}}"
-    duration="{{duration}}"
-    controls="{{controls}}"
-    danmu-list="{{danmuList}}"
-    danmu-btn="{{danmuBtn}}"
-    enable-danmu="{{enableDanmu}}"
-    autoplay="{{autoplay}}"
-    loop="{{loop}}"
-    muted="{{muted}}"
-    initial-time="{{initialTime}}"
-    direction="{{direction}}"
-    show-progress="{{showProgress}}"
-    show-fullscreen-btn="{{showFullscreenBtn}}"
-    show-play-btn="{{showPlayBtn}}"
-    show-center-play-btn="{{showCenterPlayBtn}}"
-    enable-progress-gesture="{{enableProgressGesture}}"
-    object-fit="{{objectFit}}"
-    poster="{{poster}}"
-    show-mute-btn="{{showMuteBtn}}"
-    title="{{title}}"
-    play-btn-position="{{playBtnPosition}}"
-    enable-play-gesture="{{enablePlayGesture}}"
-    auto-pause-if-navigate="{{autoPauseIfNavigate}}"
-    auto-pause-if-open-native="{{autoPauseIfOpenNative}}"
-    vslide-gesture="{{vslideGesture}}"
-    vslide-gesture-in-fullscreen="{{vslideGestureInFullscreen}}"
-    bindplay="onVideoPlay"
-    bindpause="onVideoPause"
-    bindended="onVideoEnded"
-    bindtimeupdate="onVideoTimeUpdate"
-    bindfullscreenchange="onVideoFullScreenChange"
-    bindwaiting="onVideoWaiting"
-    binderror="onVideoError"
-    bindprogress="onVideoProgress"
-><template is="subtree" data="{{childNodes: innerChildNodes, inCover}}"/></video>
-<button
-    wx:elif="{{wxCompName === 'button'}}"
-    id="{{id}}"
-    class="{{class}}"
-    style="{{style}}"
-    size="{{size}}"
-    type="{{type}}"
-    plain="{{plain}}"
-    disabled="{{disabled}}"
-    loading="{{loading}}"
-    form-type="{{formType}}"
-    open-type="{{openType}}"
-    hover-class="{{hoverClass}}"
-    hover-stop-propagation="{{hoverStopPropagation}}"
-    hover-start-time="{{hoverStartTime}}"
-    hover-stay-time="{{hoverStayTime}}"
-    lang="{{lang}}"
-    session-from="{{sessionFrom}}"
-    send-message-title="{{sendMessageTitle}}"
-    send-message-path="{{sendMessagePath}}"
-    send-message-img="{{sendMessageImg}}"
-    app-parameter="{{appParameter}}"
-    show-message-card="{{showMessageCard}}"
-    bindgetuserinfo="onButtonGetUserInfo"
-    bindcontact="onButtonContact"
-    bindgetphonenumber="onButtonGetPhoneNumber"
-    binderror="onButtonError"
-    bindopensetting="onButtonOpenSetting"
-    bindlaunchapp="onButtonLaunchApp"
-><template is="subtree" data="{{childNodes: innerChildNodes, inCover}}"/></button>
-<picker
-    wx:elif="{{wxCompName === 'picker'}}"
+<!-- 媒体组件 -->
+<camera
+    wx:elif="{{wxCompName === 'camera'}}"
     id="{{id}}"
     class="{{class}}"
     style="{{style}}"
     mode="{{mode}}"
-    disabled="{{disabled}}"
-    range="{{range}}"
-    range-key="{{rangeKey}}"
-    value="{{value}}"
-    start="{{start}}"
-    end="{{end}}"
-    fields="{{fields}}"
-    custom-item="{{customItem}}"
-    bindchange="onPickerChange"
-    bindcolumnchange="onPickerColumnChange"
-    bindcancel="onPickerCancel"
-><template is="subtree" data="{{childNodes: innerChildNodes, inCover}}"/></picker>
+    device-position="{{devicePosition}}"
+    flash="{{flash}}"
+    frame-size="{{frameSize}}"
+    bindstop="onCameraStop"
+    binderror="onCameraError"
+    bindinitdone="onCameraInitDone"
+    bindscancode="onCameraScanCode"
+><template is="subtree-cover" data="{{childNodes: innerChildNodes}}"/></camera>
+<image
+    wx:elif="{{wxCompName === 'image'}}"
+    id="{{id}}"
+    class="{{class}}"
+    style="{{style}}"
+    rendering-mode="{{renderingMode}}"
+    src="{{src}}"
+    mode="{{mode}}"
+    lazy-load="{{lazyLoad}}"
+    show-menu-by-longpress="{{showMenuByLongpress}}"
+    bindload="onImageLoad"
+    binderror="onImageError"
+></image>
 <live-player
     wx:elif="{{wxCompName === 'live-player'}}"
     id="{{id}}"
@@ -256,16 +241,47 @@
     bindbgmprogress="onLivePusherBgmProgress"
     bindbgmcomplete="onLivePusherBgmComplete"
 ><template is="subtree-cover" data="{{childNodes: innerChildNodes}}"/></live-pusher>
-<web-view
-    wx:elif="{{wxCompName === 'web-view'}}"
+<video 
+    wx:elif="{{wxCompName === 'video'}}"
     id="{{id}}"
     class="{{class}}"
     style="{{style}}"
     src="{{src}}"
-    bindmessage="onWebviewMessage"
-    bindload="onWebviewLoad"
-    binderror="onWebviewError"
-></web-view>
+    duration="{{duration}}"
+    controls="{{controls}}"
+    danmu-list="{{danmuList}}"
+    danmu-btn="{{danmuBtn}}"
+    enable-danmu="{{enableDanmu}}"
+    autoplay="{{autoplay}}"
+    loop="{{loop}}"
+    muted="{{muted}}"
+    initial-time="{{initialTime}}"
+    direction="{{direction}}"
+    show-progress="{{showProgress}}"
+    show-fullscreen-btn="{{showFullscreenBtn}}"
+    show-play-btn="{{showPlayBtn}}"
+    show-center-play-btn="{{showCenterPlayBtn}}"
+    enable-progress-gesture="{{enableProgressGesture}}"
+    object-fit="{{objectFit}}"
+    poster="{{poster}}"
+    show-mute-btn="{{showMuteBtn}}"
+    title="{{title}}"
+    play-btn-position="{{playBtnPosition}}"
+    enable-play-gesture="{{enablePlayGesture}}"
+    auto-pause-if-navigate="{{autoPauseIfNavigate}}"
+    auto-pause-if-open-native="{{autoPauseIfOpenNative}}"
+    vslide-gesture="{{vslideGesture}}"
+    vslide-gesture-in-fullscreen="{{vslideGestureInFullscreen}}"
+    bindplay="onVideoPlay"
+    bindpause="onVideoPause"
+    bindended="onVideoEnded"
+    bindtimeupdate="onVideoTimeUpdate"
+    bindfullscreenchange="onVideoFullScreenChange"
+    bindwaiting="onVideoWaiting"
+    binderror="onVideoError"
+    bindprogress="onVideoProgress"
+><template is="subtree" data="{{childNodes: innerChildNodes, inCover}}"/></video>
+<!-- 地图 -->
 <map
     wx:elif="{{wxCompName === 'map'}}"
     id="{{id}}"
@@ -301,6 +317,7 @@
     bindregionchange="onMapRegionChange"
     bindpoitap="onMapPoiTap"
 ><template is="subtree-cover" data="{{childNodes: innerChildNodes}}"/></map>
+<!-- 画布 -->
 <canvas
     wx:elif="{{wxCompName === 'canvas'}}"
     id="{{id}}"
@@ -316,14 +333,20 @@
     bindlongtap="onCanvasLongTap"
     binderror="onCanvasError"
 ><template is="subtree-cover" data="{{childNodes: innerChildNodes}}"/></canvas>
-<cover-view
-    wx:elif="{{wxCompName === 'cover-view'}}"
+<!-- 开放能力 -->
+<web-view
+    wx:elif="{{wxCompName === 'web-view'}}"
     id="{{id}}"
     class="{{class}}"
     style="{{style}}"
-    scroll-top="{{scrollTop}}"
-><template is="subtree-cover" data="{{childNodes: innerChildNodes}}"/></cover-view>
+    src="{{src}}"
+    bindmessage="onWebviewMessage"
+    bindload="onWebviewLoad"
+    binderror="onWebviewError"
+></web-view>
+<!-- 其他 -->
 <block
     wx:elif="{{wxCompName === 'not-support'}}"
 >{{content}}</block>
+<!-- 子节点 -->
 <template is="subtree" data="{{childNodes, inCover}}"/>

@@ -83,6 +83,9 @@
         <wx-component v-else-if="item === 'live-pusher'" :behavior="item" :class="item" mode="RTC" :autopush="true" url="https://domain/push_stream" @statechange="onLivePusherStateChange">
           <Inner></Inner>
         </wx-component>
+        <wx-component v-else-if="item === 'camera'" :behavior="item" :class="item">
+          <Inner></Inner>
+        </wx-component>
         <wx-component v-else-if="item === 'web-view'" :behavior="item" :class="item" src="https://www.qq.com/"></wx-component>
         <!-- 不支持标签 -->
         <iframe v-else-if="item === 'iframe'"></iframe>
@@ -119,6 +122,7 @@ export default {
         'cover-image',
         'live-player',
         'live-pusher',
+        'camera',
         // 'web-view',
         'iframe',
       ],
@@ -278,7 +282,7 @@ export default {
   height: 200px;
 }
 
-.live-player, .live-pusher {
+.live-player, .live-pusher, .camera {
   width: 300px;
   height: 225px;
 }

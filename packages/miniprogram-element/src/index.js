@@ -1,6 +1,7 @@
 const mp = require('miniprogram-render')
 const _ = require('./util/tool')
 const initHandle = require('./util/init-handle')
+const component = require('./util/component')
 
 const {
     cache,
@@ -8,9 +9,11 @@ const {
     tool,
 } = mp.$$adapter
 const {
-    WX_COMP_NAME_MAP,
     NOT_SUPPORT,
 } = _
+const {
+    wxCompNameMap,
+} = component
 
 // dom 子树作为自定义组件渲染的层级数
 const MAX_DOM_SUB_TREE_LEVEL = 10
@@ -142,7 +145,7 @@ Component({
             if (tagName === 'WX-COMPONENT') {
                 // 无可替换 html 标签
                 if (data.wxCompName !== domNode.$$behavior) newData.wxCompName = domNode.$$behavior
-                const wxCompName = WX_COMP_NAME_MAP[domNode.$$behavior]
+                const wxCompName = wxCompNameMap[domNode.$$behavior]
                 if (wxCompName) _.checkComponentAttr(wxCompName, domNode, newData, data)
             } else if (NOT_SUPPORT.indexOf(tagName) >= 0) {
                 // 不支持标签
@@ -150,7 +153,7 @@ Component({
                 if (data.content !== domNode.content) newData.content = domNode.textContent
             } else {
                 // 可替换 html 标签
-                const wxCompName = WX_COMP_NAME_MAP[tagName]
+                const wxCompName = wxCompNameMap[tagName]
                 if (wxCompName) _.checkComponentAttr(wxCompName, domNode, newData, data)
             }
 

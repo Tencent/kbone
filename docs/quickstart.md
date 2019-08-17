@@ -342,8 +342,8 @@ npm install --save-dev vue-improve-loader
 * `<input />` --> input 组件
 * `<input type="radio" />` --> radio 组件
 * `<input type="checkbox" />` --> checkbox 组件
-* `<img />` --> image 组件
 * `<textarea></textarea>` --> textarea 组件
+* `<img />` --> image 组件
 * `<video></video>`  --> video 组件
 * `<canvas></canvas>` --> canvas 组件
 
@@ -358,17 +358,18 @@ npm install --save-dev vue-improve-loader
 
 `wx-component` 已支持内置组件列表：
 
-* view 组件
-* image 组件
-* picker 组件
-* button 组件
-* cover-view 组件
 * cover-image 组件
+* cover-view 组件
+* view 组件
+* text 组件
+* button 组件
+* picker 组件
+* camera 组件
+* image 组件
 * live-player 组件
 * live-pusher 组件
-* web-view 组件
 * map 组件
-* text 组件
+* web-view 组件
 
 > PS：button 标签不会被渲染成 button 内置组件，如若需要请使用 wx-component。
 > PS：原生组件的表现在小程序中表现会和 web 端标签有些不一样，具体可[参考原生组件说明文档](https://developers.weixin.qq.com/miniprogram/dev/component/native-component.html)。
