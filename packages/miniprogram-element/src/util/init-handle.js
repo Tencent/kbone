@@ -22,7 +22,7 @@ module.exports = {
 
         if (tagName === 'WX-COMPONENT') {
             // 无可替换 html 标签
-            data.wxCompName = domNode.$$behavior
+            data.wxCompName = domNode.behavior
             const wxCompName = wxCompNameMap[data.wxCompName]
             if (wxCompName) _.checkComponentAttr(wxCompName, domNode, data)
         } else if (NOT_SUPPORT.indexOf(tagName) >= 0) {

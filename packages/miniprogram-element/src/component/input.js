@@ -124,6 +124,9 @@ module.exports = {
         },
 
         onInputBlur(evt) {
+            if (!this.domNode) return
+
+            this.domNode.setAttribute('focus', false)
             this.callSimpleEvent('blur', evt)
         },
 

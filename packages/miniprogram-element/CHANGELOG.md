@@ -60,6 +60,10 @@
 * 支持 radio 内置组件
 * 修复组件 wxml 条件语句语法问题
 
-## next version
+## 0.0.26
 
 * 支持 camera 内置组件
+* 支持 switch 内置组件
+* 支持 slider 内置组件
+
+## next version

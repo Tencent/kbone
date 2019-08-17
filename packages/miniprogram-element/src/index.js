@@ -144,8 +144,8 @@ Component({
 
             if (tagName === 'WX-COMPONENT') {
                 // 无可替换 html 标签
-                if (data.wxCompName !== domNode.$$behavior) newData.wxCompName = domNode.$$behavior
-                const wxCompName = wxCompNameMap[domNode.$$behavior]
+                if (data.wxCompName !== domNode.behavior) newData.wxCompName = domNode.behavior
+                const wxCompName = wxCompNameMap[domNode.behavior]
                 if (wxCompName) _.checkComponentAttr(wxCompName, domNode, newData, data)
             } else if (NOT_SUPPORT.indexOf(tagName) >= 0) {
                 // 不支持标签
@@ -194,10 +194,15 @@ Component({
                             targetDomNode = window.document.getElementById(forValue)
                         } else {
                             targetDomNode = domNode.querySelector('input')
+
+                            // 寻找 switch 节点
+                            if (!targetDomNode) targetDomNode = domNode.querySelector('wx-component[behavior=switch]')
                         }
 
-                        if (targetDomNode && targetDomNode.tagName === 'INPUT' && !targetDomNode.disabled) {
-                            // 找到了目标节点
+                        if (!targetDomNode || !!targetDomNode.getAttribute('disabled')) return
+
+                        // 找到了目标节点
+                        if (targetDomNode.tagName === 'INPUT') {
                             if (_.checkEventAccessDomNode(evt, targetDomNode, domNode)) return
 
                             const type = targetDomNode.type
@@ -216,6 +221,15 @@ Component({
                                 this.callSimpleEvent('change', {detail: {value: targetDomNode.checked ? [targetDomNode.value] : []}}, targetDomNode)
                             } else {
                                 targetDomNode.focus()
+                            }
+                        } else if (targetDomNode.tagName === 'WX-COMPONENT') {
+                            if (_.checkEventAccessDomNode(evt, targetDomNode, domNode)) return
+
+                            const behavior = targetDomNode.behavior
+                            if (behavior === 'switch') {
+                                const checked = !targetDomNode.getAttribute('checked')
+                                targetDomNode.setAttribute('checked', checked)
+                                this.callSimpleEvent('change', {detail: {value: checked}}, targetDomNode)
                             }
                         }
                     }

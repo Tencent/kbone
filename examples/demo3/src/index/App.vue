@@ -27,30 +27,42 @@
         </div>
         <textarea v-else-if="item === 'textarea'" placeholder="请输入内容" maxlength="50" :auto-height="true" value="我是 textarea" @input="onTextareaInput" />
         <div v-else-if="item === 'label'">
+          <!-- input -->
           <label>
             <div>输入框1</div>
-            <input placeholder="输入框1"/>
+            <input placeholder="输入框1" @change="onLabelChange"/>
           </label>
           <label for="input2">
             <div>输入框2</div>
           </label>
-          <input id="input2" placeholder="输入框2"/>
+          <input id="input2" placeholder="输入框2" @change="onLabelChange"/>
+          <!-- radio -->
           <label>
             <div>radio1</div>
-            <input name="label-radio" type="radio" checked="checked"/>
+            <input name="label-radio" type="radio" checked="checked" @change="onLabelChange"/>
           </label>
           <label for="input3">
             <div>radio2</div>
           </label>
-          <input name="label-radio" type="radio" id="input3"/>
+          <input name="label-radio" type="radio" id="input3" @change="onLabelChange"/>
+          <!-- checkbox -->
           <label>
             <div>checkbox1</div>
-            <input type="checkbox"/>
+            <input type="checkbox" @change="onLabelChange"/>
           </label>
           <label for="input4">
             <div>checkbox2</div>
           </label>
-          <input type="checkbox" id="input4"/>
+          <input type="checkbox" id="input4" @change="onLabelChange"/>
+          <!-- switch -->
+          <label>
+            <div>switch1</div>
+            <wx-component behavior="switch" @change="onLabelChange"></wx-component>
+          </label>
+          <label for="switch2">
+            <div>switch2</div>
+          </label>
+          <wx-component behavior="switch" id="switch2" @change="onLabelChange"></wx-component>
         </div>
         <video v-else-if="item === 'video'" class="video" src="http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400" :muted="true" :show-mute-btn="true" :controls="true">
           <Inner></Inner>
@@ -70,6 +82,11 @@
             <span>选择城市</span>
           </wx-component>
         </div>
+        <div v-else-if="item === 'switch'">
+          <wx-component :behavior="item" type="switch" :checked="true" @change="onSwitchChange"></wx-component>
+          <wx-component :behavior="item" type="checkbox" @change="onSwitchChange"></wx-component>
+        </div>
+        <wx-component v-else-if="item === 'slider'" :behavior="item" min="50" max="200" :show-value="true" @change="onSliderChange"></wx-component>
         <wx-component v-else-if="item === 'map'" :behavior="item" :class="item" :longitude="113.324520" :latitude="23.099994" :scale="14" :controls="map.controls" :markers="map.markers" :polyline="map.polyline" :show-location="true" @markertap="onMapMarkerTap" @regionchange="onMapRegionChange" @controltap="onMapControlTap">
           <Inner></Inner>
         </wx-component>
@@ -116,6 +133,8 @@ export default {
         'text',
         'button',
         'picker',
+        'switch',
+        'slider',
         'image',
         'map',
         'cover-view',
@@ -242,6 +261,18 @@ export default {
 
     onLivePusherStateChange(evt) {
       console.log('onLivePusherStateChange', evt.detail)
+    },
+
+    onSwitchChange(evt) {
+      console.log('onSwitchChange', evt.detail)
+    },
+
+    onLabelChange(evt) {
+      console.log('onLabelChange', evt.detail)
+    },
+
+    onSliderChange(evt) {
+      console.log('onSliderChange', evt.detail)
     },
   }
 }

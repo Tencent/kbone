@@ -30,6 +30,14 @@ const wxComponentMap = {
         wxCompName: 'picker',
         config: require('../component/picker'),
     },
+    slider: {
+        wxCompName: 'slider',
+        config: require('../component/slider'),
+    },
+    switch: {
+        wxCompName: 'switch',
+        config: require('../component/switch'),
+    },
     TEXTAREA: {
         wxCompName: 'textarea',
         config: require('../component/textarea'),

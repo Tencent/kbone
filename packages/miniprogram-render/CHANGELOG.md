@@ -54,4 +54,8 @@
 
 * 兼容补充 window 对象的 HTMLIFrameElement 属性，用于支持 react 环境
 
+## 0.0.20
+
+* 修复 querySelector/querySelectorAll 选择不到 wx-component 节点的问题
+
 ## next version

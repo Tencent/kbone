@@ -342,6 +342,7 @@ npm install --save-dev vue-improve-loader
 * `<input />` --> input 组件
 * `<input type="radio" />` --> radio 组件
 * `<input type="checkbox" />` --> checkbox 组件
+* `<label><label>` --> label 组件
 * `<textarea></textarea>` --> textarea 组件
 * `<img />` --> image 组件
 * `<video></video>`  --> video 组件
@@ -364,6 +365,8 @@ npm install --save-dev vue-improve-loader
 * text 组件
 * button 组件
 * picker 组件
+* slider 组件
+* switch 组件
 * camera 组件
 * image 组件
 * live-player 组件

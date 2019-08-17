@@ -134,6 +134,37 @@
     bindcolumnchange="onPickerColumnChange"
     bindcancel="onPickerCancel"
 ><template is="subtree" data="{{childNodes: innerChildNodes, inCover}}"/></picker>
+<slider
+    wx:elif="{{wxCompName === 'slider'}}"
+    id="{{id}}"
+    class="{{class}}"
+    style="{{style}}"
+    min="{{min}}"
+    max="{{max}}"
+    step="{{step}}"
+    disabled="{{disabled}}"
+    value="{{value}}"
+    color="{{color}}"
+    selected-color="{{selectedColor}}"
+    active-color="{{activeColor}}"
+    background-color="{{backgroundColor}}"
+    block-size="{{blockSize}}"
+    block-color="{{blockColor}}"
+    show-value="{{showValue}}"
+    bindchange="onSliderChange"
+    bindchanging="onSliderChanging"
+></slider>
+<switch
+    wx:elif="{{wxCompName === 'switch'}}"
+    id="{{id}}"
+    class="{{class}}"
+    style="{{style}}"
+    checked="{{checked}}"
+    disabled="{{disabled}}"
+    type="{{type}}"
+    color="{{color}}"
+    bindchange="onSwitchChange"
+></switch>
 <textarea
     wx:elif="{{wxCompName === 'textarea'}}"
     id="{{id}}"
