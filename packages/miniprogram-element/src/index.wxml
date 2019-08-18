@@ -28,6 +28,32 @@
     hover-stay-time="{{hoverStayTime}}"
 ><template is="subtree" data="{{childNodes: innerChildNodes, inCover}}"/></view>
 <!-- 基础内容 -->
+<icon
+    wx:elif="{{wxCompName === 'icon'}}"
+    id="{{id}}"
+    class="{{class}}"
+    style="{{style}}"
+    type="{{type}}"
+    size="{{size}}"
+    color="{{color}}"
+></icon>
+<progress
+    wx:elif="{{wxCompName === 'progress'}}"
+    id="{{id}}"
+    class="{{class}}"
+    style="{{style}}"
+    percent="{{percent}}"
+    show-info="{{showInfo}}"
+    border-radius="{{borderRadius}}"
+    font-size="{{fontSize}}"
+    stroke-width="{{strokeWidth}}"
+    color="{{color}}"
+    active-color="{{activeColor}}"
+    background-color="{{backgroundColor}}"
+    active="{{active}}"
+    active-mode="{{activeMode}}"
+    bindactiveend="onProgressActiveEnd"
+></progress>
 <text
     wx:elif="{{wxCompName === 'text'}}"
     id="{{id}}"

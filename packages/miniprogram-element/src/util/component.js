@@ -13,6 +13,14 @@ const wxComponentMap = {
         config: require('../component/view'),
     },
     // 基础内容
+    icon: {
+        wxCompName: 'icon',
+        config: require('../component/icon'),
+    },
+    progress: {
+        wxCompName: 'progress',
+        config: require('../component/progress'),
+    },
     text: {
         wxCompName: 'text',
         config: require('../component/text'),

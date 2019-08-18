@@ -75,6 +75,17 @@
         <wx-component v-else-if="item === 'text'" :behavior="item" :selectable="true">{{'this is first line\nthis is second line'}}</wx-component>
         <wx-component v-else-if="item === 'button'" :behavior="item" open-type="share">分享</wx-component>
         <wx-component v-else-if="item === 'image'" :behavior="item" src="https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg"></wx-component>
+        <div v-else-if="item === 'icon'">
+          <div><wx-component :behavior="item" v-for="subItem in icon.size" :key="subItem" type="success" :size="subItem"></wx-component></div>
+          <div><wx-component :behavior="item" v-for="subItem in icon.color" :key="subItem" type="success" size="40" :color="subItem"></wx-component></div>
+          <div><wx-component :behavior="item" v-for="subItem in icon.type" :key="subItem" :type="subItem" size="40"></wx-component></div>
+        </div>
+        <div v-else-if="item === 'progress'">
+          <wx-component :behavior="item" percent="20" :show-info="true"></wx-component>
+          <wx-component :behavior="item" percent="40" stroke-width="12"></wx-component>
+          <wx-component :behavior="item" percent="60" color="pink"></wx-component>
+          <wx-component :behavior="item" percent="80" :active="true"></wx-component>
+        </div>
         <div v-else-if="item === 'picker'">
           <wx-component :behavior="item" :value="1" :range="['美国', '中国', '巴西', '日本']">点击&nbsp;&nbsp;选择国家</wx-component>
           <wx-component :behavior="item" mode="region" @change="onPickerChange">
@@ -133,6 +144,8 @@ export default {
         'view',
         'text',
         'button',
+        'icon',
+        'progress',
         'picker',
         'switch',
         'slider',
@@ -147,6 +160,11 @@ export default {
         'xxxx',
         'iframe',
       ],
+      icon: {
+        size: [20, 30, 40, 50, 60, 70],
+        color: ['red', 'orange', 'yellow', 'green', 'rgb(0,255,255)', 'blue', 'purple'],
+        type: ['success', 'success_no_circle', 'info', 'warn', 'waiting', 'cancel', 'download', 'search', 'clear']
+      },
       input: {
         inputText: '',
         inputNumber: '',

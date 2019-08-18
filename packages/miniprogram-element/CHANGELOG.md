@@ -66,4 +66,9 @@
 * 支持 switch 内置组件
 * 支持 slider 内置组件
 
+## 0.0.28
+
+* 支持 icon 内置组件
+* 支持 progress 内置组件
+
 ## next version
