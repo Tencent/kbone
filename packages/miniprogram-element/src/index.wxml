@@ -391,6 +391,15 @@
     binderror="onCanvasError"
 ><template is="subtree-cover" data="{{childNodes: innerChildNodes}}"/></canvas>
 <!-- 开放能力 -->
+<open-data
+    wx:elif="{{wxCompName === 'open-data'}}"
+    id="{{id}}"
+    class="{{class}}"
+    style="{{style}}"
+    type="{{type}}"
+    open-gid="{{openGid}}"
+    lang="{{lang}}"
+></open-data>
 <web-view
     wx:elif="{{wxCompName === 'web-view'}}"
     id="{{id}}"

@@ -71,4 +71,8 @@
 * 支持 icon 内置组件
 * 支持 progress 内置组件
 
+## 0.0.29
+
+* 支持 open-data 内置组件
+
 ## next version

@@ -82,6 +82,10 @@ const wxComponentMap = {
         config: require('../component/canvas'),
     },
     // 开放能力
+    'open-data': {
+        wxCompName: 'open-data',
+        config: require('../component/open-data'),
+    },
     'web-view': {
         wxCompName: 'web-view',
         config: require('../component/web-view'),

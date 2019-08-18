@@ -374,6 +374,7 @@ npm install --save-dev vue-improve-loader
 * live-player 组件
 * live-pusher 组件
 * map 组件
+* open-data 组件
 * web-view 组件
 
 > PS：button 标签不会被渲染成 button 内置组件，如若需要请使用 wx-component。

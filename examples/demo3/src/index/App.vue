@@ -86,6 +86,16 @@
           <wx-component :behavior="item" percent="60" color="pink"></wx-component>
           <wx-component :behavior="item" percent="80" :active="true"></wx-component>
         </div>
+        <div v-else-if="item === 'open-data'">
+          <wx-component :behavior="item" type="userNickName"></wx-component>
+          <wx-component :behavior="item" type="userAvatarUrl"></wx-component>
+          <wx-component :behavior="item" type="userGender"></wx-component>
+          <wx-component :behavior="item" type="userGender" lang="zh_CN"></wx-component>
+          <wx-component :behavior="item" type="userCity"></wx-component>
+          <wx-component :behavior="item" type="userProvince"></wx-component>
+          <wx-component :behavior="item" type="userCountry"></wx-component>
+          <wx-component :behavior="item" type="userLanguage"></wx-component>
+        </div>
         <div v-else-if="item === 'picker'">
           <wx-component :behavior="item" :value="1" :range="['美国', '中国', '巴西', '日本']">点击&nbsp;&nbsp;选择国家</wx-component>
           <wx-component :behavior="item" mode="region" @change="onPickerChange">
@@ -146,6 +156,7 @@ export default {
         'button',
         'icon',
         'progress',
+        'open-data',
         'picker',
         'switch',
         'slider',
