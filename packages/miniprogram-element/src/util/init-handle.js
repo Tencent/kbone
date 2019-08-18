@@ -25,6 +25,7 @@ module.exports = {
             data.wxCompName = domNode.behavior
             const wxCompName = wxCompNameMap[data.wxCompName]
             if (wxCompName) _.checkComponentAttr(wxCompName, domNode, data)
+            else console.warn(`value "${data.wxCompName}" is not supported for wx-component's behavior`)
         } else if (NOT_SUPPORT.indexOf(tagName) >= 0) {
             // 不支持标签
             data.wxCompName = 'not-support'

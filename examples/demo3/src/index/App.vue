@@ -105,6 +105,7 @@
         </wx-component>
         <wx-component v-else-if="item === 'web-view'" :behavior="item" :class="item" src="https://www.qq.com/"></wx-component>
         <!-- 不支持标签 -->
+        <wx-component v-else-if="item === 'xxxx'" :behavior="item"></wx-component>
         <iframe v-else-if="item === 'iframe'"></iframe>
       </div>
     </div>
@@ -143,6 +144,7 @@ export default {
         'live-pusher',
         'camera',
         // 'web-view',
+        'xxxx',
         'iframe',
       ],
       input: {
