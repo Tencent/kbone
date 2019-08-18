@@ -10,6 +10,7 @@ const History = require('./bom/history')
 const Miniprogram = require('./bom/miniprogram')
 const LocalStorage = require('./bom/local-storage')
 const SessionStorage = require('./bom/session-storage')
+const Performance = require('./bom/performance')
 const Node = require('./node/node')
 const Element = require('./node/element')
 
@@ -33,9 +34,9 @@ class Window extends EventTarget {
         this.$_screen = new Screen()
         this.$_history = new History(this.$_location)
         this.$_miniprogram = new Miniprogram(pageId)
-
         this.$_localStorage = new LocalStorage(this)
         this.$_sessionStorage = new SessionStorage(this)
+        this.$_performance = new Performance(timeOrigin)
 
         this.$_nowFetchingWebviewInfoPromise = null // 正在拉取 webview 端信息的 promise 实例
 
@@ -254,6 +255,10 @@ class Window extends EventTarget {
 
     get Date() {
         return Date
+    }
+
+    get performance() {
+        return this.$_performance
     }
 
     open(url) {
