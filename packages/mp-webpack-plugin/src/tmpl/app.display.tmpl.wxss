@@ -1,0 +1,55 @@
+body, p, address, article, aside, div, footer, header, hgroup, main, nav, section, blockquote, figcaption, figure, center, hr, h1, h2, h3, h4, h5, h6, ul, menu, dir, ol, dd, dl, dt, form, legend, fieldset, pre, details, summary {
+    display: block;
+}
+
+q, output, a, abbr, b, button, code, i, label, small, span, strong, time {
+    display: inline;
+}
+
+input, textarea, keygen, select, button, img, br {
+    display: inline-block;
+}
+
+datalist, area, param, template {
+    display: none;
+}
+
+table {
+    display: table;
+}
+
+thead {
+    display: table-header-group;
+}
+
+tbody {
+    display: table-row-group;
+}
+
+tfoot {
+    display: table-footer-group;
+}
+
+col {
+    display: table-column;
+}
+
+colgroup {
+    display: table-column-group;
+}
+
+tr {
+    display: table-row;
+}
+
+td, th {
+    display: table-cell;
+}
+
+caption {
+    display: table-caption;
+}
+
+li {
+    display: list-item;
+}

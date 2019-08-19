@@ -136,6 +136,10 @@ const mpPluginConfig = {
         // 跳转到 origin 之外的页面时处理方式，值同 notFound
         accessDenied: 'home',
     },
+    // 构建输出配置
+    generate: {
+        appWxss: 'default', // app.wxss 输出配置，默认值为 default，即输出默认标签样式，其他可选值：none - 输出为空，display - 只输出 display 相关的内容
+    },
     // app 配置，同 https://developers.weixin.qq.com/miniprogram/dev/reference/configuration/app.html#window
     app: {
         backgroundTextStyle: 'dark',
@@ -366,6 +370,7 @@ npm install --save-dev vue-improve-loader
 * progress 组件
 * text 组件
 * button 组件
+* editor 组件
 * picker 组件
 * slider 组件
 * switch 组件

@@ -9,6 +9,7 @@ const _ = require('./tool/utils')
 
 const PluginName = 'MpPlugin'
 const pageJsTmpl = fs.readFileSync(path.resolve(__dirname, './tmpl/page.tmpl.js'), 'utf8')
+const appDisplayWxssTmpl = fs.readFileSync(path.resolve(__dirname, './tmpl/app.display.tmpl.wxss'), 'utf8')
 const appWxssTmpl = fs.readFileSync(path.resolve(__dirname, './tmpl/app.tmpl.wxss'), 'utf8')
 const projectConfigJsonTmpl = require('./tmpl/project.config.tmpl.json')
 const packageConfigJsonTmpl = require('./tmpl/package.tmpl.json')
@@ -49,6 +50,7 @@ class MpPlugin {
 
     apply(compiler) {
         const options = this.options
+        const generateConfig = options.generate || {}
 
         // 补充其他文件输出
         compiler.hooks.emit.tapAsync(PluginName, (compilation, callback) => {
@@ -157,7 +159,8 @@ class MpPlugin {
             addFile(compilation, '../app.js', appJsContent)
 
             // app wxss
-            const appWxssContent = appWxssTmpl
+            const appWxssConfig = generateConfig.appWxss || 'default'
+            const appWxssContent = appWxssConfig === 'none' ? '' : appWxssConfig === 'display' ? appDisplayWxssTmpl : appWxssTmpl
             addFile(compilation, '../app.wxss', adjustCss(appWxssContent))
 
             // app json

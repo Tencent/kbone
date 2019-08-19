@@ -10,7 +10,10 @@ module.exports = {
 	redirect: {		
 		notFound: 'index',		
 		accessDenied: 'index',
-	},	
+	},
+	generate: {
+        appWxss: 'none',
+    },
 	app: {
 		navigationBarTitleText: 'miniprogram-project',
 	},	

@@ -75,6 +75,8 @@
 
 * 支持 open-data 内置组件
 
-## next version
+## 0.0.30
 
 * 支持 editor 内置组件
+
+## next version
