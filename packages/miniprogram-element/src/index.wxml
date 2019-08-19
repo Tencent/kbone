@@ -94,6 +94,22 @@
     bindopensetting="onButtonOpenSetting"
     bindlaunchapp="onButtonLaunchApp"
 ><template is="subtree" data="{{childNodes: innerChildNodes, inCover}}"/></button>
+<editor
+    wx:elif="{{wxCompName === 'editor'}}"
+    id="{{id}}"
+    class="{{class}}"
+    style="{{style}}"
+    read-only="{{readOnly}}"
+    placeholder="{{placeholder}}"
+    show-img-size="{{showImgSize}}"
+    show-img-toolbar="{{showImgToolbar}}"
+    show-img-resize="{{showImgResize}}"
+    bindready="onEditorReady"
+    bindfocus="onEditorFocus"
+    bindblur="onEditorBlur"
+    bindinput="onEditorInput"
+    bindstatuschange="onEditorStatusChange"
+></editor>
 <block wx:elif="{{wxCompName === 'input'}}">
     <radio-group wx:if="{{type === 'radio'}}" bindchange="onRadioChange"><radio
         id="{{id}}"

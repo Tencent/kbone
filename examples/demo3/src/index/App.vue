@@ -121,6 +121,7 @@
         <wx-component v-else-if="item === 'live-pusher'" :behavior="item" :class="item" mode="RTC" :autopush="true" url="https://domain/push_stream" @statechange="onLivePusherStateChange">
           <Inner></Inner>
         </wx-component>
+        <wx-component v-else-if="item === 'editor'" :behavior="item" placeholder="请输入内容" :show-img-size="true" :show-img-toolbar="true" :show-img-resize="true" @statuschange="onEditorStatusChange" @ready="onEditorReady"></wx-component>
         <wx-component v-else-if="item === 'camera'" :behavior="item" :class="item">
           <Inner></Inner>
         </wx-component>
@@ -167,6 +168,7 @@ export default {
         'live-player',
         'live-pusher',
         'camera',
+        'editor',
         // 'web-view',
         'xxxx',
         'iframe',
@@ -304,6 +306,14 @@ export default {
 
     onSliderChange(evt) {
       console.log('onSliderChange', evt.detail)
+    },
+
+    onEditorStatusChange(evt) {
+      console.log('onEditorStatusChange', evt.detail)
+    },
+
+    onEditorReady(evt) {
+      console.log('onEditorReady', evt.detail)
     },
   }
 }
