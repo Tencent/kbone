@@ -58,4 +58,8 @@
 
 * 修复 querySelector/querySelectorAll 选择不到 wx-component 节点的问题
 
+## 0.0.23
+
+* 修复修改事件对象后，导致小程序基础库测速上报报错问题
+
 ## next version
