@@ -8,6 +8,7 @@ const adjustCss = require('./tool/adjust-css')
 const _ = require('./tool/utils')
 
 const PluginName = 'MpPlugin'
+const appJsTmpl = fs.readFileSync(path.resolve(__dirname, './tmpl/app.tmpl.js'), 'utf8')
 const pageJsTmpl = fs.readFileSync(path.resolve(__dirname, './tmpl/page.tmpl.js'), 'utf8')
 const appDisplayWxssTmpl = fs.readFileSync(path.resolve(__dirname, './tmpl/app.display.tmpl.wxss'), 'utf8')
 const appWxssTmpl = fs.readFileSync(path.resolve(__dirname, './tmpl/app.tmpl.wxss'), 'utf8')
@@ -155,7 +156,7 @@ class MpPlugin {
             }
 
             // app js
-            const appJsContent = 'App({})'
+            const appJsContent = appJsTmpl
             addFile(compilation, '../app.js', appJsContent)
 
             // app wxss

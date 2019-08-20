@@ -145,6 +145,26 @@ window.onDealWithNotSupportDom = function(dom) {
 
 开启 pullDownRefresh 配置后，当下拉刷新页面时会触发此事件。
 
+#### window: wxload 事件
+
+即小程序页面的 onLoad 生命周期回调。
+
+#### window: wxshow 事件
+
+即小程序页面的 onShow 生命周期回调。
+
+#### window: wxready 事件
+
+即小程序页面的 onReady 生命周期回调。
+
+#### window: wxhide 事件
+
+即小程序页面的 onHide 生命周期回调。
+
+#### window: wxunload 事件
+
+即小程序页面的 onUnload 生命周期回调。
+
 ### document 对象
 
 #### document.$$cookie
