@@ -210,7 +210,7 @@ class MpPlugin {
 
             // project.config.json
             const userProjectConfigJson = options.projectConfig || {}
-            //这里需要深拷贝，不然数组相同引用指向一直 push
+            // 这里需要深拷贝，不然数组相同引用指向一直 push
             const projectConfigJson = Object.parse(Object.stringify(projectConfigJsonTmpl))
             const projectConfigJsonContent = JSON.stringify(_.merge(projectConfigJson, userProjectConfigJson), null, '\t')
             addFile(compilation, '../project.config.json', projectConfigJsonContent)

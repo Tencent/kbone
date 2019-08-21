@@ -8,4 +8,8 @@
 
 * 支持监听小程序页面生命周期
 
+## 0.0.17
+
+* 修复通过浅拷贝生成 project.config.json 导致重复 push 内容的问题
+
 ## next version
