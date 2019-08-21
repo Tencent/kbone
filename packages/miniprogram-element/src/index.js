@@ -163,7 +163,7 @@ Component({
         /**
          * 触发事件
          */
-        callEvent(evt, eventName, extra) {
+        callEvent(eventName, evt, extra) {
             const pageId = this.pageId
             const originNodeId = evt.currentTarget.dataset.privateNodeId || this.nodeId
             const originNode = cache.getNode(pageId, originNodeId)
@@ -242,44 +242,52 @@ Component({
          */
         onTouchStart(evt) {
             if (this.document && this.document.$$checkEvent(evt)) {
-                this.callEvent(evt, 'touchstart')
+                this.callEvent('touchstart', evt)
             }
         },
 
         onTouchMove(evt) {
             if (this.document && this.document.$$checkEvent(evt)) {
-                this.callEvent(evt, 'touchmove')
+                this.callEvent('touchmove', evt)
             }
         },
 
         onTouchEnd(evt) {
             if (this.document && this.document.$$checkEvent(evt)) {
-                this.callEvent(evt, 'touchend')
+                this.callEvent('touchend', evt)
             }
         },
 
         onTouchCancel(evt) {
             if (this.document && this.document.$$checkEvent(evt)) {
-                this.callEvent(evt, 'touchcancel')
+                this.callEvent('touchcancel', evt)
             }
         },
 
         onTap(evt) {
             if (this.document && this.document.$$checkEvent(evt)) {
-                this.callEvent(evt, 'click', {button: 0}) // 默认左键
+                this.callEvent('click', evt, {button: 0}) // 默认左键
             }
         },
 
         onImgLoad(evt) {
-            if (this.document && this.document.$$checkEvent(evt)) {
-                this.callEvent(evt, 'load')
-            }
+            const pageId = this.pageId
+            const originNodeId = evt.currentTarget.dataset.privateNodeId || this.nodeId
+            const originNode = cache.getNode(pageId, originNodeId)
+
+            if (!originNode) return
+
+            this.callSimpleEvent('load', evt, originNode)
         },
 
         onImgError(evt) {
-            if (this.document && this.document.$$checkEvent(evt)) {
-                this.callEvent(evt, 'error')
-            }
+            const pageId = this.pageId
+            const originNodeId = evt.currentTarget.dataset.privateNodeId || this.nodeId
+            const originNode = cache.getNode(pageId, originNodeId)
+
+            if (!originNode) return
+
+            this.callSimpleEvent('error', evt, originNode)
         },
 
         ...initHandle,

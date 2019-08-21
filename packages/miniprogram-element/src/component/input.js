@@ -116,7 +116,7 @@ module.exports = {
             if (!this.domNode) return
 
             this.domNode.value = evt.detail.value
-            this.callSimpleEvent('input', evt)
+            this.callEvent('input', evt)
         },
 
         onInputFocus(evt) {
