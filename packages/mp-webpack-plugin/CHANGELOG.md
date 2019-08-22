@@ -12,4 +12,8 @@
 
 * 修复通过浅拷贝生成 project.config.json 导致重复 push 内容的问题
 
+## 0.0.18
+
+* 修复深拷贝生成 project.config.json 报错问题
+
 ## next version
