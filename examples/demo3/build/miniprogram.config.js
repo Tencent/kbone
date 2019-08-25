@@ -13,7 +13,10 @@ module.exports = {
 	},
 	generate: {
         appWxss: 'none',
-    },
+	},
+	runtime: {
+		wxComponent: 'noprefix',
+	},
 	app: {
 		navigationBarTitleText: 'miniprogram-project',
 	},	

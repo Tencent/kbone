@@ -66,4 +66,8 @@
 
 * 修复节点 destroy 后获取 tagName 报错问题
 
+## 0.0.26
+
+* 支持内置组件 wx- 前缀写法和直接写法（后者需配置 runtime.wxComponent 的值）
+
 ## next version

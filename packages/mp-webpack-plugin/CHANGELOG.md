@@ -16,4 +16,8 @@
 
 * 修复深拷贝生成 project.config.json 报错问题
 
+## 0.0.19
+
+* 支持 runtime.wxComponent 配置
+
 ## next version

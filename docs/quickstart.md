@@ -140,6 +140,10 @@ const mpPluginConfig = {
     generate: {
         appWxss: 'default', // app.wxss 输出配置，默认值为 default，即输出默认标签样式，其他可选值：none - 输出为空，display - 只输出 display 相关的内容
     },
+    // 运行时配置
+    runtime: {
+        wxComponent: 'default', // 内置组件使用配置，默认值为 default，即可使用 wx-component 标签或类似 wx-view 这样使用前缀的用法，其他可选值：noprefix - 支持 default 用法的前提下，也支持无前缀的用法，比如直接使用 view 标签表示 view 内置组件
+    },
     // app 配置，同 https://developers.weixin.qq.com/miniprogram/dev/reference/configuration/app.html#window
     app: {
         backgroundTextStyle: 'dark',
@@ -352,16 +356,21 @@ npm install --save-dev vue-improve-loader
 * `<video></video>`  --> video 组件
 * `<canvas></canvas>` --> canvas 组件
 
-还有一部分内置组件在 html 中没有标签可替代，那就需要使用 `wx-component` 标签，基本用法如下：
+还有一部分内置组件在 html 中没有标签可替代，那就需要使用 `wx-component` 标签或者使用 `wx-` 前缀，基本用法如下：
 
 ```html
+<!-- wx-component 标签用法 -->
 <wx-component behavior="picker" mode="region" @change="onChange">选择城市</wx-component>
 <wx-component behavior="button" open-type="share" @click="onClickShare">分享</wx-component>
+
+<!-- wx- 前缀用法 -->
+<wx-picker mode="region" @change="onChange">选择城市</wx-picker>
+<wx-button open-type="share" @click="onClickShare">分享</wx-button>
 ```
 
-使用 `wx-component` 标签表示要渲染小程序内置组件，然后 behavior 字段表示要渲染的组件名，其他组件属性传入和官方文档一致，事件则采用 vue 的绑定方式。
+如果使用 `wx-component` 标签表示要渲染小程序内置组件，然后 behavior 字段表示要渲染的组件名；其他组件属性传入和官方文档一致，事件则采用 vue 的绑定方式。
 
-`wx-component` 已支持内置组件列表：
+`wx-component` 或 `wx-` 前缀已支持内置组件列表：
 
 * cover-image 组件
 * cover-view 组件
@@ -385,6 +394,7 @@ npm install --save-dev vue-improve-loader
 > PS：button 标签不会被渲染成 button 内置组件，如若需要请使用 wx-component。
 > PS：原生组件的表现在小程序中表现会和 web 端标签有些不一样，具体可[参考原生组件说明文档](https://developers.weixin.qq.com/miniprogram/dev/component/native-component.html)。
 > PS：原生组件下的子节点，div、span 等标签会被渲染成 cover-view，img 会被渲染成 cover-image，如若需要使用 button 内置组件请使用 wx-component。
+> PS：如果将插件配置 runtime.wxComponent 的值配置为 `noprefix`，则可以用不带前缀的方式使用内置组件。
 
 ### 开发建议
 

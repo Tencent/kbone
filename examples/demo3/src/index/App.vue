@@ -57,12 +57,18 @@
           <!-- switch -->
           <label>
             <div>switch1</div>
-            <wx-component behavior="switch" @change="onLabelChange"></wx-component>
+            <template>
+              <wx-component v-if="!wxPrefix" behavior="switch" @change="onLabelChange"></wx-component>
+              <wx-switch v-else @change="onLabelChange"></wx-switch>
+            </template>
           </label>
           <label for="switch2">
             <div>switch2</div>
           </label>
-          <wx-component behavior="switch" id="switch2" @change="onLabelChange"></wx-component>
+          <template>
+            <wx-component v-if="!wxPrefix" behavior="switch" id="switch2" @change="onLabelChange"></wx-component>
+            <wx-switch v-else id="switch2" @change="onLabelChange"></wx-switch>
+          </template>
         </div>
         <video v-else-if="item === 'video'" class="video" src="http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400" :muted="true" :show-mute-btn="true" :controls="true">
           <Inner></Inner>
@@ -71,63 +77,212 @@
           <Inner style="margin-top: 100px;"></Inner>
         </canvas>
         <!-- 使用 wx-component 来创建内置组件 -->
-        <wx-component v-else-if="item === 'view'" :behavior="item">我是视图</wx-component>
-        <wx-component v-else-if="item === 'text'" :behavior="item" :selectable="true">{{'this is first line\nthis is second line'}}</wx-component>
-        <wx-component v-else-if="item === 'button'" :behavior="item" open-type="share">分享</wx-component>
-        <wx-component v-else-if="item === 'image'" :behavior="item" src="https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg"></wx-component>
-        <div v-else-if="item === 'icon'">
-          <div><wx-component :behavior="item" v-for="subItem in icon.size" :key="subItem" type="success" :size="subItem"></wx-component></div>
-          <div><wx-component :behavior="item" v-for="subItem in icon.color" :key="subItem" type="success" size="40" :color="subItem"></wx-component></div>
-          <div><wx-component :behavior="item" v-for="subItem in icon.type" :key="subItem" :type="subItem" size="40"></wx-component></div>
-        </div>
-        <div v-else-if="item === 'progress'">
-          <wx-component :behavior="item" percent="20" :show-info="true"></wx-component>
-          <wx-component :behavior="item" percent="40" stroke-width="12"></wx-component>
-          <wx-component :behavior="item" percent="60" color="pink"></wx-component>
-          <wx-component :behavior="item" percent="80" :active="true"></wx-component>
-        </div>
-        <div v-else-if="item === 'open-data'">
-          <wx-component :behavior="item" type="userNickName"></wx-component>
-          <wx-component :behavior="item" type="userAvatarUrl"></wx-component>
-          <wx-component :behavior="item" type="userGender"></wx-component>
-          <wx-component :behavior="item" type="userGender" lang="zh_CN"></wx-component>
-          <wx-component :behavior="item" type="userCity"></wx-component>
-          <wx-component :behavior="item" type="userProvince"></wx-component>
-          <wx-component :behavior="item" type="userCountry"></wx-component>
-          <wx-component :behavior="item" type="userLanguage"></wx-component>
-        </div>
-        <div v-else-if="item === 'picker'">
-          <wx-component :behavior="item" :value="1" :range="['美国', '中国', '巴西', '日本']">点击&nbsp;&nbsp;选择国家</wx-component>
-          <wx-component :behavior="item" mode="region" @change="onPickerChange">
-            <span>点击&nbsp;&nbsp;</span>
-            <span>选择城市</span>
+        <template v-else-if="item === 'view'">
+          <wx-component v-if="!wxPrefix" :behavior="item">我是视图</wx-component>
+          <wx-view v-else-if="wxPrefix === 1">我是视图</wx-view>
+          <view v-else-if="wxPrefix === 2">我是视图</view>
+        </template>
+        <template v-else-if="item === 'text'">
+          <wx-component v-if="!wxPrefix" :behavior="item" :selectable="true">{{'this is first line\nthis is second line'}}</wx-component>
+          <wx-text v-else-if="wxPrefix === 1" :selectable="true">{{'this is first line\nthis is second line'}}</wx-text>
+          <text v-else-if="wxPrefix === 2" :selectable="true">{{'this is first line\nthis is second line'}}</text>
+        </template>
+        <template v-else-if="item === 'button'">
+          <wx-component v-if="!wxPrefix" :behavior="item" open-type="share">分享</wx-component>
+          <wx-button v-else-if="wxPrefix === 1" open-type="share"></wx-button>
+          <button v-else-if="wxPrefix === 2" open-type="share"></button>
+        </template>
+        <template v-else-if="item === 'image'">
+          <wx-component v-if="!wxPrefix" :behavior="item" src="https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg"></wx-component>
+          <wx-image v-else-if="wxPrefix === 1" src="https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg"></wx-image>
+          <image v-else-if="wxPrefix === 2" src="https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg"></image>
+        </template>
+        <template v-else-if="item === 'icon'">
+          <div v-if="!wxPrefix">
+            <div><wx-component :behavior="item" v-for="subItem in icon.size" :key="subItem" type="success" :size="subItem"></wx-component></div>
+            <div><wx-component :behavior="item" v-for="subItem in icon.color" :key="subItem" type="success" size="40" :color="subItem"></wx-component></div>
+            <div><wx-component :behavior="item" v-for="subItem in icon.type" :key="subItem" :type="subItem" size="40"></wx-component></div>
+          </div>
+          <div v-else-if="wxPrefix === 1">
+            <div><wx-icon v-for="subItem in icon.size" :key="subItem" type="success" :size="subItem"></wx-icon></div>
+            <div><wx-icon v-for="subItem in icon.color" :key="subItem" type="success" size="40" :color="subItem"></wx-icon></div>
+            <div><wx-icon v-for="subItem in icon.type" :key="subItem" :type="subItem" size="40"></wx-icon></div>
+          </div>
+          <div v-else-if="wxPrefix === 2">
+            <div><icon v-for="subItem in icon.size" :key="subItem" type="success" :size="subItem"></icon></div>
+            <div><icon v-for="subItem in icon.color" :key="subItem" type="success" size="40" :color="subItem"></icon></div>
+            <div><icon v-for="subItem in icon.type" :key="subItem" :type="subItem" size="40"></icon></div>
+          </div>
+        </template>
+        <template v-else-if="item === 'progress'">
+          <div v-if="wxPrefix">
+            <wx-component :behavior="item" percent="20" :show-info="true"></wx-component>
+            <wx-component :behavior="item" percent="40" stroke-width="12"></wx-component>
+            <wx-component :behavior="item" percent="60" color="pink"></wx-component>
+            <wx-component :behavior="item" percent="80" :active="true"></wx-component>
+          </div>
+          <div v-else-if="wxPrefix === 1">
+            <wx-progress percent="20" :show-info="true"></wx-progress>
+            <wx-progress percent="40" stroke-width="12"></wx-progress>
+            <wx-progress percent="60" color="pink"></wx-progress>
+            <wx-progress percent="80" :active="true"></wx-progress>
+          </div>
+          <div v-else-if="wxPrefix === 2">
+            <progress percent="20" :show-info="true"></progress>
+            <progress percent="40" stroke-width="12"></progress>
+            <progress percent="60" color="pink"></progress>
+            <progress percent="80" :active="true"></progress>
+          </div>
+        </template>
+        <template v-else-if="item === 'open-data'">
+          <div v-if="wxPrefix">
+            <wx-component :behavior="item" type="userNickName"></wx-component>
+            <wx-component :behavior="item" type="userAvatarUrl"></wx-component>
+            <wx-component :behavior="item" type="userGender"></wx-component>
+            <wx-component :behavior="item" type="userGender" lang="zh_CN"></wx-component>
+            <wx-component :behavior="item" type="userCity"></wx-component>
+            <wx-component :behavior="item" type="userProvince"></wx-component>
+            <wx-component :behavior="item" type="userCountry"></wx-component>
+            <wx-component :behavior="item" type="userLanguage"></wx-component>
+          </div>
+          <div v-else-if="wxPrefix === 1">
+            <wx-open-data type="userNickName"></wx-open-data>
+            <wx-open-data type="userAvatarUrl"></wx-open-data>
+            <wx-open-data type="userGender"></wx-open-data>
+            <wx-open-data type="userGender" lang="zh_CN"></wx-open-data>
+            <wx-open-data type="userCity"></wx-open-data>
+            <wx-open-data type="userProvince"></wx-open-data>
+            <wx-open-data type="userCountry"></wx-open-data>
+            <wx-open-data type="userLanguage"></wx-open-data>
+          </div>
+          <div v-else-if="wxPrefix === 2">
+            <open-data type="userNickName"></open-data>
+            <open-data type="userAvatarUrl"></open-data>
+            <open-data type="userGender"></open-data>
+            <open-data type="userGender" lang="zh_CN"></open-data>
+            <open-data type="userCity"></open-data>
+            <open-data type="userProvince"></open-data>
+            <open-data type="userCountry"></open-data>
+            <open-data type="userLanguage"></open-data>
+          </div>
+        </template>
+        <template v-else-if="item === 'picker'">
+          <div v-if="!wxPrefix">
+            <wx-component :behavior="item" :value="1" :range="['美国', '中国', '巴西', '日本']">点击&nbsp;&nbsp;选择国家</wx-component>
+            <wx-component :behavior="item" mode="region" @change="onPickerChange">
+              <span>点击&nbsp;&nbsp;</span>
+              <span>选择城市</span>
+            </wx-component>
+          </div>
+          <div v-else-if="wxPrefix === 1">
+            <wx-picker :value="1" :range="['美国', '中国', '巴西', '日本']">点击&nbsp;&nbsp;选择国家</wx-picker>
+            <wx-picker mode="region" @change="onPickerChange">
+              <span>点击&nbsp;&nbsp;</span>
+              <span>选择城市</span>
+            </wx-picker>
+          </div>
+          <div v-else-if="wxPrefix === 2">
+            <picker :value="1" :range="['美国', '中国', '巴西', '日本']">点击&nbsp;&nbsp;选择国家</picker>
+            <picker mode="region" @change="onPickerChange">
+              <span>点击&nbsp;&nbsp;</span>
+              <span>选择城市</span>
+            </picker>
+          </div>
+        </template>
+        <template v-else-if="item === 'switch'">
+          <div v-if="!wxPrefix">
+            <wx-component :behavior="item" type="switch" :checked="true" @change="onSwitchChange"></wx-component>
+            <wx-component :behavior="item" type="checkbox" @change="onSwitchChange"></wx-component>
+          </div>
+          <div v-else-if="wxPrefix === 1">
+            <wx-switch type="switch" :checked="true" @change="onSwitchChange"></wx-switch>
+            <wx-switch type="checkbox" @change="onSwitchChange"></wx-switch>
+          </div>
+          <div v-else-if="wxPrefix === 2">
+            <switch type="switch" :checked="true" @change="onSwitchChange"></switch>
+            <switch type="checkbox" @change="onSwitchChange"></switch>
+          </div>
+        </template>
+        <template v-else-if="item === 'slider'">
+          <wx-component v-if="!wxPrefix" :behavior="item" min="50" max="200" :show-value="true" @change="onSliderChange"></wx-component>
+          <wx-slider v-else-if="wxPrefix === 1" min="50" max="200" :show-value="true" @change="onSliderChange"></wx-slider>
+          <slider v-else-if="wxPrefix === 2" min="50" max="200" :show-value="true" @change="onSliderChange"></slider>
+        </template>
+        <template v-else-if="item === 'map'">
+          <wx-component v-if="!wxPrefix" :behavior="item" :class="item" :longitude="113.324520" :latitude="23.099994" :scale="14" :controls="map.controls" :markers="map.markers" :polyline="map.polyline" :show-location="true" @markertap="onMapMarkerTap" @regionchange="onMapRegionChange" @controltap="onMapControlTap">
+            <Inner></Inner>
           </wx-component>
-        </div>
-        <div v-else-if="item === 'switch'">
-          <wx-component :behavior="item" type="switch" :checked="true" @change="onSwitchChange"></wx-component>
-          <wx-component :behavior="item" type="checkbox" @change="onSwitchChange"></wx-component>
-        </div>
-        <wx-component v-else-if="item === 'slider'" :behavior="item" min="50" max="200" :show-value="true" @change="onSliderChange"></wx-component>
-        <wx-component v-else-if="item === 'map'" :behavior="item" :class="item" :longitude="113.324520" :latitude="23.099994" :scale="14" :controls="map.controls" :markers="map.markers" :polyline="map.polyline" :show-location="true" @markertap="onMapMarkerTap" @regionchange="onMapRegionChange" @controltap="onMapControlTap">
-          <Inner></Inner>
-        </wx-component>
-        <wx-compoennt v-else-if="item === 'cover-view'" :behavior="item">测试 cover-view</wx-compoennt>
-        <wx-component v-else-if="item === 'cover-image'" behavior="cover-view">
-          <wx-component :behavior="item" src="https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg"></wx-component>
-        </wx-component>
-        <wx-component v-else-if="item === 'live-player'" :behavior="item" :class="item" mode="live" :autoplay="true" src="rtmp://live.hkstv.hk.lxdns.com/live/hks" @statechange="onLivePlayerStateChange">
-          <Inner></Inner>
-        </wx-component>
-        <wx-component v-else-if="item === 'live-pusher'" :behavior="item" :class="item" mode="RTC" :autopush="true" url="https://domain/push_stream" @statechange="onLivePusherStateChange">
-          <Inner></Inner>
-        </wx-component>
-        <wx-component v-else-if="item === 'editor'" :behavior="item" placeholder="请输入内容" :show-img-size="true" :show-img-toolbar="true" :show-img-resize="true" @statuschange="onEditorStatusChange" @ready="onEditorReady"></wx-component>
-        <wx-component v-else-if="item === 'camera'" :behavior="item" :class="item">
-          <Inner></Inner>
-        </wx-component>
-        <wx-component v-else-if="item === 'web-view'" :behavior="item" :class="item" src="https://www.qq.com/"></wx-component>
+          <wx-map v-else-if="wxPrefix === 1" :class="item" :longitude="113.324520" :latitude="23.099994" :scale="14" :controls="map.controls" :markers="map.markers" :polyline="map.polyline" :show-location="true" @markertap="onMapMarkerTap" @regionchange="onMapRegionChange" @controltap="onMapControlTap">
+            <Inner></Inner>
+          </wx-map>
+          <map v-else-if="wxPrefix === 2" :class="item" :longitude="113.324520" :latitude="23.099994" :scale="14" :controls="map.controls" :markers="map.markers" :polyline="map.polyline" :show-location="true" @markertap="onMapMarkerTap" @regionchange="onMapRegionChange" @controltap="onMapControlTap">
+            <Inner></Inner>
+          </map>
+        </template>
+        <template v-else-if="item === 'cover-view'">
+          <wx-compoennt v-if="!wxPrefix" :behavior="item">测试 cover-view</wx-compoennt>
+          <wx-cover-view v-else-if="wxPrefix === 1">测试 cover-view</wx-cover-view>
+          <cover-view v-else-if="wxPrefix === 2">测试 cover-view</cover-view>
+        </template>
+        <template v-else-if="item === 'cover-image'">
+          <wx-component v-if="!wxPrefix" behavior="cover-view">
+            <wx-component :behavior="item" src="https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg"></wx-component>
+          </wx-component>
+          <wx-cover-view v-else-if="wxPrefix === 1">
+            <wx-cover-image src="https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg"></wx-cover-image>
+          </wx-cover-view>
+          <cover-view v-else-if="wxPrefix === 2">
+            <wx-cover-image src="https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg"></wx-cover-image>
+          </cover-view>
+        </template>
+        <template v-else-if="item === 'live-player'">
+          <wx-component v-if="!wxPrefix" :behavior="item" :class="item" mode="live" :autoplay="true" src="rtmp://live.hkstv.hk.lxdns.com/live/hks" @statechange="onLivePlayerStateChange">
+            <Inner></Inner>
+          </wx-component>
+          <wx-live-player v-else-if="wxPrefix === 1" :class="item" mode="live" :autoplay="true" src="rtmp://live.hkstv.hk.lxdns.com/live/hks" @statechange="onLivePlayerStateChange">
+            <Inner></Inner>
+          </wx-live-player>
+          <live-player v-else-if="wxPrefix === 2" :class="item" mode="live" :autoplay="true" src="rtmp://live.hkstv.hk.lxdns.com/live/hks" @statechange="onLivePlayerStateChange">
+            <Inner></Inner>
+          </live-player>
+        </template>
+        <template v-else-if="item === 'live-pusher'">
+          <wx-component v-if="!wxPrefix" :behavior="item" :class="item" mode="RTC" :autopush="true" url="https://domain/push_stream" @statechange="onLivePusherStateChange">
+            <Inner></Inner>
+          </wx-component>
+          <wx-live-pusher v-else-if="wxPrefix === 1" :class="item" mode="RTC" :autopush="true" url="https://domain/push_stream" @statechange="onLivePusherStateChange">
+            <Inner></Inner>
+          </wx-live-pusher>
+          <live-pusher v-else-if="wxPrefix === 2" :class="item" mode="RTC" :autopush="true" url="https://domain/push_stream" @statechange="onLivePusherStateChange">
+            <Inner></Inner>
+          </live-pusher>
+        </template>
+        <template v-else-if="item === 'editor'">
+          <wx-component v-if="!wxPrefix" :behavior="item" placeholder="请输入内容" :show-img-size="true" :show-img-toolbar="true" :show-img-resize="true" @statuschange="onEditorStatusChange" @ready="onEditorReady"></wx-component>
+          <wx-editor v-else-if="wxPrefix === 1" placeholder="请输入内容" :show-img-size="true" :show-img-toolbar="true" :show-img-resize="true" @statuschange="onEditorStatusChange" @ready="onEditorReady"></wx-editor>
+          <editor v-else-if="wxPrefix === 2" placeholder="请输入内容" :show-img-size="true" :show-img-toolbar="true" :show-img-resize="true" @statuschange="onEditorStatusChange" @ready="onEditorReady"></editor>
+        </template>
+        <template v-else-if="item === 'camera'">
+          <wx-component v-if="!wxPrefix" :behavior="item" :class="item">
+            <Inner></Inner>
+          </wx-component>
+          <wx-camera v-else-if="wxPrefix === 1" :class="item">
+            <Inner></Inner>
+          </wx-camera>
+          <camera v-else-if="wxPrefix === 2" :class="item">
+            <Inner></Inner>
+          </camera>
+        </template>
+        <template v-else-if="item === 'web-view'">
+          <wx-component v-if="!wxPrefix" :behavior="item" :class="item" src="https://www.qq.com/"></wx-component>
+          <wx-web-view v-else-if="wxPrefix === 1" :class="item" src="https://www.qq.com/"></wx-web-view>
+          <web-view v-else-if="wxPrefix === 2" :class="item" src="https://www.qq.com/"></web-view>
+        </template>
         <!-- 不支持标签 -->
-        <wx-component v-else-if="item === 'xxxx'" :behavior="item"></wx-component>
+        <template v-else-if="item === 'xxxx'" >
+          <wx-component v-if="!wxPrefix" :behavior="item"></wx-component>
+          <wx-xxxx v-else-if="wxPrefix === 1"></wx-xxxx>
+        </template>
         <iframe v-else-if="item === 'iframe'"></iframe>
       </div>
     </div>
@@ -144,6 +299,7 @@ export default {
   },
   data() {
     return {
+      wxPrefix: 2, // 0 - wx-component 用法，1 - wx- 前缀用法，2 - 无前缀用法(需要配置 runtime.wxComponent 字段)
       list: [
         'normal',
         'img',

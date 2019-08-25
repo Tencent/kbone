@@ -202,6 +202,7 @@ class MpPlugin {
                 origin: options.origin || 'https://miniprogram.default',
                 entry: options.entry || '/',
                 router,
+                runtime: options.runtime || {},
                 pages: pageConfigMap,
                 redirect: options.redirect || {},
                 optimization: options.optimization || {},
