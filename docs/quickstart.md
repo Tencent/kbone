@@ -383,6 +383,7 @@ npm install --save-dev vue-improve-loader
 * picker 组件
 * slider 组件
 * switch 组件
+* navigator 组件
 * camera 组件
 * image 组件
 * live-player 组件
