@@ -115,7 +115,7 @@
           </div>
         </template>
         <template v-else-if="item === 'progress'">
-          <div v-if="wxPrefix">
+          <div v-if="!wxPrefix">
             <wx-component :behavior="item" percent="20" :show-info="true"></wx-component>
             <wx-component :behavior="item" percent="40" stroke-width="12"></wx-component>
             <wx-component :behavior="item" percent="60" color="pink"></wx-component>
@@ -134,8 +134,13 @@
             <progress percent="80" :active="true"></progress>
           </div>
         </template>
+        <template v-else-if="item === 'navigator'">
+          <wx-component v-if="!wxPrefix" :behavior="item" target="miniProgram" open-type="exit">退出小程序</wx-component>
+          <wx-navigator v-else-if="wxPrefix === 1" target="miniProgram" open-type="exit">退出小程序</wx-navigator>
+          <navigator v-else-if="wxPrefix === 2" target="miniProgram" open-type="exit">退出小程序</navigator>
+        </template>
         <template v-else-if="item === 'open-data'">
-          <div v-if="wxPrefix">
+          <div v-if="!wxPrefix">
             <wx-component :behavior="item" type="userNickName"></wx-component>
             <wx-component :behavior="item" type="userAvatarUrl"></wx-component>
             <wx-component :behavior="item" type="userGender"></wx-component>
@@ -299,7 +304,7 @@ export default {
   },
   data() {
     return {
-      wxPrefix: 2, // 0 - wx-component 用法，1 - wx- 前缀用法，2 - 无前缀用法(需要配置 runtime.wxComponent 字段)
+      wxPrefix: 0, // 0 - wx-component 用法，1 - wx- 前缀用法，2 - 无前缀用法(需要配置 runtime.wxComponent 字段)
       list: [
         'normal',
         'img',
@@ -314,6 +319,7 @@ export default {
         'icon',
         'progress',
         'open-data',
+        'navigator',
         'picker',
         'switch',
         'slider',

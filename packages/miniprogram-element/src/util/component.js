@@ -54,6 +54,11 @@ const wxComponentMap = {
         wxCompName: 'textarea',
         config: require('../component/textarea'),
     },
+    // 导航
+    navigator: {
+        wxCompName: 'navigator',
+        config: require('../component/navigator'),
+    },
     // 媒体组件
     camera: {
         wxCompName: 'camera',

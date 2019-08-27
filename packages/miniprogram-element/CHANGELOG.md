@@ -79,4 +79,8 @@
 
 * 支持 editor 内置组件
 
+## 0.0.36
+
+* 支持 navigator 内置组件
+
 ## next version

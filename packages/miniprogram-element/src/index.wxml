@@ -235,6 +235,28 @@
     bindconfirm="onTextareaConfirm"
     bindkeyboardheightchange="onTextareaKeyBoardHeightChange"
 ></textarea>
+<!-- 导航 -->
+<navigator
+    wx:elif="{{wxCompName === 'navigator'}}"
+    id="{{id}}"
+    class="{{class}}"
+    style="{{style}}"
+    target="{{target}}"
+    url="{{url}}"
+    open-type="{{openType}}"
+    delta="{{delta}}"
+    app-id="{{appId}}"
+    path="{{path}}"
+    extra-data="{{extraData}}"
+    version="{{version}}"
+    hover-class="{{hoverClass}}"
+    hover-stop-propagation="{{hoverStopPropagation}}"
+    hover-start-time="{{hoverStartTime}}"
+    hover-stay-time="{{hoverStayTime}}"
+    bindsuccess="onNavigatorSuccess"
+    bindfail="onNavigatorFail"
+    bindcomplete="onNavigatorComplete"
+><template is="subtree" data="{{childNodes: innerChildNodes, inCover}}"/></navigator>
 <!-- 媒体组件 -->
 <camera
     wx:elif="{{wxCompName === 'camera'}}"
