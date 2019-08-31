@@ -151,11 +151,11 @@ const mpPluginConfig = {
         // 小程序分包预下载，详细注意事项可参考：https://developers.weixin.qq.com/miniprogram/dev/framework/subpackages/preload.html
         preloadRule: {
             // 进入 list 页面时，会预下载名为 package2 的分包
-			list: {
-				network: 'all',
-				packages: ['package2'],
-			},
-		},
+            list: {
+                network: 'all',
+                packages: ['package2'],
+            },
+        },
     },
     // 运行时配置
     runtime: {
