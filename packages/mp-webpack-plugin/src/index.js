@@ -44,6 +44,14 @@ function wrapChunks(compilation, chunks) {
     })
 }
 
+/**
+ * 获取依赖文件路径
+ */
+function getAssetPath(assetPathPrefix, filePath, assetsSubpackageMap) {
+    if (assetsSubpackageMap[filePath]) assetPathPrefix = '' // 依赖在分包内，不需要补前缀
+    return `${assetPathPrefix}../../common/${filePath}`
+}
+
 class MpPlugin {
     constructor(options) {
         this.options = options
@@ -56,24 +64,22 @@ class MpPlugin {
         // 补充其他文件输出
         compiler.hooks.emit.tapAsync(PluginName, (compilation, callback) => {
             const entryNames = Array.from(compilation.entrypoints.keys())
-
-            // 合并页面配置
             const globalConfig = options.global || {}
             const pageConfigMap = options.pages || {}
-            entryNames.forEach(entryName => {
-                pageConfigMap[entryName] = Object.assign({}, globalConfig, pageConfigMap[entryName] || {})
-            })
+            const subpackagesConfig = generateConfig.subpackages || {}
+            const preloadRuleConfig = generateConfig.preloadRule || {}
+            const pages = []
+            const subpackagesMap = {} // 页面名-分包名
+            const assetsMap = {} // 页面名-依赖
+            const assetsReverseMap = {} // 依赖-页面名
+            const assetsSubpackageMap = {} // 依赖-分包名
 
+            // 收集依赖
             for (const entryName of entryNames) {
-                const assets = {
-                    js: [],
-                    css: [],
-                }
-
+                const assets = {js: [], css: []}
                 const filePathMap = {}
                 const extRegex = /\.(css|js|wxss)(\?|$)/
                 const entryFiles = compilation.entrypoints.get(entryName).getFiles()
-
                 entryFiles.forEach(filePath => {
                     // 跳过非 css 和 js
                     const extMatch = extRegex.exec(filePath)
@@ -88,20 +94,58 @@ class MpPlugin {
                     ext = ext === 'wxss' ? 'css' : ext
                     assets[ext].push(filePath)
 
+                    // 插入反查表
+                    assetsReverseMap[filePath] = assetsReverseMap[filePath] || []
+                    if (assetsReverseMap[filePath].indexOf(entryName) === -1) assetsReverseMap[filePath].push(entryName)
+
                     // 调整 css 内容
                     if (ext === 'css') {
                         compilation.assets[filePath] = new RawSource(adjustCss(compilation.assets[filePath].source()))
                     }
                 })
 
-                const addPageScroll = pageConfigMap[entryName] && pageConfigMap[entryName].windowScroll
-                const pageBackgroundColor = pageConfigMap[entryName] && pageConfigMap[entryName].backgroundColor
-                const reachBottom = pageConfigMap[entryName] && pageConfigMap[entryName].reachBottom
-                const reachBottomDistance = pageConfigMap[entryName] && pageConfigMap[entryName].reachBottomDistance
-                const pullDownRefresh = pageConfigMap[entryName] && pageConfigMap[entryName].pullDownRefresh
+                assetsMap[entryName] = assets
+            }
+
+            // 处理分包配置
+            Object.keys(subpackagesConfig).forEach(packageName => {
+                const pages = subpackagesConfig[packageName] || []
+                pages.forEach(entryName => {
+                    subpackagesMap[entryName] = packageName
+
+                    // 寻找私有依赖，放入分包
+                    const assets = assetsMap[entryName]
+                    if (assets) {
+                        [...assets.js, ...assets.css].forEach(filePath => {
+                            const requirePages = assetsReverseMap[filePath] || []
+                            if (_.includes(pages, requirePages)) {
+                                // 该依赖为分包内页面私有
+                                assetsSubpackageMap[filePath] = packageName
+                                compilation.assets[`../${packageName}/common/${filePath}`] = compilation.assets[filePath]
+                                delete compilation.assets[filePath]
+                            }
+                        })
+                    }
+                })
+            })
+
+            // 处理各个入口页面
+            for (const entryName of entryNames) {
+                const assets = assetsMap[entryName]
+                const pageConfig = pageConfigMap[entryName] = Object.assign({}, globalConfig, pageConfigMap[entryName] || {})
+                const addPageScroll = pageConfig && pageConfig.windowScroll
+                const pageBackgroundColor = pageConfig && pageConfig.backgroundColor
+                const reachBottom = pageConfig && pageConfig.reachBottom
+                const reachBottomDistance = pageConfig && pageConfig.reachBottomDistance
+                const pullDownRefresh = pageConfig && pageConfig.pullDownRefresh
+                const packageName = subpackagesMap[entryName]
+                const pageRoute = `${packageName ? packageName + '/' : ''}pages/${entryName}/index`
+                const assetPathPrefix = packageName ? '../' : ''
 
                 // 页面 js
-                let pageJsContent = pageJsTmpl.replace('/* INIT_FUNCTION */', `function init(window, document) {${assets.js.map(js => 'require(\'../../common/' + js + '\')(window, document)').join(';')}}`)
+                let pageJsContent = pageJsTmpl
+                    .replace('/* CONFIG_PATH */', `${assetPathPrefix}../../config`)
+                    .replace('/* INIT_FUNCTION */', `function init(window, document) {${assets.js.map(js => 'require(\'' + getAssetPath(assetPathPrefix, js, assetsSubpackageMap) + '\')(window, document)').join(';')}}`)
                 let pageScrollFunction = ''
                 let reachBottomFunction = ''
                 let pullDownRefreshFunction = ''
@@ -114,19 +158,20 @@ class MpPlugin {
                 if (pullDownRefresh) {
                     pullDownRefreshFunction = () => 'onPullDownRefresh() {if (this.window) {this.window.$$trigger(\'pulldownrefresh\');}},'
                 }
-                pageJsContent = pageJsContent.replace('/* PAGE_SCROLL_FUNCTION */', pageScrollFunction)
-                pageJsContent = pageJsContent.replace('/* REACH_BOTTOM_FUNCTION */', reachBottomFunction)
-                pageJsContent = pageJsContent.replace('/* PULL_DOWN_REFRESH_FUNCTION */', pullDownRefreshFunction)
-                addFile(compilation, `../pages/${entryName}/index.js`, pageJsContent)
+                pageJsContent = pageJsContent
+                    .replace('/* PAGE_SCROLL_FUNCTION */', pageScrollFunction)
+                    .replace('/* REACH_BOTTOM_FUNCTION */', reachBottomFunction)
+                    .replace('/* PULL_DOWN_REFRESH_FUNCTION */', pullDownRefreshFunction)
+                addFile(compilation, `../${pageRoute}.js`, pageJsContent)
 
                 // 页面 wxml
                 const pageWxmlContent = '<element wx:if="{{pageId}}" class="{{bodyClass}}" style="{{bodyStyle}}" data-private-node-id="e-body" data-private-page-id="{{pageId}}"></element>'
-                addFile(compilation, `../pages/${entryName}/index.wxml`, pageWxmlContent)
+                addFile(compilation, `../${pageRoute}.wxml`, pageWxmlContent)
 
                 // 页面 wxss
-                let pageWxssContent = assets.css.map(css => `@import "../../common/${css}";`).join('\n')
+                let pageWxssContent = assets.css.map(css => `@import "${getAssetPath(assetPathPrefix, css, assetsSubpackageMap)}";`).join('\n')
                 if (pageBackgroundColor) pageWxssContent = `page { background-color: ${pageBackgroundColor}; }\n` + pageWxssContent
-                addFile(compilation, `../pages/${entryName}/index.wxss`, adjustCss(pageWxssContent))
+                addFile(compilation, `../${pageRoute}.wxss`, adjustCss(pageWxssContent))
 
                 // 页面 json
                 const pageJson = {
@@ -141,10 +186,11 @@ class MpPlugin {
                     pageJson.enablePullDownRefresh = pullDownRefresh
                 }
                 const pageJsonContent = JSON.stringify(pageJson, null, '\t')
-                addFile(compilation, `../pages/${entryName}/index.json`, pageJsonContent)
-            }
+                addFile(compilation, `../${pageRoute}.json`, pageJsonContent)
 
-            const pages = entryNames.map(entryName => `pages/${entryName}/index`)
+                // 记录页面路径
+                if (!packageName) pages.push(pageRoute)
+            }
 
             // 追加 webview 页面
             if (options.redirect && (options.redirect.notFound === 'webview' || options.redirect.accessDenied === 'webview')) {
@@ -165,10 +211,27 @@ class MpPlugin {
             addFile(compilation, '../app.wxss', adjustCss(appWxssContent))
 
             // app json
+            const subpackages = []
+            const preloadRule = {}
+            Object.keys(subpackagesConfig).forEach(packageName => {
+                const pages = subpackagesConfig[packageName] || []
+                subpackages.push({
+                    name: packageName,
+                    root: packageName,
+                    pages: pages.map(entryName => `pages/${entryName}/index`),
+                })
+            })
+            Object.keys(preloadRuleConfig).forEach(entryName => {
+                const packageName = subpackagesMap[entryName]
+                const pageRoute = `${packageName ? packageName + '/' : ''}pages/${entryName}/index`
+                preloadRule[pageRoute] = preloadRuleConfig[entryName]
+            })
             const userAppJson = options.appExtraConfig || {}
             const appJsonContent = JSON.stringify({
                 pages,
                 window: options.app || {},
+                subpackages,
+                preloadRule,
                 ...userAppJson,
             }, null, '\t')
             addFile(compilation, '../app.json', appJsonContent)
@@ -202,7 +265,9 @@ class MpPlugin {
                 origin: options.origin || 'https://miniprogram.default',
                 entry: options.entry || '/',
                 router,
-                runtime: options.runtime || {},
+                runtime: Object.assign({
+                    subpackagesMap,
+                }, options.runtime || {}),
                 pages: pageConfigMap,
                 redirect: options.redirect || {},
                 optimization: options.optimization || {},

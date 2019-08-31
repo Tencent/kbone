@@ -4,6 +4,10 @@
 
 * 支持 runtime.wxComponent 配置
 
+## 0.0.20
+
+* 支持分包
+
 ## 0.0.18
 
 * 修复深拷贝生成 project.config.json 报错问题

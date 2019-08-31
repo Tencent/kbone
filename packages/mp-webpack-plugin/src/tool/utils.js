@@ -33,6 +33,18 @@ function merge(to, from) {
     return to
 }
 
+/**
+ * 判断数组包含关系
+ */
+function includes(parentArr, childArr) {
+    for (const child of childArr) {
+        if (parentArr.indexOf(child) === -1) return false
+    }
+
+    return true
+}
+
 module.exports = {
     merge,
+    includes,
 }

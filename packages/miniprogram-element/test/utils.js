@@ -23,6 +23,9 @@ const pageConfig = {
             {regexp: '^\\/index\\/bbb\\/detail\\/([^\\/]+?)(?:\\/)?$', options: 'i'}
         ],
     },
+    runtime: {
+        subpackagesMap: {},
+    },
     pages: {
         home: {
             loadingText: '拼命加载页面中...',

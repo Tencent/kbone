@@ -1,5 +1,5 @@
 const mp = require('miniprogram-render')
-const config = require('../../config')
+const config = require('/* CONFIG_PATH */')
 
 /* INIT_FUNCTION */
 

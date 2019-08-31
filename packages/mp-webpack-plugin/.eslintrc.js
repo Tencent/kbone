@@ -6,6 +6,7 @@ module.exports = {
   ],
   'rules': {
     'import/no-unresolved': 'off',
+    'import/no-absolute-path': 'off',
   },
   'globals': {
     'init': true,
