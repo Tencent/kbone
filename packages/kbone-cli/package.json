@@ -1,0 +1,50 @@
+{
+  "name": "kbone-cli-test",
+  "version": "0.1.0",
+  "description": "Create website, app with no build configuration.",
+  "main": "bin/kbone-cli",
+  "engines": {
+    "node": ">=6.0.0"
+  },
+  "preferGlobal": true,
+  "bin": {
+    "kbone": "./bin/kbone-cli"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tencent/kbone.git"
+  },
+  "keywords": [
+    "kbone",
+    "cli",
+    "kbone-cli",
+    "webpack"
+  ],
+  "author": "dntzhang",
+  "license": "MIT",
+  "dependencies": {
+    "babel-core": "^6.24.1",
+    "babel-loader": "^6.4.1",
+    "babel-plugin-transform-es3-member-expression-literals": "^6.22.0",
+    "babel-plugin-transform-es3-property-literals": "^6.22.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "chalk": "^1.1.3",
+    "commander": "^2.9.0",
+    "cross-npm-spawn": "^1.1.1",
+    "cross-spawn": "^5.0.1",
+    "empty-dir": "^0.2.1",
+    "fs-exists-sync": "^0.1.0",
+    "inquirer": "^6.3.1",
+    "jsdom": "^9.12.0",
+    "ora": "^1.1.0",
+    "validate-npm-package-name": "^3.0.0",
+    "vinyl-fs": "^2.4.4",
+    "webpack": "^2.3.3",
+    "which": "^1.2.14"
+  },
+  "bugs": {
+    "url": "https://github.com/Tencent/kbone/issues"
+  },
+  "homepage": "https://github.com/Tencent/kbone"
+}
