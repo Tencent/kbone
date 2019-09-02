@@ -429,6 +429,25 @@
     binderror="onCanvasError"
 ><template is="subtree-cover" data="{{childNodes: innerChildNodes}}"/></canvas>
 <!-- 开放能力 -->
+<ad
+    wx:elif="{{wxCompName === 'ad'}}"
+    id="{{id}}"
+    class="{{class}}"
+    style="{{style}}"
+    unit-id="{{unitId}}"
+    ad-intervals="{{adIntervals}}"
+    bindload="onAdLoad"
+    binderror="onAdError"
+    bindclose="onAdClose"
+></ad>
+<official-account
+    wx:elif="{{wxCompName === 'official-account'}}"
+    id="{{id}}"
+    class="{{class}}"
+    style="{{style}}"
+    bindload="onOfficialAccountLoad"
+    binderror="onOfficialAccountError"
+></official-account>
 <open-data
     wx:elif="{{wxCompName === 'open-data'}}"
     id="{{id}}"

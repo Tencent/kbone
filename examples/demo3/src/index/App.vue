@@ -278,6 +278,16 @@
             <Inner></Inner>
           </camera>
         </template>
+        <template v-else-if="item === 'ad'">
+          <wx-component v-if="!wxPrefix" :behavior="item" :class="item" unit-id="123" @error="onAdError"></wx-component>
+          <wx-ad v-else-if="wxPrefix === 1" :class="item" unit-id="123" @error="onAdError"></wx-ad>
+          <ad v-else-if="wxPrefix === 2" :class="item" unit-id="123" @error="onAdError"></ad>
+        </template>
+        <template v-else-if="item === 'official-account'">
+          <wx-component v-if="!wxPrefix" :behavior="item" :class="item" @error="onOfficialAccountError"></wx-component>
+          <wx-official-account v-else-if="wxPrefix === 1" :class="item" @error="onOfficialAccountError"></wx-official-account>
+          <official-account v-else-if="wxPrefix === 2" :class="item" @error="onOfficialAccountError"></official-account>
+        </template>
         <template v-else-if="item === 'web-view'">
           <wx-component v-if="!wxPrefix" :behavior="item" :class="item" src="https://www.qq.com/"></wx-component>
           <wx-web-view v-else-if="wxPrefix === 1" :class="item" src="https://www.qq.com/"></wx-web-view>
@@ -331,6 +341,8 @@ export default {
         'live-pusher',
         'camera',
         'editor',
+        'ad',
+        'official-account',
         // 'web-view',
         'xxxx',
         'iframe',
@@ -476,6 +488,14 @@ export default {
 
     onEditorReady(evt) {
       console.log('onEditorReady', evt.detail)
+    },
+
+    onAdError(evt) {
+      console.log('onAdError', evt.detail)
+    },
+
+    onOfficialAccountError(evt) {
+      console.log('onOfficialAccountError', evt.detail)
     },
   }
 }

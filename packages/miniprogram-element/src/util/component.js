@@ -91,6 +91,14 @@ const wxComponentMap = {
         config: require('../component/canvas'),
     },
     // 开放能力
+    ad: {
+        wxCompName: 'ad',
+        config: require('../component/ad'),
+    },
+    'official-account': {
+        wxCompName: 'official-account',
+        config: require('../component/official-account'),
+    },
     'open-data': {
         wxCompName: 'open-data',
         config: require('../component/open-data'),
