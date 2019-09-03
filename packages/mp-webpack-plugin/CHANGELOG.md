@@ -1,12 +1,12 @@
 # 更新日志
 
-## 0.0.19
-
-* 支持 runtime.wxComponent 配置
-
 ## 0.0.20
 
 * 支持分包
+
+## 0.0.19
+
+* 支持 runtime.wxComponent 配置
 
 ## 0.0.18
 
