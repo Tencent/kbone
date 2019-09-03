@@ -54,9 +54,10 @@ dom 树本身是没有固定模式可循的，它的层级、dom 节点数量都
             src="https://avatars1.githubusercontent.com/u/11658803?s=60&amp;v=4"></a></td>
       <td width="92px"><a target="_blank" href="https://github.com/wechat-miniprogram/kbone/graphs/contributors">感谢你们</a></td>
     </tr>
-
   </tbody>
 </table>
+
+查看[代码贡献规范](./docs/develop.md)。
 
 ## 案例
 
