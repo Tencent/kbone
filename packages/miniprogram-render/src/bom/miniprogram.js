@@ -28,7 +28,7 @@ class Miniprogram {
         const {
             origin, entry, router, runtime
         } = cache.getConfig()
-        const subpackagesMap = runtime.subpackagesMap
+        const subpackagesMap = runtime.subpackagesMap || {}
 
         this.$_pageUrl = this.$_pageUrl || (origin + entry)
         this.window.location.$$reset(this.$_pageUrl)
