@@ -46,7 +46,7 @@ program
                 }
             ])
             .then(answers => {
-                require('../lib/init-template')({
+                require('../src/init-template')({
                     template: answers.template, project: projectName, mirror: options.mirror, language: options.language
                 })
             })
@@ -82,7 +82,7 @@ program.parse(process.argv)
 function switchCommand(cmd, args) {
     if (cmd) {
         // eslint-disable-next-line
-        require('../lib/' + cmd)(args)
+        require('../src/' + cmd)(args)
     } else {
         setTimeout(program.help, 0)
     }

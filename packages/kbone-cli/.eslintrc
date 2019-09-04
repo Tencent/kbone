@@ -6,7 +6,5 @@
       "jsx": true
     }
   },
-  "rules": {
-    "semi": 2
-  }
+  "rules": {}
 }
