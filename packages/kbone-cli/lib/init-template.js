@@ -48,7 +48,7 @@ function init(args) {
     
     console.log();
 
-    const { status, error: cloneError }  = spawn.sync('git', ['clone', '--depth=1', `https://github.com/omijs/template-${templateName}`, customPrjName || '.']);
+    const { status, error: cloneError }  = spawn.sync('git', ['clone', '--depth=1', `https://github.com/wechat-miniprogram/kbone-template-${templateName}`, customPrjName || '.']);
 
     // verify git clone succeed
     if (!cloneError && status === 0) {
@@ -94,7 +94,7 @@ function init(args) {
       }
     } else {
       // if incorrect template name
-      error(`模板 ${templateName} 不存在，访问 http://git.code.oa.com/tangdao/template-${templateName} 确认下到底在不在。`);
+      error(`模板 ${templateName} 不存在`);
     }
 	}
 
