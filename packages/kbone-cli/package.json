@@ -1,7 +1,7 @@
 {
-  "name": "kbone-cli-test",
-  "version": "0.0.10",
-  "description": "Create website, app with no build configuration.",
+  "name": "kbone-cli",
+  "version": "0.1.0",
+  "description": "Set up a miniprogram or web by running one command.",
   "main": "bin/kbone-cli",
   "engines": {
     "node": ">=6.0.0"
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Tencent/kbone.git"
+    "url": "git+https://github.com/wechat-miniprogram/kbone.git"
   },
   "keywords": [
     "kbone",
@@ -20,7 +20,7 @@
     "kbone-cli",
     "webpack"
   ],
-  "author": "dntzhang",
+  "author": "dntzhang,JuneAndGreen",
   "license": "MIT",
   "dependencies": {
     "babel-core": "^6.24.1",
@@ -45,7 +45,7 @@
     "which": "^1.2.14"
   },
   "bugs": {
-    "url": "https://github.com/Tencent/kbone/issues"
+    "url": "https://github.com/wechat-miniprogram/kbone/issues"
   },
-  "homepage": "https://github.com/Tencent/kbone"
+  "homepage": "https://github.com/wechat-miniprogram/kbone"
 }
