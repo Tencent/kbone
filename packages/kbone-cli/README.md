@@ -1,9 +1,11 @@
 ## kbone-cli
 
 ``` bash
-npx kbone-cli my-app
+npx kbone-cli init my-app
 cd my-app
-npm start
+npm start      //开发小程序
+npm run web    //开发 Web
+npm run build  //发布 Web
 ```
 
 ## 目录说明
