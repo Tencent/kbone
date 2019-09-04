@@ -101,6 +101,17 @@ function init(args) {
     console.log();
     console.log();
     success(`恭喜你! "${projectName}"项目初始化成功! `);
+    console.log();
+    console.log(`跳转目录`);
+    console.log(`cd ${projectName}`);
+    console.log();
+    console.log(`开发小程序`);
+    success(`npm start`);
+    console.log();
+    console.log(`开发 Web`);
+    success(`npm run web`);
+    console.log(`发布 Web`);
+    success(`npm run build`);
   }
 }
 
