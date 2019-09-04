@@ -46,7 +46,7 @@ function init(args) {
       dest
     );
 
-    const { status, error: cloneError } = spawn.sync('git', ['clone', '--depth=1', templateName === 'omi' ? `https://github.com/wechat-miniprogram/kbone-template-${templateName}` : `https://github.com/omijs/template-kbone`, customPrjName || '.']);
+    const { status, error: cloneError } = spawn.sync('git', ['clone', '--depth=1', templateName !== 'omi' ? `https://github.com/wechat-miniprogram/kbone-template-${templateName}` : `https://github.com/omijs/template-kbone`, customPrjName || '.']);
 
     // verify git clone succeed
     if (!cloneError && status === 0) {
