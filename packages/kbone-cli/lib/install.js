@@ -5,7 +5,7 @@ var which = require("which");
 module.exports = function (mirror, done) {
 	var registry,
 		resolved,
-		pkgtool = "tnpm";
+		pkgtool = "npm";
 	mirror = mirror.toLowerCase();
 	if (mirror === "yarn" || mirror === "cnpm") {
 		try {
