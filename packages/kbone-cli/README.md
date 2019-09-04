@@ -8,7 +8,7 @@ npm start
 
 ## 目录说明
 
-### React
+### React 或 Preact
 
 
 
