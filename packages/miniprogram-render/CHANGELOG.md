@@ -1,5 +1,9 @@
 # 更新日志
 
+## 0.0.29
+
+* 补充 miniprogram.js 中 subpackagesMap 对象的空判断，兼容旧版本 mp-webpack-plugin 插件
+
 ## 0.0.28
 
 * 修复分包引起的路径处理问题
