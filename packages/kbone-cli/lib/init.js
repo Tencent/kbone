@@ -29,7 +29,7 @@ function init(args) {
 	console.log(KboneCli + (!isCn ? " is booting... " : " 正在启动..."));
 	console.log(
 		KboneCli +
-			(!isCn ? " will execute init command... " : " 即将执行 init 命令...")
+		(!isCn ? " will execute init command... " : " 即将执行 init 命令...")
 	);
 	checkAppName(projectName);
 	if (existsSync(dest) && !emptyDir.sync(dest)) {
@@ -37,17 +37,17 @@ function init(args) {
 			process.exit(1);
 		}
 	}
-		
+
 	createApp();
 
 	function createApp() {
 		console.log();
 		console.log(
 			chalk.bold.cyan("Kbone-Cli") +
-				(!isCn
-					? " will creating a new kbone app in "
-					: " 即将创建一个新的应用在 ") +
-				dest
+			(!isCn
+				? " will creating a new kbone app in "
+				: " 即将创建一个新的应用在 ") +
+			dest
 		);
 
 		vfs
@@ -58,15 +58,15 @@ function init(args) {
 			})
 			.pipe(template(dest, tpl))
 			.pipe(vfs.dest(dest))
-			.on("end", function() {
+			.on("end", function () {
 				try {
 					info("Rename", "gitignore -> .gitignore");
 					renameSync(join(dest, "gitignore"), join(dest, ".gitignore"));
 					if (customPrjName) {
 						try {
-							var appPackage = require(join(dest,"package.json"));
+							var appPackage = require(join(dest, "package.json"));
 							appPackage.name = projectName;
-							fs.writeFile(join(dest,"package.json"), JSON.stringify(appPackage, null, 2), (err) => {
+							fs.writeFile(join(dest, "package.json"), JSON.stringify(appPackage, null, 2), (err) => {
 								if (err) return console.log(err);
 							})
 							process.chdir(customPrjName);
@@ -98,7 +98,7 @@ function init(args) {
 }
 
 function template(dest, cwd) {
-	return through.obj(function(file, enc, cb) {
+	return through.obj(function (file, enc, cb) {
 		if (!file.stat.isFile()) {
 			return cb();
 		}

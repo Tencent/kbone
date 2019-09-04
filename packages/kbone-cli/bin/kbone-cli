@@ -25,7 +25,8 @@ program
 
 
 program
-	.command('init [projectName]')
+	//.command('init [projectName]')
+	.command('[projectName]')
 	.description('Initialize a new kbone application in the current folder')
 	.action(function (projectName, option) {
 		inquirer
@@ -37,10 +38,10 @@ program
 					choices: [{
 						name: 'React',
 						value: 'react'
-					},  {
+					}, {
 						name: 'Vue',
 						value: 'vue'
-					},  {
+					}, {
 						name: 'Omi',
 						value: 'omi'
 					}]
@@ -106,5 +107,5 @@ function executable(cmd) {
 }
 
 function help() {
-	
+
 }

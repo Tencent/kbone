@@ -1,28 +1,36 @@
 ## kbone-cli
 
-```bash
-$ npm i kbone-cli -g     # install cli
-$ kbone init my-app      # init project, you can also exec 'kbone init' in an empty folder
-$ cd my-app            # please ignore this command if you executed 'kbone init' in an empty folder
-$ npm start            # develop
-$ npm run build        # release
+``` bash
+npx kbone-cli my-app
+cd my-app
+npm start
 ```
 
-> `npx kbone-cli init my-app` is also supported(npm v5.2.0+).
+## 目录说明
 
-Directory description:
+### React
+
+
+
+### Vue
+
+
+### Omi
 
 ```
+├─ build
+│  ├─ mp     //微信开发者工具指向的目录，用于生产环境
+│  ├─ web    //web 编译出的文件，用于生产环境
 ├─ config
 ├─ public
 ├─ scripts
 ├─ src
 │  ├─ assets
-│  ├─ elements    //Store all custom elements
-│  ├─ store       //Store all this store of pages
-│  ├─ admin.js    //Entry js of compiler，will build to admin.html
-│  └─ index.js    //Entry js of compiler，will build to index.html
-```
+│  ├─ components    //存放所有页面的组件
+│  ├─ models        //存放所有模型
+│  ├─ stores        //存放页面的 store
+│  ├─ log.js        //入口文件，会 build 成  log.html
+│  └─ index.js      //入口文件，会 build 成  index.html
 
 
 # License
