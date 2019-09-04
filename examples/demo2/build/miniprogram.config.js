@@ -14,7 +14,11 @@ module.exports = {
 	app: {
 		navigationBarTitleText: 'miniprogram-project',
 	},	
-	global: {},	
+	global: {
+		extra: {
+			navigationBarTextStyle: 'black',
+		},
+	},	
 	pages: {},	
 	optimization: {
 		domSubTreeLevel: 5,

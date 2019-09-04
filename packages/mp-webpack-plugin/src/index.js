@@ -134,10 +134,11 @@ class MpPlugin {
                 const assets = assetsMap[entryName]
                 const pageConfig = pageConfigMap[entryName] = Object.assign({}, globalConfig, pageConfigMap[entryName] || {})
                 const addPageScroll = pageConfig && pageConfig.windowScroll
-                const pageBackgroundColor = pageConfig && pageConfig.backgroundColor
+                const pageBackgroundColor = pageConfig && (pageConfig.pageBackgroundColor || pageConfig.backgroundColor) // 兼容原有的 backgroundColor
                 const reachBottom = pageConfig && pageConfig.reachBottom
                 const reachBottomDistance = pageConfig && pageConfig.reachBottomDistance
                 const pullDownRefresh = pageConfig && pageConfig.pullDownRefresh
+                const pageExtraConfig = pageConfig && pageConfig.extra || {}
                 const packageName = subpackagesMap[entryName]
                 const pageRoute = `${packageName ? packageName + '/' : ''}pages/${entryName}/index`
                 const assetPathPrefix = packageName ? '../' : ''
@@ -175,15 +176,14 @@ class MpPlugin {
 
                 // 页面 json
                 const pageJson = {
+                    ...pageExtraConfig,
+                    enablePullDownRefresh: !!pullDownRefresh,
                     usingComponents: {
                         element: 'miniprogram-element'
                     }
                 }
                 if (reachBottom && typeof reachBottomDistance === 'number') {
                     pageJson.onReachBottomDistance = reachBottomDistance
-                }
-                if (pullDownRefresh) {
-                    pageJson.enablePullDownRefresh = pullDownRefresh
                 }
                 const pageJsonContent = JSON.stringify(pageJson, null, '\t')
                 addFile(compilation, `../${pageRoute}.json`, pageJsonContent)

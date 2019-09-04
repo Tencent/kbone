@@ -172,10 +172,16 @@ const mpPluginConfig = {
         loadingText: '拼命加载页面中...', // 页面加载时是否需要 loading 提示，默认是没有，即空串
         share: true, // 是否支持分享，若支持，会展示分享按钮并调用 app 的 onShareAppMessage 按钮
         windowScroll: false, // 是否需要 window scroll 事件，会影响性能
-        backgroundColor: '#F7F7F7', // page 的背景色
+        pageBackgroundColor: '#F7F7F7', // page 的背景色
         reachBottom: false, // 是否支持上拉触底，若支持可监听 window 的 reachbottom 事件
         reachBottomDistance: 0, // 页面上拉触底事件触发时距页面底部距离，单位为 px
         pullDownRefresh: false, // 是否支持下拉刷新，若支持可监听 window 的 pulldownrefresh 事件
+
+        // 除了上述字段外，其他官方页面配置也支持：https://developers.weixin.qq.com/miniprogram/dev/reference/configuration/page.html
+        extra: {
+            pageOrientation: 'portrait', // 比如 pageOrientation 配置
+            disableSwipeBack: true, // 比如 disableSwipeBack 配置
+        },
     },
     // 页面配置，可以为单个页面做个性化处理，覆盖全局配置
     pages: {
