@@ -34,7 +34,7 @@ program
 				{
 					type: 'list',
 					name: 'template',
-					message: '请选择技术栈',
+					message: '请选择开发小程序或 Web 的技术栈',
 					choices: [{
 						name: 'React',
 						value: 'react'
@@ -44,6 +44,9 @@ program
 					}, {
 						name: 'Omi',
 						value: 'omi'
+					},{
+						name: 'Preact',
+						value: 'preact'
 					}]
 				}
 			])
