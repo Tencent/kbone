@@ -1,112 +1,109 @@
 #!/usr/bin/env node
 
-'use strict';
 
-var program = require('commander');
-var join = require('path').join;
-var chalk = require('chalk');
-var exists = require('fs-exists-sync');
-var spawn = require('cross-spawn');
+const program = require('commander')
+const spawn = require('cross-spawn')
 const inquirer = require('inquirer')
 
-var options = {
-	cmd: '',
-	projectName: '',
-	mirror: 'default',
-	language: 'en'
+const options = {
+    cmd: '',
+    projectName: '',
+    mirror: 'default',
+    language: 'en'
 }
 
 program
-	.version(require('../package').version, '-v, --version')
-	.usage('<cmd> [project-name]')
-	.option('-m, --mirror <mirror>', 'Select mirror like: npm, cnpm, taobao', /^(npm|cnpm|taobao|nj|rednpm|skimdb|yarn)$/i)
-	.option('-l, --language <language>', 'Select language: en / cn', selectLanguage)
-	.on('-h, --help', help);
+    .version(require('../package').version, '-v, --version')
+    .usage('<cmd> [project-name]')
+    .option('-m, --mirror <mirror>', 'Select mirror like: npm, cnpm, taobao', /^(npm|cnpm|taobao|nj|rednpm|skimdb|yarn)$/i)
+    .option('-l, --language <language>', 'Select language: en / cn', selectLanguage)
+    .on('-h, --help', help)
 
 
 program
-	.command('init [projectName]')
-	.description('Initialize a new kbone application in the current folder')
-	.action(function (projectName, option) {
-		inquirer
-			.prompt([
-				{
-					type: 'list',
-					name: 'template',
-					message: '请选择开发小程序或 Web 的技术栈',
-					choices: [{
-						name: 'React',
-						value: 'react'
-					}, {
-						name: 'Vue',
-						value: 'vue'
-					}, {
-						name: 'Omi',
-						value: 'omi'
-					},{
-						name: 'Preact',
-						value: 'preact'
-					}]
-				}
-			])
-			.then(answers => {
-				require('../lib/init-template')({ template: answers.template, project: projectName, mirror: options.mirror, language: options.language });
-			})
-	});
+    .command('init [projectName]')
+    .description('Initialize a new kbone application in the current folder')
+    .action(function(projectName) {
+        return inquirer
+            .prompt([
+                {
+                    type: 'list',
+                    name: 'template',
+                    message: '请选择开发小程序或 Web 的技术栈',
+                    choices: [{
+                        name: 'React',
+                        value: 'react'
+                    }, {
+                        name: 'Vue',
+                        value: 'vue'
+                    }, {
+                        name: 'Omi',
+                        value: 'omi'
+                    }, {
+                        name: 'Preact',
+                        value: 'preact'
+                    }]
+                }
+            ])
+            .then(answers => {
+                require('../lib/init-template')({
+                    template: answers.template, project: projectName, mirror: options.mirror, language: options.language
+                })
+            })
+    })
 
 
 program
-	.command('*')
-	.action(function (cmd) {
-		const templateName = isInitTemplate(cmd); // verify init-{templateName}
-		const option = arguments[2] || arguments[1]; // if no arguments[2], second parameter is an option.
-		const projectName = typeof arguments[1] === 'string' ? arguments[1] : ''; // if arguments[1] is not a string, no project name input.
-		// init a template
-		if (templateName) {
-			var cmd = 'init-template';
-			if (option.parent.mirror && typeof option.parent.mirror === 'string') {
-				options.mirror = option.parent.mirror;
-			}
-			// kbone init-{templateName} {projectName}
-			switchCommand(cmd, { project: projectName, template: templateName, mirror: options.mirror, language: options.language });
-		} else {
-			// default, if it is not init a template
-			spawn('kbone', ['-h'], { stdio: 'inherit' })
-		}
-	});
+    .command('*')
+    .action(function(currentCmd) {
+        const templateName = isInitTemplate(currentCmd) // verify init-{templateName}
+        // eslint-disable-next-line
+				const option = arguments[2] || arguments[1] // if no arguments[2], second parameter is an option.
+        // eslint-disable-next-line
+        const projectName = typeof arguments[1] === 'string' ? arguments[1] : '' // if arguments[1] is not a string, no project name input.
+        // init a template
+        if (templateName) {
+            const cmd = 'init-template'
+            if (option.parent.mirror && typeof option.parent.mirror === 'string') {
+                options.mirror = option.parent.mirror
+            }
+            // kbone init-{templateName} {projectName}
+            switchCommand(cmd, {
+                project: projectName, template: templateName, mirror: options.mirror, language: options.language
+            })
+        } else {
+            // default, if it is not init a template
+            spawn('kbone', ['-h'], {stdio: 'inherit'})
+        }
+    })
 
-program.parse(process.argv);
+program.parse(process.argv)
 
 function switchCommand(cmd, args) {
-	if (cmd) {
-		require('../lib/' + cmd)(args);
-	} else {
-		setTimeout(program.help, 0);
-	}
+    if (cmd) {
+        // eslint-disable-next-line
+        require('../lib/' + cmd)(args)
+    } else {
+        setTimeout(program.help, 0)
+    }
 }
 
-function isCnFuc(language) {
-	return language === "cn" ? true : false
-}
 
 function selectLanguage(language) {
-	if (language !== 'en' && language !== 'cn') {
-		language = 'en';
-	}
-	options.language = language;
-	return language;
+    if (language !== 'en' && language !== 'cn') {
+        language = 'en'
+    }
+    options.language = language
+    return language
 }
 
 // verify a command is init a template, and return a template name without init-
 // i.e. init-kbone-cli to kbone-cli
 function isInitTemplate(cmd) {
-	return /init-(.)+/.test(cmd) && /init-([^\ ]+)/.exec(cmd)[1];
+    // eslint-disable-next-line
+    return /init-(.)+/.test(cmd) && /init-([^\ ]+)/.exec(cmd)[1]
 }
 
-function executable(cmd) {
-	var file = join(__dirname, 'kbone-' + cmd);
-	return exists(file) ? file : void 0;
-}
 
 function help() {
 
