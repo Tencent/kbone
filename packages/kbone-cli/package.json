@@ -1,6 +1,6 @@
 {
   "name": "kbone-cli",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Set up a miniprogram or web by running one command.",
   "main": "bin/kbone-cli",
   "engines": {
