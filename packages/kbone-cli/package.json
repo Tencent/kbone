@@ -1,6 +1,6 @@
 {
   "name": "kbone-cli-test",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Create website, app with no build configuration.",
   "main": "bin/kbone-cli",
   "engines": {
