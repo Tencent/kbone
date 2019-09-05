@@ -10,8 +10,7 @@ module.exports = {
     }, {
         name: 'adIntervals',
         get(domNode) {
-            const value = +domNode.getAttribute('ad-intervals')
-            return !isNaN(value) ? value : 0
+            return +domNode.getAttribute('ad-intervals') || 0
         },
     }],
     handles: {

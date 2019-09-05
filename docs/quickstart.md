@@ -397,6 +397,7 @@ npm install --save-dev vue-improve-loader
 
 * cover-image 组件
 * cover-view 组件
+* scroll-view 组件
 * view 组件
 * icon 组件
 * progress 组件

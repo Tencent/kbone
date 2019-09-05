@@ -5,8 +5,7 @@ module.exports = {
     properties: [{
         name: 'percent',
         get(domNode) {
-            const value = +domNode.getAttribute('percent')
-            return !isNaN(value) ? value : 0
+            return +domNode.getAttribute('percent') || 0
         },
     }, {
         name: 'showInfo',

@@ -17,6 +17,25 @@
     style="{{style}}"
     scroll-top="{{scrollTop}}"
 ><template is="subtree-cover" data="{{childNodes: innerChildNodes}}"/></cover-view>
+<scroll-view
+    wx:elif="{{wxCompName === 'scroll-view'}}"
+    id="{{id}}"
+    class="{{class}}"
+    style="{{style}}"
+    scroll-x="{{scrollX}}"
+    scroll-y="{{scrollY}}"
+    upper-threshold="{{upperThreshold}}"
+    lower-threshold="{{lowerThreshold}}"
+    scroll-top="{{scrollTop}}"
+    scroll-left="{{scrollLeft}}"
+    scroll-into-view="{{scrollIntoView}}"
+    scroll-with-animation="{{scrollWithAnimation}}"
+    enable-back-to-top="{{enableBackToTop}}"
+    enable-flex="{{enableFlex}}"
+    bindscrolltoupper="onScrollViewScrolltoupper"
+    bindscrolltolower="onScrollViewScrolltolower"
+    bindscroll="onScrollViewScroll"
+><template is="subtree" data="{{childNodes: innerChildNodes, inCover}}"/></scroll-view>
 <view
     wx:elif="{{wxCompName === 'view'}}"
     id="{{id}}"

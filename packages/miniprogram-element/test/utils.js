@@ -147,8 +147,8 @@ simulate.checkNumber = async function(component, node, attrName, attributeName, 
 
     node.setAttribute(attributeName, '')
     await simulate.sleep(10)
-    if (component.data[attrName] !== 0) err(`${node.tagName}.${attrName}`)
-    expect(component.data[attrName]).toBe(0)
+    if (component.data[attrName] !== defaultValue) err(`${node.tagName}.${attrName}`)
+    expect(component.data[attrName]).toBe(defaultValue)
 
     node.setAttribute(attributeName, 'abc')
     await simulate.sleep(10)

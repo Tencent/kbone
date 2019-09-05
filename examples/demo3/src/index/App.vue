@@ -293,6 +293,20 @@
           <wx-web-view v-else-if="wxPrefix === 1" :class="item" src="https://www.qq.com/"></wx-web-view>
           <web-view v-else-if="wxPrefix === 2" :class="item" src="https://www.qq.com/"></web-view>
         </template>
+        <template v-else-if="item === 'scroll-view'">
+          <div>
+            <wx-component v-if="!wxPrefix" :behavior="item" :class="item + '-y'" :scroll-into-view="'y1' + scrollView.yDest" :scroll-y="true" :scroll-with-animation="true" @scroll="onScrollViewScroll"><Inner2 type="y1"/></wx-component>
+            <wx-scroll-view v-else-if="wxPrefix === 1" :class="item + '-y'" :scroll-into-view="'y2' + scrollView.yDest" :scroll-y="true" :scroll-with-animation="true" @scroll="onScrollViewScroll"><Inner2 type="y2"/></wx-scroll-view>
+            <scroll-view v-else-if="wxPrefix === 2" :class="item + '-y'" :scroll-into-view="'y3' + scrollView.yDest" :scroll-y="true" :scroll-with-animation="true" @scroll="onScrollViewScroll"><Inner2 type="y3"/></scroll-view>
+            <div class="scroll-view-btn" @click="onClickScrollViewYBtn">滚动到第三个滑块</div>
+          </div>
+          <div>
+            <wx-component v-if="!wxPrefix" :behavior="item" :class="item + '-x'" :scroll-into-view="'x1' + scrollView.xDest" :scroll-x="true" :scroll-with-animation="true" @scroll="onScrollViewScroll"><Inner2 type="x1"/></wx-component>
+            <wx-scroll-view v-else-if="wxPrefix === 1" :class="item + '-x'" :scroll-into-view="'x2' + scrollView.xDest" :scroll-x="true" :scroll-with-animation="true" @scroll="onScrollViewScroll"><Inner2 type="x2"/></wx-scroll-view>
+            <scroll-view v-else-if="wxPrefix === 2" :class="item + '-x'" :scroll-into-view="'x3' + scrollView.xDest" :scroll-x="true" :scroll-with-animation="true" @scroll="onScrollViewScroll"><Inner2 type="x3"/></scroll-view>
+            <div class="scroll-view-btn" @click="onClickScrollViewXBtn">滚动到第二个滑块</div>
+          </div>
+        </template>
         <!-- 不支持标签 -->
         <template v-else-if="item === 'xxxx'" >
           <wx-component v-if="!wxPrefix" :behavior="item"></wx-component>
@@ -306,11 +320,13 @@
 
 <script>
 import Inner from './Inner.vue'
+import Inner2 from './Inner2.vue'
 
 export default {
   name: 'App',
   components: {
     Inner,
+    Inner2,
   },
   data() {
     return {
@@ -343,6 +359,7 @@ export default {
         'editor',
         'ad',
         'official-account',
+        'scroll-view',
         // 'web-view',
         'xxxx',
         'iframe',
@@ -390,7 +407,11 @@ export default {
           },
           clickable: true,
         }],
-      }
+      },
+      scrollView: {
+        yDest: '',
+        xDest: '',
+      },
     }
   },
   watch: {
@@ -494,6 +515,18 @@ export default {
       console.log('onAdError', evt.detail)
     },
 
+    onScrollViewScroll(evt) {
+      console.log('onScrollViewScroll', evt.detail)
+    },
+
+    onClickScrollViewYBtn() {
+      this.scrollView.yDest = 'block3'
+    },
+
+    onClickScrollViewXBtn() {
+      this.scrollView.xDest = 'block2'
+    },
+
     onOfficialAccountError(evt) {
       console.log('onOfficialAccountError', evt.detail)
     },
@@ -539,5 +572,26 @@ export default {
 .live-player, .live-pusher, .camera {
   width: 300px;
   height: 225px;
+}
+
+.scroll-view-y {
+  width: 100%;
+  height: 125px;
+}
+
+.scroll-view-x {
+  width: 300px;
+  height: 125px;
+}
+
+.scroll-view-btn {
+  margin: 10px 20px;
+  text-align: center;
+  background: #07c160;
+  color: #fff;
+  line-height: 30px;
+  height: 30px;
+  font-size: 16px;
+  border-radius: 5px;
 }
 </style>

@@ -8,6 +8,10 @@ const wxComponentMap = {
         wxCompName: 'cover-view',
         config: require('../component/cover-view'),
     },
+    'scroll-view': {
+        wxCompName: 'scroll-view',
+        config: require('../component/scroll-view'),
+    },
     view: {
         wxCompName: 'view',
         config: require('../component/view'),

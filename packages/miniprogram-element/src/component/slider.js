@@ -10,13 +10,13 @@ module.exports = {
     }, {
         name: 'max',
         get(domNode) {
-            const value = +domNode.getAttribute('max')
+            const value = parseInt(domNode.getAttribute('max'), 10)
             return !isNaN(value) ? value : 100
         },
     }, {
         name: 'step',
         get(domNode) {
-            const value = +domNode.getAttribute('step')
+            const value = parseInt(domNode.getAttribute('step'), 10)
             return !isNaN(value) ? value : 1
         },
     }, {
@@ -52,7 +52,7 @@ module.exports = {
     }, {
         name: 'blockSize',
         get(domNode) {
-            const value = +domNode.getAttribute('block-size')
+            const value = parseInt(domNode.getAttribute('block-size'), 10)
             return !isNaN(value) ? value : 28
         },
     }, {
