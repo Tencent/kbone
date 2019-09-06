@@ -3,7 +3,7 @@
 ``` bash
 npx kbone-cli init my-app
 cd my-app
-npm start      //开发小程序
+npm run mp     //开发小程序
 npm run web    //开发 Web
 npm run build  //发布 Web
 ```
@@ -28,6 +28,13 @@ npm run build  //发布 Web
 
 ### Vue
 
+```
+├─ dist
+│  ├─ mp     //微信开发者工具指向的目录，用于生产环境
+│  ├─ web    //web 编译出的文件，用于生产环境
+├─ build
+├─ src       //项目业务代码
+```
 
 ### Omi
 
@@ -45,7 +52,7 @@ npm run build  //发布 Web
 │  ├─ stores        //存放页面的 store
 │  ├─ log.js        //入口文件，会 build 成  log.html
 │  └─ index.js      //入口文件，会 build 成  index.html
-
+```
 
 # License
 
