@@ -110,7 +110,7 @@ function init(args) {
         success(`cd ${projectName}`)
         console.log()
         console.log('开发小程序')
-        success('npm start')
+        success('npm run mp')
         console.log()
         console.log('开发 Web')
         success('npm run web')
