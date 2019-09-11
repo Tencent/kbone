@@ -229,6 +229,21 @@ document.querySelector('video').$$getContext().then(context => {
 })
 ```
 
+#### dom.$$getNodesRef
+
+获取小程序组件的 NodesRef 对象，返回一个 promise。
+
+> PS：此接口是小程序的 SelectorQuery 的二次封装
+
+```js
+document.querySelector('video').$$getNodesRef().then(nodesRef => {
+    // NodesRef 对象文档：https://developers.weixin.qq.com/miniprogram/dev/api/wxml/NodesRef.html
+    nodesRef.node(res => {
+        console.log(res.node)
+    }).exec()
+})
+```
+
 #### dom: $$domNodeUpdate 事件
 
 当前节点有更新时触发。

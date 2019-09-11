@@ -1,5 +1,9 @@
 # 更新日志
 
+## 0.1.1
+
+* 提供 dom 节点的 $$getNodesRef 方法以获取 NodesRef 对象
+
 ## 0.0.29
 
 * 补充 miniprogram.js 中 subpackagesMap 对象的空判断，兼容旧版本 mp-webpack-plugin 插件

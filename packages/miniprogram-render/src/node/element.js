@@ -327,7 +327,7 @@ class Element extends Node {
      * 调用 cloneNode 接口时用于处理额外的属性
      */
     $$dealWithAttrsForCloneNode() {
-    // 具体实现逻辑由子类实现
+        // 具体实现逻辑由子类实现
         return {}
     }
 
@@ -365,6 +365,25 @@ class Element extends Node {
                     .exec()
             } else {
                 window.$$createSelectorQuery().select(`.miniprogram-root >>> .node-${this.$_nodeId}`).context(res => (res && res.context ? resolve(res.context) : reject())).exec()
+            }
+        })
+    }
+
+    /**
+     * 获取对应节点的 NodesRef 对象
+     * https://developers.weixin.qq.com/miniprogram/dev/api/wxml/NodesRef.html
+     */
+    $$getNodesRef() {
+        tool.flushThrottleCache() // 先清空 setData
+        const window = cache.getWindow(this.$_pageId)
+        return new Promise((resolve, reject) => {
+            if (!window) reject()
+
+            if (this.tagName === 'CANVAS') {
+                // TODO，为了兼容基础库的一个 bug，暂且如此实现
+                resolve(wx.createSelectorQuery().in(this._wxComponent).select(`.node-${this.$_nodeId}`))
+            } else {
+                resolve(window.$$createSelectorQuery().select(`.miniprogram-root >>> .node-${this.$_nodeId}`))
             }
         })
     }
