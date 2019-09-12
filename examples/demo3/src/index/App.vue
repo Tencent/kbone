@@ -453,6 +453,12 @@ export default {
       context.stroke()
       context.draw()
     })
+
+    canvas.$$getNodesRef().then(nodesRef => {
+        nodesRef.boundingClientRect(res => {
+          console.log('test $$getNodesRef', res)
+        }).exec()
+    })
   },
   methods: {
     onInput(evt) {
