@@ -6,7 +6,6 @@ module.exports = {
   mode: 'production',
   entry: {
     index: path.resolve(__dirname, '../src/main.js'),
-    log: path.resolve(__dirname, '../src/log.js'),
   },
   output: {
     path: path.resolve(__dirname, '../dist/web'),

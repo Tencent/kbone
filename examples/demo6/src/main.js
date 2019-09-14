@@ -1,4 +1,4 @@
 import { render, h } from 'omis'
-import Counter from './components/counter'
+import Todo from './components/todo'
 
-render(<Counter />, '#app')
+render(<Todo />, '#app')

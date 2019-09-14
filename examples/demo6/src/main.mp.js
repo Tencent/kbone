@@ -1,10 +1,10 @@
 import { render, h } from 'omis'
-import Counter from './components/counter'
+import Todo from './components/todo'
 
 export default function createApp() {
   const container = document.createElement('div')
   container.id = 'app'
   document.body.appendChild(container)
 
-  render(<Counter />, '#app')
+  render(<Todo />, '#app')
 }

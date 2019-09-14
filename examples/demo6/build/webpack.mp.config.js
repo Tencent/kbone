@@ -10,7 +10,6 @@ module.exports = {
     mode: 'production',
     entry: {
         index: path.resolve(__dirname, '../src/main.mp.js'),
-        log: path.resolve(__dirname, '../src/log.mp.js')
     },
     output: {
         path: path.resolve(__dirname, '../dist/mp/common'), // 放到小程序代码目录中的 common 目录下

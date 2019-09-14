@@ -10,10 +10,6 @@ module.exports = {
 			'/test/aaa',
 			'/test/bbb',
 		],
-		log: [
-			'/test/aaa',
-			'/test/bbb',
-		]
 	},
 	// 特殊路由跳转
 	redirect: {
