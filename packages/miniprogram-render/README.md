@@ -58,7 +58,7 @@ const page2 = mp.createPage('/pages/home/index', config2) // 传入 config2
 
 #### config
 
-同 `mp-webpack-plugin` 的[配置参数](https://github.com/wechat-miniprogram/kbone/blob/master/docs/miniprogram.config.js)。
+同 `mp-webpack-plugin` 的[配置参数](../../docs/miniprogram.config.js)。
 
 ### destroyPage(pageId)
 
