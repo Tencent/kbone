@@ -1,4 +1,3 @@
-// 配置说明：https://developers.weixin.qq.com/miniprogram/dev/extended/kbone/quickstart.html#%E7%BC%96%E5%86%99-webpack-%E6%8F%92%E4%BB%B6%E9%85%8D%E7%BD%AE
 module.exports = {
     origin: '<%= options.origin.trim() %>',
     entry: '<%= options.entry.trim() %>',
