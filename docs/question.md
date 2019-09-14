@@ -56,7 +56,7 @@ Q：为什么 label 不支持 button 组件？<br/>
 A：因为小程序 label 组件不支持跨 shadow-tree 绑定，所以 label 标签的效果其实是在逻辑层监听点击事件后模拟出来。而 button 支持的复杂特性都需要用户亲自点击触发，无法在逻辑层模拟触发，故不支持。
 
 Q：为什么使用小程序内置组件的时候，和父级节点或者子级节点相互影响的样式表现（比如 flex）会不太符合预期？<br/>
-A：绝大部分小程序内置组件在渲染时会在外面多包装一层自定义组件，可以简单认为内置组件和其父级节点中间会多一层 div 容器，所以会对部分样式有影响。这个 div 容器会追加一个名为 h5-xxx 的 class，例如使用 video 组件，那么会在这个 div 容器上追加一个名为 h5-video 的 class，以便对其做特殊处理。
+A：绝大部分小程序内置组件在渲染时会在外面多包装一层自定义组件，可以简单认为内置组件和其父级节点中间会**多一层 div 容器**，所以会对部分样式有影响。这个 div 容器会追加一个名为 h5-xxx 的 class，例如使用 video 组件，那么会在这个 div 容器上追加一个名为 h5-video 的 class，以便对其做特殊处理。
 
 Q：为什么 scroll-view 的 scroll-into-view 有时可用有时不可用？<br/>
-A：因为 scroll-into-view 找寻的节点只能在当前 shadow-tree 下，因此只有传入 domSubTreeLevel 配置对应层级内的 div、img 标签对应的 id 方能生效。如果 domSubTreeLevel 的值为 5，那么只有 scroll-view 下 5 层节点内的 div、img 标签上的 id 可以作为该 scroll-view 上 scroll-into-view 的值。
+A：因为 scroll-into-view 找寻的节点只能在当前 shadow-tree 下，因此只有传入 `domSubTreeLevel` 配置对应层级内的 div、img 标签对应的 id 方能生效。如果 `domSubTreeLevel` 的值为 5，那么只有 scroll-view 下 5 层节点内的 div、img 标签上的 id 可以作为该 scroll-view 上 scroll-into-view 的值。

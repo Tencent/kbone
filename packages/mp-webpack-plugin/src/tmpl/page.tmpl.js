@@ -22,7 +22,8 @@ function dealWithPage(evt, window, value) {
     } else if (value !== 'none') {
         const targeturl = `${window.location.origin}/redirect?url=${encodeURIComponent(url)}`
         const options = {url: `/pages/${value}/index?type=${type}&targeturl=${encodeURIComponent(targeturl)}`}
-        if (type === 'jump') wx.redirectTo(options)
+        if (window.$$miniprogram.isTabBarPage(`/pages/${value}/index`)) wx.switchTab(options)
+        else if (type === 'jump') wx.redirectTo(options)
         else if (type === 'open') wx.navigateTo(options)
     }
 }

@@ -1,5 +1,9 @@
 # 更新日志
 
+## 0.1.3
+
+* 支持 tabBar
+
 ## 0.1.2
 
 * 补充 miniprogram.js 中 runtime 对象的空判断

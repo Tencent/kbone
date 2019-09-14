@@ -79,6 +79,17 @@ class Miniprogram {
 
         return null
     }
+
+    /**
+     * 判断是否 tabBar 页面
+     */
+    isTabBarPage(pageRoute) {
+        const {
+            runtime = {}
+        } = cache.getConfig()
+        const tabBarMap = runtime.tabBarMap || {}
+        return !!tabBarMap[pageRoute]
+    }
 }
 
 module.exports = Miniprogram

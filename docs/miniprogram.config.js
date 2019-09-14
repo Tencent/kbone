@@ -24,7 +24,7 @@ module.exports = {
     },
     // 特殊路由跳转
     redirect: {
-        // 跳转遇到同一个 origin 但是不在 router 里的页面时处理方式，支持的值：webview - 使用 web-view 组件打开；error - 抛出异常；none - 默认值；什么都不做，router 配置项中的 key
+        // 跳转遇到同一个 origin 但是不在 router 里的页面时处理方式，支持的值：webview - 使用 web-view 组件打开；error - 抛出异常；none - 默认值，什么都不做；router 配置项中的 key - 跳转到对应页面，这个页面必须在主包中
         notFound: 'home',
         // 跳转到 origin 之外的页面时处理方式，值同 notFound
         accessDenied: 'home',
@@ -45,6 +45,25 @@ module.exports = {
                 network: 'all',
                 packages: ['package2'],
             },
+        },
+        // 小程序 tabBar，暂不支持自定义 tabBar，详细注意事项可参考：https://developers.weixin.qq.com/miniprogram/dev/reference/configuration/app.html#tabBar
+        tabBar: {
+            color: '#000000',
+            selectedColor: '#07c160',
+            backgroundColor: '#ffffff',
+            list: [{
+                // 使用 pageName 替代官方文档中的 pagePath 字段
+                pageName: 'home',
+                text: '主页',
+                // iconPath 和 selectedIconPath 因为不支持网络图片，需要指定对应图片的绝对路径
+                iconPath: path.resolve(__dirname, '../src/img/home.png'),
+                selectedIconPath: path.resolve(__dirname, '../src/img/home-sel.png'),
+            }, {
+                pageName: 'profile',
+                text: '个人页',
+                iconPath: path.resolve(__dirname, '../src/img/profile.png'),
+                selectedIconPath: path.resolve(__dirname, '../src/img/profile-sel.png'),
+            }],
         },
     },
     // 运行时配置

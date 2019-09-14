@@ -1,3 +1,7 @@
+const crypto = require('crypto')
+const path = require('path')
+const fs = require('fs')
+
 /**
  * 深合并对象
  */
@@ -44,7 +48,52 @@ function includes(parentArr, childArr) {
     return true
 }
 
+/**
+ * 递归创建目录
+ */
+function recursiveMkdir(dirPath) {
+    const prevDirPath = path.dirname(dirPath)
+    try {
+        fs.accessSync(prevDirPath)
+    } catch (err) {
+        // 上一级目录不存在
+        recursiveMkdir(prevDirPath)
+    }
+
+    try {
+        fs.accessSync(dirPath)
+
+        const stat = fs.statSync(dirPath)
+        if (stat && !stat.isDirectory()) {
+            // 目标路径存在，但不是目录
+            fs.renameSync(dirPath, `${dirPath}.bak`) // 将此文件重命名为 .bak 后缀
+            fs.mkdirSync(dirPath)
+        }
+    } catch (err) {
+        // 目标路径不存在
+        fs.mkdirSync(dirPath)
+    }
+}
+
+/**
+ * 复制文件
+ */
+function copyFile(fromPath, toPath) {
+    recursiveMkdir(path.dirname(toPath))
+    return fs.createReadStream(fromPath).pipe(fs.createWriteStream(toPath))
+}
+
+/**
+ * 计算文件 md5
+ */
+function md5File(filePath) {
+    return crypto.createHash('md5').update(fs.readFileSync(filePath)).digest('hex')
+}
+
 module.exports = {
     merge,
     includes,
+    recursiveMkdir,
+    copyFile,
+    md5File,
 }

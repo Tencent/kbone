@@ -63,16 +63,19 @@ class MpPlugin {
 
         // 补充其他文件输出
         compiler.hooks.emit.tapAsync(PluginName, (compilation, callback) => {
+            const outputPath = compilation.outputOptions.path
             const entryNames = Array.from(compilation.entrypoints.keys())
             const globalConfig = options.global || {}
             const pageConfigMap = options.pages || {}
             const subpackagesConfig = generateConfig.subpackages || {}
             const preloadRuleConfig = generateConfig.preloadRule || {}
+            const tabBarConfig = generateConfig.tabBar || {}
             const pages = []
             const subpackagesMap = {} // 页面名-分包名
             const assetsMap = {} // 页面名-依赖
             const assetsReverseMap = {} // 依赖-页面名
             const assetsSubpackageMap = {} // 依赖-分包名
+            const tabBarMap = {}
 
             // 收集依赖
             for (const entryName of entryNames) {
@@ -213,6 +216,7 @@ class MpPlugin {
             // app json
             const subpackages = []
             const preloadRule = {}
+            let tabBar = {}
             Object.keys(subpackagesConfig).forEach(packageName => {
                 const pages = subpackagesConfig[packageName] || []
                 subpackages.push({
@@ -226,12 +230,30 @@ class MpPlugin {
                 const pageRoute = `${packageName ? packageName + '/' : ''}pages/${entryName}/index`
                 preloadRule[pageRoute] = preloadRuleConfig[entryName]
             })
+            if (tabBarConfig.list && tabBarConfig.list.length) {
+                tabBar = Object.assign(tabBar, tabBarConfig)
+                tabBar.list = tabBarConfig.list.map(item => {
+                    const iconPathName = item.iconPath ? _.md5File(item.iconPath) + path.extname(item.iconPath) : ''
+                    if (iconPathName) _.copyFile(item.iconPath, path.resolve(outputPath, `../images/${iconPathName}`))
+                    const selectedIconPathName = item.selectedIconPath ? _.md5File(item.selectedIconPath) + path.extname(item.selectedIconPath) : ''
+                    if (selectedIconPathName) _.copyFile(item.selectedIconPath, path.resolve(outputPath, `../images/${selectedIconPathName}`))
+                    tabBarMap[`/pages/${item.pageName}/index`] = true
+
+                    return {
+                        pagePath: `pages/${item.pageName}/index`,
+                        text: item.text,
+                        iconPath: iconPathName ? `./images/${iconPathName}` : '',
+                        selectedIconPath: selectedIconPathName ? `./images/${selectedIconPathName}` : '',
+                    }
+                })
+            }
             const userAppJson = options.appExtraConfig || {}
             const appJsonContent = JSON.stringify({
                 pages,
                 window: options.app || {},
                 subpackages,
                 preloadRule,
+                tabBar,
                 ...userAppJson,
             }, null, '\t')
             addFile(compilation, '../app.json', appJsonContent)
@@ -267,6 +289,7 @@ class MpPlugin {
                 router,
                 runtime: Object.assign({
                     subpackagesMap,
+                    tabBarMap,
                 }, options.runtime || {}),
                 pages: pageConfigMap,
                 redirect: options.redirect || {},
