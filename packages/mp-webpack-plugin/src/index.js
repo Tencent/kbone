@@ -216,7 +216,6 @@ class MpPlugin {
             // app json
             const subpackages = []
             const preloadRule = {}
-            let tabBar = {}
             Object.keys(subpackagesConfig).forEach(packageName => {
                 const pages = subpackagesConfig[packageName] || []
                 subpackages.push({
@@ -230,8 +229,16 @@ class MpPlugin {
                 const pageRoute = `${packageName ? packageName + '/' : ''}pages/${entryName}/index`
                 preloadRule[pageRoute] = preloadRuleConfig[entryName]
             })
+            const userAppJson = options.appExtraConfig || {}
+            const appJson = {
+                pages,
+                window: options.app || {},
+                subpackages,
+                preloadRule,
+                ...userAppJson,
+            }
             if (tabBarConfig.list && tabBarConfig.list.length) {
-                tabBar = Object.assign(tabBar, tabBarConfig)
+                let tabBar = Object.assign({}, tabBarConfig)
                 tabBar.list = tabBarConfig.list.map(item => {
                     const iconPathName = item.iconPath ? _.md5File(item.iconPath) + path.extname(item.iconPath) : ''
                     if (iconPathName) _.copyFile(item.iconPath, path.resolve(outputPath, `../images/${iconPathName}`))
@@ -246,16 +253,9 @@ class MpPlugin {
                         selectedIconPath: selectedIconPathName ? `./images/${selectedIconPathName}` : '',
                     }
                 })
+                appJson.tabBar = tabBar
             }
-            const userAppJson = options.appExtraConfig || {}
-            const appJsonContent = JSON.stringify({
-                pages,
-                window: options.app || {},
-                subpackages,
-                preloadRule,
-                tabBar,
-                ...userAppJson,
-            }, null, '\t')
+            const appJsonContent = JSON.stringify(appJson, null, '\t')
             addFile(compilation, '../app.json', appJsonContent)
 
             // config js
