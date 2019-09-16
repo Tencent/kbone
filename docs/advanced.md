@@ -133,7 +133,7 @@ npm install --save-dev vue-improve-loader
 * open-data 组件
 * web-view 组件
 
-> PS：button 标签不会被渲染成 button 内置组件，如若需要请使用 wx-component。
+> PS：button 标签不会被渲染成 button 内置组件，如若需要请按照上述原生组件使用说明使用。
 > PS：原生组件的表现在小程序中表现会和 web 端标签有些不一样，具体可[参考原生组件说明文档](https://developers.weixin.qq.com/miniprogram/dev/component/native-component.html)。
 > PS：原生组件下的子节点，div、span 等标签会被渲染成 cover-view，img 会被渲染成 cover-image，如若需要使用 button 内置组件请使用 wx-component。
 > PS：如果将插件配置 runtime.wxComponent 的值配置为 `noprefix`，则可以用不带前缀的方式使用内置组件。

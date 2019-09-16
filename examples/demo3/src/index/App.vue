@@ -89,8 +89,8 @@
         </template>
         <template v-else-if="item === 'button'">
           <wx-component v-if="!wxPrefix" :behavior="item" open-type="share">分享</wx-component>
-          <wx-button v-else-if="wxPrefix === 1" open-type="share"></wx-button>
-          <button v-else-if="wxPrefix === 2" open-type="share"></button>
+          <wx-button v-else-if="wxPrefix === 1" open-type="share">分享</wx-button>
+          <button v-else-if="wxPrefix === 2" open-type="share">分享</button>
         </template>
         <template v-else-if="item === 'image'">
           <wx-component v-if="!wxPrefix" :behavior="item" src="https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg"></wx-component>
@@ -330,7 +330,7 @@ export default {
   },
   data() {
     return {
-      wxPrefix: 0, // 0 - wx-component 用法，1 - wx- 前缀用法，2 - 无前缀用法(需要配置 runtime.wxComponent 字段)
+      wxPrefix: 1, // 0 - wx-component 用法，1 - wx- 前缀用法，2 - 无前缀用法(需要配置 runtime.wxComponent 字段)
       list: [
         'normal',
         'img',
