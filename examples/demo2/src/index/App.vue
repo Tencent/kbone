@@ -14,6 +14,9 @@
 import Header from '../common/Header.vue'
 import Footer from 'reduce-loader!../common/Footer.vue'
 import 'reduce-loader!./web'
+import {printf1} from './printf'
+
+printf1()
 
 export default {
   name: 'App',
