@@ -35,10 +35,10 @@ npm run build
 
 除了使用 kbone-cli 外，也可以直接将现有模板 clone 下来，然后在模板基础上进行开发改造：
 
-* Vue 项目模板(https://github.com/wechat-miniprogram/kbone-template-vue)
-* React 项目模板(https://github.com/wechat-miniprogram/kbone-template-react)
-* Preact 项目模板(https://github.com/wechat-miniprogram/kbone-template-preact)
-* Omi 项目模板(https://github.com/omijs/template-kbone)
+* [Vue 项目模板](https://github.com/wechat-miniprogram/kbone-template-vue)
+* [React 项目模板](https://github.com/wechat-miniprogram/kbone-template-react)
+* [Preact 项目模板](https://github.com/wechat-miniprogram/kbone-template-preact)
+* [Omi 项目模板](https://github.com/omijs/template-kbone)
 
 项目 clone 下来后，按照项目中 README.md 的指引进行开发。
 
