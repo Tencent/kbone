@@ -1,6 +1,6 @@
 {
     "name": "vue-cli-plugin-kbone",
-    "version": "0.2.1",
+    "version": "0.2.2",
     "description": "kbone plugin for vue-cli",
     "main": "src/index.js",
     "repository": {
@@ -18,7 +18,7 @@
     "dependencies": {
         "cross-env": "^5.2.0",
         "mini-css-extract-plugin": "^0.8.0",
-        "mp-webpack-plugin": "^0.2.1",
+        "mp-webpack-plugin": "^0.2.2",
         "webpack": "^4.39.1"
     }
 }
