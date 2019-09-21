@@ -2,6 +2,7 @@
 
 * 单页
 * vue-router
+* 异常捕获
 
 ## demo2
 

@@ -187,19 +187,19 @@ class EventTarget {
     /**
      * 触发节点事件
      */
-    $$trigger(eventName, {event, isCapture} = {}) {
+    $$trigger(eventName, {event, args = [], isCapture} = {}) {
         eventName = eventName.toLowerCase()
         const handlers = this.$_getHandlers(eventName, isCapture)
         const onEventName = `on${eventName}`
 
         if (typeof this[onEventName] === 'function') {
             // 触发 onXXX 绑定的事件
-            this[onEventName].call(this || null, event)
+            this[onEventName].call(this || null, event, ...args)
         }
 
         if (handlers && handlers.length) {
             // 触发 addEventListener 绑定的事件
-            handlers.forEach(handler => handler.call(this || null, event))
+            handlers.forEach(handler => handler.call(this || null, event, ...args))
         }
     }
 

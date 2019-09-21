@@ -163,6 +163,51 @@ class Window extends EventTarget {
     }
 
     /**
+     * 触发节点事件
+     */
+    $$trigger(eventName, options = {}) {
+        if (eventName === 'error' && typeof options.event === 'string') {
+            // 此处触发自 App.onError 钩子
+            const errStack = options.event
+            const errLines = errStack.split('\n')
+            let message = ''
+            for (let i = 0, len = errLines.length; i < len; i++) {
+                const line = errLines[i]
+                if (line.trim().indexOf('at') !== 0) {
+                    message += (line + '\n')
+                } else {
+                    break
+                }
+            }
+
+            const error = new Error(message)
+            error.stack = errStack
+            options.event = new this.$_customEventConstructor('error', {
+                target: this,
+                $$extra: {
+                    message,
+                    filename: '',
+                    lineno: 0,
+                    colno: 0,
+                    error,
+                },
+            })
+            options.args = [message, error]
+
+            // window.onerror 比较特殊，需要调整参数
+            if (typeof this.onerror === 'function' && !this.onerror.$$isOfficial) {
+                const oldOnError = this.onerror
+                this.onerror = (event, message, error) => {
+                    oldOnError.call(this, message, '', 0, 0, error)
+                }
+                this.onerror.$$isOfficial = true // 标记为官方封装的方法
+            }
+        }
+
+        super.$$trigger(eventName, options)
+    }
+
+    /**
      * 对外属性和方法
      */
     get document() {

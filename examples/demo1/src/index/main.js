@@ -4,6 +4,11 @@ import App from './App.vue'
 import AAA from './AAA.vue'
 import BBB from './BBB.vue'
 
+window.onerror = (message, source, lineno, colno, error) => {
+  console.log('window.onerror => ', message, source, lineno, colno, error)
+};
+window.addEventListener('error', evt => console.log('window.addEventListener(\'error\') =>', evt))
+
 Vue.use(Router)
 
 const router = new Router({
