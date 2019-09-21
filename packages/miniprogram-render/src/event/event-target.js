@@ -27,7 +27,7 @@ class EventTarget {
      * 初始化实例
      */
     $$init() {
-    // 补充实例的属性，用于 'xxx' in XXX 判断
+        // 补充实例的属性，用于 'xxx' in XXX 判断
         this.ontouchstart = null
         this.ontouchmove = null
         this.ontouchend = null

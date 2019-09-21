@@ -26,6 +26,12 @@ export default {
     window.addEventListener('wxhide', () => console.log('page1 wxhide'))
     window.addEventListener('wxunload', () => console.log('page1 wxunload'))
   },
+  mounted() {
+    // cookie
+    console.log('before set cookie', document.cookie)
+    document.cookie = `time=${+new Date()}; expires=Wed Jan 01 2020 00:00:00 GMT+0800; path=/`
+    console.log('after set cookie', document.cookie)
+  },
   methods: {
     onClickJump() {
       window.location.href = '/b'

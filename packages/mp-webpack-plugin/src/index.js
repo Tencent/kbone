@@ -238,7 +238,7 @@ class MpPlugin {
                 ...userAppJson,
             }
             if (tabBarConfig.list && tabBarConfig.list.length) {
-                let tabBar = Object.assign({}, tabBarConfig)
+                const tabBar = Object.assign({}, tabBarConfig)
                 tabBar.list = tabBarConfig.list.map(item => {
                     const iconPathName = item.iconPath ? _.md5File(item.iconPath) + path.extname(item.iconPath) : ''
                     if (iconPathName) _.copyFile(item.iconPath, path.resolve(outputPath, `../images/${iconPathName}`))

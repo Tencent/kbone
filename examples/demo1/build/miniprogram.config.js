@@ -10,7 +10,7 @@ module.exports = {
 	redirect: {	
 		notFound: 'index',	
 		accessDenied: 'index',
-	},	
+	},
 	app: {
 		navigationBarTitleText: 'miniprogram-project',
 	},

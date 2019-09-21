@@ -9,7 +9,10 @@ module.exports = {
 	redirect: {		
 		notFound: 'page1',		
 		accessDenied: 'page1',
-	},	
+	},
+	runtime: {
+		cookieStore: 'storage',
+	},
 	app: {
 		navigationBarTitleText: 'miniprogram-project',
 	},	

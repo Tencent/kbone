@@ -54,6 +54,14 @@ class Document extends EventTarget {
     constructor(pageId, nodeIdMap) {
         super()
 
+        const config = cache.getConfig()
+        const runtime = config.runtime || {}
+        const cookieStore = runtime.cookieStore
+
+        this.$_pageId = pageId
+        const pageRoute = tool.getPageRoute(pageId)
+        const pageName = tool.getPageName(pageRoute)
+
         // 用于封装特殊标签和对应构造器
         const that = this
         this.$_imageConstructor = function HTMLImageElement(width, height) {
@@ -93,6 +101,16 @@ class Document extends EventTarget {
 
         // 更新 body 的 parentNode
         this.$_tree.root.$$updateParent(this.$_node)
+
+        // 处久化 cookie
+        if (cookieStore === 'storage') {
+            try {
+                const cookie = wx.getStorageSync(`PAGE_COOKIE_${pageName}`)
+                if (cookie) this.$$cookieInstance.deserialize(cookie)
+            } catch (err) {
+                // ignore
+            }
+        }
     }
 
     /**
@@ -111,6 +129,13 @@ class Document extends EventTarget {
      */
     get $$cookie() {
         return this.$_cookie.getCookie(this.URL, true)
+    }
+
+    /**
+     * 获取 cookie 实例
+     */
+    get $$cookieInstance() {
+        return this.$_cookie
     }
 
     /**
@@ -166,6 +191,37 @@ class Document extends EventTarget {
      */
     $$createComment(options, tree) {
         return Comment.$$create(options, tree || this.$_tree)
+    }
+
+    /**
+     * 处理 Set-Cookie 头串
+     */
+    $$setCookie(str) {
+        if (str && typeof str === 'string') {
+            let start = 0
+            let startSplit = 0
+            let nextSplit = str.indexOf(',', startSplit)
+            const cookies = []
+
+            while (nextSplit >= 0) {
+                const lastSplitStr = str.substring(start, nextSplit)
+                const splitStr = str.substr(nextSplit)
+
+                if (/^,\s*([^,=;\x00-\x1F]+)=([^;\n\r\0\x00-\x1F]*).*/.test(splitStr)) {
+                // 分割成功，则上一片是完整 cookie
+                    cookies.push(lastSplitStr)
+                    start = nextSplit + 1
+                }
+
+                startSplit = nextSplit + 1
+                nextSplit = str.indexOf(',', startSplit)
+            }
+
+            // 塞入最后一片 cookie
+            cookies.push(str.substr(start))
+
+            cookies.forEach(cookie => this.cookie = cookie)
+        }
     }
 
     /**

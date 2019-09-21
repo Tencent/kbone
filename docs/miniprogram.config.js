@@ -69,6 +69,7 @@ module.exports = {
     // 运行时配置
     runtime: {
         wxComponent: 'default', // 内置组件使用配置，默认值为 default，即可使用 wx-component 标签或类似 wx-view 这样使用前缀的用法，其他可选值：noprefix - 支持 default 用法的前提下，也支持无前缀的用法，比如直接使用 view 标签表示 view 内置组件
+        cookieStore: 'default', // cookie 存储方式，默认值为 default，即存储在内存中，其他可选值：storage - 存储在小程序的 storage 中
     },
     // app 配置，同 https://developers.weixin.qq.com/miniprogram/dev/reference/configuration/app.html#window
     app: {

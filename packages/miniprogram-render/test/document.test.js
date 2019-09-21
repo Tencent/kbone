@@ -13,6 +13,13 @@ beforeAll(() => {
     document = res.document
 })
 
+test('document: $$setCookie', () => {
+    expect(document.cookie).toBe('')
+    const setCookie = 'aaa=1111-2222-33-444-abcdefgasd; path=/; expires=Mon, 18 Jan 2038 19:14:07 GMT; secure,bbb=23123-aswe-4a7a-a740-f55dfd296b1d; path=/; expires=Mon, 18 Jan 2038 19:14:07 GMT,ccc=69asd3d81234668942; path=/; expires=Mon, 18 Jan 2038 19:14:07 GMT'
+    document.$$setCookie(setCookie)
+    expect(document.cookie).toBe('aaa=1111-2222-33-444-abcdefgasd; bbb=23123-aswe-4a7a-a740-f55dfd296b1d; ccc=69asd3d81234668942')
+})
+
 test('document: nodeType', () => {
     expect(document.nodeType).toBe(Node.DOCUMENT_NODE)
 })

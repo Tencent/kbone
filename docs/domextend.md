@@ -54,6 +54,8 @@ window.$$trigger('beforeunload', {
 | eventName | String | 事件名称 |
 | isCapture | Boolean | 是否清空捕获事件句柄，默认是 false |
 
+> PS：慎用此方法，因为会清理掉所有地方绑定的事件句柄。
+
 #### window.$$getComputedStyle
 
 小程序中 window.getComputedStyle 的替代实现，返回一个 promise。
@@ -191,6 +193,25 @@ wx.request({
 
 同 [window.$$clearEvent](#windowclearevent)。
 
+> PS：慎用此方法，因为会清理掉所有地方绑定的事件句柄。
+
+#### document.$$setCookie
+
+处理 wx.request 返回的 Set-Cookie 头，并存入 document.cookie 中。
+
+```js
+wx.request({
+    method: 'GET',
+    url: '/cgi/xxx',
+    success(res) {
+        const setCookie = res.header['Set-Cookie']
+        document.$$setCookie(setCookie)
+
+        console.log(document.cookie)
+    },
+})
+```
+
 ### dom 对象
 
 #### dom.$$trigger
@@ -200,6 +221,8 @@ wx.request({
 #### dom.$$clearEvent
 
 同 [window.$$clearEvent](#windowclearevent)。
+
+> PS：慎用此方法，因为会清理掉所有地方绑定的事件句柄。
 
 #### dom.$$getBoundingClientRect
 
