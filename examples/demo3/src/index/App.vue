@@ -81,6 +81,9 @@
           <wx-component v-if="!wxPrefix" :behavior="item">我是视图</wx-component>
           <wx-view v-else-if="wxPrefix === 1">我是视图</wx-view>
           <view v-else-if="wxPrefix === 2">我是视图</view>
+          <wx-component v-if="!wxPrefix" :behavior="item" :hidden="true">我是 hidden 视图</wx-component>
+          <wx-view v-else-if="wxPrefix === 1" :hidden="true">我是 hidden 视图</wx-view>
+          <view v-else-if="wxPrefix === 2" :hidden="true">我是 hidden 视图</view>
         </template>
         <template v-else-if="item === 'text'">
           <wx-component v-if="!wxPrefix" :behavior="item" :selectable="true">{{'this is first line\nthis is second line'}}</wx-component>

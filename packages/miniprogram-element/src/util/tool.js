@@ -113,13 +113,15 @@ function checkComponentAttr(name, domNode, destData, oldData) {
         }
     }
 
-    // 补充 id、class 和 style
+    // 补充 id、class、style 和 hidden
     const newId = domNode.id
     if (!oldData || oldData.id !== newId) destData.id = newId
     const newClass = `wx-comp-${name} node-${domNode.$$nodeId} ${domNode.className || ''}`
     if (!oldData || oldData.class !== newClass) destData.class = newClass
     const newStyle = domNode.style.cssText
     if (!oldData || oldData.style !== newStyle) destData.style = newStyle
+    const newHidden = domNode.getAttribute('hidden') || false
+    if (!oldData || oldData.hidden !== newHidden) destData.hidden = newHidden
 }
 
 /**
