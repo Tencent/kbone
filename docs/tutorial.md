@@ -2,7 +2,14 @@
 
 此方案基于 webpack 构建实现，构建 web 端代码的流程无需做任何调整，此处只介绍如何将源码构建成小程序端代码。
 
-## 编写 webpack 配置
+* [编写 webpack 配置](#编写-webpack-配置)
+* [编写 webpack 插件配置](#编写-webpack-插件配置)
+* [新增入口文件](#新增入口文件)
+* [执行构建](#执行构建)
+* [例子](#例子)
+* [进阶](#进阶)
+
+### 编写 webpack 配置
 
 新建一个 webpack.mp.config.js 文件，用于小程序端代码的构建，假设你要构建的小程序代码放到 `./miniprogram` 目录中：
 
@@ -111,7 +118,7 @@ module.exports = {
 }
 ```
 
-## 编写 webpack 插件配置
+### 编写 webpack 插件配置
 
 这里的 webpack 插件配置即上面提到的 `MpPlugin` 的配置，内容如下：
 
@@ -150,7 +157,7 @@ module.exports = {
 
 更多详细配置信息可以[点此查看](./miniprogram.config.js)。
 
-## 新增入口文件
+### 新增入口文件
 
 此处小程序 webpack 配置所使用的入口文件和 web 端有一定区别，假设 web 端是这样的：
 
@@ -187,7 +194,7 @@ export default function createApp() {
 
 这是因为小程序中各个页面的逻辑端是统一跑在 appService 上的，需要对各个页面做隔离。为了方便做后续操作，需要将创建根组件实例的逻辑封装成方法暴露给适配层，调用此方法时会返回根组件实例。
 
-## 执行构建
+### 执行构建
 
 1. 构建小程序代码：
 
@@ -206,10 +213,10 @@ npm install
 
 > PS：建议使用工具的 RC 版本或者 Nightly 版本，以支持 babelSetting 的 ignore 配置。
 
-## 例子
+### 例子
 
 我们准备了若干 demo，可以[点此查看](https://github.com/wechat-miniprogram/kbone/tree/master/examples)。
 
-## 进阶
+### 进阶
 
 更多进阶用法和开发建议，可以[点此查看](./advanced.md)。

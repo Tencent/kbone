@@ -65,6 +65,8 @@ module.exports = {
                 selectedIconPath: path.resolve(__dirname, '../src/img/profile-sel.png'),
             }],
         },
+        // 自定义生成小程序 app.js，值为 webpack 配置中 entryName。也就是说，如果一个 webpack 配置的入口被声明为 app.js 的入口，那么它就不会被作为页面处理
+        app: 'miniprogram-app',
     },
     // 运行时配置
     runtime: {

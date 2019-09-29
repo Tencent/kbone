@@ -11,6 +11,8 @@ const isOptimize = false // 是否压缩业务代码，开发者工具可能无�
 module.exports = {
     mode: 'production',
     entry: {
+        'miniprogram-app': path.resolve(__dirname, '../src/app.js'),
+
         page1: path.resolve(__dirname, '../src/page1/main.mp.js'),
         page2: path.resolve(__dirname, '../src/page2/main.mp.js'),
         page3: path.resolve(__dirname, '../src/page3/main.mp.js'),

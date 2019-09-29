@@ -1,6 +1,10 @@
-## DOM/BOM 扩展 API
+## dom/bom 扩展 API
 
 为了更好地适配小程序端接口，此方案在原有的 dom 接口之上进行了扩展。
+
+* [window 对象](#window-对象)
+* [document 对象](#document-对象)
+* [dom 对象](#dom-对象)
 
 ### window 对象
 

@@ -31,10 +31,17 @@ function addFile(compilation, filename, content) {
 /**
  * 给 chunk 头尾追加内容
  */
-function wrapChunks(compilation, chunks) {
+function wrapChunks(compilation, chunks, appJsEntryName) {
     chunks.forEach(chunk => {
         chunk.files.forEach(fileName => {
-            if (ModuleFilenameHelpers.matchObject({test: /\.js$/}, fileName)) {
+            if (fileName === `${appJsEntryName}.js`) {
+                // app.js
+                const headerContent = 'module.exports = function(window, document) {const App = function(options) {window.appOptions = options};'
+                const footerContent = '}'
+
+                compilation.assets[fileName] = new ConcatSource(headerContent, compilation.assets[fileName], footerContent)
+            } else if (ModuleFilenameHelpers.matchObject({test: /\.js$/}, fileName)) {
+                // 页面 js
                 const headerContent = 'module.exports = function(window, document) {' + globalVars.map(item => `var ${item} = window.${item}`).join(';') + ';'
                 const footerContent = '}'
 
@@ -60,6 +67,7 @@ class MpPlugin {
     apply(compiler) {
         const options = this.options
         const generateConfig = options.generate || {}
+        const appJsEntryName = generateConfig.app || ''
 
         // 补充其他文件输出
         compiler.hooks.emit.tapAsync(PluginName, (compilation, callback) => {
@@ -76,6 +84,10 @@ class MpPlugin {
             const assetsReverseMap = {} // 依赖-页面名
             const assetsSubpackageMap = {} // 依赖-分包名
             const tabBarMap = {}
+
+            // 剔除 app.js 入口
+            const appJsEntryIndex = entryNames.indexOf(appJsEntryName)
+            if (appJsEntryIndex >= 0) entryNames.splice(appJsEntryIndex, 1)
 
             // 收集依赖
             for (const entryName of entryNames) {
@@ -205,7 +217,7 @@ class MpPlugin {
             }
 
             // app js
-            const appJsContent = appJsTmpl
+            const appJsContent = appJsTmpl.replace('/* INIT_FUNCTION */', 'const appConfig = ' + (appJsEntryName ? `(function(){const fakeWindow = {};require('./common/${appJsEntryName}.js')(fakeWindow, {});return fakeWindow.appOptions;})();` : '{};'))
             addFile(compilation, '../app.js', appJsContent)
 
             // app wxss
@@ -327,11 +339,11 @@ class MpPlugin {
         compiler.hooks.compilation.tap(PluginName, compilation => {
             if (this.afterOptimizations) {
                 compilation.hooks.afterOptimizeChunkAssets.tap(PluginName, chunks => {
-                    wrapChunks(compilation, chunks)
+                    wrapChunks(compilation, chunks, appJsEntryName)
                 })
             } else {
                 compilation.hooks.optimizeChunkAssets.tapAsync(PluginName, (chunks, callback) => {
-                    wrapChunks(compilation, chunks)
+                    wrapChunks(compilation, chunks, appJsEntryName)
                     callback()
                 })
             }

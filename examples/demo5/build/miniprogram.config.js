@@ -10,6 +10,9 @@ module.exports = {
 		notFound: 'page1',		
 		accessDenied: 'page1',
 	},
+	generate: {
+		app: 'miniprogram-app',
+	},
 	runtime: {
 		cookieStore: 'storage',
 	},
