@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>123</div>
+    <div>kbone</div>
     <comp-a>
       <view>comp-a slot</view>
     </comp-a>
