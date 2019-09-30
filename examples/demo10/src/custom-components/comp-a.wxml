@@ -1,0 +1,2 @@
+<view>{{str}}</view>
+<slot></slot>

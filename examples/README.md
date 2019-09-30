@@ -55,3 +55,4 @@ npm install
 * demo7：多页 + 分包
 * demo8：贪吃蛇小游戏（[omis](https://github.com/Tencent/omi/tree/master/packages/omis) + kbone）
 * demo9：tabBar
+* demo10：自定义组件

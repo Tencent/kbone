@@ -8,7 +8,7 @@ const {
 
 const ELEMENT_DIFF_KEYS = ['nodeId', 'pageId', 'tagName', 'compName', 'id', 'class', 'style', 'src', 'mode', 'lazyLoad', 'showMenuByLongpress', 'isImage', 'isLeaf', 'isSimple', 'content']
 const TEXT_NODE_DIFF_KEYS = ['nodeId', 'pageId', 'content']
-const NEET_SPLIT_CLASS_STYLE_FROM_CUSTOM_ELEMENT = ['INPUT', 'TEXTAREA', 'VIDEO', 'CANVAS', 'WX-COMPONENT'] // 需要分离 class 和 style 的节点
+const NEET_SPLIT_CLASS_STYLE_FROM_CUSTOM_ELEMENT = ['INPUT', 'TEXTAREA', 'VIDEO', 'CANVAS', 'WX-COMPONENT', 'WX-CUSTOM-COMPONENT'] // 需要分离 class 和 style 的节点
 const NEET_RENDER_TO_CUSTOM_ELEMENT = ['IFRAME', ...NEET_SPLIT_CLASS_STYLE_FROM_CUSTOM_ELEMENT] // 必须渲染成自定义组件的节点
 const NOT_SUPPORT = ['IFRAME']
 

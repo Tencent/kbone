@@ -21,11 +21,15 @@ module.exports = {
         const tagName = domNode.tagName
 
         if (tagName === 'WX-COMPONENT') {
-            // 无可替换 html 标签
+            // 内置组件
             data.wxCompName = domNode.behavior
             const wxCompName = wxCompNameMap[data.wxCompName]
             if (wxCompName) _.checkComponentAttr(wxCompName, domNode, data)
             else console.warn(`value "${data.wxCompName}" is not supported for wx-component's behavior`)
+        } else if (tagName === 'WX-CUSTOM-COMPONENT') {
+            // 自定义组件
+            data.wxCustomCompName = domNode.behavior
+            // TODO
         } else if (NOT_SUPPORT.indexOf(tagName) >= 0) {
             // 不支持标签
             data.wxCompName = 'not-support'

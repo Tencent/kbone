@@ -84,6 +84,36 @@ function copyFile(fromPath, toPath) {
 }
 
 /**
+ * 复制目录
+ */
+function copyDir(fromPath, toPath) {
+    try {
+        fs.accessSync(fromPath)
+
+        const stat = fs.statSync(fromPath)
+        if (stat && !stat.isDirectory()) {
+            // 源路径存在，但不是目录
+            return console.log(`path is not directory: "${fromPath}"`)
+        }
+    } catch (err) {
+        // 源路径不存在
+        return console.log(`path not exists: "${fromPath}"`)
+    }
+
+    const files = fs.readdirSync(fromPath)
+    for (const fileName of files) {
+        const filePath = path.join(fromPath, fileName)
+        const distFilePath = path.join(toPath, fileName)
+        const stat = fs.statSync(filePath)
+        if (stat && stat.isDirectory()) {
+            copyDir(filePath, distFilePath)
+        } else if (stat && stat.isFile()) {
+            copyFile(filePath, distFilePath)
+        }
+    }
+}
+
+/**
  * 计算文件 md5
  */
 function md5File(filePath) {
@@ -95,5 +125,6 @@ module.exports = {
     includes,
     recursiveMkdir,
     copyFile,
+    copyDir,
     md5File,
 }

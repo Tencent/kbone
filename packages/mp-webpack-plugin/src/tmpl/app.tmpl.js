@@ -2,7 +2,7 @@
 
 const LIFE_CYCLE_METHODS = ['onLaunch', 'onShow', 'onHide', 'onError', 'onPageNotFound']
 const extraConfig = {}
-for (let key in appConfig) {
+for (const key in appConfig) {
     if (LIFE_CYCLE_METHODS.indexOf(key) === -1) extraConfig[key] = appConfig[key]
 }
 

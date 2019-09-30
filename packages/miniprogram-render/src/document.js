@@ -14,6 +14,7 @@ const Video = require('./node/element/video')
 const Canvas = require('./node/element/canvas')
 const NotSupport = require('./node/element/not-support')
 const WxComponent = require('./node/element/wx-component')
+const WxCustomComponent = require('./node/element/wx-custom-component')
 const Cookie = require('./bom/cookie')
 
 const CONSTRUCTOR_MAP = {
@@ -37,6 +38,7 @@ const WX_COMPONENT_LIST = [
     'ad', 'official-account', 'open-data', 'web-view'
 ]
 WX_COMPONENT_LIST.forEach(name => WX_COMPONENT_MAP[name] = name)
+let WX_CUSTOM_COMPONENT_MAP = {}
 
 /**
  * 判断是否是内置组件
@@ -57,6 +59,7 @@ class Document extends EventTarget {
         const config = cache.getConfig()
         const runtime = config.runtime || {}
         const cookieStore = runtime.cookieStore
+        WX_CUSTOM_COMPONENT_MAP = runtime.usingComponents || {}
 
         this.$_pageId = pageId
         const pageRoute = tool.getPageRoute(pageId)
@@ -172,6 +175,13 @@ class Document extends EventTarget {
             options.attrs = options.attrs || {}
             options.attrs.behavior = wxComponentName
             return WxComponent.$$create(options, tree)
+        } else if (WX_CUSTOM_COMPONENT_MAP[originTagName]) {
+            // 自定义组件的特殊写法，转成 wx-custom-component 节点
+            options.tagName = 'wx-custom-component'
+            options.attrs = options.attrs || {}
+            options.componentName = originTagName
+            options.componentPath = WX_CUSTOM_COMPONENT_MAP[originTagName]
+            return WxCustomComponent.$$create(options, tree)
         } else if (!tool.isTagNameSupport(tagName)) {
             return NotSupport.$$create(options, tree)
         } else {

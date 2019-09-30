@@ -518,5 +518,7 @@
 <block
     wx:elif="{{wxCompName === 'not-support'}}"
 >{{content}}</block>
+<!-- 自定义组件 -->
+<custom-component wx:elif="{{!!wxCustomCompName}}" name="{{wxCustomCompName}}"><template is="subtree" data="{{childNodes: innerChildNodes, inCover}}"/></custom-component>
 <!-- 子节点 -->
-<template is="subtree" data="{{childNodes, inCover}}"/>
+<template wx:else is="subtree" data="{{childNodes, inCover}}"/>

@@ -10,5 +10,6 @@ module.exports = {
   },
   'globals': {
     'init': true,
+    'appConfig': true,
   },
 }

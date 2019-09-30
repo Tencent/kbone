@@ -12,6 +12,7 @@ const appJsTmpl = fs.readFileSync(path.resolve(__dirname, './tmpl/app.tmpl.js'),
 const pageJsTmpl = fs.readFileSync(path.resolve(__dirname, './tmpl/page.tmpl.js'), 'utf8')
 const appDisplayWxssTmpl = fs.readFileSync(path.resolve(__dirname, './tmpl/app.display.tmpl.wxss'), 'utf8')
 const appWxssTmpl = fs.readFileSync(path.resolve(__dirname, './tmpl/app.tmpl.wxss'), 'utf8')
+const customComponentJsTmpl = fs.readFileSync(path.resolve(__dirname, './tmpl/custom-component.tmpl.js'), 'utf8')
 const projectConfigJsonTmpl = require('./tmpl/project.config.tmpl.json')
 const packageConfigJsonTmpl = require('./tmpl/package.tmpl.json')
 
@@ -72,6 +73,8 @@ class MpPlugin {
             const subpackagesConfig = generateConfig.subpackages || {}
             const preloadRuleConfig = generateConfig.preloadRule || {}
             const tabBarConfig = generateConfig.tabBar || {}
+            const wxCustomComponentConfig = generateConfig.wxCustomComponent || {}
+            const wxCustomComponentRoot = wxCustomComponentConfig.root
             const pages = []
             const subpackagesMap = {} // 页面名-分包名
             const assetsMap = {} // 页面名-依赖
@@ -175,7 +178,7 @@ class MpPlugin {
                 addFile(compilation, `../${pageRoute}.js`, pageJsContent)
 
                 // 页面 wxml
-                const pageWxmlContent = '<element wx:if="{{pageId}}" class="{{bodyClass}}" style="{{bodyStyle}}" data-private-node-id="e-body" data-private-page-id="{{pageId}}"></element>'
+                const pageWxmlContent = `<element wx:if="{{pageId}}" class="{{bodyClass}}" style="{{bodyStyle}}" data-private-node-id="e-body" data-private-page-id="{{pageId}}" ${wxCustomComponentRoot ? 'generic:custom-component="custom-component"' : ''}></element>`
                 addFile(compilation, `../${pageRoute}.wxml`, pageWxmlContent)
 
                 // 页面 wxss
@@ -188,8 +191,11 @@ class MpPlugin {
                     ...pageExtraConfig,
                     enablePullDownRefresh: !!pullDownRefresh,
                     usingComponents: {
-                        element: 'miniprogram-element'
-                    }
+                        element: 'miniprogram-element',
+                    },
+                }
+                if (wxCustomComponentRoot) {
+                    pageJson.usingComponents['custom-component'] = `${assetPathPrefix}../../custom-component/index`
                 }
                 if (reachBottom && typeof reachBottomDistance === 'number') {
                     pageJson.onReachBottomDistance = reachBottomDistance
@@ -301,6 +307,7 @@ class MpPlugin {
                 runtime: Object.assign({
                     subpackagesMap,
                     tabBarMap,
+                    usingComponents: wxCustomComponentConfig.usingComponents || {},
                 }, options.runtime || {}),
                 pages: pageConfigMap,
                 redirect: options.redirect || {},
@@ -330,6 +337,31 @@ class MpPlugin {
 
             // node_modules
             addFile(compilation, '../node_modules/.miniprogram', '')
+
+            // 自定义组件，生成到 miniprogram_npm 中
+            if (wxCustomComponentRoot) {
+                _.copyDir(wxCustomComponentRoot, path.resolve(outputPath, '../custom-component/components'))
+
+                const usingComponents = wxCustomComponentConfig.usingComponents || {}
+                const realUsingComponents = {}
+                const names = Object.keys(usingComponents)
+                names.forEach(key => realUsingComponents[key] = `components/${usingComponents[key]}`)
+
+                // custom-component/index.js
+                addFile(compilation, '../custom-component/index.js', customComponentJsTmpl)
+
+                // custom-component/index.wxml
+                addFile(compilation, '../custom-component/index.wxml', names.map((name, index) => `<${name} wx:${index === 0 ? 'if' : 'elif'}="{{name === '${name}'}}"><slot/></${name}>`).join('\n'))
+
+                // custom-component/index.wxss
+                addFile(compilation, '../custom-component/index.wxss', '')
+
+                // custom-component/index.json
+                addFile(compilation, '../custom-component/index.json', JSON.stringify({
+                    component: true,
+                    usingComponents: realUsingComponents,
+                }, null, '\t'))
+            }
 
             callback()
         })
