@@ -4,7 +4,7 @@
 
 * [多页开发](#多页开发)
 * [使用小程序内置组件](#使用小程序内置组件)
-* [自定义 app.js 和 app.wxss](#自定义-app.js-和-app.wxss)
+* [自定义 app.js 和 app.wxss](#自定义-appjs-和-appwxss)
 * [代码优化](#代码优化)
 * [开发建议](#开发建议)
 
@@ -49,7 +49,8 @@ module.exports = {
 
 有了以上几个配置后，就可以在 kbone 内使用 a 标签或者 location 对象进行跳转。kbone 会将要跳转的 url 进行解析，然后根据配置中的 origin 和 router 查找出对应的页面，然后拼出页面在小程序中的路由，最后通过小程序 API 进行跳转（利用 wx.redirectTo 等方法）。
 
-> 通过多页可以支持使用小程序 tabBar，还可以使用小程序分包与预下载机制，更多详细配置信息可以[点此查看](./miniprogram.config.js)。
+> PS：通过多页可以支持使用小程序 tabBar，还可以使用小程序分包与预下载机制，更多详细配置信息可以[点此查看](./miniprogram.config.js)。
+
 > PS：具体例子可参考 [demo5](../examples/demo5) 和 [demo7](../examples/demo7)
 
 ### 使用小程序内置组件
@@ -105,9 +106,13 @@ module.exports = {
 * web-view 组件
 
 > PS：button 标签不会被渲染成 button 内置组件，如若需要请按照上述原生组件使用说明使用。
+
 > PS：原生组件的表现在小程序中表现会和 web 端标签有些不一样，具体可[参考原生组件说明文档](https://developers.weixin.qq.com/miniprogram/dev/component/native-component.html)。
+
 > PS：原生组件下的子节点，div、span 等标签会被渲染成 cover-view，img 会被渲染成 cover-image，如若需要使用 button 内置组件请使用 wx-component。
+
 > PS：如果将插件配置 runtime.wxComponent 的值配置为 `noprefix`，则可以用不带前缀的方式使用内置组件。
+
 > PS：具体例子可参考 [demo5](../examples/demo3)
 
 ### 自定义 app.js 和 app.wxss
@@ -171,7 +176,8 @@ App({
 })
 ```
 
-> PS：app.js 不属于任何页面，所以没有真正的 window 和 document 对象，所有依赖这两个对象实现的代码在这里无法被直接使用
+> PS：app.js 不属于任何页面，所以没有真正的 window 和 document 对象，所有依赖这两个对象实现的代码在这里无法被直接使用。
+
 > PS：具体例子可参考 [demo5](../examples/demo5)
 
 ### 代码优化
