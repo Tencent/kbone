@@ -5,7 +5,14 @@
 </template>
 
 <script>
-export default {}
+import add from 'add'
+import {printf} from './utils'
+
+export default {
+  mounted() {
+    printf('I am Header --> ' + add([7, 8]))
+  },
+}
 </script>
 
 <style>

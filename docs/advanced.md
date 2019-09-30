@@ -4,6 +4,7 @@
 
 * [多页开发](#多页开发)
 * [使用小程序内置组件](#使用小程序内置组件)
+* [自定义 app.js 和 app.wxss](#自定义-app.js-和-app.wxss)
 * [代码优化](#代码优化)
 * [开发建议](#开发建议)
 
@@ -11,7 +12,7 @@
 
 对于多页面的应用，在 Web 端可以直接通过 a 标签或者 location 对象进行跳转，但是在小程序中则行不通；同时 Web 端的页面 url 实现和小程序页面路由也是完全不一样的，因此对于多页开发最大的难点在于如何进行页面跳转。
 
-1. webpack 构建
+1. 修改 webpack 配置
 
 对于多页应用，此处和 Web 端一致，有多少个页面就需要配置多少个入口文件。如下例子，这个应用中包含 page1、page2 和 page2 三个页面：
 
@@ -27,7 +28,7 @@ module.exports = {
 }
 ```
 
-2. webpack 插件配置
+2. 修改 webpack 插件配置
 
 `mp-webpack-plugin` 这个插件的配置同样需要调整，需要开发者提供各个页面对应的 url 给 kbone。
 
@@ -49,6 +50,7 @@ module.exports = {
 有了以上几个配置后，就可以在 kbone 内使用 a 标签或者 location 对象进行跳转。kbone 会将要跳转的 url 进行解析，然后根据配置中的 origin 和 router 查找出对应的页面，然后拼出页面在小程序中的路由，最后通过小程序 API 进行跳转（利用 wx.redirectTo 等方法）。
 
 > 通过多页可以支持使用小程序 tabBar，还可以使用小程序分包与预下载机制，更多详细配置信息可以[点此查看](./miniprogram.config.js)。
+> PS：具体例子可参考 [demo5](../examples/demo5) 和 [demo7](../examples/demo7)
 
 ### 使用小程序内置组件
 
@@ -106,6 +108,71 @@ module.exports = {
 > PS：原生组件的表现在小程序中表现会和 web 端标签有些不一样，具体可[参考原生组件说明文档](https://developers.weixin.qq.com/miniprogram/dev/component/native-component.html)。
 > PS：原生组件下的子节点，div、span 等标签会被渲染成 cover-view，img 会被渲染成 cover-image，如若需要使用 button 内置组件请使用 wx-component。
 > PS：如果将插件配置 runtime.wxComponent 的值配置为 `noprefix`，则可以用不带前缀的方式使用内置组件。
+> PS：具体例子可参考 [demo5](../examples/demo3)
+
+### 自定义 app.js 和 app.wxss
+
+在开发过程中，可能需要监听 app 的生命周期，这就需要开发者自定义 app.js。
+
+1. 修改 webpack 配置
+
+首先需要在 webpack 配置中补上 app.js 的构建入口，比如下面代码的 `miniprogram-app` 入口：
+
+```js
+// webpack.mp.config.js
+module.exports = {
+    entry: {
+        'miniprogram-app': path.resolve(__dirname, '../src/app.js'),
+
+        page1: path.resolve(__dirname, '../src/page1/main.mp.js'),
+        page2: path.resolve(__dirname, '../src/page2/main.mp.js'),
+    },
+    // ... other options
+}
+```
+
+2. 修改 webpack 插件配置
+
+在 webpack 配置补完入口，还需要在 `mp-webpack-plugin` 这个插件的配置中补充说明，不然 kbone 会将 `miniprgram-app` 入口作为页面处理。
+
+```js
+module.exports = {
+    generate: {
+        app: 'miniprogram-app',
+    },
+    // ... other options
+}
+```
+
+如上，将 webpack 构建中的入口名称设置在插件配置的 generate.app 字段上，那么构建时 kbone 会将这个入口的构建作为 app.js 处理。
+
+3. 补充 src/app.js
+
+```js
+// 自定义 app.wxss
+import './app.css'
+
+App({
+    onLaunch(options) {},
+    onShow(options) {
+        // 获取当前页面实例
+        const pages = getCurrentPages() || []
+        const currentPage = pages[pages.length - 1]
+
+        // 获取当前页面的 window 对象和 document 对象
+        if (currentPage) {
+            console.log(currentPage.window)
+            console.log(currentPage.document)
+        }
+    },
+    onHide() {},
+    onError(err) {},
+    onPageNotFound(options) {},
+})
+```
+
+> PS：app.js 不属于任何页面，所以没有真正的 window 和 document 对象，所有依赖这两个对象实现的代码在这里无法被直接使用
+> PS：具体例子可参考 [demo5](../examples/demo5)
 
 ### 代码优化
 

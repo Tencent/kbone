@@ -60,6 +60,3 @@ A：绝大部分小程序内置组件在渲染时会在外面多包装一层自�
 
 Q：为什么 scroll-view 的 scroll-into-view 有时可用有时不可用？<br/>
 A：因为 scroll-into-view 找寻的节点只能在当前 shadow-tree 下，因此只有传入 `domSubTreeLevel` 配置对应层级内的 div、img 标签对应的 id 方能生效。如果 `domSubTreeLevel` 的值为 5，那么只有 scroll-view 下 5 层节点内的 div、img 标签上的 id 可以作为该 scroll-view 上 scroll-into-view 的值。
-
-Q：能否自定义 app.js？<br/>
-A：最新版本 `mp-webpack-plugin` 插件已支持，配置 generate.app 字段即可，具体用法可参考 [demo](../examples/demo5)。

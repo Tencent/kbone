@@ -1,5 +1,10 @@
+import add from 'add'
+import {printf} from './common/utils.js'
+import './app.css'
+
 App({
     onLaunch(options) {
+        printf('I am app.js --> ' + add([1, 2]))
         console.log('App.onLaunch --> ', options)
     },
     onShow(options) {

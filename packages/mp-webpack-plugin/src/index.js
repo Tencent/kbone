@@ -31,18 +31,12 @@ function addFile(compilation, filename, content) {
 /**
  * 给 chunk 头尾追加内容
  */
-function wrapChunks(compilation, chunks, appJsEntryName) {
+function wrapChunks(compilation, chunks) {
     chunks.forEach(chunk => {
         chunk.files.forEach(fileName => {
-            if (fileName === `${appJsEntryName}.js`) {
-                // app.js
-                const headerContent = 'module.exports = function(window, document) {const App = function(options) {window.appOptions = options};'
-                const footerContent = '}'
-
-                compilation.assets[fileName] = new ConcatSource(headerContent, compilation.assets[fileName], footerContent)
-            } else if (ModuleFilenameHelpers.matchObject({test: /\.js$/}, fileName)) {
+            if (ModuleFilenameHelpers.matchObject({test: /\.js$/}, fileName)) {
                 // 页面 js
-                const headerContent = 'module.exports = function(window, document) {' + globalVars.map(item => `var ${item} = window.${item}`).join(';') + ';'
+                const headerContent = 'module.exports = function(window, document) {const App = function(options) {window.appOptions = options};' + globalVars.map(item => `var ${item} = window.${item}`).join(';') + ';'
                 const footerContent = '}'
 
                 compilation.assets[fileName] = new ConcatSource(headerContent, compilation.assets[fileName], footerContent)
@@ -54,9 +48,9 @@ function wrapChunks(compilation, chunks, appJsEntryName) {
 /**
  * 获取依赖文件路径
  */
-function getAssetPath(assetPathPrefix, filePath, assetsSubpackageMap) {
+function getAssetPath(assetPathPrefix, filePath, assetsSubpackageMap, backwardStr = '../../') {
     if (assetsSubpackageMap[filePath]) assetPathPrefix = '' // 依赖在分包内，不需要补前缀
-    return `${assetPathPrefix}../../common/${filePath}`
+    return `${assetPathPrefix}${backwardStr}common/${filePath}`
 }
 
 class MpPlugin {
@@ -67,12 +61,12 @@ class MpPlugin {
     apply(compiler) {
         const options = this.options
         const generateConfig = options.generate || {}
-        const appJsEntryName = generateConfig.app || ''
 
         // 补充其他文件输出
         compiler.hooks.emit.tapAsync(PluginName, (compilation, callback) => {
             const outputPath = compilation.outputOptions.path
             const entryNames = Array.from(compilation.entrypoints.keys())
+            const appJsEntryName = generateConfig.app || ''
             const globalConfig = options.global || {}
             const pageConfigMap = options.pages || {}
             const subpackagesConfig = generateConfig.subpackages || {}
@@ -84,10 +78,6 @@ class MpPlugin {
             const assetsReverseMap = {} // 依赖-页面名
             const assetsSubpackageMap = {} // 依赖-分包名
             const tabBarMap = {}
-
-            // 剔除 app.js 入口
-            const appJsEntryIndex = entryNames.indexOf(appJsEntryName)
-            if (appJsEntryIndex >= 0) entryNames.splice(appJsEntryIndex, 1)
 
             // 收集依赖
             for (const entryName of entryNames) {
@@ -143,6 +133,10 @@ class MpPlugin {
                     }
                 })
             })
+
+            // 剔除 app.js 入口
+            const appJsEntryIndex = entryNames.indexOf(appJsEntryName)
+            if (appJsEntryIndex >= 0) entryNames.splice(appJsEntryIndex, 1)
 
             // 处理各个入口页面
             for (const entryName of entryNames) {
@@ -217,12 +211,17 @@ class MpPlugin {
             }
 
             // app js
-            const appJsContent = appJsTmpl.replace('/* INIT_FUNCTION */', 'const appConfig = ' + (appJsEntryName ? `(function(){const fakeWindow = {};require('./common/${appJsEntryName}.js')(fakeWindow, {});return fakeWindow.appOptions;})();` : '{};'))
+            const appAssets = assetsMap[appJsEntryName] || {js: [], css: []}
+            const appJsContent = appJsTmpl
+                .replace('/* INIT_FUNCTION */', `const fakeWindow = {};const fakeDocument = {};${appAssets.js.map(js => 'require(\'' + getAssetPath('', js, assetsSubpackageMap, '') + '\')(fakeWindow, fakeDocument)').join(';')};const appConfig = fakeWindow.appOptions || {};`)
             addFile(compilation, '../app.js', appJsContent)
 
             // app wxss
             const appWxssConfig = generateConfig.appWxss || 'default'
-            const appWxssContent = appWxssConfig === 'none' ? '' : appWxssConfig === 'display' ? appDisplayWxssTmpl : appWxssTmpl
+            let appWxssContent = appWxssConfig === 'none' ? '' : appWxssConfig === 'display' ? appDisplayWxssTmpl : appWxssTmpl
+            if (appAssets.css.length) {
+                appWxssContent += `\n${appAssets.css.map(css => `@import "${getAssetPath('', css, assetsSubpackageMap, '')}";`).join('\n')}`
+            }
             addFile(compilation, '../app.wxss', adjustCss(appWxssContent))
 
             // app json
@@ -339,11 +338,11 @@ class MpPlugin {
         compiler.hooks.compilation.tap(PluginName, compilation => {
             if (this.afterOptimizations) {
                 compilation.hooks.afterOptimizeChunkAssets.tap(PluginName, chunks => {
-                    wrapChunks(compilation, chunks, appJsEntryName)
+                    wrapChunks(compilation, chunks)
                 })
             } else {
                 compilation.hooks.optimizeChunkAssets.tapAsync(PluginName, (chunks, callback) => {
-                    wrapChunks(compilation, chunks, appJsEntryName)
+                    wrapChunks(compilation, chunks)
                     callback()
                 })
             }
