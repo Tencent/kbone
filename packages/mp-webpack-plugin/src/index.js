@@ -75,6 +75,7 @@ class MpPlugin {
             const tabBarConfig = generateConfig.tabBar || {}
             const wxCustomComponentConfig = generateConfig.wxCustomComponent || {}
             const wxCustomComponentRoot = wxCustomComponentConfig.root
+            const wxCustomComponents = wxCustomComponentConfig.usingComponents || {}
             const pages = []
             const subpackagesMap = {} // 页面名-分包名
             const assetsMap = {} // 页面名-依赖
@@ -140,6 +141,15 @@ class MpPlugin {
             // 剔除 app.js 入口
             const appJsEntryIndex = entryNames.indexOf(appJsEntryName)
             if (appJsEntryIndex >= 0) entryNames.splice(appJsEntryIndex, 1)
+
+            // 处理自定义组件字段
+            Object.keys(wxCustomComponents).forEach(key => {
+                if (typeof wxCustomComponents[key] === 'string') {
+                    wxCustomComponents[key] = {
+                        path: wxCustomComponents[key],
+                    }
+                }
+            })
 
             // 处理各个入口页面
             for (const entryName of entryNames) {
@@ -342,16 +352,18 @@ class MpPlugin {
             if (wxCustomComponentRoot) {
                 _.copyDir(wxCustomComponentRoot, path.resolve(outputPath, '../custom-component/components'))
 
-                const usingComponents = wxCustomComponentConfig.usingComponents || {}
                 const realUsingComponents = {}
-                const names = Object.keys(usingComponents)
-                names.forEach(key => realUsingComponents[key] = `components/${usingComponents[key]}`)
+                const names = Object.keys(wxCustomComponents)
+                names.forEach(key => realUsingComponents[key] = `components/${wxCustomComponents[key].path}`)
 
                 // custom-component/index.js
                 addFile(compilation, '../custom-component/index.js', customComponentJsTmpl)
 
                 // custom-component/index.wxml
-                addFile(compilation, '../custom-component/index.wxml', names.map((name, index) => `<${name} wx:${index === 0 ? 'if' : 'elif'}="{{name === '${name}'}}"><slot/></${name}>`).join('\n'))
+                addFile(compilation, '../custom-component/index.wxml', names.map((key, index) => {
+                    const {props = [], events = []} = wxCustomComponents[key]
+                    return `<${key} wx:${index === 0 ? 'if' : 'elif'}="{{name === '${key}'}}" id="{{id}}" class="{{class}}" style="{{style}}" ${props.map(name => name + '="{{' + name + '}}"').join(' ')} ${events.map(name => 'bind' + name + '="on' + name + '"').join(' ')}><slot/></${key}>`
+                }).join('\n'))
 
                 // custom-component/index.wxss
                 addFile(compilation, '../custom-component/index.wxss', '')

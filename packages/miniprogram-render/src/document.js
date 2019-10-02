@@ -180,7 +180,6 @@ class Document extends EventTarget {
             options.tagName = 'wx-custom-component'
             options.attrs = options.attrs || {}
             options.componentName = originTagName
-            options.componentPath = WX_CUSTOM_COMPONENT_MAP[originTagName]
             return WxCustomComponent.$$create(options, tree)
         } else if (!tool.isTagNameSupport(tagName)) {
             return NotSupport.$$create(options, tree)

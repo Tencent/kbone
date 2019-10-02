@@ -29,7 +29,6 @@ class WxCustomComponent extends Element {
      */
     $$init(options, tree) {
         this.$_behavior = options.componentName
-        this.$_path = options.componentPath
 
         super.$$init(options, tree)
     }
@@ -41,7 +40,6 @@ class WxCustomComponent extends Element {
         super.$$destroy()
 
         this.$_behavior = null
-        this.$_path = null
     }
 
     /**
@@ -60,10 +58,6 @@ class WxCustomComponent extends Element {
 
     get behavior() {
         return this.$_behavior
-    }
-
-    get path() {
-        return this.$_path
     }
 }
 

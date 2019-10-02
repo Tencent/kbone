@@ -29,7 +29,8 @@ module.exports = {
         } else if (tagName === 'WX-CUSTOM-COMPONENT') {
             // 自定义组件
             data.wxCustomCompName = domNode.behavior
-            // TODO
+            data.nodeId = this.nodeId
+            data.pageId = this.pageId
         } else if (NOT_SUPPORT.indexOf(tagName) >= 0) {
             // 不支持标签
             data.wxCompName = 'not-support'

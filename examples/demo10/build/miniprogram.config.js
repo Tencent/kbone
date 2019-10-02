@@ -14,8 +14,16 @@ module.exports = {
 		wxCustomComponent: {
 			root: path.join(__dirname, '../src/custom-components'),
 			usingComponents: {
-				'comp-a': 'comp-a',
-				'comp-b': 'comp-b/index',
+				'comp-a': {
+					path: 'comp-a',
+					props: ['prefix', 'suffix'],
+					events: ['someevent'],
+				},
+				'comp-b': {
+					path: 'comp-b/index',
+					props: ['prefix'],
+				},
+				'comp-c': 'comp-c',
 			},
 		},
 	},

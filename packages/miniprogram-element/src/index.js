@@ -151,7 +151,8 @@ Component({
             } else if (tagName === 'WX-CUSTOM-COMPONENT') {
                 // 自定义组件
                 if (data.wxCustomCompName !== domNode.behavior) newData.wxCustomCompName = domNode.behavior
-                // TODO
+                if (data.nodeId !== this.nodeId) data.nodeId = this.nodeId
+                if (data.pageId !== this.pageId) data.pageId = this.pageId
             } else if (NOT_SUPPORT.indexOf(tagName) >= 0) {
                 // 不支持标签
                 newData.wxCompName = 'not-support'

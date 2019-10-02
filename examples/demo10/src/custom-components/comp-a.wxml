@@ -1,2 +1,4 @@
-<view>{{str}}</view>
+<view>comp-a</view>
+<button class="btn" bindtap="onTap">comp-a button</button>
+<view><text class="prefix">{{prefix}}</text>-{{str}}-<text class="suffix">{{suffix}}</text></view>
 <slot></slot>

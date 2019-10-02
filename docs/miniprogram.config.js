@@ -67,6 +67,20 @@ module.exports = {
         },
         // 自定义生成小程序 app.js，值为 webpack 配置中 entryName。也就是说，如果一个 webpack 配置的入口被声明为 app.js 的入口，那么它就不会被作为页面处理
         app: 'miniprogram-app',
+        // 使用小程序自定义组件
+        wxCustomComponent: {
+            // 所有要使用的自定义组件所在的根目录
+            root: path.join(__dirname, '../src/custom-components'),
+            // 要使用的自定义组件
+			usingComponents: {
+				'comp-a': 'comp-a/index', // 相对根目录的路径
+				'comp-b': {
+                    path: 'comp-b/index', // 相对根目录的路径
+                    props: ['propa', 'propb'], // 组件 properties，如果在相应的 dom 节点上设置了和列表中的 property 同名的 attribute，那么它会同步到自定义组件的 property 上
+                    events: ['someevent'], // 组件事件，如果在相应的 dom 节点上监听了列表中的事件，那么它会同步到自定义组件上
+                },
+			},
+		},
     },
     // 运行时配置
     runtime: {

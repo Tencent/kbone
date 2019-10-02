@@ -4,6 +4,7 @@
 
 * [多页开发](#多页开发)
 * [使用小程序内置组件](#使用小程序内置组件)
+* [使用小程序自定义组件](#使用小程序自定义组件)
 * [自定义 app.js 和 app.wxss](#自定义-appjs-和-appwxss)
 * [代码优化](#代码优化)
 * [开发建议](#开发建议)
@@ -55,7 +56,7 @@ module.exports = {
 
 ### 使用小程序内置组件
 
-需要明确的是，如果没有特殊需求的话，请尽量使用 html 标签来编写代码，使用内置组件时请按需使用。这是因为绝大部分内置组件外层都会被包裹一层自定义组件，如果自定义组件的实例数量过大的话，理论上是会对性能造成一定程度的影响，所以对于 view、text、image 等会被频繁使用的内置组件，如果没有特殊需求的话请直接使用 div、span、img 等 html 标签替代。
+需要明确的是，如果没有特殊需求的话，请尽量使用 html 标签来编写代码，使用内置组件时请按需使用。这是因为绝大部分内置组件外层都会被包裹一层自定义组件，如果自定义组件的实例数量达到一定量级的话，理论上是会对性能造成一定程度的影响，所以对于 view、text、image 等会被频繁使用的内置组件，如果没有特殊需求的话请直接使用 div、span、img 等 html 标签替代。
 
 部分内置组件可以直接使用 html 标签替代，比如 input 组件可以使用 input 标签替代。目前已支持的可替代组件列表：
 
@@ -116,6 +117,94 @@ module.exports = {
 > PS：如果将插件配置 runtime.wxComponent 的值配置为 `noprefix`，则可以用不带前缀的方式使用内置组件。
 
 > PS：具体例子可参考 [demo5](../examples/demo3)
+
+### 使用小程序自定义组件
+
+需要明确的是，如果可以使用 Web 端组件技术实现的话请尽量使用 Web 端技术（如 vue、react 组件），使用自定义组件请按需使用。这是因为自定义组件外层会被包裹上 kbone 的自定义组件，而当自定义组件的实例数量达到一定量级的话，理论上是会对性能造成一定程度的影响。
+
+要在 kbone 中使用自定义组件，需要将所有自定义组件和其依赖放到一个固定的目录，这个目录可以自己拟定，假设这个目录为 `src/custom-components`：
+
+1. 修改 webpack 插件配置
+
+在 `mp-webpack-plugin` 这个插件的配置中的 generate 字段内补充 **wxCustomComponent**，其中 root 是组件根目录，即上面提到的目录：`src/custom-component`，usingComponents 则用来配置要用到的自定义组件。
+
+```js
+module.exports = {
+    generate: {
+        wxCustomComponent: {
+            root: path.join(__dirname, '../src/custom-components'),
+			usingComponents: {
+				'comp-a': 'comp-a/index',
+				'comp-b': {
+                    path: 'comp-b/index',
+                    props: ['propa', 'propb'],
+                    events: ['someevent'],
+                },
+			},
+		},
+    },
+    // ... other options
+}
+```
+
+usingComponents 里的声明和小程序页面的 usingComponents 字段类似。键为组件名，值可以为组件相对 root 字段的路径，也可以是一个配置对象。这个配置对象的 path 为组件相对路径，props 表示要这个组件会被用到的 properties，events 表示这个组件会被监听到的事件。
+
+2. 将自定义组件放入组件根目录
+
+下面以 comp-b 组件为例：
+
+```html
+<!-- comp-b.wxml -->
+<view>comp-b</view>
+<view>propa: {{propa}} -- propb: {{propb}}</view>
+<button bintap="onTap">click me</button>
+<slot></slot>
+```
+
+```js
+// comp-b.js
+Component({
+    properties: {
+        propa: {type: String, value: ''},
+        propb: {type: String, value: ''},
+    },
+    methods: {
+        onTap() {
+            this.triggerEvent('someevent')
+        },
+    },
+})
+```
+
+3. 使用自定义组件
+
+假设使用 vue 技术，然后下面同样以 comp-b 组件为例：
+
+```html
+<template>
+    <div>
+        <comp-b :propa="propa" :propb="propb" @someevent="onEvent">
+            <div>comp-b slot</div>
+        </comp-b>
+    </div>
+</template>
+<script>
+export default {
+    data() {
+        return {propa: 'propa-value', propb: 'propb-value'}
+    },
+    methods: {
+        onEvent(evt) {
+            console.log('someevent', evt)
+        },
+    },
+}
+</script>
+```
+
+> PS：如果使用 react 等其他框架其实和 vue 同理，因为它们的底层都是调用 document.createElement 来创建节点。当在 webpack 插件配置声明了这个自定义组件的情况下，在调用 document.createElement 创建该节点时会被转换成创建 wx-custom-component 标签，类似于内置组件的 wx-component 标签。
+
+> PS：具体例子可参考 [demo10](../examples/demo10)
 
 ### 自定义 app.js 和 app.wxss
 
