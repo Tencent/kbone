@@ -7,6 +7,9 @@
 
 ## Q&A
 
+Q：kbone 主要有哪些依赖包？如何安装升级 kbone 依赖？<br/>
+A：kbone 依赖主要包含三个：`mp-webpack-plugin`、`miniprogram-element` 和 `miniprogram-render`。其中 `mp-webpack-plugin` 是一个 webpack 插件，需要安装在项目目录中。`miniprogram-element` 和 `miniprogram-render` 则是小程序代码的依赖，需要安装在小程序目录中。默认情况下，使用 webpack 和 `mp-webpack-plugin` 生成小程序代码的时候，会在小程序目录生成 pakckage.json，直接在小程序目录执行 `npm install` 就会在小程序目录下安装 `miniprogram-element` 和 `miniprogram-render`。升级过程和安装同理。
+
 Q：对于像 getBoundingClientRect 等接口，有没有什么兼容方案？<br/>
 A：部分无法直接适配的接口会以 [dom/bom 扩展 api](./domextend.md) 的方式提供。
 
