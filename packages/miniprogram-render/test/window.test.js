@@ -7,6 +7,7 @@ const SessionStorage = require('../src/bom/session-storage')
 const History = require('../src/bom/history')
 const Screen = require('../src/bom/screen')
 const CustomEvent = require('../src/event/custom-event')
+const Event = require('../src/event/event')
 const Element = require('../src/node/element')
 const Node = require('../src/node/node')
 const Image = require('../src/node/element/image')
@@ -22,6 +23,189 @@ beforeAll(() => {
 
 test('window: init', () => {
     expect(window.HTMLIFrameElement).toBeInstanceOf(Function)
+})
+
+test('window: $$getPrototype/$$extend', () => {
+    // window.location
+    expect(window.$$getPrototype('window.location')).toBe(window.location.__proto__)
+    window.$$extend('window.location', {
+        testStr: 'window.location',
+        testFunc() {
+            return this
+        },
+    })
+    expect(window.location.testFunc()).toBe(window.location)
+    expect(window.location.testStr).toBe('window.location')
+
+    // window.navigator
+    expect(window.$$getPrototype('window.navigator')).toBe(window.navigator.__proto__)
+    window.$$extend('window.navigator', {
+        testStr: 'window.navigator',
+        testFunc() {
+            return this
+        },
+    })
+    expect(window.navigator.testFunc()).toBe(window.navigator)
+    expect(window.navigator.testStr).toBe('window.navigator')
+
+    // window.performance
+    expect(window.$$getPrototype('window.performance')).toBe(window.performance.__proto__)
+    window.$$extend('window.performance', {
+        testStr: 'window.performance',
+        testFunc() {
+            return this
+        },
+    })
+    expect(window.performance.testFunc()).toBe(window.performance)
+    expect(window.performance.testStr).toBe('window.performance')
+
+    // window.screen
+    expect(window.$$getPrototype('window.screen')).toBe(window.screen.__proto__)
+    window.$$extend('window.screen', {
+        testStr: 'window.screen',
+        testFunc() {
+            return this
+        },
+    })
+    expect(window.screen.testFunc()).toBe(window.screen)
+    expect(window.screen.testStr).toBe('window.screen')
+
+    // window.history
+    expect(window.$$getPrototype('window.history')).toBe(window.history.__proto__)
+    window.$$extend('window.history', {
+        testStr: 'window.history',
+        testFunc() {
+            return this
+        },
+    })
+    expect(window.history.testFunc()).toBe(window.history)
+    expect(window.history.testStr).toBe('window.history')
+
+    // window.localStorage
+    expect(window.$$getPrototype('window.localStorage')).toBe(window.localStorage.__proto__)
+    window.$$extend('window.localStorage', {
+        testStr: 'window.localStorage',
+        testFunc() {
+            return this
+        },
+    })
+    expect(window.localStorage.testFunc()).toBe(window.localStorage)
+    expect(window.localStorage.testStr).toBe('window.localStorage')
+
+    // window.sessionStorage
+    expect(window.$$getPrototype('window.sessionStorage')).toBe(window.sessionStorage.__proto__)
+    window.$$extend('window.sessionStorage', {
+        testStr: 'window.sessionStorage',
+        testFunc() {
+            return this
+        },
+    })
+    expect(window.sessionStorage.testFunc()).toBe(window.sessionStorage)
+    expect(window.sessionStorage.testStr).toBe('window.sessionStorage')
+
+    // window.event
+    const evt = new window.CustomEvent('test')
+    expect(window.$$getPrototype('window.event')).toBe(Event.prototype)
+    window.$$extend('window.event', {
+        testStr: 'window.event',
+        testFunc() {
+            return this
+        },
+    })
+    expect(evt.testFunc()).toBe(evt)
+    expect(evt.testStr).toBe('window.event')
+
+    // window
+    expect(window.$$getPrototype('window')).toBe(window.__proto__)
+    window.$$extend('window', {
+        testStr: 'window',
+        testFunc() {
+            return this
+        },
+    })
+    expect(window.testFunc()).toBe(window)
+    expect(window.testStr).toBe('window')
+
+    // document
+    expect(window.$$getPrototype('document')).toBe(document.__proto__)
+    window.$$extend('document', {
+        testStr: 'document',
+        testFunc() {
+            return this
+        },
+    })
+    expect(document.testFunc()).toBe(document)
+    expect(document.testStr).toBe('document')
+
+    const element = document.createElement('div')
+
+    // element.attribute
+    expect(window.$$getPrototype('element.attribute')).toBe(element.$_attrs.__proto__)
+    window.$$extend('element.attribute', {
+        testStr: 'element.attribute',
+        testFunc() {
+            return this
+        },
+    })
+    expect(element.$_attrs.testFunc()).toBe(element.$_attrs)
+    expect(element.$_attrs.testStr).toBe('element.attribute')
+
+    // element.classList
+    expect(window.$$getPrototype('element.classList')).toBe(element.classList.__proto__)
+    window.$$extend('element.classList', {
+        testStr: 'element.classList',
+        testFunc() {
+            return this
+        },
+    })
+    expect(element.classList.testFunc()).toBe(element.classList)
+    expect(element.classList.testStr).toBe('element.classList')
+
+    // element.style
+    expect(window.$$getPrototype('element.style')).toBe(element.style.__proto__)
+    window.$$extend('element.style', {
+        testStr: 'element.style',
+        testFunc() {
+            return this
+        },
+    })
+    expect(element.style.testFunc()).toBe(element.style)
+    expect(element.style.testStr).toBe('element.style')
+
+    // element
+    expect(window.$$getPrototype('element')).toBe(element.__proto__)
+    window.$$extend('element', {
+        testStr: 'element',
+        testFunc() {
+            return this
+        },
+    })
+    expect(element.testFunc()).toBe(element)
+    expect(element.testStr).toBe('element')
+
+    // textNode
+    const textNode = document.createTextNode('text')
+    expect(window.$$getPrototype('textNode')).toBe(textNode.__proto__)
+    window.$$extend('textNode', {
+        testStr: 'textNode',
+        testFunc() {
+            return this
+        },
+    })
+    expect(textNode.testFunc()).toBe(textNode)
+    expect(textNode.testStr).toBe('textNode')
+
+    // comment
+    const comment = document.createComment('comment')
+    expect(window.$$getPrototype('comment')).toBe(comment.__proto__)
+    window.$$extend('comment', {
+        testStr: 'comment',
+        testFunc() {
+            return this
+        },
+    })
+    expect(comment.testFunc()).toBe(comment)
+    expect(comment.testStr).toBe('comment')
 })
 
 test('window: document', () => {

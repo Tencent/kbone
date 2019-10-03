@@ -1,3 +1,4 @@
+const Document = require('./document')
 const EventTarget = require('./event/event-target')
 const Event = require('./event/event')
 const OriginalCustomEvent = require('./event/custom-event')
@@ -13,8 +14,28 @@ const SessionStorage = require('./bom/session-storage')
 const Performance = require('./bom/performance')
 const Node = require('./node/node')
 const Element = require('./node/element')
+const TextNode = require('./node/text-node')
+const Comment = require('./node/comment')
+const ClassList = require('./node/class-list')
+const Style = require('./node/style')
+const Attribute = require('./node/attribute')
 
 let lastRafTime = 0
+const WINDOW_PROTOTYPE_MAP = {
+    'location': Location.prototype,
+    'navigator': Navigator.prototype,
+    'performance': Performance.prototype,
+    'screen': Screen.prototype,
+    'history': History.prototype,
+    'localStorage': LocalStorage.prototype,
+    'sessionStorage': SessionStorage.prototype,
+    'event': Event.prototype,
+}
+const ELEMENT_PROTOTYPE_MAP = {
+    'attribute': Attribute.prototype,
+    'classList': ClassList.prototype,
+    'style': Style.prototype,
+}
 
 class Window extends EventTarget {
     constructor(pageId) {
@@ -205,6 +226,55 @@ class Window extends EventTarget {
         }
 
         super.$$trigger(eventName, options)
+    }
+
+    /**
+     * 获取原型
+     */
+    $$getPrototype(descriptor) {
+        if (!descriptor || typeof descriptor !== 'string') return
+
+        descriptor = descriptor.split('.')
+        const main = descriptor[0]
+        const sub = descriptor[1]
+
+        if (main === 'window') {
+            if (WINDOW_PROTOTYPE_MAP[sub]) {
+                return WINDOW_PROTOTYPE_MAP[sub]
+            } else if (!sub) {
+                return Window.prototype
+            }
+        } else if (main === 'document') {
+            if (!sub) {
+                return Document.prototype
+            }
+        } else if (main === 'element') {
+            if (ELEMENT_PROTOTYPE_MAP[sub]) {
+                return ELEMENT_PROTOTYPE_MAP[sub]
+            } else if (!sub) {
+                return Element.prototype
+            }
+        } else if (main === 'textNode') {
+            if (!sub) {
+                return TextNode.prototype
+            }
+        } else if (main === 'comment') {
+            if (!sub) {
+                return Comment.prototype
+            }
+        }
+    }
+
+    /**
+     * 扩展 bom/dom 对象
+     */
+    $$extend(descriptor, options) {
+        if (!descriptor || !options || typeof descriptor !== 'string' || typeof options !== 'object') return
+
+        const prototype = this.$$getPrototype(descriptor)
+        const keys = Object.keys(options)
+
+        if (prototype) keys.forEach(key => prototype[key] = options[key])
     }
 
     /**

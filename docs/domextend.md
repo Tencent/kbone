@@ -91,6 +91,61 @@ window.$$getComputedStyle(document.querySelector('div'), ['backgroundColor']).th
 
 强制清空 setData 队列进行渲染。
 
+#### window.$$getPrototype
+
+获取 bom/dom 对象的原型，用于对其做一些扩展改造.
+
+| 参数 | 类型 | 描述 |
+|---|---|---|
+| descriptor | String | 描述字符串 |
+
+描述字符串支持的列表如下：
+
+* window.location
+* window.navigator
+* window.performance
+* window.screen
+* window.history
+* window.localStorage
+* window.sessionStorage
+* window.event
+* window
+* document
+* element.attribute
+* element.classList
+* element.style
+* element
+* textNode
+* comment
+
+```js
+const locationPrototype = window.$$getPrototype('window.location') // location 对象的 prototype
+
+const elementPrototype = window.$$getPrototype('element') // 普通节点的 prototype
+const textNodePrototype = window.$$getPrototype('textNode') // 文本节点的 prototype
+```
+
+#### window.$$extend
+
+对 bom/dom 对象进行扩展.
+
+| 参数 | 类型 | 描述 |
+|---|---|---|
+| descriptor | String | 描述字符串，值同 [window.$$getPrototype](#windowgetprototype) 接口 |
+| options | Object | 扩展对象 |
+
+```js
+// 对 location 对象进行扩展
+window.$$extend('window.location', {
+    testStr: 'I am location',
+    testFunc() {
+        return `Hello, ${this.testStr}`
+    },
+})
+
+console.log(window.location.testFunc()) // 输出 Hello, I am location
+```
+
 #### window.onShareAppMessage
 
 开启 share 配置后，当进行页面分享时会执行的回调。此回调可以返回一个对象，作为小程序处理分享的参数。
