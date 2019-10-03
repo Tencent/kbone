@@ -6,7 +6,7 @@
 * [使用小程序内置组件](#使用小程序内置组件)
 * [使用小程序自定义组件](#使用小程序自定义组件)
 * [自定义 app.js 和 app.wxss](#自定义-appjs-和-appwxss)
-* [扩展 bom/dom 对象和 API](#扩展-bomdom-对象和-api)
+* [扩展 dom/bom 对象和 API](#扩展-dombom-对象和-api)
 * [代码优化](#代码优化)
 * [开发建议](#开发建议)
 
@@ -272,9 +272,57 @@ App({
 
 > PS：具体例子可参考 [demo5](../examples/demo5)
 
-### 扩展 bom/dom 对象和 API
+### 扩展 dom/bom 对象和 API
 
-TODO
+kbone 能够满足大多数常见的开发场景，但是当遇到当前 dom/bom 接口不能满足的情况时，kbone 也提供了一系列 API 来扩展 dom/bom 对象和接口。
+
+这里需要注意的是，下述所有对于 dom/bom 对象的扩展都是针对所有页面的，也就是说有一个页面对其进行了扩展，所有页面都会生效，因此在使用扩展时建议做好处理标志，然后判断是否已经被扩展过。
+
+* 使用 window.$$extend 对 dom/bom 对象追加属性/方法
+
+举个例子，假设需要对 `window.location` 对象追加一个属性 testStr 和一个方法 testFunc，可以编写如下代码：
+
+```js
+window.$$extend('window.location', {
+    testStr: 'I am location',
+    testFunc() {
+        return `Hello, ${this.testStr}`
+    },
+})
+```
+
+这样便可以通过 `window.location.testStr` 获取新追加的属性，同时可以通过 `window.location.testFunc()` 调用新追加的方法。
+
+* 使用 window.$$getPrototype 获取 dom/bom 对象的原型
+
+如果遇到追加属性和追加方法都无法满足需求的情况下，可以获取到对应对象的原型进行操作：
+
+```js
+const locationPrototype = window.$$getPrototype('window.location')
+```
+
+如上例子，locationPrototype 便是 window.location 对象的原型。
+
+* 对 dom/bom 对象方法追加前置/后置处理
+
+除了上述的给对象新增和覆盖方法，还可以对已有的方法进行前置/后置处理。
+
+前置处理即表示此方法会在执行原始方法之前执行，后置处理则是在之后执行。前置处理方法接收到的参数和原始方法接收到的参数一致，后置处理方法接收到的参数则是原始方法执行后返回的结果。下面给一个简单的例子：
+
+```js
+const beforeAspect = function(...args) {
+    // 在执行 window.location.testFunc 前被调用，args 为调用该方法时传入的参数
+}
+const afterAspect = function(res) {
+    // 在执行 window.location.testFunc 后被调用，res 为该方法返回结果
+}
+window.$$addAspect('window.location.testFunc.before', beforeAspect)
+window.$$addAspect('window.location.testFunc.after', afterAspect)
+
+window.location.testFunc('abc', 123) // 会执行 beforeAspect，再调用 testFunc，最后再执行 afterAspect
+```
+
+> PS：具体 API 可参考 [dom/bom 扩展 API](./domextend.md) 文档。
 
 ### 代码优化
 

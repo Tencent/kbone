@@ -1,3 +1,4 @@
+/* eslint-disable no-proto */
 const mock = require('./mock')
 const Document = require('../src/document')
 const Location = require('../src/bom/location')
@@ -25,7 +26,7 @@ test('window: init', () => {
     expect(window.HTMLIFrameElement).toBeInstanceOf(Function)
 })
 
-test('window: $$getPrototype/$$extend', () => {
+test('window: $$getPrototype/$$extend/$$addAspect', () => {
     // window.location
     expect(window.$$getPrototype('window.location')).toBe(window.location.__proto__)
     window.$$extend('window.location', {
@@ -206,6 +207,131 @@ test('window: $$getPrototype/$$extend', () => {
     })
     expect(comment.testFunc()).toBe(comment)
     expect(comment.testStr).toBe('comment')
+
+    // normal aspect
+    const expectArg1 = 123
+    const expectArg2 = {a: 'abc'}
+    const beforeAspect = function(arg1, arg2) {
+        expect(arg1).toBe(expectArg1)
+        expect(arg2).toBe(expectArg2)
+        this.testStr = 'before-' + this.testStr
+    }
+    const beforeAspect2 = function(arg1, arg2) {
+        expect(arg1).toBe(expectArg1)
+        expect(arg2).toBe(expectArg2)
+        this.testStr = 'before2-' + this.testStr
+    }
+    const afterAspect = function(arg1) {
+        expect(arg1).toBe(this)
+        this.testStr = this.testStr + '-after'
+    }
+    const afterAspect2 = function(arg1) {
+        expect(arg1).toBe(this)
+        this.testStr = this.testStr + '-after2'
+    }
+    const afterAspect3 = function(arg1) {
+        expect(arg1).toBe(this)
+        this.testStr = this.testStr + '-after3'
+    }
+    let originalFunc = window.location.testFunc
+    window.$$addAspect('window.location.testFunc.before', beforeAspect)
+    expect(window.location.testFunc(expectArg1, expectArg2)).toBe(window.location)
+    expect(window.location.testStr).toBe('before-window.location')
+    expect(window.location.testFunc).not.toBe(originalFunc)
+    window.$$addAspect('window.location.testFunc.after', afterAspect)
+    expect(window.location.testFunc(expectArg1, expectArg2)).toBe(window.location)
+    expect(window.location.testStr).toBe('before-before-window.location-after')
+    expect(window.location.testFunc).not.toBe(originalFunc)
+    window.$$removeAspect('window.location.testFunc.before', beforeAspect)
+    expect(window.location.testFunc(expectArg1, expectArg2)).toBe(window.location)
+    expect(window.location.testStr).toBe('before-before-window.location-after-after')
+    expect(window.location.testFunc).not.toBe(originalFunc)
+    window.$$removeAspect('window.location.testFunc.after', afterAspect)
+    expect(window.location.testFunc(expectArg1, expectArg2)).toBe(window.location)
+    expect(window.location.testStr).toBe('before-before-window.location-after-after')
+    expect(window.location.testFunc).toBe(originalFunc)
+
+    // multiple aspect
+    window.$$addAspect('window.location.testFunc.before', beforeAspect)
+    window.$$addAspect('window.location.testFunc.before', beforeAspect2)
+    window.$$addAspect('window.location.testFunc.after', afterAspect)
+    window.$$addAspect('window.location.testFunc.after', afterAspect2)
+    window.$$addAspect('window.location.testFunc.after', afterAspect3)
+    window.location.testStr = 'window.location'
+    expect(window.location.testFunc(expectArg1, expectArg2)).toBe(window.location)
+    expect(window.location.testStr).toBe('before2-before-window.location-after-after2-after3')
+    expect(window.location.testFunc).not.toBe(originalFunc)
+    window.$$removeAspect('window.location.testFunc.before', beforeAspect)
+    window.$$removeAspect('window.location.testFunc.after', afterAspect)
+    window.location.testStr = 'window.location'
+    expect(window.location.testFunc(expectArg1, expectArg2)).toBe(window.location)
+    expect(window.location.testStr).toBe('before2-window.location-after2-after3')
+    expect(window.location.testFunc).not.toBe(originalFunc)
+    window.$$removeAspect('window.location.testFunc.before', beforeAspect2)
+    window.$$removeAspect('window.location.testFunc.after', afterAspect3)
+    window.location.testStr = 'window.location'
+    expect(window.location.testFunc(expectArg1, expectArg2)).toBe(window.location)
+    expect(window.location.testStr).toBe('window.location-after2')
+    expect(window.location.testFunc).not.toBe(originalFunc)
+    window.$$removeAspect('window.location.testFunc.after', afterAspect2)
+    window.location.testStr = 'window.location'
+    expect(window.location.testFunc(expectArg1, expectArg2)).toBe(window.location)
+    expect(window.location.testStr).toBe('window.location')
+    expect(window.location.testFunc).toBe(originalFunc)
+
+    // before aspect stop
+    const beforeAspect3 = function(arg1, arg2) {
+        expect(arg1).toBe(expectArg1)
+        expect(arg2).toBe(expectArg2)
+        if (this.testStr === 'before-before-before-window.location') return true
+        this.testStr = 'before-' + this.testStr
+    }
+    window.$$addAspect('window.location.testFunc.before', beforeAspect3)
+    window.location.testStr = 'window.location'
+    expect(window.location.testFunc(expectArg1, expectArg2)).toBe(window.location)
+    expect(window.location.testFunc(expectArg1, expectArg2)).toBe(window.location)
+    expect(window.location.testFunc(expectArg1, expectArg2)).toBe(window.location)
+    expect(window.location.testStr).toBe('before-before-before-window.location')
+    expect(window.location.testFunc(expectArg1, expectArg2)).toBe(undefined)
+    expect(window.location.testStr).toBe('before-before-before-window.location')
+    expect(window.location.testFunc(expectArg1, expectArg2)).toBe(undefined)
+    expect(window.location.testStr).toBe('before-before-before-window.location')
+    window.$$removeAspect('window.location.testFunc.before', beforeAspect3)
+    expect(window.location.testFunc(expectArg1, expectArg2)).toBe(window.location)
+    expect(window.location.testFunc).toBe(originalFunc)
+
+    // parent class method aspect
+    originalFunc = element.hasChildNodes
+    const beforeAspect4 = function(arg1, arg2) {
+        expect(arg1).toBe(expectArg1)
+        expect(arg2).toBe(expectArg2)
+        if (this.testStr === 'before-before-before-element') return true
+        this.testStr = 'before-' + this.testStr
+    }
+    const afterAspect4 = function(arg1) {
+        expect(arg1).toBe(false)
+        this.testStr = this.testStr + '-after4'
+    }
+    window.$$addAspect('element.hasChildNodes.before', beforeAspect)
+    window.$$addAspect('element.hasChildNodes.after', afterAspect4)
+    element.testStr = 'element'
+    expect(element.hasChildNodes(expectArg1, expectArg2)).toBe(false)
+    expect(element.testStr).toBe('before-element-after4')
+    window.$$removeAspect('element.hasChildNodes.before', beforeAspect)
+    window.$$removeAspect('element.hasChildNodes.after', afterAspect4)
+    window.$$addAspect('element.hasChildNodes.before', beforeAspect4)
+    element.testStr = 'element'
+    expect(element.hasChildNodes(expectArg1, expectArg2)).toBe(false)
+    expect(element.hasChildNodes(expectArg1, expectArg2)).toBe(false)
+    expect(element.hasChildNodes(expectArg1, expectArg2)).toBe(false)
+    expect(element.testStr).toBe('before-before-before-element')
+    expect(element.hasChildNodes(expectArg1, expectArg2)).toBe(undefined)
+    expect(element.testStr).toBe('before-before-before-element')
+    expect(element.hasChildNodes(expectArg1, expectArg2)).toBe(undefined)
+    expect(element.testStr).toBe('before-before-before-element')
+    window.$$removeAspect('element.hasChildNodes.before', beforeAspect4)
+    expect(element.hasChildNodes(expectArg1, expectArg2)).toBe(false)
+    expect(element.hasChildNodes).toBe(originalFunc)
 })
 
 test('window: document', () => {

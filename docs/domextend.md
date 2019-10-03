@@ -93,7 +93,7 @@ window.$$getComputedStyle(document.querySelector('div'), ['backgroundColor']).th
 
 #### window.$$getPrototype
 
-获取 bom/dom 对象的原型，用于对其做一些扩展改造.
+获取 dom/bom 对象的原型，用于对其做一些扩展改造。
 
 | 参数 | 类型 | 描述 |
 |---|---|---|
@@ -127,7 +127,7 @@ const textNodePrototype = window.$$getPrototype('textNode') // 文本节点的 p
 
 #### window.$$extend
 
-对 bom/dom 对象进行扩展.
+对 dom/bom 对象进行扩展。
 
 | 参数 | 类型 | 描述 |
 |---|---|---|
@@ -144,6 +144,55 @@ window.$$extend('window.location', {
 })
 
 console.log(window.location.testFunc()) // 输出 Hello, I am location
+```
+
+#### window.$$addAspect
+
+对 dom/bom 对象方法追加前置/后置处理。
+
+| 参数 | 类型 | 描述 |
+|---|---|---|
+| descriptor | String | 描述字符串 |
+| func | Function | 处理方法 |
+
+描述字符串的值类似 [window.$$getPrototype](#windowgetprototype) 接口的描述字符串，只是后续追加了方法和类型，比如 `element.hasChildNodes.before` 即表示在 element.hasChildNodes 方法追加前置处理。
+
+前置处理即表示此方法会在执行原始方法之前执行，后置处理则是在之后执行。前置处理方法接收到的参数和原始方法接收到的参数一致，后置处理方法接收到的参数则是原始方法执行后返回的结果。
+
+```js
+const div = document.createElement('div')
+div.count = 0
+
+const beforeAspect = function(arg) {
+    // 在执行 div.hasChildNodes 前被调用
+    console.log(arg) // 输出调用 div.hasChildNodes 时传入的参数
+    if (this.count === 50) return true // 如果返回 true，则中断方法执行，不会再执行原始方法
+    this.count++
+}
+const afterAspect = function(res) {
+    // 在执行 div.hasChildNodes 后被调用
+    console.log(res) // 输出调用 div.hasChildNodes 的返回值
+
+    this.count++
+}
+window.$$addAspect('element.hasChildNodes.before', beforeAspect)
+window.$$addAspect('element.hasChildNodes.after', afterAspect)
+div.hasChildNodes('abc') // 返回 false
+div.count // 输出 2
+```
+
+#### window.$$removeAspect
+
+移除对 dom/bom 对象方法追加前置/后置处理。
+
+| 参数 | 类型 | 描述 |
+|---|---|---|
+| descriptor | String | 描述字符串，值同 [window.$$addAspect](#windowaddaspect) 接口 |
+| func | Function | 处理方法 |
+
+```js
+window.$$removeAspect('element.hasChildNodes.before', beforeAspect)
+window.$$removeAspect('element.hasChildNodes.after', afterAspect)
 ```
 
 #### window.onShareAppMessage
