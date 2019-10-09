@@ -134,15 +134,15 @@ module.exports = {
     generate: {
         wxCustomComponent: {
             root: path.join(__dirname, '../src/custom-components'),
-			usingComponents: {
-				'comp-a': 'comp-a/index',
-				'comp-b': {
+	    usingComponents: {
+    		'comp-a': 'comp-a/index',
+		'comp-b': {
                     path: 'comp-b/index',
                     props: ['propa', 'propb'],
                     events: ['someevent'],
                 },
-			},
-		},
+	    },
+	},
     },
     // ... other options
 }
