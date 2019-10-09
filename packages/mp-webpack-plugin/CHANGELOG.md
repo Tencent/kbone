@@ -1,5 +1,9 @@
 # 更新日志
 
+## 0.4.1
+
+* 删除生成的 wxss 中不支持的 @-moz-keyframes 规则
+
 ## 0.4.0
 
 * 支持自定义 app.js 和 app.wxss

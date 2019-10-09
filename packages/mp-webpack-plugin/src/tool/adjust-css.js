@@ -10,7 +10,12 @@ const suffixRegexp = /[a-zA-Z0-9_-]/
  */
 const replaceTagNamePlugin = postcss.plugin('replaceTagName', () => root => {
     root.walk(child => {
-        if (child.type === 'rule') {
+        if (child.type === 'atrule') {
+            // 处理 wxss 不支持的 @ 前缀
+            if (child.name === '-moz-keyframes') {
+                child.remove()
+            }
+        } else if (child.type === 'rule') {
             const selectors = []
 
             child.selectors.forEach(selector => {
