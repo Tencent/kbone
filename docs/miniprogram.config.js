@@ -46,7 +46,7 @@ module.exports = {
                 packages: ['package2'],
             },
         },
-        // 小程序 tabBar，暂不支持自定义 tabBar，详细注意事项可参考：https://developers.weixin.qq.com/miniprogram/dev/reference/configuration/app.html#tabBar
+        // 小程序 tabBar，详细注意事项可参考：https://developers.weixin.qq.com/miniprogram/dev/reference/configuration/app.html#tabBar
         tabBar: {
             color: '#000000',
             selectedColor: '#07c160',
@@ -64,6 +64,8 @@ module.exports = {
                 iconPath: path.resolve(__dirname, '../src/img/profile.png'),
                 selectedIconPath: path.resolve(__dirname, '../src/img/profile-sel.png'),
             }],
+            // 如果需要使用自定义 tabBar，则需要配置 custom 字段，其值为需要拷贝到小程序目录的 custom-tab-bar 目录
+            custom: path.join(__dirname, '../src/custom-tab-bar'),
         },
         // 自定义生成小程序 app.js，值为 webpack 配置中 entryName。也就是说，如果一个 webpack 配置的入口被声明为 app.js 的入口，那么它就不会被作为页面处理
         app: 'miniprogram-app',

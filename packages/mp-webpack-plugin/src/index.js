@@ -280,6 +280,14 @@ class MpPlugin {
                         selectedIconPath: selectedIconPathName ? `./images/${selectedIconPathName}` : '',
                     }
                 })
+
+                if (tabBar.custom) {
+                    // 自定义 tabBar
+                    const customTabBarDir = tabBar.custom
+                    tabBar.custom = true
+                    _.copyDir(customTabBarDir, path.resolve(outputPath, '../custom-tab-bar'))
+                }
+
                 appJson.tabBar = tabBar
             }
             const appJsonContent = JSON.stringify(appJson, null, '\t')

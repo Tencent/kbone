@@ -56,3 +56,4 @@ npm install
 * demo8：贪吃蛇小游戏（[omis](https://github.com/Tencent/omi/tree/master/packages/omis) + kbone）
 * demo9：tabBar
 * demo10：自定义组件
+* demo11：自定义 tabBar

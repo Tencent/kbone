@@ -51,6 +51,9 @@ Page({
         this.document = mpRes.document
         this.query = query
 
+        // 写入 page 的方法
+        if (typeof this.getTabBar === 'function') this.window.getTabBar = this.getTabBar.bind(this)
+
         init(this.window, this.document)
 
         // 处理跳转页面不存在的情况
@@ -134,6 +137,7 @@ Page({
 
         this.pageConfig = null
         this.pageId = null
+        this.window.getTabBar = null
         this.window = null
         this.document = null
         this.app = null
