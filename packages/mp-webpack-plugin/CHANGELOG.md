@@ -1,5 +1,9 @@
 # 更新日志
 
+## 0.4.3
+
+* 将 miniprogram-element/index.wxss 中的 button 默认样式重制代码迁移到 app.wxss 中
+
 ## 0.4.2
 
 * 支持自定义 tabBar

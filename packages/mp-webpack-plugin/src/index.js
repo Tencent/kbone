@@ -11,6 +11,7 @@ const PluginName = 'MpPlugin'
 const appJsTmpl = fs.readFileSync(path.resolve(__dirname, './tmpl/app.tmpl.js'), 'utf8')
 const pageJsTmpl = fs.readFileSync(path.resolve(__dirname, './tmpl/page.tmpl.js'), 'utf8')
 const appDisplayWxssTmpl = fs.readFileSync(path.resolve(__dirname, './tmpl/app.display.tmpl.wxss'), 'utf8')
+const appExtraWxssTmpl = fs.readFileSync(path.resolve(__dirname, './tmpl/app.extra.tmpl.wxss'), 'utf8')
 const appWxssTmpl = fs.readFileSync(path.resolve(__dirname, './tmpl/app.tmpl.wxss'), 'utf8')
 const customComponentJsTmpl = fs.readFileSync(path.resolve(__dirname, './tmpl/custom-component.tmpl.js'), 'utf8')
 const projectConfigJsonTmpl = require('./tmpl/project.config.tmpl.json')
@@ -238,7 +239,11 @@ class MpPlugin {
             if (appAssets.css.length) {
                 appWxssContent += `\n${appAssets.css.map(css => `@import "${getAssetPath('', css, assetsSubpackageMap, '')}";`).join('\n')}`
             }
-            addFile(compilation, '../app.wxss', adjustCss(appWxssContent))
+            appWxssContent = adjustCss(appWxssContent)
+            if (appWxssConfig !== 'none' && appWxssConfig !== 'display') {
+                appWxssContent += '\n' + appExtraWxssTmpl
+            }
+            addFile(compilation, '../app.wxss', appWxssContent)
 
             // app json
             const subpackages = []
