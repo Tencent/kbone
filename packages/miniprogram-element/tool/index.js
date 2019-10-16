@@ -30,9 +30,9 @@ function getSubtreeSimple(i) {
     // 补充头尾
     const outputContent = [
         `<block wx:for="{{${!isFirst ? 'item' + (i - 1) + '.' : ''}childNodes}}" wx:key="nodeId" wx:for-item="${itemName}">`,
-        ...subContent.map(line => '    ' + line),
+        ...subContent,
         '</block>'
-    ].map(line => '   ' + line)
+    ]
 
     // 补充上一层的结束标签
     if (!isFirst) {
@@ -65,9 +65,9 @@ function getSubtreeCoverSimple(i) {
     // 补充头尾
     const outputContent = [
         `<block wx:for="{{${!isFirst ? 'item' + (i - 1) + '.' : ''}childNodes}}" wx:key="nodeId" wx:for-item="${itemName}">`,
-        ...subContent.map(line => '    ' + line),
+        ...subContent,
         '</block>'
-    ].map(line => '   ' + line)
+    ]
 
     // 补充上一层的结束标签
     if (!isFirst) {
@@ -85,11 +85,11 @@ function createSubtreeTemplate() {
         '<!-- 此文件由 tool/index.js 生成 -->',
         '<template name="subtree">',
         ...getSubtreeSimple(1),
-        '</template>\n'
+        '</template>'
     ]
 
     // 写入文件
-    fs.writeFileSync(subtreeDestPath, content.join('\n'), 'utf8')
+    fs.writeFileSync(subtreeDestPath, content.join(''), 'utf8')
 }
 
 /**
@@ -100,11 +100,11 @@ function createSubtreeCoverTemplate() {
         '<!-- 此文件由 tool/index.js 生成 -->',
         '<template name="subtree-cover">',
         ...getSubtreeCoverSimple(1),
-        '</template>\n'
+        '</template>'
     ]
 
     // 写入文件
-    fs.writeFileSync(subtreeCoverDestPath, content.join('\n'), 'utf8')
+    fs.writeFileSync(subtreeCoverDestPath, content.join(''), 'utf8')
 }
 
 function main() {

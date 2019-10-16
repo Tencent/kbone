@@ -6,6 +6,9 @@
     </ul>
     <router-view></router-view>
     <button class="btn" @click="throwError">throw an error</button>
+    <div style="margin-left: 20px;">
+      <p>这是<span>1</span>段中间插入了span的文本</p>
+    </div>
     <Footer/>
   </div>
 </template>
