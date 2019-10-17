@@ -11,6 +11,16 @@ module.exports = {
 		notFound: 'index',	
 		accessDenied: 'index',
 	},
+	generate: {
+		globalVars: [
+            ['TEST_VAR_STRING', '\'miniprogram\''],
+            ['TEST_VAR_NUMBER', '123'],
+            ['TEST_VAR_BOOL', 'true'],
+            ['TEST_VAR_FUNCTION', 'function() {return \'I am function\'}'],
+			['TEST_VAR_OTHERS', 'window.document'],
+			['CustomEvent'],
+        ],
+	},
 	app: {
 		navigationBarTitleText: 'miniprogram-project',
 	},

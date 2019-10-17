@@ -82,7 +82,16 @@ module.exports = {
                     events: ['someevent'], // 组件事件，如果在相应的 dom 节点上监听了列表中的事件，那么它会同步到自定义组件上
                 },
 			},
-		},
+        },
+        // 注入全局变量，每一项为 [key, value] 的结构
+        globalVars: [
+            ['TEST_VAR_STRING', '\'miniprogram\''], // 会生成类似 var TEST_VAR_STRING = 'miniprogram' 的语句
+            ['TEST_VAR_NUMBER', '123'],
+            ['TEST_VAR_BOOL', 'true'],
+            ['TEST_VAR_FUNCTION', 'function() {return \'I am function\'}'],
+            ['TEST_VAR_OTHERS', 'window.document'],
+            ['CustomEvent'], // 如果没有 value，则会从 window 下读取，生成类似 var CustomEvent = window.CustomEvent 的语句
+        ],
     },
     // 运行时配置
     runtime: {

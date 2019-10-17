@@ -21,6 +21,14 @@ export default {
   components: {
     Footer,
   },
+  mounted() {
+    console.log(TEST_VAR_STRING)
+    console.log(TEST_VAR_NUMBER)
+    console.log(TEST_VAR_BOOL)
+    console.log(TEST_VAR_FUNCTION)
+    console.log(TEST_VAR_OTHERS)
+    console.log(CustomEvent)
+  },
   methods: {
     throwError() {
       setTimeout(() => {

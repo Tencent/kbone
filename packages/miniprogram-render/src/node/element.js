@@ -48,6 +48,15 @@ class Element extends Node {
         this.$_attrs = null
 
         this.$_initAttrs(options.attrs)
+
+        // 补充实例的属性，用于 'xxx' in XXX 判断
+        this.onclick = null
+        this.ontouchstart = null
+        this.ontouchmove = null
+        this.ontouchend = null
+        this.ontouchcancel = null
+        this.onload = null
+        this.onerror = null
     }
 
     /**

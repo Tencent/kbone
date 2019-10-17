@@ -33,15 +33,17 @@ function addFile(compilation, filename, content) {
 /**
  * 给 chunk 头尾追加内容
  */
-function wrapChunks(compilation, chunks) {
+function wrapChunks(compilation, chunks, globalVarsConfig) {
     chunks.forEach(chunk => {
         chunk.files.forEach(fileName => {
             if (ModuleFilenameHelpers.matchObject({test: /\.js$/}, fileName)) {
                 // 页面 js
                 const headerContent = 'module.exports = function(window, document) {const App = function(options) {window.appOptions = options};' + globalVars.map(item => `var ${item} = window.${item}`).join(';') + ';'
+                let customHeaderContent = globalVarsConfig.map(item => `var ${item[0]} = ${item[1] ? item[1] : 'window[\'' + item[0] + '\']'}`).join(';')
+                customHeaderContent = customHeaderContent ? customHeaderContent + ';' : ''
                 const footerContent = '}'
 
-                compilation.assets[fileName] = new ConcatSource(headerContent, compilation.assets[fileName], footerContent)
+                compilation.assets[fileName] = new ConcatSource(headerContent + customHeaderContent, compilation.assets[fileName], footerContent)
             }
         })
     })
@@ -393,13 +395,14 @@ class MpPlugin {
 
         // 处理头尾追加内容
         compiler.hooks.compilation.tap(PluginName, compilation => {
+            const globalVarsConfig = generateConfig.globalVars || []
             if (this.afterOptimizations) {
                 compilation.hooks.afterOptimizeChunkAssets.tap(PluginName, chunks => {
-                    wrapChunks(compilation, chunks)
+                    wrapChunks(compilation, chunks, globalVarsConfig)
                 })
             } else {
                 compilation.hooks.optimizeChunkAssets.tapAsync(PluginName, (chunks, callback) => {
-                    wrapChunks(compilation, chunks)
+                    wrapChunks(compilation, chunks, globalVarsConfig)
                     callback()
                 })
             }
