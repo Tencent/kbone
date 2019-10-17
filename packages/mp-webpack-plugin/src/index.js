@@ -33,7 +33,7 @@ function addFile(compilation, filename, content) {
 /**
  * 给 chunk 头尾追加内容
  */
-function wrapChunks(compilation, chunks, globalVars) {
+function wrapChunks(compilation, chunks) {
     chunks.forEach(chunk => {
         chunk.files.forEach(fileName => {
             if (ModuleFilenameHelpers.matchObject({test: /\.js$/}, fileName)) {
@@ -393,14 +393,13 @@ class MpPlugin {
 
         // 处理头尾追加内容
         compiler.hooks.compilation.tap(PluginName, compilation => {
-            const customGlobalVars = options.globalVars || []
             if (this.afterOptimizations) {
                 compilation.hooks.afterOptimizeChunkAssets.tap(PluginName, chunks => {
-                    wrapChunks(compilation, chunks, globalVars.concat(customGlobalVars))
+                    wrapChunks(compilation, chunks)
                 })
             } else {
                 compilation.hooks.optimizeChunkAssets.tapAsync(PluginName, (chunks, callback) => {
-                    wrapChunks(compilation, chunks, globalVars.concat(customGlobalVars))
+                    wrapChunks(compilation, chunks)
                     callback()
                 })
             }
