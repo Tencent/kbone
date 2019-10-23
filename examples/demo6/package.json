@@ -4,7 +4,7 @@
     "mp": "cross-env NODE_ENV=production webpack --config build/webpack.mp.config.js --progress --hide-modules"
   },
   "dependencies": {
-    "omis": "latest"
+    "omis": "^1.0.3"
   },
   "browserslist": [
     "> 1%",
@@ -27,6 +27,6 @@
     "stylehacks": "^4.0.3",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.2.3",
-    "mp-webpack-plugin2": "latest"
+    "mp-webpack-plugin": "latest"
   }
 }
