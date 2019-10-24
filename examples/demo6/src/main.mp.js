@@ -1,10 +1,10 @@
-import { render, h } from 'omis'
-import Todo from './components/todo'
+import { render, h } from 'omio'
+import './components/todo'
+import Store from './store'
 
 export default function createApp() {
   const container = document.createElement('div')
   container.id = 'app'
   document.body.appendChild(container)
-
-  render(<Todo />, '#app')
+  render(<todo-app />, '#app', new Store)
 }
