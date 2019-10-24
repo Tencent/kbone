@@ -3,7 +3,7 @@
     "mp": "cross-env NODE_ENV=production webpack --config build/webpack.mp.config.js --progress --hide-modules"
   },
   "dependencies": {
-    "omis": "latest"
+    "omio": "^2.6.3"
   },
   "browserslist": [
     "> 1%",
@@ -14,6 +14,9 @@
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-decorators-legacy": "^1.3.5",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-plugin-transform-react-jsx": "^6.24.1",
     "babel-preset-stage-3": "^6.24.1",
     "cross-env": "^5.0.5",

@@ -2,18 +2,18 @@ class Store {
 
 
   id = 1
-  inputText = ''
 
   data = {
     todo: [{ text: '学习 Kbone', id: 0, done: false }, { text: '学习 Omi', id: 1, done: false }],
     left: 2,
     type: 'all',
-    done: 0
+    done: 0,
+    inputText: ''
   }
 
 
   textInput = (evt) => {
-    this.inputText = evt.currentTarget.value
+    this.data.inputText = evt.currentTarget.value
   }
 
   gotoAbout() {
@@ -52,8 +52,8 @@ class Store {
     }
   }
 
-  newTodo() {
-    if (this.inputText.trim() === '') {
+  newTodo = () => {
+    if (this.data.inputText.trim() === '') {
       wx.showToast({
         title: '内容不能为空',
         icon: 'none',
@@ -64,13 +64,13 @@ class Store {
     }
 
     this.data.todo.unshift({
-      text: this.inputText,
+      text: this.data.inputText,
       id: ++this.id,
       done: false,
       createTime: new Date()
     })
     this.computeCount()
-    this.inputText = ''
+    this.data.inputText = ''
 
   }
 

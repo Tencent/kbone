@@ -1,11 +1,15 @@
-import { render, h } from 'omis'
-import Index from './components/index'
+import { render, h } from 'omio'
+import './components/index'
 import store from './stores/index'
+import './assets/index.css'
 
 export default function createApp() {
   const container = document.createElement('div')
   container.id = 'app'
   document.body.appendChild(container)
 
-  render(<Index />, '#app', store)
+  render(<my-index />, '#app', store)
 }
+
+//web
+"undefined" != typeof wx && wx.getSystemInfoSync || createApp()

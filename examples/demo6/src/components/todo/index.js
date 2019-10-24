@@ -3,8 +3,8 @@ import css from './_index.css'
 import '../todo-footer'
 
 define('todo-app', _ => {
-  const { textInput, inputText, data, newTodo, done, toggle, deleteItem } = _.store
-  const { todo, type } = data
+  const { textInput, data, newTodo, done, toggle, deleteItem } = _.store
+  const { todo, type, inputText } = data
   return <div class="container">
     <div class="title">todos</div>
     {/* 需要使用cdn图片 */}
@@ -28,6 +28,6 @@ define('todo-app', _ => {
   </div>
 }, {
     css: typeof wx !== undefined ? '' : css,
-    useSelf: ['todo', 'type']
+    useSelf: ['todo', 'type', 'inputText']
   })
 
