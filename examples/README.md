@@ -51,9 +51,9 @@ npm install
 * demo3：内置组件
 * demo4：vue-cli-plugin-kbone
 * demo5：多页
-* demo6：[omis](https://github.com/Tencent/omi/tree/master/packages/omis) + kbone
+* demo6：[omi](https://github.com/Tencent/omi) + kbone
 * demo7：多页 + 分包
-* demo8：贪吃蛇小游戏（[omis](https://github.com/Tencent/omi/tree/master/packages/omis) + kbone）
+* demo8：贪吃蛇小游戏（[omi](https://github.com/Tencent/omi) + kbone）
 * demo9：tabBar
 * demo10：自定义组件
 * demo11：自定义 tabBar
