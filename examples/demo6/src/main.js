@@ -1,4 +1,5 @@
-import { render, h } from 'omis'
-import Todo from './components/todo'
+import { render, h } from 'omio'
+import './components/todo'
+import Store from './store'
 
-render(<Todo />, '#app')
+render(<todo-app />, '#app', new Store)

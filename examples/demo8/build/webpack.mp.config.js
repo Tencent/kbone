@@ -80,6 +80,8 @@ module.exports = {
                 exclude: /node_modules/,
                 options: {
                     plugins : [ 
+                        "transform-decorators-legacy",
+                        "transform-class-properties",
                         ['transform-react-jsx', {pragma: 'h'}]
                     ] 
                 }
