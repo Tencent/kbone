@@ -55,6 +55,7 @@ module.exports = {
                 target: domNode,
                 eventPhase: Event.AT_TARGET,
                 detail: evt && evt.detail,
+                $$extra: evt && evt.extra,
             }),
             currentTarget: domNode,
         })

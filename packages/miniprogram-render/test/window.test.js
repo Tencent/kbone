@@ -342,7 +342,7 @@ test('window: document', () => {
 test('window: location', () => {
     expect(window.location).toBeInstanceOf(Location)
 
-    // TODO seter
+    // TODO setter
 })
 
 test('window: navigator', () => {

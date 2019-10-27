@@ -38,6 +38,10 @@ const wxComponentMap = {
         wxCompName: 'editor',
         config: require('../component/editor'),
     },
+    form: {
+        wxCompName: 'form',
+        config: require('../component/form'),
+    },
     INPUT: {
         wxCompName: 'input',
         config: require('../component/input'),

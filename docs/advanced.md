@@ -95,6 +95,7 @@ module.exports = {
 * text 组件
 * button 组件
 * editor 组件
+* form 组件
 * picker 组件
 * slider 组件
 * switch 组件
@@ -109,7 +110,7 @@ module.exports = {
 * open-data 组件
 * web-view 组件
 
-> PS：button 标签不会被渲染成 button 内置组件，如若需要请按照上述原生组件使用说明使用。
+> PS：button 标签不会被渲染成 button 内置组件，同理 form 标签也不会被渲染成 form 内置组件，如若需要请按照上述原生组件使用说明使用。
 
 > PS：原生组件的表现在小程序中表现会和 web 端标签有些不一样，具体可[参考原生组件说明文档](https://developers.weixin.qq.com/miniprogram/dev/component/native-component.html)。
 
