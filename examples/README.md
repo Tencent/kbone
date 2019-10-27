@@ -57,3 +57,4 @@ npm install
 * demo9：tabBar
 * demo10：自定义组件
 * demo11：自定义 tabBar
+* demo12：只输出页面相关的代码（可用于独立分包）

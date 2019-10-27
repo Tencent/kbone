@@ -31,6 +31,8 @@ module.exports = {
     },
     // 构建输出配置
     generate: {
+        // app 输出配置，默认值为 default，即会输出 app.js、app.json、app.wxss 和 project.config.json 等文件，其他可选值：noemit - 不输出 app 相关文件
+        app: 'default',
         // app.wxss 输出配置，默认值为 default，即输出默认标签样式，其他可选值：none - 输出为空，display - 只输出 display 相关的内容
         appWxss: 'default',
         // 小程序分包，暂不支持独立分包，详细注意事项可参考：https://developers.weixin.qq.com/miniprogram/dev/framework/subpackages/basic.html
