@@ -24,6 +24,7 @@
           <input type="radio" name="radio" value="radio1" @input="onInput" v-model="input.inputRadio" />
           <input type="radio" name="radio" value="radio2" @input="onInput" v-model="input.inputRadio" />
           <input type="checkbox" @input="onInput" v-model="input.inputCheckbox" />
+          <input type="hidden" value="I am Hidden" />
         </div>
         <textarea v-else-if="item === 'textarea'" placeholder="请输入内容" maxlength="50" :auto-height="true" value="我是 textarea" @input="onTextareaInput" />
         <div v-else-if="item === 'label'">
@@ -89,6 +90,58 @@
           <wx-component v-if="!wxPrefix" :behavior="item" :selectable="true">{{'this is first line\nthis is second line'}}</wx-component>
           <wx-text v-else-if="wxPrefix === 1" :selectable="true">{{'this is first line\nthis is second line'}}</wx-text>
           <text v-else-if="wxPrefix === 2" :selectable="true">{{'this is first line\nthis is second line'}}</text>
+        </template>
+        <template v-else-if="item === 'form'">
+          <!-- form 组件 -->
+          <wx-form :report-submit="true" @submit="onFormSubmit" @reset="onFormReset">
+            <div>
+              <div>form 组件</div>
+              <input type="text" name="text-a" value="text value" />
+              <input type="text" value="text value2" />
+              <input type="number" name="number-a" value="123" />
+              <textarea name="textare-a" value="textare value" />
+              <wx-switch name="switch-a" :checked="true" />
+              <wx-slider name="slider-a" min="50" max="200" :show-value="true" />
+              <wx-picker name="picker-a" :value="1" :range="['美国', '中国', '巴西', '日本']">点击&nbsp;&nbsp;选择国家</wx-picker>
+              <div class="ipt-group"><input type="radio" name="radio-a" value="radio1" :checked="true" />radio1</div>
+              <div class="ipt-group"><input type="radio" name="radio-a" value="radio2" />radio2</div>
+              <div class="ipt-group"><input type="checkbox" name="checkbox-a" value="checkbox1" :checked="true" />checkbox1</div>
+              <div class="ipt-group"><input type="checkbox" name="checkbox-a" value="checkbox2" :checked="true" />checkbox2</div>
+              <div class="ipt-group"><input type="checkbox" name="checkbox-a" value="checkbox3" />checkbox3</div>
+              <input type="hidden" name="hidden-a" value="hidden value" />
+              <button type="submit">submit（普通标签）</button>
+              <button type="reset">reset（普通标签）</button>
+              <button>什么也不做（普通标签）</button>
+              <wx-button form-type="submit">submit（内置组件）</wx-button>
+              <wx-button form-type="reset">reset（内置组件）</wx-button>
+              <wx-button>什么也不做（内置组件）</wx-button>
+            </div>
+          </wx-form>
+          <!-- form 标签 -->
+          <form :report-submit="true" @submit="onFormSubmit" @reset="onFormReset">
+            <div>
+              <div>form 标签</div>
+              <input type="text" name="text-b" value="text value" />
+              <input type="text" value="text value2" />
+              <input type="number" name="number-b" value="123" />
+              <textarea name="textare-b" value="textare value" />
+              <wx-switch name="switch-b" :checked="true" />
+              <wx-slider name="slider-b" min="50" max="200" :show-value="true" />
+              <wx-picker name="picker-a" :value="1" :range="['美国', '中国', '巴西', '日本']">点击&nbsp;&nbsp;选择国家</wx-picker>
+              <div class="ipt-group"><input type="radio" name="radio-b" value="radio1" :checked="true" />radio1</div>
+              <div class="ipt-group"><input type="radio" name="radio-b" value="radio2" />radio2</div>
+              <div class="ipt-group"><input type="checkbox" name="checkbox-b" value="checkbox1" :checked="true" />checkbox1</div>
+              <div class="ipt-group"><input type="checkbox" name="checkbox-b" value="checkbox2" :checked="true" />checkbox2</div>
+              <div class="ipt-group"><input type="checkbox" name="checkbox-b" value="checkbox3" />checkbox3</div>
+              <input type="hidden" name="hidden-b" value="hidden value" />
+              <button type="submit">submit（普通标签）</button>
+              <button type="reset">reset（普通标签）</button>
+              <button>什么也不做（普通标签）</button>
+              <wx-button form-type="submit">submit（内置组件）</wx-button>
+              <wx-button form-type="reset">reset（内置组件）</wx-button>
+              <wx-button>什么也不做（内置组件）</wx-button>
+            </div>
+          </form>
         </template>
         <template v-else-if="item === 'button'">
           <wx-component v-if="!wxPrefix" :behavior="item" open-type="share">分享</wx-component>
@@ -344,6 +397,7 @@ export default {
         'canvas',
         'view',
         'text',
+        'form',
         'button',
         'icon',
         'progress',
@@ -539,6 +593,14 @@ export default {
     onOfficialAccountError(evt) {
       console.log('onOfficialAccountError', evt.detail)
     },
+
+    onFormSubmit(evt) {
+      console.log('form submit', evt.$$from, evt.detail)
+    },
+
+    onFormReset(evt) {
+      console.log('form reset', evt.$$from)
+    },
   }
 }
 </script>
@@ -602,5 +664,19 @@ export default {
   height: 30px;
   font-size: 16px;
   border-radius: 5px;
+}
+
+.ipt-group input {
+  display: inline-block;
+}
+
+button {
+  display: block;
+  width: 100%;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  font-size: 20px;
+  border: 1px solid #ddd;
 }
 </style>

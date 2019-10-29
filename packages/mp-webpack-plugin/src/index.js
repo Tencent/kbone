@@ -229,76 +229,95 @@ class MpPlugin {
                 pages.push('pages/webview/index')
             }
 
-            // app js
-            const appAssets = assetsMap[appJsEntryName] || {js: [], css: []}
-            const appJsContent = appJsTmpl
-                .replace('/* INIT_FUNCTION */', `const fakeWindow = {};const fakeDocument = {};${appAssets.js.map(js => 'require(\'' + getAssetPath('', js, assetsSubpackageMap, '') + '\')(fakeWindow, fakeDocument)').join(';')};const appConfig = fakeWindow.appOptions || {};`)
-            addFile(compilation, '../app.js', appJsContent)
+            const appConfig = generateConfig.app || 'default'
+            const isEmitApp = appConfig !== 'noemit'
 
-            // app wxss
-            const appWxssConfig = generateConfig.appWxss || 'default'
-            let appWxssContent = appWxssConfig === 'none' ? '' : appWxssConfig === 'display' ? appDisplayWxssTmpl : appWxssTmpl
-            if (appAssets.css.length) {
-                appWxssContent += `\n${appAssets.css.map(css => `@import "${getAssetPath('', css, assetsSubpackageMap, '')}";`).join('\n')}`
-            }
-            appWxssContent = adjustCss(appWxssContent)
-            if (appWxssConfig !== 'none' && appWxssConfig !== 'display') {
-                appWxssContent += '\n' + appExtraWxssTmpl
-            }
-            addFile(compilation, '../app.wxss', appWxssContent)
+            if (isEmitApp) {
+                // app js
+                const appAssets = assetsMap[appJsEntryName] || {js: [], css: []}
+                const appJsContent = appJsTmpl
+                    .replace('/* INIT_FUNCTION */', `const fakeWindow = {};const fakeDocument = {};${appAssets.js.map(js => 'require(\'' + getAssetPath('', js, assetsSubpackageMap, '') + '\')(fakeWindow, fakeDocument)').join(';')};const appConfig = fakeWindow.appOptions || {};`)
+                addFile(compilation, '../app.js', appJsContent)
 
-            // app json
-            const subpackages = []
-            const preloadRule = {}
-            Object.keys(subpackagesConfig).forEach(packageName => {
-                const pages = subpackagesConfig[packageName] || []
-                subpackages.push({
-                    name: packageName,
-                    root: packageName,
-                    pages: pages.map(entryName => `pages/${entryName}/index`),
-                })
-            })
-            Object.keys(preloadRuleConfig).forEach(entryName => {
-                const packageName = subpackagesMap[entryName]
-                const pageRoute = `${packageName ? packageName + '/' : ''}pages/${entryName}/index`
-                preloadRule[pageRoute] = preloadRuleConfig[entryName]
-            })
-            const userAppJson = options.appExtraConfig || {}
-            const appJson = {
-                pages,
-                window: options.app || {},
-                subpackages,
-                preloadRule,
-                ...userAppJson,
-            }
-            if (tabBarConfig.list && tabBarConfig.list.length) {
-                const tabBar = Object.assign({}, tabBarConfig)
-                tabBar.list = tabBarConfig.list.map(item => {
-                    const iconPathName = item.iconPath ? _.md5File(item.iconPath) + path.extname(item.iconPath) : ''
-                    if (iconPathName) _.copyFile(item.iconPath, path.resolve(outputPath, `../images/${iconPathName}`))
-                    const selectedIconPathName = item.selectedIconPath ? _.md5File(item.selectedIconPath) + path.extname(item.selectedIconPath) : ''
-                    if (selectedIconPathName) _.copyFile(item.selectedIconPath, path.resolve(outputPath, `../images/${selectedIconPathName}`))
-                    tabBarMap[`/pages/${item.pageName}/index`] = true
-
-                    return {
-                        pagePath: `pages/${item.pageName}/index`,
-                        text: item.text,
-                        iconPath: iconPathName ? `./images/${iconPathName}` : '',
-                        selectedIconPath: selectedIconPathName ? `./images/${selectedIconPathName}` : '',
-                    }
-                })
-
-                if (tabBar.custom) {
-                    // 自定义 tabBar
-                    const customTabBarDir = tabBar.custom
-                    tabBar.custom = true
-                    _.copyDir(customTabBarDir, path.resolve(outputPath, '../custom-tab-bar'))
+                // app wxss
+                const appWxssConfig = generateConfig.appWxss || 'default'
+                let appWxssContent = appWxssConfig === 'none' ? '' : appWxssConfig === 'display' ? appDisplayWxssTmpl : appWxssTmpl
+                if (appAssets.css.length) {
+                    appWxssContent += `\n${appAssets.css.map(css => `@import "${getAssetPath('', css, assetsSubpackageMap, '')}";`).join('\n')}`
                 }
+                appWxssContent = adjustCss(appWxssContent)
+                if (appWxssConfig !== 'none' && appWxssConfig !== 'display') {
+                    appWxssContent += '\n' + appExtraWxssTmpl
+                }
+                addFile(compilation, '../app.wxss', appWxssContent)
 
-                appJson.tabBar = tabBar
+                // app json
+                const subpackages = []
+                const preloadRule = {}
+                Object.keys(subpackagesConfig).forEach(packageName => {
+                    const pages = subpackagesConfig[packageName] || []
+                    subpackages.push({
+                        name: packageName,
+                        root: packageName,
+                        pages: pages.map(entryName => `pages/${entryName}/index`),
+                    })
+                })
+                Object.keys(preloadRuleConfig).forEach(entryName => {
+                    const packageName = subpackagesMap[entryName]
+                    const pageRoute = `${packageName ? packageName + '/' : ''}pages/${entryName}/index`
+                    preloadRule[pageRoute] = preloadRuleConfig[entryName]
+                })
+                const userAppJson = options.appExtraConfig || {}
+                const appJson = {
+                    pages,
+                    window: options.app || {},
+                    subpackages,
+                    preloadRule,
+                    ...userAppJson,
+                }
+                if (tabBarConfig.list && tabBarConfig.list.length) {
+                    const tabBar = Object.assign({}, tabBarConfig)
+                    tabBar.list = tabBarConfig.list.map(item => {
+                        const iconPathName = item.iconPath ? _.md5File(item.iconPath) + path.extname(item.iconPath) : ''
+                        if (iconPathName) _.copyFile(item.iconPath, path.resolve(outputPath, `../images/${iconPathName}`))
+                        const selectedIconPathName = item.selectedIconPath ? _.md5File(item.selectedIconPath) + path.extname(item.selectedIconPath) : ''
+                        if (selectedIconPathName) _.copyFile(item.selectedIconPath, path.resolve(outputPath, `../images/${selectedIconPathName}`))
+                        tabBarMap[`/pages/${item.pageName}/index`] = true
+
+                        return {
+                            pagePath: `pages/${item.pageName}/index`,
+                            text: item.text,
+                            iconPath: iconPathName ? `./images/${iconPathName}` : '',
+                            selectedIconPath: selectedIconPathName ? `./images/${selectedIconPathName}` : '',
+                        }
+                    })
+
+                    if (tabBar.custom) {
+                        // 自定义 tabBar
+                        const customTabBarDir = tabBar.custom
+                        tabBar.custom = true
+                        _.copyDir(customTabBarDir, path.resolve(outputPath, '../custom-tab-bar'))
+                    }
+
+                    appJson.tabBar = tabBar
+                }
+                const appJsonContent = JSON.stringify(appJson, null, '\t')
+                addFile(compilation, '../app.json', appJsonContent)
+
+                // project.config.json
+                const userProjectConfigJson = options.projectConfig || {}
+                // 这里需要深拷贝，不然数组相同引用指向一直 push
+                const projectConfigJson = JSON.parse(JSON.stringify(projectConfigJsonTmpl))
+                const projectConfigJsonContent = JSON.stringify(_.merge(projectConfigJson, userProjectConfigJson), null, '\t')
+                addFile(compilation, '../project.config.json', projectConfigJsonContent)
+
+                // sitemap.json
+                const userSitemapConfigJson = options.sitemapConfig
+                if (userSitemapConfigJson) {
+                    const sitemapConfigJsonContent = JSON.stringify(userSitemapConfigJson, null, '\t')
+                    addFile(compilation, '../sitemap.json', sitemapConfigJsonContent)
+                }
             }
-            const appJsonContent = JSON.stringify(appJson, null, '\t')
-            addFile(compilation, '../app.json', appJsonContent)
 
             // config js
             const router = {}
@@ -340,25 +359,11 @@ class MpPlugin {
             }, null, '\t')
             addFile(compilation, '../config.js', configJsContent)
 
-            // project.config.json
-            const userProjectConfigJson = options.projectConfig || {}
-            // 这里需要深拷贝，不然数组相同引用指向一直 push
-            const projectConfigJson = JSON.parse(JSON.stringify(projectConfigJsonTmpl))
-            const projectConfigJsonContent = JSON.stringify(_.merge(projectConfigJson, userProjectConfigJson), null, '\t')
-            addFile(compilation, '../project.config.json', projectConfigJsonContent)
-
             // package.json
             const userPackageConfigJson = options.packageConfig || {}
             const packageConfigJson = Object.assign({}, packageConfigJsonTmpl)
             const packageConfigJsonContent = JSON.stringify(_.merge(packageConfigJson, userPackageConfigJson), null, '\t')
             addFile(compilation, '../package.json', packageConfigJsonContent)
-
-            // sitemap.json
-            const userSitemapConfigJson = options.sitemapConfig
-            if (userSitemapConfigJson) {
-                const sitemapConfigJsonContent = JSON.stringify(userSitemapConfigJson, null, '\t')
-                addFile(compilation, '../sitemap.json', sitemapConfigJsonContent)
-            }
 
             // node_modules
             addFile(compilation, '../node_modules/.miniprogram', '')

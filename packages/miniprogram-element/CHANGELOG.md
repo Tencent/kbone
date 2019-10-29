@@ -1,5 +1,11 @@
 # 更新日志
 
+## 0.5.0
+
+* 修复 type 为 hidden 的 input 节点也会被渲染的问题
+* 支持 form 表单
+* 对于使用 wx-component 或 wx- 前缀渲染的内置组件，其容器追加 wx-xxx 的 class
+
 ## 0.4.2
 
 * 将 index.wxss 中的 button 默认样式重制代码迁移到 app.wxss 中

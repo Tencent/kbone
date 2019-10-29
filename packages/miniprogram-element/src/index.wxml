@@ -138,6 +138,17 @@
     bindinput="onEditorInput"
     bindstatuschange="onEditorStatusChange"
 ></editor>
+<form
+    wx:elif="{{wxCompName === 'form'}}"
+    id="{{id}}"
+    class="{{class}}"
+    style="{{style}}"
+    hidden="{{hidden}}"
+    report-submit="{{reportSubmit}}"
+    report-submit-timeout="{{reportSubmitTimeout}}"
+    bindsubmit="onFormSubmit"
+    bindreset="onFormReset"
+><template is="subtree" data="{{childNodes: innerChildNodes, inCover}}"/></form>
 <block wx:elif="{{wxCompName === 'input'}}">
     <radio-group wx:if="{{type === 'radio'}}" bindchange="onRadioChange"><radio
         id="{{id}}"
@@ -160,7 +171,7 @@
         color="{{color}}"
     ><template is="subtree" data="{{childNodes: innerChildNodes, inCover}}"/></checkbox></checkbox-group>
     <input
-        wx:else
+        wx:elif="{{type !== 'hidden'}}"
         id="{{id}}"
         class="{{class}}"
         style="{{style}}"

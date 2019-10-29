@@ -14,7 +14,8 @@ module.exports = {
         appWxss: 'none',
 	},
 	runtime: {
-		wxComponent: 'noprefix',
+		// wxComponent: 'noprefix',
+		wxComponent: 'default',
 	},
 	app: {
 		navigationBarTitleText: 'miniprogram-project',

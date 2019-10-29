@@ -68,6 +68,9 @@ module.exports = {
     }],
     handles: {
         onSliderChange(evt) {
+            if (!this.domNode) return
+
+            this.domNode.$$setAttributeWithoutUpdate('value', evt.detail.value)
             this.callSimpleEvent('change', evt)
         },
 

@@ -238,6 +238,60 @@ Component({
                                 this.callSimpleEvent('change', {detail: {value: checked}}, targetDomNode)
                             }
                         }
+                    } else if ((domNode.tagName === 'BUTTON' || (domNode.tagName === 'WX-COMPONENT' && domNode.behavior === 'button')) && evt.type === 'click' && !isCapture) {
+                        // 处理 button 点击
+                        const type = domNode.tagName === 'BUTTON' ? domNode.getAttribute('type') : domNode.getAttribute('form-type')
+                        const formAttr = domNode.getAttribute('form')
+                        const form = formAttr ? window.document.getElementById('formAttr') : _.findParentNode(domNode, 'FORM')
+
+                        if (!form) return
+                        if (type !== 'submit' && type !== 'reset') return
+
+                        const inputList = form.querySelectorAll('input[name]')
+                        const textareaList = form.querySelectorAll('textarea[name]')
+                        const switchList = form.querySelectorAll('wx-component[behavior=switch]').filter(item => !!item.getAttribute('name'))
+                        const sliderList = form.querySelectorAll('wx-component[behavior=slider]').filter(item => !!item.getAttribute('name'))
+                        const pickerList = form.querySelectorAll('wx-component[behavior=picker]').filter(item => !!item.getAttribute('name'))
+
+                        if (type === 'submit') {
+                            const formData = {}
+                            if (inputList.length) {
+                                inputList.forEach(item => {
+                                    if (item.type === 'radio') {
+                                        if (item.checked) formData[item.name] = item.value
+                                    } else if (item.type === 'checkbox') {
+                                        formData[item.name] = formData[item.name] || []
+                                        if (item.checked) formData[item.name].push(item.value)
+                                    } else {
+                                        formData[item.name] = item.value
+                                    }
+                                })
+                            }
+                            if (textareaList.length) textareaList.forEach(item => formData[item.getAttribute('name')] = item.value)
+                            if (switchList.length) switchList.forEach(item => formData[item.getAttribute('name')] = !!item.getAttribute('checked'))
+                            if (sliderList.length) sliderList.forEach(item => formData[item.getAttribute('name')] = +item.getAttribute('value') || 0)
+                            if (pickerList.length) pickerList.forEach(item => formData[item.getAttribute('name')] = item.getAttribute('value'))
+
+                            this.callSimpleEvent('submit', {detail: {value: formData}, extra: {$$from: 'button'}}, form)
+                        } else if (type === 'reset') {
+                            if (inputList.length) {
+                                inputList.forEach(item => {
+                                    if (item.type === 'radio') {
+                                        item.checked = false
+                                    } else if (item.type === 'checkbox') {
+                                        item.checked = false
+                                    } else {
+                                        item.value = ''
+                                    }
+                                })
+                            }
+                            if (textareaList.length) textareaList.forEach(item => item.value = '')
+                            if (switchList.length) switchList.forEach(item => item.setAttribute('checked', undefined))
+                            if (sliderList.length) sliderList.forEach(item => item.setAttribute('value', undefined))
+                            if (pickerList.length) pickerList.forEach(item => item.setAttribute('value', undefined))
+
+                            this.callSimpleEvent('reset', {extra: {$$from: 'button'}}, form)
+                        }
                     }
                 }, 0)
             })
