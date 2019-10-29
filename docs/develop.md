@@ -4,7 +4,7 @@
 
 首先需要将代码仓库 clone 下来：https://github.com/wechat-miniprogram/kbone，然后切到 develop 分支。
 
-初次将代码 clone 下来后，需要先运行 `npm run prepare` 来完成 lerna 的初始化0，之后才能进入开发的流程：
+初次将代码 clone 下来后，需要先运行 `npm run prepare` 来完成 lerna 的初始化，之后才能进入开发的流程：
 
 1. 完成代码开发
 2. 补充单元测试
