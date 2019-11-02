@@ -115,6 +115,8 @@ module.exports = {
         reachBottom: false, // 是否支持上拉触底，若支持可监听 window 的 reachbottom 事件
         reachBottomDistance: 0, // 页面上拉触底事件触发时距页面底部距离，单位为 px
         pullDownRefresh: false, // 是否支持下拉刷新，若支持可监听 window 的 pulldownrefresh 事件
+        rem: true, // 是否支持 rem
+        pageStyle: true, // 是否支持修改页面样式
 
         // 除了上述字段外，其他官方页面配置也支持：https://developers.weixin.qq.com/miniprogram/dev/reference/configuration/page.html
         extra: {

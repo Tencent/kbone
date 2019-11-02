@@ -9,6 +9,11 @@ export default function createApp() {
   container.id = 'app'
   document.body.appendChild(container)
 
+  // rem 和页面样式修改
+  window.onload = function() {
+    document.documentElement.style.fontSize = wx.getSystemInfoSync().screenWidth / 16 + 'px'
+    document.documentElement.style.backgroundColor = '#fffbe7'
+  }
   window.onerror = (message, source, lineno, colno, error) => {
     console.log('window.onerror => ', message, source, lineno, colno, error)
   };

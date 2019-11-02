@@ -24,7 +24,10 @@ module.exports = {
 	app: {
 		navigationBarTitleText: 'miniprogram-project',
 	},
-	global: {},
+	global: {
+		rem: true, // 是否支持 rem
+        pageStyle: true, // 是否支持修改页面样式
+	},
 	pages: {},
 	optimization: {
 		domSubTreeLevel: 5,

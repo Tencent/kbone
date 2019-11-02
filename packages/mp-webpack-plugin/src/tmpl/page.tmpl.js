@@ -33,6 +33,8 @@ Page({
         pageId: '',
         bodyClass: 'h5-body miniprogram-root',
         bodyStyle: '',
+        rootFontSize: '12px',
+        pageStyle: '',
     },
     onLoad(query) {
         const pageName = mp.$$adapter.tool.getPageName(this.route)
@@ -85,6 +87,18 @@ Page({
             wx.hideShareMenu()
         }
 
+        // 处理 document 更新
+        this.document.documentElement.addEventListener('$$domNodeUpdate', () => {
+            if (pageConfig.rem) {
+                const rootFontSize = this.document.documentElement.style.fontSize
+                if (rootFontSize && rootFontSize !== this.data.rootFontSize) this.setData({rootFontSize})
+            }
+            if (pageConfig.pageStyle) {
+                const pageStyle = this.document.documentElement.style.cssText
+                if (pageStyle && pageStyle !== this.data.pageStyle) this.setData({pageStyle})
+            }
+        })
+
         // 处理 body 更新
         this.document.documentElement.addEventListener('$$childNodesUpdate', () => {
             const domNode = this.document.body
@@ -108,6 +122,7 @@ Page({
             pageId: this.pageId
         })
         this.app = this.window.createApp()
+        this.window.$$trigger('load')
         this.window.$$trigger('wxload', {event: query})
     },
     onShow() {

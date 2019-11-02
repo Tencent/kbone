@@ -25,7 +25,7 @@
 		}
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.7.4",
+	"libVersion": "2.9.0",
 	"appid": "",
 	"projectname": "kbone-project",
 	"debugOptions": {

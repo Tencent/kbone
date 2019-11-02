@@ -163,6 +163,8 @@ class MpPlugin {
                 const reachBottom = pageConfig && pageConfig.reachBottom
                 const reachBottomDistance = pageConfig && pageConfig.reachBottomDistance
                 const pullDownRefresh = pageConfig && pageConfig.pullDownRefresh
+                const rem = pageConfig && pageConfig.rem
+                const pageStyle = pageConfig && pageConfig.pageStyle
                 const pageExtraConfig = pageConfig && pageConfig.extra || {}
                 const packageName = subpackagesMap[entryName]
                 const pageRoute = `${packageName ? packageName + '/' : ''}pages/${entryName}/index`
@@ -191,7 +193,10 @@ class MpPlugin {
                 addFile(compilation, `../${pageRoute}.js`, pageJsContent)
 
                 // 页面 wxml
-                const pageWxmlContent = `<element wx:if="{{pageId}}" class="{{bodyClass}}" style="{{bodyStyle}}" data-private-node-id="e-body" data-private-page-id="{{pageId}}" ${wxCustomComponentRoot ? 'generic:custom-component="custom-component"' : ''}></element>`
+                let pageWxmlContent = `<element wx:if="{{pageId}}" class="{{bodyClass}}" style="{{bodyStyle}}" data-private-node-id="e-body" data-private-page-id="{{pageId}}" ${wxCustomComponentRoot ? 'generic:custom-component="custom-component"' : ''}></element>`
+                if (rem || pageStyle) {
+                    pageWxmlContent = `<page-meta ${rem ? 'root-font-size="{{rootFontSize}}"' : ''} ${pageStyle ? 'page-style="{{pageStyle}}"' : ''}></page-meta>` + pageWxmlContent
+                }
                 addFile(compilation, `../${pageRoute}.wxml`, pageWxmlContent)
 
                 // 页面 wxss

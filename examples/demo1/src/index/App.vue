@@ -9,6 +9,9 @@
     <div style="margin-left: 20px;">
       <p>这是<span>1</span>段中间插入了span的文本</p>
     </div>
+    <div style="margin: 20px;">
+      <p style="width: 10rem;">这段看起来特别特别长的文字宽度是 10 rem，测试测试测试测试测试测试测试测试测试测试测试测试</p>
+    </div>
     <Footer/>
   </div>
 </template>
