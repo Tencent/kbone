@@ -1,5 +1,9 @@
 # 更新日志
 
+## 0.5.3
+
+* 将用户代码初始化调用后移到 window.location 初始化之后
+
 ## 0.5.1
 
 * 支持 window.onload

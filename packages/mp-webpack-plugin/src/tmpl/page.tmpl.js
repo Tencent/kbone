@@ -56,8 +56,6 @@ Page({
         // 写入 page 的方法
         if (typeof this.getTabBar === 'function') this.window.getTabBar = this.getTabBar.bind(this)
 
-        init(this.window, this.document)
-
         // 处理跳转页面不存在的情况
         if (config.redirect && config.redirect.notFound) {
             this.window.addEventListener('pagenotfound', evt => {
@@ -118,6 +116,7 @@ Page({
         // 处理 intersectionObserver 获取
         this.window.$$createIntersectionObserver = options => wx.createIntersectionObserver(this, options)
 
+        init(this.window, this.document)
         this.setData({
             pageId: this.pageId
         })
