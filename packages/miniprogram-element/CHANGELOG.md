@@ -1,5 +1,9 @@
 # 更新日志
 
+## 0.5.2
+
+* 支持 input 输入框的 change 事件
+
 ## 0.5.0
 
 * 修复 type 为 hidden 的 input 节点也会被渲染的问题

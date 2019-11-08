@@ -18,7 +18,7 @@
           <img src="https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg" mode="top" width="50" height="50" @load="onImgLoad" />
         </div>
         <div v-else-if="item === 'input'">
-          <input type="text" placeholder="请输入文本内容" @input="onInput" v-model="input.inputText" />
+          <input type="text" placeholder="请输入文本内容" @input="onInput" v-model="input.inputText" @change="onInputChange" />
           <input type="number" placeholder="请输入数字内容" @input="onInput" v-model="input.inputNumber" data-is-number="yes" />
           <input type="radio" />
           <input type="radio" name="radio" value="radio1" @input="onInput" v-model="input.inputRadio" />
@@ -520,6 +520,10 @@ export default {
   methods: {
     onInput(evt) {
       console.log('onInput', evt.target.value, evt)
+    },
+
+    onInputChange(evt) {
+      console.log('onInputChange', evt.target.value, evt)
     },
 
     onTextareaInput(evt) {

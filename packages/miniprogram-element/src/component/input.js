@@ -119,6 +119,7 @@ module.exports = {
         },
 
         onInputFocus(evt) {
+            this._inputOldValue = this.domNode.value
             this.callSimpleEvent('focus', evt)
         },
 
@@ -126,6 +127,10 @@ module.exports = {
             if (!this.domNode) return
 
             this.domNode.setAttribute('focus', false)
+            if (this._inputOldValue !== undefined && this.domNode.value !== this._inputOldValue) {
+                this._inputOldValue = undefined
+                this.callSimpleEvent('change', evt)
+            }
             this.callSimpleEvent('blur', evt)
         },
 
