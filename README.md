@@ -39,7 +39,7 @@ npm run web
 npm run build
 ```
 
-> PS：项目基于 webpack 构建，关于 webpack 方面的配置可以[点此查看](https://webpack.js.org/configuration/)，而关于小程序构建相关的详细配置细节可以[参考此文档](./tutorial.md)。
+> PS：项目基于 webpack 构建，关于 webpack 方面的配置可以[点此查看](https://webpack.js.org/configuration/)，而关于小程序构建相关的详细配置细节可以[参考此文档](./docs/tutorial.md)。
 
 ### 使用模板快速开发
 
@@ -52,7 +52,7 @@ npm run build
 
 项目 clone 下来后，按照项目中 README.md 的指引进行开发。
 
-> PS：项目基于 webpack 构建，关于 webpack 方面的配置可以[点此查看](https://webpack.js.org/configuration/)，而关于小程序构建相关的详细配置细节可以[参考此文档](./tutorial.md)。
+> PS：项目基于 webpack 构建，关于 webpack 方面的配置可以[点此查看](https://webpack.js.org/configuration/)，而关于小程序构建相关的详细配置细节可以[参考此文档](./docs/tutorial.md)。
 
 ### 手动配置开发
 
@@ -61,9 +61,9 @@ npm run build
 一般需要补充两个配置：
 
 * 构建到小程序代码的[ webpack 配置](https://webpack.js.org/configuration/)
-* 使用 webpack 构建中使用到的特殊插件[ mp-webpack-plugin 配置](./miniprogram.config.js)
+* 使用 webpack 构建中使用到的特殊插件[ mp-webpack-plugin 配置](./docs/miniprogram.config.js)
 
-[点此可以查看](./tutorial.md)具体配置方式和操作流程。
+[点此可以查看](./docs/ctutorial.md)具体配置方式和操作流程。
 
 ## 进阶
 
