@@ -6,7 +6,7 @@ kbone 是一个致力于微信小程序和 Web 端同构的解决方案。
 
 微信小程序的底层模型和 Web 端不同，我们想直接把 Web 端的代码挪到小程序环境内执行是不可能的。kbone 的诞生就是为了解决这个问题，它实现了一个适配器，在适配层里模拟出了浏览器环境，让 Web 端的代码可以不做什么改动便可运行在小程序里。
 
-这里有个简单的[代码片段](https://developers.weixin.qq.com/miniprogram/dev/devtools/minicode.html)：https://developers.weixin.qq.com/s/R9Hm0Qm67Acd，可以使用开发者工具打开看看效果。
+这里有个简单的[代码片段](https://developers.weixin.qq.com/miniprogram/dev/devtools/minicode.html)：[https://developers.weixin.qq.com/s/R9Hm0Qm67Acd](https://developers.weixin.qq.com/s/R9Hm0Qm67Acd)，可以使用开发者工具打开看看效果。
 
 因为 kbone 是通过提供适配器的方式来实现同构，所以它的优势很明显：
 
