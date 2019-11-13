@@ -5,6 +5,7 @@
 * [多页开发](#多页开发)
 * [使用小程序内置组件](#使用小程序内置组件)
 * [使用小程序自定义组件](#使用小程序自定义组件)
+* [使用 rem](#使用-rem)
 * [自定义 app.js 和 app.wxss](#自定义-appjs-和-appwxss)
 * [扩展 dom/bom 对象和 API](#扩展-dombom-对象和-api)
 * [代码优化](#代码优化)
@@ -135,15 +136,15 @@ module.exports = {
     generate: {
         wxCustomComponent: {
             root: path.join(__dirname, '../src/custom-components'),
-	    usingComponents: {
-    		'comp-a': 'comp-a/index',
-		'comp-b': {
+            usingComponents: {
+                'comp-a': 'comp-a/index',
+                'comp-b': {
                     path: 'comp-b/index',
                     props: ['propa', 'propb'],
                     events: ['someevent'],
                 },
-	    },
-	},
+            },
+        },
     },
     // ... other options
 }
@@ -207,6 +208,47 @@ export default {
 > PS：如果使用 react 等其他框架其实和 vue 同理，因为它们的底层都是调用 document.createElement 来创建节点。当在 webpack 插件配置声明了这个自定义组件的情况下，在调用 document.createElement 创建该节点时会被转换成创建 wx-custom-component 标签，类似于内置组件的 wx-component 标签。
 
 > PS：具体例子可参考 [demo10](../examples/demo10)
+
+### 使用 rem
+
+kbone 没有支持 rpx，取而代之的是可以使用更为传统的 rem 进行开发。使用流程如下：
+
+1. 修改 webpack 插件配置
+
+在 `mp-webpack-plugin` 这个插件的配置中的 global 字段内补充 **rem** 配置。
+
+```js
+module.exports = {
+    global: {
+        rem: true,
+    },
+    // ... other options
+}
+```
+
+2. 在业务代码里就可以设置 html 的 font-size 样式了，比如如下方式：
+
+```js
+window.onload = function() {
+    if (process.env.isMiniprogram) {
+        // 小程序
+        document.documentElement.style.fontSize = wx.getSystemInfoSync().screenWidth / 16 + 'px'
+    } else {
+        // Web 端
+        document.documentElement.style.fontSize = document.documentElement.getBoundingClientRect().width / 16 + 'px'
+    }
+}
+```
+
+3. 在业务代码的样式里使用 rem。
+
+```css
+.content {
+    width: 10rem;
+}
+```
+
+> PS：这个特性只在基础库 2.9.0 及以上版本支持。
 
 ### 自定义 app.js 和 app.wxss
 
