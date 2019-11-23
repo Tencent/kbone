@@ -119,7 +119,7 @@ module.exports = {
 
 > PS：如果将插件配置 runtime.wxComponent 的值配置为 `noprefix`，则可以用不带前缀的方式使用内置组件。
 
-> PS：具体例子可参考 [demo5](../examples/demo3)
+> PS：具体例子可参考 [demo3](../examples/demo3)
 
 ### 使用小程序自定义组件
 
