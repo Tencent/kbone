@@ -109,7 +109,7 @@ module.exports = {
             const domNode = cache.getNode(this.pageId, nodeId)
 
             if (!domNode) return
-            
+
             this.callSimpleEvent('htouchmove', evt, domNode)
         },
 
@@ -118,7 +118,7 @@ module.exports = {
             const domNode = cache.getNode(this.pageId, nodeId)
 
             if (!domNode) return
-            
+
             this.callSimpleEvent('vtouchmove', evt, domNode)
         },
     },

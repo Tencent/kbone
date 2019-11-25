@@ -89,7 +89,11 @@ module.exports = {
 
 * cover-image 组件
 * cover-view 组件
+* movable-area 组件
+* movable-view 组件
 * scroll-view 组件
+* swiper 组件
+* swiper-item 组件
 * view 组件
 * icon 组件
 * progress 组件
@@ -98,6 +102,8 @@ module.exports = {
 * editor 组件
 * form 组件
 * picker 组件
+* picker-view 组件
+* picker-view-column 组件
 * slider 组件
 * switch 组件
 * navigator 组件
@@ -112,6 +118,16 @@ module.exports = {
 * web-view 组件
 
 > PS：button 标签不会被渲染成 button 内置组件，同理 form 标签也不会被渲染成 form 内置组件，如若需要请按照上述原生组件使用说明使用。
+
+> PS：因为自定义组件的限制，movable-area/movable-view、swiper/swiper-item、picker-view/picker-view-column 这三组组件必须作为父子存在才能使用，比如 swiper 组件和 swiper-item 必须作为父子组件才能使用，如：
+
+```html
+<wx-swiper>
+    <wx-swiper-item>A</wx-swiper-item>
+    <wx-swiper-item>B</wx-swiper-item>
+    <wx-swiper-item>C</wx-swiper-item>
+</wx-swiper>
+```
 
 > PS：原生组件的表现在小程序中表现会和 web 端标签有些不一样，具体可[参考原生组件说明文档](https://developers.weixin.qq.com/miniprogram/dev/component/native-component.html)。
 
