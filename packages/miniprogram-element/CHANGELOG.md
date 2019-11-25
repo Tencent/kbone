@@ -1,5 +1,11 @@
 # 更新日志
 
+## 0.5.6
+
+* 支持 swiper 内置组件
+* 支持 picker-view 内置组件
+* 支持 movable-view 内置组件
+
 ## 0.5.5
 
 * input 的 change 事件支持冒泡到 document

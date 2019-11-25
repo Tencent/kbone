@@ -9,7 +9,8 @@ const {
     NOT_SUPPORT,
 } = _
 const {
-    wxCompNameMap
+    wxCompNameMap,
+    handles,
 } = component
 
 module.exports = {
@@ -61,5 +62,5 @@ module.exports = {
         })
     },
 
-    ...component.handles,
+    ...handles,
 }

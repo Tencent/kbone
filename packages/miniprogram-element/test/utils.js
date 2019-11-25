@@ -244,4 +244,6 @@ simulate.checkEvent = async function(component, node, eventNameList) {
     expect(evtList.map(evt => evt.type)).toEqual(eventNameList)
 }
 
+simulate.elementId = simulate.load('index', 'element')
+
 module.exports = simulate
