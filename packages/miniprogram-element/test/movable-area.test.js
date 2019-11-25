@@ -33,7 +33,7 @@ test('movable-area', async() => {
         get(target, name) {
             return movableArea.data.innerChildNodes[0].extra[name]
         },
-    });
+    })
 
     // direction
     await _.checkString({data: proxy}, child, 'direction', 'direction', 'none')
