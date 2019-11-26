@@ -20,7 +20,13 @@ module.exports = {
 		navigationBarTitleText: 'miniprogram-project',
 	},	
 	global: {},	
-	pages: {},	
+	pages: {
+		page1: {
+			extra: {
+				navigationBarTitleText: 'page1',
+			},
+		},
+	},	
 	optimization: {
 		domSubTreeLevel: 5,
 
