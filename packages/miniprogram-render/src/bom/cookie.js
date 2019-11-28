@@ -1,8 +1,14 @@
 const Location = require('./location')
+const cache = require('../util/cache')
 
 class Cookie {
-    constructor() {
+    constructor(pageName) {
+        this.$_pageName = pageName
         this.$_map = {} // 三维数组，domain - path - key
+
+        const config = cache.getConfig()
+        const runtime = config.runtime || {}
+        this.cookieStore = runtime.cookieStore
     }
 
     static parse(cookieStr) {
@@ -150,6 +156,14 @@ class Cookie {
         } else if (oldCookie) {
             // 存在旧 cookie，且被设置为已过期
             delete map[cookieDomain][cookiePath][cookieKey]
+        }
+
+        // 持久化 cookie
+        if (this.cookieStore !== 'memory') {
+            wx.setStorage({
+                key: `PAGE_COOKIE_${this.$_pageName}`,
+                data: this.serialize(),
+            })
         }
     }
 

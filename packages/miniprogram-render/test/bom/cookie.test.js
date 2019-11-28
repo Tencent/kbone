@@ -2,7 +2,7 @@ const mock = require('../mock')
 const Cookie = require('../../src/bom/cookie')
 
 test('cookie', async() => {
-    const cookie = new Cookie()
+    const cookie = new Cookie('testPageName')
     const url1 = 'http://sub.host.com/p/a/t/h?query=string#hash'
     const url2 = 'http://xxx.sub.host.com/p/a/t/h?query=string#hash'
     const url3 = 'http://sub2.host.com/p/a/t/h?query=string#hash'

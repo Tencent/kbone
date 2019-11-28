@@ -14,7 +14,7 @@ module.exports = {
 		app: 'miniprogram-app',
 	},
 	runtime: {
-		cookieStore: 'storage',
+		cookieStore: 'memory',
 	},
 	app: {
 		navigationBarTitleText: 'miniprogram-project',

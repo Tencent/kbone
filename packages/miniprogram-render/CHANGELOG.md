@@ -1,5 +1,10 @@
 # 更新日志
 
+## 0.5.3
+
+* cookie 存储默认持久化，可配置成存储在内存中
+* 持久化 cookie 时，每次执行 setCookie 都会刷新 storage 里的 cookie 内容
+
 ## 0.5.0
 
 * 支持 form 表单

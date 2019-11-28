@@ -101,6 +101,11 @@ global.wx = {
     setStorageSync(key, data) {
         storageMap[key] = data
     },
+    setStorage(key, data) {
+        setTimeout(() => {
+            storageMap[key] = data
+        }, 0)
+    },
     removeStorageSync(key) {
         delete storageMap[key]
     },
