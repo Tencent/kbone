@@ -1,5 +1,6 @@
 const path = require('path')
 const fs = require('fs')
+const {spawn} = require('child_process')
 const ConcatSource = require('webpack-sources').ConcatSource
 const ModuleFilenameHelpers = require('webpack/lib/ModuleFilenameHelpers')
 const {RawSource} = require('webpack-sources')
@@ -66,7 +67,6 @@ class MpPlugin {
         const options = this.options
         const generateConfig = options.generate || {}
 
-        // 补充其他文件输出
         compiler.hooks.emit.tapAsync(PluginName, (compilation, callback) => {
             const outputPath = compilation.outputOptions.path
             const entryNames = Array.from(compilation.entrypoints.keys())
@@ -403,8 +403,8 @@ class MpPlugin {
             callback()
         })
 
-        // 处理头尾追加内容
         compiler.hooks.compilation.tap(PluginName, compilation => {
+            // 处理头尾追加内容
             const globalVarsConfig = generateConfig.globalVars || []
             if (this.afterOptimizations) {
                 compilation.hooks.afterOptimizeChunkAssets.tap(PluginName, chunks => {
@@ -416,6 +416,36 @@ class MpPlugin {
                     callback()
                 })
             }
+        })
+
+        const hasBuiltNpm = false
+        compiler.hooks.done.tapAsync(PluginName, (stats, callback) => {
+            // 处理自动安装小程序依赖
+            const autoBuildNpm = generateConfig.autoBuildNpm || false
+            const distDir = path.dirname(stats.compilation.outputOptions.path)
+
+            if (hasBuiltNpm || !autoBuildNpm) return callback()
+
+            const build = () => {
+                ['miniprogram-element', 'miniprogram-render'].forEach(name => {
+                    _.copyDir(path.resolve(distDir, `./node_modules/${name}/src`), path.resolve(distDir, `./miniprogram_npm/${name}`))
+                })
+                callback()
+            }
+            let res = null
+            console.log('\nstart building deps...\n')
+
+            if (autoBuildNpm === 'yarn') {
+                res = spawn('yarn', ['install', '--production'], {cwd: distDir})
+            } else {
+                res = spawn('npm', ['install', '--production'], {cwd: distDir})
+            }
+            res.on('close', code => {
+                console.log(`\nbuilt deps ${!code ? 'success' : 'failed'}\n`)
+                if (!code) build()
+            })
+
+            callback()
         })
     }
 }

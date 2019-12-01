@@ -19,7 +19,8 @@ module.exports = {
             ['TEST_VAR_FUNCTION', 'function() {return \'I am function\'}'],
 			['TEST_VAR_OTHERS', 'window.document'],
 			['CustomEvent'],
-        ],
+		],
+		autoBuildNpm: 'yarn',
 	},
 	app: {
 		navigationBarTitleText: 'miniprogram-project',

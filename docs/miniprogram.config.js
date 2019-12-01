@@ -94,6 +94,8 @@ module.exports = {
             ['TEST_VAR_OTHERS', 'window.document'],
             ['CustomEvent'], // 如果没有 value，则会从 window 下读取，生成类似 var CustomEvent = window.CustomEvent 的语句
         ],
+        // 构建完成后自动安装小程序依赖，默认为 false，即不安装，支持的值：true/'npm' - 使用 npm 构建，'yarn' - 使用 yarn 构建
+        autoBuildNpm: false,
     },
     // 运行时配置
     runtime: {
