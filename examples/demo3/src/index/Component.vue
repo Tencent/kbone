@@ -177,9 +177,9 @@
           </form>
         </template>
         <template v-else-if="item === 'button'">
-          <wx-component v-if="!wxPrefix" :behavior="item" class="wx-button" open-type="share">分享</wx-component>
-          <wx-button v-else-if="wxPrefix === 1" class="wx-button" open-type="share">分享</wx-button>
-          <button v-else-if="wxPrefix === 2" class="wx-button" open-type="share">分享</button>
+          <wx-component v-if="!wxPrefix" :behavior="item" class="wx-button-custom" open-type="share">分享</wx-component>
+          <wx-button v-else-if="wxPrefix === 1" class="wx-button-custom" open-type="share">分享</wx-button>
+          <button v-else-if="wxPrefix === 2" class="wx-button-custom" open-type="share">分享</button>
         </template>
         <template v-else-if="item === 'image'">
           <wx-component v-if="!wxPrefix" :behavior="item" src="https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg"></wx-component>
