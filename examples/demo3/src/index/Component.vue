@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <!-- className 属性用来测试 -->
+  <div className="cnt2">
     <div class="group" v-for="item in list" :key="item">
       <div class="label">{{item}}</div>
       <div class="comp">
@@ -177,9 +178,10 @@
           </form>
         </template>
         <template v-else-if="item === 'button'">
-          <wx-component v-if="!wxPrefix" :behavior="item" class="wx-button-custom" open-type="share">分享</wx-component>
-          <wx-button v-else-if="wxPrefix === 1" class="wx-button-custom" open-type="share">分享</wx-button>
-          <button v-else-if="wxPrefix === 2" class="wx-button-custom" open-type="share">分享</button>
+          <!-- className 属性用来测试 -->
+          <wx-component v-if="!wxPrefix" :behavior="item" className="wx-button-custom" open-type="share">分享</wx-component>
+          <wx-button v-else-if="wxPrefix === 1" className="wx-button-custom" open-type="share">分享</wx-button>
+          <button v-else-if="wxPrefix === 2" className="wx-button-custom" open-type="share">分享</button>
         </template>
         <template v-else-if="item === 'image'">
           <wx-component v-if="!wxPrefix" :behavior="item" src="https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg"></wx-component>
