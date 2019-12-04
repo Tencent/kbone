@@ -28,9 +28,9 @@ module.exports = {
     mode: 'production',
     entry: {
         // js 入口
-        home: page.resolve(__dirname, '../src/home/main.mp.js'),
-        list: page.resolve(__dirname, '../src/list/main.mp.js'),
-        detail: page.resolve(__dirname, '../src/detail/main.mp.js'),
+        home: path.resolve(__dirname, '../src/home/main.mp.js'),
+        list: path.resolve(__dirname, '../src/list/main.mp.js'),
+        detail: path.resolve(__dirname, '../src/detail/main.mp.js'),
     },
     output: {
         path: path.resolve(__dirname, './miniprogram/common'), // 放到小程序代码目录中的 common 目录下
