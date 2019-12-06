@@ -178,6 +178,39 @@ test('event', () => {
     a.removeEventListener('click', onAEvent3)
     b.removeEventListener('click', onBEvent3)
     c.removeEventListener('click', onCEvent3)
+
+    // stopImmediatePropagation
+    seqList.length = 0
+    const onAEvent4 = () => {
+        seqList.push('a')
+    }
+    const onBEvent4 = () => {
+        seqList.push('b1')
+    }
+    const onBEvent5 = evt => {
+        seqList.push('b2')
+        evt.stopImmediatePropagation()
+    }
+    const onBEvent6 = () => {
+        seqList.push('b3')
+    }
+    const onCEvent4 = () => {
+        seqList.push('c')
+    }
+    a.addEventListener('click', onAEvent4)
+    b.addEventListener('click', onBEvent4)
+    b.addEventListener('click', onBEvent5)
+    b.addEventListener('click', onBEvent6)
+    c.addEventListener('click', onCEvent4)
+
+    EventTarget.$$process(c, 'click', miniprogramEvent)
+    expect(seqList).toEqual(['c', 'b1', 'b2'])
+
+    a.removeEventListener('click', onAEvent4)
+    b.removeEventListener('click', onBEvent4)
+    b.removeEventListener('click', onBEvent5)
+    b.removeEventListener('click', onBEvent6)
+    c.removeEventListener('click', onCEvent4)
 })
 
 test('event: CustomEvent/dispatchEvent', () => {
@@ -244,4 +277,22 @@ test('event: CustomEvent/dispatchEvent', () => {
     a.removeEventListener('testevent', onAEvent2)
     b.removeEventListener('testevent', onBEvent2)
     c.removeEventListener('testevent', onCEvent2)
+})
+
+test('error catch', () => {
+    const a = document.querySelector('.aa')
+    const list = []
+    const miniprogramEvent = {timeStamp: Date.now}
+
+    const onEvent1 = () => list.push(1)
+    const onEvent2 = () => {
+        throw new Error('event error')
+    }
+    const onEvent3 = () => list.push(3)
+    a.addEventListener('click', onEvent1)
+    a.addEventListener('click', onEvent2)
+    a.addEventListener('click', onEvent3)
+
+    EventTarget.$$process(a, 'click', miniprogramEvent)
+    expect(list).toEqual([1, 3])
 })

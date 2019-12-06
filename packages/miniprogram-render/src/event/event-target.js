@@ -194,12 +194,24 @@ class EventTarget {
 
         if (typeof this[onEventName] === 'function') {
             // 触发 onXXX 绑定的事件
-            this[onEventName].call(this || null, event, ...args)
+            if (event && event.$$immediateStop) return
+            try {
+                this[onEventName].call(this || null, event, ...args)
+            } catch (err) {
+                console.error(err)
+            }
         }
 
         if (handlers && handlers.length) {
             // 触发 addEventListener 绑定的事件
-            handlers.forEach(handler => handler.call(this || null, event, ...args))
+            handlers.forEach(handler => {
+                if (event && event.$$immediateStop) return
+                try {
+                    handler.call(this || null, event, ...args)
+                } catch (err) {
+                    console.error(err)
+                }
+            })
         }
     }
 

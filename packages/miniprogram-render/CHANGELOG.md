@@ -1,5 +1,11 @@
 # 更新日志
 
+## 0.5.8
+
+* 修复设置 textContent 为空串没有清空子节点的问题
+* 触发事件句柄时补充异常捕获
+* 支持 event.stopImmediatePropagation 接口
+
 ## 0.5.7
 
 * 兼容 react 内置组件节点无法通过 className 设置 class 的问题

@@ -225,6 +225,11 @@ test('element: innerText/textContent', () => {
     expect(node1.innerText).toBe('<span>321</span>')
     expect(updateCount).toBe(2)
 
+    node1.innerHTML = '<span>321</span>'
+    expect(node1.childNodes.length).toBe(1)
+    node1.textContent = ''
+    expect(node1.childNodes.length).toBe(0)
+
     node1.removeEventListener('$$childNodesUpdate', onUpdate)
     document.body.removeChild(node1)
 })

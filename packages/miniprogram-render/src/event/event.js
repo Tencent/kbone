@@ -21,6 +21,7 @@ class Event {
         this.$_currentTarget = options.currentTarget || options.target
         this.$_eventPhase = options.eventPhase || Event.NONE
         this.$_detail = options.detail || null
+        this.$_immediateStop = false
         this.$_canBubble = true
         this.$_bubbles = options.bubbles || false
         this.$_touches = null
@@ -47,6 +48,13 @@ class Event {
         if (options.changedTouches && options.changedTouches.length) {
             this.$_changedTouches = options.changedTouches.map(touch => ({...touch, target: options.target}))
         }
+    }
+
+    /**
+     * 返回事件是否立即停止
+     */
+    get $$immediateStop() {
+        return this.$_immediateStop
     }
 
     /**
@@ -146,6 +154,13 @@ class Event {
     stopPropagation() {
         if (this.eventPhase === Event.NONE) return
 
+        this.$_canBubble = false
+    }
+
+    stopImmediatePropagation() {
+        if (this.eventPhase === Event.NONE) return
+
+        this.$_immediateStop = true
         this.$_canBubble = false
     }
 
