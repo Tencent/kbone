@@ -34,7 +34,7 @@
 	"devDependencies": {
 		"jest": "^23.5.0",
 		"miniprogram-render": "^0.2.2",
-		"miniprogram-simulate": "^1.1.4"
+		"miniprogram-simulate": "^1.1.5"
 	},
 	"gitHead": "c10a1480cac3e1ca5c74f48c094ff3c5ee77a967"
 }
