@@ -194,6 +194,7 @@
     send-message-img="{{sendMessageImg}}"
     app-parameter="{{appParameter}}"
     show-message-card="{{showMessageCard}}"
+    business-id="{{businessId}}"
     bindgetuserinfo="onButtonGetUserInfo"
     bindcontact="onButtonContact"
     bindgetphonenumber="onButtonGetPhoneNumber"

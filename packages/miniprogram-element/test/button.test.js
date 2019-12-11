@@ -76,6 +76,9 @@ test('button', async() => {
     // showMessageCard
     await _.checkBoolean(button, node, 'showMessageCard', 'show-message-card', false)
 
+    // businessId
+    await _.checkString(button, node, 'businessId', 'business-id', '')
+
     // event
     const wxButton = button.querySelector('.wx-comp-button')
     await _.checkEvent(wxButton, node, ['getuserinfo', 'contact', 'getphonenumber', 'error', 'opensetting', 'launchapp'])

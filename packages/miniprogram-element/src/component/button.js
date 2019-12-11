@@ -94,6 +94,11 @@ module.exports = {
         get(domNode) {
             return !!domNode.getAttribute('show-message-card')
         },
+    }, {
+        name: 'businessId',
+        get(domNode) {
+            return domNode.getAttribute('business-id') || ''
+        },
     }],
     handles: {
         onButtonGetUserInfo(evt) {
