@@ -160,6 +160,8 @@ class EventTarget {
         // 重置事件
         event.$$setCurrentTarget(null)
         event.$$setEventPhase(Event.NONE)
+
+        return event
     }
 
     /**
