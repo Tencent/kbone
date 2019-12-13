@@ -47,7 +47,7 @@ npm run web
 npm run build
 ```
 
-> PS：项目基于 webpack 构建，关于 webpack 方面的配置可以[点此查看](https://webpack.js.org/configuration/)，而关于小程序构建相关的详细配置细节可以[参考此文档](./docs/tutorial.md)。
+> PS：项目基于 webpack 构建，关于 webpack 方面的配置可以[点此查看](https://webpack.js.org/configuration/)，而关于小程序构建相关的详细配置细节可以[参考此文档](https://wechat-miniprogram.github.io/kbone/docs/guide/tutorial.html)。
 
 ### 使用模板快速开发
 
@@ -60,7 +60,7 @@ npm run build
 
 项目 clone 下来后，按照项目中 README.md 的指引进行开发。
 
-> PS：项目基于 webpack 构建，关于 webpack 方面的配置可以[点此查看](https://webpack.js.org/configuration/)，而关于小程序构建相关的详细配置细节可以[参考此文档](./docs/tutorial.md)。
+> PS：项目基于 webpack 构建，关于 webpack 方面的配置可以[点此查看](https://webpack.js.org/configuration/)，而关于小程序构建相关的详细配置细节可以[参考此文档](https://wechat-miniprogram.github.io/kbone/docs/guide/tutorial.html)。
 
 ### 手动配置开发
 
@@ -69,23 +69,17 @@ npm run build
 一般需要补充两个配置：
 
 * 构建到小程序代码的[ webpack 配置](https://webpack.js.org/configuration/)
-* 使用 webpack 构建中使用到的特殊插件[ mp-webpack-plugin 配置](./docs/miniprogram.config.js)
+* 使用 webpack 构建中使用到的特殊插件[ mp-webpack-plugin 配置](https://wechat-miniprogram.github.io/kbone/docs/config/)
 
-[点此可以查看](./docs/ctutorial.md)具体配置方式和操作流程。
+[点此可以查看](https://wechat-miniprogram.github.io/kbone/docs/guide/tutorial.html)具体配置方式和操作流程。
 
-## 进阶
+## 文档
 
-当然这里还有一些其他的文档可以给予开发者帮助：
-
-* [原理简介](./docs/principle.md)：简单介绍 kbone 的实现原理。
-* [自定义配置开发指南](./docs/tutorial.md)：如果需要手动搭建 kbone 项目，则可参考此文档。
-* [详细配置说明](./docs/miniprogram.config.js)：搭建 kbone 项目需要使用一个特殊的 webpack 插件，此文档是这个插件的配置说明。
-* [进阶用法和开发建议](./docs/advanced.md)：因为 Web 端和小程序端的差异性，此文档提供了一些进阶用法和开发建议。
-* [dom/bom 扩展 API 文档](./docs/domextend.md)：为了可以更好地使用小程序端的一些特性，对 dom/bom 对象做了一定程度的扩展，如果需要可以查看此文档。
+更为详细的说明和指引，可点击[查看文档](https://wechat-miniprogram.github.io/kbone/docs/)。
 
 ## 问题
 
-此方案虽然将整个 Web 端框架包含进来并提供了适配层，但是也不是银弹，无法满足所有场景，具体限制可参考[问题文档](./docs/question.md)。如果还遇到其他问题，可在 [issue](https://github.com/wechat-miniprogram/kbone/issues) 中反馈。
+此方案虽然将整个 Web 端框架包含进来并提供了适配层，但是也不是银弹，无法满足所有场景，具体限制可参考[问题文档](https://wechat-miniprogram.github.io/kbone/docs/qa/)。如果还遇到其他问题，可在 [issue](https://github.com/wechat-miniprogram/kbone/issues) 中反馈。
 
 ## 选择
 
@@ -109,7 +103,7 @@ npm run build
   </tbody>
 </table>
 
-查看[代码贡献规范](./docs/develop.md)。
+查看[代码贡献规范](https://wechat-miniprogram.github.io/kbone/docs/guide/develop.html)。
 
 ## 交流群
 
