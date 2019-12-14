@@ -1,5 +1,9 @@
 # 更新日志
 
+## 0.5.10
+
+* style-list 里补充 touchAction 属性
+
 ## 0.5.9
 
 * 调整 EventTarget.$$process 方法在其执行完成后返回被处理的事件对象
