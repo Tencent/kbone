@@ -1,28 +1,17 @@
 const path = require('path')
 
 module.exports = {
-    projectName: path.basename(process.cwd()),
-    cdnPath: '',
-    cdnLimit: 1024,
-    origin: 'https://miniprogram.default',
-    entryFiles: true,
-    entryFileName: 'main.mp.js',
     entry: '/',
-    domSubTreeLevel: 10,
-    elementMultiplexing: true,
-    textMultiplexing: true,
-    commentMultiplexing: true,
-    domExtendMultiplexing: true,
-    styleValueReduce: 5000,
-    attrValueReduce: 5000,
-    navigationStyle: 'custom',
-    navigationBarBackgroundColor: '#000000',
-    navigationBarTextStyle: 'white',
-    backgroundColor: '#FFFFFF',
-    backgroundTextStyle: 'dark',
-    backgroundColorTop: '#FFFFFF',
-    backgroundColorBottom: '#FFFFFF',
-    enablePullDownRefresh: false,
-    onReachBottomDistance: 50,
-    pageOrientation: 'portrait',
+    router: JSON.stringify({
+        app: ['/'],
+    }),
+
+    projectName: path.basename(process.cwd()),
+    cdnPath: '/',
+    cdnLimit: 10 * 1024,
+    entryFileName: 'main.mp.js',
+
+    appWxss: 'default',
+    autoBuildNpm: '\'npm\'',
+    rem: false,
 }
