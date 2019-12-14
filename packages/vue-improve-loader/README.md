@@ -9,7 +9,3 @@
 ```
 npm install --save-dev vue-improve-loader
 ```
-
-## 使用
-
-[查看文档](https://github.com/wechat-miniprogram/kbone/blob/master/docs/advanced.md#%E4%BB%A3%E7%A0%81%E4%BC%98%E5%8C%96)。
