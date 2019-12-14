@@ -11,7 +11,7 @@ module.exports = {
 		accessDenied: 'page1',
 	},
 	generate: {
-		app: 'miniprogram-app',
+		appEntry: 'miniprogram-app',
 	},
 	runtime: {
 		cookieStore: 'memory',

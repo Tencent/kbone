@@ -70,7 +70,7 @@ class MpPlugin {
         compiler.hooks.emit.tapAsync(PluginName, (compilation, callback) => {
             const outputPath = compilation.outputOptions.path
             const entryNames = Array.from(compilation.entrypoints.keys())
-            const appJsEntryName = generateConfig.app || ''
+            const appJsEntryName = generateConfig.appEntry || generateConfig.app || '' // 取 app 是为了兼容旧版本的一个 bug
             const globalConfig = options.global || {}
             const pageConfigMap = options.pages || {}
             const subpackagesConfig = generateConfig.subpackages || {}
