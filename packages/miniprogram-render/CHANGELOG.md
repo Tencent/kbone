@@ -1,5 +1,9 @@
 # 更新日志
 
+## 0.5.11
+
+* 给 wx-component 节点提供 behavior setter
+
 ## 0.5.10
 
 * style-list 里补充 touchAction 属性
