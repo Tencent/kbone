@@ -1,5 +1,6 @@
 const fs = require('fs')
 const path = require('path')
+const defaultOptions = require('./defaultOptions')
 
 const entryFileTemplate = `import Vue from 'vue'
 import App from './App.vue'
@@ -49,6 +50,9 @@ module.exports = (api, options) => {
         })
         options.entry = entry
         options.router = JSON.stringify(router)
+    } else {
+        options.entry = defaultOptions.entry
+        options.router = defaultOptions.router
     }
 
     // 添加入口文件
