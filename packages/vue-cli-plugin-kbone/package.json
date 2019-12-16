@@ -1,6 +1,6 @@
 {
     "name": "vue-cli-plugin-kbone",
-    "version": "0.4.0",
+    "version": "0.4.1",
     "description": "kbone plugin for vue-cli",
     "main": "src/index.js",
     "repository": {
