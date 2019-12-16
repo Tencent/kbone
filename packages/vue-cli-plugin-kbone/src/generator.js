@@ -26,6 +26,7 @@ module.exports = (api, options) => {
     let config = {}
     try {
         fs.accessSync(configPath)
+        // eslint-disable-next-line import/no-dynamic-require
         config = require(configPath)
     } catch (err) {
         // ignore
@@ -34,7 +35,7 @@ module.exports = (api, options) => {
     // 添加 scripts
     api.extendPackage({
         scripts: {
-            'mp': 'cross-env MP_ENV=miniprogram vue-cli-service build --mode development --dest ./dist/mp/common --watch',
+            mp: 'cross-env MP_ENV=miniprogram vue-cli-service build --mode development --dest ./dist/mp/common --watch',
             'dev:mp': 'npm run mp',
             'build:mp': 'cross-env MP_ENV=miniprogram vue-cli-service build --mode production --dest ./dist/mp/common',
         },

@@ -38,17 +38,15 @@ module.exports = (api, options) => {
             }
 
             // 重写 plugins
-            webpackConfig.plugins = webpackConfig.plugins.filter(plugin => {
-                return [
-                    'VueLoaderPlugin',
-                ].indexOf(plugin.constructor.name) >= 0
-            }).concat([
+            webpackConfig.plugins = webpackConfig.plugins.filter(plugin => [
+                'VueLoaderPlugin',
+            ].indexOf(plugin.constructor.name) >= 0).concat([
                 new webpack.DefinePlugin({
-                  'process.env.isMiniprogram': process.env.isMiniprogram, // 注入环境变量，用于业务代码判断
+                    'process.env.isMiniprogram': process.env.isMiniprogram, // 注入环境变量，用于业务代码判断
                 }),
                 new MiniCssExtractPlugin({
-                  filename: '[name].wxss',
-                  chunkFilename: '[name].wxss',
+                    filename: '[name].wxss',
+                    chunkFilename: '[name].wxss',
                 }),
                 new MpPlugin(mpPluginConfig),
             ])

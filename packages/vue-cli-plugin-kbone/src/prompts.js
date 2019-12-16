@@ -20,7 +20,7 @@ module.exports = [
         default: defaultOptions.entryFileName,
         message: 'kbone 入口文件名称：',
     },
-    
+
     // generate
     {
         name: 'app',
