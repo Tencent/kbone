@@ -40,7 +40,6 @@ module.exports = {
 		styleValueReduce: 5000,
 		attrValueReduce: 5000,
 	},
-    appExtraConfig: {},
     projectConfig: {
         appid: '<%= options.appid.trim() %>',
         projectname: '<%= options.projectName.trim() %>',
