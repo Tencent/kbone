@@ -490,6 +490,10 @@ class Window extends EventTarget {
         return Date
     }
 
+    get Symbol() {
+        return Symbol
+    }
+
     get performance() {
         return this.$_performance
     }

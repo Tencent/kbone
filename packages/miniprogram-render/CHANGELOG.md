@@ -1,5 +1,9 @@
 # 更新日志
 
+## 0.5.12
+
+* 补充 window.Symbol
+
 ## 0.5.11
 
 * 给 wx-component 节点提供 behavior setter
