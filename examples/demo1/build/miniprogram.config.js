@@ -20,7 +20,7 @@ module.exports = {
 			['TEST_VAR_OTHERS', 'window.document'],
 			['CustomEvent'],
 		],
-		autoBuildNpm: 'yarn',
+		autoBuildNpm: 'npm',
 	},
 	app: {
 		navigationBarTitleText: 'miniprogram-project',

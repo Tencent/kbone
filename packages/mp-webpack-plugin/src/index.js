@@ -5,6 +5,7 @@ const ConcatSource = require('webpack-sources').ConcatSource
 const ModuleFilenameHelpers = require('webpack/lib/ModuleFilenameHelpers')
 const {RawSource} = require('webpack-sources')
 const pathToRegexp = require('path-to-regexp')
+const colors = require('colors/safe')
 const adjustCss = require('./tool/adjust-css')
 const _ = require('./tool/utils')
 
@@ -433,7 +434,7 @@ class MpPlugin {
                 callback()
             }
             let res = null
-            console.log('\nstart building deps...\n')
+            console.log(colors.bold('\nstart building dependencies...\n'))
 
             if (autoBuildNpm === 'yarn') {
                 res = spawn('yarn', ['install', '--production'], {cwd: distDir})
@@ -441,8 +442,13 @@ class MpPlugin {
                 res = spawn('npm', ['install', '--production'], {cwd: distDir})
             }
             res.on('close', code => {
-                console.log(`\nbuilt deps ${!code ? 'success' : 'failed'}\n`)
-                if (!code) build()
+                if (!code) {
+                    console.log(colors.bold(`\nbuilt dependencies ${colors.green('successfully')}\n`))
+                    build()
+                }
+            })
+            res.on('error', () => {
+                console.log(colors.bold(`\nbuilt dependencies ${colors.red('failed')}, please enter "${colors.yellow(distDir)}" and run install manually\n`))
             })
 
             callback()
