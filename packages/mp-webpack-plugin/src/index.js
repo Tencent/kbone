@@ -1,6 +1,6 @@
 const path = require('path')
 const fs = require('fs')
-const {spawn} = require('child_process')
+const {exec} = require('child_process')
 const ConcatSource = require('webpack-sources').ConcatSource
 const ModuleFilenameHelpers = require('webpack/lib/ModuleFilenameHelpers')
 const {RawSource} = require('webpack-sources')
@@ -432,18 +432,18 @@ class MpPlugin {
                 })
                 callback()
             }
-            let res = null
             console.log('\nstart building deps...\n')
 
-            if (autoBuildNpm === 'yarn') {
-                res = spawn('yarn', ['install', '--production'], {cwd: distDir})
-            } else {
-                res = spawn('npm', ['install', '--production'], {cwd: distDir})
+            function autoBuildNpmExecCallback(error) {
+                console.log(`\nbuilt deps ${!error ? 'success' : 'failed'}\n`)
+                if (!error) build()
             }
-            res.on('close', code => {
-                console.log(`\nbuilt deps ${!code ? 'success' : 'failed'}\n`)
-                if (!code) build()
-            })
+
+            if (autoBuildNpm === 'yarn') {
+                exec('yarn install --production', {cwd: distDir}, autoBuildNpmExecCallback)
+            } else {
+                exec('npm install --production', {cwd: distDir}, autoBuildNpmExecCallback)
+            }
 
             callback()
         })

@@ -1,5 +1,9 @@
 # 更新日志
 
+## 0.5.6
+
+* 修复 generate.autoBuildNpm windows环境不可用问题
+
 ## 0.5.5
 
 * 修复 generate.app 配置冲突问题
