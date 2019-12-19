@@ -9,7 +9,7 @@ module.exports = {
     generate: {
         app: 'default',
         appWxss: 'default',
-        autoBuildNpm: false,
+        autoBuildNpm: 'npm',
     },
     app: {
         backgroundTextStyle: 'dark',
@@ -18,9 +18,6 @@ module.exports = {
     },
     appExtraConfig: {
         sitemapLocation: 'sitemap.json',
-        useExtendedLib: {
-            kbone: true,
-        },
     },
     global: {
         share: true,
@@ -40,7 +37,6 @@ module.exports = {
 		styleValueReduce: 5000,
 		attrValueReduce: 5000,
 	},
-    appExtraConfig: {},
     projectConfig: {
         appid: '',
         projectname: 'demo4',

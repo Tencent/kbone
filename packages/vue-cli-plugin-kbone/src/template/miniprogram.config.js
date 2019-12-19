@@ -18,9 +18,6 @@ module.exports = {
     },
     appExtraConfig: {
         sitemapLocation: 'sitemap.json',
-        useExtendedLib: {
-            kbone: true,
-        },
     },
     global: {
         share: true,
