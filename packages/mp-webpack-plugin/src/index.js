@@ -434,9 +434,9 @@ class MpPlugin {
                 callback()
             }
             console.log(colors.bold('\nstart building dependencies...\n'))
-            
+
             const command = autoBuildNpm === 'yarn' ? 'yarn' : 'npm'
-            const res = execa(command, ['install', '--production'], {cwd: distDir}).then(({exitCode}) => {
+            execa(command, ['install', '--production'], {cwd: distDir}).then(({exitCode}) => {
                 if (!exitCode) {
                     console.log(colors.bold(`\nbuilt dependencies ${colors.green('successfully')}\n`))
                     build()
@@ -446,15 +446,6 @@ class MpPlugin {
             }).catch(() => {
                 console.log(colors.bold(`\nbuilt dependencies ${colors.red('failed')}, please enter "${colors.yellow(distDir)}" and run install manually\n`))
             })
-            // res.on('close', code => {
-            //     if (!code) {
-            //         console.log(colors.bold(`\nbuilt dependencies ${colors.green('successfully')}\n`))
-            //         build()
-            //     }
-            // })
-            // res.on('error', () => {
-            //     console.log(colors.bold(`\nbuilt dependencies ${colors.red('failed')}, please enter "${colors.yellow(distDir)}" and run install manually\n`))
-            // })
 
             callback()
         })
