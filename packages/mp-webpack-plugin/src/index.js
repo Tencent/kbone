@@ -1,6 +1,6 @@
 const path = require('path')
 const fs = require('fs')
-const {spawn} = require('child_process')
+const execa = require('execa')
 const ConcatSource = require('webpack-sources').ConcatSource
 const ModuleFilenameHelpers = require('webpack/lib/ModuleFilenameHelpers')
 const {RawSource} = require('webpack-sources')
@@ -433,23 +433,28 @@ class MpPlugin {
                 })
                 callback()
             }
-            let res = null
             console.log(colors.bold('\nstart building dependencies...\n'))
-
-            if (autoBuildNpm === 'yarn') {
-                res = spawn('yarn', ['install', '--production'], {cwd: distDir})
-            } else {
-                res = spawn('npm', ['install', '--production'], {cwd: distDir})
-            }
-            res.on('close', code => {
-                if (!code) {
+            
+            const command = autoBuildNpm === 'yarn' ? 'yarn' : 'npm'
+            const res = execa(command, ['install', '--production'], {cwd: distDir}).then(({exitCode}) => {
+                if (!exitCode) {
                     console.log(colors.bold(`\nbuilt dependencies ${colors.green('successfully')}\n`))
                     build()
+                } else {
+                    console.log(colors.bold(`\nbuilt dependencies ${colors.red('failed')}, please enter "${colors.yellow(distDir)}" and run install manually\n`))
                 }
-            })
-            res.on('error', () => {
+            }).catch(() => {
                 console.log(colors.bold(`\nbuilt dependencies ${colors.red('failed')}, please enter "${colors.yellow(distDir)}" and run install manually\n`))
             })
+            // res.on('close', code => {
+            //     if (!code) {
+            //         console.log(colors.bold(`\nbuilt dependencies ${colors.green('successfully')}\n`))
+            //         build()
+            //     }
+            // })
+            // res.on('error', () => {
+            //     console.log(colors.bold(`\nbuilt dependencies ${colors.red('failed')}, please enter "${colors.yellow(distDir)}" and run install manually\n`))
+            // })
 
             callback()
         })
