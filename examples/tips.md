@@ -54,3 +54,9 @@
 * 多页
 * 页面跳转
 * 小程序自定义 tabBar
+
+## demo14
+
+* 单页
+* vue-router
+* i18n
