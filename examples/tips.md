@@ -60,3 +60,7 @@
 * 单页
 * vue-router
 * i18n
+
+## demo15
+
+* alloyFinger

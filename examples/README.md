@@ -60,3 +60,4 @@ npm install
 * demo12：只输出页面相关的代码（可用于独立分包）
 * demo13：todo vue
 * demo14：i18n
+* demo15：alloyFinger

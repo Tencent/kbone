@@ -18,25 +18,13 @@ module.exports = {
 	},
 	app: {
 		navigationBarTitleText: 'miniprogram-project',
-	},	
-	global: {},	
+	},
 	pages: {
 		page1: {
 			extra: {
 				navigationBarTitleText: 'page1',
 			},
 		},
-	},	
-	optimization: {
-		domSubTreeLevel: 5,
-
-		elementMultiplexing: true,
-		textMultiplexing: true,
-		commentMultiplexing: true,
-		domExtendMultiplexing: true,
-
-		styleValueReduce: 5000,
-		attrValueReduce: 5000,
 	},
 	projectConfig: {
 		appid: '',

@@ -29,18 +29,6 @@ module.exports = {
 		rem: true, // 是否支持 rem
         pageStyle: true, // 是否支持修改页面样式
 	},
-	pages: {},
-	optimization: {
-		domSubTreeLevel: 5,
-
-		elementMultiplexing: true,
-		textMultiplexing: true,
-		commentMultiplexing: true,
-		domExtendMultiplexing: true,
-
-		styleValueReduce: 5000,
-		attrValueReduce: 5000,
-	},
 	projectConfig: {
 		appid: '',
         projectname: 'kbone-demo1',
