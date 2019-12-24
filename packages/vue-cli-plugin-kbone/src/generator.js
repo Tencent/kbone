@@ -55,6 +55,7 @@ module.exports = (api, options) => {
         options.entry = defaultOptions.entry
         options.router = defaultOptions.router
     }
+    options.appWxss = options.appWxss || defaultOptions.appWxss
 
     // 添加入口文件
     api.postProcessFiles(files => {
