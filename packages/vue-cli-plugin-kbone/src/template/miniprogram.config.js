@@ -7,7 +7,7 @@ module.exports = {
         accessDenied: 'app',
     },
     generate: {
-        app: '<%= options.app ? 'default' : 'noemit' %>',
+        app: '<%= options.app.trim() %>',
         appWxss: '<%= options.appWxss.trim() %>',
         autoBuildNpm: <%- options.autoBuildNpm %>,
     },

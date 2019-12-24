@@ -24,11 +24,20 @@ module.exports = [
     // generate
     {
         name: 'app',
-        type: 'confirm',
+        type: 'list',
         message: '是否需要输出 app.js、project.config.json 等非页面相关文件：',
-        default: true,
+        choices: [{
+            name: '输出完整小程序项目',
+            value: 'default',
+        }, {
+            name: '只输出页面相关文件，不输出 app.js、project.config.json 等非页面相关文件',
+            value: 'noemit',
+        }, {
+            name: '不输出 project.config.json',
+            value: 'noconfig',
+        }],
     }, {
-        when: answers => !!answers.app,
+        when: answers => answers.app !== 'noemit',
         name: 'appWxss',
         type: 'list',
         message: '选择 app.wxss 输出配置：',
