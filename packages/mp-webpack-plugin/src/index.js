@@ -237,6 +237,7 @@ class MpPlugin {
 
             const appConfig = generateConfig.app || 'default'
             const isEmitApp = appConfig !== 'noemit'
+            const isEmitProjectConfig = appConfig !== 'noconfig'
 
             if (isEmitApp) {
                 // app js
@@ -310,12 +311,14 @@ class MpPlugin {
                 const appJsonContent = JSON.stringify(appJson, null, '\t')
                 addFile(compilation, '../app.json', appJsonContent)
 
-                // project.config.json
-                const userProjectConfigJson = options.projectConfig || {}
-                // 这里需要深拷贝，不然数组相同引用指向一直 push
-                const projectConfigJson = JSON.parse(JSON.stringify(projectConfigJsonTmpl))
-                const projectConfigJsonContent = JSON.stringify(_.merge(projectConfigJson, userProjectConfigJson), null, '\t')
-                addFile(compilation, '../project.config.json', projectConfigJsonContent)
+                if (isEmitProjectConfig) {
+                    // project.config.json
+                    const userProjectConfigJson = options.projectConfig || {}
+                    // 这里需要深拷贝，不然数组相同引用指向一直 push
+                    const projectConfigJson = JSON.parse(JSON.stringify(projectConfigJsonTmpl))
+                    const projectConfigJsonContent = JSON.stringify(_.merge(projectConfigJson, userProjectConfigJson), null, '\t')
+                    addFile(compilation, '../project.config.json', projectConfigJsonContent)
+                }
 
                 // sitemap.json
                 const userSitemapConfigJson = options.sitemapConfig

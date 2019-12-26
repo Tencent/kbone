@@ -55,6 +55,7 @@ npm run build
 
 * [Vue 项目模板](https://github.com/wechat-miniprogram/kbone-template-vue)
 * [React 项目模板](https://github.com/wechat-miniprogram/kbone-template-react)
+* [kbone-ui 项目模板](https://github.com/wechat-miniprogram/kbone-template-kboneui)
 * [Preact 项目模板](https://github.com/wechat-miniprogram/kbone-template-preact)
 * [Omi 项目模板](https://github.com/omijs/template-kbone)
 
@@ -70,6 +71,15 @@ npm run build
 * 使用 webpack 构建中使用到的特殊插件[ mp-webpack-plugin 配置](https://wechat-miniprogram.github.io/kbone/docs/config/)
 
 [点此可以查看](https://wechat-miniprogram.github.io/kbone/docs/guide/tutorial.html)具体配置方式和操作流程。
+
+## kbone-ui
+
+[kbone-ui](https://github.com/wechat-miniprogram/kbone-ui) 是一个能同时支持 小程序(kbone) 和 vue 框架开发的多端 UI 库。
+
+* 即可以基于 `kbone` 同时开发小程序和 H5，也可以单独使用开发 H5 应用。
+* 支持以 Vue 语法来支持 H5 端和小程序端运行
+* 对齐 [微信weui](https://weui.io) 样式组件
+
 
 ## 文档
 

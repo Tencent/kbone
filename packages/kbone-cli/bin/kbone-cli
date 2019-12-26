@@ -37,6 +37,9 @@ program
                         name: 'Vue',
                         value: 'vue'
                     }, {
+                        name: 'kbone-ui',
+                        value: 'kboneui'
+                    }, {
                         name: 'Omi',
                         value: 'omi'
                     }, {
