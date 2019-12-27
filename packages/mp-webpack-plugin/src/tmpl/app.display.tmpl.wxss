@@ -2,7 +2,7 @@ body, p, address, article, aside, div, footer, header, hgroup, main, nav, sectio
     display: block;
 }
 
-q, output, a, abbr, b, button, code, i, label, small, span, strong, time {
+q, output, a, abbr, b, code, i, label, small, span, strong, time {
     display: inline;
 }
 
