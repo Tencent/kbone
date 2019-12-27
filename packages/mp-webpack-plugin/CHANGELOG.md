@@ -1,5 +1,9 @@
 # 更新日志
 
+## 0.5.9
+
+* 修复默认样式中 button 被追加 display: inline; 的问题
+
 ## 0.5.8
 
 * 支持输出除 project.config.json 之外文件的配置
