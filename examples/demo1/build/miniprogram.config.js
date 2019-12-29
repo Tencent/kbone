@@ -18,7 +18,7 @@ module.exports = {
             ['TEST_VAR_BOOL', 'true'],
             ['TEST_VAR_FUNCTION', 'function() {return \'I am function\'}'],
 			['TEST_VAR_OTHERS', 'window.document'],
-			['CustomEvent'],
+			['open'],
 		],
 		autoBuildNpm: 'npm',
 	},

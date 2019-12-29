@@ -30,7 +30,17 @@ export default {
     console.log(TEST_VAR_BOOL)
     console.log(TEST_VAR_FUNCTION)
     console.log(TEST_VAR_OTHERS)
+    console.log(open)
+    console.log(HTMLElement)
+    console.log(Element)
+    console.log(localStorage)
+    console.log(sessionStorage)
+    console.log(navigator)
+    console.log(location)
+    console.log(performance)
+    console.log(Image)
     console.log(CustomEvent)
+    console.log(Event)
 
     // cookie
     console.log('before set cookie', document.cookie)

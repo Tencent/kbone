@@ -20,7 +20,7 @@ const projectConfigJsonTmpl = require('./tmpl/project.config.tmpl.json')
 const packageConfigJsonTmpl = require('./tmpl/package.tmpl.json')
 
 process.env.isMiniprogram = true // 设置环境变量
-const globalVars = ['navigator', 'HTMLElement', 'localStorage', 'sessionStorage', 'location']
+const globalVars = ['HTMLElement', 'Element', 'localStorage', 'sessionStorage', 'navigator', 'location', 'performance', 'Image', 'CustomEvent', 'Event']
 
 /**
  * 添加文件
