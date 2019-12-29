@@ -1,6 +1,6 @@
 # 更新日志
 
-## 0.6
+## 0.6.0
 
 * 支持 window.Event 属性
 * 使用 setAttribute 方法来兼容 setAttributeNS 方法
