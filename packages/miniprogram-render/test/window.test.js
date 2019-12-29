@@ -356,6 +356,10 @@ test('window: CustomEvent', () => {
     expect(evt).toBeInstanceOf(CustomEvent)
 })
 
+test('window: Event', () => {
+    expect(window.Event).toBe(Event)
+})
+
 test('window: self', () => {
     expect(window.self).toBe(window)
 })

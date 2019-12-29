@@ -398,6 +398,10 @@ class Window extends EventTarget {
         return this.$_customEventConstructor
     }
 
+    get Event() {
+        return Event
+    }
+
     get self() {
         return this
     }

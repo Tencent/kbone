@@ -294,6 +294,12 @@ class Document extends EventTarget {
         return this.$_tree.getByClassName(className)
     }
 
+    getElementsByName(name) {
+        if (typeof name !== 'string') return []
+
+        return this.$_tree.query(`*[name=${name}]`)
+    }
+
     querySelector(selector) {
         if (typeof selector !== 'string') return
 

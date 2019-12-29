@@ -92,6 +92,19 @@ test('document: getElementsByClassName', () => {
     expect(nodes[2].tagName).toBe('SPAN')
 })
 
+test('document: getElementsByName', () => {
+    const nodes1 = document.getElementsByName('n1')
+    expect(nodes1.length).toBe(2)
+    expect(nodes1[0]).toBeInstanceOf(Element)
+    expect(nodes1[0].getAttribute('name')).toBe('n1')
+    expect(nodes1[1]).toBeInstanceOf(Element)
+    expect(nodes1[1].getAttribute('name')).toBe('n1')
+    const nodes2 = document.getElementsByName('n2')
+    expect(nodes2.length).toBe(1)
+    expect(nodes2[0]).toBeInstanceOf(Element)
+    expect(nodes2[0].getAttribute('name')).toBe('n2')
+})
+
 test('document: querySelector', () => {
     const node1 = document.querySelector('#bb')
     expect(node1).toBeInstanceOf(Element)

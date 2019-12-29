@@ -1,5 +1,11 @@
 # 更新日志
 
+## 0.6
+
+* 支持 window.Event 属性
+* 使用 setAttribute 方法来兼容 setAttributeNS 方法
+* 支持 document.getElementsByName 方法
+
 ## 0.5.13
 
 * 修复 touches 相关字段为空时没有返回空数组的问题
