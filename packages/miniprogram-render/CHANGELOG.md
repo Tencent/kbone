@@ -1,5 +1,9 @@
 # 更新日志
 
+## 0.6.1
+
+* 支持 node 的 remove 方法
+
 ## 0.6.0
 
 * 支持 window.Event 属性
