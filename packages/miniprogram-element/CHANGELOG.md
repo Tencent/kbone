@@ -1,5 +1,9 @@
 # 更新日志
 
+## 0.5.9
+
+* 修复react下onChange事件不触发
+
 ## 0.5.8
 
 * 支持 button 内置组件的 business-id 属性
