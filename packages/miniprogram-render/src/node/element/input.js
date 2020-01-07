@@ -21,7 +21,9 @@ class HTMLInputElement extends Element {
             }
         }
 
-        return new HTMLInputElement(options, tree)
+        const element = new HTMLInputElement(options, tree)
+        element.$$initElementEvents()
+        return element
     }
 
     /**
@@ -88,6 +90,19 @@ class HTMLInputElement extends Element {
             // 特殊字段
             mpplaceholderclass: this.mpplaceholderclass,
         }
+    }
+
+    /**
+     * 兼容 preact
+     * 初始化空的原生事件
+     */
+    $$initElementEvents() {
+        this.oninput = null
+        this.onfocus = null
+        this.onblur = null
+        this.onchange = null
+        this.onconfirm = null
+        this.onkeyboardheightchange = null
     }
 
     /**

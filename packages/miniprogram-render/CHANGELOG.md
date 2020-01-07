@@ -71,3 +71,5 @@
 * 支持内置组件 wx- 前缀写法和直接写法（后者需配置 runtime.wxComponent 的值）
 
 ## next version
+
+* 为虚拟的 input / textarea 元素初始化空的原生事件，修复 preact 下表单组件相关的事件不生效的 bug
