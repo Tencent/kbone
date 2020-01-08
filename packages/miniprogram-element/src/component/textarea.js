@@ -91,6 +91,7 @@ module.exports = {
     }],
     handles: {
         onTextareaFocus(evt) {
+            this._textareaOldValue = this.domNode.value
             this.callSimpleEvent('focus', evt)
         },
 
@@ -98,6 +99,10 @@ module.exports = {
             if (!this.domNode) return
 
             this.domNode.setAttribute('focus', false)
+            if (this._textareaOldValue !== undefined && this.domNode.value !== this._textareaOldValue) {
+                this._textareaOldValue = undefined
+                this.callEvent('change', evt)
+            }
             this.callSimpleEvent('blur', evt)
         },
 
