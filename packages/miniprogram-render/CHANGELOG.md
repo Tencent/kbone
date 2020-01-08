@@ -1,5 +1,9 @@
 # 更新日志
 
+## 0.7.0
+
+* 支持 document.querySelector('body')
+
 ## 0.6.1
 
 * 支持 node 的 remove 方法

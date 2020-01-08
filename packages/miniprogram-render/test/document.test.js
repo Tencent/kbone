@@ -117,6 +117,7 @@ test('document: querySelector', () => {
     expect(node2.id).toBe('bb4')
 
     expect(document.querySelector('#aa')).toBe(null)
+    expect(document.querySelector('body')).toBe(document.body)
 })
 
 test('document: querySelectorAll', () => {
