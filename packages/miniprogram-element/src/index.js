@@ -215,17 +215,17 @@ Component({
 
                             const type = targetDomNode.type
                             if (type === 'radio') {
-                                targetDomNode.checked = true
+                                targetDomNode.setAttribute('checked', true)
                                 const name = targetDomNode.name
                                 const otherDomNodes = window.document.querySelectorAll(`input[name=${name}]`) || []
                                 for (const otherDomNode of otherDomNodes) {
                                     if (otherDomNode.type === 'radio' && otherDomNode !== targetDomNode) {
-                                        otherDomNode.checked = false
+                                        otherDomNode.setAttribute('checked', false)
                                     }
                                 }
                                 this.callSimpleEvent('change', {detail: {value: targetDomNode.value}}, targetDomNode)
                             } else if (type === 'checkbox') {
-                                targetDomNode.checked = !targetDomNode.checked
+                                targetDomNode.setAttribute('checked', !targetDomNode.checked)
                                 this.callSimpleEvent('change', {detail: {value: targetDomNode.checked ? [targetDomNode.value] : []}}, targetDomNode)
                             } else {
                                 targetDomNode.focus()
@@ -279,15 +279,15 @@ Component({
                             if (inputList.length) {
                                 inputList.forEach(item => {
                                     if (item.type === 'radio') {
-                                        item.checked = false
+                                        item.setAttribute('checked', false)
                                     } else if (item.type === 'checkbox') {
-                                        item.checked = false
+                                        item.setAttribute('checked', false)
                                     } else {
-                                        item.value = ''
+                                        item.setAttribute('value', '')
                                     }
                                 })
                             }
-                            if (textareaList.length) textareaList.forEach(item => item.value = '')
+                            if (textareaList.length) textareaList.forEach(item => item.setAttribute('value', ''))
                             if (switchList.length) switchList.forEach(item => item.setAttribute('checked', undefined))
                             if (sliderList.length) sliderList.forEach(item => item.setAttribute('value', undefined))
                             if (pickerList.length) pickerList.forEach(item => item.setAttribute('value', undefined))

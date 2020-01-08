@@ -1,8 +1,12 @@
 # 更新日志
 
+## 0.7.1
+
+* 修复 react 下 checkbox/radio onChange 事件不触发的问题
+
 ## 0.7.0
 
-* 修复 react/preact 下 onChange/onFocus/onBlur 事件不触发的问题
+* 修复 react/preact 下输入框 onChange/onFocus/onBlur 事件不触发的问题
 
 ## 0.5.8
 
