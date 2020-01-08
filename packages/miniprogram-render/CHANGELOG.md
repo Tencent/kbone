@@ -1,5 +1,9 @@
 # 更新日志
 
+## 0.6.2
+
+* 修复react下onChange事件不触发
+
 ## 0.6.1
 
 * 支持 node 的 remove 方法
