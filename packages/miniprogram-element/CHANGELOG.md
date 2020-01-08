@@ -2,7 +2,7 @@
 
 ## 0.7.0
 
-* 修复 react 下 onChange 事件不触发的问题
+* 修复 react/preact 下 onChange/onFocus/onBlur 事件不触发的问题
 
 ## 0.5.8
 

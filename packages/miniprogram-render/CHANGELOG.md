@@ -3,7 +3,8 @@
 ## 0.7.0
 
 * 支持 document.querySelector('body')
-* 修复 react 下 onChange 事件不触发的问题
+* 修复 react/preact 下 onChange/onFocus/onBlur 事件不触发的问题
+* 修复非冒泡事件不触发捕获阶段的问题
 
 ## 0.6.1
 
