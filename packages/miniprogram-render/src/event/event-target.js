@@ -32,6 +32,7 @@ class EventTarget {
         this.ontouchmove = null
         this.ontouchend = null
         this.ontouchcancel = null
+        this.oninput = null
 
         this.$_miniprogramEvent = null // 记录已触发的小程序事件
         this.$_eventHandlerMap = null

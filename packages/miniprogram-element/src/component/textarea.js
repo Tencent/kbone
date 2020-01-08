@@ -108,7 +108,8 @@ module.exports = {
         onTextareaInput(evt) {
             if (!this.domNode) return
 
-            this.domNode.value = evt.detail.value
+            const value = '' + evt.detail.value
+            this.domNode.setAttribute('value', value)
             this.callEvent('input', evt)
         },
 
