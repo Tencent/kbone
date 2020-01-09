@@ -1,5 +1,9 @@
 # 更新日志
 
+## 0.7.1
+
+* 补充 WebkitAppearance 到样式列表中
+
 ## 0.7.0
 
 * 支持 document.querySelector('body')
