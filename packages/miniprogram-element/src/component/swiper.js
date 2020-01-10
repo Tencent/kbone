@@ -30,13 +30,13 @@ module.exports = {
     }, {
         name: 'interval',
         get(domNode) {
-            const value = parseInt(domNode.getAttribute('interval'), 10)
+            const value = parseFloat(domNode.getAttribute('interval'), 10)
             return !isNaN(value) ? value : 5000
         },
     }, {
         name: 'duration',
         get(domNode) {
-            const value = parseInt(domNode.getAttribute('duration'), 10)
+            const value = parseFloat(domNode.getAttribute('duration'), 10)
             return !isNaN(value) ? value : 500
         },
     }, {
@@ -62,7 +62,7 @@ module.exports = {
     }, {
         name: 'displayMultipleItems',
         get(domNode) {
-            const value = parseInt(domNode.getAttribute('display-multiple-items'), 10)
+            const value = parseFloat(domNode.getAttribute('display-multiple-items'), 10)
             return !isNaN(value) ? value : 1
         },
     }, {

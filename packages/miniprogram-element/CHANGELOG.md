@@ -1,5 +1,9 @@
 # 更新日志
 
+## 0.7.3
+
+* 修改小程序内置组件的 number 属性为 float 类型
+
 ## 0.7.1
 
 * 修复 react 下 checkbox/radio onChange 事件不触发的问题
