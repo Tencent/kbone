@@ -30,7 +30,22 @@ export default {
     console.log(TEST_VAR_BOOL)
     console.log(TEST_VAR_FUNCTION)
     console.log(TEST_VAR_OTHERS)
+    console.log(open)
+    console.log(HTMLElement)
+    console.log(Element)
+    console.log(localStorage)
+    console.log(sessionStorage)
+    console.log(navigator)
+    console.log(location)
+    console.log(performance)
+    console.log(Image)
     console.log(CustomEvent)
+    console.log(Event)
+
+    // cookie
+    console.log('before set cookie', document.cookie)
+    document.cookie = `time=${+new Date()}; expires=Wed Jan 01 2020 00:00:00 GMT+0800; path=/`
+    console.log('after set cookie', document.cookie)
   },
   methods: {
     throwError() {

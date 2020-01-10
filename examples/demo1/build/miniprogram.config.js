@@ -18,8 +18,9 @@ module.exports = {
             ['TEST_VAR_BOOL', 'true'],
             ['TEST_VAR_FUNCTION', 'function() {return \'I am function\'}'],
 			['TEST_VAR_OTHERS', 'window.document'],
-			['CustomEvent'],
-        ],
+			['open'],
+		],
+		autoBuildNpm: 'npm',
 	},
 	app: {
 		navigationBarTitleText: 'miniprogram-project',
@@ -27,18 +28,6 @@ module.exports = {
 	global: {
 		rem: true, // 是否支持 rem
         pageStyle: true, // 是否支持修改页面样式
-	},
-	pages: {},
-	optimization: {
-		domSubTreeLevel: 5,
-
-		elementMultiplexing: true,
-		textMultiplexing: true,
-		commentMultiplexing: true,
-		domExtendMultiplexing: true,
-
-		styleValueReduce: 5000,
-		attrValueReduce: 5000,
 	},
 	projectConfig: {
 		appid: '',

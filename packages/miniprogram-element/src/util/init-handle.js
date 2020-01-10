@@ -4,12 +4,14 @@ const component = require('./component')
 
 const {
     Event,
+    EventTarget,
 } = mp.$$adapter
 const {
     NOT_SUPPORT,
 } = _
 const {
-    wxCompNameMap
+    wxCompNameMap,
+    handles,
 } = component
 
 module.exports = {
@@ -43,23 +45,21 @@ module.exports = {
     },
 
     /**
-     * 触发简单节点事件
+     * 触发简单节点事件，不做冒泡处理
      */
     callSimpleEvent(eventName, evt, domNode) {
         domNode = domNode || this.domNode
         if (!domNode) return
 
-        domNode.$$trigger(eventName, {
-            event: new Event({
-                name: eventName,
-                target: domNode,
-                eventPhase: Event.AT_TARGET,
-                detail: evt && evt.detail,
-                $$extra: evt && evt.extra,
-            }),
-            currentTarget: domNode,
-        })
+        EventTarget.$$process(domNode, new Event({
+            name: eventName,
+            target: domNode,
+            eventPhase: Event.AT_TARGET,
+            detail: evt && evt.detail,
+            $$extra: evt && evt.extra,
+            bubbles: false,
+        }))
     },
 
-    ...component.handles,
+    ...handles,
 }

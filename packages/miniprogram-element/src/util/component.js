@@ -8,9 +8,17 @@ const wxComponentMap = {
         wxCompName: 'cover-view',
         config: require('../component/cover-view'),
     },
+    'movable-area': {
+        wxCompName: 'movable-area',
+        config: require('../component/movable-area'),
+    },
     'scroll-view': {
         wxCompName: 'scroll-view',
         config: require('../component/scroll-view'),
+    },
+    swiper: {
+        wxCompName: 'swiper',
+        config: require('../component/swiper'),
     },
     view: {
         wxCompName: 'view',
@@ -49,6 +57,10 @@ const wxComponentMap = {
     picker: {
         wxCompName: 'picker',
         config: require('../component/picker'),
+    },
+    'picker-view': {
+        wxCompName: 'picker-view',
+        config: require('../component/picker-view'),
     },
     slider: {
         wxCompName: 'slider',
@@ -117,6 +129,12 @@ const wxComponentMap = {
     },
 }
 
+const wxSubComponentMap = {
+    'movable-view': require('../component/movable-view'),
+    'swiper-item': require('../component/swiper-item'),
+    'picker-view-column': require('../component/picker-view-column'),
+}
+
 const wxComponentKeys = Object.keys(wxComponentMap)
 const wxCompNameMap = {}
 const properties = {}
@@ -128,9 +146,14 @@ wxComponentKeys.forEach(key => {
     properties[wxCompName] = config.properties
     Object.assign(handles, config.handles)
 })
+Object.keys(wxSubComponentMap).forEach(key => {
+    const config = wxSubComponentMap[key]
+    Object.assign(handles, config.handles)
+})
 
 module.exports = {
     wxCompNameMap,
     properties,
     handles,
+    wxSubComponentMap,
 }

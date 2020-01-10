@@ -1,9 +1,11 @@
 const path = require('path')
 const fs = require('fs')
+const execa = require('execa')
 const ConcatSource = require('webpack-sources').ConcatSource
 const ModuleFilenameHelpers = require('webpack/lib/ModuleFilenameHelpers')
 const {RawSource} = require('webpack-sources')
 const pathToRegexp = require('path-to-regexp')
+const colors = require('colors/safe')
 const adjustCss = require('./tool/adjust-css')
 const _ = require('./tool/utils')
 
@@ -18,7 +20,7 @@ const projectConfigJsonTmpl = require('./tmpl/project.config.tmpl.json')
 const packageConfigJsonTmpl = require('./tmpl/package.tmpl.json')
 
 process.env.isMiniprogram = true // 设置环境变量
-const globalVars = ['navigator', 'HTMLElement', 'localStorage', 'sessionStorage', 'location']
+const globalVars = ['HTMLElement', 'Element', 'localStorage', 'sessionStorage', 'navigator', 'location', 'performance', 'Image', 'CustomEvent', 'Event']
 
 /**
  * 添加文件
@@ -66,11 +68,10 @@ class MpPlugin {
         const options = this.options
         const generateConfig = options.generate || {}
 
-        // 补充其他文件输出
         compiler.hooks.emit.tapAsync(PluginName, (compilation, callback) => {
             const outputPath = compilation.outputOptions.path
             const entryNames = Array.from(compilation.entrypoints.keys())
-            const appJsEntryName = generateConfig.app || ''
+            const appJsEntryName = generateConfig.appEntry || generateConfig.app || '' // 取 app 是为了兼容旧版本的一个 bug
             const globalConfig = options.global || {}
             const pageConfigMap = options.pages || {}
             const subpackagesConfig = generateConfig.subpackages || {}
@@ -236,6 +237,7 @@ class MpPlugin {
 
             const appConfig = generateConfig.app || 'default'
             const isEmitApp = appConfig !== 'noemit'
+            const isEmitProjectConfig = appConfig !== 'noconfig'
 
             if (isEmitApp) {
                 // app js
@@ -309,12 +311,14 @@ class MpPlugin {
                 const appJsonContent = JSON.stringify(appJson, null, '\t')
                 addFile(compilation, '../app.json', appJsonContent)
 
-                // project.config.json
-                const userProjectConfigJson = options.projectConfig || {}
-                // 这里需要深拷贝，不然数组相同引用指向一直 push
-                const projectConfigJson = JSON.parse(JSON.stringify(projectConfigJsonTmpl))
-                const projectConfigJsonContent = JSON.stringify(_.merge(projectConfigJson, userProjectConfigJson), null, '\t')
-                addFile(compilation, '../project.config.json', projectConfigJsonContent)
+                if (isEmitProjectConfig) {
+                    // project.config.json
+                    const userProjectConfigJson = options.projectConfig || {}
+                    // 这里需要深拷贝，不然数组相同引用指向一直 push
+                    const projectConfigJson = JSON.parse(JSON.stringify(projectConfigJsonTmpl))
+                    const projectConfigJsonContent = JSON.stringify(_.merge(projectConfigJson, userProjectConfigJson), null, '\t')
+                    addFile(compilation, '../project.config.json', projectConfigJsonContent)
+                }
 
                 // sitemap.json
                 const userSitemapConfigJson = options.sitemapConfig
@@ -403,8 +407,8 @@ class MpPlugin {
             callback()
         })
 
-        // 处理头尾追加内容
         compiler.hooks.compilation.tap(PluginName, compilation => {
+            // 处理头尾追加内容
             const globalVarsConfig = generateConfig.globalVars || []
             if (this.afterOptimizations) {
                 compilation.hooks.afterOptimizeChunkAssets.tap(PluginName, chunks => {
@@ -416,6 +420,37 @@ class MpPlugin {
                     callback()
                 })
             }
+        })
+
+        const hasBuiltNpm = false
+        compiler.hooks.done.tapAsync(PluginName, (stats, callback) => {
+            // 处理自动安装小程序依赖
+            const autoBuildNpm = generateConfig.autoBuildNpm || false
+            const distDir = path.dirname(stats.compilation.outputOptions.path)
+
+            if (hasBuiltNpm || !autoBuildNpm) return callback()
+
+            const build = () => {
+                ['miniprogram-element', 'miniprogram-render'].forEach(name => {
+                    _.copyDir(path.resolve(distDir, `./node_modules/${name}/src`), path.resolve(distDir, `./miniprogram_npm/${name}`))
+                })
+                callback()
+            }
+            console.log(colors.bold('\nstart building dependencies...\n'))
+
+            const command = autoBuildNpm === 'yarn' ? 'yarn' : 'npm'
+            execa(command, ['install', '--production'], {cwd: distDir}).then(({exitCode}) => {
+                if (!exitCode) {
+                    console.log(colors.bold(`\nbuilt dependencies ${colors.green('successfully')}\n`))
+                    build()
+                } else {
+                    console.log(colors.bold(`\nbuilt dependencies ${colors.red('failed')}, please enter "${colors.yellow(distDir)}" and run install manually\n`))
+                }
+            }).catch(() => {
+                console.log(colors.bold(`\nbuilt dependencies ${colors.red('failed')}, please enter "${colors.yellow(distDir)}" and run install manually\n`))
+            })
+
+            callback()
         })
     }
 }

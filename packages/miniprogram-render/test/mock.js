@@ -60,13 +60,13 @@ const config = {
 const html = `<div class="aa">
     <div id="bb" class="bb">
         <header>
-            <div class="bb1">123</div>
+            <div class="bb1" name="n1">123</div>
             <div class="bb2" data-a="123">321</div>
         </header>
         <div class="bb3">middle</div>
         <footer>
-            <span id="bb4" class="bb4" data-index=1>1</span>
-            <span class="bb4" data-index=2>2</span>
+            <span id="bb4" class="bb4" name="n1" data-index=1>1</span>
+            <span class="bb4" name="n2" data-index=2>2</span>
             <span class="bb4" data-index=3>3</span>
         </footer>
         <div>tail</div>
@@ -100,6 +100,11 @@ global.wx = {
     },
     setStorageSync(key, data) {
         storageMap[key] = data
+    },
+    setStorage(key, data) {
+        setTimeout(() => {
+            storageMap[key] = data
+        }, 0)
     },
     removeStorageSync(key) {
         delete storageMap[key]

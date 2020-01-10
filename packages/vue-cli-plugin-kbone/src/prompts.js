@@ -5,222 +5,86 @@ module.exports = [
     {
         name: 'appid',
         type: 'input',
-        message: 'AppId:',
+        message: 'AppId：',
     }, {
         name: 'projectName',
         type: 'input',
         default: defaultOptions.projectName,
-        message: '项目名:',
-    },
-
-    // 选择配置模板信息
-    {
-        name: 'configType',
-        type: 'list',
-        message: '配置方式:',
-        choices: [{
-            name: '默认配置',
-            value: 'default',
-            short: '默认配置',
-        }, {
-            name: '自定义配置',
-            value: 'custom',
-            short: '自定义配置',
-        }],
+        message: '项目名：',
     },
 
     // 入口文件
     {
-        when: answers => answers.configType === 'custom',
-        name: 'entryFiles',
-        type: 'confirm',
-        default: defaultOptions.entryFiles,
-        message: '是否生成 kbone 入口文件:',
-    }, {
-        when: answers => !!answers.entryFiles,
         name: 'entryFileName',
         type: 'input',
         default: defaultOptions.entryFileName,
-        message: 'kbone 入口文件名称:',
+        message: 'kbone 入口文件名称：',
+    },
+
+    // generate
+    {
+        name: 'app',
+        type: 'list',
+        message: '是否需要输出 app.js、project.config.json 等非页面相关文件：',
+        choices: [{
+            name: '输出完整小程序项目',
+            value: 'default',
+        }, {
+            name: '只输出页面相关文件，不输出 app.js、project.config.json 等非页面相关文件',
+            value: 'noemit',
+        }, {
+            name: '不输出 project.config.json',
+            value: 'noconfig',
+        }],
+    }, {
+        when: answers => answers.app !== 'noemit',
+        name: 'appWxss',
+        type: 'list',
+        message: '选择 app.wxss 输出配置：',
+        choices: [{
+            name: '输出默认标签样式',
+            value: 'default',
+        }, {
+            name: '输出为空',
+            value: 'none',
+        }, {
+            name: '只输出 display 相关的内容',
+            value: 'display',
+        }],
+    }, {
+        name: 'autoBuildNpm',
+        type: 'list',
+        message: '选择是否自动构建依赖包：',
+        choices: [{
+            name: '使用 npm 自动构建',
+            value: '\'npm\'',
+        }, {
+            name: '使用 yarn 自动构建',
+            value: '\'yarn\'',
+        }, {
+            name: '不自动构建依赖包',
+            value: false,
+        }],
+    },
+
+    // global
+    {
+        name: 'rem',
+        type: 'confirm',
+        message: '是否需要使用 rem：',
+        default: false,
     },
 
     // cdn 配置
     {
-        when: answers => answers.configType === 'custom',
         name: 'cdnLimit',
         type: 'input',
         default: defaultOptions.cdnLimit,
-        message: '静态资源内联大小限制:',
+        message: '内联静态资源大小限制：',
     }, {
-        when: answers => answers.configType === 'custom',
         name: 'cdnPath',
         type: 'input',
         default: defaultOptions.cdnPath,
-        message: '静态资源文件 cdn 路径:',
+        message: '静态资源文件 cdn 路径：',
     },
-
-    // 基本配置
-    {
-        when: answers => answers.configType === 'custom',
-        name: 'origin',
-        type: 'input',
-        default: defaultOptions.origin,
-        message: '静态资源域名:',
-    }, {
-        when: answers => answers.configType === 'custom',
-        name: 'entry',
-        type: 'input',
-        default: defaultOptions.entry,
-        message: '入口页面路由:',
-    },
-
-    // 优化配置
-    {
-        when: answers => answers.configType === 'custom',
-        name: 'domSubTreeLevel',
-        type: 'number',
-        default: defaultOptions.domSubTreeLevel,
-        message: '将多少层级的 dom 子树作为一个自定义组件渲染，支持 1 - 10:',
-    }, {
-        when: answers => answers.configType === 'custom',
-        name: 'elementMultiplexing',
-        type: 'confirm',
-        default: defaultOptions.elementMultiplexing,
-        message: 'element 节点复用:',
-    }, {
-        when: answers => answers.configType === 'custom',
-        name: 'textMultiplexing',
-        type: 'confirm',
-        default: defaultOptions.textMultiplexing,
-        message: '文本节点复用:',
-    }, {
-        when: answers => answers.configType === 'custom',
-        name: 'commentMultiplexing',
-        type: 'confirm',
-        default: defaultOptions.commentMultiplexing,
-        message: '注释节点复用:',
-    }, {
-        when: answers => answers.configType === 'custom',
-        name: 'domExtendMultiplexing',
-        type: 'confirm',
-        default: defaultOptions.domExtendMultiplexing,
-        message: '节点相关对象复用，如 style、classList 对象等:',
-    }, {
-        when: answers => answers.configType === 'custom',
-        name: 'styleValueReduce',
-        type: 'number',
-        default: defaultOptions.styleValueReduce,
-        message: '如果设置 style 属性时存在某个属性的值超过一定值，则进行删减:',
-    }, {
-        when: answers => answers.configType === 'custom',
-        name: 'attrValueReduce',
-        type: 'number',
-        default: defaultOptions.attrValueReduce,
-        message: '如果设置 dom 属性时存在某个属性的值超过一定值，则进行删减:',
-    },
-
-    // app 配置
-    {
-        when: answers => answers.configType === 'custom',
-        name: 'navigationStyle',
-        type: 'list',
-        message: '导航栏样式:',
-        choices: [{
-            name: '自定义导航栏',
-            value: 'custom',
-            short: '自定义导航栏',
-        }, {
-            name: '默认样式',
-            value: 'default',
-            short: '默认样式',
-        }],
-    }, {
-        when: answers => answers.configType === 'custom' && answers.navigationStyle === 'default',
-        name: 'navigationBarTitleText',
-        type: 'input',
-        default: answers => answers.projectName.trim(),
-        message: '导航栏标题文字内容:',
-    }, {
-        when: answers => answers.configType === 'custom' && answers.navigationStyle === 'default',
-        name: 'navigationBarBackgroundColor',
-        type: 'input',
-        default: defaultOptions.navigationBarBackgroundColor,
-        message: '导航栏背景颜色:',
-    }, {
-        when: answers => answers.configType === 'custom' && answers.navigationStyle === 'default',
-        name: 'navigationBarTextStyle',
-        type: 'list',
-        message: '导航栏标题颜色:',
-        choices: [{
-            name: '白色',
-            value: 'white',
-            short: '白色'
-        }, {
-            name: '黑色',
-            value: 'black',
-            short: '黑色'
-        }],
-    }, {
-        when: answers => answers.configType === 'custom',
-        name: 'backgroundColor',
-        type: 'input',
-        default: defaultOptions.backgroundColor,
-        message: '窗口的背景色:',
-    }, {
-        when: answers => answers.configType === 'custom',
-        name: 'backgroundTextStyle',
-        type: 'list',
-        message: '下拉 loading 的样式:',
-        choices: [{
-            name: '暗',
-            value: 'dark',
-            short: '暗',
-        }, {
-            name: '亮',
-            value: 'light',
-            short: '亮',
-        }],
-    }, {
-        when: answers => answers.configType === 'custom',
-        name: 'backgroundColorTop',
-        type: 'input',
-        default: defaultOptions.backgroundColorTop,
-        message: '顶部窗口的背景色，仅 iOS 支持:',
-    }, {
-        when: answers => answers.configType === 'custom',
-        name: 'backgroundColorBottom',
-        type: 'input',
-        default: defaultOptions.backgroundColorBottom,
-        message: '底部窗口的背景色，仅 iOS 支持:',
-    }, {
-        when: answers => answers.configType === 'custom',
-        name: 'enablePullDownRefresh',
-        type: 'confirm',
-        default: defaultOptions.enablePullDownRefresh,
-        message: '是否开启全局的下拉刷新:',
-    }, {
-        when: answers => answers.configType === 'custom',
-        name: 'onReachBottomDistance',
-        type: 'number',
-        default: defaultOptions.onReachBottomDistance,
-        message: '页面上拉触底事件触发时距页面底部距离，单位为 px:',
-    }, {
-        when: answers => answers.configType === 'custom',
-        name: 'pageOrientation',
-        type: 'list',
-        message: '屏幕旋转设置:',
-        choices: [{
-            name: '竖屏',
-            value: 'portrait',
-            short: '竖屏',
-        }, {
-            name: '横屏',
-            value: 'landscape',
-            short: '横屏',
-        }, {
-            name: '自动',
-            value: 'auto',
-            short: '自动',
-        }],
-    }
 ]

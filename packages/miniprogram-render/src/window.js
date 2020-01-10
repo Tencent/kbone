@@ -44,8 +44,6 @@ class Window extends EventTarget {
         const timeOrigin = +new Date()
 
         this.$_pageId = pageId
-        this.$_pageRoute = tool.getPageRoute(pageId)
-        this.$_pageName = tool.getPageName(this.$_pageRoute)
 
         this.$_outerHeight = 0
         this.$_outerWidth = 0
@@ -87,11 +85,6 @@ class Window extends EventTarget {
      * 初始化内部事件
      */
     $_initInnerEvent() {
-        const config = cache.getConfig()
-        const runtime = config.runtime || {}
-        const cookieStore = runtime.cookieStore
-
-
         // 监听 location 的事件
         this.$_location.addEventListener('hashchange', ({oldURL, newURL}) => {
             this.$$trigger('hashchange', {
@@ -120,19 +113,6 @@ class Window extends EventTarget {
                 currentTarget: this,
             })
         })
-
-        // 监听自身的事件
-        const onPageUnloadOrHide = () => {
-            // 持久化 cookie
-            if (cookieStore === 'storage') {
-                wx.setStorage({
-                    key: `PAGE_COOKIE_${this.$_pageName}`,
-                    data: this.document.$$cookieInstance.serialize(),
-                })
-            }
-        }
-        this.addEventListener('wxunload', onPageUnloadOrHide)
-        this.addEventListener('wxhide', onPageUnloadOrHide)
     }
 
     /**
@@ -418,6 +398,10 @@ class Window extends EventTarget {
         return this.$_customEventConstructor
     }
 
+    get Event() {
+        return Event
+    }
+
     get self() {
         return this
     }
@@ -508,6 +492,10 @@ class Window extends EventTarget {
 
     get Date() {
         return Date
+    }
+
+    get Symbol() {
+        return Symbol
     }
 
     get performance() {

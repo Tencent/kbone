@@ -606,12 +606,6 @@ class Element extends Node {
     set textContent(text) {
         text = '' + text
 
-        // 空串不新增 textNode 节点
-        if (!text) return
-
-        const nodeId = `b-${tool.getId()}` // 运行时生成，使用 b- 前缀
-        const child = this.ownerDocument.$$createTextNode({content: text, nodeId})
-
         // 删除所有子节点
         this.$_children.forEach(node => {
             node.$$updateParent(null)
@@ -620,6 +614,12 @@ class Element extends Node {
             this.$_updateChildrenExtra(node, true)
         })
         this.$_children.length = 0
+
+        // 空串不新增 textNode 节点
+        if (!text) return
+
+        const nodeId = `b-${tool.getId()}` // 运行时生成，使用 b- 前缀
+        const child = this.ownerDocument.$$createTextNode({content: text, nodeId})
 
         this.appendChild(child)
     }
@@ -890,6 +890,30 @@ class Element extends Node {
         if (typeof name !== 'string') return false
 
         return this.$_attrs.remove(name)
+    }
+
+    setAttributeNS(namespace, name, value) {
+        // 不支持 namespace，使用 setAttribute 来兼容
+        console.warn(`namespace ${namespace} is not supported`)
+        this.setAttribute(name, value)
+    }
+
+    getAttributeNS(namespace, name) {
+        // 不支持 namespace，使用 setAttribute 来兼容
+        console.warn(`namespace ${namespace} is not supported`)
+        return this.getAttribute(name)
+    }
+
+    hasAttributeNS(namespace, name) {
+        // 不支持 namespace，使用 setAttribute 来兼容
+        console.warn(`namespace ${namespace} is not supported`)
+        return this.hasAttribute(name)
+    }
+
+    removeAttributeNS(namespace, name) {
+        // 不支持 namespace，使用 setAttribute 来兼容
+        console.warn(`namespace ${namespace} is not supported`)
+        return this.removeAttribute(name)
     }
 
     contains(otherElement) {

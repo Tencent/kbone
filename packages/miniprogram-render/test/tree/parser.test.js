@@ -106,7 +106,7 @@ test('parse html', () => {
                 children: [{
                     type: 'element',
                     tagName: 'div',
-                    attrs: [{name: 'class', value: 'bb1'}],
+                    attrs: [{name: 'class', value: 'bb1'}, {name: 'name', value: 'n1'}],
                     unary: false,
                     children: [{type: 'text', content: '123'}]
                 }, {
@@ -130,13 +130,13 @@ test('parse html', () => {
                 children: [{
                     type: 'element',
                     tagName: 'span',
-                    attrs: [{name: 'id', value: 'bb4'}, {name: 'class', value: 'bb4'}, {name: 'data-index', value: '1'}],
+                    attrs: [{name: 'id', value: 'bb4'}, {name: 'class', value: 'bb4'}, {name: 'name', value: 'n1'}, {name: 'data-index', value: '1'}],
                     unary: false,
                     children: [{type: 'text', content: '1'}],
                 }, {
                     type: 'element',
                     tagName: 'span',
-                    attrs: [{name: 'class', value: 'bb4'}, {name: 'data-index', value: '2'}],
+                    attrs: [{name: 'class', value: 'bb4'}, {name: 'name', value: 'n2'}, {name: 'data-index', value: '2'}],
                     unary: false,
                     children: [{type: 'text', content: '2'}],
                 }, {

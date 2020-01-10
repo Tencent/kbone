@@ -1,5 +1,23 @@
 # 更新日志
 
+## 0.7.1
+
+* 修复 react 下 checkbox/radio onChange 事件不触发的问题
+
+## 0.7.0
+
+* 修复 react/preact 下输入框 onChange/onFocus/onBlur 事件不触发的问题
+
+## 0.5.8
+
+* 支持 button 内置组件的 business-id 属性
+
+## 0.5.6
+
+* 支持 swiper 内置组件
+* 支持 picker-view 内置组件
+* 支持 movable-view 内置组件
+
 ## 0.5.5
 
 * input 的 change 事件支持冒泡到 document

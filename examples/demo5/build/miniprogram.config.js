@@ -11,26 +11,20 @@ module.exports = {
 		accessDenied: 'page1',
 	},
 	generate: {
-		app: 'miniprogram-app',
+		appEntry: 'miniprogram-app',
 	},
 	runtime: {
-		cookieStore: 'storage',
+		cookieStore: 'memory',
 	},
 	app: {
 		navigationBarTitleText: 'miniprogram-project',
-	},	
-	global: {},	
-	pages: {},	
-	optimization: {
-		domSubTreeLevel: 5,
-
-		elementMultiplexing: true,
-		textMultiplexing: true,
-		commentMultiplexing: true,
-		domExtendMultiplexing: true,
-
-		styleValueReduce: 5000,
-		attrValueReduce: 5000,
+	},
+	pages: {
+		page1: {
+			extra: {
+				navigationBarTitleText: 'page1',
+			},
+		},
 	},
 	projectConfig: {
 		appid: '',

@@ -5,7 +5,7 @@ test('button', async() => {
     const componentId = _.load({
         template: `<element class="h5-body" style="width: 100%; height: 100%;" data-private-node-id="e-body" data-private-page-id="${page.pageId}"></element>`,
         usingComponents: {
-            element: _.load('index', 'element'),
+            element: _.elementId,
         },
     }, 'page')
     const component = _.render(componentId)
@@ -75,6 +75,9 @@ test('button', async() => {
 
     // showMessageCard
     await _.checkBoolean(button, node, 'showMessageCard', 'show-message-card', false)
+
+    // businessId
+    await _.checkString(button, node, 'businessId', 'business-id', '')
 
     // event
     const wxButton = button.querySelector('.wx-comp-button')

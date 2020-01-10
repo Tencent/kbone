@@ -49,7 +49,7 @@ test('event', () => {
     e.addEventListener('click', onEEvent)
 
     target = e
-    EventTarget.$$process(target, 'click', miniprogramEvent)
+    expect(EventTarget.$$process(target, 'click', miniprogramEvent)).toBeInstanceOf(Event)
     expect(countMap.doc).toBe(1)
     expect(countMap.a).toBe(1)
     expect(countMap.b).toBe(1)
@@ -60,7 +60,7 @@ test('event', () => {
 
     target = c
     seqList.length = 0
-    EventTarget.$$process(target, 'click', miniprogramEvent)
+    expect(EventTarget.$$process(target, 'click', miniprogramEvent)).toBeInstanceOf(Event)
     expect(countMap.doc).toBe(2)
     expect(countMap.a).toBe(2)
     expect(countMap.b).toBe(2)
@@ -72,9 +72,9 @@ test('event', () => {
     target = d
     seqList.length = 0
     d.removeEventListener('click', onDEvent)
-    EventTarget.$$process(target, 'click', miniprogramEvent)
+    expect(EventTarget.$$process(target, 'click', miniprogramEvent)).toBeInstanceOf(Event)
     d.removeEventListener('click', onDEvent, true)
-    EventTarget.$$process(target, 'click', miniprogramEvent)
+    expect(EventTarget.$$process(target, 'click', miniprogramEvent)).toBeInstanceOf(Event)
     expect(countMap.doc).toBe(4)
     expect(countMap.a).toBe(4)
     expect(countMap.b).toBe(4)
@@ -86,7 +86,7 @@ test('event', () => {
     target = e
     seqList.length = 0
     d.addEventListener('click', onDEvent)
-    EventTarget.$$process(target, 'click', miniprogramEvent)
+    expect(EventTarget.$$process(target, 'click', miniprogramEvent)).toBeInstanceOf(Event)
     expect(countMap.doc).toBe(5)
     expect(countMap.a).toBe(5)
     expect(countMap.b).toBe(5)
@@ -154,20 +154,20 @@ test('event', () => {
     document.addEventListener('click', onDocEvent3)
     a.addEventListener('click', onAEvent3)
     c.addEventListener('click', onCEvent3)
-    EventTarget.$$process(c, 'click', miniprogramEvent)
+    expect(EventTarget.$$process(c, 'click', miniprogramEvent)).toBeInstanceOf(Event)
     expect(passEvt.eventPhase).toBe(Event.NONE)
     expect(seqList).toEqual(['doc', 'a', 'c', 'c', 'a', 'doc'])
 
     seqList.length = 0
     b.addEventListener('click', onBEvent2, true)
-    EventTarget.$$process(c, 'click', miniprogramEvent)
+    expect(EventTarget.$$process(c, 'click', miniprogramEvent)).toBeInstanceOf(Event)
     expect(passEvt.eventPhase).toBe(Event.NONE)
     expect(seqList).toEqual(['doc', 'a', 'b'])
 
     seqList.length = 0
     b.removeEventListener('click', onBEvent2, true)
     b.addEventListener('click', onBEvent3)
-    EventTarget.$$process(c, 'click', miniprogramEvent)
+    expect(EventTarget.$$process(c, 'click', miniprogramEvent)).toBeInstanceOf(Event)
     expect(passEvt.eventPhase).toBe(Event.NONE)
     expect(seqList).toEqual(['doc', 'a', 'c', 'c', 'b'])
 
@@ -178,6 +178,39 @@ test('event', () => {
     a.removeEventListener('click', onAEvent3)
     b.removeEventListener('click', onBEvent3)
     c.removeEventListener('click', onCEvent3)
+
+    // stopImmediatePropagation
+    seqList.length = 0
+    const onAEvent4 = () => {
+        seqList.push('a')
+    }
+    const onBEvent4 = () => {
+        seqList.push('b1')
+    }
+    const onBEvent5 = evt => {
+        seqList.push('b2')
+        evt.stopImmediatePropagation()
+    }
+    const onBEvent6 = () => {
+        seqList.push('b3')
+    }
+    const onCEvent4 = () => {
+        seqList.push('c')
+    }
+    a.addEventListener('click', onAEvent4)
+    b.addEventListener('click', onBEvent4)
+    b.addEventListener('click', onBEvent5)
+    b.addEventListener('click', onBEvent6)
+    c.addEventListener('click', onCEvent4)
+
+    expect(EventTarget.$$process(c, 'click', miniprogramEvent)).toBeInstanceOf(Event)
+    expect(seqList).toEqual(['c', 'b1', 'b2'])
+
+    a.removeEventListener('click', onAEvent4)
+    b.removeEventListener('click', onBEvent4)
+    b.removeEventListener('click', onBEvent5)
+    b.removeEventListener('click', onBEvent6)
+    c.removeEventListener('click', onCEvent4)
 })
 
 test('event: CustomEvent/dispatchEvent', () => {
@@ -214,11 +247,11 @@ test('event: CustomEvent/dispatchEvent', () => {
     expect(customEvent).toBeInstanceOf(Event)
 
     b.dispatchEvent(customEvent)
-    expect(seqList).toEqual(['b', 'b'])
+    expect(seqList).toEqual(['a', 'b', 'b'])
 
     seqList.length = 0
     c.dispatchEvent(customEvent)
-    expect(seqList).toEqual(['c', 'c'])
+    expect(seqList).toEqual(['a', 'b', 'c', 'c'])
 
     // 带 detail，可冒泡
     detail = {a: 123}
@@ -244,4 +277,22 @@ test('event: CustomEvent/dispatchEvent', () => {
     a.removeEventListener('testevent', onAEvent2)
     b.removeEventListener('testevent', onBEvent2)
     c.removeEventListener('testevent', onCEvent2)
+})
+
+test('error catch', () => {
+    const a = document.querySelector('.aa')
+    const list = []
+    const miniprogramEvent = {timeStamp: Date.now}
+
+    const onEvent1 = () => list.push(1)
+    const onEvent2 = () => {
+        throw new Error('event error')
+    }
+    const onEvent3 = () => list.push(3)
+    a.addEventListener('click', onEvent1)
+    a.addEventListener('click', onEvent2)
+    a.addEventListener('click', onEvent3)
+
+    EventTarget.$$process(a, 'click', miniprogramEvent)
+    expect(list).toEqual([1, 3])
 })

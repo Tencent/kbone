@@ -1,5 +1,60 @@
 # 更新日志
 
+## 0.7.1
+
+* 补充 WebkitAppearance 到样式列表中
+
+## 0.7.0
+
+* 支持 document.querySelector('body')
+* 修复 react/preact 下输入框 onChange/onFocus/onBlur 事件不触发的问题
+* 修复非冒泡事件不触发捕获阶段的问题
+
+## 0.6.1
+
+* 支持 node 的 remove 方法
+
+## 0.6.0
+
+* 支持 window.Event 属性
+* 使用 setAttribute 方法来兼容 setAttributeNS 方法
+* 支持 document.getElementsByName 方法
+
+## 0.5.13
+
+* 修复 touches 相关字段为空时没有返回空数组的问题
+
+## 0.5.12
+
+* 补充 window.Symbol
+
+## 0.5.11
+
+* 给 wx-component 节点提供 behavior setter
+
+## 0.5.10
+
+* style-list 里补充 touchAction 属性
+
+## 0.5.9
+
+* 调整 EventTarget.$$process 方法在其执行完成后返回被处理的事件对象
+
+## 0.5.8
+
+* 修复设置 textContent 为空串没有清空子节点的问题
+* 触发事件句柄时补充异常捕获
+* 支持 event.stopImmediatePropagation 接口
+
+## 0.5.7
+
+* 兼容 react 内置组件节点无法通过 className 设置 class 的问题
+
+## 0.5.3
+
+* cookie 存储默认持久化，可配置成存储在内存中
+* 持久化 cookie 时，每次执行 setCookie 都会刷新 storage 里的 cookie 内容
+
 ## 0.5.0
 
 * 支持 form 表单

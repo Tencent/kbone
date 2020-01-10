@@ -1,6 +1,6 @@
 {
 	"name": "miniprogram-render",
-	"version": "0.5.2",
+	"version": "0.7.1",
 	"description": "web's adapter for miniprogram",
 	"main": "src/index.js",
 	"miniprogram": "src",
@@ -29,5 +29,5 @@
 		"jest": "^24.8.0",
 		"jsdom": "^15.1.1"
 	},
-	"gitHead": "c10a1480cac3e1ca5c74f48c094ff3c5ee77a967"
+	"gitHead": "d299d264090a690d2d336def6e025daea8d43879"
 }

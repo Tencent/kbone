@@ -1,14 +1,20 @@
 const mp = require('miniprogram-render')
 const initData = require('./init-data')
+const component = require('./component')
 
 const {
     cache,
     tool,
 } = mp.$$adapter
 
-const ELEMENT_DIFF_KEYS = ['nodeId', 'pageId', 'tagName', 'compName', 'id', 'class', 'style', 'src', 'mode', 'lazyLoad', 'showMenuByLongpress', 'isImage', 'isLeaf', 'isSimple', 'content']
+const {
+    wxSubComponentMap,
+} = component
+
+const ELEMENT_DIFF_KEYS = ['nodeId', 'pageId', 'tagName', 'compName', 'id', 'class', 'style', 'src', 'mode', 'lazyLoad', 'showMenuByLongpress', 'isImage', 'isLeaf', 'isSimple', 'content', 'extra']
 const TEXT_NODE_DIFF_KEYS = ['nodeId', 'pageId', 'content']
 const NEET_SPLIT_CLASS_STYLE_FROM_CUSTOM_ELEMENT = ['INPUT', 'TEXTAREA', 'VIDEO', 'CANVAS', 'WX-COMPONENT', 'WX-CUSTOM-COMPONENT'] // 需要分离 class 和 style 的节点
+const NEET_BEHAVIOR_NORMAL_CUSTOM_ELEMENT = ['swiper-item', 'movable-view', 'picker-view-column']
 const NEET_RENDER_TO_CUSTOM_ELEMENT = ['IFRAME', ...NEET_SPLIT_CLASS_STYLE_FROM_CUSTOM_ELEMENT] // 必须渲染成自定义组件的节点
 const NOT_SUPPORT = ['IFRAME']
 
@@ -30,10 +36,32 @@ function filterNodes(domNode, level) {
         domInfo.class = `h5-${domInfo.tagName} node-${domInfo.nodeId} ${domInfo.class || ''}` // 增加默认 class
         domInfo.domNode = child
 
-        // 特殊节点不需要处理 id 和样式
+        // 特殊节点
         if (NEET_SPLIT_CLASS_STYLE_FROM_CUSTOM_ELEMENT.indexOf(child.tagName) >= 0) {
-            domInfo.id = ''
+            if (domInfo.tagName === 'wx-component' && NEET_BEHAVIOR_NORMAL_CUSTOM_ELEMENT.indexOf(child.behavior) !== -1) {
+                // 特殊内置组件，强制作为某内置组件的子组件，需要直接在当前模板渲染
+                domInfo.compName = child.behavior
+                domInfo.extra = {
+                    hidden: child.getAttribute('hidden') || false,
+                }
+
+                // 补充该内置组件的属性
+                const {properties} = wxSubComponentMap[child.behavior] || {}
+                if (properties && properties.length) {
+                    properties.forEach(({name, get}) => {
+                        domInfo.extra[name] = get(child)
+                    })
+                }
+
+                if (child.children.length && level > 0) {
+                    domInfo.childNodes = filterNodes(child, level - 1)
+                }
+                return domInfo
+            }
+
+            // 不需要处理 id 和样式
             domInfo.class = `h5-${domInfo.tagName} ${domInfo.tagName === 'wx-component' ? 'wx-' + child.behavior : ''}`
+            domInfo.id = ''
             domInfo.style = ''
         }
 
@@ -83,7 +111,18 @@ function checkDiffChildNodes(newChildNodes, oldChildNodes) {
         const keys = newChild.type === 'element' ? ELEMENT_DIFF_KEYS : TEXT_NODE_DIFF_KEYS
 
         for (const key of keys) {
-            if (newChild[key] !== oldChild[key]) return true
+            const newValue = newChild[key]
+            const oldValue = oldChild[key]
+            if (typeof newValue === 'object') {
+                // 值为对象，则判断对象顶层值是否有变化
+                if (typeof oldValue !== 'object') return true
+
+                const objectKeys = Object.keys(newValue)
+                for (const objectKey of objectKeys) {
+                    if (newValue[objectKey] !== oldValue[objectKey]) return true
+                }
+            }
+            if (newValue !== oldValue) return true
         }
 
         // 比较孙子后辈节点

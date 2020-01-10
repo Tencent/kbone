@@ -114,7 +114,8 @@ module.exports = {
         onInputInput(evt) {
             if (!this.domNode) return
 
-            this.domNode.value = evt.detail.value
+            const value = '' + evt.detail.value
+            this.domNode.setAttribute('value', value)
             this.callEvent('input', evt)
         },
 
@@ -150,13 +151,14 @@ module.exports = {
             const otherDomNodes = window.document.querySelectorAll(`input[name=${name}]`) || []
 
             if (value === domNode.value) {
-                domNode.checked = true
+                domNode.setAttribute('checked', true)
                 for (const otherDomNode of otherDomNodes) {
                     if (otherDomNode.type === 'radio' && otherDomNode !== domNode) {
-                        otherDomNode.checked = false
+                        otherDomNode.setAttribute('checked', false)
                     }
                 }
             }
+            this.callEvent('input', evt)
             this.callEvent('change', evt)
         },
 
@@ -164,10 +166,11 @@ module.exports = {
             const domNode = this.domNode
             const value = evt.detail.value || []
             if (value.indexOf(domNode.value) >= 0) {
-                domNode.checked = true
+                domNode.setAttribute('checked', true)
             } else {
-                domNode.checked = false
+                domNode.setAttribute('checked', false)
             }
+            this.callEvent('input', evt)
             this.callEvent('change', evt)
         },
     },

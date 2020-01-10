@@ -56,10 +56,6 @@ const page2 = mp.createPage('/pages/home/index', config2) // 传入 config2
 
 > PS：config 的覆盖规则设计是为了保证多个页面能共用一份配置，以确保页面的表现一致
 
-#### config
-
-同 `mp-webpack-plugin` 的[配置参数](../../docs/miniprogram.config.js)。
-
 ### destroyPage(pageId)
 
 销毁页面。

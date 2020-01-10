@@ -1,6 +1,6 @@
 {
 	"name": "mp-webpack-plugin",
-	"version": "0.5.3",
+	"version": "0.5.10",
 	"description": "a tool for develop miniprogram with vue",
 	"main": "src/index.js",
 	"miniprogram": "src",
@@ -12,6 +12,8 @@
 	"author": "wechat-miniprogram",
 	"license": "MIT",
 	"dependencies": {
+		"colors": "^1.4.0",
+		"execa": "^3.4.0",
 		"path-to-regexp": "^3.0.0",
 		"postcss": "^7.0.17",
 		"webpack": "^4.35.3",

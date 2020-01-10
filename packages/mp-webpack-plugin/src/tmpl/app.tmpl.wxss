@@ -410,6 +410,6 @@ br {
     display: inline-block;
 }
 
-a, abbr, b, button, code, i, label, small, span, strong, time {
+a, abbr, b, code, i, label, small, span, strong, time {
     display: inline;
 }

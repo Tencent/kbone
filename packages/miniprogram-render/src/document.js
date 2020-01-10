@@ -86,7 +86,7 @@ class Document extends EventTarget {
             nodeId: 'e-body',
             children: [],
         }, nodeIdMap, this)
-        this.$_cookie = new Cookie()
+        this.$_cookie = new Cookie(pageName)
         this.$_config = null
 
         // documentElement
@@ -106,7 +106,7 @@ class Document extends EventTarget {
         this.$_tree.root.$$updateParent(this.$_node)
 
         // 处久化 cookie
-        if (cookieStore === 'storage') {
+        if (cookieStore !== 'memory') {
             try {
                 const cookie = wx.getStorageSync(`PAGE_COOKIE_${pageName}`)
                 if (cookie) this.$$cookieInstance.deserialize(cookie)
@@ -292,6 +292,12 @@ class Document extends EventTarget {
         if (typeof className !== 'string') return []
 
         return this.$_tree.getByClassName(className)
+    }
+
+    getElementsByName(name) {
+        if (typeof name !== 'string') return []
+
+        return this.$_tree.query(`*[name=${name}]`)
     }
 
     querySelector(selector) {
