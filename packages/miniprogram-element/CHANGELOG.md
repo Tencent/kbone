@@ -1,6 +1,6 @@
 # 更新日志
 
-## 0.7.4
+## 0.7.5
 
 * 修复 swiper 的 indicatorDots 属性
 
