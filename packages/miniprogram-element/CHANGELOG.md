@@ -1,5 +1,9 @@
 # 更新日志
 
+## 0.7.4
+
+* 修复 swiper 的 indicatorDots 属性
+
 ## 0.7.3
 
 * 修改小程序内置组件的 number 属性为 float 类型

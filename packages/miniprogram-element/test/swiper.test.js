@@ -40,8 +40,8 @@ test('swiper', async() => {
     expect(swiper.data.innerChildNodes[1].extra).toEqual({hidden: false, itemId: '2'})
     expect(swiper.data.innerChildNodes[2].extra).toEqual({hidden: false, itemId: ''})
 
-    // mindicator-dotsin
-    await _.checkBoolean(swiper, node, 'indicatorDots', 'mindicator-dotsin', false)
+    // indicator-dots
+    await _.checkBoolean(swiper, node, 'indicatorDots', 'indicator-dots', false)
 
     // indicator-color
     await _.checkString(swiper, node, 'indicatorColor', 'indicator-color', 'rgba(0, 0, 0, .3)')

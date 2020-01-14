@@ -5,7 +5,7 @@ module.exports = {
     properties: [{
         name: 'indicatorDots',
         get(domNode) {
-            return !!domNode.getAttribute('mindicator-dotsin')
+            return !!domNode.getAttribute('indicator-dots')
         },
     }, {
         name: 'indicatorColor',
