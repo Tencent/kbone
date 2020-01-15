@@ -53,7 +53,7 @@ function filterNodes(domNode, level) {
                     })
                 }
 
-                if (child.children.length && level > 0) {
+                if (child.childNodes.length && level > 0) {
                     domInfo.childNodes = filterNodes(child, level - 1)
                 }
                 return domInfo

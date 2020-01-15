@@ -47,7 +47,7 @@ module.exports = {
     }, {
         name: 'maxlength',
         get(domNode) {
-            const value = parseFloat(domNode.maxlength, 10)
+            const value = parseFloat(domNode.maxlength)
             return !isNaN(value) ? value : 140
         },
     }, {
@@ -78,19 +78,19 @@ module.exports = {
     }, {
         name: 'cursor',
         get(domNode) {
-            const value = parseFloat(domNode.getAttribute('cursor'), 10)
+            const value = parseFloat(domNode.getAttribute('cursor'))
             return !isNaN(value) ? value : -1
         },
     }, {
         name: 'selectionStart',
         get(domNode) {
-            const value = parseFloat(domNode.getAttribute('selection-start'), 10)
+            const value = parseFloat(domNode.getAttribute('selection-start'))
             return !isNaN(value) ? value : -1
         },
     }, {
         name: 'selectionEnd',
         get(domNode) {
-            const value = parseFloat(domNode.getAttribute('selection-end'), 10)
+            const value = parseFloat(domNode.getAttribute('selection-end'))
             return !isNaN(value) ? value : -1
         },
     }, {

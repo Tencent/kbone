@@ -50,13 +50,13 @@ module.exports = {
     }, {
         name: 'hoverStartTime',
         get(domNode) {
-            const value = parseFloat(domNode.getAttribute('hover-start-time'), 10)
+            const value = parseFloat(domNode.getAttribute('hover-start-time'))
             return !isNaN(value) ? value : 20
         },
     }, {
         name: 'hoverStayTime',
         get(domNode) {
-            const value = parseFloat(domNode.getAttribute('hover-stay-time'), 10)
+            const value = parseFloat(domNode.getAttribute('hover-stay-time'))
             return !isNaN(value) ? value : 70
         },
     }, {
