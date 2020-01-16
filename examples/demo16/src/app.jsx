@@ -13,8 +13,6 @@ const App = (props, store) => {
                     onFocus={e => console.log('focus', e)}
                     onBlur={e => console.log('blur', e)}
                     onChange={e => console.log('change', e)}
-                    onconfirm={e => console.log('confirm', e)}
-                    onkeyboardheightchange={e => console.log('KeyBoardHeightChange', e)}
                 />
             </div>
             <div>
