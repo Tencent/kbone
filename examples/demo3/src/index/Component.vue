@@ -191,6 +191,9 @@
           <wx-component v-if="!wxPrefix" :behavior="item" className="wx-button-custom" open-type="share">分享</wx-component>
           <wx-button v-else-if="wxPrefix === 1" className="wx-button-custom" open-type="share">分享</wx-button>
           <button v-else-if="wxPrefix === 2" className="wx-button-custom" open-type="share">分享</button>
+          <wx-component v-if="!wxPrefix" :behavior="item" open-type="getPhoneNumber" @getphonenumber="onGetPhoneNumber">获取手机号</wx-component>
+          <wx-button v-else-if="wxPrefix === 1" open-type="getPhoneNumber" @getphonenumber="onGetPhoneNumber">获取手机号</wx-button>
+          <button v-else-if="wxPrefix === 2" open-type="getPhoneNumber" @getphonenumber="onGetPhoneNumber">获取手机号</button>
         </template>
         <template v-else-if="item === 'image'">
           <wx-component v-if="!wxPrefix" :behavior="item" src="https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg"></wx-component>
@@ -616,6 +619,12 @@ export default {
     }
   },
   mounted() {
+    wx.login({
+      success(res) {
+        console.log('login success', res)
+      }
+    })
+
     const canvas = this.$refs.canvas[0]
     canvas.$$getContext().then(context => {
       context.setStrokeStyle("#00ff00")
@@ -745,6 +754,10 @@ export default {
 
     onMovableScale(evt) {
       console.log('onMovableScale', evt.detail)
+    },
+
+    onGetPhoneNumber(evt) {
+      console.log('onGetPhoneNumber', evt)
     },
   }
 }
