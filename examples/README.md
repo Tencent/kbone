@@ -63,3 +63,4 @@ npm install
 * demo15：vue + alloyFinger
 * demo16：react
 * demo17：preact
+* demo18：vue + 多页

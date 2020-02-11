@@ -48,7 +48,7 @@ export default {
 
     // cookie
     console.log('before set cookie', document.cookie)
-    document.cookie = `time=${+new Date()}; expires=Wed Jan 01 2020 00:00:00 GMT+0800; path=/`
+    document.cookie = `time=${+new Date()}; expires=Wed Jan 01 2220 00:00:00 GMT+0800; path=/`
     console.log('after set cookie', document.cookie)
   },
   methods: {

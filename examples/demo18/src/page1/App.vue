@@ -19,18 +19,11 @@ export default {
     Header,
     Footer
   },
-  created() {
-    window.addEventListener('wxload', query => console.log('page1 wxload', query))
-    window.addEventListener('wxshow', () => console.log('page1 wxshow'))
-    window.addEventListener('wxready', () => console.log('page1 wxready'))
-    window.addEventListener('wxhide', () => console.log('page1 wxhide'))
-    window.addEventListener('wxunload', () => console.log('page1 wxunload'))
-  },
   mounted() {
     // cookie
-    console.log('before set cookie', document.cookie)
+    console.log('before set cookie [page1]', document.cookie)
     document.cookie = `time=${+new Date()}; expires=Wed Jan 01 2220 00:00:00 GMT+0800; path=/`
-    console.log('after set cookie', document.cookie)
+    console.log('after set cookie [page1]', document.cookie)
   },
   methods: {
     onClickJump() {

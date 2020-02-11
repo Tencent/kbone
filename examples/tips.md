@@ -74,3 +74,10 @@
 
 * vue
 * alloyFinger
+
+## demo18
+
+* vue
+* 多页
+* 页面跳转
+* cookie 支持所有页面共享
