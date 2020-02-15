@@ -1,6 +1,24 @@
 const Location = require('./location')
 const cache = require('../util/cache')
 
+const pairSplitRegExp = /(;|\n) */
+function tryDecode(str, dec = decodeURIComponent) {
+    try {
+        return dec(str)
+    } catch (e) {
+        return str
+    }
+}
+
+/**
+ * RegExp to match field-content in RFC 7230 sec 3.2
+ *
+ * field-content = field-vchar [ 1*( SP / HTAB ) field-vchar ]
+ * field-vchar   = VCHAR / obs-text
+ * obs-text      = %x80-FF
+ */
+const fieldContentRegExp = /^[\u0009\u0020-\u007e\u0080-\u00ff]+$/
+
 class Cookie {
     constructor(pageName) {
         const config = cache.getConfig()
@@ -19,14 +37,9 @@ class Cookie {
     static parse(cookieStr) {
         if (!cookieStr && typeof cookieStr !== 'string') return null
 
-        cookieStr = cookieStr.trim().split(';')
-
         // key-value
-        const parseKeyValue = /^([^=;\x00-\x1F]+)=([^;\n\r\0\x00-\x1F]*).*/.exec(cookieStr.shift())
-        if (!parseKeyValue) return null
-
-        const key = (parseKeyValue[1] || '').trim()
-        const value = (parseKeyValue[2] || '').trim()
+        let key = null
+        let value = null
 
         // 其他字段
         let path = null
@@ -36,32 +49,32 @@ class Cookie {
         let secure = false
         let httpOnly = false
 
-        for (let item of cookieStr) {
-            item = item.trim()
-            if (!item) continue
+        const pairs = cookieStr.split(pairSplitRegExp)
+        pairs.forEach((pair) => {
+            let [k, v] = pair.split('=')
+            if (!fieldContentRegExp.test(k)) return
+            k = (k || '').trim().toLowerCase()
+            v = tryDecode((v || '').trim())
 
-            let [key, value] = item.split('=')
-            key = (key || '').trim().toLowerCase()
-            value = (value || '').trim()
 
-            if (!key) continue
+            if (k === '') { return }
 
-            switch (key) {
+            switch (k) {
             case 'path':
-                if (value[0] === '/') path = value
+                if (v[0] === '/') { path = v }
                 break
             case 'domain':
-                value = value.replace(/^\./, '').toLowerCase()
-                if (value) domain = value
+                v = v.replace(/^\./, '').toLowerCase()
+                if (v) { domain = v }
                 break
             case 'expires':
-                if (value) {
-                    const timeStamp = Date.parse(value)
-                    if (timeStamp) expires = timeStamp
+                if (v) {
+                    const timeStamp = Date.parse(v)
+                    if (timeStamp) { expires = timeStamp }
                 }
                 break
             case 'max-age':
-                if (/^-?[0-9]+$/.test(value)) maxAge = +value * 1000
+                if (/^-?[0-9]+$/.test(v)) { maxAge = +v * 1000 }
                 break
             case 'secure':
                 secure = true
@@ -70,10 +83,16 @@ class Cookie {
                 httpOnly = true
                 break
             default:
+                if (pair.indexOf('=') > 0) {
+                    key = k
+                    value = v
+                }
                 // ignore
                 break
             }
-        }
+        })
+
+        if (!key || key === '') { return null }
 
         return {
             key, value, path, domain, expires, maxAge, secure, httpOnly

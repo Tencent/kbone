@@ -19,6 +19,8 @@ test('cookie', async() => {
     cookie.setCookie('aaa=abc', url1)
     cookie.setCookie('ccc=cba\nasdf', url1)
     expect(cookie.getCookie(url1)).toBe('aaa=abc; ccc=cba; eee=fff; ggg=')
+    cookie.setCookie('max-age=1; ooo=hhh', url1) // order
+    expect(cookie.getCookie(url1)).toBe('aaa=abc; ccc=cba; eee=fff; ggg=; ooo=hhh')
 
     // maxAge
     cookie.setCookie('aaa=bbb; max-age=1', url1)
