@@ -53,7 +53,7 @@ function filterNodes(domNode, level) {
                     })
                 }
 
-                if (child.children.length && level > 0) {
+                if (child.childNodes.length && level > 0) {
                     domInfo.childNodes = filterNodes(child, level - 1)
                 }
                 return domInfo
@@ -97,6 +97,18 @@ function filterNodes(domNode, level) {
 }
 
 /**
+ * 判断两值是否相等
+ */
+function isEqual(a, b) {
+    if (typeof a === 'number' && typeof b === 'number') {
+        // 值为数值，需要考虑精度
+        return parseInt(a * 1000, 10) === parseInt(b * 1000, 10)
+    }
+
+    return a === b
+}
+
+/**
  * 比较新旧子节点是否不同
  */
 function checkDiffChildNodes(newChildNodes, oldChildNodes) {
@@ -121,8 +133,9 @@ function checkDiffChildNodes(newChildNodes, oldChildNodes) {
                 for (const objectKey of objectKeys) {
                     if (newValue[objectKey] !== oldValue[objectKey]) return true
                 }
+            } else if (!isEqual(newValue, oldValue)) {
+                return true
             }
-            if (newValue !== oldValue) return true
         }
 
         // 比较孙子后辈节点
@@ -148,7 +161,7 @@ function checkComponentAttr(name, domNode, destData, oldData) {
     if (attrs && attrs.length) {
         for (const {name, get} of attrs) {
             const newValue = get(domNode)
-            if (!oldData || oldData[name] !== newValue) destData[name] = newValue
+            if (!oldData || !isEqual(newValue, oldData[name])) destData[name] = newValue
         }
     }
 

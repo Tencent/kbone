@@ -31,20 +31,24 @@ export default {
     console.log(TEST_VAR_FUNCTION)
     console.log(TEST_VAR_OTHERS)
     console.log(open)
-    console.log(HTMLElement)
-    console.log(Element)
-    console.log(localStorage)
-    console.log(sessionStorage)
-    console.log(navigator)
-    console.log(location)
-    console.log(performance)
-    console.log(Image)
-    console.log(CustomEvent)
-    console.log(Event)
+    console.log('HTMLElement --> ', HTMLElement)
+    console.log('Element --> ', Element)
+    console.log('Node --> ', Node)
+    console.log('localStorage --> ', localStorage)
+    console.log('sessionStorage --> ', sessionStorage)
+    console.log('navigator --> ', navigator)
+    console.log('history --> ', history)
+    console.log('location --> ', location)
+    console.log('performance --> ', performance)
+    console.log('Image --> ', Image)
+    console.log('CustomEvent --> ', CustomEvent)
+    console.log('Event --> ', Event)
+    console.log('requestAnimationFrame --> ', requestAnimationFrame)
+    console.log('cancelAnimationFrame --> ', cancelAnimationFrame)
 
     // cookie
     console.log('before set cookie', document.cookie)
-    document.cookie = `time=${+new Date()}; expires=Wed Jan 01 2020 00:00:00 GMT+0800; path=/`
+    document.cookie = `time=${+new Date()}; expires=Wed Jan 01 2220 00:00:00 GMT+0800; path=/`
     console.log('after set cookie', document.cookie)
   },
   methods: {

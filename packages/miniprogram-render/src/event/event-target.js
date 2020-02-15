@@ -132,12 +132,14 @@ class EventTarget {
             target.$$trigger(eventName, {
                 event,
                 isCapture: true,
+                isTarget: true,
             })
             if (callback) callback(target, event, true)
 
             target.$$trigger(eventName, {
                 event,
                 isCapture: false,
+                isTarget: true,
             })
             if (callback) callback(target, event, false)
         }
@@ -191,12 +193,14 @@ class EventTarget {
     /**
      * 触发节点事件
      */
-    $$trigger(eventName, {event, args = [], isCapture} = {}) {
+    $$trigger(eventName, {
+        event, args = [], isCapture, isTarget
+    } = {}) {
         eventName = eventName.toLowerCase()
         const handlers = this.$_getHandlers(eventName, isCapture)
         const onEventName = `on${eventName}`
 
-        if (typeof this[onEventName] === 'function') {
+        if ((!isCapture || !isTarget) && typeof this[onEventName] === 'function') {
             // 触发 onXXX 绑定的事件
             if (event && event.$$immediateStop) return
             try {

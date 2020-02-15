@@ -36,13 +36,13 @@ module.exports = {
     }, {
         name: 'damping',
         get(domNode) {
-            const value = parseInt(domNode.getAttribute('damping'), 10)
+            const value = parseFloat(domNode.getAttribute('damping'))
             return !isNaN(value) ? value : 20
         },
     }, {
         name: 'friction',
         get(domNode) {
-            const value = parseInt(domNode.getAttribute('friction'), 10)
+            const value = parseFloat(domNode.getAttribute('friction'))
             return !isNaN(value) ? value : 2
         },
     }, {
@@ -58,19 +58,19 @@ module.exports = {
     }, {
         name: 'scaleMin',
         get(domNode) {
-            const value = parseInt(domNode.getAttribute('scale-min'), 10)
+            const value = parseFloat(domNode.getAttribute('scale-min'))
             return !isNaN(value) ? value : 0.5
         },
     }, {
         name: 'scaleMax',
         get(domNode) {
-            const value = parseInt(domNode.getAttribute('scale-max'), 10)
+            const value = parseFloat(domNode.getAttribute('scale-max'))
             return !isNaN(value) ? value : 10
         },
     }, {
         name: 'scaleValue',
         get(domNode) {
-            const value = parseInt(domNode.getAttribute('scale-value'), 10)
+            const value = parseFloat(domNode.getAttribute('scale-value'))
             return !isNaN(value) ? value : 1
         },
     }, {

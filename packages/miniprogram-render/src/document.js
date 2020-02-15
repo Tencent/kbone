@@ -105,10 +105,11 @@ class Document extends EventTarget {
         // 更新 body 的 parentNode
         this.$_tree.root.$$updateParent(this.$_node)
 
-        // 处久化 cookie
-        if (cookieStore !== 'memory') {
+        // 持久化 cookie
+        if (cookieStore !== 'memory' && cookieStore !== 'globalmemory') {
             try {
-                const cookie = wx.getStorageSync(`PAGE_COOKIE_${pageName}`)
+                const key = cookieStore === 'storage' ? `PAGE_COOKIE_${pageName}` : 'PAGE_COOKIE'
+                const cookie = wx.getStorageSync(key)
                 if (cookie) this.$$cookieInstance.deserialize(cookie)
             } catch (err) {
                 // ignore

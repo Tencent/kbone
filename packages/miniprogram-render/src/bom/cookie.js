@@ -3,12 +3,17 @@ const cache = require('../util/cache')
 
 class Cookie {
     constructor(pageName) {
-        this.$_pageName = pageName
-        this.$_map = {} // 三维数组，domain - path - key
-
         const config = cache.getConfig()
         const runtime = config.runtime || {}
         this.cookieStore = runtime.cookieStore
+        this.$_pageName = pageName
+
+        if (this.cookieStore !== 'storage' && this.cookieStore !== 'memory') {
+            // 需要全局共享
+            this.$_map = cache.getCookie()
+        } else {
+            this.$_map = {} // 三维数组，domain - path - key
+        }
     }
 
     static parse(cookieStr) {
@@ -159,9 +164,10 @@ class Cookie {
         }
 
         // 持久化 cookie
-        if (this.cookieStore !== 'memory') {
+        if (this.cookieStore !== 'memory' && this.cookieStore !== 'globalmemory') {
+            const key = this.cookieStore === 'storage' ? `PAGE_COOKIE_${this.$_pageName}` : 'PAGE_COOKIE'
             wx.setStorage({
-                key: `PAGE_COOKIE_${this.$_pageName}`,
+                key,
                 data: this.serialize(),
             })
         }
@@ -244,11 +250,35 @@ class Cookie {
      * 反序列化
      */
     deserialize(str) {
+        let map = {}
         try {
-            this.$_map = JSON.parse(str)
+            map = JSON.parse(str)
         } catch (err) {
             console.log('cannot deserialize the cookie')
-            this.$_map = {}
+            map = {}
+        }
+
+        // 合并 cookie
+        const domainList = Object.keys(map)
+
+        for (const domainItem of domainList) {
+            const domainMap = map[domainItem] || {}
+            const pathList = Object.keys(domainMap)
+
+            for (const pathItem of pathList) {
+                const pathMap = map[domainItem][pathItem] || {}
+
+                Object.keys(pathMap).forEach(key => {
+                    const cookie = pathMap[key]
+
+                    if (!cookie) return
+
+                    // 已存在则不覆盖
+                    if (!this.$_map[domainItem]) this.$_map[domainItem] = {}
+                    if (!this.$_map[domainItem][pathItem]) this.$_map[domainItem][pathItem] = {}
+                    if (!this.$_map[domainItem][pathItem][key]) this.$_map[domainItem][pathItem][key] = cookie
+                })
+            }
         }
     }
 }
