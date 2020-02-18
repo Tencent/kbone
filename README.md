@@ -123,7 +123,7 @@ npm run build
 
 QQ 交流群：926335938
 
-使用相关问题可在 [Kbone](https://developers.weixin.qq.com/community/minihome/mixflow/1213301129006825473) 社区发帖
+使用相关问题可在 [Kbone社区](https://developers.weixin.qq.com/community/minihome/mixflow/1213301129006825473) 发帖
 
 ## 案例
 
