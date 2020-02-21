@@ -119,9 +119,11 @@ npm run build
 
 查看[代码贡献规范](https://wechat-miniprogram.github.io/kbone/docs/guide/develop.html)。
 
-## 交流群
+## 交流
 
 QQ 交流群：926335938
+
+使用相关问题可在 [Kbone社区](https://developers.weixin.qq.com/community/minihome/mixflow/1213301129006825473) 发帖
 
 ## 案例
 
