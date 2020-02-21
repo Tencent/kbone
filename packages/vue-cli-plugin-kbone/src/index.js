@@ -3,7 +3,6 @@ module.exports = (api, options) => {
         const path = require('path')
         const webpack = require('webpack')
         const MpPlugin = require('mp-webpack-plugin')
-        const MiniCssExtractPlugin = require('mini-css-extract-plugin')
         const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 
         const cwd = api.getCwd()
@@ -11,7 +10,10 @@ module.exports = (api, options) => {
         // eslint-disable-next-line import/no-dynamic-require
         const mpPluginConfig = require(mpPluginConfigPath)
 
-        options.css.extract = true
+        options.css.extract = {
+            filename: '[name].wxss',
+            chunkFilename: '[name].wxss',
+        }
 
         const pages = options.pages || {
             app: './src/main.js'
@@ -40,13 +42,10 @@ module.exports = (api, options) => {
             // 重写 plugins
             webpackConfig.plugins = webpackConfig.plugins.filter(plugin => [
                 'VueLoaderPlugin',
+                'MiniCssExtractPlugin',
             ].indexOf(plugin.constructor.name) >= 0).concat([
                 new webpack.DefinePlugin({
                     'process.env.isMiniprogram': process.env.isMiniprogram, // 注入环境变量，用于业务代码判断
-                }),
-                new MiniCssExtractPlugin({
-                    filename: '[name].wxss',
-                    chunkFilename: '[name].wxss',
                 }),
                 new MpPlugin(mpPluginConfig),
             ])

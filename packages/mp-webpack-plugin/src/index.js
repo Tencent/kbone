@@ -460,12 +460,12 @@ class MpPlugin {
                     build()
                 } else {
                     console.log(colors.bold(`\nbuilt dependencies ${colors.red('failed')}, please enter "${colors.yellow(distDir)}" and run install manually\n`))
+                    callback()
                 }
             }).catch(() => {
                 console.log(colors.bold(`\nbuilt dependencies ${colors.red('failed')}, please enter "${colors.yellow(distDir)}" and run install manually\n`))
+                callback()
             })
-
-            callback()
         })
     }
 }
