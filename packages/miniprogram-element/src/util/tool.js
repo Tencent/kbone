@@ -33,7 +33,7 @@ function filterNodes(domNode, level) {
 
         if (domInfo.type !== 'element' && domInfo.type !== 'text') return
 
-        domInfo.class = `h5-${domInfo.tagName} node-${domInfo.nodeId} ${domInfo.class || ''}` // 增加默认 class
+        domInfo.class = domInfo.type === 'element' ? `h5-${domInfo.tagName} node-${domInfo.nodeId} ${domInfo.class || ''}` : '' // 增加默认 class
         domInfo.domNode = child
 
         // 特殊节点

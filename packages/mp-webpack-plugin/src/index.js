@@ -332,7 +332,8 @@ class MpPlugin {
                     // 这里需要深拷贝，不然数组相同引用指向一直 push
                     const projectConfigJson = JSON.parse(JSON.stringify(projectConfigJsonTmpl))
                     const projectConfigJsonContent = JSON.stringify(_.merge(projectConfigJson, userProjectConfigJson), null, '\t')
-                    addFile(compilation, '../project.config.json', projectConfigJsonContent)
+                    const projectConfigPath = path.join(path.relative(outputPath, generateConfig.projectConfig), './project.config.json') || '../project.config.json'
+                    addFile(compilation, projectConfigPath, projectConfigJsonContent)
                 }
 
                 // sitemap.json
@@ -460,10 +461,12 @@ class MpPlugin {
                     build()
                 } else {
                     console.log(colors.bold(`\nbuilt dependencies ${colors.red('failed')}, please enter "${colors.yellow(distDir)}" and run install manually\n`))
+                    // eslint-disable-next-line promise/no-callback-in-promise
                     callback()
                 }
             }).catch(() => {
                 console.log(colors.bold(`\nbuilt dependencies ${colors.red('failed')}, please enter "${colors.yellow(distDir)}" and run install manually\n`))
+                // eslint-disable-next-line promise/no-callback-in-promise
                 callback()
             })
         })

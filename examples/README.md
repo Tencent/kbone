@@ -64,3 +64,4 @@ npm install
 * demo16：react
 * demo17：preact
 * demo18：vue + 多页
+* demo19：vue + 云开发
