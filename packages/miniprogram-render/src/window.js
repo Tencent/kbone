@@ -498,6 +498,14 @@ class Window extends EventTarget {
         return Symbol
     }
 
+    get parseInt() {
+        return parseInt
+    }
+
+    get parseFloat() {
+        return parseFloat
+    }
+
     get performance() {
         return this.$_performance
     }

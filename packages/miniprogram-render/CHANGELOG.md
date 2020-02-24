@@ -1,5 +1,9 @@
 # 更新日志
 
+## 0.8.1
+
+* 补充 parseInt/parseFloat 到 window 对象上
+
 ## 0.8.0
 
 * 支持全局跨页共享 cookie
