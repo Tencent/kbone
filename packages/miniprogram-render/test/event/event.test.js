@@ -247,11 +247,11 @@ test('event: CustomEvent/dispatchEvent', () => {
     expect(customEvent).toBeInstanceOf(Event)
 
     b.dispatchEvent(customEvent)
-    expect(seqList).toEqual(['b', 'b'])
+    expect(seqList).toEqual(['a', 'b', 'b'])
 
     seqList.length = 0
     c.dispatchEvent(customEvent)
-    expect(seqList).toEqual(['c', 'c'])
+    expect(seqList).toEqual(['a', 'b', 'c', 'c'])
 
     // 带 detail，可冒泡
     detail = {a: 123}

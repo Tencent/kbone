@@ -1,5 +1,37 @@
 # 更新日志
 
+## 0.8.1
+
+* 补充 parseInt/parseFloat 到 window 对象上
+
+## 0.8.0
+
+* 支持全局跨页共享 cookie
+
+## 0.7.5
+
+* 修复使用 onXXX 的方式监听事件时再目标阶段会触发两次句柄的问题
+
+## 0.7.1
+
+* 补充 WebkitAppearance 到样式列表中
+
+## 0.7.0
+
+* 支持 document.querySelector('body')
+* 修复 react/preact 下输入框 onChange/onFocus/onBlur 事件不触发的问题
+* 修复非冒泡事件不触发捕获阶段的问题
+
+## 0.6.1
+
+* 支持 node 的 remove 方法
+
+## 0.6.0
+
+* 支持 window.Event 属性
+* 使用 setAttribute 方法来兼容 setAttributeNS 方法
+* 支持 document.getElementsByName 方法
+
 ## 0.5.13
 
 * 修复 touches 相关字段为空时没有返回空数组的问题

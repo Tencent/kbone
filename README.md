@@ -102,10 +102,16 @@ npm run build
     <tr>
       <td><a target="_blank" href="https://github.com/JuneAndGreen"><img width="60px"
             src="https://avatars2.githubusercontent.com/u/7931744?s=60&amp;v=4"></a></td>
+      <td><a target="_blank" href="https://github.com/lastleaf"><img width="60px"
+            src="https://avatars2.githubusercontent.com/u/2016597?s=60&amp;v=4"></a></td>
       <td><a target="_blank" href="https://github.com/dntzhang"><img width="60px"
             src="https://avatars2.githubusercontent.com/u/7917954?s=60&amp;v=4"></a></td>
+      <td><a target="_blank" href="https://github.com/JimmyVV"><img width="60px"
+            src="https://avatars2.githubusercontent.com/u/12005455?s=60&amp;v=4"></a></td>
       <td><a target="_blank" href="https://github.com/stephenml"><img width="60px"
             src="https://avatars1.githubusercontent.com/u/11658803?s=60&amp;v=4"></a></td>
+      <td><a target="_blank" href="https://github.com/jayjliang"><img width="60px"
+            src="https://avatars1.githubusercontent.com/u/9363437?s=60&amp;v=4"></a></td>
       <td width="92px"><a target="_blank" href="https://github.com/wechat-miniprogram/kbone/graphs/contributors">感谢你们</a></td>
     </tr>
   </tbody>
@@ -113,9 +119,11 @@ npm run build
 
 查看[代码贡献规范](https://wechat-miniprogram.github.io/kbone/docs/guide/develop.html)。
 
-## 交流群
+## 交流
 
 QQ 交流群：926335938
+
+使用相关问题可在 [Kbone社区](https://developers.weixin.qq.com/community/minihome/mixflow/1213301129006825473) 发帖
 
 ## 案例
 

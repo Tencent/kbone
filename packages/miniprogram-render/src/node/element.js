@@ -892,6 +892,30 @@ class Element extends Node {
         return this.$_attrs.remove(name)
     }
 
+    setAttributeNS(namespace, name, value) {
+        // 不支持 namespace，使用 setAttribute 来兼容
+        console.warn(`namespace ${namespace} is not supported`)
+        this.setAttribute(name, value)
+    }
+
+    getAttributeNS(namespace, name) {
+        // 不支持 namespace，使用 setAttribute 来兼容
+        console.warn(`namespace ${namespace} is not supported`)
+        return this.getAttribute(name)
+    }
+
+    hasAttributeNS(namespace, name) {
+        // 不支持 namespace，使用 setAttribute 来兼容
+        console.warn(`namespace ${namespace} is not supported`)
+        return this.hasAttribute(name)
+    }
+
+    removeAttributeNS(namespace, name) {
+        // 不支持 namespace，使用 setAttribute 来兼容
+        console.warn(`namespace ${namespace} is not supported`)
+        return this.removeAttribute(name)
+    }
+
     contains(otherElement) {
         const stack = []
         let checkElement = this

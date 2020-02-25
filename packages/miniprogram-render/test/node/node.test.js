@@ -155,3 +155,23 @@ test('node: hasChildNodes', () => {
     expect(node5.hasChildNodes()).toBe(false)
     expect(node6.hasChildNodes()).toBe(false)
 })
+
+test('element: remove', () => {
+    const node1 = document.createElement('div')
+    const node2 = document.createElement('div')
+    const node3 = document.createTextNode('123')
+    const node4 = document.createElement('div')
+
+    node1.appendChild(node2)
+    node1.appendChild(node3)
+
+    expect(node2.parentNode).toBe(node1)
+    expect(node2.remove()).toBe(node2)
+    expect(node2.parentNode).toBe(null)
+    expect(node3.parentNode).toBe(node1)
+    expect(node3.remove()).toBe(node3)
+    expect(node3.parentNode).toBe(null)
+    expect(node4.parentNode).toBe(null)
+    expect(node4.remove()).toBe(node4)
+    expect(node4.parentNode).toBe(null)
+})

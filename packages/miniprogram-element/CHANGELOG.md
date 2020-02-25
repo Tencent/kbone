@@ -1,5 +1,30 @@
 # 更新日志
 
+## 0.7.8
+
+* 修复在触发部分内置组件简单事件时，缺少 touches 和 changedTouches 的问题
+
+## 0.7.7
+
+* 修复浮点数等值判断问题
+
+## 0.7.6
+
+* 修复 swiper 的 indicatorDots 属性
+* 修复内置组件文本子节点不显示的问题
+
+## 0.7.3
+
+* 修改小程序内置组件的 number 属性为 float 类型
+
+## 0.7.1
+
+* 修复 react 下 checkbox/radio onChange 事件不触发的问题
+
+## 0.7.0
+
+* 修复 react/preact 下输入框 onChange/onFocus/onBlur 事件不触发的问题
+
 ## 0.5.8
 
 * 支持 button 内置组件的 business-id 属性

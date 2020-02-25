@@ -398,6 +398,10 @@ class Window extends EventTarget {
         return this.$_customEventConstructor
     }
 
+    get Event() {
+        return Event
+    }
+
     get self() {
         return this
     }
@@ -492,6 +496,14 @@ class Window extends EventTarget {
 
     get Symbol() {
         return Symbol
+    }
+
+    get parseInt() {
+        return parseInt
+    }
+
+    get parseFloat() {
+        return parseFloat
     }
 
     get performance() {

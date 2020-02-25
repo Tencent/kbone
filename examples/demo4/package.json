@@ -15,15 +15,15 @@
     "vue": "^2.6.10"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.9.0",
-    "@vue/cli-plugin-eslint": "^3.9.0",
-    "@vue/cli-service": "^3.9.0",
-    "babel-eslint": "^10.0.1",
+    "@vue/cli-plugin-babel": "^4.2.0",
+    "@vue/cli-plugin-eslint": "^4.2.0",
+    "@vue/cli-service": "^4.2.0",
+    "babel-eslint": "^10.0.3",
     "cross-env": "^5.2.0",
-    "eslint": "^5.16.0",
-    "eslint-plugin-vue": "^5.0.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-vue": "^6.1.2",
     "vue-cli-plugin-kbone": "file:../../packages/vue-cli-plugin-kbone",
-    "vue-template-compiler": "^2.6.10"
+    "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
     "root": true,
@@ -37,6 +37,14 @@
     "rules": {},
     "parserOptions": {
       "parser": "babel-eslint"
+    },
+    "globals": {
+      "App": true,
+      "Page": true,
+      "Component": true,
+      "Behavior": true,
+      "wx": true,
+      "getCurrentPages": true
     }
   },
   "postcss": {

@@ -22,25 +22,25 @@ Other dependencies and licenses:
 
 Open Source Software Licensed under the MIT License
 --------------------------------------------------------------------
-1. kbone-cli 0.3.1
+1. kbone-cli
 Copyright (c) 2019 wechat-miniprogram
 
-2. miniprogram-element 0.5.9
+2. miniprogram-element
 Copyright (c) 2019 wechat-miniprogram
 
-3. miniprogram-render 0.5.13
+3. miniprogram-render
 Copyright (c) 2019 wechat-miniprogram
 
-4. mp-webpack-plugin 0.5.8
+4. mp-webpack-plugin
 Copyright (c) 2019 wechat-miniprogram
 
-5. reduce-loader 0.3.1
+5. reduce-loader
 Copyright (c) 2019 wechat-miniprogram
 
-6. vue-cli-plugin-kbone 0.4.14
+6. vue-cli-plugin-kbone
 Copyright (c) 2019 wechat-miniprogram
 
-7.vue-improve-loader 0.3.1
+7.vue-improve-loader
 Copyright (c) 2019 wechat-miniprogram
 
 

@@ -93,34 +93,43 @@
           <text v-else-if="wxPrefix === 2" :selectable="true">{{'this is first line\nthis is second line'}}</text>
         </template>
         <template v-else-if="item === 'swiper'">
-          <wx-component v-if="!wxPrefix" :behavior="item" :class="item" :indicator-dots="true" :autoplay="true" :interval="5000" :duration="500" @change="onSwiperChange">
+          <wx-component v-if="!wxPrefix" :behavior="item" :class="item" :indicator-dots="swiper.indicatorDots" :autoplay="swiper.autoplay" :interval="5000" :duration="500" @change="onSwiperChange">
             <wx-component behavior="swiper-item" class="swiper-item-1" item-id="1"><span>A</span></wx-component>
             <wx-component behavior="swiper-item" class="swiper-item-2" item-id="2"><span>B</span></wx-component>
             <wx-component behavior="swiper-item" class="swiper-item-3" item-id="3"><span>C</span></wx-component>
             <div>不会被渲染</div>
           </wx-component>
-          <wx-swiper v-else-if="wxPrefix === 1" :class="item" :indicator-dots="true" :autoplay="true" :interval="5000" :duration="500" @change="onSwiperChange">
+          <wx-swiper v-else-if="wxPrefix === 1" :class="item" :indicator-dots="swiper.indicatorDots" :autoplay="swiper.autoplay" :interval="5000" :duration="500" @change="onSwiperChange">
             <wx-swiper-item class="swiper-item-1" item-id="1"><span>A</span></wx-swiper-item>
             <wx-swiper-item class="swiper-item-2" item-id="2"><span>B</span></wx-swiper-item>
             <wx-swiper-item class="swiper-item-3" item-id="3"><span>C</span></wx-swiper-item>
             <div>不会被渲染</div>
           </wx-swiper>
-          <swiper v-else-if="wxPrefix === 2" :class="item" :indicator-dots="true" :autoplay="true" :interval="5000" :duration="500" @change="onSwiperChange">
+          <swiper v-else-if="wxPrefix === 2" :class="item" :indicator-dots="swiper.indicatorDots" :autoplay="swiper.autoplay" :interval="5000" :duration="500" @change="onSwiperChange">
             <swiper-item class="swiper-item-1" item-id="1"><span>A</span></swiper-item>
             <swiper-item class="swiper-item-2" item-id="2"><span>B</span></swiper-item>
             <swiper-item class="swiper-item-3" item-id="3"><span>C</span></swiper-item>
             <div>不会被渲染</div>
           </swiper>
+          <div>
+            <wx-switch name="switch-a" :checked="swiper.indicatorDots" @change="swiper.indicatorDots = !swiper.indicatorDots" /> 指示点
+          </div>
+          <div>
+            <wx-switch name="switch-a" :checked="swiper.autoplay" @change="swiper.autoplay = !swiper.autoplay" /> 自动播放
+          </div>
         </template>
         <template v-else-if="item === 'movable'">
           <wx-component v-if="!wxPrefix" :behavior="item" :class="item" :scale-area="true">
             <wx-component class="movable-view" behavior="movable-view" direction="all" :inertia="true" :out-of-bounds="true" :x="movable.x" :y="movable.y" :scale-value="movable.scaleValue" :scale="true" @change="onMovableChange" @scale="onMovableScale"><span>text</span></wx-component>
+            <wx-component class="movable-view" behavior="movable-view" direction="all" :x="0" :y="0">plaintext</wx-component>
           </wx-component>
           <wx-movable-area v-else-if="wxPrefix === 1" :class="item" :scale-area="true">
             <wx-movable-view class="movable-view" direction="all" :inertia="true" :out-of-bounds="true" :x="movable.x" :y="movable.y" :scale-value="movable.scaleValue" :scale="true" @change="onMovableChange" @scale="onMovableScale"><span>text</span></wx-movable-view>
+            <wx-movable-view class="movable-view" direction="all" :x="0" :y="0">plaintext</wx-movable-view>
           </wx-movable-area>
           <movable-area v-else-if="wxPrefix === 2" :class="item" :scale-area="true">
             <movable-view class="movable-view" direction="all" :inertia="true" :out-of-bounds="true" :x="movable.x" :y="movable.y" :scale-value="movable.scaleValue" :scale="true" @change="onMovableChange" @scale="onMovableScale"><span>text</span></movable-view>
+            <movable-view class="movable-view" direction="all" :x="0" :y="0">plaintext</movable-view>
           </movable-area>
           <wx-button @click="movable.x = movable.y = 30">move to (30px, 30px)</wx-button>
           <wx-button @click="movable.scaleValue = 3">scale to 3.0</wx-button>
@@ -182,6 +191,9 @@
           <wx-component v-if="!wxPrefix" :behavior="item" className="wx-button-custom" open-type="share">分享</wx-component>
           <wx-button v-else-if="wxPrefix === 1" className="wx-button-custom" open-type="share">分享</wx-button>
           <button v-else-if="wxPrefix === 2" className="wx-button-custom" open-type="share">分享</button>
+          <wx-component v-if="!wxPrefix" :behavior="item" open-type="getPhoneNumber" @getphonenumber="onGetPhoneNumber">获取手机号</wx-component>
+          <wx-button v-else-if="wxPrefix === 1" open-type="getPhoneNumber" @getphonenumber="onGetPhoneNumber">获取手机号</wx-button>
+          <button v-else-if="wxPrefix === 2" open-type="getPhoneNumber" @getphonenumber="onGetPhoneNumber">获取手机号</button>
         </template>
         <template v-else-if="item === 'image'">
           <wx-component v-if="!wxPrefix" :behavior="item" src="https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg"></wx-component>
@@ -581,6 +593,10 @@ export default {
         y: 10,
         scaleValue: 1.2,
       },
+      swiper: {
+        indicatorDots: true,
+        autoplay: false,
+      },
     }
   },
   watch: {
@@ -603,6 +619,12 @@ export default {
     }
   },
   mounted() {
+    wx.login({
+      success(res) {
+        console.log('login success', res)
+      }
+    })
+
     const canvas = this.$refs.canvas[0]
     canvas.$$getContext().then(context => {
       context.setStrokeStyle("#00ff00")
@@ -732,6 +754,10 @@ export default {
 
     onMovableScale(evt) {
       console.log('onMovableScale', evt.detail)
+    },
+
+    onGetPhoneNumber(evt) {
+      console.log('onGetPhoneNumber', evt)
     },
   }
 }

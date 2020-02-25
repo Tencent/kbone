@@ -29,16 +29,16 @@ test('scroll-view', async() => {
     await _.checkBoolean(scrollView, node, 'scrollY', 'scroll-y', false)
 
     // upperThreshold
-    await _.checkNumber(scrollView, node, 'upperThreshold', 'upper-threshold', 50)
+    await _.checkString(scrollView, node, 'upperThreshold', 'upper-threshold', '50')
 
     // lowerThreshold
-    await _.checkNumber(scrollView, node, 'lowerThreshold', 'lower-threshold', 50)
+    await _.checkString(scrollView, node, 'lowerThreshold', 'lower-threshold', '50')
 
     // scrollTop
-    await _.checkNumber(scrollView, node, 'scrollTop', 'scroll-top', '')
+    await _.checkString(scrollView, node, 'scrollTop', 'scroll-top', '')
 
     // scrollLeft
-    await _.checkNumber(scrollView, node, 'scrollLeft', 'scroll-left', '')
+    await _.checkString(scrollView, node, 'scrollLeft', 'scroll-left', '')
 
     // scrollIntoView
     await _.checkString(scrollView, node, 'scrollIntoView', 'scroll-into-view', '')

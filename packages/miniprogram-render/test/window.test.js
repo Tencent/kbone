@@ -356,6 +356,10 @@ test('window: CustomEvent', () => {
     expect(evt).toBeInstanceOf(CustomEvent)
 })
 
+test('window: Event', () => {
+    expect(window.Event).toBe(Event)
+})
+
 test('window: self', () => {
     expect(window.self).toBe(window)
 })
@@ -420,7 +424,7 @@ test('window: Node', () => {
     expect(window.Node).toBe(Node)
 })
 
-test('window: RegExp/Math/Number/Boolean/String/Date/Symbol', () => {
+test('window: RegExp/Math/Number/Boolean/String/Date/Symbol/parseInt/parseFloat', () => {
     expect(window.RegExp).toBe(RegExp)
     expect(window.Math).toBe(Math)
     expect(window.Number).toBe(Number)
@@ -428,6 +432,8 @@ test('window: RegExp/Math/Number/Boolean/String/Date/Symbol', () => {
     expect(window.String).toBe(String)
     expect(window.Date).toBe(Date)
     expect(window.Symbol).toBe(Symbol)
+    expect(window.parseInt).toBe(parseInt)
+    expect(window.parseFloat).toBe(parseFloat)
 })
 
 test('window: open', () => {

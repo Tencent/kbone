@@ -46,18 +46,22 @@ npm install
 
 ## demo 列表
 
-* demo1：vue-router
-* demo2：reduce-loader + vue-improve-loader
-* demo3：内置组件
-* demo4：vue-cli-plugin-kbone
-* demo5：多页
-* demo6：[omi](https://github.com/Tencent/omi) + kbone
-* demo7：多页 + 分包
-* demo8：贪吃蛇小游戏（[omi](https://github.com/Tencent/omi) + kbone）
-* demo9：tabBar
-* demo10：自定义组件
-* demo11：自定义 tabBar
-* demo12：只输出页面相关的代码（可用于独立分包）
-* demo13：todo vue
-* demo14：i18n
-* demo15：alloyFinger
+* demo1：vue + vue-router
+* demo2：vue + reduce-loader + vue-improve-loader
+* demo3：vue + 内置组件
+* demo4：vue + vue-cli-plugin-kbone
+* demo5：vue + 多页
+* demo6：[omi](https://github.com/Tencent/omi)
+* demo7：vue + 多页 + 分包
+* demo8：[omi](https://github.com/Tencent/omi) + 贪吃蛇小游戏
+* demo9：vue + tabBar
+* demo10：vue + 自定义组件
+* demo11：vue + 自定义 tabBar
+* demo12：vue + 只输出页面相关的代码（可用于独立分包）
+* demo13：vue + todo app
+* demo14：vue + vue-i18n
+* demo15：vue + alloyFinger
+* demo16：react
+* demo17：preact
+* demo18：vue + 多页
+* demo19：vue + 云开发

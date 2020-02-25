@@ -554,15 +554,17 @@ test('node: querySelectorAll', () => {
 })
 
 test('element: setAttribute/getAttribute/hasAttribute/removeAttribute', () => {
+    const parent = document.createElement('div')
     const node = document.createElement('div')
-    document.body.appendChild(node)
+    document.body.appendChild(parent)
+    parent.appendChild(node)
     const attributes = node.attributes
 
     let updateCount = 0
     const onUpdate = function() {
         updateCount++
     }
-    node.parentNode.addEventListener('$$childNodesUpdate', onUpdate)
+    parent.addEventListener('$$childNodesUpdate', onUpdate)
 
     expect(node.getAttribute('id')).toBe('')
     expect(node.getAttribute('class')).toBe('')
@@ -663,8 +665,57 @@ test('element: setAttribute/getAttribute/hasAttribute/removeAttribute', () => {
     expect(attributes.length).toEqual(2)
     expect(updateCount).toBe(14)
 
-    node.parentNode.removeEventListener('$$childNodesUpdate', onUpdate)
-    document.body.removeChild(node)
+    parent.removeEventListener('$$childNodesUpdate', onUpdate)
+    document.body.removeChild(parent)
+})
+
+test('element: setAttributeNS/getAttributeNS/hasAttributeNS/removeAttributeNS', () => {
+    const ns = 'http://www.example.com/2014/test'
+    const parent = document.createElement('div')
+    const node = document.createElement('div')
+    document.body.appendChild(parent)
+    parent.appendChild(node)
+    const attributes = node.attributes
+
+    let updateCount = 0
+    const onUpdate = function() {
+        updateCount++
+    }
+    parent.addEventListener('$$childNodesUpdate', onUpdate)
+
+    expect(node.getAttributeNS(ns, 'src')).toBe(undefined)
+    expect(node.hasAttributeNS(ns, 'src')).toBe(false)
+    expect(attributes).toEqual([])
+    expect(attributes.src).toBe(undefined)
+    expect(updateCount).toBe(0)
+
+    // eslint-disable-next-line no-script-url
+    node.src = 'javascript: void(0);'
+    // eslint-disable-next-line no-script-url
+    expect(node.getAttributeNS(ns, 'src')).toBe('javascript: void(0);')
+    expect(node.hasAttributeNS(ns, 'src')).toBe(true)
+    expect(attributes.length).toBe(1)
+    expect(attributes.src).toBe(attributes[0])
+    // eslint-disable-next-line no-script-url
+    expect(attributes.src).toEqual({name: 'src', value: 'javascript: void(0);'})
+    expect(updateCount).toBe(1)
+
+    node.setAttributeNS(ns, 'src', 'moc.haha.www')
+    expect(node.src).toBe('moc.haha.www')
+    expect(attributes.length).toEqual(1)
+    expect(attributes.src).toBe(attributes[0])
+    expect(attributes.src).toEqual({name: 'src', value: 'moc.haha.www'})
+    expect(updateCount).toBe(2)
+
+    node.removeAttributeNS(ns, 'src')
+    expect(node.src).toBe(undefined)
+    expect(node.getAttributeNS(ns, 'src')).toBe(undefined)
+    expect(node.hasAttributeNS(ns, 'src')).toBe(false)
+    expect(attributes.src).toBe(undefined)
+    expect(updateCount).toBe(3)
+
+    parent.removeEventListener('$$childNodesUpdate', onUpdate)
+    document.body.removeChild(parent)
 })
 
 test('element: contains', () => {
