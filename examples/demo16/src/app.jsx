@@ -1,6 +1,8 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {render, h} from 'react-dom'
 import './app.css'
+
+import PickerView from './picker-view'
 
 const App = (props, store) => {
     return (
@@ -36,6 +38,10 @@ const App = (props, store) => {
                     value="2"
                     onChange={e => console.log('change', e)}
                 />
+            </div>
+            <div>
+                我是 picker-view：
+                <PickerView></PickerView>
             </div>
         </div>
     )
