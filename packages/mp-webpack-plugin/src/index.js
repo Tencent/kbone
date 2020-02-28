@@ -332,7 +332,7 @@ class MpPlugin {
                     // 这里需要深拷贝，不然数组相同引用指向一直 push
                     const projectConfigJson = JSON.parse(JSON.stringify(projectConfigJsonTmpl))
                     const projectConfigJsonContent = JSON.stringify(_.merge(projectConfigJson, userProjectConfigJson), null, '\t')
-                    const projectConfigPath = path.join(path.relative(outputPath, generateConfig.projectConfig), './project.config.json') || '../project.config.json'
+                    const projectConfigPath = generateConfig.projectConfig ? path.join(path.relative(outputPath, generateConfig.projectConfig), './project.config.json') : '../project.config.json'
                     addFile(compilation, projectConfigPath, projectConfigJsonContent)
                 }
 

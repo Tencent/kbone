@@ -129,3 +129,6 @@ QQ 交流群：926335938
 
 ![微信开放社区](./docs/images/code1.jpg)
 
+## License
+
+[MIT](./LICENSE)

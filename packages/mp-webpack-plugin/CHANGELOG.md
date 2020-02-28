@@ -1,5 +1,9 @@
 # 更新日志
 
+## 0.8.2
+
+* 修复没有传入 projectConfig 配置导致构建报错问题
+
 ## 0.8.1
 
 * 支持调整 project.config.json 文件的输出目录
