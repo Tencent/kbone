@@ -258,7 +258,7 @@ class MpPlugin {
                 // app js
                 const appAssets = assetsMap[appJsEntryName] || {js: [], css: []}
                 const appJsContent = appJsTmpl
-                    .replace('/* INIT_FUNCTION */', `const fakeWindow = {};const fakeDocument = {};${appAssets.js.map(js => 'require(\'' + getAssetPath('', js, assetsSubpackageMap, '') + '\')(fakeWindow, fakeDocument);')}const appConfig = fakeWindow.appOptions || {};`)
+                    .replace('/* INIT_FUNCTION */', `const fakeWindow = {};const fakeDocument = {};${appAssets.js.map(js => 'require(\'' + getAssetPath('', js, assetsSubpackageMap, '') + '\')(fakeWindow, fakeDocument);').join('')}const appConfig = fakeWindow.appOptions || {};`)
                 addFile(compilation, '../app.js', appJsContent)
 
                 // app wxss
