@@ -27,7 +27,7 @@
           <input type="checkbox" @input="onInput" v-model="input.inputCheckbox" />
           <input type="hidden" value="I am Hidden" />
         </div>
-        <textarea v-else-if="item === 'textarea'" class="textarea-node" style="height: 30px;" placeholder="请输入内容" maxlength="50" :auto-height="true" :adjust-position="''" value="我是 textarea" @input="onTextareaInput" />
+        <textarea v-else-if="item === 'textarea'" class="textarea-node" style="height: 30px;" placeholder="请输入内容" maxlength="50" :auto-height="true" adjust-position="" value="我是 textarea" @input="onTextareaInput" />
         <div v-else-if="item === 'label'">
           <!-- input -->
           <label>
