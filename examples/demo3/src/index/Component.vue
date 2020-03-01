@@ -27,7 +27,7 @@
           <input type="checkbox" @input="onInput" v-model="input.inputCheckbox" />
           <input type="hidden" value="I am Hidden" />
         </div>
-        <textarea v-else-if="item === 'textarea'" placeholder="请输入内容" maxlength="50" :auto-height="true" value="我是 textarea" @input="onTextareaInput" />
+        <textarea v-else-if="item === 'textarea'" class="textarea-node" style="height: 30px;" placeholder="请输入内容" maxlength="50" :auto-height="true" :adjust-position="''" value="我是 textarea" @input="onTextareaInput" />
         <div v-else-if="item === 'label'">
           <!-- input -->
           <label>
@@ -61,7 +61,7 @@
             <div>switch1</div>
             <template>
               <wx-component v-if="!wxPrefix" behavior="switch" @change="onLabelChange"></wx-component>
-              <wx-switch v-else @change="onLabelChange"></wx-switch>
+              <wx-switch v-else class="switch-node" @change="onLabelChange"></wx-switch>
             </template>
           </label>
           <label for="switch2">
@@ -769,6 +769,10 @@ export default {
   height: 40px;
   line-height: 40px;
   background: rgba(7, 193, 96, 0.06);
+}
+
+textarea .wx-comp-textarea {
+  background-color: #ddd;
 }
 
 .inline {
