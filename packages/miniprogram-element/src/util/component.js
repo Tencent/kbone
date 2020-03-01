@@ -33,6 +33,10 @@ const wxComponentMap = {
         wxCompName: 'progress',
         config: require('../component/progress'),
     },
+    'rich-text': {
+        wxCompName: 'rich-text',
+        config: require('../component/rich-text'),
+    },
     text: {
         wxCompName: 'text',
         config: require('../component/text'),

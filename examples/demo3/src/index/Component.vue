@@ -92,6 +92,11 @@
           <wx-text v-else-if="wxPrefix === 1" :selectable="true">{{'this is first line\nthis is second line'}}</wx-text>
           <text v-else-if="wxPrefix === 2" :selectable="true">{{'this is first line\nthis is second line'}}</text>
         </template>
+        <template v-else-if="item === 'rich-text'">
+          <wx-component v-if="!wxPrefix" :behavior="item" :nodes="richText.nodes"></wx-component>
+          <wx-rich-text v-else-if="wxPrefix === 1" :nodes="richText.nodes"></wx-rich-text>
+          <rich-text v-else-if="wxPrefix === 2" :nodes="richText.nodes"></rich-text>
+        </template>
         <template v-else-if="item === 'swiper'">
           <wx-component v-if="!wxPrefix" :behavior="item" :class="item" :indicator-dots="swiper.indicatorDots" :autoplay="swiper.autoplay" :interval="5000" :duration="500" @change="onSwiperChange">
             <wx-component behavior="swiper-item" class="swiper-item-1" item-id="1"><span>A</span></wx-component>
@@ -503,6 +508,7 @@ export default {
         'canvas',
         'view',
         'text',
+        'rich-text',
         'swiper',
         'movable',
         'picker-view',
@@ -596,6 +602,19 @@ export default {
       swiper: {
         indicatorDots: true,
         autoplay: false,
+      },
+      richText: {
+        nodes: [{
+          name: 'div',
+          attrs: {
+            class: 'rich-text-div',
+            style: 'line-height: 60px; color: red;',
+          },
+          children: [{
+            type: 'text',
+            text: 'Hello&nbsp;World!',
+          }],
+        }],
       },
     }
   },
@@ -880,5 +899,9 @@ button {
   width: 50px;
   background: #1AAD19;
   color: #fff;
+}
+
+.rich-text-div {
+  font-size: 30px;
 }
 </style>

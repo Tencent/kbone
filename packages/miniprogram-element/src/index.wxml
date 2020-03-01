@@ -159,6 +159,15 @@
     active-mode="{{activeMode}}"
     bindactiveend="onProgressActiveEnd"
 ></progress>
+<rich-text
+    wx:elif="{{wxCompName === 'rich-text'}}"
+    id="{{id}}"
+    class="{{class}}"
+    style="{{style}}"
+    hidden="{{hidden}}"
+    nodes="{{nodes}}"
+    space="{{space}}"
+></rich-text>
 <text
     wx:elif="{{wxCompName === 'text'}}"
     id="{{id}}"
