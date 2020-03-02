@@ -1,5 +1,9 @@
 # 更新日志
 
+## 0.8.2
+
+* 支持 canvas 的 $$prepare 方法
+
 ## 0.8.1
 
 * 补充 parseInt/parseFloat 到 window 对象上
