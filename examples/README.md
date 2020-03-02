@@ -65,3 +65,4 @@ npm install
 * demo17：preact
 * demo18：vue + 多页
 * demo19：vue + 云开发
+* demo20：vue + echarts
