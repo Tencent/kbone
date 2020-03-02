@@ -61,18 +61,8 @@ export function getChart(canvas, echarts, options) {
           }
       })
 
-      const stop = evt => {
-        evt.preventDefault()
-        evt.stopPropagation()
-        evt.stopImmediatePropagation()
-      }
-      canvas.addEventListener('touchstart', stop)
-      canvas.addEventListener('touchmove', stop)
-      canvas.addEventListener('touchend', stop)
-
       // 为了拿到正确的 zrX/zrY，不走正常的 touch 事件
       canvas.addEventListener = () => {}
-      canvas.removeEventListener = () => {}
 
       const chart = echarts.init(canvas, null, {
           width: options.width || 300,
