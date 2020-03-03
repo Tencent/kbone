@@ -8,6 +8,7 @@ const {
 } = mp.$$adapter
 const {
     NOT_SUPPORT,
+    USE_TEMPLATE,
 } = _
 const {
     wxCompNameMap,
@@ -21,6 +22,11 @@ module.exports = {
     init(data) {
         const domNode = this.domNode
         const tagName = domNode.tagName
+
+        // 使用 template 渲染
+        if (USE_TEMPLATE.indexOf(tagName) !== -1 && USE_TEMPLATE.indexOf(domNode.behavior) !== -1) {
+            if (domNode.type !== 'radio' && domNode.type !== 'checkbox') return
+        }
 
         if (tagName === 'WX-COMPONENT') {
             // 内置组件
@@ -48,7 +54,7 @@ module.exports = {
      * 触发简单节点事件，不做冒泡处理
      */
     callSimpleEvent(eventName, evt, domNode) {
-        domNode = domNode || this.domNode
+        domNode = domNode || this.getDomNodeFromEvt(evt) || this.domNode
         if (!domNode) return
 
         EventTarget.$$process(domNode, new Event({

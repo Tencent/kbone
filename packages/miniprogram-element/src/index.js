@@ -108,11 +108,11 @@ Component({
                 const dataChildNodes = _.dealWithLeafAndSimple(childNodes, this.onChildNodesUpdate)
                 const newData = {}
                 if (this.data.wxCompName || this.data.wxCustomCompName) {
-                    // 内置组件/自定义组件
+                    // 部分内置组件/自定义组件
                     newData.innerChildNodes = dataChildNodes
                     newData.childNodes = []
                 } else {
-                    // 普通标签
+                    // 普通标签/其他组件
                     newData.innerChildNodes = []
                     newData.childNodes = dataChildNodes
                 }
@@ -174,11 +174,11 @@ Component({
         callEvent(eventName, evt, extra) {
             const pageId = this.pageId
             const originNodeId = evt.currentTarget.dataset.privateNodeId || this.nodeId
-            const originNode = cache.getNode(pageId, originNodeId)
+            const domNode = cache.getNode(pageId, originNodeId)
 
-            if (!originNode) return
+            if (!domNode) return
 
-            EventTarget.$$process(originNode, eventName, evt, extra, (domNode, evt, isCapture) => {
+            EventTarget.$$process(domNode, eventName, evt, extra, (domNode, evt, isCapture) => {
                 // 延迟触发跳转，先等所有同步回调处理完成
                 setTimeout(() => {
                     if (evt.cancelable) return
@@ -333,23 +333,27 @@ Component({
         },
 
         onImgLoad(evt) {
-            const pageId = this.pageId
-            const originNodeId = evt.currentTarget.dataset.privateNodeId || this.nodeId
-            const originNode = cache.getNode(pageId, originNodeId)
+            const domNode = this.getDomNodeFromEvt(evt)
+            if (!domNode) return
 
-            if (!originNode) return
-
-            this.callSimpleEvent('load', evt, originNode)
+            this.callSimpleEvent('load', evt, domNode)
         },
 
         onImgError(evt) {
+            const domNode = this.getDomNodeFromEvt(evt)
+            if (!domNode) return
+
+            this.callSimpleEvent('error', evt, domNode)
+        },
+
+        /**
+         * 从小程序事件对象中获取 domNode
+         */
+        getDomNodeFromEvt(evt) {
+            if (!evt) return
             const pageId = this.pageId
-            const originNodeId = evt.currentTarget.dataset.privateNodeId || this.nodeId
-            const originNode = cache.getNode(pageId, originNodeId)
-
-            if (!originNode) return
-
-            this.callSimpleEvent('error', evt, originNode)
+            const originNodeId = evt.currentTarget.dataset.privateNodeId
+            return cache.getNode(pageId, originNodeId)
         },
 
         ...initHandle,

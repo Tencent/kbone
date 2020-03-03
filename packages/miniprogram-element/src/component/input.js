@@ -112,24 +112,29 @@ module.exports = {
     }],
     handles: {
         onInputInput(evt) {
-            if (!this.domNode) return
+            const domNode = this.getDomNodeFromEvt(evt)
+            if (!domNode) return
 
             const value = '' + evt.detail.value
-            this.domNode.setAttribute('value', value)
+            domNode.setAttribute('value', value)
             this.callEvent('input', evt)
         },
 
         onInputFocus(evt) {
-            this._inputOldValue = this.domNode.value
+            const domNode = this.getDomNodeFromEvt(evt)
+            if (domNode) domNode._inputOldValue = domNode.value
+
+            domNode.setAttribute('focus', true)
             this.callSimpleEvent('focus', evt)
         },
 
         onInputBlur(evt) {
-            if (!this.domNode) return
+            const domNode = this.getDomNodeFromEvt(evt)
+            if (!domNode) return
 
-            this.domNode.setAttribute('focus', false)
-            if (this._inputOldValue !== undefined && this.domNode.value !== this._inputOldValue) {
-                this._inputOldValue = undefined
+            domNode.setAttribute('focus', false)
+            if (domNode._inputOldValue !== undefined && domNode.value !== domNode._inputOldValue) {
+                domNode._inputOldValue = undefined
                 this.callEvent('change', evt)
             }
             this.callSimpleEvent('blur', evt)
