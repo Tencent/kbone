@@ -153,10 +153,10 @@ module.exports = {
             const domNode = this.domNode
             const value = evt.detail.value
             const name = domNode.name
-            const otherDomNodes = window.document.querySelectorAll(`input[name=${name}]`) || []
 
             if (value === domNode.value) {
                 domNode.setAttribute('checked', true)
+                const otherDomNodes = window.document.querySelectorAll(`input[name=${name}]`) || []
                 for (const otherDomNode of otherDomNodes) {
                     if (otherDomNode.type === 'radio' && otherDomNode !== domNode) {
                         otherDomNode.setAttribute('checked', false)
