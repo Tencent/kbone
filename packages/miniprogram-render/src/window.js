@@ -510,6 +510,12 @@ class Window extends EventTarget {
         return this.$_performance
     }
 
+    get SVGElement() {
+        // 不作任何实现，只作兼容使用
+        console.warn('window.SVGElement is not supported')
+        return function() {}
+    }
+
     open(url) {
         // 不支持 windowName 和 windowFeatures
         this.location.$$open(url)
