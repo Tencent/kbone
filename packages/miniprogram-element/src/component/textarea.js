@@ -91,15 +91,20 @@ module.exports = {
     }],
     handles: {
         onTextareaFocus(evt) {
-            this._textareaOldValue = this.domNode.value
+            const domNode = this.getDomNodeFromEvt(evt)
+            if (!domNode) return
+
+            this._textareaOldValue = domNode.value
+            domNode.setAttribute('focus', true)
             this.callSimpleEvent('focus', evt)
         },
 
         onTextareaBlur(evt) {
-            if (!this.domNode) return
+            const domNode = this.getDomNodeFromEvt(evt)
+            if (!domNode) return
 
-            this.domNode.setAttribute('focus', false)
-            if (this._textareaOldValue !== undefined && this.domNode.value !== this._textareaOldValue) {
+            domNode.setAttribute('focus', false)
+            if (this._textareaOldValue !== undefined && domNode.value !== this._textareaOldValue) {
                 this._textareaOldValue = undefined
                 this.callEvent('change', evt)
             }
@@ -111,10 +116,11 @@ module.exports = {
         },
 
         onTextareaInput(evt) {
-            if (!this.domNode) return
+            const domNode = this.getDomNodeFromEvt(evt)
+            if (!domNode) return
 
             const value = '' + evt.detail.value
-            this.domNode.setAttribute('value', value)
+            domNode.setAttribute('value', value)
             this.callEvent('input', evt)
         },
 

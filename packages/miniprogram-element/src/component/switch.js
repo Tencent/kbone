@@ -25,9 +25,10 @@ module.exports = {
     }],
     handles: {
         onSwitchChange(evt) {
-            if (!this.domNode) return
+            const domNode = this.getDomNodeFromEvt(evt)
+            if (!domNode) return
 
-            this.domNode.setAttribute('checked', evt.detail.value)
+            domNode.setAttribute('checked', evt.detail.value)
             this.callSimpleEvent('change', evt)
         },
     },

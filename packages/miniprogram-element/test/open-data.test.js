@@ -20,16 +20,15 @@ test('open-data', async() => {
     node.setAttribute('behavior', 'open-data')
     page.document.body.appendChild(node)
     await _.sleep(10)
-    const openData = body.querySelector('.h5-wx-component')
 
     // type
-    await _.checkString(openData, node, 'type', 'type', '')
+    await _.checkString(body, node, 'type', 'type', '')
 
     // openGid
-    await _.checkString(openData, node, 'openGid', 'open-gid', '')
+    await _.checkString(body, node, 'openGid', 'open-gid', '')
 
     // lang
-    await _.checkString(openData, node, 'lang', 'lang', 'en')
+    await _.checkString(body, node, 'lang', 'lang', 'en')
 
     page.document.body.removeChild(node)
     document.body.removeChild(wrapper)

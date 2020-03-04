@@ -20,23 +20,21 @@ test('switch', async() => {
     node.setAttribute('behavior', 'switch')
     page.document.body.appendChild(node)
     await _.sleep(10)
-    const switchComp = body.querySelector('.h5-wx-component')
 
     // checked
-    await _.checkBoolean(switchComp, node, 'checked', 'checked', false)
+    await _.checkBoolean(body, node, 'checked', 'checked', false)
 
     // disabled
-    await _.checkBoolean(switchComp, node, 'disabled', 'disabled', false)
+    await _.checkBoolean(body, node, 'disabled', 'disabled', false)
 
     // type
-    await _.checkString(switchComp, node, 'type', 'type', 'switch')
+    await _.checkString(body, node, 'type', 'type', 'switch')
 
     // color
-    await _.checkString(switchComp, node, 'color', 'color', '#04BE02')
+    await _.checkString(body, node, 'color', 'color', '#04BE02')
 
     // event
-    const wxSwitch = switchComp.querySelector('.wx-comp-switch')
-    await _.checkEvent(wxSwitch, node, ['change'])
+    await _.checkEvent(body.querySelector('.h5-wx-component'), node, ['change'])
 
     page.document.body.removeChild(node)
     document.body.removeChild(wrapper)

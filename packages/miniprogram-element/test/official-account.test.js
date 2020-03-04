@@ -20,11 +20,9 @@ test('official-account', async() => {
     node.setAttribute('behavior', 'official-account')
     page.document.body.appendChild(node)
     await _.sleep(10)
-    const officialAccount = body.querySelector('.h5-wx-component')
 
     // event
-    const wxOfficialAccount = officialAccount.querySelector('.wx-comp-official-account')
-    await _.checkEvent(wxOfficialAccount, node, ['load', 'error'])
+    await _.checkEvent(body.querySelector('.h5-wx-component'), node, ['load', 'error'])
 
     page.document.body.removeChild(node)
     document.body.removeChild(wrapper)

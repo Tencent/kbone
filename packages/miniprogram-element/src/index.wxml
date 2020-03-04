@@ -131,43 +131,6 @@
     hover-stay-time="{{hoverStayTime}}"
 ><template is="subtree" data="{{childNodes: innerChildNodes, inCover}}"/></view>
 <!-- 基础内容 -->
-<icon
-    wx:elif="{{wxCompName === 'icon'}}"
-    id="{{id}}"
-    class="{{class}}"
-    style="{{style}}"
-    hidden="{{hidden}}"
-    type="{{type}}"
-    size="{{size}}"
-    color="{{color}}"
-></icon>
-<progress
-    wx:elif="{{wxCompName === 'progress'}}"
-    id="{{id}}"
-    class="{{class}}"
-    style="{{style}}"
-    hidden="{{hidden}}"
-    percent="{{percent}}"
-    show-info="{{showInfo}}"
-    border-radius="{{borderRadius}}"
-    font-size="{{fontSize}}"
-    stroke-width="{{strokeWidth}}"
-    color="{{color}}"
-    active-color="{{activeColor}}"
-    background-color="{{backgroundColor}}"
-    active="{{active}}"
-    active-mode="{{activeMode}}"
-    bindactiveend="onProgressActiveEnd"
-></progress>
-<rich-text
-    wx:elif="{{wxCompName === 'rich-text'}}"
-    id="{{id}}"
-    class="{{class}}"
-    style="{{style}}"
-    hidden="{{hidden}}"
-    nodes="{{nodes}}"
-    space="{{space}}"
-></rich-text>
 <text
     wx:elif="{{wxCompName === 'text'}}"
     id="{{id}}"
@@ -211,23 +174,6 @@
     bindopensetting="onButtonOpenSetting"
     bindlaunchapp="onButtonLaunchApp"
 ><template is="subtree" data="{{childNodes: innerChildNodes, inCover}}"/></button>
-<editor
-    wx:elif="{{wxCompName === 'editor'}}"
-    id="{{id}}"
-    class="{{class}}"
-    style="{{style}}"
-    hidden="{{hidden}}"
-    read-only="{{readOnly}}"
-    placeholder="{{placeholder}}"
-    show-img-size="{{showImgSize}}"
-    show-img-toolbar="{{showImgToolbar}}"
-    show-img-resize="{{showImgResize}}"
-    bindready="onEditorReady"
-    bindfocus="onEditorFocus"
-    bindblur="onEditorBlur"
-    bindinput="onEditorInput"
-    bindstatuschange="onEditorStatusChange"
-></editor>
 <form
     wx:elif="{{wxCompName === 'form'}}"
     id="{{id}}"
@@ -288,68 +234,6 @@
         hidden="{{item.extra.hidden}}"
     ><template is="subtree" data="{{childNodes: item.childNodes, inCover}}"/></picker-view-column>
 </block></picker-view>
-<slider
-    wx:elif="{{wxCompName === 'slider'}}"
-    id="{{id}}"
-    class="{{class}}"
-    style="{{style}}"
-    hidden="{{hidden}}"
-    min="{{min}}"
-    max="{{max}}"
-    step="{{step}}"
-    disabled="{{disabled}}"
-    value="{{value}}"
-    color="{{color}}"
-    selected-color="{{selectedColor}}"
-    active-color="{{activeColor}}"
-    background-color="{{backgroundColor}}"
-    block-size="{{blockSize}}"
-    block-color="{{blockColor}}"
-    show-value="{{showValue}}"
-    bindchange="onSliderChange"
-    bindchanging="onSliderChanging"
-></slider>
-<switch
-    wx:elif="{{wxCompName === 'switch'}}"
-    id="{{id}}"
-    class="{{class}}"
-    style="{{style}}"
-    hidden="{{hidden}}"
-    checked="{{checked}}"
-    disabled="{{disabled}}"
-    type="{{type}}"
-    color="{{color}}"
-    bindchange="onSwitchChange"
-></switch>
-<textarea
-    wx:elif="{{wxCompName === 'textarea'}}"
-    id="{{id}}"
-    class="{{class}}"
-    style="{{style}}"
-    hidden="{{hidden}}"
-    value="{{value}}"
-    placeholder="{{placeholder}}"
-    placeholder-style="{{placeholderStyle}}"
-    placeholder-class="{{placeholderClass}}"
-    disabled="{{disabled}}"
-    maxlength="{{maxlength}}"
-    auto-focus="{{autoFocus}}"
-    focus="{{focus}}"
-    auto-height="{{autoHeight}}"
-    fixed="{{fixed}}"
-    cursor-spacing="{{cursorSpacing}}"
-    cursor="{{cursor}}"
-    show-confirm-bar="{{showConfirmBar}}"
-    selection-start="{{selectionStart}}"
-    selection-end="{{selectionEnd}}"
-    adjust-position="{{adjustPosition}}"
-    bindfocus="onTextareaFocus"
-    bindblur="onTextareaBlur"
-    bindlinechange="onTextareaLineChange"
-    bindinput="onTextareaInput"
-    bindconfirm="onTextareaConfirm"
-    bindkeyboardheightchange="onTextareaKeyBoardHeightChange"
-></textarea>
 <!-- 导航 -->
 <navigator
     wx:elif="{{wxCompName === 'navigator'}}"
@@ -389,20 +273,6 @@
     bindinitdone="onCameraInitDone"
     bindscancode="onCameraScanCode"
 ><template is="subtree-cover" data="{{childNodes: innerChildNodes}}"/></camera>
-<image
-    wx:elif="{{wxCompName === 'image'}}"
-    id="{{id}}"
-    class="{{class}}"
-    style="{{style}}"
-    hidden="{{hidden}}"
-    rendering-mode="{{renderingMode}}"
-    src="{{src}}"
-    mode="{{mode}}"
-    lazy-load="{{lazyLoad}}"
-    show-menu-by-longpress="{{showMenuByLongpress}}"
-    bindload="onImageLoad"
-    binderror="onImageError"
-></image>
 <live-player
     wx:elif="{{wxCompName === 'live-player'}}"
     id="{{id}}"
@@ -551,49 +421,6 @@
     bindlongtap="onCanvasLongTap"
     binderror="onCanvasError"
 ><template is="subtree-cover" data="{{childNodes: innerChildNodes}}"/></canvas>
-<!-- 开放能力 -->
-<ad
-    wx:elif="{{wxCompName === 'ad'}}"
-    id="{{id}}"
-    class="{{class}}"
-    style="{{style}}"
-    hidden="{{hidden}}"
-    unit-id="{{unitId}}"
-    ad-intervals="{{adIntervals}}"
-    bindload="onAdLoad"
-    binderror="onAdError"
-    bindclose="onAdClose"
-></ad>
-<official-account
-    wx:elif="{{wxCompName === 'official-account'}}"
-    id="{{id}}"
-    class="{{class}}"
-    style="{{style}}"
-    hidden="{{hidden}}"
-    bindload="onOfficialAccountLoad"
-    binderror="onOfficialAccountError"
-></official-account>
-<open-data
-    wx:elif="{{wxCompName === 'open-data'}}"
-    id="{{id}}"
-    class="{{class}}"
-    style="{{style}}"
-    hidden="{{hidden}}"
-    type="{{type}}"
-    open-gid="{{openGid}}"
-    lang="{{lang}}"
-></open-data>
-<web-view
-    wx:elif="{{wxCompName === 'web-view'}}"
-    id="{{id}}"
-    class="{{class}}"
-    style="{{style}}"
-    hidden="{{hidden}}"
-    src="{{src}}"
-    bindmessage="onWebviewMessage"
-    bindload="onWebviewLoad"
-    binderror="onWebviewError"
-></web-view>
 <!-- 其他 -->
 <block
     wx:elif="{{wxCompName === 'not-support'}}"

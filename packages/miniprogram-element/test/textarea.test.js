@@ -1,6 +1,6 @@
 const _ = require('./utils')
 
-test('input', async() => {
+test('textarea', async() => {
     const page = global.$$page
     const componentId = _.load({
         template: `<element class="h5-body" style="width: 100%; height: 100%;" data-private-node-id="e-body" data-private-page-id="${page.pageId}"></element>`,
@@ -16,54 +16,12 @@ test('input', async() => {
     expect(_.match(component.dom, `<element class="h5-body" style="width: 100%; height: 100%;" data-private-node-id="e-body" data-private-page-id="${page.pageId}"></element>`)).toBe(true)
 
     const body = component.querySelector('.h5-body')
-    const node = page.document.createElement('input')
+    const node = page.document.createElement('textarea')
     page.document.body.appendChild(node)
     await _.sleep(10)
 
     // value
     await _.checkString(body, node, 'value', 'value', '')
-    node.setAttribute('type', 'radio')
-    node.setAttribute('value', undefined)
-    await _.sleep(10)
-    expect(node.value).toBe('on')
-    expect(body.data.childNodes[0].extra.value).toBe('on')
-    node.setAttribute('type', 'checkbox')
-    node.setAttribute('value', undefined)
-    await _.sleep(10)
-    expect(node.value).toBe('on')
-    expect(body.data.childNodes[0].extra.value).toBe('on')
-    node.setAttribute('type', undefined)
-    await _.sleep(10)
-
-    // type
-    expect(body.data.childNodes[0].extra.type).toBe('text')
-    node.setAttribute('type', '')
-    await _.sleep(10)
-    expect(body.data.childNodes[0].extra.type).toBe('text')
-    node.setAttribute('type', 'number')
-    await _.sleep(10)
-    expect(body.data.childNodes[0].extra.type).toBe('number')
-    node.setAttribute('type', 'text')
-    await _.sleep(10)
-    expect(body.data.childNodes[0].extra.type).toBe('text')
-    node.setAttribute('type', 'digit')
-    await _.sleep(10)
-    expect(body.data.childNodes[0].extra.type).toBe('digit')
-
-    // password
-    expect(body.data.childNodes[0].extra.password).toBe(false)
-    node.setAttribute('type', 'password')
-    await _.sleep(10)
-    expect(body.data.childNodes[0].extra.type).toBe('text')
-    expect(body.data.childNodes[0].extra.password).toBe(true)
-    node.setAttribute('type', '')
-    await _.sleep(10)
-    expect(body.data.childNodes[0].extra.type).toBe('text')
-    expect(body.data.childNodes[0].extra.password).toBe(false)
-    node.setAttribute('password', true)
-    await _.sleep(10)
-    expect(body.data.childNodes[0].extra.type).toBe('text')
-    expect(body.data.childNodes[0].extra.password).toBe(true)
 
     // placeholder
     await _.checkString(body, node, 'placeholder', 'placeholder', '')
@@ -80,9 +38,6 @@ test('input', async() => {
     // maxlength
     await _.checkNumber(body, node, 'maxlength', 'maxlength', 140)
 
-    // cursorSpacing
-    await _.checkNumber(body, node, 'cursorSpacing', 'cursor-spacing', 0)
-
     // autoFocus
     await _.checkBoolean(body, node, 'autoFocus', 'autofocus', false)
 
@@ -95,14 +50,20 @@ test('input', async() => {
     await _.sleep(10)
     expect(body.data.childNodes[0].extra.focus).toBe(false)
 
-    // confirmType
-    await _.checkString(body, node, 'confirmType', 'confirm-type', 'done')
+    // autoHeight
+    await _.checkBoolean(body, node, 'autoHeight', 'auto-height', false)
 
-    // confirmHold
-    await _.checkBoolean(body, node, 'confirmHold', 'confirm-hold', false)
+    // fixed
+    await _.checkBoolean(body, node, 'fixed', 'fixed', false)
+
+    // cursorSpacing
+    await _.checkNumber(body, node, 'cursorSpacing', 'cursor-spacing', 0)
 
     // cursor
     await _.checkNumber(body, node, 'cursor', 'cursor', -1)
+
+    // showConfirmBar
+    await _.checkBoolean(body, node, 'showConfirmBar', 'show-confirm-bar', true)
 
     // selectionStart
     await _.checkNumber(body, node, 'selectionStart', 'selection-start', -1)
@@ -113,11 +74,8 @@ test('input', async() => {
     // adjustPosition
     await _.checkBoolean(body, node, 'adjustPosition', 'adjust-position', true)
 
-    // checked
-    await _.checkBoolean(body, node, 'checked', 'checked', false)
-
     // event
-    await _.checkEvent(body.querySelector('.h5-input'), node, ['input', 'focus', 'blur', 'confirm', 'keyboardheightchange'])
+    await _.checkEvent(body.querySelector('.h5-textarea'), node, ['focus', 'blur', 'linechange', 'input', 'confirm', 'keyboardheightchange'])
 
     page.document.body.removeChild(node)
     document.body.removeChild(wrapper)

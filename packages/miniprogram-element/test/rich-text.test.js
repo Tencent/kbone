@@ -20,13 +20,22 @@ test('rich-text', async() => {
     node.setAttribute('behavior', 'rich-text')
     page.document.body.appendChild(node)
     await _.sleep(10)
-    const richText = body.querySelector('.h5-wx-component')
 
     // nodes
-    await _.checkArray(richText, node, 'nodes', 'nodes', [])
+    await _.checkArray(body, node, 'nodes', 'nodes', [], [{
+        name: 'div',
+        attrs: {
+            class: 'rich-text-div',
+            style: 'line-height: 60px; color: red;',
+        },
+        children: [{
+            type: 'text',
+            text: 'Hello&nbsp;World!',
+        }],
+    }])
 
     // space
-    await _.checkString(richText, node, 'space', 'space', '')
+    await _.checkString(body, node, 'space', 'space', '')
 
     page.document.body.removeChild(node)
     document.body.removeChild(wrapper)
