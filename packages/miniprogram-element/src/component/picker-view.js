@@ -31,9 +31,10 @@ module.exports = {
     }],
     handles: {
         onPickerViewChange(evt) {
-            if (!this.domNode) return
+            const domNode = this.getDomNodeFromEvt(evt)
+            if (!domNode) return
 
-            this.domNode.$$setAttributeWithoutUpdate('value', evt.detail.value)
+            domNode.$$setAttributeWithoutUpdate('value', evt.detail.value)
             this.callSimpleEvent('change', evt)
         },
 

@@ -14,16 +14,18 @@ const {
 
 const ELEMENT_DIFF_KEYS = ['nodeId', 'pageId', 'tagName', 'compName', 'id', 'class', 'style', 'src', 'mode', 'lazyLoad', 'showMenuByLongpress', 'useTemplate', 'isImage', 'isLeaf', 'isSimple', 'content', 'extra']
 const TEXT_NODE_DIFF_KEYS = ['nodeId', 'pageId', 'content']
-const NEET_SPLIT_CLASS_STYLE_FROM_CUSTOM_ELEMENT = ['VIDEO', 'CANVAS', 'WX-COMPONENT', 'WX-CUSTOM-COMPONENT'] // 需要分离 class 和 style 的节点
+const NEET_SPLIT_CLASS_STYLE_FROM_CUSTOM_ELEMENT = ['WX-COMPONENT', 'WX-CUSTOM-COMPONENT'] // 需要分离 class 和 style 的节点
+const NEET_BEHAVIOR_NORMAL_CUSTOM_ELEMENT_PARENT = ['swiper', 'movable-area', 'picker-view']
 const NEET_BEHAVIOR_NORMAL_CUSTOM_ELEMENT = ['swiper-item', 'movable-view', 'picker-view-column']
 const NEET_RENDER_TO_CUSTOM_ELEMENT = ['IFRAME', ...NEET_SPLIT_CLASS_STYLE_FROM_CUSTOM_ELEMENT] // 必须渲染成自定义组件的节点
 const NOT_SUPPORT = ['IFRAME']
-const USE_TEMPLATE = ['cover-image', 'icon', 'progress', 'rich-text', 'editor', 'INPUT', 'slider', 'switch', 'TEXTAREA', 'image', 'ad', 'official-account', 'open-data', 'web-view'] // 使用 template 渲染
+const USE_TEMPLATE = ['cover-image', 'movable-area', 'movable-view', 'swiper', 'swiper-item', 'icon', 'progress', 'rich-text', 'button', 'editor', 'form', 'INPUT', 'picker', 'picker-view', 'picker-view-column', 'slider', 'switch', 'TEXTAREA', 'navigator', 'camera', 'image', 'live-player', 'live-pusher', 'VIDEO', 'map', 'CANVAS', 'ad', 'official-account', 'open-data', 'web-view'] // 使用 template 渲染
+const IN_COVER = ['cover-view'] // 子节点必须使用 cover-view/cover-image
 
 /**
  * 过滤子节点，只获取儿子节点
  */
-function filterNodes(domNode, level) {
+function filterNodes(domNode, level, component) {
     const window = cache.getWindow(domNode.$$pageId)
     const childNodes = domNode.childNodes || []
 
@@ -56,7 +58,7 @@ function filterNodes(domNode, level) {
                 }
 
                 if (child.childNodes.length && level > 0) {
-                    domInfo.childNodes = filterNodes(child, level - 1)
+                    domInfo.childNodes = filterNodes(child, level - 1, component)
                 }
                 return domInfo
             }
@@ -85,15 +87,22 @@ function filterNodes(domNode, level) {
             if (wxCompName) checkComponentAttr(wxCompName, child, extra, null, `h5-${domInfo.tagName}`)
             extra.pageId = domInfo.pageId
             extra.nodeId = domInfo.nodeId
+            extra.inCover = component.data.inCover
+            extra.hasChildren = !!domNode.childNodes.length
             domInfo.extra = extra
-            // domInfo.childNodes = filterNodes(child, 0) // 用于走通用的 diff 和 filter 逻辑
 
-            // // 给 template 用
-            // extra.childData = {childNodes: domInfo.childNodes.map(childNode => {
-            //     const copyChildNode = Object.assign({}, childNode)
-            //     delete copyChildNode.domNode
-            //     return copyChildNode
-            // })}
+            // 给 template 中的特殊节点用
+            if (NEET_BEHAVIOR_NORMAL_CUSTOM_ELEMENT_PARENT.indexOf(templateName) !== -1) {
+                const childNodes = filterNodes(child, 0) || []
+                extra.childNodes = childNodes.map(childNode => {
+                    const copyChildNode = Object.assign({}, childNode)
+                    delete copyChildNode.domNode
+                    return copyChildNode
+                })
+            }
+
+            // TODO，为了兼容基础库的一个 bug，暂且如此实现
+            if (wxCompName === 'canvas') domInfo.domNode._wxComponent = component
         }
 
         // 判断叶子节点
@@ -106,7 +115,7 @@ function filterNodes(domNode, level) {
         domInfo.isSimple = !domInfo.isImage && !domInfo.useTemplate && !domInfo.isLeaf && domInfo.type === 'element' && NEET_RENDER_TO_CUSTOM_ELEMENT.indexOf(child.tagName) === -1 && level > 0
         if (domInfo.isSimple) {
             domInfo.content = ''
-            domInfo.childNodes = filterNodes(child, level - 1)
+            domInfo.childNodes = filterNodes(child, level - 1, component)
         }
 
         return domInfo
@@ -259,6 +268,7 @@ function findParentNode(domNode, tagName) {
 module.exports = {
     NOT_SUPPORT,
     USE_TEMPLATE,
+    IN_COVER,
     filterNodes,
     checkDiffChildNodes,
     checkComponentAttr,

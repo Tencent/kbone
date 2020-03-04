@@ -24,7 +24,7 @@ module.exports = {
         const tagName = domNode.tagName
 
         // 使用 template 渲染
-        if (USE_TEMPLATE.indexOf(tagName) !== -1 && USE_TEMPLATE.indexOf(domNode.behavior) !== -1) return
+        if (USE_TEMPLATE.indexOf(tagName) !== -1 || USE_TEMPLATE.indexOf(domNode.behavior) !== -1) return
 
         if (tagName === 'WX-COMPONENT') {
             // 内置组件

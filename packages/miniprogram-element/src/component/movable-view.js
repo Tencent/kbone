@@ -1,9 +1,3 @@
-const mp = require('miniprogram-render')
-
-const {
-    cache,
-} = mp.$$adapter
-
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/movable-view.html
  */
@@ -82,9 +76,7 @@ module.exports = {
     }],
     handles: {
         onMovableViewChange(evt) {
-            const nodeId = evt.currentTarget.dataset.privateNodeId
-            const domNode = cache.getNode(this.pageId, nodeId)
-
+            const domNode = this.getDomNodeFromEvt(evt)
             if (!domNode) return
 
             domNode.$$setAttributeWithoutUpdate('x', evt.detail.x)
@@ -93,9 +85,7 @@ module.exports = {
         },
 
         onMovableViewScale(evt) {
-            const nodeId = evt.currentTarget.dataset.privateNodeId
-            const domNode = cache.getNode(this.pageId, nodeId)
-
+            const domNode = this.getDomNodeFromEvt(evt)
             if (!domNode) return
 
             domNode.$$setAttributeWithoutUpdate('x', evt.detail.x)
@@ -105,18 +95,14 @@ module.exports = {
         },
 
         onMovableViewHtouchmove(evt) {
-            const nodeId = evt.currentTarget.dataset.privateNodeId
-            const domNode = cache.getNode(this.pageId, nodeId)
-
+            const domNode = this.getDomNodeFromEvt(evt)
             if (!domNode) return
 
             this.callSimpleEvent('htouchmove', evt, domNode)
         },
 
         onMovableViewVtouchmove(evt) {
-            const nodeId = evt.currentTarget.dataset.privateNodeId
-            const domNode = cache.getNode(this.pageId, nodeId)
-
+            const domNode = this.getDomNodeFromEvt(evt)
             if (!domNode) return
 
             this.callSimpleEvent('vtouchmove', evt, domNode)

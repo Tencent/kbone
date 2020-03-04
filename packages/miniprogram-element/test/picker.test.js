@@ -20,67 +20,65 @@ test('picker', async() => {
     node.setAttribute('behavior', 'picker')
     page.document.body.appendChild(node)
     await _.sleep(10)
-    const picker = body.querySelector('.h5-wx-component')
 
     // mode
-    await _.checkString(picker, node, 'mode', 'mode', 'selector')
+    await _.checkString(body, node, 'mode', 'mode', 'selector')
 
     // disabled
-    await _.checkBoolean(picker, node, 'disabled', 'disabled', false)
+    await _.checkBoolean(body, node, 'disabled', 'disabled', false)
 
     // range
-    await _.checkArray(picker, node, 'range', 'range', [], ['美国', '中国', '巴西', '日本'])
+    await _.checkArray(body, node, 'range', 'range', [], ['美国', '中国', '巴西', '日本'])
 
     // rangeKey
-    await _.checkString(picker, node, 'rangeKey', 'range-key', '')
+    await _.checkString(body, node, 'rangeKey', 'range-key', '')
 
     // value
     node.setAttribute('mode', '')
     await _.sleep(10)
-    await _.checkNumber(picker, node, 'value', 'value', 0)
+    await _.checkNumber(body, node, 'value', 'value', 0)
     node.setAttribute('mode', 'selector')
     node.setAttribute('value', undefined)
     await _.sleep(10)
-    await _.checkNumber(picker, node, 'value', 'value', 0)
+    await _.checkNumber(body, node, 'value', 'value', 0)
     node.setAttribute('mode', 'multiSelector')
     node.setAttribute('value', undefined)
     await _.sleep(10)
-    await _.checkNumber(picker, node, 'value', 'value', 0)
+    await _.checkNumber(body, node, 'value', 'value', 0)
     node.setAttribute('mode', 'time')
     node.setAttribute('value', undefined)
     await _.sleep(10)
-    await _.checkString(picker, node, 'value', 'value', '')
+    await _.checkString(body, node, 'value', 'value', '')
     node.setAttribute('mode', 'date')
     node.setAttribute('value', undefined)
     await _.sleep(10)
-    await _.checkString(picker, node, 'value', 'value', '0')
+    await _.checkString(body, node, 'value', 'value', '0')
     node.setAttribute('mode', 'region')
     node.setAttribute('value', undefined)
     await _.sleep(10)
-    expect(picker.data.value).toEqual([])
+    expect(body.data.childNodes[0].extra.value).toEqual([])
     const value = ['广东省', '广州市', '海珠区']
     node.setAttribute('value', value)
     await _.sleep(10)
-    expect(picker.data.value).toEqual(value)
+    expect(body.data.childNodes[0].extra.value).toEqual(value)
     node.setAttribute('value', [])
     await _.sleep(10)
-    expect(picker.data.value).toEqual([])
+    expect(body.data.childNodes[0].extra.value).toEqual([])
     node.setAttribute('value', undefined)
     await _.sleep(10)
-    expect(picker.data.value).toEqual([])
+    expect(body.data.childNodes[0].extra.value).toEqual([])
 
     // start
-    await _.checkString(picker, node, 'start', 'start', '')
+    await _.checkString(body, node, 'start', 'start', '')
 
     // end
-    await _.checkString(picker, node, 'end', 'end', '')
+    await _.checkString(body, node, 'end', 'end', '')
 
     // fields
-    await _.checkString(picker, node, 'fields', 'fields', 'day')
+    await _.checkString(body, node, 'fields', 'fields', 'day')
 
     // event
-    const wxPicker = picker.querySelector('.wx-comp-picker')
-    await _.checkEvent(wxPicker, node, ['change', 'columnchange', 'cancel'])
+    await _.checkEvent(body.querySelector('.h5-wx-component'), node, ['change', 'columnchange', 'cancel'])
 
     page.document.body.removeChild(node)
     document.body.removeChild(wrapper)

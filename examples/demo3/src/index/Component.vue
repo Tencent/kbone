@@ -779,6 +779,10 @@ export default {
     },
 
     onPickerViewChange(evt) {
+      // this.pickerView.year = this.pickerView.years[evt.detail.value[0]]
+      // this.pickerView.month = this.pickerView.months[evt.detail.value[1]]
+      // this.pickerView.day = this.pickerView.days[evt.detail.value[2]]
+      // this.pickerView.value = evt.detail.value
       console.log('onPickerViewChange', evt.detail)
     },
 

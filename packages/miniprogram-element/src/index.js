@@ -10,6 +10,7 @@ const {
 } = mp.$$adapter
 const {
     NOT_SUPPORT,
+    IN_COVER,
 } = _
 const {
     wxCompNameMap,
@@ -54,9 +55,6 @@ Component({
         this.domNode = cache.getNode(pageId, nodeId)
         if (!this.domNode) return
 
-        // TODO，为了兼容基础库的一个 bug，暂且如此实现
-        if (this.domNode.tagName === 'CANVAS') this.domNode._wxComponent = this
-
         // 存储 document
         this.document = cache.getDocument(pageId)
 
@@ -70,9 +68,10 @@ Component({
 
         // 初始化
         this.init(data)
+        if (IN_COVER.indexOf(data.wxCompName) !== -1) this.data.inCover = true
 
         // 初始化孩子节点
-        const childNodes = _.filterNodes(this.domNode, DOM_SUB_TREE_LEVEL - 1)
+        const childNodes = _.filterNodes(this.domNode, DOM_SUB_TREE_LEVEL - 1, this)
         const dataChildNodes = _.dealWithLeafAndSimple(childNodes, this.onChildNodesUpdate)
         if (data.wxCompName || data.wxCustomCompName) {
             // 内置组件/自定义组件
@@ -102,7 +101,7 @@ Component({
             if (!this.pageId || !this.nodeId) return
 
             // 儿子节点有变化
-            const childNodes = _.filterNodes(this.domNode, DOM_SUB_TREE_LEVEL - 1)
+            const childNodes = _.filterNodes(this.domNode, DOM_SUB_TREE_LEVEL - 1, this)
             const oldChildNodes = this.data.wxCompName || this.data.wxCustomCompName ? this.data.innerChildNodes : this.data.childNodes
             if (_.checkDiffChildNodes(childNodes, oldChildNodes)) {
                 const dataChildNodes = _.dealWithLeafAndSimple(childNodes, this.onChildNodesUpdate)

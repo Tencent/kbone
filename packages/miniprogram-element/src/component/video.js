@@ -166,9 +166,10 @@ module.exports = {
         },
 
         onVideoTimeUpdate(evt) {
-            if (!this.domNode) return
+            const domNode = this.getDomNodeFromEvt(evt)
+            if (!domNode) return
 
-            this.domNode.$$setAttributeWithoutUpdate('currentTime', evt.detail.currentTime)
+            domNode.$$setAttributeWithoutUpdate('currentTime', evt.detail.currentTime)
             this.callSimpleEvent('timeupdate', evt)
         },
 
@@ -185,9 +186,10 @@ module.exports = {
         },
 
         onVideoProgress(evt) {
-            if (!this.domNode) return
+            const domNode = this.getDomNodeFromEvt(evt)
+            if (!domNode) return
 
-            this.domNode.$$setAttributeWithoutUpdate('buffered', evt.detail.buffered)
+            domNode.$$setAttributeWithoutUpdate('buffered', evt.detail.buffered)
             this.callSimpleEvent('progress', evt)
         },
     },

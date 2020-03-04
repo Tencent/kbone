@@ -78,9 +78,10 @@ module.exports = {
     }],
     handles: {
         onSwiperChange(evt) {
-            if (!this.domNode) return
+            const domNode = this.getDomNodeFromEvt(evt)
+            if (!domNode) return
 
-            this.domNode.$$setAttributeWithoutUpdate('current', evt.detail.current)
+            domNode.$$setAttributeWithoutUpdate('current', evt.detail.current)
             this.callSimpleEvent('change', evt)
         },
 

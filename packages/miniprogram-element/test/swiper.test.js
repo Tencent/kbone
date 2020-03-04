@@ -29,62 +29,61 @@ test('swiper', async() => {
     const swiper = body.querySelector('.h5-wx-component')
 
     // 检查 swiper-item
-    expect(swiper.dom.childNodes[0].childNodes.length).toBe(3)
+    expect(swiper.dom.childNodes.length).toBe(3)
     expect(swiper.dom.childNodes[0].childNodes[0].childNodes[0].classList.contains('element--h5-span')).toBe(true)
     expect(swiper.dom.childNodes[0].childNodes[0].childNodes[0].innerHTML).toBe('1')
-    expect(swiper.dom.childNodes[0].childNodes[1].childNodes[0].classList.contains('element--h5-span')).toBe(true)
-    expect(swiper.dom.childNodes[0].childNodes[1].childNodes[0].innerHTML).toBe('2')
-    expect(swiper.dom.childNodes[0].childNodes[2].childNodes[0].classList.contains('element--h5-span')).toBe(true)
-    expect(swiper.dom.childNodes[0].childNodes[2].childNodes[0].innerHTML).toBe('3')
-    expect(swiper.data.innerChildNodes[0].extra).toEqual({hidden: false, itemId: '1'})
-    expect(swiper.data.innerChildNodes[1].extra).toEqual({hidden: false, itemId: '2'})
-    expect(swiper.data.innerChildNodes[2].extra).toEqual({hidden: false, itemId: ''})
+    expect(swiper.dom.childNodes[1].childNodes[0].childNodes[0].classList.contains('element--h5-span')).toBe(true)
+    expect(swiper.dom.childNodes[1].childNodes[0].childNodes[0].innerHTML).toBe('2')
+    expect(swiper.dom.childNodes[2].childNodes[0].childNodes[0].classList.contains('element--h5-span')).toBe(true)
+    expect(swiper.dom.childNodes[2].childNodes[0].childNodes[0].innerHTML).toBe('3')
+    expect(body.data.childNodes[0].extra.childNodes[0].extra).toEqual({hidden: false, itemId: '1'})
+    expect(body.data.childNodes[0].extra.childNodes[1].extra).toEqual({hidden: false, itemId: '2'})
+    expect(body.data.childNodes[0].extra.childNodes[2].extra).toEqual({hidden: false, itemId: ''})
 
     // indicator-dots
-    await _.checkBoolean(swiper, node, 'indicatorDots', 'indicator-dots', false)
+    await _.checkBoolean(body, node, 'indicatorDots', 'indicator-dots', false)
 
     // indicator-color
-    await _.checkString(swiper, node, 'indicatorColor', 'indicator-color', 'rgba(0, 0, 0, .3)')
+    await _.checkString(body, node, 'indicatorColor', 'indicator-color', 'rgba(0, 0, 0, .3)')
 
     // indicator-active-color
-    await _.checkString(swiper, node, 'indicatorActiveColor', 'indicator-active-color', '#000000')
+    await _.checkString(body, node, 'indicatorActiveColor', 'indicator-active-color', '#000000')
 
     // autoplay
-    await _.checkBoolean(swiper, node, 'autoplay', 'autoplay', false)
+    await _.checkBoolean(body, node, 'autoplay', 'autoplay', false)
 
     // current
-    await _.checkNumber(swiper, node, 'current', 'current', 0)
+    await _.checkNumber(body, node, 'current', 'current', 0)
 
     // interval
-    await _.checkNumber(swiper, node, 'interval', 'interval', 5000)
+    await _.checkNumber(body, node, 'interval', 'interval', 5000)
 
     // duration
-    await _.checkNumber(swiper, node, 'duration', 'duration', 500)
+    await _.checkNumber(body, node, 'duration', 'duration', 500)
 
     // circular
-    await _.checkBoolean(swiper, node, 'circular', 'circular', false)
+    await _.checkBoolean(body, node, 'circular', 'circular', false)
 
     // vertical
-    await _.checkBoolean(swiper, node, 'vertical', 'vertical', false)
+    await _.checkBoolean(body, node, 'vertical', 'vertical', false)
 
     // previous-margin
-    await _.checkString(swiper, node, 'previousMargin', 'previous-margin', '0px')
+    await _.checkString(body, node, 'previousMargin', 'previous-margin', '0px')
 
     // next-margin
-    await _.checkString(swiper, node, 'nextMargin', 'next-margin', '0px')
+    await _.checkString(body, node, 'nextMargin', 'next-margin', '0px')
 
     // display-multiple-items
-    await _.checkNumber(swiper, node, 'displayMultipleItems', 'display-multiple-items', 1)
+    await _.checkNumber(body, node, 'displayMultipleItems', 'display-multiple-items', 1)
 
     // skip-hidden-item-layout
-    await _.checkBoolean(swiper, node, 'skipHiddenItemLayout', 'skip-hidden-item-layout', false)
+    await _.checkBoolean(body, node, 'skipHiddenItemLayout', 'skip-hidden-item-layout', false)
 
     // easing-function
-    await _.checkString(swiper, node, 'easingFunction', 'easing-function', 'default')
+    await _.checkString(body, node, 'easingFunction', 'easing-function', 'default')
 
     // event
-    const wxSwiper = swiper.querySelector('.wx-comp-swiper')
-    await _.checkEvent(wxSwiper, node, ['change', 'transition', 'animationfinish'])
+    await _.checkEvent(swiper, node, ['change', 'transition', 'animationfinish'])
 
     page.document.body.removeChild(node)
     document.body.removeChild(wrapper)
