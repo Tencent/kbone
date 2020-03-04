@@ -239,28 +239,6 @@
     bindsubmit="onFormSubmit"
     bindreset="onFormReset"
 ><template is="subtree" data="{{childNodes: innerChildNodes, inCover}}"/></form>
-<block wx:elif="{{wxCompName === 'input'}}">
-    <radio-group wx:if="{{type === 'radio'}}" bindchange="onRadioChange"><radio
-        id="{{id}}"
-        class="{{class}}"
-        style="{{style}}"
-        hidden="{{hidden}}"
-        value="{{value}}"
-        disabled="{{disabled}}"
-        checked="{{checked}}"
-        color="{{color}}"
-    ><template is="subtree" data="{{childNodes: innerChildNodes, inCover}}"/></radio></radio-group>
-    <checkbox-group wx:elif="{{type === 'checkbox'}}" bindchange="onCheckboxChange"><checkbox
-        id="{{id}}"
-        class="{{class}}"
-        style="{{style}}"
-        hidden="{{hidden}}"
-        value="{{value}}"
-        disabled="{{disabled}}"
-        checked="{{checked}}"
-        color="{{color}}"
-    ><template is="subtree" data="{{childNodes: innerChildNodes, inCover}}"/></checkbox></checkbox-group>
-</block>
 <picker
     wx:elif="{{wxCompName === 'picker'}}"
     id="{{id}}"

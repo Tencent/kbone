@@ -24,9 +24,7 @@ module.exports = {
         const tagName = domNode.tagName
 
         // 使用 template 渲染
-        if (USE_TEMPLATE.indexOf(tagName) !== -1 && USE_TEMPLATE.indexOf(domNode.behavior) !== -1) {
-            if (domNode.type !== 'radio' && domNode.type !== 'checkbox') return
-        }
+        if (USE_TEMPLATE.indexOf(tagName) !== -1 && USE_TEMPLATE.indexOf(domNode.behavior) !== -1) return
 
         if (tagName === 'WX-COMPONENT') {
             // 内置组件
@@ -54,7 +52,7 @@ module.exports = {
      * 触发简单节点事件，不做冒泡处理
      */
     callSimpleEvent(eventName, evt, domNode) {
-        domNode = domNode || this.getDomNodeFromEvt(evt) || this.domNode
+        domNode = domNode || this.getDomNodeFromEvt(evt)
         if (!domNode) return
 
         EventTarget.$$process(domNode, new Event({

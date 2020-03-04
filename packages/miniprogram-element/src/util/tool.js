@@ -83,19 +83,19 @@ function filterNodes(domNode, level) {
 
         // 判断是否使用 template 渲染
         const templateName = domInfo.tagName === 'wx-component' ? child.behavior : child.tagName
-        domInfo.useTemplate = USE_TEMPLATE.indexOf(templateName) !== -1
-        if (domInfo.useTemplate && domInfo.tagName === 'input') domInfo.useTemplate = child.type !== 'radio' && child.type !== 'checkbox' // input 补充特殊判断
+        domInfo.useTemplate = !domInfo.isImage && USE_TEMPLATE.indexOf(templateName) !== -1
         if (domInfo.useTemplate) {
             const wxCompName = wxCompNameMap[templateName]
             const extra = {}
-            if (wxCompName) checkComponentAttr(wxCompName, child, extra)
+            if (wxCompName) checkComponentAttr(wxCompName, child, extra, null, `h5-${domInfo.tagName}`)
             extra.pageId = domInfo.pageId
             extra.nodeId = domInfo.nodeId
+            // extra.childNodes = filterNodes(child, 0)
             domInfo.extra = extra
         }
 
         // 判断叶子节点
-        domInfo.isLeaf = !domInfo.isImage && !domInfo.useTemplate && domInfo.type === 'element' && !child.children.length && NEET_RENDER_TO_CUSTOM_ELEMENT.indexOf(child.tagName) === -1
+        domInfo.isLeaf = !domInfo.useTemplate && domInfo.type === 'element' && !child.children.length && NEET_RENDER_TO_CUSTOM_ELEMENT.indexOf(child.tagName) === -1
         if (domInfo.isLeaf) {
             domInfo.content = child.childNodes.map(childNode => (childNode.$$domInfo.type === 'text' ? childNode.textContent : '')).join('')
         }
@@ -168,7 +168,7 @@ function checkDiffChildNodes(newChildNodes, oldChildNodes) {
 /**
  * 检查组件属性
  */
-function checkComponentAttr(name, domNode, destData, oldData) {
+function checkComponentAttr(name, domNode, destData, oldData, extraClass = '') {
     const attrs = initData[name]
 
     destData.wxCompName = name
@@ -183,7 +183,7 @@ function checkComponentAttr(name, domNode, destData, oldData) {
     // 补充 id、class、style 和 hidden
     const newId = domNode.id
     if (!oldData || oldData.id !== newId) destData.id = newId
-    const newClass = `wx-comp-${name} node-${domNode.$$nodeId} ${domNode.className || ''}`
+    const newClass = `${extraClass} wx-comp-${name} node-${domNode.$$nodeId} ${domNode.className || ''}`
     if (!oldData || oldData.class !== newClass) destData.class = newClass
     const newStyle = domNode.style.cssText
     if (!oldData || oldData.style !== newStyle) destData.style = newStyle
@@ -199,7 +199,7 @@ function dealWithLeafAndSimple(childNodes, onChildNodesUpdate) {
         childNodes = childNodes.map(originChildNode => {
             const childNode = Object.assign({}, originChildNode)
 
-            if (childNode.isLeaf || childNode.isSimple || childNode.useTemplate) {
+            if (childNode.isImage || childNode.isLeaf || childNode.isSimple || childNode.useTemplate) {
                 childNode.domNode.$$clearEvent('$$childNodesUpdate')
                 childNode.domNode.addEventListener('$$childNodesUpdate', onChildNodesUpdate)
             }

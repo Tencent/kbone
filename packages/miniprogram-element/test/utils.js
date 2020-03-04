@@ -159,24 +159,28 @@ simulate.checkNumber = async function(component, node, attrName, attributeName, 
 /**
  * 检查字符串
  */
-simulate.checkString = async function(component, node, attrName, attributeName, defaultValue) {
-    if (component.data[attrName] !== defaultValue) err(`${node.tagName}.${attrName}`)
-    expect(component.data[attrName]).toBe(defaultValue)
+simulate.checkString = async function(component, node, attrName, attributeName, defaultValue, isInTemplate) {
+    function getData(component) {
+        return isInTemplate ? component.data.childNodes[0].extra : component.data
+    }
+
+    if (getData(component)[attrName] !== defaultValue) err(`${node.tagName}.${attrName}`)
+    expect(getData(component)[attrName]).toBe(defaultValue)
 
     node.setAttribute(attributeName, '12345')
     await simulate.sleep(10)
-    if (component.data[attrName] !== '12345') err(`${node.tagName}.${attrName}`)
-    expect(component.data[attrName]).toBe('12345')
+    if (getData(component)[attrName] !== '12345') err(`${node.tagName}.${attrName}`)
+    expect(getData(component)[attrName]).toBe('12345')
 
     node.setAttribute(attributeName, '54321')
     await simulate.sleep(10)
-    if (component.data[attrName] !== '54321') err(`${node.tagName}.${attrName}`)
-    expect(component.data[attrName]).toBe('54321')
+    if (getData(component)[attrName] !== '54321') err(`${node.tagName}.${attrName}`)
+    expect(getData(component)[attrName]).toBe('54321')
 
     node.setAttribute(attributeName, '')
     await simulate.sleep(10)
-    if (component.data[attrName] !== defaultValue) err(`${node.tagName}.${attrName}`)
-    expect(component.data[attrName]).toBe(defaultValue)
+    if (getData(component)[attrName] !== defaultValue) err(`${node.tagName}.${attrName}`)
+    expect(getData(component)[attrName]).toBe(defaultValue)
 }
 
 /**

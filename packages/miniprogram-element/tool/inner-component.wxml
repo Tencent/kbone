@@ -1,6 +1,56 @@
 <template name="input">
+    <radio-group
+        wx:if="{{type === 'radio'}}"
+
+        id="{{id}}"
+        class="{{class}}"
+        style="{{style}}"
+        data-private-node-id="{{nodeId}}"
+        data-private-page-id="{{pageId}}"
+        bindchange="onRadioChange"
+    ><radio
+        id="{{id}}"
+        class="{{class}}"
+        style="{{style}}"
+        hidden="{{hidden}}"
+        data-private-node-id="{{nodeId}}"
+        data-private-page-id="{{pageId}}"
+        bindtouchstart="onTouchStart"
+        bindtouchmove="onTouchMove"
+        bindtouchend="onTouchEnd"
+        bindtouchcancel="onTouchCancel"
+
+        value="{{value}}"
+        disabled="{{disabled}}"
+        checked="{{checked}}"
+        color="{{color}}"
+    ></radio></radio-group>
+    <checkbox-group
+        wx:elif="{{type === 'checkbox'}}"
+
+        id="{{id}}"
+        class="{{class}}"
+        style="{{style}}"
+        data-private-node-id="{{nodeId}}"
+        data-private-page-id="{{pageId}}"
+        bindchange="onCheckboxChange"
+    ><checkbox
+        hidden="{{hidden}}"
+        data-private-node-id="{{nodeId}}"
+        data-private-page-id="{{pageId}}"
+        bindtouchstart="onTouchStart"
+        bindtouchmove="onTouchMove"
+        bindtouchend="onTouchEnd"
+        bindtouchcancel="onTouchCancel"
+        bindtap="onTap"
+
+        value="{{value}}"
+        disabled="{{disabled}}"
+        checked="{{checked}}"
+        color="{{color}}"
+    ></checkbox></checkbox-group>
     <input
-        wx:if="{{type !== 'hidden'}}"
+        wx:elif="{{type !== 'hidden'}}"
 
         id="{{id}}"
         class="{{class}}"

@@ -124,7 +124,7 @@ Component({
             const childNodeStack = [].concat(childNodes)
             let childNode = childNodeStack.pop()
             while (childNode) {
-                if (childNode.type === 'element' && !childNode.isLeaf && !childNode.isSimple) {
+                if (childNode.type === 'element' && !childNode.isImage && !childNode.isLeaf && !childNode.isSimple && !childNode.useTemplate) {
                     childNode.domNode.$$trigger('$$childNodesUpdate')
                 }
 
@@ -172,9 +172,7 @@ Component({
          * 触发事件
          */
         callEvent(eventName, evt, extra) {
-            const pageId = this.pageId
-            const originNodeId = evt.currentTarget.dataset.privateNodeId || this.nodeId
-            const domNode = cache.getNode(pageId, originNodeId)
+            const domNode = this.getDomNodeFromEvt(evt)
 
             if (!domNode) return
 
@@ -352,7 +350,7 @@ Component({
         getDomNodeFromEvt(evt) {
             if (!evt) return
             const pageId = this.pageId
-            const originNodeId = evt.currentTarget.dataset.privateNodeId
+            const originNodeId = evt.currentTarget.dataset.privateNodeId || this.nodeId
             return cache.getNode(pageId, originNodeId)
         },
 

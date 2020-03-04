@@ -3,7 +3,7 @@
   <div className="cnt2">
     <div class="group" v-for="item in list" :key="item">
       <div class="label">{{item}}</div>
-      <div class="comp">
+      <wx-view class="comp">
         <div v-if="item === 'normal'">
           <div>
             <div class="inline">hello </div>
@@ -463,7 +463,7 @@
           <wx-xxxx v-else-if="wxPrefix === 1"></wx-xxxx>
         </template>
         <iframe v-else-if="item === 'iframe'"></iframe>
-      </div>
+      </wx-view>
     </div>
   </div>
 </template>

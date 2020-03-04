@@ -122,8 +122,9 @@ module.exports = {
 
         onInputFocus(evt) {
             const domNode = this.getDomNodeFromEvt(evt)
-            if (domNode) domNode._inputOldValue = domNode.value
+            if (!domNode) return
 
+            domNode._inputOldValue = domNode.value
             domNode.setAttribute('focus', true)
             this.callSimpleEvent('focus', evt)
         },
@@ -149,8 +150,10 @@ module.exports = {
         },
 
         onRadioChange(evt) {
+            const domNode = this.getDomNodeFromEvt(evt)
+            if (!domNode) return
+
             const window = cache.getWindow(this.pageId)
-            const domNode = this.domNode
             const value = evt.detail.value
             const name = domNode.name
 
@@ -168,7 +171,9 @@ module.exports = {
         },
 
         onCheckboxChange(evt) {
-            const domNode = this.domNode
+            const domNode = this.getDomNodeFromEvt(evt)
+            if (!domNode) return
+            
             const value = evt.detail.value || []
             if (value.indexOf(domNode.value) >= 0) {
                 domNode.setAttribute('checked', true)
