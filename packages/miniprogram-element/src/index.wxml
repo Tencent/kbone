@@ -1,16 +1,6 @@
 <import src="./template/subtree.wxml"/>
 <import src="./template/subtree-cover.wxml"/>
 <!-- 视图容器 -->
-<cover-image
-    wx:if="{{wxCompName === 'cover-image'}}"
-    id="{{id}}"
-    class="{{class}}"
-    style="{{style}}"
-    hidden="{{hidden}}"
-    src="{{src}}"
-    bindload="onCoverImageLoad"
-    binderror="onCoverImageError"
-></cover-image>
 <cover-view
     wx:elif="{{wxCompName === 'cover-view'}}"
     id="{{id}}"
