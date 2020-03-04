@@ -199,6 +199,21 @@
           <wx-component v-if="!wxPrefix" :behavior="item" open-type="getPhoneNumber" @getphonenumber="onGetPhoneNumber">获取手机号</wx-component>
           <wx-button v-else-if="wxPrefix === 1" open-type="getPhoneNumber" @getphonenumber="onGetPhoneNumber">获取手机号</wx-button>
           <button v-else-if="wxPrefix === 2" open-type="getPhoneNumber" @getphonenumber="onGetPhoneNumber">获取手机号</button>
+          <wx-component v-if="!wxPrefix" :behavior="item">
+            <span>span1</span>
+            <input type="checkbox"/>
+            <span>span2</span>
+          </wx-component>
+          <wx-button v-else-if="wxPrefix === 1">
+            <span>span1</span>
+            <input type="checkbox"/>
+            <span>span2</span>
+          </wx-button>
+          <button v-else-if="wxPrefix === 2">
+            <span>span1</span>
+            <input type="checkbox"/>
+            <span>span2</span>
+          </button>
         </template>
         <template v-else-if="item === 'image'">
           <wx-component v-if="!wxPrefix" :behavior="item" src="https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg"></wx-component>

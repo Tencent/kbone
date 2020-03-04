@@ -74,11 +74,6 @@ function filterNodes(domNode, level) {
             domInfo.mode = child.getAttribute('mode') || ''
             domInfo.lazyLoad = !!child.getAttribute('lazy-load')
             domInfo.showMenuByLongpress = !!child.getAttribute('show-menu-by-longpress')
-        } else {
-            domInfo.src = ''
-            domInfo.mode = ''
-            domInfo.lazyLoad = false
-            domInfo.showMenuByLongpress = false
         }
 
         // 判断是否使用 template 渲染
@@ -90,18 +85,25 @@ function filterNodes(domNode, level) {
             if (wxCompName) checkComponentAttr(wxCompName, child, extra, null, `h5-${domInfo.tagName}`)
             extra.pageId = domInfo.pageId
             extra.nodeId = domInfo.nodeId
-            // extra.childNodes = filterNodes(child, 0)
             domInfo.extra = extra
+            // domInfo.childNodes = filterNodes(child, 0) // 用于走通用的 diff 和 filter 逻辑
+
+            // // 给 template 用
+            // extra.childData = {childNodes: domInfo.childNodes.map(childNode => {
+            //     const copyChildNode = Object.assign({}, childNode)
+            //     delete copyChildNode.domNode
+            //     return copyChildNode
+            // })}
         }
 
         // 判断叶子节点
-        domInfo.isLeaf = !domInfo.useTemplate && domInfo.type === 'element' && !child.children.length && NEET_RENDER_TO_CUSTOM_ELEMENT.indexOf(child.tagName) === -1
+        domInfo.isLeaf = !domInfo.isImage && !domInfo.useTemplate && domInfo.type === 'element' && !child.children.length && NEET_RENDER_TO_CUSTOM_ELEMENT.indexOf(child.tagName) === -1
         if (domInfo.isLeaf) {
             domInfo.content = child.childNodes.map(childNode => (childNode.$$domInfo.type === 'text' ? childNode.textContent : '')).join('')
         }
 
         // 判断可直接用 view 渲染的简单子节点
-        domInfo.isSimple = !domInfo.isLeaf && domInfo.type === 'element' && NEET_RENDER_TO_CUSTOM_ELEMENT.indexOf(child.tagName) === -1 && level > 0
+        domInfo.isSimple = !domInfo.isImage && !domInfo.useTemplate && !domInfo.isLeaf && domInfo.type === 'element' && NEET_RENDER_TO_CUSTOM_ELEMENT.indexOf(child.tagName) === -1 && level > 0
         if (domInfo.isSimple) {
             domInfo.content = ''
             domInfo.childNodes = filterNodes(child, level - 1)
@@ -140,7 +142,7 @@ function checkDiffChildNodes(newChildNodes, oldChildNodes) {
         for (const key of keys) {
             const newValue = newChild[key]
             const oldValue = oldChild[key]
-            if (typeof newValue === 'object') {
+            if (typeof newValue === 'object' && !Array.isArray(newValue)) {
                 // 值为对象，则判断对象顶层值是否有变化
                 if (typeof oldValue !== 'object') return true
 

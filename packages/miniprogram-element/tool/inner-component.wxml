@@ -12,7 +12,7 @@
         bindtouchend="onTouchEnd"
         bindtouchcancel="onTouchCancel"
         bindtap="onTap"
-        
+
         src="{{src}}"
         bindload="onCoverImageLoad"
         binderror="onCoverImageError"

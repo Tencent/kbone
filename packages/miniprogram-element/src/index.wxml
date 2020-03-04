@@ -2,7 +2,7 @@
 <import src="./template/subtree-cover.wxml"/>
 <!-- 视图容器 -->
 <cover-view
-    wx:elif="{{wxCompName === 'cover-view'}}"
+    wx:if="{{wxCompName === 'cover-view'}}"
     id="{{id}}"
     class="{{class}}"
     style="{{style}}"
