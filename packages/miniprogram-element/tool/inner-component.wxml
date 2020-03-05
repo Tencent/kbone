@@ -387,45 +387,6 @@
         bindcancel="onPickerCancel"
     ><element wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element></picker>
 </template>
-<template name="picker-view">
-    <picker-view
-        id="{{id}}"
-        class="{{class}}"
-        style="{{style}}"
-        hidden="{{hidden}}"
-        data-private-node-id="{{nodeId}}"
-        data-private-page-id="{{pageId}}"
-        bindtouchstart="onTouchStart"
-        bindtouchmove="onTouchMove"
-        bindtouchend="onTouchEnd"
-        bindtouchcancel="onTouchCancel"
-        bindtap="onTap"
-
-        value="{{value}}"
-        indicator-style="{{indicatorStyle}}"
-        indicator-class="{{indicatorClass}}"
-        mask-style="{{maskStyle}}"
-        mask-class="{{maskClass}}"
-        bindchange="onPickerViewChange"
-        bindpickstart="onPickerViewPickstart"
-        bindpickend="onPickerViewPickend"
-    ><block wx:for="{{childNodes}}" wx:key="nodeId">
-        <picker-view-column
-            wx:if="{{item.type === 'element' && item.compName === 'picker-view-column'}}"
-            id="{{item.id}}"
-            class="{{item.class || ''}}"
-            style="{{item.style || ''}}"
-            hidden="{{item.extra.hidden}}"
-            data-private-node-id="{{item.nodeId}}"
-            data-private-page-id="{{item.pageId}}"
-            bindtouchstart="onTouchStart"
-            bindtouchmove="onTouchMove"
-            bindtouchend="onTouchEnd"
-            bindtouchcancel="onTouchCancel"
-            bindtap="onTap"
-        ><element wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{item.nodeId}}" data-private-page-id="{{item.pageId}}" generic:custom-component="custom-component"></element></picker-view-column>
-    </block></picker-view>
-</template>
 <template name="slider">
     <slider
         id="{{id}}"

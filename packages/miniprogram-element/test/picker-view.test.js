@@ -29,34 +29,35 @@ test('picker-view', async() => {
     const pickerView = body.querySelector('.h5-wx-component')
 
     // 检查 picker-view-column
-    expect(pickerView.dom.childNodes.length).toBe(3)
+    expect(pickerView.dom.childNodes[0].childNodes.length).toBe(3)
     expect(pickerView.dom.childNodes[0].childNodes[0].childNodes[0].classList.contains('element--h5-span')).toBe(true)
     expect(pickerView.dom.childNodes[0].childNodes[0].childNodes[0].innerHTML).toBe('1')
-    expect(pickerView.dom.childNodes[1].childNodes[0].childNodes[0].classList.contains('element--h5-span')).toBe(true)
-    expect(pickerView.dom.childNodes[1].childNodes[0].childNodes[0].innerHTML).toBe('2')
-    expect(pickerView.dom.childNodes[2].childNodes[0].childNodes[0].classList.contains('element--h5-span')).toBe(true)
-    expect(pickerView.dom.childNodes[2].childNodes[0].childNodes[0].innerHTML).toBe('3')
-    expect(body.data.childNodes[0].extra.childNodes[0].extra).toEqual({hidden: false})
-    expect(body.data.childNodes[0].extra.childNodes[1].extra).toEqual({hidden: false})
-    expect(body.data.childNodes[0].extra.childNodes[2].extra).toEqual({hidden: false})
+    expect(pickerView.dom.childNodes[0].childNodes[1].childNodes[0].classList.contains('element--h5-span')).toBe(true)
+    expect(pickerView.dom.childNodes[0].childNodes[1].childNodes[0].innerHTML).toBe('2')
+    expect(pickerView.dom.childNodes[0].childNodes[2].childNodes[0].classList.contains('element--h5-span')).toBe(true)
+    expect(pickerView.dom.childNodes[0].childNodes[2].childNodes[0].innerHTML).toBe('3')
+    expect(pickerView.data.innerChildNodes[0].extra).toEqual({hidden: false})
+    expect(pickerView.data.innerChildNodes[1].extra).toEqual({hidden: false})
+    expect(pickerView.data.innerChildNodes[2].extra).toEqual({hidden: false})
 
     // value
-    await _.checkArray(body, node, 'value', 'value', [], [9999, 1, 1])
+    await _.checkArray(pickerView, node, 'value', 'value', [], [9999, 1, 1])
 
     // indicator-style
-    await _.checkString(body, node, 'indicatorStyle', 'indicator-style', '')
+    await _.checkString(pickerView, node, 'indicatorStyle', 'indicator-style', '')
 
     // indicator-class
-    await _.checkString(body, node, 'indicatorClass', 'indicator-class', '')
+    await _.checkString(pickerView, node, 'indicatorClass', 'indicator-class', '')
 
     // mask-style
-    await _.checkString(body, node, 'maskStyle', 'mask-style', '')
+    await _.checkString(pickerView, node, 'maskStyle', 'mask-style', '')
 
     // mask-class
-    await _.checkString(body, node, 'maskClass', 'mask-class', '')
+    await _.checkString(pickerView, node, 'maskClass', 'mask-class', '')
 
     // event
-    await _.checkEvent(pickerView, node, ['change', 'pickstart', 'pickend'])
+    const wxPickerView = pickerView.querySelector('.wx-comp-picker-view')
+    await _.checkEvent(wxPickerView, node, ['change', 'pickstart', 'pickend'])
 
     page.document.body.removeChild(node)
     document.body.removeChild(wrapper)
