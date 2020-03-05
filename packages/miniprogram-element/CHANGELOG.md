@@ -2,7 +2,7 @@
 
 ## 1.0.0
 
-* input 等无子节点的内置组件转为使用 template 渲染，去除包裹容器，修复包裹容器带来的样式影响
+* 除 view、cover-view、text 和 scroll-view 外的内置组件转为使用 template 渲染，去除包裹容器，修复包裹容器带来的样式影响，同时子组件使用内包裹渲染
 * checkbox/radio 对齐 Web 端表现，不再支持子节点
 
 ## 0.8.4
