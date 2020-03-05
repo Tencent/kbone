@@ -173,7 +173,7 @@ module.exports = {
         onCheckboxChange(evt) {
             const domNode = this.getDomNodeFromEvt(evt)
             if (!domNode) return
-            
+
             const value = evt.detail.value || []
             if (value.indexOf(domNode.value) >= 0) {
                 domNode.setAttribute('checked', true)
