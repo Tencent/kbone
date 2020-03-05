@@ -23,7 +23,7 @@ module.exports = {
         const domNode = this.domNode
         const tagName = domNode.tagName
 
-        // 使用 template 渲染
+        // 使用 template 渲染
         if (USE_TEMPLATE.indexOf(tagName) !== -1 || USE_TEMPLATE.indexOf(domNode.behavior) !== -1) return
 
         if (tagName === 'WX-COMPONENT') {
@@ -44,7 +44,7 @@ module.exports = {
         } else {
             // 可替换 html 标签
             const wxCompName = wxCompNameMap[tagName]
-            if (wxCompName) _.checkComponentAttr(wxCompName, domNode, data)
+            if (wxCompName) data.wxCompName = wxCompName
         }
     },
 
