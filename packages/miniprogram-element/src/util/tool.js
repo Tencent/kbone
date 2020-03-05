@@ -84,7 +84,7 @@ function filterNodes(domNode, level, component) {
         if (domInfo.useTemplate) {
             const wxCompName = wxCompNameMap[templateName]
             const extra = {}
-            if (wxCompName) checkComponentAttr(wxCompName, child, extra, null, `h5-${domInfo.tagName}`)
+            if (wxCompName) checkComponentAttr(wxCompName, child, extra, null, `h5-${domInfo.tagName} ${domInfo.tagName === 'wx-component' ? 'wx-' + child.behavior : ''}`)
             extra.pageId = domInfo.pageId
             extra.nodeId = domInfo.nodeId
             extra.inCover = component.data.inCover
