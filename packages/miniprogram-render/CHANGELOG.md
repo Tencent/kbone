@@ -1,5 +1,10 @@
 # 更新日志
 
+## 1.0.1
+
+* innerHTML 支持生成注释节点
+* 补充 textNode、comment 节点的 childNodes 属性
+
 ## 1.0.0
 
 * 除 view、cover-view、text 和 scroll-view 外的内置组件转为使用 template 渲染，去除包裹容器，修复包裹容器带来的样式影响，同时子组件使用内包裹渲染

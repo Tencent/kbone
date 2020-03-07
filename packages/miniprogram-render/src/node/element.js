@@ -292,6 +292,9 @@ class Element extends Node {
             return this.ownerDocument.$$createTextNode({
                 content: tool.decodeContent(content), nodeId
             })
+        } else if (type === 'comment') {
+            // 注释
+            return this.ownerDocument.createComment()
         }
     }
 

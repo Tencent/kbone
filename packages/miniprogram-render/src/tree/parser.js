@@ -48,6 +48,7 @@ function tokenize(content, handler) {
 
                 if (index >= 0) {
                     content = content.substring(index + 3)
+                    if (handler.comment) handler.comment(content)
                     isText = false
                 }
             } else if (content.indexOf('</') === 0) {
@@ -242,6 +243,14 @@ function parse(html) {
 
             stack.last().children.push({
                 type: 'text',
+                content,
+            })
+        },
+        comment(content) {
+            content = content.trim()
+
+            stack.last().children.push({
+                type: 'comment',
                 content,
             })
         },

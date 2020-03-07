@@ -34,7 +34,8 @@ const globalVars = [
     'CustomEvent',
     'Event',
     'requestAnimationFrame',
-    'cancelAnimationFrame'
+    'cancelAnimationFrame',
+    'getComputedStyle',
 ]
 
 /**
