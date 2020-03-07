@@ -20,7 +20,7 @@ const replaceTagNamePlugin = postcss.plugin('replaceTagName', () => root => {
 
             child.selectors.forEach(selector => {
                 // 小程序 wxss 不支持 .xxx>:first-child 这样的写法
-                selector = selector.replace(/>:/g, '>*:') 
+                selector = selector.replace(/>:/g, '>*:')
 
                 // 处理标签名选择器
                 selector = selector.replace(replaceRegexp, (all, $1, tagName, $2, offset, string) => {
