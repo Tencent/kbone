@@ -19,6 +19,9 @@ module.exports = {
 	app: {
 		navigationBarTitleText: 'miniprogram-project',
 	},
+	global: {
+		share: true,
+	},
 	pages: {
 		page1: {
 			extra: {
