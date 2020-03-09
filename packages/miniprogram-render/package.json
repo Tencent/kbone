@@ -1,6 +1,6 @@
 {
 	"name": "miniprogram-render",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"description": "web's adapter for miniprogram",
 	"main": "src/index.js",
 	"miniprogram": "src",
