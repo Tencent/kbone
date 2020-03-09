@@ -1,6 +1,6 @@
 {
 	"name": "miniprogram-element",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"description": "web's adapter for miniprogram",
 	"main": "src/index.js",
 	"miniprogram": "src",
@@ -37,6 +37,6 @@
 	},
 	"gitHead": "30c26f3f71ead7a2a50cfec49549011a11fe73af",
 	"dependencies": {
-		"miniprogram-render": "^1.0.1"
+		"miniprogram-render": "^1.0.2"
 	}
 }
