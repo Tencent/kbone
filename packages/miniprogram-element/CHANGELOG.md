@@ -1,5 +1,9 @@
 # 更新日志
 
+## 1.0.4
+
+* 兼容 react 中 picker-view 设置数组到 value 中会被序列化字符串的问题
+
 ## 1.0.1
 
 * 调整 picker-view 为 0.x 版本的渲染模式
