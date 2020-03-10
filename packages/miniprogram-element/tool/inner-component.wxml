@@ -2,7 +2,7 @@
 <template name="cover-image">
     <cover-image
         id="{{id}}"
-        class="{{class}}"
+        class="{{className}}"
         style="{{style}}"
         hidden="{{hidden}}"
         data-private-node-id="{{nodeId}}"
@@ -21,7 +21,7 @@
 <template name="movable-area">
     <movable-area
         id="{{id}}"
-        class="{{class}}"
+        class="{{className}}"
         style="{{style}}"
         hidden="{{hidden}}"
         data-private-node-id="{{nodeId}}"
@@ -37,7 +37,7 @@
         <movable-view
             wx:if="{{item.type === 'element' && item.compName === 'movable-view'}}"
             id="{{item.id}}"
-            class="{{item.class || ''}}"
+            class="{{item.className || ''}}"
             style="{{item.style || ''}}"
             hidden="{{item.extra.hidden}}"
             data-private-node-id="{{item.nodeId}}"
@@ -71,7 +71,7 @@
 <template name="swiper">
     <swiper
         id="{{id}}"
-        class="{{class}}"
+        class="{{className}}"
         style="{{style}}"
         hidden="{{hidden}}"
         data-private-node-id="{{nodeId}}"
@@ -104,7 +104,7 @@
         <swiper-item
             wx:if="{{item.type === 'element' && item.compName === 'swiper-item'}}"
             id="{{item.id}}"
-            class="{{item.class || ''}}"
+            class="{{item.className || ''}}"
             hidden="{{item.extra.hidden}}"
             data-private-node-id="{{item.nodeId}}"
             data-private-page-id="{{item.pageId}}"
@@ -122,7 +122,7 @@
 <template name="icon">
     <icon
         id="{{id}}"
-        class="{{class}}"
+        class="{{className}}"
         style="{{style}}"
         hidden="{{hidden}}"
         data-private-node-id="{{nodeId}}"
@@ -141,7 +141,7 @@
 <template name="progress">
     <progress
         id="{{id}}"
-        class="{{class}}"
+        class="{{className}}"
         style="{{style}}"
         hidden="{{hidden}}"
         data-private-node-id="{{nodeId}}"
@@ -168,7 +168,7 @@
 <template name="rich-text">
     <rich-text
         id="{{id}}"
-        class="{{class}}"
+        class="{{className}}"
         style="{{style}}"
         hidden="{{hidden}}"
         data-private-node-id="{{nodeId}}"
@@ -187,7 +187,7 @@
 <template name="button">
     <button
         id="{{id}}"
-        class="{{class}}"
+        class="{{className}}"
         style="{{style}}"
         hidden="{{hidden}}"
         data-private-node-id="{{nodeId}}"
@@ -228,7 +228,7 @@
 <template name="editor">
     <editor
         id="{{id}}"
-        class="{{class}}"
+        class="{{className}}"
         style="{{style}}"
         hidden="{{hidden}}"
         data-private-node-id="{{nodeId}}"
@@ -254,7 +254,7 @@
 <template name="form">
     <form
         id="{{id}}"
-        class="{{class}}"
+        class="{{className}}"
         style="{{style}}"
         hidden="{{hidden}}"
         data-private-node-id="{{nodeId}}"
@@ -275,14 +275,14 @@
     <radio-group
         wx:if="{{type === 'radio'}}"
         id="{{id}}"
-        class="{{class}}"
+        class="{{className}}"
         style="{{style}}"
         data-private-node-id="{{nodeId}}"
         data-private-page-id="{{pageId}}"
         bindchange="onRadioChange"
     ><radio
         id="{{id}}"
-        class="{{class}}"
+        class="{{className}}"
         style="{{style}}"
         hidden="{{hidden}}"
         data-private-node-id="{{nodeId}}"
@@ -301,7 +301,7 @@
     <checkbox-group
         wx:elif="{{type === 'checkbox'}}"
         id="{{id}}"
-        class="{{class}}"
+        class="{{className}}"
         style="{{style}}"
         data-private-node-id="{{nodeId}}"
         data-private-page-id="{{pageId}}"
@@ -324,7 +324,7 @@
     <input
         wx:elif="{{type !== 'hidden'}}"
         id="{{id}}"
-        class="{{class}}"
+        class="{{className}}"
         style="{{style}}"
         hidden="{{hidden}}"
         data-private-node-id="{{nodeId}}"
@@ -362,7 +362,7 @@
 <template name="picker">
     <picker
         id="{{id}}"
-        class="{{class}}"
+        class="{{className}}"
         style="{{style}}"
         hidden="{{hidden}}"
         data-private-node-id="{{nodeId}}"
@@ -390,7 +390,7 @@
 <template name="slider">
     <slider
         id="{{id}}"
-        class="{{class}}"
+        class="{{className}}"
         style="{{style}}"
         hidden="{{hidden}}"
         data-private-node-id="{{nodeId}}"
@@ -420,7 +420,7 @@
 <template name="switch">
     <switch
         id="{{id}}"
-        class="{{class}}"
+        class="{{className}}"
         style="{{style}}"
         hidden="{{hidden}}"
         data-private-node-id="{{nodeId}}"
@@ -441,7 +441,7 @@
 <template name="textarea">
     <textarea
         id="{{id}}"
-        class="{{class}}"
+        class="{{className}}"
         style="{{style}}"
         hidden="{{hidden}}"
         data-private-node-id="{{nodeId}}"
@@ -480,7 +480,7 @@
 <template name="navigator">
     <navigator
         id="{{id}}"
-        class="{{class}}"
+        class="{{className}}"
         style="{{style}}"
         hidden="{{hidden}}"
         data-private-node-id="{{nodeId}}"
@@ -512,7 +512,7 @@
 <template name="camera">
     <camera
         id="{{id}}"
-        class="{{class}}"
+        class="{{className}}"
         style="{{style}}"
         hidden="{{hidden}}"
         data-private-node-id="{{nodeId}}"
@@ -536,7 +536,7 @@
 <template name="image">
     <image
         id="{{id}}"
-        class="{{class}}"
+        class="{{className}}"
         style="{{style}}"
         hidden="{{hidden}}"
         data-private-node-id="{{nodeId}}"
@@ -559,7 +559,7 @@
 <template name="live-player">
     <live-player
         id="{{id}}"
-        class="{{class}}"
+        class="{{className}}"
         style="{{style}}"
         hidden="{{hidden}}"
         data-private-node-id="{{nodeId}}"
@@ -590,7 +590,7 @@
 <template name="live-pusher">
     <live-pusher
         id="{{id}}"
-        class="{{class}}"
+        class="{{className}}"
         style="{{style}}"
         hidden="{{hidden}}"
         data-private-node-id="{{nodeId}}"
@@ -630,7 +630,7 @@
 <template name="video">
     <video 
         id="{{id}}"
-        class="{{class}}"
+        class="{{className}}"
         style="{{style}}"
         hidden="{{hidden}}"
         data-private-node-id="{{nodeId}}"
@@ -681,7 +681,7 @@
 <template name="map">
     <map
         id="{{id}}"
-        class="{{class}}"
+        class="{{className}}"
         style="{{style}}"
         hidden="{{hidden}}"
         data-private-node-id="{{nodeId}}"
@@ -727,7 +727,7 @@
 <template name="canvas">
     <canvas
         id="{{id}}"
-        class="{{class}}"
+        class="{{className}}"
         style="{{style}}"
         hidden="{{hidden}}"
         data-private-node-id="{{nodeId}}"
@@ -753,7 +753,7 @@
 <template name="ad">
     <ad
         id="{{id}}"
-        class="{{class}}"
+        class="{{className}}"
         style="{{style}}"
         hidden="{{hidden}}"
         data-private-node-id="{{nodeId}}"
@@ -774,7 +774,7 @@
 <template name="official-account">
     <official-account
         id="{{id}}"
-        class="{{class}}"
+        class="{{className}}"
         style="{{style}}"
         hidden="{{hidden}}"
         data-private-node-id="{{nodeId}}"
@@ -792,7 +792,7 @@
 <template name="open-data">
     <open-data
         id="{{id}}"
-        class="{{class}}"
+        class="{{className}}"
         style="{{style}}"
         hidden="{{hidden}}"
         data-private-node-id="{{nodeId}}"
@@ -811,7 +811,7 @@
 <template name="web-view">
     <web-view
         id="{{id}}"
-        class="{{class}}"
+        class="{{className}}"
         style="{{style}}"
         hidden="{{hidden}}"
         data-private-node-id="{{nodeId}}"

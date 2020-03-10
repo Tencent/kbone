@@ -308,7 +308,7 @@ class Element extends Node {
             type: this.$_type,
             tagName: this.$_tagName,
             id: this.id,
-            class: this.className,
+            className: this.className,
             style: this.$__style ? this.style.cssText : '',
         }
     }

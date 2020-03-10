@@ -1,5 +1,9 @@
 # 更新日志
 
+## 1.0.4
+
+* 调整 $$domInfo 对象的 class 为 className
+
 ## 1.0.1
 
 * innerHTML 支持生成注释节点
