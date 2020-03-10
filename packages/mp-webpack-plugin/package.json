@@ -1,6 +1,6 @@
 {
 	"name": "mp-webpack-plugin",
-	"version": "0.8.6",
+	"version": "0.8.7",
 	"description": "a tool for develop miniprogram with vue",
 	"main": "src/index.js",
 	"miniprogram": "src",
