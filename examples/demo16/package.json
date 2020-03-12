@@ -5,7 +5,8 @@
     },
     "dependencies": {
         "react": "^16.9.0",
-        "react-dom": "^16.9.0"
+        "react-dom": "^16.9.0",
+        "react-router-dom": "^5.1.2"
     },
     "devDependencies": {
         "babel-core": "^6.26.0",

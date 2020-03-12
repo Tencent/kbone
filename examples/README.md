@@ -61,7 +61,7 @@ npm install
 * demo13：vue + todo app
 * demo14：vue + vue-i18n
 * demo15：vue + alloyFinger
-* demo16：react
+* demo16：react + react-router
 * demo17：preact
 * demo18：vue + 多页
 * demo19：vue + 云开发

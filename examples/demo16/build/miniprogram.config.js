@@ -1,8 +1,8 @@
 module.exports = {
 	origin: 'https://test.miniprogram.com',
-	entry: '/test/aaa',
+	entry: '/view1',
 	router: {
-		index: ['/test/aaa'],
+		index: ['/view1', '/view2'],
 	},
 	redirect: {	
 		notFound: 'index',	
