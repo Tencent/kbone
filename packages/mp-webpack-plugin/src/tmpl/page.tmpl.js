@@ -21,8 +21,11 @@ function dealWithPage(evt, window, value) {
         console.error(`page not found: ${evt.url}`)
     } else if (value !== 'none') {
         const targeturl = `${window.location.origin}/redirect?url=${encodeURIComponent(url)}`
-        const options = {url: `/pages/${value}/index?type=${type}&targeturl=${encodeURIComponent(targeturl)}`}
-        if (window.$$miniprogram.isTabBarPage(`/pages/${value}/index`)) wx.switchTab(options)
+        const subpackagesMap = window.$$miniprogram.subpackagesMap
+        const packageName = subpackagesMap[value]
+        const pageRoute = `/${packageName ? packageName + '/' : ''}pages/${value}/index`
+        const options = {url: `${pageRoute}?type=${type}&targeturl=${encodeURIComponent(targeturl)}`}
+        if (window.$$miniprogram.isTabBarPage(pageRoute)) wx.switchTab(options)
         else if (type === 'jump') wx.redirectTo(options)
         else if (type === 'open') wx.navigateTo(options)
     }
