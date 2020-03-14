@@ -1,6 +1,7 @@
 <template>
   <div class="cnt">
     <Header></Header>
+    <p>当前 url：{{url}}</p>
     <a href="/a">回到首页</a>
     <button @click="onClickJump">回到首页</button>
     <Footer></Footer>
@@ -16,6 +17,11 @@ export default {
   components: {
     Header,
     Footer
+  },
+  data() {
+    return {
+      url: location.href,
+    }
   },
   created() {
     window.addEventListener('wxload', query => console.log('page2 wxload', query))

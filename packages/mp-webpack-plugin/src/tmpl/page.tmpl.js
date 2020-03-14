@@ -161,19 +161,25 @@ Page({
         this.query = null
     },
     onShareAppMessage(data) {
-        if (this.window.onShareAppMessage) {
-            const shareOptions = Object.assign({}, this.window.onShareAppMessage(data))
+        const window = this.window
+        if (window && window.onShareAppMessage) {
+            const shareOptions = Object.assign({}, window.onShareAppMessage(data))
 
             if (shareOptions.miniprogramPath) {
                 shareOptions.path = shareOptions.miniprogramPath
             } else {
                 const query = Object.assign({}, this.query || {})
+                let route = this.route
 
                 if (shareOptions.path) {
+                    shareOptions.path = shareOptions.path[0] === '/' ? window.location.origin + shareOptions.path : shareOptions.path
+                    const {pathname} = window.location.constructor.$$parse(shareOptions.path)
+                    const matchRoute = window.$$miniprogram.getMatchRoute(pathname || '/')
+                    if (matchRoute) route = matchRoute
                     query.targeturl = encodeURIComponent(shareOptions.path)
                 } else {
                     // 组装当前页面路径
-                    const location = this.window.location
+                    const location = window.location
 
                     query.targeturl = encodeURIComponent(location.href)
                     query.search = encodeURIComponent(location.search)
@@ -182,7 +188,7 @@ Page({
 
                 query.type = 'share'
                 const queryString = Object.keys(query).map(key => `${key}=${query[key] || ''}`).join('&')
-                const currentPagePath = `${this.route}?${queryString}`
+                const currentPagePath = `${route}?${queryString}`
                 shareOptions.path = currentPagePath
             }
 
