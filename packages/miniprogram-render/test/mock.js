@@ -135,6 +135,39 @@ global.wx = {
             }
         }, 10)
     },
+    request(options) {
+        expect(options.url).toBe('https://a.b.c?a=12#haha')
+        expect(options.header).toEqual({
+            'Accept': '*/*',
+            'Content-type': 'application/x-www-form-urlencoded',
+            'cookie': 'aaa=bbb; ccc=123',
+        })
+        expect(options.method).toBe('POST')
+        expect(options.dataType).toBe('text')
+        expect(options.responseType).toBe('text')
+    
+        const success = options.success
+        const fail = options.fail
+        const complete = options.complete
+    
+        if (options.data === 'fail') {
+            fail({
+                errMsg: 'some error',
+            })
+            complete()
+        } else if (options.data === 'timeout') {
+            // ignore
+        } else {
+            success({
+                data: options.data,
+                statusCode: 200,
+                header: {
+                    'Content-Type': 'application/javascript',
+                },
+            })
+            complete()
+        }
+    },
 }
 
 module.exports = {

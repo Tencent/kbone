@@ -8,7 +8,6 @@ beforeAll(() => {
     window = res.window
 })
 
-
 test('storage', () => {
     const localStorage = window.localStorage
     const sessionStorage = window.sessionStorage

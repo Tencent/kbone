@@ -7,6 +7,7 @@ const LocalStorage = require('../src/bom/local-storage')
 const SessionStorage = require('../src/bom/session-storage')
 const History = require('../src/bom/history')
 const Screen = require('../src/bom/screen')
+const XMLHttpRequest = require('../src/bom/xml-http-request')
 const CustomEvent = require('../src/event/custom-event')
 const Event = require('../src/event/event')
 const Element = require('../src/node/element')
@@ -341,8 +342,6 @@ test('window: document', () => {
 
 test('window: location', () => {
     expect(window.location).toBeInstanceOf(Location)
-
-    // TODO setter
 })
 
 test('window: navigator', () => {
@@ -413,7 +412,13 @@ test('window: setTimeout/clearTimeout/setInterval/clearInterval', async() => {
 })
 
 test('window: HTMLElement', () => {
-    // TODO
+    const htmlElement = new window.HTMLElement({
+        tagName: 'div',
+        attrs: {},
+        nodeId: 'test',
+        type: Node.ELEMENT_NODE,
+    }, document.$_tree)
+    expect(htmlElement).toBeInstanceOf(Element)
 })
 
 test('window: Element', () => {
@@ -434,6 +439,11 @@ test('window: RegExp/Math/Number/Boolean/String/Date/Symbol/parseInt/parseFloat'
     expect(window.Symbol).toBe(Symbol)
     expect(window.parseInt).toBe(parseInt)
     expect(window.parseFloat).toBe(parseFloat)
+})
+
+test('window: XMLHttpRequest', () => {
+    const xmlHttpRequest = new window.XMLHttpRequest()
+    expect(xmlHttpRequest).toBeInstanceOf(XMLHttpRequest)
 })
 
 test('window: open', () => {
@@ -487,7 +497,7 @@ test('window: open', () => {
 })
 
 test('window: getComputedStyle', () => {
-    // TODO
+    // not supported
 })
 
 test('window: requestAnimationFrame/cancelAnimationFrame', async() => {
