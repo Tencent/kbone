@@ -12,8 +12,21 @@ beforeAll(() => {
 })
 
 test('XMLHttpRequest', async () => {
-  document.cookie = 'aaa=bbb'
-  document.cookie = 'ccc=123'
+  const expires = (new Date(Date.now() + 1000)).toUTCString()
+  global.testXHRData = {
+    url: 'https://a.b.c?a=12#haha',
+    header: {
+      'Accept': '*/*',
+      'Content-type': 'application/x-www-form-urlencoded',
+      'cookie': 'aaa=bbb; ccc=ddd',
+    },
+    method: 'POST',
+    dataType: 'text',
+    responseType: 'text',
+  }
+
+  document.cookie = `aaa=bbb; expires=${expires}`
+  document.cookie = 'ccc=ddd'
 
   let readyStateChangeCount = 0
   let errorCount = 0

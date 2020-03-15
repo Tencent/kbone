@@ -114,7 +114,7 @@ class XMLHttpRequest extends EventTarget {
     // 头信息
     const header = Object.assign({}, this.$_header)
     if (this.$_window) {
-      header.cookie = this.$_window.document.cookie
+      header.cookie = this.$_window.document.$$cookie
     }
 
     this.$_requestTask = wx.request({
@@ -144,30 +144,7 @@ class XMLHttpRequest extends EventTarget {
       const setCookie = header['Set-Cookie']
 
       if (setCookie && typeof setCookie === 'string') {
-        let start = 0
-        let startSplit = 0
-        let nextSplit = setCookie.indexOf(',', startSplit)
-        const cookies = []
-
-        while (nextSplit >= 0) {
-          const lastSplitStr = setCookie.substring(start, nextSplit)
-          const splitStr = setCookie.substr(nextSplit)
-
-          // eslint-disable-next-line no-control-regex
-          if (/^,\s*([^,=;\x00-\x1F]+)=([^;\n\r\0\x00-\x1F]*).*/.test(splitStr)) {
-            // 分割成功，则上一片是完整 cookie
-            cookies.push(lastSplitStr)
-            start = nextSplit + 1
-          }
-
-          startSplit = nextSplit + 1
-          nextSplit = setCookie.indexOf(',', startSplit)
-        }
-
-        // 塞入最后一片 cookie
-        cookies.push(setCookie.substr(start))
-
-        cookies.forEach(cookie => this.$_window.document.cookie = cookie)
+        this.$_window.document.$$setCookie(setCookie)
       }
     }
 

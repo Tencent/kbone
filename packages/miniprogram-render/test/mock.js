@@ -136,15 +136,11 @@ global.wx = {
         }, 10)
     },
     request(options) {
-        expect(options.url).toBe('https://a.b.c?a=12#haha')
-        expect(options.header).toEqual({
-            'Accept': '*/*',
-            'Content-type': 'application/x-www-form-urlencoded',
-            'cookie': 'aaa=bbb; ccc=123',
-        })
-        expect(options.method).toBe('POST')
-        expect(options.dataType).toBe('text')
-        expect(options.responseType).toBe('text')
+        expect(options.url).toBe(global.testXHRData.url)
+        expect(options.header).toEqual(global.testXHRData.header)
+        expect(options.method).toBe(global.testXHRData.method)
+        expect(options.dataType).toBe(global.testXHRData.dataType)
+        expect(options.responseType).toBe(global.testXHRData.responseType)
     
         const success = options.success
         const fail = options.fail
