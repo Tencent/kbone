@@ -59,7 +59,6 @@ class XMLHttpRequest extends EventTarget {
     this.$_status = 0
     this.$_statusText = ''
     this.$_readyState = XMLHttpRequest.UNSENT
-    this.$_onreadystatechange = null
     this.$_header = {
       Accept: '*/*'
     }
@@ -79,12 +78,10 @@ class XMLHttpRequest extends EventTarget {
    * readyState 变化
    */
   $_callReadyStateChange(readyState) {
-    const func = this.$_onreadystatechange
     const hasChange = readyState !== this.$_readyState
-
     this.$_readyState = readyState
 
-    if (typeof func === 'function' && hasChange) func.call(null)
+    if (hasChange) this.$$trigger('readystatechange')
   }
 
   /**
@@ -119,7 +116,7 @@ class XMLHttpRequest extends EventTarget {
 
     this.$_requestTask = wx.request({
       url: this.$_url,
-      data: this.$_data,
+      data: this.$_data || {},
       header,
       method: this.$_method,
       dataType: this.$_responseType === 'json' ? 'json' : 'text',
@@ -205,14 +202,6 @@ class XMLHttpRequest extends EventTarget {
 
   get readyState() {
     return this.$_readyState
-  }
-
-  get onreadystatechange() {
-    return this.$_onreadystatechange
-  }
-
-  set onreadystatechange(func) {
-    if (typeof func === 'function') this.$_onreadystatechange = func
   }
 
   get responseType() {

@@ -146,16 +146,16 @@ global.wx = {
         const fail = options.fail
         const complete = options.complete
     
-        if (options.data === 'fail') {
+        if (global.testXHRData.res === 'fail') {
             fail({
                 errMsg: 'some error',
             })
             complete()
-        } else if (options.data === 'timeout') {
+        } else if (global.testXHRData.res === 'timeout') {
             // ignore
         } else {
             success({
-                data: options.data,
+                data: global.testXHRData.data,
                 statusCode: 200,
                 header: {
                     'Content-Type': 'application/javascript',

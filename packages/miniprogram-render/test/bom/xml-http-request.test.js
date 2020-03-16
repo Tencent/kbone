@@ -12,15 +12,8 @@ beforeAll(() => {
 })
 
 test('XMLHttpRequest', async () => {
-  const expires = (new Date(Date.now() + 1000)).toUTCString()
+  const expires = (new Date(Date.now() + 1000 * 1000)).toUTCString()
   global.testXHRData = {
-    url: 'https://a.b.c?a=12#haha',
-    header: {
-      'Accept': '*/*',
-      'Content-type': 'application/x-www-form-urlencoded',
-      'cookie': 'aaa=bbb; ccc=ddd',
-    },
-    method: 'POST',
     dataType: 'text',
     responseType: 'text',
   }
@@ -34,33 +27,116 @@ test('XMLHttpRequest', async () => {
   let loadEndCount = 0
   let loadCount = 0
   let timeoutCount = 0
-  const xhr = new XMLHttpRequest()
 
-  xhr.onreadystatechange = function() {
+  const onreadystatechange = function() {
     readyStateChangeCount++
   }
 
-  xhr.onerror = function() {
+  const onerror = function() {
     errorCount++
   }
 
-  xhr.onloadstart = function() {
+  const onloadstart = function() {
     loadStartCount++
   }
 
-  xhr.onloadend = function() {
+  const onloadend = function() {
     expect(loadStartCount).toBe(loadEndCount + 1)
     loadEndCount++
   }
 
-  xhr.onload = function() {
+  const onload = function() {
     expect(loadEndCount).toBe(loadCount + 1)
     loadCount++
   }
 
-  xhr.ontimeout = function() {
+  const ontimeout = function() {
     timeoutCount++
   }
+
+  // get
+  let xhr = new XMLHttpRequest()
+  xhr.onreadystatechange = onreadystatechange
+  xhr.onerror = onerror
+  xhr.onloadstart = onloadstart
+  xhr.onloadend = onloadend
+  xhr.onload = onload
+  xhr.ontimeout = ontimeout
+
+  global.testXHRData.url = 'https://test.miniprogram.com?a=12#haha'
+  global.testXHRData.header = {
+    'Accept': '*/*',
+    'cookie': 'aaa=bbb; ccc=ddd',
+  }
+  global.testXHRData.method = 'GET'
+  
+  expect(xhr.readyState).toBe(XMLHttpRequest.UNSENT)
+  expect(readyStateChangeCount).toBe(0)
+
+  xhr.open('GET', 'https://test.miniprogram.com?a=12#haha')
+  expect(xhr.readyState).toBe(XMLHttpRequest.OPENED)
+  expect(readyStateChangeCount).toBe(1)
+
+  xhr.responseType = 'text'
+  xhr.timeout = 200
+
+  // fail
+  global.testXHRData.res = 'fail'
+  expect(errorCount).toBe(0)
+  xhr.send()
+  expect(xhr.readyState).toBe(XMLHttpRequest.DONE)
+  expect(readyStateChangeCount).toBe(2)
+  expect(errorCount).toBe(1)
+
+  // timeout
+  global.testXHRData.res = 'timeout'
+  expect(timeoutCount).toBe(0)
+  xhr.$_readyState = XMLHttpRequest.OPENED // 利用私有字段调整 readyState，为了再次发送请求
+  xhr.send()
+  await mock.sleep(300)
+  expect(xhr.readyState).toBe(XMLHttpRequest.DONE)
+  expect(readyStateChangeCount).toBe(3)
+  expect(timeoutCount).toBe(1)
+
+  // success
+  global.testXHRData.res = 'success'
+  global.testXHRData.data = 'success'
+  expect(loadStartCount).toBe(0)
+  expect(loadEndCount).toBe(0)
+  expect(loadCount).toBe(0)
+  xhr.$_readyState = XMLHttpRequest.OPENED // 利用私有字段调整 readyState，为了再次发送请求
+  xhr.send()
+  expect(xhr.readyState).toBe(XMLHttpRequest.DONE)
+  expect(readyStateChangeCount).toBe(6)
+  expect(loadStartCount).toBe(1)
+  expect(loadEndCount).toBe(1)
+  expect(loadCount).toBe(1)
+  expect(xhr.responseText).toBe('success')
+  expect(xhr.response).toBe('success')
+
+  // post
+  readyStateChangeCount = 0
+  errorCount = 0
+  loadStartCount = 0
+  loadEndCount = 0
+  loadCount = 0
+  timeoutCount = 0
+  
+  xhr = new XMLHttpRequest()
+  xhr.onreadystatechange = onreadystatechange
+  xhr.onerror = onerror
+  xhr.onloadstart = onloadstart
+  xhr.onloadend = onloadend
+  xhr.onload = onload
+  xhr.ontimeout = ontimeout
+
+  global.testXHRData.url = 'https://a.b.c?a=12#haha'
+  global.testXHRData.header = {
+    'Accept': '*/*',
+    'Content-type': 'application/x-www-form-urlencoded',
+    'cookie': 'aaa=bbb; ccc=ddd',
+  }
+  global.testXHRData.method = 'POST'
 
   expect(xhr.readyState).toBe(XMLHttpRequest.UNSENT)
   expect(readyStateChangeCount).toBe(0)
@@ -74,6 +150,7 @@ test('XMLHttpRequest', async () => {
   xhr.timeout = 200
 
   // fail
+  global.testXHRData.res = 'fail'
   expect(errorCount).toBe(0)
   xhr.send('fail')
   expect(xhr.readyState).toBe(XMLHttpRequest.DONE)
@@ -81,15 +158,18 @@ test('XMLHttpRequest', async () => {
   expect(errorCount).toBe(1)
 
   // timeout
+  global.testXHRData.res = 'timeout'
   expect(timeoutCount).toBe(0)
   xhr.$_readyState = XMLHttpRequest.OPENED // 利用私有字段调整 readyState，为了再次发送请求
   xhr.send('timeout')
-  await new Promise((resolve, reject) => setTimeout(resolve, 300))
+  await mock.sleep(300)
   expect(xhr.readyState).toBe(XMLHttpRequest.DONE)
   expect(readyStateChangeCount).toBe(3)
   expect(timeoutCount).toBe(1)
 
   // success
+  global.testXHRData.res = 'success'
+  global.testXHRData.data = 'success'
   expect(loadStartCount).toBe(0)
   expect(loadEndCount).toBe(0)
   expect(loadCount).toBe(0)
