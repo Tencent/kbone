@@ -1,5 +1,9 @@
 # 更新日志
 
+## 1.0.9
+
+* 修复内置组件 hasChildren 判断条件
+
 ## 1.0.5
 
 * 调整 $$domInfo 对象的 class 为 className

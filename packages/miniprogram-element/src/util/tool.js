@@ -88,7 +88,7 @@ function filterNodes(domNode, level, component) {
             extra.pageId = domInfo.pageId
             extra.nodeId = domInfo.nodeId
             extra.inCover = component.data.inCover
-            extra.hasChildren = !!domNode.childNodes.length
+            extra.hasChildren = !!child.childNodes.length
             domInfo.extra = extra
 
             // 给 template 中的特殊节点用
