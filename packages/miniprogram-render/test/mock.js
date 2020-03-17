@@ -141,11 +141,11 @@ global.wx = {
         expect(options.method).toBe(global.testXHRData.method)
         expect(options.dataType).toBe(global.testXHRData.dataType)
         expect(options.responseType).toBe(global.testXHRData.responseType)
-    
+
         const success = options.success
         const fail = options.fail
         const complete = options.complete
-    
+
         if (global.testXHRData.res === 'fail') {
             fail({
                 errMsg: 'some error',
