@@ -36,6 +36,7 @@ const globalVars = [
     'requestAnimationFrame',
     'cancelAnimationFrame',
     'getComputedStyle',
+    'XMLHttpRequest',
 ]
 
 /**

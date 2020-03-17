@@ -114,8 +114,12 @@ class XMLHttpRequest extends EventTarget {
       header.cookie = this.$_window.document.$$cookie
     }
 
+    // 补完 url
+    let url = this.$_url
+    url = url.indexOf('//') === -1 ? this.$_window.location.origin + url : url
+
     this.$_requestTask = wx.request({
-      url: this.$_url,
+      url,
       data: this.$_data || {},
       header,
       method: this.$_method,

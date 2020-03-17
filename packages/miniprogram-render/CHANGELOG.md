@@ -1,5 +1,9 @@
 # 更新日志
 
+## 1.0.8
+
+* 支持 XMLHttpRequest 对象
+
 ## 1.0.7
 
 * 修复 canvas 的 getContext 中在 prepare 完成之后仍然会输出未进行 prepare 的日志问题
