@@ -123,7 +123,10 @@ class HTMLCanvasElement extends Element {
     }
 
     getContext(type) {
-        if (this.$_node) console.warn('canvas is not prepared, please call $$prepare method first')
+        if (!this.$_node) {
+            console.warn('canvas is not prepared, please call $$prepare method first')
+            return
+        }
         return this.$_node.getContext(type)
     }
 }
