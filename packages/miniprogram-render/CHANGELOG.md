@@ -1,5 +1,9 @@
 # 更新日志
 
+## 1.0.9
+
+* 支持 window.close 方法
+
 ## 1.0.8
 
 * 支持 XMLHttpRequest 对象

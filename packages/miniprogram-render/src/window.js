@@ -532,6 +532,12 @@ class Window extends EventTarget {
         this.location.$$open(url)
     }
 
+    close() {
+        wx.navigateBack({
+            delta: 1,
+        })
+    }
+
     getComputedStyle() {
         // 不作任何实现，只作兼容使用
         console.warn('window.getComputedStyle is not supported, please use window.$$getComputedStyle instead of it')

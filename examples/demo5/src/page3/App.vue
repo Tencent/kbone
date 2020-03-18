@@ -3,6 +3,7 @@
     <Header></Header>
     <p>当前 url：{{url}}</p>
     <button @click="onClickBack">回到上一页</button>
+    <button @click="onClickClose">关闭当前窗口</button>
     <Footer></Footer>
   </div>
 </template>
@@ -34,6 +35,10 @@ export default {
       if (process.env.isMiniprogram) {
         wx.navigateBack()
       }
+    },
+
+    onClickClose() {
+      window.close()
     },
   },
 }
