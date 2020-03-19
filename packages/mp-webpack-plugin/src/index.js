@@ -148,7 +148,7 @@ class MpPlugin {
                     if (assets) {
                         [...assets.js, ...assets.css].forEach(filePath => {
                             const requirePages = assetsReverseMap[filePath] || []
-                            if (_.includes(pages, requirePages)) {
+                            if (_.includes(pages, requirePages) && compilation.assets[filePath]) {
                                 // 该依赖为分包内页面私有
                                 assetsSubpackageMap[filePath] = packageName
                                 compilation.assets[`../${packageName}/common/${filePath}`] = compilation.assets[filePath]
