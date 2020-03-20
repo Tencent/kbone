@@ -29,6 +29,13 @@ export default {
     window.addEventListener('wxready', () => console.log('page2 wxready'))
     window.addEventListener('wxhide', () => console.log('page2 wxhide'))
     window.addEventListener('wxunload', () => console.log('page2 wxunload'))
+
+    window.onShareAppMessage = () => {
+      return {
+        title: 'kbone-demo',
+        path: '/a',
+      }
+    }
   },
   methods: {
     onClickJump() {
