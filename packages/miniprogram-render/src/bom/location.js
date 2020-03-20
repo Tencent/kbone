@@ -146,7 +146,7 @@ class Location extends EventTarget {
             return false
         }
 
-        if (this.$_pathname !== oldValues.pathname) {
+        if (this.$_pathname !== oldValues.pathname || this.$_search !== oldValues.search) {
             const matchRoute = window.$$miniprogram.getMatchRoute(this.$_pathname)
 
             if (matchRoute) {
@@ -504,6 +504,8 @@ class Location extends EventTarget {
     set search(value) {
         if (typeof value !== 'string') return
 
+        const oldValues = this.$_getOldValues()
+
         if (!value || value === '?') {
             this.$_search = ''
         } else {
@@ -514,7 +516,7 @@ class Location extends EventTarget {
             this.$_search = search || ''
         }
 
-        this.$_enterHistory()
+        if (this.$_checkUrl(oldValues)) this.$_enterHistory()
     }
 
     get hash() {
