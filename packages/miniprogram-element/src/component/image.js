@@ -38,11 +38,11 @@ module.exports = {
     }],
     handles: {
         onImageLoad(evt) {
-            this.callSimpleEvent('load', evt)
+            this.callSingleEvent('load', evt)
         },
 
         onImageError(evt) {
-            this.callSimpleEvent('error', evt)
+            this.callSingleEvent('error', evt)
         },
     },
 }

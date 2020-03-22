@@ -1,11 +1,6 @@
-const mp = require('miniprogram-render')
 const _ = require('./tool')
 const component = require('./component')
 
-const {
-    Event,
-    EventTarget,
-} = mp.$$adapter
 const {
     NOT_SUPPORT,
     USE_TEMPLATE,
@@ -46,25 +41,6 @@ module.exports = {
             const wxCompName = wxCompNameMap[tagName]
             if (wxCompName) data.wxCompName = wxCompName
         }
-    },
-
-    /**
-     * 触发简单节点事件，不做冒泡处理
-     */
-    callSimpleEvent(eventName, evt, domNode) {
-        domNode = domNode || this.getDomNodeFromEvt(evt)
-        if (!domNode) return
-
-        EventTarget.$$process(domNode, new Event({
-            touches: evt.touches,
-            changedTouches: evt.changedTouches,
-            name: eventName,
-            target: domNode,
-            eventPhase: Event.AT_TARGET,
-            detail: evt && evt.detail,
-            $$extra: evt && evt.extra,
-            bubbles: false,
-        }))
     },
 
     ...handles,

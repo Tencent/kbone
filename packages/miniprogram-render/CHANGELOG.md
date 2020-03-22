@@ -1,5 +1,9 @@
 # 更新日志
 
+## 1.1.0
+
+* 支持 wx-capture、wx-catch 和 wx-animation 三种特殊节点
+
 ## 1.0.10
 
 * 修复只有 search 变化时未进行页面跳转的问题

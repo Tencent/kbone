@@ -131,6 +131,19 @@ const wxComponentMap = {
         wxCompName: 'web-view',
         config: require('../component/web-view'),
     },
+    // 特殊补充
+    capture: {
+        wxCompName: 'capture',
+        config: {},
+    },
+    catch: {
+        wxCompName: 'catch',
+        config: {},
+    },
+    animation: {
+        wxCompName: 'animation',
+        config: {},
+    },
 }
 
 const wxSubComponentMap = {
@@ -147,12 +160,12 @@ wxComponentKeys.forEach(key => {
     const {wxCompName, config} = wxComponentMap[key]
 
     wxCompNameMap[key] = wxCompName
-    properties[wxCompName] = config.properties
-    Object.assign(handles, config.handles)
+    properties[wxCompName] = config.properties || []
+    Object.assign(handles, config.handles || {})
 })
 Object.keys(wxSubComponentMap).forEach(key => {
     const config = wxSubComponentMap[key]
-    Object.assign(handles, config.handles)
+    Object.assign(handles, config.handles || {})
 })
 
 module.exports = {

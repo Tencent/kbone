@@ -29,7 +29,7 @@ module.exports = {
             if (!domNode) return
 
             domNode.setAttribute('checked', evt.detail.value)
-            this.callSimpleEvent('change', evt)
+            this.callSingleEvent('change', evt)
         },
     },
 }

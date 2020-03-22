@@ -13,6 +13,26 @@
             <a class="margin-left-10 block" href="javascript: void(0)">fake jump</a>
           </div>
         </div>
+        <div v-if="item === 'event'">
+          <div @click="onRootClick">
+            <wx-capture @touchstart="onParentTouchStart" @touchend="onParentTouchEnd" @click="onParentClick">
+              <button @click="onClick">capture-inner</button>
+            </wx-capture>
+            <wx-catch @touchstart="onParentTouchStart" @touchend="onParentTouchEnd" @click="onParentClick">
+              <button @click="onClick">catch-inner1</button>
+            </wx-catch>
+            <wx-catch @click="onParentClick">
+              <button @click="onClick">catch-inner2</button>
+            </wx-catch>
+            <div class="event-cnt">
+              <wx-animation :class="['event-t', transition ? 'event-t-s' : 'event-t-e']" @transitionend="onTransitionEnd"></wx-animation>
+              <button @click="startTranstion">transition</button>
+            </div>
+            <div class="event-cnt">
+              <wx-animation class="event-a" @animationstart="onAnimationStart" @animationiteration="onAnimationIteration" @animationend="onAnimationEnd"></wx-animation>
+            </div>
+          </div>
+        </div>
         <!-- 可使用 html 标签替代的内置组件 -->
         <div v-else-if="item === 'img'">
           <img src="https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg" width="50" height="50" @load="onImgLoad" />
@@ -75,7 +95,7 @@
         <video v-else-if="item === 'video'" class="video" src="http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400" :muted="true" :show-mute-btn="true" :controls="true">
           <Inner></Inner>
         </video>
-        <canvas v-else-if="item === 'canvas'" class="canvas" ref="canvas" canvas-id="canvas" width="300" height="200">
+        <canvas v-else-if="item === 'canvas'" class="canvas" ref="canvas" type="2d" width="300" height="200">
           <Inner style="margin-top: 100px;"></Inner>
         </canvas>
         <!-- 使用 wx-component 来创建内置组件 -->
@@ -478,6 +498,14 @@
           <wx-xxxx v-else-if="wxPrefix === 1"></wx-xxxx>
         </template>
         <iframe v-else-if="item === 'iframe'"></iframe>
+        <div v-else-if="item === 'intersection'">
+          <div>{{intersection.appear ? '小球出现' : '小球消失'}}</div>
+          <wx-scroll-view class="intersection-scroll-view" :scroll-y="true">
+            <div class="intersection-scroll-area" :style="intersection.appear ? 'background: #ccc' : ''">
+              <div class="intersection-ball"></div>
+            </div>
+          </wx-scroll-view>
+        </div>
       </wx-view>
     </div>
   </div>
@@ -515,6 +543,7 @@ export default {
     return {
       list: [
         'normal',
+        'event',
         'img',
         'input',
         'textarea',
@@ -551,7 +580,9 @@ export default {
         // 'web-view',
         'xxxx',
         'iframe',
+        'intersection',
       ],
+      transition: false,
       icon: {
         size: [20, 30, 40, 50, 60, 70],
         color: ['red', 'orange', 'yellow', 'green', 'rgb(0,255,255)', 'blue', 'purple'],
@@ -631,6 +662,9 @@ export default {
           }],
         }],
       },
+      intersection: {
+        appear: false,
+      },
     }
   },
   watch: {
@@ -660,13 +694,15 @@ export default {
     })
 
     const canvas = this.$refs.canvas[0]
-    canvas.$$getContext().then(context => {
-      context.setStrokeStyle("#00ff00")
-      context.setLineWidth(5)
+    canvas.$$prepare().then(domNode => {
+      const context = domNode.getContext('2d')
+
+      context.strokeStyle = '#00ff00'
+      context.lineWidth = 5
       context.rect(0, 0, 200, 200)
       context.stroke()
-      context.setStrokeStyle("#ff0000")
-      context.setLineWidth(2)
+      context.strokeStyle = '#ff0000'
+      context.lineWidth = 2
       context.moveTo(160, 100)
       context.arc(100, 100, 60, 0, 2 * Math.PI, true)
       context.moveTo(140, 100)
@@ -676,16 +712,63 @@ export default {
       context.moveTo(125, 80)
       context.arc(120, 80, 5, 0, 2 * Math.PI, true)
       context.stroke()
-      context.draw()
     }).catch(console.error)
 
     canvas.$$getNodesRef().then(nodesRef => {
-        nodesRef.boundingClientRect(res => {
-          console.log('test $$getNodesRef', res)
-        }).exec()
+      nodesRef.boundingClientRect(res => {
+        console.log('test $$getNodesRef', res)
+      }).exec()
     })
+
+    this.observer = window.$$createIntersectionObserver()
+    this.observer
+      .relativeTo('.h5-body >>> .intersection-scroll-view')
+      .observe('.h5-body >>> .intersection-ball', res => {
+        console.log(res)
+        this.intersection.appear = res.intersectionRatio > 0
+      })
   },
   methods: {
+    onClick() {
+      console.log('click')
+    },
+
+    onParentTouchStart() {
+      console.log('parent touchstart')
+    },
+
+    onParentTouchEnd() {
+      console.log('parent touchend')
+    },
+
+    onParentClick() {
+      console.log('parent click')
+    },
+
+    onRootClick() {
+      console.log('root click')
+    },
+
+    startTranstion() {
+      this.transition = !this.transition
+    },
+
+    onTransitionEnd() {
+      console.log('transition end')
+    },
+
+    onAnimationStart() {
+      console.log('animation start')
+    },
+
+    onAnimationIteration() {
+      console.log('animation iteration')
+    },
+
+    onAnimationEnd() {
+      console.log('animation end')
+    },
+
     onInput(evt) {
       console.log('onInput', evt.target.value, evt)
     },
@@ -779,10 +862,10 @@ export default {
     },
 
     onPickerViewChange(evt) {
-      // this.pickerView.year = this.pickerView.years[evt.detail.value[0]]
-      // this.pickerView.month = this.pickerView.months[evt.detail.value[1]]
-      // this.pickerView.day = this.pickerView.days[evt.detail.value[2]]
-      // this.pickerView.value = evt.detail.value
+      this.pickerView.year = this.pickerView.years[evt.detail.value[0]]
+      this.pickerView.month = this.pickerView.months[evt.detail.value[1]]
+      this.pickerView.day = this.pickerView.days[evt.detail.value[2]]
+      this.pickerView.value = evt.detail.value
       console.log('onPickerViewChange', evt.detail)
     },
 
@@ -802,6 +885,45 @@ export default {
 </script>
 
 <style>
+.event-cnt {
+  position: relative;
+  height: 100px;
+}
+
+.event-t, .event-a {
+  left: 0;
+  top: 60px;
+  width: 50px;
+  height: 50px;
+  background-color: red;
+  position: absolute;
+  transition: all 0.5s;
+}
+
+.event-t-s {
+  left: 50px;
+}
+
+.event-t-e {
+  left: 0;
+}
+
+@keyframes event-aa {
+  0% {
+    left: 0;
+  }
+  50% {
+    left: 50px
+  }
+  100% {
+    left: 0;
+  }
+}
+
+.event-a {
+  animation: 1s ease 0s 8 event-aa;
+}
+
 .label {
   padding: 0 20px;
   height: 40px;
@@ -922,5 +1044,28 @@ button {
 
 .rich-text-div {
   font-size: 30px;
+}
+
+.intersection-scroll-view {
+  height: 200px;
+  background: #fff;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.intersection-scroll-area {
+  padding-top: 200px;
+  height: 650px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: .5s;
+}
+
+.intersection-ball {
+  width: 100px;
+  height: 100px;
+  background: #1AAD19;
+  border-radius: 50%;
 }
 </style>

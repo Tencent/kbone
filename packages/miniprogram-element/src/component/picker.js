@@ -67,15 +67,15 @@ module.exports = {
             if (!domNode) return
 
             domNode.$$setAttributeWithoutUpdate('value', evt.detail.value)
-            this.callSimpleEvent('change', evt)
+            this.callSingleEvent('change', evt)
         },
 
         onPickerColumnChange(evt) {
-            this.callSimpleEvent('columnchange', evt)
+            this.callSingleEvent('columnchange', evt)
         },
 
         onPickerCancel(evt) {
-            this.callSimpleEvent('cancel', evt)
+            this.callSingleEvent('cancel', evt)
         },
     },
 }

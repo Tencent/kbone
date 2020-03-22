@@ -82,15 +82,15 @@ module.exports = {
             if (!domNode) return
 
             domNode.$$setAttributeWithoutUpdate('current', evt.detail.current)
-            this.callSimpleEvent('change', evt)
+            this.callSingleEvent('change', evt)
         },
 
         onSwiperTransition(evt) {
-            this.callSimpleEvent('transition', evt)
+            this.callSingleEvent('transition', evt)
         },
 
         onSwiperAnimationfinish(evt) {
-            this.callSimpleEvent('animationfinish', evt)
+            this.callSingleEvent('animationfinish', evt)
         },
     },
 }

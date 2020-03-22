@@ -55,15 +55,15 @@ module.exports = {
     }],
     handles: {
         onScrollViewScrolltoupper(evt) {
-            this.callSimpleEvent('scrolltoupper', evt)
+            this.callSingleEvent('scrolltoupper', evt)
         },
 
         onScrollViewScrolltolower(evt) {
-            this.callSimpleEvent('scrolltolower', evt)
+            this.callSingleEvent('scrolltolower', evt)
         },
 
         onScrollViewScroll(evt) {
-            this.callSimpleEvent('scroll', evt)
+            this.callSingleEvent('scroll', evt)
         },
     },
 }

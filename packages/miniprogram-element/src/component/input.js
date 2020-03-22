@@ -146,7 +146,7 @@ module.exports = {
         },
 
         onInputKeyBoardHeightChange(evt) {
-            this.callSimpleEvent('keyboardheightchange', evt)
+            this.callSingleEvent('keyboardheightchange', evt)
         },
 
         onRadioChange(evt) {

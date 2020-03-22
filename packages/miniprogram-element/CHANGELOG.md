@@ -1,5 +1,10 @@
 # 更新日志
 
+## 1.1.0
+
+* 支持 wx-capture、wx-catch 和 wx-animation 三种特殊节点
+* 内置组件中不可冒泡事件均取消捕获阶段
+
 ## 1.0.9
 
 * 修复内置组件 hasChildren 判断条件

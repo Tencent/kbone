@@ -18,15 +18,15 @@ module.exports = {
     }],
     handles: {
         onWebviewMessage(evt) {
-            this.callSimpleEvent('message', evt)
+            this.callSingleEvent('message', evt)
         },
 
         onWebviewLoad(evt) {
-            this.callSimpleEvent('load', evt)
+            this.callSingleEvent('load', evt)
         },
 
         onWebviewError(evt) {
-            this.callSimpleEvent('error', evt)
+            this.callSingleEvent('error', evt)
         },
     },
 }

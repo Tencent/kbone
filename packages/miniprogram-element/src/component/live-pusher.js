@@ -108,27 +108,27 @@ module.exports = {
     }],
     handles: {
         onLivePusherStateChange(evt) {
-            this.callSimpleEvent('statechange', evt)
+            this.callSingleEvent('statechange', evt)
         },
 
         onLivePusherNetStatus(evt) {
-            this.callSimpleEvent('netstatus', evt)
+            this.callSingleEvent('netstatus', evt)
         },
 
         onLivePusherError(evt) {
-            this.callSimpleEvent('error', evt)
+            this.callSingleEvent('error', evt)
         },
 
         onLivePusherBgmStart(evt) {
-            this.callSimpleEvent('bgmstart', evt)
+            this.callSingleEvent('bgmstart', evt)
         },
 
         onLivePusherBgmProgress(evt) {
-            this.callSimpleEvent('bgmprogress', evt)
+            this.callSingleEvent('bgmprogress', evt)
         },
 
         onLivePusherBgmComplete(evt) {
-            this.callSimpleEvent('bgmcomplete', evt)
+            this.callSingleEvent('bgmcomplete', evt)
         },
 
     },

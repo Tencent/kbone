@@ -55,7 +55,7 @@ module.exports = {
     }],
     handles: {
         onProgressActiveEnd(evt) {
-            this.callSimpleEvent('activeend', evt)
+            this.callSingleEvent('activeend', evt)
         },
     },
 }

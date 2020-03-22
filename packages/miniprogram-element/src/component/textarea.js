@@ -112,7 +112,7 @@ module.exports = {
         },
 
         onTextareaLineChange(evt) {
-            this.callSimpleEvent('linechange', evt)
+            this.callSingleEvent('linechange', evt)
         },
 
         onTextareaInput(evt) {
@@ -129,7 +129,7 @@ module.exports = {
         },
 
         onTextareaKeyBoardHeightChange(evt) {
-            this.callSimpleEvent('keyboardheightchange', evt)
+            this.callSingleEvent('keyboardheightchange', evt)
         },
     },
 }

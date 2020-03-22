@@ -15,15 +15,15 @@ module.exports = {
     }],
     handles: {
         onAdLoad(evt) {
-            this.callSimpleEvent('load', evt)
+            this.callSingleEvent('load', evt)
         },
 
         onAdError(evt) {
-            this.callSimpleEvent('error', evt)
+            this.callSingleEvent('error', evt)
         },
 
         onAdClose(evt) {
-            this.callSimpleEvent('close', evt)
+            this.callSingleEvent('close', evt)
         },
     },
 }

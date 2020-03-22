@@ -102,27 +102,27 @@ module.exports = {
     }],
     handles: {
         onButtonGetUserInfo(evt) {
-            this.callSimpleEvent('getuserinfo', evt)
+            this.callSingleEvent('getuserinfo', evt)
         },
 
         onButtonContact(evt) {
-            this.callSimpleEvent('contact', evt)
+            this.callSingleEvent('contact', evt)
         },
 
         onButtonGetPhoneNumber(evt) {
-            this.callSimpleEvent('getphonenumber', evt)
+            this.callSingleEvent('getphonenumber', evt)
         },
 
         onButtonError(evt) {
-            this.callSimpleEvent('error', evt)
+            this.callSingleEvent('error', evt)
         },
 
         onButtonOpenSetting(evt) {
-            this.callSimpleEvent('opensetting', evt)
+            this.callSingleEvent('opensetting', evt)
         },
 
         onButtonLaunchApp(evt) {
-            this.callSimpleEvent('launchapp', evt)
+            this.callSingleEvent('launchapp', evt)
         },
 
     },

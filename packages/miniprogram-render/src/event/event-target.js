@@ -113,6 +113,9 @@ class EventTarget {
             if (!event.$$canBubble) break // 判定冒泡是否结束
             if (currentTarget === target) continue
 
+            // wx-capture 节点事件单独触发
+            if (currentTarget.tagName === 'WX-COMPONENT' && currentTarget.behavior === 'capture') continue
+
             event.$$setCurrentTarget(currentTarget)
             event.$$setEventPhase(Event.CAPTURING_PHASE)
 
@@ -150,6 +153,9 @@ class EventTarget {
                 if (!event.$$canBubble) break // 判定冒泡是否结束
                 if (currentTarget === target) continue
 
+                // wx-capture 节点事件单独触发
+                if (currentTarget.tagName === 'WX-COMPONENT' && currentTarget.behavior === 'capture') continue
+
                 event.$$setCurrentTarget(currentTarget)
                 event.$$setEventPhase(Event.BUBBLING_PHASE)
 
@@ -158,6 +164,9 @@ class EventTarget {
                     isCapture: false,
                 })
                 if (callback) callback(currentTarget, event, false)
+
+                // wx-catch 节点事件要结束冒泡
+                if (currentTarget.tagName === 'WX-COMPONENT' && currentTarget.behavior === 'catch') event.stopPropagation()
             }
         }
 
@@ -267,6 +276,16 @@ class EventTarget {
         const handlers = this.$_getHandlers(eventName, isCapture)
 
         if (handlers && handlers.length) handlers.length = 0
+    }
+
+    /**
+     * 是否存在事件句柄，只考虑通过 addEventListener 绑定的句柄
+     */
+    $$hasEventHandler(eventName) {
+        eventName = eventName.toLowerCase()
+        const bubbleHandlers = this.$_getHandlers(eventName, false)
+        const captureHandlers = this.$_getHandlers(eventName, true)
+        return (bubbleHandlers && bubbleHandlers.length) || (captureHandlers && captureHandlers.length)
     }
 
     /**

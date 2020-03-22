@@ -5,6 +5,7 @@ const component = require('./util/component')
 
 const {
     cache,
+    Event,
     EventTarget,
     tool,
 } = mp.$$adapter
@@ -165,6 +166,44 @@ Component({
             }
 
             this.setData(newData)
+        },
+
+        /**
+         * 触发简单节点事件，不做捕获冒泡处理
+         */
+        callSingleEvent(eventName, evt) {
+            const domNode = this.getDomNodeFromEvt(evt)
+            if (!domNode) return
+
+            domNode.$$trigger(eventName, {
+                event: new Event({
+                    name: eventName,
+                    target: domNode,
+                    eventPhase: Event.AT_TARGET,
+                    detail: evt && evt.detail,
+                    $$extra: evt && evt.extra,
+                }),
+                currentTarget: domNode,
+            })
+        },
+
+        /**
+         * 触发简单节点事件，不做冒泡处理，但会走捕获阶段
+         */
+        callSimpleEvent(eventName, evt, domNode) {
+            domNode = domNode || this.getDomNodeFromEvt(evt)
+            if (!domNode) return
+
+            EventTarget.$$process(domNode, new Event({
+                touches: evt.touches,
+                changedTouches: evt.changedTouches,
+                name: eventName,
+                target: domNode,
+                eventPhase: Event.AT_TARGET,
+                detail: evt && evt.detail,
+                $$extra: evt && evt.extra,
+                bubbles: false, // 不冒泡
+            }))
         },
 
         /**
@@ -329,18 +368,57 @@ Component({
             }
         },
 
+        /**
+         * 图片相关事件
+         */
         onImgLoad(evt) {
-            const domNode = this.getDomNodeFromEvt(evt)
-            if (!domNode) return
-
-            this.callSimpleEvent('load', evt, domNode)
+            this.callSingleEvent('load', evt)
         },
 
         onImgError(evt) {
-            const domNode = this.getDomNodeFromEvt(evt)
-            if (!domNode) return
+            this.callSingleEvent('error', evt)
+        },
 
-            this.callSimpleEvent('error', evt, domNode)
+        /**
+         * capture 相关事件，wx-capture 的事件不走仿造事件捕获冒泡系统，单独触发
+         */
+        onCaptureTouchStart(evt) {
+            this.callSingleEvent('touchstart', evt)
+        },
+
+        onCaptureTouchMove(evt) {
+            this.callSingleEvent('touchmove', evt)
+        },
+
+        onCaptureTouchEnd(evt) {
+            this.callSingleEvent('touchend', evt)
+        },
+
+        onCaptureTouchCancel(evt) {
+            this.callSingleEvent('touchcancel', evt)
+        },
+
+        onCaptureTap(evt) {
+            this.callSingleEvent('click', evt)
+        },
+
+        /**
+         * 动画相关事件
+         */
+        onTransitionEnd(evt) {
+            this.callEvent('transitionend', evt)
+        },
+
+        onAnimationStart(evt) {
+            this.callEvent('animationstart', evt)
+        },
+
+        onAnimationIteration(evt) {
+            this.callEvent('animationiteration', evt)
+        },
+
+        onAnimationEnd(evt) {
+            this.callEvent('animationend', evt)
         },
 
         /**

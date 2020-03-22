@@ -68,15 +68,15 @@ module.exports = {
     }],
     handles: {
         onNavigatorSuccess(evt) {
-            this.callSimpleEvent('success', evt)
+            this.callSingleEvent('success', evt)
         },
 
         onNavigatorFail(evt) {
-            this.callSimpleEvent('fail', evt)
+            this.callSingleEvent('fail', evt)
         },
 
         onNavigatorComplete(evt) {
-            this.callSimpleEvent('complete', evt)
+            this.callSingleEvent('complete', evt)
         },
     },
 }

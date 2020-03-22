@@ -127,31 +127,31 @@ module.exports = {
     }],
     handles: {
         onMapTap(evt) {
-            this.callSimpleEvent('tap', evt)
+            this.callSingleEvent('tap', evt)
         },
 
         onMapMarkerTap(evt) {
-            this.callSimpleEvent('markertap', evt)
+            this.callSingleEvent('markertap', evt)
         },
 
         onMapControlTap(evt) {
-            this.callSimpleEvent('controltap', evt)
+            this.callSingleEvent('controltap', evt)
         },
 
         onMapCalloutTap(evt) {
-            this.callSimpleEvent('callouttap', evt)
+            this.callSingleEvent('callouttap', evt)
         },
 
         onMapUpdated(evt) {
-            this.callSimpleEvent('updated', evt)
+            this.callSingleEvent('updated', evt)
         },
 
         onMapRegionChange(evt) {
-            this.callSimpleEvent('regionchange', evt)
+            this.callSingleEvent('regionchange', evt)
         },
 
         onMapPoiTap(evt) {
-            this.callSimpleEvent('poitap', evt)
+            this.callSingleEvent('poitap', evt)
         },
 
     },

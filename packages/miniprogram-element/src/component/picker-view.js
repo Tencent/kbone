@@ -36,15 +36,15 @@ module.exports = {
             if (!domNode) return
 
             domNode.$$setAttributeWithoutUpdate('value', evt.detail.value)
-            this.callSimpleEvent('change', evt)
+            this.callSingleEvent('change', evt)
         },
 
         onPickerViewPickstart(evt) {
-            this.callSimpleEvent('pickstart', evt)
+            this.callSingleEvent('pickstart', evt)
         },
 
         onPickerViewPickend(evt) {
-            this.callSimpleEvent('pickend', evt)
+            this.callSingleEvent('pickend', evt)
         },
     },
 }

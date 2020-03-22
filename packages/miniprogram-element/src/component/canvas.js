@@ -20,27 +20,27 @@ module.exports = {
     }],
     handles: {
         onCanvasTouchStart(evt) {
-            this.callSimpleEvent('canvastouchstart', evt)
+            this.callSingleEvent('canvastouchstart', evt)
         },
 
         onCanvasTouchMove(evt) {
-            this.callSimpleEvent('canvastouchmove', evt)
+            this.callSingleEvent('canvastouchmove', evt)
         },
 
         onCanvasTouchEnd(evt) {
-            this.callSimpleEvent('canvastouchend', evt)
+            this.callSingleEvent('canvastouchend', evt)
         },
 
         onCanvasTouchCancel(evt) {
-            this.callSimpleEvent('canvastouchcancel', evt)
+            this.callSingleEvent('canvastouchcancel', evt)
         },
 
         onCanvasLongTap(evt) {
-            this.callSimpleEvent('longtap', evt)
+            this.callSingleEvent('longtap', evt)
         },
 
         onCanvasError(evt) {
-            this.callSimpleEvent('error', evt)
+            this.callSingleEvent('error', evt)
         },
     },
 }

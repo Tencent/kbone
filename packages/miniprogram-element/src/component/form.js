@@ -17,11 +17,11 @@ module.exports = {
     }],
     handles: {
         onFormSubmit(evt) {
-            this.callSimpleEvent('submit', evt)
+            this.callSingleEvent('submit', evt)
         },
 
         onFormReset(evt) {
-            this.callSimpleEvent('reset', evt)
+            this.callSingleEvent('reset', evt)
         },
     },
 }
