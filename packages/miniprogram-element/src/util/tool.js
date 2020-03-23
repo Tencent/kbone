@@ -101,9 +101,6 @@ function filterNodes(domNode, level, component) {
                 })
             }
 
-            // 挂载该节点所处的自定义组件实例
-            child._wxComponent = component
-
             // wx-catch 的 touch 事件会导致 tap 事件的触发，需要真正被绑定后再补充句柄
             if (wxCompName === 'catch') {
                 extra.touchStart = child.$$hasEventHandler('touchstart') ? 'onTouchStart' : ''
@@ -125,6 +122,9 @@ function filterNodes(domNode, level, component) {
             domInfo.content = ''
             domInfo.childNodes = filterNodes(child, level - 1, component)
         }
+
+        // 挂载该节点所处的自定义组件实例
+        child._wxComponent = component
 
         return domInfo
     }).filter(child => !!child)

@@ -1,5 +1,9 @@
 # 更新日志
 
+## 1.1.1
+
+* 所有节点均支持通过 _wxComponent 属性获取对应的自定义组件实例
+
 ## 1.1.0
 
 * 支持 wx-capture、wx-catch 和 wx-animation 三种特殊节点
