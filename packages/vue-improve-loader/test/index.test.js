@@ -8,15 +8,20 @@ test('check-reduce', () => {
     expect(getSimpleHTML(loader(`
         <template>
             <div>
-                <a><span></span><p>1</p></a>
-                <a><span></span><p>2</p></a>
-                <a><span></span><p>3</p></a>
-            </div>
-            <div check-reduce>
-                <span>123</span>
+                <template #header>
+                    <h1>Here might be a page title</h1>
+                </template>
+                <div>
+                    <a><span></span><p>1</p></a>
+                    <a><span></span><p>2</p></a>
+                    <a><span></span><p>3</p></a>
+                </div>
+                <div check-reduce>
+                    <span>123</span>
+                </div>
             </div>
         </template>
-    `))).toBe('<template><div><a><span></span><p>1</p></a><a><span></span><p>2</p></a><a><span></span><p>3</p></a></div></template>')
+    `))).toBe('<template><div><template #header><h1>Here might be a page title</h1></template><div><a><span></span><p>1</p></a><a><span></span><p>2</p></a><a><span></span><p>3</p></a></div></div></template>')
 
     // TODO
 })
