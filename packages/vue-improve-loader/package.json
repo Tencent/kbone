@@ -1,6 +1,6 @@
 {
 	"name": "vue-improve-loader",
-	"version": "0.3.1",
+	"version": "0.3.2",
 	"description": "a tool for develop miniprogram with vue",
 	"main": "src/index.js",
 	"miniprogram": "src",
