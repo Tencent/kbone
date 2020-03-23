@@ -55,6 +55,7 @@ Component({
         // 记录 dom
         this.domNode = cache.getNode(pageId, nodeId)
         if (!this.domNode) return
+        this.domNode._wxComponent = this
 
         // 存储 document
         this.document = cache.getDocument(pageId)
