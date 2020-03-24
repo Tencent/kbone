@@ -95,7 +95,7 @@ module.exports = {
             if (!domNode) return
 
             this._textareaOldValue = domNode.value
-            domNode.setAttribute('focus', true)
+            domNode.$$setAttributeWithoutUpdate('focus', true)
             this.callSimpleEvent('focus', evt)
         },
 
@@ -103,7 +103,7 @@ module.exports = {
             const domNode = this.getDomNodeFromEvt(evt)
             if (!domNode) return
 
-            domNode.setAttribute('focus', false)
+            domNode.$$setAttributeWithoutUpdate('focus', false)
             if (this._textareaOldValue !== undefined && domNode.value !== this._textareaOldValue) {
                 this._textareaOldValue = undefined
                 this.callEvent('change', evt)
@@ -120,7 +120,7 @@ module.exports = {
             if (!domNode) return
 
             const value = '' + evt.detail.value
-            domNode.setAttribute('value', value)
+            domNode.$$setAttributeWithoutUpdate('value', value)
             this.callEvent('input', evt)
         },
 

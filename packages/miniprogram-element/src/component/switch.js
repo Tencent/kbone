@@ -28,7 +28,7 @@ module.exports = {
             const domNode = this.getDomNodeFromEvt(evt)
             if (!domNode) return
 
-            domNode.setAttribute('checked', evt.detail.value)
+            domNode.$$setAttributeWithoutUpdate('checked', evt.detail.value)
             this.callSingleEvent('change', evt)
         },
     },
