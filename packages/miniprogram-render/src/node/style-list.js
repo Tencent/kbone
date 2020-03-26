@@ -4,7 +4,7 @@
 
 module.exports = [
     'position', 'top', 'bottom', 'right', 'left', 'float', 'clear',
-    'display', 'width', 'height', 'maxHeight', 'maxWidth', 'minHeight', 'minWidth', 'flex', 'flexBasis', 'flexGrow', 'flexShrink', 'flexDirection', 'flexWrap', 'justifyContent', 'alignItems',
+    'display', 'width', 'height', 'maxHeight', 'maxWidth', 'minHeight', 'minWidth', 'flex', 'flexBasis', 'flexGrow', 'flexShrink', 'flexDirection', 'flexWrap', 'justifyContent', 'alignItems', 'order',
     'padding', 'paddingBottom', 'paddingLeft', 'paddingRight', 'paddingTop',
     'margin', 'marginBottom', 'marginLeft', 'marginRight', 'marginTop',
 

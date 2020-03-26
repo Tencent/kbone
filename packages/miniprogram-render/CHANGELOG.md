@@ -1,5 +1,9 @@
 # 更新日志
 
+## 1.1.2
+
+* style-list 补充 order 样式
+
 ## 1.1.1
 
 * 修复 XMLHttpRequest 对象的 getResponseHeader 对大小写敏感问题
