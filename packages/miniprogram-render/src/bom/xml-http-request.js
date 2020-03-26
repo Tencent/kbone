@@ -248,7 +248,8 @@ class XMLHttpRequest extends EventTarget {
     getResponseHeader(name) {
         if (this.$_readyState === XMLHttpRequest.UNSENT || this.$_readyState === XMLHttpRequest.OPENED || !this.$_resHeader) return null
 
-        const key = Object.keys(this.$_resHeader).find(k => k.toLowerCase() === name.toLowerCase())
+        // 处理大小写不敏感
+        const key = Object.keys(this.$_resHeader).find(item => item.toLowerCase() === name.toLowerCase())
         const value = key ? this.$_resHeader[key] : null
 
         return typeof value === 'string' ? value : null

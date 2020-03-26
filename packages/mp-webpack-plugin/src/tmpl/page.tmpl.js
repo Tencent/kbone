@@ -75,7 +75,9 @@ Page({
 
         if (query.type === 'open' || query.type === 'jump' || query.type === 'share') {
             // 处理页面参数，只有当页面是其他页面打开或跳转时才处理
-            this.window.$$miniprogram.init(query.targeturl ? decodeURIComponent(query.targeturl) : null)
+            let targetUrl = decodeURIComponent(query.targeturl)
+            targetUrl = targetUrl.indexOf('://') >= 0 ? targetUrl : (config.origin + targetUrl)
+            this.window.$$miniprogram.init(targetUrl ? targetUrl : null)
 
             if (query.search) this.window.location.search = decodeURIComponent(query.search)
             if (query.hash) this.window.location.hash = decodeURIComponent(query.hash)

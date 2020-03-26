@@ -1,5 +1,9 @@
 # 更新日志
 
+## 1.1.1
+
+* 修复 XMLHttpRequest 对象的 getResponseHeader 对大小写敏感问题
+
 ## 1.1.0
 
 * 支持 wx-capture、wx-catch 和 wx-animation 三种特殊节点

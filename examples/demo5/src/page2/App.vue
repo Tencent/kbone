@@ -4,6 +4,7 @@
     <p>当前 url：{{url}}</p>
     <a href="/a">回到首页</a>
     <button @click="onClickJump">回到首页</button>
+    <button @click="onClickReLaunch">relaunch</button>
     <Footer></Footer>
   </div>
 </template>
@@ -40,6 +41,12 @@ export default {
   methods: {
     onClickJump() {
       window.location.href = '/a'
+    },
+
+    onClickReLaunch() {
+      wx.reLaunch({
+        url: `/pages/page1/index?type=jump&targeturl=${encodeURIComponent('/a')}`,
+      })
     },
   },
 }
