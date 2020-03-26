@@ -132,7 +132,7 @@ test('map', async() => {
     await _.checkBoolean(body, node, 'enableTraffic', 'enable-traffic', false)
 
     // event
-    await _.checkEvent(body.querySelector('.h5-wx-component'), node, ['tap', 'markertap', 'controltap', 'callouttap', 'updated', 'regionchange', 'poitap'])
+    await _.checkEvent(body.querySelector('.h5-wx-component'), node, ['tap', 'markertap', 'labeltap', 'controltap', 'callouttap', 'updated', 'regionchange', 'poitap'])
 
     page.document.body.removeChild(node)
     document.body.removeChild(wrapper)

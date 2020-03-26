@@ -716,6 +716,7 @@
         enable-traffic="{{enableTraffic}}"
         bindtap="onMapTap"
         bindmarkertap="onMapMarkerTap"
+        bindlabeltap="onMapLabelTap"
         bindcontroltap="onMapControlTap"
         bindcallouttap="onMapCalloutTap"
         bindupdated="onMapUpdated"

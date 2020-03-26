@@ -1,6 +1,19 @@
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/map.html
  */
+
+/**
+  * 兼容开发者工具 bug
+  */
+function dealWithDevToolsEvt(evt) {
+    if (!evt.detail) evt.detail = {}
+    if (evt.markerId !== undefined) evt.detail.markerId = evt.markerId
+    if (evt.controlId !== undefined) evt.detail.controlId = evt.controlId
+    if (evt.name !== undefined) evt.detail.name = evt.name
+    if (evt.longitude !== undefined) evt.detail.longitude = evt.longitude
+    if (evt.latitude !== undefined) evt.detail.latitude = evt.latitude
+}
+
 module.exports = {
     properties: [{
         name: 'longitude',
@@ -131,14 +144,22 @@ module.exports = {
         },
 
         onMapMarkerTap(evt) {
+            dealWithDevToolsEvt(evt)
             this.callSingleEvent('markertap', evt)
         },
 
+        onMapLabelTap(evt) {
+            dealWithDevToolsEvt(evt)
+            this.callSingleEvent('labeltap', evt)
+        },
+
         onMapControlTap(evt) {
+            dealWithDevToolsEvt(evt)
             this.callSingleEvent('controltap', evt)
         },
 
         onMapCalloutTap(evt) {
+            dealWithDevToolsEvt(evt)
             this.callSingleEvent('callouttap', evt)
         },
 
@@ -151,6 +172,7 @@ module.exports = {
         },
 
         onMapPoiTap(evt) {
+            dealWithDevToolsEvt(evt)
             this.callSingleEvent('poitap', evt)
         },
 
