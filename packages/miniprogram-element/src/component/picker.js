@@ -15,7 +15,15 @@ module.exports = {
     }, {
         name: 'range',
         get(domNode) {
-            const value = domNode.getAttribute('range')
+            let value = domNode.getAttribute('range')
+            if (typeof value === 'string') {
+                // react 会直接将属性值转成字符串
+                try {
+                    value = JSON.parse(value)
+                } catch (err) {
+                    value = value.split(',')
+                }
+            }
             return value !== undefined ? value : []
         },
     }, {
@@ -27,14 +35,18 @@ module.exports = {
         name: 'value',
         get(domNode) {
             const mode = domNode.getAttribute('mode') || 'selector'
-            const value = domNode.getAttribute('value')
-            if (mode === 'selector' || mode === 'multiSelector') {
+            let value = domNode.getAttribute('value')
+            if (mode === 'selector') {
                 return +value || 0
+            } else if (mode === 'multiSelector') {
+                if (typeof value === 'string') value = value.split(',').map(item => parseInt(item, 10)) // react 会直接将属性值转成字符串
+                return value || []
             } else if (mode === 'time') {
                 return value || ''
             } else if (mode === 'date') {
                 return value || '0'
             } else if (mode === 'region') {
+                if (typeof value === 'string') value = value.split(',') // react 会直接将属性值转成字符串
                 return value || []
             }
 

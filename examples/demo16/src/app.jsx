@@ -9,6 +9,14 @@ import View2 from './view2'
 import View3 from './view3'
 
 const App = (props, store) => {
+    const pickerRange1 = ['中国', '美国', '巴西', '日本']
+    const pickerRange2 = JSON.stringify([
+        {name: '中国'},
+        {name: '美国'},
+        {name: '巴西'},
+        {name: '日本'}
+    ])
+
     return (
         <div>
             <div>
@@ -42,6 +50,11 @@ const App = (props, store) => {
                     value="2"
                     onChange={e => console.log('change', e)}
                 />
+            </div>
+            <div>
+                我是 picker-view：
+                <wx-picker range={pickerRange1}>选择国家1</wx-picker>
+                <wx-picker range={pickerRange2} range-key="name">选择国家2</wx-picker>
             </div>
             <div>
                 我是 picker-view：

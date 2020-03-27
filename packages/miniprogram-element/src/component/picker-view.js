@@ -6,7 +6,7 @@ module.exports = {
         name: 'value',
         get(domNode) {
             let value = domNode.getAttribute('value')
-            if (typeof value === 'string') value = value.split(',').map(item => parseInt(item, 10))
+            if (typeof value === 'string') value = value.split(',').map(item => parseInt(item, 10)) // react 会直接将属性值转成字符串
             return value !== undefined ? value : []
         },
     }, {
