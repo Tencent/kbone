@@ -178,6 +178,9 @@ Component({
 
             domNode.$$trigger(eventName, {
                 event: new Event({
+                    timeStamp: evt && evt.timeStamp,
+                    touches: evt && evt.touches,
+                    changedTouches: evt && evt.changedTouches,
                     name: eventName,
                     target: domNode,
                     eventPhase: Event.AT_TARGET,
