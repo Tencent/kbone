@@ -43,9 +43,17 @@ class WxComponent extends Element {
     }
 
     set behavior(value) {
-        if (typeof value !== 'string') return
+        if (!value || typeof value !== 'string') return
 
         this.$_attrs.set('behavior', value)
+    }
+
+    get value() {
+        return this.$_attrs.get('value')
+    }
+
+    set value(value) {
+        this.$_attrs.set('value', value)
     }
 }
 

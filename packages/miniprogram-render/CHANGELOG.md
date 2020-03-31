@@ -1,5 +1,10 @@
 # 更新日志
 
+## 1.1.3
+
+* 修复 preact 无法通过 wx- 前缀使用内置组件问题
+* 修复 picker-view 等表单组件无法设置 value 问题
+
 ## 1.1.2
 
 * style-list 补充 order 样式
