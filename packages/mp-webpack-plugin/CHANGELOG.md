@@ -1,5 +1,9 @@
 # 更新日志
 
+## 0.9.4
+
+* 在 generate.app 值为 noemit 且只有分包输出时，config.js 输出到分包内
+
 ## 0.9.3
 
 * 页面跳转时传入的 targeturl 支持不带域名

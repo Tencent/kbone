@@ -66,3 +66,4 @@ npm install
 * demo18：vue + 多页
 * demo19：vue + 云开发
 * demo20：vue + echarts
+* demo21：vue + 分包 + kbone 混合原生小程序开发
