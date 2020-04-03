@@ -193,9 +193,18 @@ function checkComponentAttr(name, domNode, destData, oldData, extraClass = '') {
     destData.wxCompName = name
 
     if (attrs && attrs.length) {
-        for (const {name, get} of attrs) {
+        for (const {name, get, canBeUserChanged = false} of attrs) {
             const newValue = get(domNode)
-            if (!oldData || !isEqual(newValue, oldData[name])) destData[name] = newValue
+            if (canBeUserChanged) {
+                // 可被用户行为改变的属性，除了 data 外，还需要对比监听到上次用户行为修改的值
+                const oldValues = domNode._oldValues
+                if (!oldData || !isEqual(newValue, oldData[name]) || (oldValues && !isEqual(newValue, oldValues[name]))) {
+                    destData[name] = newValue
+                }
+            } else if (!oldData || !isEqual(newValue, oldData[name])) {
+                // 对比 data
+                destData[name] = newValue
+            }
         }
     }
 

@@ -145,19 +145,19 @@
         </template>
         <template v-else-if="item === 'movable'">
           <wx-component v-if="!wxPrefix" :behavior="item" :class="item" :scale-area="true">
-            <wx-component class="movable-view" behavior="movable-view" direction="all" :inertia="true" :out-of-bounds="true" :x="movable.x" :y="movable.y" :scale-value="movable.scaleValue" :scale="true" @change="onMovableChange" @scale="onMovableScale"><span>text</span></wx-component>
+            <wx-component ref="movable-view" class="movable-view" behavior="movable-view" direction="all" :inertia="true" :out-of-bounds="true" :x="movable.x" :y="movable.y" :scale-value="movable.scaleValue" :scale="true" @change="onMovableChange" @scale="onMovableScale"><span>text</span></wx-component>
             <wx-component class="movable-view" behavior="movable-view" direction="all" :x="0" :y="0">plaintext</wx-component>
           </wx-component>
           <wx-movable-area v-else-if="wxPrefix === 1" :class="item" :scale-area="true">
-            <wx-movable-view class="movable-view" direction="all" :inertia="true" :out-of-bounds="true" :x="movable.x" :y="movable.y" :scale-value="movable.scaleValue" :scale="true" @change="onMovableChange" @scale="onMovableScale"><span>text</span></wx-movable-view>
+            <wx-movable-view ref="movable-view" class="movable-view" direction="all" :inertia="true" :out-of-bounds="true" :x="movable.x" :y="movable.y" :scale-value="movable.scaleValue" :scale="true" @change="onMovableChange" @scale="onMovableScale"><span>text</span></wx-movable-view>
             <wx-movable-view class="movable-view" direction="all" :x="0" :y="0">plaintext</wx-movable-view>
           </wx-movable-area>
           <movable-area v-else-if="wxPrefix === 2" :class="item" :scale-area="true">
-            <movable-view class="movable-view" direction="all" :inertia="true" :out-of-bounds="true" :x="movable.x" :y="movable.y" :scale-value="movable.scaleValue" :scale="true" @change="onMovableChange" @scale="onMovableScale"><span>text</span></movable-view>
+            <movable-view ref="movable-view" class="movable-view" direction="all" :inertia="true" :out-of-bounds="true" :x="movable.x" :y="movable.y" :scale-value="movable.scaleValue" :scale="true" @change="onMovableChange" @scale="onMovableScale"><span>text</span></movable-view>
             <movable-view class="movable-view" direction="all" :x="0" :y="0">plaintext</movable-view>
           </movable-area>
-          <wx-button @click="movable.x = movable.y = 30">move to (30px, 30px)</wx-button>
-          <wx-button @click="movable.scaleValue = 3">scale to 3.0</wx-button>
+          <wx-button @click="onClickMovableMove">move to (30px, 30px)</wx-button>
+          <wx-button @click="onClickMovableScale">scale to 3.0</wx-button>
         </template>
         <template v-else-if="item === 'form'">
           <!-- form 组件 -->
@@ -480,15 +480,15 @@
         </template>
         <template v-else-if="item === 'scroll-view'">
           <div>
-            <wx-component v-if="!wxPrefix" :behavior="item" :class="item + '-y'" :scroll-into-view="'y1' + scrollView.yDest" :scroll-y="true" :scroll-with-animation="true" @scroll="onScrollViewScroll"><Inner2 type="y1"/></wx-component>
-            <wx-scroll-view v-else-if="wxPrefix === 1" :class="item + '-y'" :scroll-into-view="'y2' + scrollView.yDest" :scroll-y="true" :scroll-with-animation="true" @scroll="onScrollViewScroll"><Inner2 type="y2"/></wx-scroll-view>
-            <scroll-view v-else-if="wxPrefix === 2" :class="item + '-y'" :scroll-into-view="'y3' + scrollView.yDest" :scroll-y="true" :scroll-with-animation="true" @scroll="onScrollViewScroll"><Inner2 type="y3"/></scroll-view>
+            <wx-component ref="scroll-view" v-if="!wxPrefix" :behavior="item" :class="item + '-y'" :scroll-into-view="'y1' + scrollView.yDest" :scroll-y="true" :scroll-with-animation="true" @scroll="onScrollViewScroll"><Inner2 type="y1"/></wx-component>
+            <wx-scroll-view ref="scroll-view" v-else-if="wxPrefix === 1" :class="item + '-y'" :scroll-into-view="'y2' + scrollView.yDest" :scroll-y="true" :scroll-with-animation="true" @scroll="onScrollViewScroll"><Inner2 type="y2"/></wx-scroll-view>
+            <scroll-view ref="scroll-view" v-else-if="wxPrefix === 2" :class="item + '-y'" :scroll-into-view="'y3' + scrollView.yDest" :scroll-y="true" :scroll-with-animation="true" @scroll="onScrollViewScroll"><Inner2 type="y3"/></scroll-view>
             <div class="scroll-view-btn" @click="onClickScrollViewYBtn">滚动到第三个滑块</div>
           </div>
           <div>
-            <wx-component v-if="!wxPrefix" :behavior="item" :class="item + '-x'" :scroll-into-view="'x1' + scrollView.xDest" :scroll-x="true" :scroll-with-animation="true" @scroll="onScrollViewScroll"><Inner2 type="x1"/></wx-component>
-            <wx-scroll-view v-else-if="wxPrefix === 1" :class="item + '-x'" :scroll-into-view="'x2' + scrollView.xDest" :scroll-x="true" :scroll-with-animation="true" @scroll="onScrollViewScroll"><Inner2 type="x2"/></wx-scroll-view>
-            <scroll-view v-else-if="wxPrefix === 2" :class="item + '-x'" :scroll-into-view="'x3' + scrollView.xDest" :scroll-x="true" :scroll-with-animation="true" @scroll="onScrollViewScroll"><Inner2 type="x3"/></scroll-view>
+            <wx-component ref="scroll-view" v-if="!wxPrefix" :behavior="item" :class="item + '-x'" :scroll-into-view="'x1' + scrollView.xDest" :scroll-x="true" :scroll-with-animation="true" @scroll="onScrollViewScroll"><Inner2 type="x1"/></wx-component>
+            <wx-scroll-view ref="scroll-view" v-else-if="wxPrefix === 1" :class="item + '-x'" :scroll-into-view="'x2' + scrollView.xDest" :scroll-x="true" :scroll-with-animation="true" @scroll="onScrollViewScroll"><Inner2 type="x2"/></wx-scroll-view>
+            <scroll-view ref="scroll-view" v-else-if="wxPrefix === 2" :class="item + '-x'" :scroll-into-view="'x3' + scrollView.xDest" :scroll-x="true" :scroll-with-animation="true" @scroll="onScrollViewScroll"><Inner2 type="x3"/></scroll-view>
             <div class="scroll-view-btn" @click="onClickScrollViewXBtn">滚动到第二个滑块</div>
           </div>
         </template>
@@ -838,10 +838,22 @@ export default {
     },
 
     onClickScrollViewYBtn() {
+      const domNodes = this.$refs['scroll-view'] || []
+      if (domNodes[0]) {
+        const wxPrefix = this.wxPrefix
+        const prefix = wxPrefix === 1 ? 'y2' : wxPrefix === 2 ? 'y3' : 'y1'
+        domNodes[0].setAttribute('scroll-into-view', prefix + 'block3')
+      }
       this.scrollView.yDest = 'block3'
     },
 
     onClickScrollViewXBtn() {
+      const domNodes = this.$refs['scroll-view'] || []
+      if (domNodes[1]) {
+        const wxPrefix = this.wxPrefix
+        const prefix = wxPrefix === 1 ? 'x2' : wxPrefix === 2 ? 'x3' : 'x1'
+        domNodes[1].setAttribute('scroll-into-view', prefix + 'block2')
+      }
       this.scrollView.xDest = 'block2'
     },
 
@@ -879,6 +891,23 @@ export default {
 
     onGetPhoneNumber(evt) {
       console.log('onGetPhoneNumber', evt)
+    },
+
+    onClickMovableMove() {
+      const domNodes = this.$refs['movable-view'] || []
+      if (domNodes[0]) {
+        domNodes[0].setAttribute('x', 30)
+        domNodes[0].setAttribute('y', 30)
+      }
+      this.movable.x = this.movable.y = 30
+    },
+
+    onClickMovableScale() {
+      const domNodes = this.$refs['movable-view'] || []
+      if (domNodes[0]) {
+        domNodes[0].setAttribute('scale-value', 3)
+      }
+      this.movable.scaleValue = 3
     },
   }
 }

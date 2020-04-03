@@ -4,6 +4,7 @@
 module.exports = {
     properties: [{
         name: 'value',
+        canBeUserChanged: true,
         get(domNode) {
             let value = domNode.getAttribute('value')
             if (typeof value === 'string') value = value.split(',').map(item => parseInt(item, 10)) // react 会直接将属性值转成字符串
@@ -36,6 +37,11 @@ module.exports = {
             if (!domNode) return
 
             domNode.$$setAttributeWithoutUpdate('value', evt.detail.value)
+
+            // 可被用户行为改变的值，需要记录
+            domNode._oldValues = domNode._oldValues || {}
+            domNode._oldValues.value = evt.detail.value
+
             this.callSingleEvent('change', evt)
         },
 

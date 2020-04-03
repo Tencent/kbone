@@ -24,6 +24,7 @@ module.exports = {
         },
     }, {
         name: 'current',
+        canBeUserChanged: true,
         get(domNode) {
             return +domNode.getAttribute('current') || 0
         },
@@ -82,6 +83,11 @@ module.exports = {
             if (!domNode) return
 
             domNode.$$setAttributeWithoutUpdate('current', evt.detail.current)
+
+            // 可被用户行为改变的值，需要记录
+            domNode._oldValues = domNode._oldValues || {}
+            domNode._oldValues.current = evt.detail.current
+
             this.callSingleEvent('change', evt)
         },
 

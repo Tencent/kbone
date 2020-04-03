@@ -26,6 +26,7 @@ module.exports = {
         },
     }, {
         name: 'value',
+        canBeUserChanged: true,
         get(domNode) {
             return +domNode.getAttribute('value') || 0
         },
@@ -72,6 +73,11 @@ module.exports = {
             if (!domNode) return
 
             domNode.$$setAttributeWithoutUpdate('value', evt.detail.value)
+
+            // 可被用户行为改变的值，需要记录
+            domNode._oldValues = domNode._oldValues || {}
+            domNode._oldValues.value = evt.detail.value
+
             this.callSingleEvent('change', evt)
         },
 

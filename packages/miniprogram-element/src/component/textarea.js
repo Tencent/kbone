@@ -4,6 +4,7 @@
 module.exports = {
     properties: [{
         name: 'value',
+        canBeUserChanged: true,
         get(domNode) {
             return domNode.value || ''
         },
@@ -94,8 +95,13 @@ module.exports = {
             const domNode = this.getDomNodeFromEvt(evt)
             if (!domNode) return
 
-            this._textareaOldValue = domNode.value
+            domNode._textareaOldValue = domNode.value
             domNode.$$setAttributeWithoutUpdate('focus', true)
+
+            // 可被用户行为改变的值，需要记录
+            domNode._oldValues = domNode._oldValues || {}
+            domNode._oldValues.focus = true
+
             this.callSimpleEvent('focus', evt)
         },
 
@@ -104,8 +110,13 @@ module.exports = {
             if (!domNode) return
 
             domNode.$$setAttributeWithoutUpdate('focus', false)
-            if (this._textareaOldValue !== undefined && domNode.value !== this._textareaOldValue) {
-                this._textareaOldValue = undefined
+
+            // 可被用户行为改变的值，需要记录
+            domNode._oldValues = domNode._oldValues || {}
+            domNode._oldValues.focus = false
+
+            if (domNode._textareaOldValue !== undefined && domNode.value !== domNode._textareaOldValue) {
+                domNode._textareaOldValue = undefined
                 this.callEvent('change', evt)
             }
             this.callSimpleEvent('blur', evt)
@@ -121,6 +132,11 @@ module.exports = {
 
             const value = '' + evt.detail.value
             domNode.$$setAttributeWithoutUpdate('value', value)
+
+            // 可被用户行为改变的值，需要记录
+            domNode._oldValues = domNode._oldValues || {}
+            domNode._oldValues.value = value
+
             this.callEvent('input', evt)
         },
 

@@ -10,6 +10,7 @@ const {
 module.exports = {
     properties: [{
         name: 'value',
+        canBeUserChanged: true,
         get(domNode) {
             return domNode.value || ''
         },
@@ -62,6 +63,7 @@ module.exports = {
         },
     }, {
         name: 'focus',
+        canBeUserChanged: true,
         get(domNode) {
             return !!domNode.getAttribute('focus')
         },
@@ -101,6 +103,7 @@ module.exports = {
         },
     }, {
         name: 'checked',
+        canBeUserChanged: true,
         get(domNode) {
             return !!domNode.getAttribute('checked')
         },
@@ -117,6 +120,11 @@ module.exports = {
 
             const value = '' + evt.detail.value
             domNode.$$setAttributeWithoutUpdate('value', value)
+
+            // 可被用户行为改变的值，需要记录
+            domNode._oldValues = domNode._oldValues || {}
+            domNode._oldValues.value = value
+
             this.callEvent('input', evt)
         },
 
@@ -126,6 +134,11 @@ module.exports = {
 
             domNode._inputOldValue = domNode.value
             domNode.$$setAttributeWithoutUpdate('focus', true)
+
+            // 可被用户行为改变的值，需要记录
+            domNode._oldValues = domNode._oldValues || {}
+            domNode._oldValues.focus = true
+
             this.callSimpleEvent('focus', evt)
         },
 
@@ -134,6 +147,11 @@ module.exports = {
             if (!domNode) return
 
             domNode.$$setAttributeWithoutUpdate('focus', false)
+
+            // 可被用户行为改变的值，需要记录
+            domNode._oldValues = domNode._oldValues || {}
+            domNode._oldValues.focus = false
+
             if (domNode._inputOldValue !== undefined && domNode.value !== domNode._inputOldValue) {
                 domNode._inputOldValue = undefined
                 this.callEvent('change', evt)
@@ -159,10 +177,19 @@ module.exports = {
 
             if (value === domNode.value) {
                 domNode.$$setAttributeWithoutUpdate('checked', true)
+
+                // 可被用户行为改变的值，需要记录
+                domNode._oldValues = domNode._oldValues || {}
+                domNode._oldValues.checked = true
+
                 const otherDomNodes = window.document.querySelectorAll(`input[name=${name}]`) || []
                 for (const otherDomNode of otherDomNodes) {
                     if (otherDomNode.type === 'radio' && otherDomNode !== domNode) {
                         otherDomNode.$$setAttributeWithoutUpdate('checked', false)
+
+                        // 可被用户行为改变的值，需要记录
+                        otherDomNode._oldValues = otherDomNode._oldValues || {}
+                        otherDomNode._oldValues.checked = false
                     }
                 }
             }
@@ -177,8 +204,16 @@ module.exports = {
             const value = evt.detail.value || []
             if (value.indexOf(domNode.value) >= 0) {
                 domNode.$$setAttributeWithoutUpdate('checked', true)
+
+                // 可被用户行为改变的值，需要记录
+                domNode._oldValues = domNode._oldValues || {}
+                domNode._oldValues.checked = true
             } else {
                 domNode.$$setAttributeWithoutUpdate('checked', false)
+
+                // 可被用户行为改变的值，需要记录
+                domNode._oldValues = domNode._oldValues || {}
+                domNode._oldValues.checked = false
             }
             this.callEvent('input', evt)
             this.callEvent('change', evt)
