@@ -20,17 +20,15 @@ test('form', async() => {
     node.setAttribute('behavior', 'form')
     page.document.body.appendChild(node)
     await _.sleep(10)
-    const form = body.querySelector('.h5-wx-component')
 
     // reportSubmit
-    await _.checkBoolean(form, node, 'reportSubmit', 'report-submit', false)
+    await _.checkBoolean(body, node, 'reportSubmit', 'report-submit', false)
 
     // reportSubmitTimeout
-    await _.checkNumber(form, node, 'reportSubmitTimeout', 'report-submit-timeout', 0)
+    await _.checkNumber(body, node, 'reportSubmitTimeout', 'report-submit-timeout', 0)
 
     // event
-    const wxForm = form.querySelector('.wx-comp-form')
-    await _.checkEvent(wxForm, node, ['submit', 'reset'])
+    await _.checkEvent(body.querySelector('.h5-wx-component'), node, ['submit', 'reset'])
 
     page.document.body.removeChild(node)
     document.body.removeChild(wrapper)

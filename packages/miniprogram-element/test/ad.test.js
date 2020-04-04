@@ -20,17 +20,15 @@ test('ad', async() => {
     node.setAttribute('behavior', 'ad')
     page.document.body.appendChild(node)
     await _.sleep(10)
-    const ad = body.querySelector('.h5-wx-component')
 
     // unitId
-    await _.checkString(ad, node, 'unitId', 'unit-id', '')
+    await _.checkString(body, node, 'unitId', 'unit-id', '')
 
     // adIntervals
-    await _.checkNumber(ad, node, 'adIntervals', 'ad-intervals', 0)
+    await _.checkNumber(body, node, 'adIntervals', 'ad-intervals', 0)
 
     // event
-    const wxAd = ad.querySelector('.wx-comp-ad')
-    await _.checkEvent(wxAd, node, ['load', 'error', 'close'])
+    await _.checkEvent(body.querySelector('.h5-wx-component'), node, ['load', 'error', 'close'])
 
     page.document.body.removeChild(node)
     document.body.removeChild(wrapper)

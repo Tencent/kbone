@@ -1,9 +1,3 @@
-const mp = require('miniprogram-render')
-
-const {
-    cache,
-} = mp.$$adapter
-
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/movable-view.html
  */
@@ -25,11 +19,13 @@ module.exports = {
         },
     }, {
         name: 'x',
+        canBeUserChanged: true,
         get(domNode) {
             return +domNode.getAttribute('x') || 0
         },
     }, {
         name: 'y',
+        canBeUserChanged: true,
         get(domNode) {
             return +domNode.getAttribute('y') || 0
         },
@@ -52,6 +48,7 @@ module.exports = {
         },
     }, {
         name: 'scale',
+        canBeUserChanged: true,
         get(domNode) {
             return !!domNode.getAttribute('scale')
         },
@@ -82,44 +79,43 @@ module.exports = {
     }],
     handles: {
         onMovableViewChange(evt) {
-            const nodeId = evt.currentTarget.dataset.privateNodeId
-            const domNode = cache.getNode(this.pageId, nodeId)
-
+            const domNode = this.getDomNodeFromEvt(evt)
             if (!domNode) return
 
             domNode.$$setAttributeWithoutUpdate('x', evt.detail.x)
             domNode.$$setAttributeWithoutUpdate('y', evt.detail.y)
-            this.callSimpleEvent('change', evt, domNode)
+
+            // 可被用户行为改变的值，需要记录
+            domNode._oldValues = domNode._oldValues || {}
+            domNode._oldValues.x = evt.detail.x
+            domNode._oldValues.y = evt.detail.y
+
+            this.callSingleEvent('change', evt)
         },
 
         onMovableViewScale(evt) {
-            const nodeId = evt.currentTarget.dataset.privateNodeId
-            const domNode = cache.getNode(this.pageId, nodeId)
-
+            const domNode = this.getDomNodeFromEvt(evt)
             if (!domNode) return
 
             domNode.$$setAttributeWithoutUpdate('x', evt.detail.x)
             domNode.$$setAttributeWithoutUpdate('y', evt.detail.y)
             domNode.$$setAttributeWithoutUpdate('scale-value', evt.detail.scale)
-            this.callSimpleEvent('scale', evt, domNode)
+
+            // 可被用户行为改变的值，需要记录
+            domNode._oldValues = domNode._oldValues || {}
+            domNode._oldValues.x = evt.detail.x
+            domNode._oldValues.y = evt.detail.y
+            domNode._oldValues.scaleValue = evt.detail.scale
+
+            this.callSingleEvent('scale', evt)
         },
 
         onMovableViewHtouchmove(evt) {
-            const nodeId = evt.currentTarget.dataset.privateNodeId
-            const domNode = cache.getNode(this.pageId, nodeId)
-
-            if (!domNode) return
-
-            this.callSimpleEvent('htouchmove', evt, domNode)
+            this.callSingleEvent('htouchmove', evt)
         },
 
         onMovableViewVtouchmove(evt) {
-            const nodeId = evt.currentTarget.dataset.privateNodeId
-            const domNode = cache.getNode(this.pageId, nodeId)
-
-            if (!domNode) return
-
-            this.callSimpleEvent('vtouchmove', evt, domNode)
+            this.callSingleEvent('vtouchmove', evt)
         },
     },
 }

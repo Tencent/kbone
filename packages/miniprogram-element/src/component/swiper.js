@@ -24,6 +24,7 @@ module.exports = {
         },
     }, {
         name: 'current',
+        canBeUserChanged: true,
         get(domNode) {
             return +domNode.getAttribute('current') || 0
         },
@@ -78,18 +79,24 @@ module.exports = {
     }],
     handles: {
         onSwiperChange(evt) {
-            if (!this.domNode) return
+            const domNode = this.getDomNodeFromEvt(evt)
+            if (!domNode) return
 
-            this.domNode.$$setAttributeWithoutUpdate('current', evt.detail.current)
-            this.callSimpleEvent('change', evt)
+            domNode.$$setAttributeWithoutUpdate('current', evt.detail.current)
+
+            // 可被用户行为改变的值，需要记录
+            domNode._oldValues = domNode._oldValues || {}
+            domNode._oldValues.current = evt.detail.current
+
+            this.callSingleEvent('change', evt)
         },
 
         onSwiperTransition(evt) {
-            this.callSimpleEvent('transition', evt)
+            this.callSingleEvent('transition', evt)
         },
 
         onSwiperAnimationfinish(evt) {
-            this.callSimpleEvent('animationfinish', evt)
+            this.callSingleEvent('animationfinish', evt)
         },
     },
 }

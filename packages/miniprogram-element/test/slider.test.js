@@ -20,47 +20,45 @@ test('slider', async() => {
     node.setAttribute('behavior', 'slider')
     page.document.body.appendChild(node)
     await _.sleep(10)
-    const slider = body.querySelector('.h5-wx-component')
 
     // min
-    await _.checkNumber(slider, node, 'min', 'min', 0)
+    await _.checkNumber(body, node, 'min', 'min', 0)
 
     // max
-    await _.checkNumber(slider, node, 'max', 'max', 100)
+    await _.checkNumber(body, node, 'max', 'max', 100)
 
     // step
-    await _.checkNumber(slider, node, 'step', 'step', 1)
+    await _.checkNumber(body, node, 'step', 'step', 1)
 
     // disabled
-    await _.checkBoolean(slider, node, 'disabled', 'disabled', false)
+    await _.checkBoolean(body, node, 'disabled', 'disabled', false)
 
     // value
-    await _.checkNumber(slider, node, 'value', 'value', 0)
+    await _.checkNumber(body, node, 'value', 'value', 0)
 
     // color
-    await _.checkString(slider, node, 'color', 'color', '#e9e9e9')
+    await _.checkString(body, node, 'color', 'color', '#e9e9e9')
 
     // selectedColor
-    await _.checkString(slider, node, 'selectedColor', 'selected-color', '#1aad19')
+    await _.checkString(body, node, 'selectedColor', 'selected-color', '#1aad19')
 
     // activeColor
-    await _.checkString(slider, node, 'activeColor', 'active-color', '#1aad19')
+    await _.checkString(body, node, 'activeColor', 'active-color', '#1aad19')
 
     // backgroundColor
-    await _.checkString(slider, node, 'backgroundColor', 'background-color', '#e9e9e9')
+    await _.checkString(body, node, 'backgroundColor', 'background-color', '#e9e9e9')
 
     // blockSize
-    await _.checkNumber(slider, node, 'blockSize', 'block-size', 28)
+    await _.checkNumber(body, node, 'blockSize', 'block-size', 28)
 
     // blockColor
-    await _.checkString(slider, node, 'blockColor', 'block-color', '#ffffff')
+    await _.checkString(body, node, 'blockColor', 'block-color', '#ffffff')
 
     // showValue
-    await _.checkBoolean(slider, node, 'showValue', 'show-value', false)
+    await _.checkBoolean(body, node, 'showValue', 'show-value', false)
 
     // event
-    const wxSlider = slider.querySelector('.wx-comp-slider')
-    await _.checkEvent(wxSlider, node, ['change', 'changing'])
+    await _.checkEvent(body.querySelector('.h5-wx-component'), node, ['change', 'changing'])
 
     page.document.body.removeChild(node)
     document.body.removeChild(wrapper)

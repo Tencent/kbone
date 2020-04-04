@@ -4,8 +4,10 @@
 module.exports = {
     properties: [{
         name: 'value',
+        canBeUserChanged: true,
         get(domNode) {
-            const value = domNode.getAttribute('value')
+            let value = domNode.getAttribute('value')
+            if (typeof value === 'string') value = value.split(',').map(item => parseInt(item, 10)) // react 会直接将属性值转成字符串
             return value !== undefined ? value : []
         },
     }, {
@@ -31,18 +33,24 @@ module.exports = {
     }],
     handles: {
         onPickerViewChange(evt) {
-            if (!this.domNode) return
+            const domNode = this.getDomNodeFromEvt(evt)
+            if (!domNode) return
 
-            this.domNode.$$setAttributeWithoutUpdate('value', evt.detail.value)
-            this.callSimpleEvent('change', evt)
+            domNode.$$setAttributeWithoutUpdate('value', evt.detail.value)
+
+            // 可被用户行为改变的值，需要记录
+            domNode._oldValues = domNode._oldValues || {}
+            domNode._oldValues.value = evt.detail.value
+
+            this.callSingleEvent('change', evt)
         },
 
         onPickerViewPickstart(evt) {
-            this.callSimpleEvent('pickstart', evt)
+            this.callSingleEvent('pickstart', evt)
         },
 
         onPickerViewPickend(evt) {
-            this.callSimpleEvent('pickend', evt)
+            this.callSingleEvent('pickend', evt)
         },
     },
 }

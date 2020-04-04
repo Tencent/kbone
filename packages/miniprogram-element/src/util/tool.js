@@ -8,20 +8,24 @@ const {
 } = mp.$$adapter
 
 const {
+    wxCompNameMap,
     wxSubComponentMap,
 } = component
 
-const ELEMENT_DIFF_KEYS = ['nodeId', 'pageId', 'tagName', 'compName', 'id', 'class', 'style', 'src', 'mode', 'lazyLoad', 'showMenuByLongpress', 'isImage', 'isLeaf', 'isSimple', 'content', 'extra']
+const ELEMENT_DIFF_KEYS = ['nodeId', 'pageId', 'tagName', 'compName', 'id', 'className', 'style', 'src', 'mode', 'lazyLoad', 'showMenuByLongpress', 'useTemplate', 'isImage', 'isLeaf', 'isSimple', 'content', 'extra']
 const TEXT_NODE_DIFF_KEYS = ['nodeId', 'pageId', 'content']
-const NEET_SPLIT_CLASS_STYLE_FROM_CUSTOM_ELEMENT = ['INPUT', 'TEXTAREA', 'VIDEO', 'CANVAS', 'WX-COMPONENT', 'WX-CUSTOM-COMPONENT'] // 需要分离 class 和 style 的节点
+const NEET_SPLIT_CLASS_STYLE_FROM_CUSTOM_ELEMENT = ['WX-COMPONENT', 'WX-CUSTOM-COMPONENT'] // 需要分离 class 和 style 的节点
+const NEET_BEHAVIOR_NORMAL_CUSTOM_ELEMENT_PARENT = ['swiper', 'movable-area']
 const NEET_BEHAVIOR_NORMAL_CUSTOM_ELEMENT = ['swiper-item', 'movable-view', 'picker-view-column']
 const NEET_RENDER_TO_CUSTOM_ELEMENT = ['IFRAME', ...NEET_SPLIT_CLASS_STYLE_FROM_CUSTOM_ELEMENT] // 必须渲染成自定义组件的节点
 const NOT_SUPPORT = ['IFRAME']
+const USE_TEMPLATE = ['cover-image', 'movable-area', 'movable-view', 'swiper', 'swiper-item', 'icon', 'progress', 'rich-text', 'button', 'editor', 'form', 'INPUT', 'picker', 'slider', 'switch', 'TEXTAREA', 'navigator', 'camera', 'image', 'live-player', 'live-pusher', 'VIDEO', 'map', 'CANVAS', 'ad', 'official-account', 'open-data', 'web-view', 'capture', 'catch', 'animation'] // 使用 template 渲染
+const IN_COVER = ['cover-view'] // 子节点必须使用 cover-view/cover-image
 
 /**
  * 过滤子节点，只获取儿子节点
  */
-function filterNodes(domNode, level) {
+function filterNodes(domNode, level, component) {
     const window = cache.getWindow(domNode.$$pageId)
     const childNodes = domNode.childNodes || []
 
@@ -33,7 +37,7 @@ function filterNodes(domNode, level) {
 
         if (domInfo.type !== 'element' && domInfo.type !== 'text') return
 
-        domInfo.class = domInfo.type === 'element' ? `h5-${domInfo.tagName} node-${domInfo.nodeId} ${domInfo.class || ''}` : '' // 增加默认 class
+        domInfo.className = domInfo.type === 'element' ? `h5-${domInfo.tagName} node-${domInfo.nodeId} ${domInfo.className || ''}` : '' // 增加默认 class
         domInfo.domNode = child
 
         // 特殊节点
@@ -54,13 +58,13 @@ function filterNodes(domNode, level) {
                 }
 
                 if (child.childNodes.length && level > 0) {
-                    domInfo.childNodes = filterNodes(child, level - 1)
+                    domInfo.childNodes = filterNodes(child, level - 1, component)
                 }
                 return domInfo
             }
 
             // 不需要处理 id 和样式
-            domInfo.class = `h5-${domInfo.tagName} ${domInfo.tagName === 'wx-component' ? 'wx-' + child.behavior : ''}`
+            domInfo.className = `h5-${domInfo.tagName} ${domInfo.tagName === 'wx-component' ? 'wx-' + child.behavior : ''}`
             domInfo.id = ''
             domInfo.style = ''
         }
@@ -72,25 +76,55 @@ function filterNodes(domNode, level) {
             domInfo.mode = child.getAttribute('mode') || ''
             domInfo.lazyLoad = !!child.getAttribute('lazy-load')
             domInfo.showMenuByLongpress = !!child.getAttribute('show-menu-by-longpress')
-        } else {
-            domInfo.src = ''
-            domInfo.mode = ''
-            domInfo.lazyLoad = false
-            domInfo.showMenuByLongpress = false
+        }
+
+        // 判断是否使用 template 渲染
+        const templateName = domInfo.tagName === 'wx-component' ? child.behavior : child.tagName
+        domInfo.useTemplate = !domInfo.isImage && USE_TEMPLATE.indexOf(templateName) !== -1
+        if (domInfo.useTemplate) {
+            const wxCompName = wxCompNameMap[templateName]
+            const extra = {}
+            if (wxCompName) checkComponentAttr(wxCompName, child, extra, null, `h5-${domInfo.tagName} ${domInfo.tagName === 'wx-component' ? 'wx-' + child.behavior : ''}`)
+            extra.pageId = domInfo.pageId
+            extra.nodeId = domInfo.nodeId
+            extra.inCover = component.data.inCover
+            extra.hasChildren = !!child.childNodes.length
+            domInfo.extra = extra
+
+            // 给 template 中的特殊节点用
+            if (NEET_BEHAVIOR_NORMAL_CUSTOM_ELEMENT_PARENT.indexOf(templateName) !== -1) {
+                const childNodes = filterNodes(child, 0) || []
+                extra.childNodes = childNodes.map(childNode => {
+                    const copyChildNode = Object.assign({}, childNode)
+                    delete copyChildNode.domNode
+                    return copyChildNode
+                })
+            }
+
+            // wx-catch 的 touch 事件会导致 tap 事件的触发，需要真正被绑定后再补充句柄
+            if (wxCompName === 'catch') {
+                extra.touchStart = child.$$hasEventHandler('touchstart') ? 'onTouchStart' : ''
+                extra.touchMove = child.$$hasEventHandler('touchmove') ? 'onTouchMove' : ''
+                extra.touchEnd = child.$$hasEventHandler('touchend') ? 'onTouchEnd' : ''
+                extra.touchCancel = child.$$hasEventHandler('touchcancel') ? 'onTouchCancel' : ''
+            }
         }
 
         // 判断叶子节点
-        domInfo.isLeaf = !domInfo.isImage && domInfo.type === 'element' && !child.children.length && NEET_RENDER_TO_CUSTOM_ELEMENT.indexOf(child.tagName.toUpperCase()) === -1
+        domInfo.isLeaf = !domInfo.isImage && !domInfo.useTemplate && domInfo.type === 'element' && !child.children.length && NEET_RENDER_TO_CUSTOM_ELEMENT.indexOf(child.tagName) === -1
         if (domInfo.isLeaf) {
             domInfo.content = child.childNodes.map(childNode => (childNode.$$domInfo.type === 'text' ? childNode.textContent : '')).join('')
         }
 
         // 判断可直接用 view 渲染的简单子节点
-        domInfo.isSimple = !domInfo.isLeaf && domInfo.type === 'element' && NEET_RENDER_TO_CUSTOM_ELEMENT.indexOf(child.tagName.toUpperCase()) === -1 && level > 0
+        domInfo.isSimple = !domInfo.isImage && !domInfo.useTemplate && !domInfo.isLeaf && domInfo.type === 'element' && NEET_RENDER_TO_CUSTOM_ELEMENT.indexOf(child.tagName) === -1 && level > 0
         if (domInfo.isSimple) {
             domInfo.content = ''
-            domInfo.childNodes = filterNodes(child, level - 1)
+            domInfo.childNodes = filterNodes(child, level - 1, component)
         }
+
+        // 挂载该节点所处的自定义组件实例
+        child._wxComponent = component
 
         return domInfo
     }).filter(child => !!child)
@@ -125,13 +159,13 @@ function checkDiffChildNodes(newChildNodes, oldChildNodes) {
         for (const key of keys) {
             const newValue = newChild[key]
             const oldValue = oldChild[key]
-            if (typeof newValue === 'object') {
+            if (typeof newValue === 'object' && !Array.isArray(newValue)) {
                 // 值为对象，则判断对象顶层值是否有变化
                 if (typeof oldValue !== 'object') return true
 
                 const objectKeys = Object.keys(newValue)
                 for (const objectKey of objectKeys) {
-                    if (newValue[objectKey] !== oldValue[objectKey]) return true
+                    if (!isEqual(newValue[objectKey], oldValue[objectKey])) return true
                 }
             } else if (!isEqual(newValue, oldValue)) {
                 return true
@@ -153,23 +187,32 @@ function checkDiffChildNodes(newChildNodes, oldChildNodes) {
 /**
  * 检查组件属性
  */
-function checkComponentAttr(name, domNode, destData, oldData) {
+function checkComponentAttr(name, domNode, destData, oldData, extraClass = '') {
     const attrs = initData[name]
 
     destData.wxCompName = name
 
     if (attrs && attrs.length) {
-        for (const {name, get} of attrs) {
+        for (const {name, get, canBeUserChanged = false} of attrs) {
             const newValue = get(domNode)
-            if (!oldData || !isEqual(newValue, oldData[name])) destData[name] = newValue
+            if (canBeUserChanged) {
+                // 可被用户行为改变的属性，除了 data 外，还需要对比监听到上次用户行为修改的值
+                const oldValues = domNode._oldValues
+                if (!oldData || !isEqual(newValue, oldData[name]) || (oldValues && !isEqual(newValue, oldValues[name]))) {
+                    destData[name] = newValue
+                }
+            } else if (!oldData || !isEqual(newValue, oldData[name])) {
+                // 对比 data
+                destData[name] = newValue
+            }
         }
     }
 
     // 补充 id、class、style 和 hidden
     const newId = domNode.id
     if (!oldData || oldData.id !== newId) destData.id = newId
-    const newClass = `wx-comp-${name} node-${domNode.$$nodeId} ${domNode.className || ''}`
-    if (!oldData || oldData.class !== newClass) destData.class = newClass
+    const newClass = `${extraClass} wx-comp-${name} node-${domNode.$$nodeId} ${domNode.className || ''}`
+    if (!oldData || oldData.className !== newClass) destData.className = newClass
     const newStyle = domNode.style.cssText
     if (!oldData || oldData.style !== newStyle) destData.style = newStyle
     const newHidden = domNode.getAttribute('hidden') || false
@@ -184,7 +227,7 @@ function dealWithLeafAndSimple(childNodes, onChildNodesUpdate) {
         childNodes = childNodes.map(originChildNode => {
             const childNode = Object.assign({}, originChildNode)
 
-            if (childNode.isLeaf || childNode.isSimple) {
+            if (childNode.isImage || childNode.isLeaf || childNode.isSimple || childNode.useTemplate) {
                 childNode.domNode.$$clearEvent('$$childNodesUpdate')
                 childNode.domNode.addEventListener('$$childNodesUpdate', onChildNodesUpdate)
             }
@@ -241,6 +284,8 @@ function findParentNode(domNode, tagName) {
 
 module.exports = {
     NOT_SUPPORT,
+    USE_TEMPLATE,
+    IN_COVER,
     filterNodes,
     checkDiffChildNodes,
     checkComponentAttr,

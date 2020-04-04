@@ -36,6 +36,8 @@ class HTMLCanvasElement extends Element {
 
         super.$$init(options, tree)
 
+        this.$_node = null
+
         this.$_initRect()
     }
 
@@ -54,6 +56,23 @@ class HTMLCanvasElement extends Element {
     }
 
     /**
+     * 准备 canvas 节点
+     */
+    $$prepare() {
+        return new Promise((resolve, reject) => {
+            this.$$getNodesRef().then(nodesRef => nodesRef.node(res => {
+                this.$_node = res.node
+
+                // 设置 canvas 宽高
+                this.$_node.width = this.width
+                this.$_node.height = this.height
+
+                resolve(this)
+            }).exec()).catch(reject)
+        })
+    }
+
+    /**
      * 更新父组件树
      */
     $_triggerParentUpdate() {
@@ -68,8 +87,14 @@ class HTMLCanvasElement extends Element {
         const width = parseInt(this.$_attrs.get('width'), 10)
         const height = parseInt(this.$_attrs.get('height'), 10)
 
-        if (typeof width === 'number' && width >= 0) this.$_style.width = `${width}px`
-        if (typeof height === 'number' && height >= 0) this.$_style.height = `${height}px`
+        if (typeof width === 'number' && width >= 0) {
+            this.$_style.width = `${width}px`
+            if (this.$_node) this.$_node.width = width
+        }
+        if (typeof height === 'number' && height >= 0) {
+            this.$_style.height = `${height}px`
+            if (this.$_node) this.$_node.height = height
+        }
     }
 
     /**
@@ -95,6 +120,14 @@ class HTMLCanvasElement extends Element {
 
         this.$_attrs.set('height', value)
         this.$_initRect()
+    }
+
+    getContext(type) {
+        if (!this.$_node) {
+            console.warn('canvas is not prepared, please call $$prepare method first')
+            return
+        }
+        return this.$_node.getContext(type)
     }
 }
 

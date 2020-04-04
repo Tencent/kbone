@@ -1,5 +1,67 @@
 # 更新日志
 
+## 1.1.4
+
+* 支持对内置组件中可被用户行为改变的值进行强制更新
+
+## 1.1.3
+
+* 修复 preact 无法通过 wx- 前缀使用内置组件问题
+* 修复 picker-view 等表单组件无法设置 value 问题
+
+## 1.1.2
+
+* style-list 补充 order 样式
+
+## 1.1.1
+
+* 修复 XMLHttpRequest 对象的 getResponseHeader 对大小写敏感问题
+
+## 1.1.0
+
+* 支持 wx-capture、wx-catch 和 wx-animation 三种特殊节点
+
+## 1.0.10
+
+* 修复只有 search 变化时未进行页面跳转的问题
+
+## 1.0.9
+
+* 支持 window.close 方法
+
+## 1.0.8
+
+* 支持 XMLHttpRequest 对象
+
+## 1.0.7
+
+* 修复 canvas 的 getContext 中在 prepare 完成之后仍然会输出未进行 prepare 的日志问题
+
+## 1.0.6
+
+* 支持 style 中直接设置 flex
+
+## 1.0.5
+
+* 修复异常跳转进入分包页面时拼接路由错误的问题
+
+## 1.0.4
+
+* 调整 $$domInfo 对象的 class 为 className
+
+## 1.0.1
+
+* innerHTML 支持生成注释节点
+* 补充 textNode、comment 节点的 childNodes 属性
+
+## 1.0.0
+
+* 除 view、cover-view、text 和 scroll-view 外的内置组件转为使用 template 渲染，去除包裹容器，修复包裹容器带来的样式影响，同时子组件使用内包裹渲染
+
+## 0.8.2
+
+* 支持 canvas 的 $$prepare 方法
+
 ## 0.8.1
 
 * 补充 parseInt/parseFloat 到 window 对象上

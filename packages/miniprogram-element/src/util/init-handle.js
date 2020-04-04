@@ -1,13 +1,9 @@
-const mp = require('miniprogram-render')
 const _ = require('./tool')
 const component = require('./component')
 
 const {
-    Event,
-    EventTarget,
-} = mp.$$adapter
-const {
     NOT_SUPPORT,
+    USE_TEMPLATE,
 } = _
 const {
     wxCompNameMap,
@@ -21,6 +17,9 @@ module.exports = {
     init(data) {
         const domNode = this.domNode
         const tagName = domNode.tagName
+
+        // 使用 template 渲染
+        if (USE_TEMPLATE.indexOf(tagName) !== -1 || USE_TEMPLATE.indexOf(domNode.behavior) !== -1) return
 
         if (tagName === 'WX-COMPONENT') {
             // 内置组件
@@ -40,27 +39,8 @@ module.exports = {
         } else {
             // 可替换 html 标签
             const wxCompName = wxCompNameMap[tagName]
-            if (wxCompName) _.checkComponentAttr(wxCompName, domNode, data)
+            if (wxCompName) data.wxCompName = wxCompName
         }
-    },
-
-    /**
-     * 触发简单节点事件，不做冒泡处理
-     */
-    callSimpleEvent(eventName, evt, domNode) {
-        domNode = domNode || this.domNode
-        if (!domNode) return
-
-        EventTarget.$$process(domNode, new Event({
-            touches: evt.touches,
-            changedTouches: evt.changedTouches,
-            name: eventName,
-            target: domNode,
-            eventPhase: Event.AT_TARGET,
-            detail: evt && evt.detail,
-            $$extra: evt && evt.extra,
-            bubbles: false,
-        }))
     },
 
     ...handles,

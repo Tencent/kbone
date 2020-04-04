@@ -4,6 +4,7 @@
 module.exports = {
     properties: [{
         name: 'value',
+        canBeUserChanged: true,
         get(domNode) {
             return domNode.value || ''
         },
@@ -91,30 +92,51 @@ module.exports = {
     }],
     handles: {
         onTextareaFocus(evt) {
-            this._textareaOldValue = this.domNode.value
+            const domNode = this.getDomNodeFromEvt(evt)
+            if (!domNode) return
+
+            domNode._textareaOldValue = domNode.value
+            domNode.$$setAttributeWithoutUpdate('focus', true)
+
+            // 可被用户行为改变的值，需要记录
+            domNode._oldValues = domNode._oldValues || {}
+            domNode._oldValues.focus = true
+
             this.callSimpleEvent('focus', evt)
         },
 
         onTextareaBlur(evt) {
-            if (!this.domNode) return
+            const domNode = this.getDomNodeFromEvt(evt)
+            if (!domNode) return
 
-            this.domNode.setAttribute('focus', false)
-            if (this._textareaOldValue !== undefined && this.domNode.value !== this._textareaOldValue) {
-                this._textareaOldValue = undefined
+            domNode.$$setAttributeWithoutUpdate('focus', false)
+
+            // 可被用户行为改变的值，需要记录
+            domNode._oldValues = domNode._oldValues || {}
+            domNode._oldValues.focus = false
+
+            if (domNode._textareaOldValue !== undefined && domNode.value !== domNode._textareaOldValue) {
+                domNode._textareaOldValue = undefined
                 this.callEvent('change', evt)
             }
             this.callSimpleEvent('blur', evt)
         },
 
         onTextareaLineChange(evt) {
-            this.callSimpleEvent('linechange', evt)
+            this.callSingleEvent('linechange', evt)
         },
 
         onTextareaInput(evt) {
-            if (!this.domNode) return
+            const domNode = this.getDomNodeFromEvt(evt)
+            if (!domNode) return
 
             const value = '' + evt.detail.value
-            this.domNode.setAttribute('value', value)
+            domNode.$$setAttributeWithoutUpdate('value', value)
+
+            // 可被用户行为改变的值，需要记录
+            domNode._oldValues = domNode._oldValues || {}
+            domNode._oldValues.value = value
+
             this.callEvent('input', evt)
         },
 
@@ -123,7 +145,7 @@ module.exports = {
         },
 
         onTextareaKeyBoardHeightChange(evt) {
-            this.callSimpleEvent('keyboardheightchange', evt)
+            this.callSingleEvent('keyboardheightchange', evt)
         },
     },
 }

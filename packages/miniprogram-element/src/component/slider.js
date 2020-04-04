@@ -26,6 +26,7 @@ module.exports = {
         },
     }, {
         name: 'value',
+        canBeUserChanged: true,
         get(domNode) {
             return +domNode.getAttribute('value') || 0
         },
@@ -68,14 +69,20 @@ module.exports = {
     }],
     handles: {
         onSliderChange(evt) {
-            if (!this.domNode) return
+            const domNode = this.getDomNodeFromEvt(evt)
+            if (!domNode) return
 
-            this.domNode.$$setAttributeWithoutUpdate('value', evt.detail.value)
-            this.callSimpleEvent('change', evt)
+            domNode.$$setAttributeWithoutUpdate('value', evt.detail.value)
+
+            // 可被用户行为改变的值，需要记录
+            domNode._oldValues = domNode._oldValues || {}
+            domNode._oldValues.value = evt.detail.value
+
+            this.callSingleEvent('change', evt)
         },
 
         onSliderChanging(evt) {
-            this.callSimpleEvent('changing', evt)
+            this.callSingleEvent('changing', evt)
         },
     },
 }

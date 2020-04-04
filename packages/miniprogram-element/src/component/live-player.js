@@ -77,15 +77,15 @@ module.exports = {
     }],
     handles: {
         onLivePlayerStateChange(evt) {
-            this.callSimpleEvent('statechange', evt)
+            this.callSingleEvent('statechange', evt)
         },
 
         onLivePlayerFullScreenChange(evt) {
-            this.callSimpleEvent('fullscreenchange', evt)
+            this.callSingleEvent('fullscreenchange', evt)
         },
 
         onLivePlayerNetStatus(evt) {
-            this.callSimpleEvent('netstatus', evt)
+            this.callSingleEvent('netstatus', evt)
         },
 
     },

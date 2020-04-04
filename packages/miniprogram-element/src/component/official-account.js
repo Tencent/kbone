@@ -5,11 +5,11 @@ module.exports = {
     properties: [],
     handles: {
         onOfficialAccountLoad(evt) {
-            this.callSimpleEvent('load', evt)
+            this.callSingleEvent('load', evt)
         },
 
         onOfficialAccountError(evt) {
-            this.callSimpleEvent('error', evt)
+            this.callSingleEvent('error', evt)
         },
     },
 }

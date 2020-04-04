@@ -3,7 +3,7 @@
   <div className="cnt2">
     <div class="group" v-for="item in list" :key="item">
       <div class="label">{{item}}</div>
-      <div class="comp">
+      <wx-view class="comp">
         <div v-if="item === 'normal'">
           <div>
             <div class="inline">hello </div>
@@ -11,6 +11,26 @@
           </div>
           <div>
             <a class="margin-left-10 block" href="javascript: void(0)">fake jump</a>
+          </div>
+        </div>
+        <div v-if="item === 'event'">
+          <div @click="onRootClick">
+            <wx-capture @touchstart="onParentTouchStart" @touchend="onParentTouchEnd" @click="onParentClick">
+              <button @click="onClick">capture-inner({{eventCount}})</button>
+            </wx-capture>
+            <wx-catch @touchstart="onParentTouchStart" @touchend="onParentTouchEnd" @click="onParentClick">
+              <button @click="onClick">catch-inner1({{eventCount}})</button>
+            </wx-catch>
+            <wx-catch @click="onParentClick">
+              <button @click="onClick">catch-inner2({{eventCount}})</button>
+            </wx-catch>
+            <div class="event-cnt">
+              <wx-animation :class="['event-t', transition ? 'event-t-s' : 'event-t-e']" @transitionend="onTransitionEnd"></wx-animation>
+              <button @click="startTranstion">transition</button>
+            </div>
+            <div class="event-cnt">
+              <wx-animation class="event-a" @animationstart="onAnimationStart" @animationiteration="onAnimationIteration" @animationend="onAnimationEnd"></wx-animation>
+            </div>
           </div>
         </div>
         <!-- 可使用 html 标签替代的内置组件 -->
@@ -27,7 +47,7 @@
           <input type="checkbox" @input="onInput" v-model="input.inputCheckbox" />
           <input type="hidden" value="I am Hidden" />
         </div>
-        <textarea v-else-if="item === 'textarea'" placeholder="请输入内容" maxlength="50" :auto-height="true" value="我是 textarea" @input="onTextareaInput" />
+        <textarea v-else-if="item === 'textarea'" class="textarea-node" style="height: 30px;" placeholder="请输入内容" maxlength="50" :auto-height="true" adjust-position="" value="我是 textarea" @input="onTextareaInput" />
         <div v-else-if="item === 'label'">
           <!-- input -->
           <label>
@@ -61,7 +81,7 @@
             <div>switch1</div>
             <template>
               <wx-component v-if="!wxPrefix" behavior="switch" @change="onLabelChange"></wx-component>
-              <wx-switch v-else @change="onLabelChange"></wx-switch>
+              <wx-switch v-else class="switch-node" @change="onLabelChange"></wx-switch>
             </template>
           </label>
           <label for="switch2">
@@ -75,7 +95,7 @@
         <video v-else-if="item === 'video'" class="video" src="http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400" :muted="true" :show-mute-btn="true" :controls="true">
           <Inner></Inner>
         </video>
-        <canvas v-else-if="item === 'canvas'" class="canvas" ref="canvas" canvas-id="canvas" width="300" height="200">
+        <canvas v-else-if="item === 'canvas'" class="canvas" ref="canvas" type="2d" width="300" height="200">
           <Inner style="margin-top: 100px;"></Inner>
         </canvas>
         <!-- 使用 wx-component 来创建内置组件 -->
@@ -91,6 +111,11 @@
           <wx-component v-if="!wxPrefix" :behavior="item" :selectable="true">{{'this is first line\nthis is second line'}}</wx-component>
           <wx-text v-else-if="wxPrefix === 1" :selectable="true">{{'this is first line\nthis is second line'}}</wx-text>
           <text v-else-if="wxPrefix === 2" :selectable="true">{{'this is first line\nthis is second line'}}</text>
+        </template>
+        <template v-else-if="item === 'rich-text'">
+          <wx-component v-if="!wxPrefix" :behavior="item" :nodes="richText.nodes"></wx-component>
+          <wx-rich-text v-else-if="wxPrefix === 1" :nodes="richText.nodes"></wx-rich-text>
+          <rich-text v-else-if="wxPrefix === 2" :nodes="richText.nodes"></rich-text>
         </template>
         <template v-else-if="item === 'swiper'">
           <wx-component v-if="!wxPrefix" :behavior="item" :class="item" :indicator-dots="swiper.indicatorDots" :autoplay="swiper.autoplay" :interval="5000" :duration="500" @change="onSwiperChange">
@@ -120,19 +145,19 @@
         </template>
         <template v-else-if="item === 'movable'">
           <wx-component v-if="!wxPrefix" :behavior="item" :class="item" :scale-area="true">
-            <wx-component class="movable-view" behavior="movable-view" direction="all" :inertia="true" :out-of-bounds="true" :x="movable.x" :y="movable.y" :scale-value="movable.scaleValue" :scale="true" @change="onMovableChange" @scale="onMovableScale"><span>text</span></wx-component>
+            <wx-component ref="movable-view" class="movable-view" behavior="movable-view" direction="all" :inertia="true" :out-of-bounds="true" :x="movable.x" :y="movable.y" :scale-value="movable.scaleValue" :scale="true" @change="onMovableChange" @scale="onMovableScale"><span>text</span></wx-component>
             <wx-component class="movable-view" behavior="movable-view" direction="all" :x="0" :y="0">plaintext</wx-component>
           </wx-component>
           <wx-movable-area v-else-if="wxPrefix === 1" :class="item" :scale-area="true">
-            <wx-movable-view class="movable-view" direction="all" :inertia="true" :out-of-bounds="true" :x="movable.x" :y="movable.y" :scale-value="movable.scaleValue" :scale="true" @change="onMovableChange" @scale="onMovableScale"><span>text</span></wx-movable-view>
+            <wx-movable-view ref="movable-view" class="movable-view" direction="all" :inertia="true" :out-of-bounds="true" :x="movable.x" :y="movable.y" :scale-value="movable.scaleValue" :scale="true" @change="onMovableChange" @scale="onMovableScale"><span>text</span></wx-movable-view>
             <wx-movable-view class="movable-view" direction="all" :x="0" :y="0">plaintext</wx-movable-view>
           </wx-movable-area>
           <movable-area v-else-if="wxPrefix === 2" :class="item" :scale-area="true">
-            <movable-view class="movable-view" direction="all" :inertia="true" :out-of-bounds="true" :x="movable.x" :y="movable.y" :scale-value="movable.scaleValue" :scale="true" @change="onMovableChange" @scale="onMovableScale"><span>text</span></movable-view>
+            <movable-view ref="movable-view" class="movable-view" direction="all" :inertia="true" :out-of-bounds="true" :x="movable.x" :y="movable.y" :scale-value="movable.scaleValue" :scale="true" @change="onMovableChange" @scale="onMovableScale"><span>text</span></movable-view>
             <movable-view class="movable-view" direction="all" :x="0" :y="0">plaintext</movable-view>
           </movable-area>
-          <wx-button @click="movable.x = movable.y = 30">move to (30px, 30px)</wx-button>
-          <wx-button @click="movable.scaleValue = 3">scale to 3.0</wx-button>
+          <wx-button @click="onClickMovableMove">move to (30px, 30px)</wx-button>
+          <wx-button @click="onClickMovableScale">scale to 3.0</wx-button>
         </template>
         <template v-else-if="item === 'form'">
           <!-- form 组件 -->
@@ -194,6 +219,21 @@
           <wx-component v-if="!wxPrefix" :behavior="item" open-type="getPhoneNumber" @getphonenumber="onGetPhoneNumber">获取手机号</wx-component>
           <wx-button v-else-if="wxPrefix === 1" open-type="getPhoneNumber" @getphonenumber="onGetPhoneNumber">获取手机号</wx-button>
           <button v-else-if="wxPrefix === 2" open-type="getPhoneNumber" @getphonenumber="onGetPhoneNumber">获取手机号</button>
+          <wx-component v-if="!wxPrefix" :behavior="item">
+            <span>span1</span>
+            <input type="checkbox"/>
+            <span>span2</span>
+          </wx-component>
+          <wx-button v-else-if="wxPrefix === 1">
+            <span>span1</span>
+            <input type="checkbox"/>
+            <span>span2</span>
+          </wx-button>
+          <button v-else-if="wxPrefix === 2">
+            <span>span1</span>
+            <input type="checkbox"/>
+            <span>span2</span>
+          </button>
         </template>
         <template v-else-if="item === 'image'">
           <wx-component v-if="!wxPrefix" :behavior="item" src="https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg"></wx-component>
@@ -440,15 +480,15 @@
         </template>
         <template v-else-if="item === 'scroll-view'">
           <div>
-            <wx-component v-if="!wxPrefix" :behavior="item" :class="item + '-y'" :scroll-into-view="'y1' + scrollView.yDest" :scroll-y="true" :scroll-with-animation="true" @scroll="onScrollViewScroll"><Inner2 type="y1"/></wx-component>
-            <wx-scroll-view v-else-if="wxPrefix === 1" :class="item + '-y'" :scroll-into-view="'y2' + scrollView.yDest" :scroll-y="true" :scroll-with-animation="true" @scroll="onScrollViewScroll"><Inner2 type="y2"/></wx-scroll-view>
-            <scroll-view v-else-if="wxPrefix === 2" :class="item + '-y'" :scroll-into-view="'y3' + scrollView.yDest" :scroll-y="true" :scroll-with-animation="true" @scroll="onScrollViewScroll"><Inner2 type="y3"/></scroll-view>
+            <wx-component ref="scroll-view" v-if="!wxPrefix" :behavior="item" :class="item + '-y'" :scroll-into-view="'y1' + scrollView.yDest" :scroll-y="true" :scroll-with-animation="true" @scroll="onScrollViewScroll"><Inner2 type="y1"/></wx-component>
+            <wx-scroll-view ref="scroll-view" v-else-if="wxPrefix === 1" :class="item + '-y'" :scroll-into-view="'y2' + scrollView.yDest" :scroll-y="true" :scroll-with-animation="true" @scroll="onScrollViewScroll"><Inner2 type="y2"/></wx-scroll-view>
+            <scroll-view ref="scroll-view" v-else-if="wxPrefix === 2" :class="item + '-y'" :scroll-into-view="'y3' + scrollView.yDest" :scroll-y="true" :scroll-with-animation="true" @scroll="onScrollViewScroll"><Inner2 type="y3"/></scroll-view>
             <div class="scroll-view-btn" @click="onClickScrollViewYBtn">滚动到第三个滑块</div>
           </div>
           <div>
-            <wx-component v-if="!wxPrefix" :behavior="item" :class="item + '-x'" :scroll-into-view="'x1' + scrollView.xDest" :scroll-x="true" :scroll-with-animation="true" @scroll="onScrollViewScroll"><Inner2 type="x1"/></wx-component>
-            <wx-scroll-view v-else-if="wxPrefix === 1" :class="item + '-x'" :scroll-into-view="'x2' + scrollView.xDest" :scroll-x="true" :scroll-with-animation="true" @scroll="onScrollViewScroll"><Inner2 type="x2"/></wx-scroll-view>
-            <scroll-view v-else-if="wxPrefix === 2" :class="item + '-x'" :scroll-into-view="'x3' + scrollView.xDest" :scroll-x="true" :scroll-with-animation="true" @scroll="onScrollViewScroll"><Inner2 type="x3"/></scroll-view>
+            <wx-component ref="scroll-view" v-if="!wxPrefix" :behavior="item" :class="item + '-x'" :scroll-into-view="'x1' + scrollView.xDest" :scroll-x="true" :scroll-with-animation="true" @scroll="onScrollViewScroll"><Inner2 type="x1"/></wx-component>
+            <wx-scroll-view ref="scroll-view" v-else-if="wxPrefix === 1" :class="item + '-x'" :scroll-into-view="'x2' + scrollView.xDest" :scroll-x="true" :scroll-with-animation="true" @scroll="onScrollViewScroll"><Inner2 type="x2"/></wx-scroll-view>
+            <scroll-view ref="scroll-view" v-else-if="wxPrefix === 2" :class="item + '-x'" :scroll-into-view="'x3' + scrollView.xDest" :scroll-x="true" :scroll-with-animation="true" @scroll="onScrollViewScroll"><Inner2 type="x3"/></scroll-view>
             <div class="scroll-view-btn" @click="onClickScrollViewXBtn">滚动到第二个滑块</div>
           </div>
         </template>
@@ -458,7 +498,15 @@
           <wx-xxxx v-else-if="wxPrefix === 1"></wx-xxxx>
         </template>
         <iframe v-else-if="item === 'iframe'"></iframe>
-      </div>
+        <div v-else-if="item === 'intersection'">
+          <div>{{intersection.appear ? '小球出现' : '小球消失'}}</div>
+          <wx-scroll-view class="intersection-scroll-view" :scroll-y="true">
+            <div class="intersection-scroll-area" :style="intersection.appear ? 'background: #ccc' : ''">
+              <div class="intersection-ball"></div>
+            </div>
+          </wx-scroll-view>
+        </div>
+      </wx-view>
     </div>
   </div>
 </template>
@@ -495,6 +543,7 @@ export default {
     return {
       list: [
         'normal',
+        'event',
         'img',
         'input',
         'textarea',
@@ -503,6 +552,7 @@ export default {
         'canvas',
         'view',
         'text',
+        'rich-text',
         'swiper',
         'movable',
         'picker-view',
@@ -530,7 +580,10 @@ export default {
         // 'web-view',
         'xxxx',
         'iframe',
+        'intersection',
       ],
+      eventCount: 0,
+      transition: false,
       icon: {
         size: [20, 30, 40, 50, 60, 70],
         color: ['red', 'orange', 'yellow', 'green', 'rgb(0,255,255)', 'blue', 'purple'],
@@ -597,6 +650,22 @@ export default {
         indicatorDots: true,
         autoplay: false,
       },
+      richText: {
+        nodes: [{
+          name: 'div',
+          attrs: {
+            class: 'rich-text-div',
+            style: 'line-height: 60px; color: red;',
+          },
+          children: [{
+            type: 'text',
+            text: 'Hello&nbsp;World!',
+          }],
+        }],
+      },
+      intersection: {
+        appear: false,
+      },
     }
   },
   watch: {
@@ -626,13 +695,15 @@ export default {
     })
 
     const canvas = this.$refs.canvas[0]
-    canvas.$$getContext().then(context => {
-      context.setStrokeStyle("#00ff00")
-      context.setLineWidth(5)
+    canvas.$$prepare().then(domNode => {
+      const context = domNode.getContext('2d')
+
+      context.strokeStyle = '#00ff00'
+      context.lineWidth = 5
       context.rect(0, 0, 200, 200)
       context.stroke()
-      context.setStrokeStyle("#ff0000")
-      context.setLineWidth(2)
+      context.strokeStyle = '#ff0000'
+      context.lineWidth = 2
       context.moveTo(160, 100)
       context.arc(100, 100, 60, 0, 2 * Math.PI, true)
       context.moveTo(140, 100)
@@ -642,16 +713,64 @@ export default {
       context.moveTo(125, 80)
       context.arc(120, 80, 5, 0, 2 * Math.PI, true)
       context.stroke()
-      context.draw()
-    })
+    }).catch(console.error)
 
     canvas.$$getNodesRef().then(nodesRef => {
-        nodesRef.boundingClientRect(res => {
-          console.log('test $$getNodesRef', res)
-        }).exec()
+      nodesRef.boundingClientRect(res => {
+        console.log('test $$getNodesRef', res)
+      }).exec()
     })
+
+    this.observer = window.$$createIntersectionObserver()
+    this.observer
+      .relativeTo('.h5-body >>> .intersection-scroll-view')
+      .observe('.h5-body >>> .intersection-ball', res => {
+        console.log(res)
+        this.intersection.appear = res.intersectionRatio > 0
+      })
   },
   methods: {
+    onClick() {
+      this.eventCount++
+      console.log('click')
+    },
+
+    onParentTouchStart() {
+      console.log('parent touchstart')
+    },
+
+    onParentTouchEnd() {
+      console.log('parent touchend')
+    },
+
+    onParentClick() {
+      console.log('parent click')
+    },
+
+    onRootClick() {
+      console.log('root click')
+    },
+
+    startTranstion() {
+      this.transition = !this.transition
+    },
+
+    onTransitionEnd() {
+      console.log('transition end')
+    },
+
+    onAnimationStart() {
+      console.log('animation start')
+    },
+
+    onAnimationIteration() {
+      console.log('animation iteration')
+    },
+
+    onAnimationEnd() {
+      console.log('animation end')
+    },
+
     onInput(evt) {
       console.log('onInput', evt.target.value, evt)
     },
@@ -721,10 +840,22 @@ export default {
     },
 
     onClickScrollViewYBtn() {
+      const domNodes = this.$refs['scroll-view'] || []
+      if (domNodes[0]) {
+        const wxPrefix = this.wxPrefix
+        const prefix = wxPrefix === 1 ? 'y2' : wxPrefix === 2 ? 'y3' : 'y1'
+        domNodes[0].setAttribute('scroll-into-view', prefix + 'block3')
+      }
       this.scrollView.yDest = 'block3'
     },
 
     onClickScrollViewXBtn() {
+      const domNodes = this.$refs['scroll-view'] || []
+      if (domNodes[1]) {
+        const wxPrefix = this.wxPrefix
+        const prefix = wxPrefix === 1 ? 'x2' : wxPrefix === 2 ? 'x3' : 'x1'
+        domNodes[1].setAttribute('scroll-into-view', prefix + 'block2')
+      }
       this.scrollView.xDest = 'block2'
     },
 
@@ -745,6 +876,10 @@ export default {
     },
 
     onPickerViewChange(evt) {
+      this.pickerView.year = this.pickerView.years[evt.detail.value[0]]
+      this.pickerView.month = this.pickerView.months[evt.detail.value[1]]
+      this.pickerView.day = this.pickerView.days[evt.detail.value[2]]
+      this.pickerView.value = evt.detail.value
       console.log('onPickerViewChange', evt.detail)
     },
 
@@ -759,16 +894,76 @@ export default {
     onGetPhoneNumber(evt) {
       console.log('onGetPhoneNumber', evt)
     },
+
+    onClickMovableMove() {
+      const domNodes = this.$refs['movable-view'] || []
+      if (domNodes[0]) {
+        domNodes[0].setAttribute('x', 30)
+        domNodes[0].setAttribute('y', 30)
+      }
+      this.movable.x = this.movable.y = 30
+    },
+
+    onClickMovableScale() {
+      const domNodes = this.$refs['movable-view'] || []
+      if (domNodes[0]) {
+        domNodes[0].setAttribute('scale-value', 3)
+      }
+      this.movable.scaleValue = 3
+    },
   }
 }
 </script>
 
 <style>
+.event-cnt {
+  position: relative;
+  height: 100px;
+}
+
+.event-t, .event-a {
+  left: 0;
+  top: 60px;
+  width: 50px;
+  height: 50px;
+  background-color: red;
+  position: absolute;
+  transition: all 0.5s;
+}
+
+.event-t-s {
+  left: 50px;
+}
+
+.event-t-e {
+  left: 0;
+}
+
+@keyframes event-aa {
+  0% {
+    left: 0;
+  }
+  50% {
+    left: 50px
+  }
+  100% {
+    left: 0;
+  }
+}
+
+.event-a {
+  animation: 1s ease 0s 8 event-aa;
+}
+
 .label {
   padding: 0 20px;
   height: 40px;
   line-height: 40px;
   background: rgba(7, 193, 96, 0.06);
+}
+
+textarea .wx-comp-textarea {
+  background-color: #ddd;
 }
 
 .inline {
@@ -876,5 +1071,32 @@ button {
   width: 50px;
   background: #1AAD19;
   color: #fff;
+}
+
+.rich-text-div {
+  font-size: 30px;
+}
+
+.intersection-scroll-view {
+  height: 200px;
+  background: #fff;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.intersection-scroll-area {
+  padding-top: 200px;
+  height: 650px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: .5s;
+}
+
+.intersection-ball {
+  width: 100px;
+  height: 100px;
+  background: #1AAD19;
+  border-radius: 50%;
 }
 </style>

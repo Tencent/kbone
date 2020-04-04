@@ -152,7 +152,7 @@ class Event {
     }
 
     preventDefault() {
-    // 目前仅支持 a 标签的点击阻止
+        // 目前仅支持 a 标签的点击阻止
         this.$_cancelable = true
     }
 

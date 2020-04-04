@@ -1,5 +1,63 @@
 # 更新日志
 
+## 1.1.9
+
+* 支持对内置组件中可被用户行为改变的值进行强制更新
+
+## 1.1.7
+
+* 修复简单事件丢失 touches 等字段的问题
+
+## 1.1.6
+
+* picker 的 range 字段支持传入 json 串，以兼容 react
+
+## 1.1.5
+
+* 兼容开发者工具 map 组件相关事件的 detail 对象为空的问题
+
+## 1.1.2
+
+* 修复内置组件监听事件进行状态同步时调用 setAttribute 会触发 setData 的问题
+
+## 1.1.1
+
+* 所有节点均支持通过 _wxComponent 属性获取对应的自定义组件实例
+
+## 1.1.0
+
+* 支持 wx-capture、wx-catch 和 wx-animation 三种特殊节点
+* 内置组件中不可冒泡事件均取消捕获阶段
+
+## 1.0.9
+
+* 修复内置组件 hasChildren 判断条件
+
+## 1.0.5
+
+* 调整 $$domInfo 对象的 class 为 className
+
+## 1.0.4
+
+* 兼容 react 中 picker-view 设置数组到 value 中会被序列化字符串的问题
+
+## 1.0.1
+
+* 调整 picker-view 为 0.x 版本的渲染模式
+
+## 1.0.0
+
+* 除 view、cover-view、text 和 scroll-view 外的内置组件转为使用 template 渲染，去除包裹容器，修复包裹容器带来的样式影响，同时子组件使用内包裹渲染
+* checkbox/radio 对齐 Web 端表现，不再支持子节点
+
+## 0.8.4
+
+* 对 canvas 内置组件的 touch 事件进行特殊处理
+
+## 0.8.3
+
+* 支持 rich-text 内置组件
+
 ## 0.7.8
 
 * 修复在触发部分内置组件简单事件时，缺少 touches 和 changedTouches 的问题

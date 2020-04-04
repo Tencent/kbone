@@ -25,19 +25,19 @@ module.exports = {
     }],
     handles: {
         onCameraStop(evt) {
-            this.callSimpleEvent('stop', evt)
+            this.callSingleEvent('stop', evt)
         },
 
         onCameraError(evt) {
-            this.callSimpleEvent('error', evt)
+            this.callSingleEvent('error', evt)
         },
 
         onCameraInitDone(evt) {
-            this.callSimpleEvent('initdone', evt)
+            this.callSingleEvent('initdone', evt)
         },
 
         onCameraScanCode(evt) {
-            this.callSimpleEvent('scancode', evt)
+            this.callSingleEvent('scancode', evt)
         },
     },
 }

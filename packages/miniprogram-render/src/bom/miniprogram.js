@@ -6,6 +6,7 @@ class Miniprogram {
     constructor(pageId) {
         this.$_pageId = pageId
         this.$_pageUrl = '' // 页面真实 url
+        this.$_subpackagesMap = {} // 分包名映射表
     }
 
     get window() {
@@ -20,6 +21,10 @@ class Miniprogram {
         return cache.getConfig()
     }
 
+    get subpackagesMap() {
+        return this.$_subpackagesMap
+    }
+
     /**
      * 初始化
      */
@@ -31,6 +36,7 @@ class Miniprogram {
         const subpackagesMap = runtime.subpackagesMap || {}
 
         this.$_pageUrl = this.$_pageUrl || (origin + entry)
+        this.$_subpackagesMap = subpackagesMap
         this.window.location.$$reset(this.$_pageUrl)
         this.window.history.$$reset()
 

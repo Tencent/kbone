@@ -34,7 +34,9 @@ const globalVars = [
     'CustomEvent',
     'Event',
     'requestAnimationFrame',
-    'cancelAnimationFrame'
+    'cancelAnimationFrame',
+    'getComputedStyle',
+    'XMLHttpRequest',
 ]
 
 /**
@@ -101,6 +103,7 @@ class MpPlugin {
             const assetsReverseMap = {} // 依赖-页面名
             const assetsSubpackageMap = {} // 依赖-分包名
             const tabBarMap = {}
+            let needEmitConfigToSubpackage = false // 是否输出 config.js 到分包内
 
             // 收集依赖
             for (const entryName of entryNames) {
@@ -146,7 +149,7 @@ class MpPlugin {
                     if (assets) {
                         [...assets.js, ...assets.css].forEach(filePath => {
                             const requirePages = assetsReverseMap[filePath] || []
-                            if (_.includes(pages, requirePages)) {
+                            if (_.includes(pages, requirePages) && compilation.assets[filePath]) {
                                 // 该依赖为分包内页面私有
                                 assetsSubpackageMap[filePath] = packageName
                                 compilation.assets[`../${packageName}/common/${filePath}`] = compilation.assets[filePath]
@@ -170,6 +173,11 @@ class MpPlugin {
                 }
             })
 
+            if (generateConfig.app === 'noemit') {
+                // generate.app 值为 noemit 且只有分包输出时，将 config.js 输出到分包内
+                needEmitConfigToSubpackage = !entryNames.find(entryName => !subpackagesMap[entryName])
+            }
+
             // 处理各个入口页面
             for (const entryName of entryNames) {
                 const assets = assetsMap[entryName]
@@ -184,7 +192,7 @@ class MpPlugin {
                 const pageExtraConfig = pageConfig && pageConfig.extra || {}
                 const packageName = subpackagesMap[entryName]
                 const pageRoute = `${packageName ? packageName + '/' : ''}pages/${entryName}/index`
-                const assetPathPrefix = packageName ? '../' : ''
+                const assetPathPrefix = packageName && !needEmitConfigToSubpackage ? '../' : ''
 
                 // 页面 js
                 let pageJsContent = pageJsTmpl
@@ -258,7 +266,7 @@ class MpPlugin {
                 // app js
                 const appAssets = assetsMap[appJsEntryName] || {js: [], css: []}
                 const appJsContent = appJsTmpl
-                    .replace('/* INIT_FUNCTION */', `const fakeWindow = {};const fakeDocument = {};${appAssets.js.map(js => 'require(\'' + getAssetPath('', js, assetsSubpackageMap, '') + '\')(fakeWindow, fakeDocument)').join(';')};const appConfig = fakeWindow.appOptions || {};`)
+                    .replace('/* INIT_FUNCTION */', `const fakeWindow = {};const fakeDocument = {};${appAssets.js.map(js => 'require(\'' + getAssetPath('', js, assetsSubpackageMap, '') + '\')(fakeWindow, fakeDocument);').join('')}const appConfig = fakeWindow.appOptions || {};`)
                 addFile(compilation, '../app.js', appJsContent)
 
                 // app wxss
@@ -382,7 +390,13 @@ class MpPlugin {
                 redirect: options.redirect || {},
                 optimization: options.optimization || {},
             }, null, '\t')
-            addFile(compilation, '../config.js', configJsContent)
+            if (needEmitConfigToSubpackage) {
+                Object.keys(subpackagesConfig).forEach(packageName => {
+                    addFile(compilation, `../${packageName}/config.js`, configJsContent)
+                })
+            } else {
+                addFile(compilation, '../config.js', configJsContent)
+            }
 
             // package.json
             const userPackageConfigJson = options.packageConfig || {}

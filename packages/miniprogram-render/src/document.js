@@ -35,7 +35,9 @@ const WX_COMPONENT_LIST = [
     'audio', 'camera', 'image', 'live-player', 'live-pusher', 'video',
     'map',
     'canvas',
-    'ad', 'official-account', 'open-data', 'web-view'
+    'ad', 'official-account', 'open-data', 'web-view',
+    // 特殊补充
+    'capture', 'catch', 'animation'
 ]
 WX_COMPONENT_LIST.forEach(name => WX_COMPONENT_MAP[name] = name)
 let WX_CUSTOM_COMPONENT_MAP = {}

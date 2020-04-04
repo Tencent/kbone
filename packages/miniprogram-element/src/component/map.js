@@ -1,6 +1,19 @@
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/map.html
  */
+
+/**
+  * 兼容开发者工具 bug
+  */
+function dealWithDevToolsEvt(evt) {
+    if (!evt.detail) evt.detail = {}
+    if (evt.markerId !== undefined) evt.detail.markerId = evt.markerId
+    if (evt.controlId !== undefined) evt.detail.controlId = evt.controlId
+    if (evt.name !== undefined) evt.detail.name = evt.name
+    if (evt.longitude !== undefined) evt.detail.longitude = evt.longitude
+    if (evt.latitude !== undefined) evt.detail.latitude = evt.latitude
+}
+
 module.exports = {
     properties: [{
         name: 'longitude',
@@ -127,31 +140,40 @@ module.exports = {
     }],
     handles: {
         onMapTap(evt) {
-            this.callSimpleEvent('tap', evt)
+            this.callSingleEvent('tap', evt)
         },
 
         onMapMarkerTap(evt) {
-            this.callSimpleEvent('markertap', evt)
+            dealWithDevToolsEvt(evt)
+            this.callSingleEvent('markertap', evt)
+        },
+
+        onMapLabelTap(evt) {
+            dealWithDevToolsEvt(evt)
+            this.callSingleEvent('labeltap', evt)
         },
 
         onMapControlTap(evt) {
-            this.callSimpleEvent('controltap', evt)
+            dealWithDevToolsEvt(evt)
+            this.callSingleEvent('controltap', evt)
         },
 
         onMapCalloutTap(evt) {
-            this.callSimpleEvent('callouttap', evt)
+            dealWithDevToolsEvt(evt)
+            this.callSingleEvent('callouttap', evt)
         },
 
         onMapUpdated(evt) {
-            this.callSimpleEvent('updated', evt)
+            this.callSingleEvent('updated', evt)
         },
 
         onMapRegionChange(evt) {
-            this.callSimpleEvent('regionchange', evt)
+            this.callSingleEvent('regionchange', evt)
         },
 
         onMapPoiTap(evt) {
-            this.callSimpleEvent('poitap', evt)
+            dealWithDevToolsEvt(evt)
+            this.callSingleEvent('poitap', evt)
         },
 
     },

@@ -20,26 +20,24 @@ test('editor', async() => {
     node.setAttribute('behavior', 'editor')
     page.document.body.appendChild(node)
     await _.sleep(10)
-    const editor = body.querySelector('.h5-wx-component')
 
     // readOnly
-    await _.checkBoolean(editor, node, 'readOnly', 'read-only', false)
+    await _.checkBoolean(body, node, 'readOnly', 'read-only', false)
 
     // placeholder
-    await _.checkString(editor, node, 'placeholder', 'placeholder', '')
+    await _.checkString(body, node, 'placeholder', 'placeholder', '')
 
     // showImgSize
-    await _.checkBoolean(editor, node, 'showImgSize', 'show-img-size', false)
+    await _.checkBoolean(body, node, 'showImgSize', 'show-img-size', false)
 
     // showImgToolbar
-    await _.checkBoolean(editor, node, 'showImgToolbar', 'show-img-toolbar', false)
+    await _.checkBoolean(body, node, 'showImgToolbar', 'show-img-toolbar', false)
 
     // showImgResize
-    await _.checkBoolean(editor, node, 'showImgResize', 'show-img-resize', false)
+    await _.checkBoolean(body, node, 'showImgResize', 'show-img-resize', false)
 
     // event
-    const wxEditor = editor.querySelector('.wx-comp-editor')
-    await _.checkEvent(wxEditor, node, ['ready', 'focus', 'blur', 'input', 'statuschange'])
+    await _.checkEvent(body.querySelector('.h5-wx-component'), node, ['ready', 'focus', 'blur', 'input', 'statuschange'])
 
     page.document.body.removeChild(node)
     document.body.removeChild(wrapper)

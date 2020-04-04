@@ -30,23 +30,23 @@ module.exports = {
     }],
     handles: {
         onEditorReady(evt) {
-            this.callSimpleEvent('ready', evt)
+            this.callSingleEvent('ready', evt)
         },
 
         onEditorFocus(evt) {
-            this.callSimpleEvent('focus', evt)
+            this.callSingleEvent('focus', evt)
         },
 
         onEditorBlur(evt) {
-            this.callSimpleEvent('blur', evt)
+            this.callSingleEvent('blur', evt)
         },
 
         onEditorInput(evt) {
-            this.callSimpleEvent('input', evt)
+            this.callSingleEvent('input', evt)
         },
 
         onEditorStatusChange(evt) {
-            this.callSimpleEvent('statuschange', evt)
+            this.callSingleEvent('statuschange', evt)
         },
     },
 }

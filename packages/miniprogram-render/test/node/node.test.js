@@ -134,6 +134,17 @@ test('node: ownerDocument', () => {
     expect(node4.ownerDocument).toBe(document)
 })
 
+test('node: childNodes', () => {
+    const node1 = document.createElement('div')
+    const node2 = document.createTextNode('text')
+    const node3 = document.createComment('comment')
+    node1.innerHTML = '<div>123</div>321<span>123</span><!-- haha -->321'
+
+    expect(node1.childNodes.length).toBe(5)
+    expect(node2.childNodes.length).toBe(0)
+    expect(node3.childNodes.length).toBe(0)
+})
+
 test('node: hasChildNodes', () => {
     const node1 = document.createElement('div')
     const node2 = document.createElement('div')

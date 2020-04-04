@@ -20,14 +20,12 @@ test('cover-image', async() => {
     node.setAttribute('behavior', 'cover-image')
     page.document.body.appendChild(node)
     await _.sleep(10)
-    const coverImage = body.querySelector('.h5-wx-component')
 
     // src
-    await _.checkUrl(coverImage, node, 'src', 'src', '')
+    await _.checkUrl(body, node, 'src', 'src', '')
 
     // event
-    const wxCoverImage = coverImage.querySelector('.wx-comp-cover-image')
-    await _.checkEvent(wxCoverImage, node, ['error', 'load'])
+    await _.checkEvent(body.querySelector('.h5-wx-component'), node, ['error', 'load'])
 
     page.document.body.removeChild(node)
     document.body.removeChild(wrapper)

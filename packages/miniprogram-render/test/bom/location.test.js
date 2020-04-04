@@ -240,13 +240,13 @@ test('location: set', () => {
 
     // search
     expect(location.search).toBe('?query=string')
-    global.expectPagePath = `/pages/list/index?type=jump&targeturl=${encodeURIComponent('https://test.miniprogram.com/index/aaa/list/123#hash')}&search=&hash=${encodeURIComponent('#hash')}`
+    global.expectPagePath = `/pages/list/index?type=jump&targeturl=${encodeURIComponent('https://test.miniprogram.com/index/aaa/list/123#hash')}&hash=${encodeURIComponent('#hash')}`
     location.search = ''
     expect(location.search).toBe('')
     global.expectPagePath = `/pages/list/index?type=jump&targeturl=${encodeURIComponent('https://test.miniprogram.com/index/aaa/list/123?a=123#hash')}&search=${encodeURIComponent('?a=123')}&hash=${encodeURIComponent('#hash')}`
     location.search = 'a=123'
     expect(location.search).toBe('?a=123')
-    global.expectPagePath = `/pages/list/index?type=jump&targeturl=${encodeURIComponent('https://test.miniprogram.com/index/aaa/list/123#hash')}&search=&hash=${encodeURIComponent('#hash')}`
+    global.expectPagePath = `/pages/list/index?type=jump&targeturl=${encodeURIComponent('https://test.miniprogram.com/index/aaa/list/123#hash')}&hash=${encodeURIComponent('#hash')}`
     location.search = '?'
     expect(location.search).toBe('')
     global.expectPagePath = `/pages/list/index?type=jump&targeturl=${encodeURIComponent('https://test.miniprogram.com/index/aaa/list/123?c=321#hash')}&search=${encodeURIComponent('?c=321')}&hash=${encodeURIComponent('#hash')}`

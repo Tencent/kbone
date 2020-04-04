@@ -20,53 +20,51 @@ test('navigator', async() => {
     node.setAttribute('behavior', 'navigator')
     page.document.body.appendChild(node)
     await _.sleep(10)
-    const navigator = body.querySelector('.h5-wx-component')
 
     // target
-    await _.checkString(navigator, node, 'target', 'target', 'self')
+    await _.checkString(body, node, 'target', 'target', 'self')
 
     // url
-    await _.checkString(navigator, node, 'url', 'url', '')
+    await _.checkString(body, node, 'url', 'url', '')
 
     // openType
-    await _.checkString(navigator, node, 'openType', 'open-type', 'navigate')
+    await _.checkString(body, node, 'openType', 'open-type', 'navigate')
 
     // delta
-    await _.checkNumber(navigator, node, 'delta', 'delta', 1)
+    await _.checkNumber(body, node, 'delta', 'delta', 1)
 
     // appId
-    await _.checkString(navigator, node, 'appId', 'app-id', '')
+    await _.checkString(body, node, 'appId', 'app-id', '')
 
     // path
-    await _.checkString(navigator, node, 'path', 'path', '')
+    await _.checkString(body, node, 'path', 'path', '')
 
     // extraData
-    expect(navigator.data.extraData).toEqual({})
+    expect(body.data.childNodes[0].extra.extraData).toEqual({})
     node.setAttribute('extra-data', {a: 123, b: 321})
     await _.sleep(10)
-    expect(navigator.data.extraData).toEqual({a: 123, b: 321})
+    expect(body.data.childNodes[0].extra.extraData).toEqual({a: 123, b: 321})
     node.setAttribute('extra-data', undefined)
     await _.sleep(10)
-    expect(navigator.data.extraData).toEqual({})
+    expect(body.data.childNodes[0].extra.extraData).toEqual({})
 
     // version
-    await _.checkString(navigator, node, 'version', 'version', 'release')
+    await _.checkString(body, node, 'version', 'version', 'release')
 
     // hoverClass
-    await _.checkString(navigator, node, 'hoverClass', 'hover-class', 'navigator-hover')
+    await _.checkString(body, node, 'hoverClass', 'hover-class', 'navigator-hover')
 
     // hoverStopPropagation
-    await _.checkBoolean(navigator, node, 'hoverStopPropagation', 'hover-stop-propagation', false)
+    await _.checkBoolean(body, node, 'hoverStopPropagation', 'hover-stop-propagation', false)
 
     // hoverStartTime
-    await _.checkNumber(navigator, node, 'hoverStartTime', 'hover-start-time', 50)
+    await _.checkNumber(body, node, 'hoverStartTime', 'hover-start-time', 50)
 
     // hoverStayTime
-    await _.checkNumber(navigator, node, 'hoverStayTime', 'hover-stay-time', 600)
+    await _.checkNumber(body, node, 'hoverStayTime', 'hover-stay-time', 600)
 
     // event
-    const wxNavigator = navigator.querySelector('.wx-comp-navigator')
-    await _.checkEvent(wxNavigator, node, ['success', 'fail', 'complete'])
+    await _.checkEvent(body.querySelector('.h5-wx-component'), node, ['success', 'fail', 'complete'])
 
     page.document.body.removeChild(node)
     document.body.removeChild(wrapper)

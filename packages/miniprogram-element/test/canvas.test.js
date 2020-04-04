@@ -19,20 +19,18 @@ test('canvas', async() => {
     const node = page.document.createElement('canvas')
     page.document.body.appendChild(node)
     await _.sleep(10)
-    const canvas = body.querySelector('.h5-canvas')
 
     // type
-    await _.checkString(canvas, node, 'type', 'type', '')
+    await _.checkString(body, node, 'type', 'type', '')
 
     // canvasId
-    await _.checkString(canvas, node, 'canvasId', 'canvas-id', '')
+    await _.checkString(body, node, 'canvasId', 'canvas-id', '')
 
     // disableScroll
-    await _.checkBoolean(canvas, node, 'disableScroll', 'disable-scroll', false)
+    await _.checkBoolean(body, node, 'disableScroll', 'disable-scroll', false)
 
     // event
-    const wxCanvas = canvas.querySelector('.wx-comp-canvas')
-    await _.checkEvent(wxCanvas, node, ['touchstart', 'touchmove', 'touchend', 'touchcancel', 'longtap', 'error'])
+    await _.checkEvent(body.querySelector('.h5-canvas'), node, [['touchstart', 'canvastouchstart'], ['touchmove', 'canvastouchmove'], ['touchend', 'canvastouchend'], ['touchcancel', 'canvastouchcancel'], 'longtap', 'error'])
 
     page.document.body.removeChild(node)
     document.body.removeChild(wrapper)

@@ -4,14 +4,13 @@ const Event = require('./event/event')
 const OriginalCustomEvent = require('./event/custom-event')
 const Location = require('./bom/location')
 const Navigator = require('./bom/navigator')
-const cache = require('./util/cache')
-const tool = require('./util/tool')
 const Screen = require('./bom/screen')
 const History = require('./bom/history')
 const Miniprogram = require('./bom/miniprogram')
 const LocalStorage = require('./bom/local-storage')
 const SessionStorage = require('./bom/session-storage')
 const Performance = require('./bom/performance')
+const OriginalXMLHttpRequest = require('./bom/xml-http-request')
 const Node = require('./node/node')
 const Element = require('./node/element')
 const TextNode = require('./node/text-node')
@@ -19,6 +18,8 @@ const Comment = require('./node/comment')
 const ClassList = require('./node/class-list')
 const Style = require('./node/style')
 const Attribute = require('./node/attribute')
+const cache = require('./util/cache')
+const tool = require('./util/tool')
 
 let lastRafTime = 0
 const WINDOW_PROTOTYPE_MAP = {
@@ -42,6 +43,7 @@ class Window extends EventTarget {
         super()
 
         const timeOrigin = +new Date()
+        const that = this
 
         this.$_pageId = pageId
 
@@ -74,6 +76,11 @@ class Window extends EventTarget {
             constructor(name = '', options = {}) {
                 options.timeStamp = +new Date() - timeOrigin
                 super(name, options)
+            }
+        }
+        this.$_xmlHttpRequestConstructor = class XMLHttpRequest extends OriginalXMLHttpRequest {
+            constructor() {
+                super(that)
             }
         }
 
@@ -510,9 +517,25 @@ class Window extends EventTarget {
         return this.$_performance
     }
 
+    get SVGElement() {
+        // 不作任何实现，只作兼容使用
+        console.warn('window.SVGElement is not supported')
+        return function() {}
+    }
+
+    get XMLHttpRequest() {
+        return this.$_xmlHttpRequestConstructor
+    }
+
     open(url) {
         // 不支持 windowName 和 windowFeatures
         this.location.$$open(url)
+    }
+
+    close() {
+        wx.navigateBack({
+            delta: 1,
+        })
     }
 
     getComputedStyle() {

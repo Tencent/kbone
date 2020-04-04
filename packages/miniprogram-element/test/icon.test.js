@@ -20,16 +20,15 @@ test('picker', async() => {
     node.setAttribute('behavior', 'icon')
     page.document.body.appendChild(node)
     await _.sleep(10)
-    const icon = body.querySelector('.h5-wx-component')
 
     // type
-    await _.checkString(icon, node, 'type', 'type', '')
+    await _.checkString(body, node, 'type', 'type', '')
 
     // size
-    await _.checkString(icon, node, 'size', 'size', '23')
+    await _.checkString(body, node, 'size', 'size', '23')
 
     // color
-    await _.checkString(icon, node, 'color', 'color', '')
+    await _.checkString(body, node, 'color', 'color', '')
 
     page.document.body.removeChild(node)
     document.body.removeChild(wrapper)

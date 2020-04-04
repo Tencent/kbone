@@ -1,7 +1,9 @@
 <template>
   <div class="cnt">
     <Header></Header>
+    <p>当前 url：{{url}}</p>
     <button @click="onClickBack">回到上一页</button>
+    <button @click="onClickClose">关闭当前窗口</button>
     <Footer></Footer>
   </div>
 </template>
@@ -16,18 +18,34 @@ export default {
     Header,
     Footer
   },
+  data() {
+    return {
+      url: location.href,
+    }
+  },
   created() {
     window.addEventListener('wxload', query => console.log('page3 wxload', query))
     window.addEventListener('wxshow', () => console.log('page3 wxshow'))
     window.addEventListener('wxready', () => console.log('page3 wxready'))
     window.addEventListener('wxhide', () => console.log('page3 wxhide'))
     window.addEventListener('wxunload', () => console.log('page3 wxunload'))
+
+    window.onShareAppMessage = () => {
+      return {
+        title: 'kbone-demo',
+        path: '/a',
+      }
+    }
   },
   methods: {
     onClickBack() {
       if (process.env.isMiniprogram) {
         wx.navigateBack()
       }
+    },
+
+    onClickClose() {
+      window.close()
     },
   },
 }

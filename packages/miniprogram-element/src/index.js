@@ -5,11 +5,13 @@ const component = require('./util/component')
 
 const {
     cache,
+    Event,
     EventTarget,
     tool,
 } = mp.$$adapter
 const {
     NOT_SUPPORT,
+    IN_COVER,
 } = _
 const {
     wxCompNameMap,
@@ -53,9 +55,7 @@ Component({
         // 记录 dom
         this.domNode = cache.getNode(pageId, nodeId)
         if (!this.domNode) return
-
-        // TODO，为了兼容基础库的一个 bug，暂且如此实现
-        if (this.domNode.tagName === 'CANVAS') this.domNode._wxComponent = this
+        this.domNode._wxComponent = this
 
         // 存储 document
         this.document = cache.getDocument(pageId)
@@ -70,9 +70,10 @@ Component({
 
         // 初始化
         this.init(data)
+        if (IN_COVER.indexOf(data.wxCompName) !== -1) this.data.inCover = true
 
         // 初始化孩子节点
-        const childNodes = _.filterNodes(this.domNode, DOM_SUB_TREE_LEVEL - 1)
+        const childNodes = _.filterNodes(this.domNode, DOM_SUB_TREE_LEVEL - 1, this)
         const dataChildNodes = _.dealWithLeafAndSimple(childNodes, this.onChildNodesUpdate)
         if (data.wxCompName || data.wxCustomCompName) {
             // 内置组件/自定义组件
@@ -102,17 +103,17 @@ Component({
             if (!this.pageId || !this.nodeId) return
 
             // 儿子节点有变化
-            const childNodes = _.filterNodes(this.domNode, DOM_SUB_TREE_LEVEL - 1)
+            const childNodes = _.filterNodes(this.domNode, DOM_SUB_TREE_LEVEL - 1, this)
             const oldChildNodes = this.data.wxCompName || this.data.wxCustomCompName ? this.data.innerChildNodes : this.data.childNodes
             if (_.checkDiffChildNodes(childNodes, oldChildNodes)) {
                 const dataChildNodes = _.dealWithLeafAndSimple(childNodes, this.onChildNodesUpdate)
                 const newData = {}
                 if (this.data.wxCompName || this.data.wxCustomCompName) {
-                    // 内置组件/自定义组件
+                    // 部分内置组件/自定义组件
                     newData.innerChildNodes = dataChildNodes
                     newData.childNodes = []
                 } else {
-                    // 普通标签
+                    // 普通标签/其他组件
                     newData.innerChildNodes = []
                     newData.childNodes = dataChildNodes
                 }
@@ -124,7 +125,7 @@ Component({
             const childNodeStack = [].concat(childNodes)
             let childNode = childNodeStack.pop()
             while (childNode) {
-                if (childNode.type === 'element' && !childNode.isLeaf && !childNode.isSimple) {
+                if (childNode.type === 'element' && !childNode.isImage && !childNode.isLeaf && !childNode.isSimple && !childNode.useTemplate) {
                     childNode.domNode.$$trigger('$$childNodesUpdate')
                 }
 
@@ -169,16 +170,55 @@ Component({
         },
 
         /**
+         * 触发简单节点事件，不做捕获冒泡处理
+         */
+        callSingleEvent(eventName, evt) {
+            const domNode = this.getDomNodeFromEvt(evt)
+            if (!domNode) return
+
+            domNode.$$trigger(eventName, {
+                event: new Event({
+                    timeStamp: evt && evt.timeStamp,
+                    touches: evt && evt.touches,
+                    changedTouches: evt && evt.changedTouches,
+                    name: eventName,
+                    target: domNode,
+                    eventPhase: Event.AT_TARGET,
+                    detail: evt && evt.detail,
+                    $$extra: evt && evt.extra,
+                }),
+                currentTarget: domNode,
+            })
+        },
+
+        /**
+         * 触发简单节点事件，不做冒泡处理，但会走捕获阶段
+         */
+        callSimpleEvent(eventName, evt, domNode) {
+            domNode = domNode || this.getDomNodeFromEvt(evt)
+            if (!domNode) return
+
+            EventTarget.$$process(domNode, new Event({
+                touches: evt.touches,
+                changedTouches: evt.changedTouches,
+                name: eventName,
+                target: domNode,
+                eventPhase: Event.AT_TARGET,
+                detail: evt && evt.detail,
+                $$extra: evt && evt.extra,
+                bubbles: false, // 不冒泡
+            }))
+        },
+
+        /**
          * 触发事件
          */
         callEvent(eventName, evt, extra) {
-            const pageId = this.pageId
-            const originNodeId = evt.currentTarget.dataset.privateNodeId || this.nodeId
-            const originNode = cache.getNode(pageId, originNodeId)
+            const domNode = this.getDomNodeFromEvt(evt)
 
-            if (!originNode) return
+            if (!domNode) return
 
-            EventTarget.$$process(originNode, eventName, evt, extra, (domNode, evt, isCapture) => {
+            EventTarget.$$process(domNode, eventName, evt, extra, (domNode, evt, isCapture) => {
                 // 延迟触发跳转，先等所有同步回调处理完成
                 setTimeout(() => {
                     if (evt.cancelable) return
@@ -332,24 +372,67 @@ Component({
             }
         },
 
+        /**
+         * 图片相关事件
+         */
         onImgLoad(evt) {
-            const pageId = this.pageId
-            const originNodeId = evt.currentTarget.dataset.privateNodeId || this.nodeId
-            const originNode = cache.getNode(pageId, originNodeId)
-
-            if (!originNode) return
-
-            this.callSimpleEvent('load', evt, originNode)
+            this.callSingleEvent('load', evt)
         },
 
         onImgError(evt) {
+            this.callSingleEvent('error', evt)
+        },
+
+        /**
+         * capture 相关事件，wx-capture 的事件不走仿造事件捕获冒泡系统，单独触发
+         */
+        onCaptureTouchStart(evt) {
+            this.callSingleEvent('touchstart', evt)
+        },
+
+        onCaptureTouchMove(evt) {
+            this.callSingleEvent('touchmove', evt)
+        },
+
+        onCaptureTouchEnd(evt) {
+            this.callSingleEvent('touchend', evt)
+        },
+
+        onCaptureTouchCancel(evt) {
+            this.callSingleEvent('touchcancel', evt)
+        },
+
+        onCaptureTap(evt) {
+            this.callSingleEvent('click', evt)
+        },
+
+        /**
+         * 动画相关事件
+         */
+        onTransitionEnd(evt) {
+            this.callEvent('transitionend', evt)
+        },
+
+        onAnimationStart(evt) {
+            this.callEvent('animationstart', evt)
+        },
+
+        onAnimationIteration(evt) {
+            this.callEvent('animationiteration', evt)
+        },
+
+        onAnimationEnd(evt) {
+            this.callEvent('animationend', evt)
+        },
+
+        /**
+         * 从小程序事件对象中获取 domNode
+         */
+        getDomNodeFromEvt(evt) {
+            if (!evt) return
             const pageId = this.pageId
             const originNodeId = evt.currentTarget.dataset.privateNodeId || this.nodeId
-            const originNode = cache.getNode(pageId, originNodeId)
-
-            if (!originNode) return
-
-            this.callSimpleEvent('error', evt, originNode)
+            return cache.getNode(pageId, originNodeId)
         },
 
         ...initHandle,

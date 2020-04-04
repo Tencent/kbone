@@ -23,7 +23,6 @@ test('movable-area', async() => {
     child.setAttribute('behavior', 'movable-view')
     node.appendChild(child)
     await _.sleep(10)
-    const movableArea = body.querySelector('.h5-wx-component')
 
     /**
      * movable-view
@@ -31,7 +30,7 @@ test('movable-area', async() => {
 
     const proxy = new Proxy({}, {
         get(target, name) {
-            return movableArea.data.innerChildNodes[0].extra[name]
+            return body.data.childNodes[0].extra.childNodes[0].extra[name]
         },
     })
 
@@ -79,7 +78,7 @@ test('movable-area', async() => {
      */
 
     // scale-area
-    await _.checkBoolean(movableArea, node, 'scaleArea', 'scale-area', false)
+    await _.checkBoolean(body, node, 'scaleArea', 'scale-area', false)
 
     page.document.body.removeChild(node)
     document.body.removeChild(wrapper)

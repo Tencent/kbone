@@ -154,41 +154,43 @@ module.exports = {
     }],
     handles: {
         onVideoPlay(evt) {
-            this.callSimpleEvent('play', evt)
+            this.callSingleEvent('play', evt)
         },
 
         onVideoPause(evt) {
-            this.callSimpleEvent('pause', evt)
+            this.callSingleEvent('pause', evt)
         },
 
         onVideoEnded(evt) {
-            this.callSimpleEvent('ended', evt)
+            this.callSingleEvent('ended', evt)
         },
 
         onVideoTimeUpdate(evt) {
-            if (!this.domNode) return
+            const domNode = this.getDomNodeFromEvt(evt)
+            if (!domNode) return
 
-            this.domNode.$$setAttributeWithoutUpdate('currentTime', evt.detail.currentTime)
-            this.callSimpleEvent('timeupdate', evt)
+            domNode.$$setAttributeWithoutUpdate('currentTime', evt.detail.currentTime)
+            this.callSingleEvent('timeupdate', evt)
         },
 
         onVideoFullScreenChange(evt) {
-            this.callSimpleEvent('fullscreenchange', evt)
+            this.callSingleEvent('fullscreenchange', evt)
         },
 
         onVideoWaiting(evt) {
-            this.callSimpleEvent('waiting', evt)
+            this.callSingleEvent('waiting', evt)
         },
 
         onVideoError(evt) {
-            this.callSimpleEvent('error', evt)
+            this.callSingleEvent('error', evt)
         },
 
         onVideoProgress(evt) {
-            if (!this.domNode) return
+            const domNode = this.getDomNodeFromEvt(evt)
+            if (!domNode) return
 
-            this.domNode.$$setAttributeWithoutUpdate('buffered', evt.detail.buffered)
-            this.callSimpleEvent('progress', evt)
+            domNode.$$setAttributeWithoutUpdate('buffered', evt.detail.buffered)
+            this.callSingleEvent('progress', evt)
         },
     },
 }

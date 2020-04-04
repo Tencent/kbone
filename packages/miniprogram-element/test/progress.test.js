@@ -20,41 +20,39 @@ test('progress', async() => {
     node.setAttribute('behavior', 'progress')
     page.document.body.appendChild(node)
     await _.sleep(10)
-    const progress = body.querySelector('.h5-wx-component')
 
     // percent
-    await _.checkNumber(progress, node, 'percent', 'percent', 0)
+    await _.checkNumber(body, node, 'percent', 'percent', 0)
 
     // showInfo
-    await _.checkBoolean(progress, node, 'showInfo', 'show-info', false)
+    await _.checkBoolean(body, node, 'showInfo', 'show-info', false)
 
     // borderRadius
-    await _.checkString(progress, node, 'borderRadius', 'border-radius', '0')
+    await _.checkString(body, node, 'borderRadius', 'border-radius', '0')
 
     // fontSize
-    await _.checkString(progress, node, 'fontSize', 'font-size', '16')
+    await _.checkString(body, node, 'fontSize', 'font-size', '16')
 
     // strokeWidth
-    await _.checkString(progress, node, 'strokeWidth', 'stroke-width', '6')
+    await _.checkString(body, node, 'strokeWidth', 'stroke-width', '6')
 
     // color
-    await _.checkString(progress, node, 'color', 'color', '#09BB07')
+    await _.checkString(body, node, 'color', 'color', '#09BB07')
 
     // activeColor
-    await _.checkString(progress, node, 'activeColor', 'active-color', '#09BB07')
+    await _.checkString(body, node, 'activeColor', 'active-color', '#09BB07')
 
     // backgroundColor
-    await _.checkString(progress, node, 'backgroundColor', 'background-color', '#EBEBEB')
+    await _.checkString(body, node, 'backgroundColor', 'background-color', '#EBEBEB')
 
     // active
-    await _.checkBoolean(progress, node, 'active', 'active', false)
+    await _.checkBoolean(body, node, 'active', 'active', false)
 
     // activeMode
-    await _.checkString(progress, node, 'activeMode', 'active-mode', 'backwards')
+    await _.checkString(body, node, 'activeMode', 'active-mode', 'backwards')
 
     // event
-    const wxProgress = progress.querySelector('.wx-comp-progress')
-    await _.checkEvent(wxProgress, node, ['activeend'])
+    await _.checkEvent(body.querySelector('.h5-wx-component'), node, ['activeend'])
 
     page.document.body.removeChild(node)
     document.body.removeChild(wrapper)
