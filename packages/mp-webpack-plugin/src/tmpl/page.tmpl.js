@@ -150,6 +150,7 @@ Page({
         this.window.$$trigger('wxunload')
         if (this.app && this.app.$destroy) this.app.$destroy()
         this.document.body.$$recycle() // 回收 dom 节点
+        this.window.$$destroy()
 
         mp.destroyPage(this.pageId)
         global.$$runtime = null
