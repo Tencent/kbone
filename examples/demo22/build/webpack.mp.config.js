@@ -87,9 +87,12 @@ module.exports = {
             },
             {
                 test: /\.js$/,
-                use: [
-                    'babel-loader'
-                ],
+                use: [{
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['env', 'stage-3'],
+                    },
+                }],
                 exclude: /node_modules/
             },
             {

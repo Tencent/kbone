@@ -38,6 +38,7 @@ const ELEMENT_PROTOTYPE_MAP = {
     style: Style.prototype,
 }
 const subscribeMap = {}
+const globalObject = {}
 
 class Window extends EventTarget {
     constructor(pageId) {
@@ -188,6 +189,13 @@ class Window extends EventTarget {
      */
     get $$miniprogram() {
         return this.$_miniprogram
+    }
+
+    /**
+     * 获取全局共享对象
+     */
+    get $$global() {
+        return globalObject
     }
 
     /**
@@ -414,7 +422,7 @@ class Window extends EventTarget {
      */
     $$unsubscribe(name, handler) {
         const pageId = this.$_pageId
-        
+
         if (typeof name !== 'string' || !subscribeMap[name] || !subscribeMap[name][pageId]) return
 
         const handlers = subscribeMap[name][pageId]
@@ -435,15 +443,17 @@ class Window extends EventTarget {
 
         Object.keys(subscribeMap[name]).forEach(pageId => {
             const handlers = subscribeMap[name][pageId]
-            if (handlers && handlers.length) handlers.forEach(handler => {
-                if (typeof handler !== 'function') return
+            if (handlers && handlers.length) {
+                handlers.forEach(handler => {
+                    if (typeof handler !== 'function') return
 
-                try {
-                    handler.call(null, data)
-                } catch (err) {
-                    console.error(err)
-                }
-            })
+                    try {
+                        handler.call(null, data)
+                    } catch (err) {
+                        console.error(err)
+                    }
+                })
+            }
         })
     }
 

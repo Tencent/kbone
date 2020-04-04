@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import {createStore} from '../store'
 import App from './App.vue'
 
 export default function createApp() {
@@ -8,6 +9,7 @@ export default function createApp() {
 
   return new Vue({
     el: '#app',
+    store: createStore(),
     render: h => h(App)
   })
 }

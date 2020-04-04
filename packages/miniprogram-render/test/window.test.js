@@ -15,18 +15,12 @@ const Node = require('../src/node/node')
 const Image = require('../src/node/element/image')
 
 let window
-let window2
-let window3
 let document
 
 beforeAll(() => {
     const res = mock.createPage('home')
     window = res.window
     document = res.document
-    const res2 = mock.createPage('list')
-    window2 = res2.window
-    const res3 = mock.createPage('detail')
-    window3 = res3.window
 })
 
 test('window: init', () => {
@@ -342,6 +336,11 @@ test('window: $$getPrototype/$$extend/$$addAspect', () => {
 })
 
 test('window: $$subscribe/$$unsubscribe/$$publish', () => {
+    const res2 = mock.createPage('list')
+    const window2 = res2.window
+    const res3 = mock.createPage('detail')
+    const window3 = res3.window
+
     const data1 = []
     const data2 = []
     const data3 = []
@@ -415,6 +414,23 @@ test('window: $$subscribe/$$unsubscribe/$$publish', () => {
     expect(data1).toEqual(['111', '222', '333', '444'])
     expect(data2).toEqual(['111', '111', '222', '222'])
     expect(data3).toEqual(['111', '222'])
+})
+
+test('window: $$global', () => {
+    const res2 = mock.createPage('list')
+    const window2 = res2.window
+    const res3 = mock.createPage('detail')
+    const window3 = res3.window
+
+    window.$$global.aaa = '123'
+    expect(window.$$global.aaa).toBe('123')
+    expect(window2.$$global.aaa).toBe('123')
+    expect(window3.$$global.aaa).toBe('123')
+
+    window.$$global.bbb = {num: '123'}
+    expect(window.$$global.bbb).toEqual({num: '123'})
+    expect(window2.$$global.bbb).toEqual({num: '123'})
+    expect(window3.$$global.bbb).toEqual({num: '123'})
 })
 
 test('window: document', () => {
