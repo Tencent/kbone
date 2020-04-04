@@ -16,13 +16,13 @@
         <div v-if="item === 'event'">
           <div @click="onRootClick">
             <wx-capture @touchstart="onParentTouchStart" @touchend="onParentTouchEnd" @click="onParentClick">
-              <button @click="onClick">capture-inner</button>
+              <button @click="onClick">capture-inner({{eventCount}})</button>
             </wx-capture>
             <wx-catch @touchstart="onParentTouchStart" @touchend="onParentTouchEnd" @click="onParentClick">
-              <button @click="onClick">catch-inner1</button>
+              <button @click="onClick">catch-inner1({{eventCount}})</button>
             </wx-catch>
             <wx-catch @click="onParentClick">
-              <button @click="onClick">catch-inner2</button>
+              <button @click="onClick">catch-inner2({{eventCount}})</button>
             </wx-catch>
             <div class="event-cnt">
               <wx-animation :class="['event-t', transition ? 'event-t-s' : 'event-t-e']" @transitionend="onTransitionEnd"></wx-animation>
@@ -582,6 +582,7 @@ export default {
         'iframe',
         'intersection',
       ],
+      eventCount: 0,
       transition: false,
       icon: {
         size: [20, 30, 40, 50, 60, 70],
@@ -730,6 +731,7 @@ export default {
   },
   methods: {
     onClick() {
+      this.eventCount++
       console.log('click')
     },
 
