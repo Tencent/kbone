@@ -22,6 +22,7 @@ const MAX_DOM_SUB_TREE_LEVEL = 10
 let DOM_SUB_TREE_LEVEL = 10
 
 Component({
+    behaviors: ['wx://form-field-button'],
     properties: {
         inCover: {
             type: Boolean,
@@ -163,7 +164,7 @@ Component({
             } else {
                 // 可替换 html 标签
                 const wxCompName = wxCompNameMap[tagName]
-                if (wxCompName) _.checkComponentAttr(wxCompName, domNode, newData, data)
+                if (wxCompName) newData.wxCompName = wxCompName
             }
 
             this.setData(newData)
@@ -284,7 +285,7 @@ Component({
                         // 处理 button 点击
                         const type = domNode.tagName === 'BUTTON' ? domNode.getAttribute('type') : domNode.getAttribute('form-type')
                         const formAttr = domNode.getAttribute('form')
-                        const form = formAttr ? window.document.getElementById('formAttr') : _.findParentNode(domNode, 'FORM')
+                        const form = formAttr ? window.document.getElementById(formAttr) : _.findParentNode(domNode, 'FORM')
 
                         if (!form) return
                         if (type !== 'submit' && type !== 'reset') return
@@ -314,7 +315,12 @@ Component({
                             if (sliderList.length) sliderList.forEach(item => formData[item.getAttribute('name')] = +item.getAttribute('value') || 0)
                             if (pickerList.length) pickerList.forEach(item => formData[item.getAttribute('name')] = item.getAttribute('value'))
 
-                            this.callSimpleEvent('submit', {detail: {value: formData}, extra: {$$from: 'button'}}, form)
+                            const detail = {value: formData}
+                            if (form._formId) {
+                                detail.formId = form._formId
+                                form._formId = null
+                            }
+                            this.callSimpleEvent('submit', {detail, extra: {$$from: 'button'}}, form)
                         } else if (type === 'reset') {
                             if (inputList.length) {
                                 inputList.forEach(item => {

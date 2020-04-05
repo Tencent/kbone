@@ -163,6 +163,12 @@ function checkDiffChildNodes(newChildNodes, oldChildNodes) {
                 // 值为对象，则判断对象顶层值是否有变化
                 if (typeof oldValue !== 'object') return true
 
+                // 需要强制更新
+                if (key === 'extra' && newValue.forceUpdate) {
+                    newValue.forceUpdate = false
+                    return true
+                }
+
                 const objectKeys = Object.keys(newValue)
                 for (const objectKey of objectKeys) {
                     if (!isEqual(newValue[objectKey], oldValue[objectKey])) return true
@@ -200,6 +206,7 @@ function checkComponentAttr(name, domNode, destData, oldData, extraClass = '') {
                 const oldValues = domNode._oldValues
                 if (!oldData || !isEqual(newValue, oldData[name]) || (oldValues && !isEqual(newValue, oldValues[name]))) {
                     destData[name] = newValue
+                    destData.forceUpdate = true // 避免被 diff 掉，需要强制更新
                 }
             } else if (!oldData || !isEqual(newValue, oldData[name])) {
                 // 对比 data

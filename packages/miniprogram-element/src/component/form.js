@@ -17,11 +17,15 @@ module.exports = {
     }],
     handles: {
         onFormSubmit(evt) {
-            this.callSingleEvent('submit', evt)
+            const domNode = this.getDomNodeFromEvt(evt)
+            if (!domNode) return
+
+            domNode._formId = evt.detail.formId
+            // submit 事件由 kbone 模拟，不需要原生 submit 事件
         },
 
-        onFormReset(evt) {
-            this.callSingleEvent('reset', evt)
+        onFormReset() {
+            // reset 事件由 kbone 模拟，不需要原生 reset 事件
         },
     },
 }

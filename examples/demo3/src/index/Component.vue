@@ -186,7 +186,7 @@
             </div>
           </wx-form>
           <!-- form 标签 -->
-          <form :report-submit="true" @submit="onFormSubmit" @reset="onFormReset">
+          <form @submit="onFormSubmit" @reset="onFormReset">
             <div>
               <div>form 标签</div>
               <input type="text" name="text-b" value="text value" />
