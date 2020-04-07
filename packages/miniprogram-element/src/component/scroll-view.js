@@ -79,7 +79,7 @@ module.exports = {
             domNode._oldValues.scrollTop = evt.detail.scrollTop
             domNode._oldValues.scrollLeft = evt.detail.scrollLeft
 
-            this.callSingleEvent('scroll', evt)
+            this.callSimpleEvent('scroll', evt)
         },
     },
 }
