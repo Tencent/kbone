@@ -1,5 +1,9 @@
 # 更新日志
 
+## 1.2.3
+
+* 兼容旧版本基础库使用不存在的 behavior 会报 _unprepared 的问题
+
 ## 1.2.2
 
 * scroll-view 的 scroll 事件补充捕获阶段

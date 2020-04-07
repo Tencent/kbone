@@ -21,8 +21,14 @@ const {
 const MAX_DOM_SUB_TREE_LEVEL = 10
 let DOM_SUB_TREE_LEVEL = 10
 
+const version = wx.getSystemInfoSync().SDKVersion
+const behaviors = []
+if (_.compareVersion(version, '2.10.3') >= 0) {
+    behaviors.push('wx://form-field-button')
+}
+
 Component({
-    behaviors: ['wx://form-field-button'],
+    behaviors,
     properties: {
         inCover: {
             type: Boolean,
