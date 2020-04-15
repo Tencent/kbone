@@ -55,6 +55,36 @@ module.exports = {
         get(domNode) {
             return !!domNode.getAttribute('enable-flex')
         },
+    }, {
+        name: 'scrollAnchoring',
+        get(domNode) {
+            return !!domNode.getAttribute('scroll-anchoring')
+        },
+    }, {
+        name: 'refresherEnabled',
+        get(domNode) {
+            return !!domNode.getAttribute('refresher-enabled')
+        },
+    }, {
+        name: 'refresherThreshold',
+        get(domNode) {
+            return domNode.getAttribute('refresher-threshold') || '45'
+        },
+    }, {
+        name: 'refresherDefaultStyle',
+        get(domNode) {
+            return domNode.getAttribute('refresher-default-style') || 'black'
+        },
+    }, {
+        name: 'refresherBackground',
+        get(domNode) {
+            return domNode.getAttribute('refresher-background') || '#FFF'
+        },
+    }, {
+        name: 'refresherTriggered',
+        get(domNode) {
+            return !!domNode.getAttribute('refresher-triggered')
+        },
     }],
     handles: {
         onScrollViewScrolltoupper(evt) {
@@ -81,5 +111,22 @@ module.exports = {
 
             this.callSimpleEvent('scroll', evt)
         },
+
+        onScrollViewRefresherPulling(evt) {
+            this.callSingleEvent('refresherpulling', evt)
+        },
+
+        onScrollViewRefresherRefresh(evt) {
+            this.callSingleEvent('refresherrefresh', evt)
+        },
+
+        onScrollViewRefresherRestore(evt) {
+            this.callSingleEvent('refresherrestore', evt)
+        },
+
+        onScrollViewRefresherAbort(evt) {
+            this.callSingleEvent('refresherabort', evt)
+        },
+
     },
 }
