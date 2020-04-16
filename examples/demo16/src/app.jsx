@@ -16,6 +16,12 @@ const App = (props, store) => {
         {name: '巴西'},
         {name: '日本'}
     ])
+    const scrollViewProps = {
+        className: 'scroll-view-y',
+        'scroll-y': true,
+        'scroll-with-animation': true,
+        'refresher-enabled': true,
+    }
 
     return (
         <div>
@@ -55,6 +61,18 @@ const App = (props, store) => {
                 我是 picker-view：
                 <wx-picker range={pickerRange1}>选择国家1</wx-picker>
                 <wx-picker range={pickerRange2} range-key="name">选择国家2</wx-picker>
+            </div>
+            <div>
+                我是 scroll-view：
+                <wx-scroll-view {...scrollViewProps}>
+                <div>
+                    <div class="block block1"></div>
+                    <div class="block block2"></div>
+                    <div class="block block3"></div>
+                    <div class="block block4"></div>
+                    <div class="block block5"></div>
+                </div>
+                </wx-scroll-view>
             </div>
             <div>
                 我是 picker-view：
