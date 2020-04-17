@@ -460,7 +460,10 @@ class MpPlugin {
 
             hasBuiltNpm = _.isFileExisted(path.resolve(distDir, './node_modules/miniprogram-element/package.json')) && _.isFileExisted(path.resolve(distDir, './node_modules/miniprogram-render/package.json'))
 
-            if (hasBuiltNpm || !autoBuildNpm) return callback()
+            if (hasBuiltNpm || !autoBuildNpm) {
+                if (hasBuiltNpm) console.log(colors.bold('\ndependencies has been built\n'))
+                return callback()
+            }
 
             const build = () => {
                 _.copyDir(path.resolve(distDir, './node_modules/miniprogram-element/src'), path.resolve(distDir, './miniprogram_npm/miniprogram-element'))

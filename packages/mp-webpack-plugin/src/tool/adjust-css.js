@@ -1,4 +1,5 @@
 const postcss = require('postcss')
+const colors = require('colors/safe')
 const tagList = require('./tag-list')
 
 const replaceRegexp = new RegExp(`(\\W|\\b)(${['html', ...tagList].join('|')})(\\W|\\b)`, 'ig')
@@ -24,7 +25,10 @@ const replaceTagNamePlugin = postcss.plugin('replaceTagName', () => root => {
 
                 // 小程序 wxss 不支持 ~ 选择器，故直接抛弃
                 const wavyLineIndex = selector.indexOf('~')
-                if (wavyLineIndex !== -1 && selector[wavyLineIndex + 1] !== '=') return
+                if (wavyLineIndex !== -1 && selector[wavyLineIndex + 1] !== '=') {
+                    console.warn(colors.bold(`\nselector ${colors.yellow(selector)} is not supported in wxss, so it will be deleted\n`))
+                    return
+                }
 
                 // 处理标签名选择器
                 selector = selector.replace(replaceRegexp, (all, $1, tagName, $2, offset, string) => {
