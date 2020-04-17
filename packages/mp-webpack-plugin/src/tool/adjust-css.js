@@ -22,6 +22,10 @@ const replaceTagNamePlugin = postcss.plugin('replaceTagName', () => root => {
                 // 小程序 wxss 不支持 .xxx>:first-child 这样的写法
                 selector = selector.replace(/>:/g, '>*:')
 
+                // 小程序 wxss 不支持 ~ 选择器，故直接抛弃
+                const wavyLineIndex = selector.indexOf('~')
+                if (wavyLineIndex !== -1 && selector[wavyLineIndex + 1] !== '=') return
+
                 // 处理标签名选择器
                 selector = selector.replace(replaceRegexp, (all, $1, tagName, $2, offset, string) => {
                     // 非标签选择器，调整 \b 匹配的情况
@@ -62,7 +66,11 @@ const replaceTagNamePlugin = postcss.plugin('replaceTagName', () => root => {
                 if (selector.trim()) selectors.push(selector)
             })
 
-            child.selectors = selectors
+            if (!selectors.length) {
+                child.remove()
+            } else {
+                child.selectors = selectors
+            }
         }
     })
 })

@@ -49,6 +49,18 @@ function includes(parentArr, childArr) {
 }
 
 /**
+ * 判断文件是否存在
+ */
+function isFileExisted(filePath) {
+    try {
+        fs.accessSync(filePath)
+        return true
+    } catch (err) {
+        return false
+    }
+}
+
+/**
  * 递归创建目录
  */
 function recursiveMkdir(dirPath) {
@@ -123,6 +135,7 @@ function md5File(filePath) {
 module.exports = {
     merge,
     includes,
+    isFileExisted,
     recursiveMkdir,
     copyFile,
     copyDir,
