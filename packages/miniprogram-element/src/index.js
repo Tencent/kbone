@@ -180,7 +180,7 @@ Component({
          * 触发简单节点事件，不做捕获冒泡处理
          */
         callSingleEvent(eventName, evt) {
-            const domNode = this.getDomNodeFromEvt(evt)
+            const domNode = this.getDomNodeFromEvt(evt, eventName)
             if (!domNode) return
 
             domNode.$$trigger(eventName, {
@@ -440,10 +440,16 @@ Component({
         /**
          * 从小程序事件对象中获取 domNode
          */
-        getDomNodeFromEvt(evt) {
+        getDomNodeFromEvt(evt, eventName) {
             if (!evt) return
             const pageId = this.pageId
-            const originNodeId = evt.currentTarget.dataset.privateNodeId || this.nodeId
+            let originNodeId = this.nodeId
+            if (evt.currentTarget && evt.currentTarget.dataset.privateNodeId) {
+                originNodeId = evt.currentTarget.dataset.privateNodeId
+            } else if (eventName && eventName.indexOf('canvas') === 0 && evt.target && evt.target.dataset.privateNodeId) {
+                // canvas 相关 touch 事件，基础库没有提供 currentTarget，取 target 使用
+                originNodeId = evt.target.dataset.privateNodeId
+            }
             return cache.getNode(pageId, originNodeId)
         },
 

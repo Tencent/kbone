@@ -1,5 +1,9 @@
 # 更新日志
 
+## 1.2.6
+
+* 兼容 canvas touch 相关事件小程序基础库没有提供 currentTarget 的问题
+
 ## 1.2.4
 
 * 支持 scroll-view 下拉刷新相关属性
