@@ -6,6 +6,7 @@
     <a href="/page4" target="_blank">跳转页面4</a>
     <button @click="startFetchData">开启数据更新</button>
     <div>count: {{count}} - name: {{data.name || ''}}</div>
+    <Storage name="1"></Storage>
     <Footer></Footer>
   </div>
 </template>
@@ -14,12 +15,14 @@
 import {mapState, mapActions} from 'vuex'
 import Header from '../common/Header.vue'
 import Footer from '../common/Footer.vue'
+import Storage from '../common/Storage.vue'
 
 export default {
   name: 'App',
   components: {
     Header,
-    Footer
+    Footer,
+    Storage,
   },
   computed: {
     ...mapState(['count', 'data'])

@@ -108,3 +108,5 @@
 * 页面跳转
 * 跨页面通信
 * 跨页面数据共享
+* localStorage
+* sessionStorage

@@ -13,18 +13,23 @@ class SessionStorage {
     $_triggerStorage(key, newValue, oldValue, force) {
         if (!force && newValue === oldValue) return
 
-        this.$_window.$$trigger('storage', {
-            event: new Event({
-                name: 'storage',
-                target: this.$_window,
-                $$extra: {
-                    key,
-                    newValue,
-                    oldValue,
-                    storageArea: this,
-                    url: this.$_window.location.href,
-                }
-            })
+        const pages = getCurrentPages() || []
+        pages.forEach(page => {
+            if (page && page.window && page.window !== this.$_window) {
+                page.window.$$trigger('storage', {
+                    event: new Event({
+                        name: 'storage',
+                        target: page.window,
+                        $$extra: {
+                            key,
+                            newValue,
+                            oldValue,
+                            storageArea: this,
+                            url: this.$_window.location.href,
+                        }
+                    })
+                })
+            }
         })
     }
 
@@ -48,7 +53,8 @@ class SessionStorage {
     }
 
     setItem(key, data) {
-        if (!key || typeof key !== 'string' || typeof data !== 'string') return
+        if (!key || typeof key !== 'string') return
+        data = '' + data
 
         const oldValue = this.$_map[key] || null
 
