@@ -110,7 +110,7 @@ module.exports = (api, options) => {
                             loader: 'url-loader',
                             options: {
                                 limit: mpPluginConfig.vue.cdnLimit || 1024,
-                                name: '[name]_[hash:hex:6].[ext]',
+                                name: '[name].[hash:hex:8].[ext]',
                                 publicPath: mpPluginConfig.vue.cdnPath, // 对于资源文件直接使用线上的 cdn 地址
                                 emitFile: false,
                             }
