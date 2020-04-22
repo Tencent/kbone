@@ -1,5 +1,9 @@
 # 更新日志
 
+## 0.9.12
+
+* 支持 document 的 visibilitychange 事件
+
 ## 0.9.9
 
 * 自动构建 npm 逻辑支持检测 npm 包是否已被安装进而跳过此过程

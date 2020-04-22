@@ -153,6 +153,13 @@ class Document extends EventTarget {
     }
 
     /**
+     * 设置页面显示状态
+     */
+    set $$visibilityState(value) {
+        this.$_visibilityState = value
+    }
+
+    /**
      * 触发节点事件
      */
     $$trigger(eventName, options) {
@@ -277,6 +284,14 @@ class Document extends EventTarget {
         if (!value || typeof value !== 'string') return
 
         this.$_cookie.setCookie(value, this.URL)
+    }
+
+    get visibilityState() {
+        return this.$_visibilityState
+    }
+
+    get hidden() {
+        return this.$_visibilityState === 'visible'
     }
 
     getElementById(id) {

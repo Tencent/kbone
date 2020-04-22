@@ -30,6 +30,11 @@ export default {
     window.addEventListener('wxhide', () => console.log('page3 wxhide'))
     window.addEventListener('wxunload', () => console.log('page3 wxunload'))
 
+    document.addEventListener('visibilitychange', () => {
+      console.log('page3 visibilityState: ', document.visibilityState)
+      console.log('page3 hidden: ', document.hidden)
+    })
+
     window.onShareAppMessage = () => {
       return {
         title: 'kbone-demo',

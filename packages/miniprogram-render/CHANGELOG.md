@@ -1,5 +1,10 @@
 # 更新日志
 
+## 1.2.7
+
+* 支持 document.visibilityState
+* 支持 document.hidden
+
 ## 1.2.6
 
 * storage 事件对齐 Web 端表现
