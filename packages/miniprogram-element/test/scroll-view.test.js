@@ -52,9 +52,27 @@ test('scroll-view', async() => {
     // enableFlex
     await _.checkBoolean(scrollView, node, 'enableFlex', 'enable-flex', false)
 
+    // scrollAnchoring
+    await _.checkBoolean(scrollView, node, 'scrollAnchoring', 'scroll-anchoring', false)
+
+    // refresherEnabled
+    await _.checkBoolean(scrollView, node, 'refresherEnabled', 'refresher-enabled', false)
+
+    // refresherThreshold
+    await _.checkString(scrollView, node, 'refresherThreshold', 'refresher-threshold', '45')
+
+    // refresherDefaultStyle
+    await _.checkString(scrollView, node, 'refresherDefaultStyle', 'refresher-default-style', 'black')
+
+    // refresherBackground
+    await _.checkString(scrollView, node, 'refresherBackground', 'refresher-background', '#FFF')
+
+    // refresherTriggered
+    await _.checkBoolean(scrollView, node, 'refresherTriggered', 'refresher-triggered', false)
+
     // event
     const wxScrollView = scrollView.querySelector('.wx-comp-scroll-view')
-    await _.checkEvent(wxScrollView, node, ['scrolltoupper', 'scrolltolower'])
+    await _.checkEvent(wxScrollView, node, ['scrolltoupper', 'scrolltolower', 'refresherpulling', 'refresherrefresh', 'refresherrestore', 'refresherabort'])
 
     page.document.body.removeChild(node)
     document.body.removeChild(wrapper)

@@ -21,7 +21,14 @@ const {
 const MAX_DOM_SUB_TREE_LEVEL = 10
 let DOM_SUB_TREE_LEVEL = 10
 
+const version = wx.getSystemInfoSync().SDKVersion
+const behaviors = []
+if (_.compareVersion(version, '2.10.3') >= 0) {
+    behaviors.push('wx://form-field-button')
+}
+
 Component({
+    behaviors,
     properties: {
         inCover: {
             type: Boolean,
@@ -163,7 +170,7 @@ Component({
             } else {
                 // 可替换 html 标签
                 const wxCompName = wxCompNameMap[tagName]
-                if (wxCompName) _.checkComponentAttr(wxCompName, domNode, newData, data)
+                if (wxCompName) newData.wxCompName = wxCompName
             }
 
             this.setData(newData)
@@ -173,7 +180,7 @@ Component({
          * 触发简单节点事件，不做捕获冒泡处理
          */
         callSingleEvent(eventName, evt) {
-            const domNode = this.getDomNodeFromEvt(evt)
+            const domNode = this.getDomNodeFromEvt(evt, eventName)
             if (!domNode) return
 
             domNode.$$trigger(eventName, {
@@ -284,7 +291,7 @@ Component({
                         // 处理 button 点击
                         const type = domNode.tagName === 'BUTTON' ? domNode.getAttribute('type') : domNode.getAttribute('form-type')
                         const formAttr = domNode.getAttribute('form')
-                        const form = formAttr ? window.document.getElementById('formAttr') : _.findParentNode(domNode, 'FORM')
+                        const form = formAttr ? window.document.getElementById(formAttr) : _.findParentNode(domNode, 'FORM')
 
                         if (!form) return
                         if (type !== 'submit' && type !== 'reset') return
@@ -314,7 +321,12 @@ Component({
                             if (sliderList.length) sliderList.forEach(item => formData[item.getAttribute('name')] = +item.getAttribute('value') || 0)
                             if (pickerList.length) pickerList.forEach(item => formData[item.getAttribute('name')] = item.getAttribute('value'))
 
-                            this.callSimpleEvent('submit', {detail: {value: formData}, extra: {$$from: 'button'}}, form)
+                            const detail = {value: formData}
+                            if (form._formId) {
+                                detail.formId = form._formId
+                                form._formId = null
+                            }
+                            this.callSimpleEvent('submit', {detail, extra: {$$from: 'button'}}, form)
                         } else if (type === 'reset') {
                             if (inputList.length) {
                                 inputList.forEach(item => {
@@ -428,10 +440,16 @@ Component({
         /**
          * 从小程序事件对象中获取 domNode
          */
-        getDomNodeFromEvt(evt) {
+        getDomNodeFromEvt(evt, eventName) {
             if (!evt) return
             const pageId = this.pageId
-            const originNodeId = evt.currentTarget.dataset.privateNodeId || this.nodeId
+            let originNodeId = this.nodeId
+            if (evt.currentTarget && evt.currentTarget.dataset.privateNodeId) {
+                originNodeId = evt.currentTarget.dataset.privateNodeId
+            } else if (eventName && eventName.indexOf('canvas') === 0 && evt.target && evt.target.dataset.privateNodeId) {
+                // canvas 相关 touch 事件，基础库没有提供 currentTarget，取 target 使用
+                originNodeId = evt.target.dataset.privateNodeId
+            }
             return cache.getNode(pageId, originNodeId)
         },
 

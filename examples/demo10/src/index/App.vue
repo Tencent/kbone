@@ -1,7 +1,7 @@
 <template>
   <div class="cnt">
     <h2>kbone</h2>
-    <comp-a class="block" :prefix="prefixA" :suffix="suffixA" @someevent="onEvent">
+    <comp-a ref="compA" class="block" :prefix="prefixA" :suffix="suffixA" @someevent="onEvent">
       <div>comp-a slot</div>
     </comp-a>
     <comp-b class="block" :prefix="prefixB">
@@ -27,6 +27,8 @@ export default {
     onClick() {
       this.prefixA = 'prefix-new-a'
       this.prefixB = 'prefix-new-b'
+
+      this.$refs.compA._wxCustomComponent.printf()
     },
 
     onEvent(evt) {

@@ -22,5 +22,9 @@ Component({
                 },
             })
         },
+
+        printf() {
+            console.log('I am comp-a')
+        },
     },
 })

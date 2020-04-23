@@ -57,7 +57,7 @@ function wrapChunks(compilation, chunks, globalVarsConfig) {
         chunk.files.forEach(fileName => {
             if (ModuleFilenameHelpers.matchObject({test: /\.js$/}, fileName)) {
                 // 页面 js
-                const headerContent = 'module.exports = function(window, document) {const App = function(options) {window.appOptions = options};' + globalVars.map(item => `var ${item} = window.${item}`).join(';') + ';'
+                const headerContent = 'module.exports = function(window, document) {var App = function(options) {window.appOptions = options};' + globalVars.map(item => `var ${item} = window.${item}`).join(';') + ';'
                 let customHeaderContent = globalVarsConfig.map(item => `var ${item[0]} = ${item[1] ? item[1] : 'window[\'' + item[0] + '\']'}`).join(';')
                 customHeaderContent = customHeaderContent ? customHeaderContent + ';' : ''
                 const footerContent = '}'
@@ -266,7 +266,7 @@ class MpPlugin {
                 // app js
                 const appAssets = assetsMap[appJsEntryName] || {js: [], css: []}
                 const appJsContent = appJsTmpl
-                    .replace('/* INIT_FUNCTION */', `const fakeWindow = {};const fakeDocument = {};${appAssets.js.map(js => 'require(\'' + getAssetPath('', js, assetsSubpackageMap, '') + '\')(fakeWindow, fakeDocument);').join('')}const appConfig = fakeWindow.appOptions || {};`)
+                    .replace('/* INIT_FUNCTION */', `var fakeWindow = {};var fakeDocument = {};${appAssets.js.map(js => 'require(\'' + getAssetPath('', js, assetsSubpackageMap, '') + '\')(fakeWindow, fakeDocument);').join('')}var appConfig = fakeWindow.appOptions || {};`)
                 addFile(compilation, '../app.js', appJsContent)
 
                 // app wxss
@@ -452,18 +452,22 @@ class MpPlugin {
             }
         })
 
-        const hasBuiltNpm = false
+        let hasBuiltNpm = false
         compiler.hooks.done.tapAsync(PluginName, (stats, callback) => {
             // 处理自动安装小程序依赖
             const autoBuildNpm = generateConfig.autoBuildNpm || false
             const distDir = path.dirname(stats.compilation.outputOptions.path)
 
-            if (hasBuiltNpm || !autoBuildNpm) return callback()
+            hasBuiltNpm = _.isFileExisted(path.resolve(distDir, './node_modules/miniprogram-element/package.json')) && _.isFileExisted(path.resolve(distDir, './node_modules/miniprogram-render/package.json'))
+
+            if (hasBuiltNpm || !autoBuildNpm) {
+                if (hasBuiltNpm) console.log(colors.bold('\ndependencies has been built\n'))
+                return callback()
+            }
 
             const build = () => {
-                ['miniprogram-element', 'miniprogram-render'].forEach(name => {
-                    _.copyDir(path.resolve(distDir, `./node_modules/${name}/src`), path.resolve(distDir, `./miniprogram_npm/${name}`))
-                })
+                _.copyDir(path.resolve(distDir, './node_modules/miniprogram-element/src'), path.resolve(distDir, './miniprogram_npm/miniprogram-element'))
+                _.copyDir(path.resolve(distDir, './node_modules/miniprogram-render/src'), path.resolve(distDir, './miniprogram_npm/miniprogram-render'))
                 callback()
             }
             console.log(colors.bold('\nstart building dependencies...\n'))

@@ -17,7 +17,6 @@ npm install --save miniprogram-render
 ```js
 const mp = require('miniprogram-render')
 
-```js
 Page({
     onLoad() {
         // 创建页面

@@ -12,8 +12,12 @@ class LocalStorage {
     $_updateInfo() {
         try {
             const info = wx.getStorageInfoSync()
-
-            this.$_keys = info.keys
+            const pages = getCurrentPages() || []
+            pages.forEach(page => {
+                if (page && page.window) {
+                    page.window.localStorage.$$keys = info.keys
+                }
+            })
         } catch (err) {
             console.warn('getStorageInfoSync fail')
         }
@@ -25,19 +29,28 @@ class LocalStorage {
     $_triggerStorage(key, newValue, oldValue, force) {
         if (!force && newValue === oldValue) return
 
-        this.$_window.$$trigger('storage', {
-            event: new Event({
-                name: 'storage',
-                target: this.$_window,
-                $$extra: {
-                    key,
-                    newValue,
-                    oldValue,
-                    storageArea: this,
-                    url: this.$_window.location.href,
-                }
-            })
+        const pages = getCurrentPages() || []
+        pages.forEach(page => {
+            if (page && page.window && page.window !== this.$_window) {
+                page.window.$$trigger('storage', {
+                    event: new Event({
+                        name: 'storage',
+                        target: page.window,
+                        $$extra: {
+                            key,
+                            newValue,
+                            oldValue,
+                            storageArea: this,
+                            url: this.$_window.location.href,
+                        }
+                    })
+                })
+            }
         })
+    }
+
+    set $$keys(keys) {
+        this.$_keys = keys
     }
 
     /**
@@ -60,7 +73,8 @@ class LocalStorage {
     }
 
     setItem(key, data) {
-        if (!key || typeof key !== 'string' || typeof data !== 'string') return
+        if (!key || typeof key !== 'string') return
+        data = '' + data
 
         const oldValue = wx.getStorageSync(key) || null
 

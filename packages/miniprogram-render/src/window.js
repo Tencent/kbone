@@ -37,6 +37,8 @@ const ELEMENT_PROTOTYPE_MAP = {
     classList: ClassList.prototype,
     style: Style.prototype,
 }
+const subscribeMap = {}
+const globalObject = {}
 
 class Window extends EventTarget {
     constructor(pageId) {
@@ -187,6 +189,27 @@ class Window extends EventTarget {
      */
     get $$miniprogram() {
         return this.$_miniprogram
+    }
+
+    /**
+     * 获取全局共享对象
+     */
+    get $$global() {
+        return globalObject
+    }
+
+    /**
+     * 销毁实例
+     */
+    $$destroy() {
+        super.$$destroy()
+
+        const pageId = this.$_pageId
+
+        Object.keys(subscribeMap).forEach(name => {
+            const handlersMap = subscribeMap[name]
+            if (handlersMap[pageId]) handlersMap[pageId] = null
+        })
     }
 
     /**
@@ -380,6 +403,58 @@ class Window extends EventTarget {
                 prototype[method] = methodInPrototype.$$originalMethod
             }
         }
+    }
+
+    /**
+     * 订阅广播事件
+     */
+    $$subscribe(name, handler) {
+        if (typeof name !== 'string' || typeof handler !== 'function') return
+
+        const pageId = this.$_pageId
+        subscribeMap[name] = subscribeMap[name] || {}
+        subscribeMap[name][pageId] = subscribeMap[name][pageId] || []
+        subscribeMap[name][pageId].push(handler)
+    }
+
+    /**
+     * 取消订阅广播事件
+     */
+    $$unsubscribe(name, handler) {
+        const pageId = this.$_pageId
+
+        if (typeof name !== 'string' || !subscribeMap[name] || !subscribeMap[name][pageId]) return
+
+        const handlers = subscribeMap[name][pageId]
+        if (!handler) {
+            // 取消所有 handler 的订阅
+            handlers.length = 0
+        } else if (typeof handler === 'function') {
+            const index = handlers.indexOf(handler)
+            if (index !== -1) handlers.splice(index, 1)
+        }
+    }
+
+    /**
+     * 发布广播事件
+     */
+    $$publish(name, data) {
+        if (typeof name !== 'string' || !subscribeMap[name]) return
+
+        Object.keys(subscribeMap[name]).forEach(pageId => {
+            const handlers = subscribeMap[name][pageId]
+            if (handlers && handlers.length) {
+                handlers.forEach(handler => {
+                    if (typeof handler !== 'function') return
+
+                    try {
+                        handler.call(null, data)
+                    } catch (err) {
+                        console.error(err)
+                    }
+                })
+            }
+        })
     }
 
     /**

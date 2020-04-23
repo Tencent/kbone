@@ -27,9 +27,6 @@ test('form', async() => {
     // reportSubmitTimeout
     await _.checkNumber(body, node, 'reportSubmitTimeout', 'report-submit-timeout', 0)
 
-    // event
-    await _.checkEvent(body.querySelector('.h5-wx-component'), node, ['submit', 'reset'])
-
     page.document.body.removeChild(node)
     document.body.removeChild(wrapper)
 })

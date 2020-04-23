@@ -163,6 +163,12 @@ function checkDiffChildNodes(newChildNodes, oldChildNodes) {
                 // 值为对象，则判断对象顶层值是否有变化
                 if (typeof oldValue !== 'object') return true
 
+                // 需要强制更新
+                if (key === 'extra' && newValue.forceUpdate) {
+                    newValue.forceUpdate = false
+                    return true
+                }
+
                 const objectKeys = Object.keys(newValue)
                 for (const objectKey of objectKeys) {
                     if (!isEqual(newValue[objectKey], oldValue[objectKey])) return true
@@ -200,6 +206,7 @@ function checkComponentAttr(name, domNode, destData, oldData, extraClass = '') {
                 const oldValues = domNode._oldValues
                 if (!oldData || !isEqual(newValue, oldData[name]) || (oldValues && !isEqual(newValue, oldValues[name]))) {
                     destData[name] = newValue
+                    destData.forceUpdate = true // 避免被 diff 掉，需要强制更新
                 }
             } else if (!oldData || !isEqual(newValue, oldData[name])) {
                 // 对比 data
@@ -282,6 +289,35 @@ function findParentNode(domNode, tagName) {
     return null
 }
 
+/**
+ * 判断基础库版本
+ */
+function compareVersion(v1, v2) {
+    v1 = v1.split('.')
+    v2 = v2.split('.')
+    const len = Math.max(v1.length, v2.length)
+
+    while (v1.length < len) {
+        v1.push('0')
+    }
+    while (v2.length < len) {
+        v2.push('0')
+    }
+
+    for (let i = 0; i < len; i++) {
+        const num1 = parseInt(v1[i], 10)
+        const num2 = parseInt(v2[i], 10)
+
+        if (num1 > num2) {
+            return 1
+        } else if (num1 < num2) {
+            return -1
+        }
+    }
+
+    return 0
+}
+
 module.exports = {
     NOT_SUPPORT,
     USE_TEMPLATE,
@@ -292,4 +328,5 @@ module.exports = {
     dealWithLeafAndSimple,
     checkEventAccessDomNode,
     findParentNode,
+    compareVersion,
 }

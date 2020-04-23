@@ -25,7 +25,7 @@ test('button', async() => {
     await _.checkString(body, node, 'size', 'size', 'default')
 
     // type
-    await _.checkString(body, node, 'type', 'type', 'default')
+    await _.checkString(body, node, 'type', 'type', undefined)
 
     // plain
     await _.checkBoolean(body, node, 'plain', 'plain', false)

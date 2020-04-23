@@ -18,7 +18,9 @@
 		"checkSiteMap": true,
 		"uploadWithSourceMap": true,
 		"babelSetting": {
-			"ignore": [],
+			"ignore": [
+				"common/*"
+			],
 			"disablePlugins": [],
 			"outputPath": ""
 		},
