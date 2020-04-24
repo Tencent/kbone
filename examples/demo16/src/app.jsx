@@ -9,6 +9,43 @@ import View2 from './view2'
 import View3 from './view3'
 
 const App = (props, store) => {
+    const mapProps = {
+        longitude: 113.324520,
+        latitude: 23.099994,
+        scale: 14,
+        controls: JSON.stringify([{
+            id: 1,
+            iconPath: 'https://i.loli.net/2019/07/27/5d3c143497e6d38917.jpg',
+            position: {
+                left: 0,
+                top: 300 - 50,
+                width: 50,
+                height: 50,
+            },
+            clickable: true,
+        }]),
+        markers: JSON.stringify([{
+            iconPath: 'https://i.loli.net/2019/07/27/5d3c141367f2784840.jpg',
+            id: 0,
+            latitude: 23.099994,
+            longitude: 113.324520,
+            width: 50,
+            height: 50,
+        }]),
+        polyline: JSON.stringify([{
+            points: [{
+                longitude: 113.3245211,
+                latitude: 23.10229,
+            }, {
+                longitude: 113.324520,
+                latitude: 23.21229,
+            }],
+            color: '#FF0000DD',
+            width: 2,
+            dottedLine: true,
+        }]),
+        'show-location': true,
+    }
     const pickerRange1 = ['中国', '美国', '巴西', '日本']
     const pickerRange2 = JSON.stringify([
         {name: '中国'},
@@ -56,6 +93,10 @@ const App = (props, store) => {
                     value="2"
                     onChange={e => console.log('change', e)}
                 />
+            </div>
+            <div>
+                我是 map
+                <wx-map {...mapProps}></wx-map>
             </div>
             <div>
                 我是 picker-view：

@@ -14,6 +14,22 @@ function dealWithDevToolsEvt(evt) {
     if (evt.latitude !== undefined) evt.detail.latitude = evt.latitude
 }
 
+/**
+ * 兼容 react
+ */
+function dealWithReactAttr(value) {
+    if (typeof value === 'string') {
+        // react 会直接将属性值转成字符串
+        try {
+            value = JSON.parse(value)
+        } catch (err) {
+            value = undefined
+        }
+    }
+
+    return value
+}
+
 module.exports = {
     properties: [{
         name: 'longitude',
@@ -36,31 +52,31 @@ module.exports = {
     }, {
         name: 'markers',
         get(domNode) {
-            const value = domNode.getAttribute('markers')
+            const value = dealWithReactAttr(domNode.getAttribute('markers'))
             return value !== undefined ? value : []
         },
     }, {
         name: 'polyline',
         get(domNode) {
-            const value = domNode.getAttribute('polyline')
+            const value = dealWithReactAttr(domNode.getAttribute('polyline'))
             return value !== undefined ? value : []
         },
     }, {
         name: 'circles',
         get(domNode) {
-            const value = domNode.getAttribute('circles')
+            const value = dealWithReactAttr(domNode.getAttribute('circles'))
             return value !== undefined ? value : []
         },
     }, {
         name: 'controls',
         get(domNode) {
-            const value = domNode.getAttribute('controls')
+            const value = dealWithReactAttr(domNode.getAttribute('controls'))
             return value !== undefined ? value : []
         },
     }, {
         name: 'includePoints',
         get(domNode) {
-            const value = domNode.getAttribute('include-points')
+            const value = dealWithReactAttr(domNode.getAttribute('include-points'))
             return value !== undefined ? value : []
         },
     }, {
@@ -71,7 +87,7 @@ module.exports = {
     }, {
         name: 'polygons',
         get(domNode) {
-            const value = domNode.getAttribute('polygons')
+            const value = dealWithReactAttr(domNode.getAttribute('polygons'))
             return value !== undefined ? value : []
         },
     }, {
