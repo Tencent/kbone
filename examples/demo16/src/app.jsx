@@ -9,6 +9,9 @@ import View2 from './view2'
 import View3 from './view3'
 
 const App = (props, store) => {
+    const inputProps = {
+        'confirm-type': 'search',
+    }
     const mapProps = {
         longitude: 113.324520,
         latitude: 23.099994,
@@ -65,6 +68,7 @@ const App = (props, store) => {
             <div>
                 我是输入框：
                 <input
+                    {...inputProps}
                     onClick={e => console.log('click', e)}
                     onInput={e => console.log('input', e)}
                     onFocus={e => console.log('focus', e)}
