@@ -46,7 +46,7 @@ const App = (props, store) => {
         }]),
         'show-location': true,
     }
-    const pickerRange1 = ['中国', '美国', '巴西', '日本']
+    const [pickerRange1, setPickerRange1] = useState(['中国', '美国', '巴西', '日本'])
     const pickerRange2 = JSON.stringify([
         {name: '中国'},
         {name: '美国'},
@@ -99,9 +99,12 @@ const App = (props, store) => {
                 <wx-map {...mapProps}></wx-map>
             </div>
             <div>
-                我是 picker-view：
+                我是 picker：
                 <wx-picker range={pickerRange1}>选择国家1</wx-picker>
                 <wx-picker range={pickerRange2} range-key="name">选择国家2</wx-picker>
+                <div>
+                    <button onClick={() => setPickerRange1(['中国', '外国'])}>更新 picker1</button>
+                </div>
             </div>
             <div>
                 我是 scroll-view：
