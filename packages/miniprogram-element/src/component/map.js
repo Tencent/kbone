@@ -184,6 +184,8 @@ module.exports = {
         },
 
         onMapRegionChange(evt) {
+            if (evt.detail && !evt.detail.causedBy) evt.detail.causedBy = evt.causedBy
+
             this.callSingleEvent('regionchange', evt)
         },
 

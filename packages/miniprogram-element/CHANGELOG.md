@@ -1,5 +1,9 @@
 # 更新日志
 
+## 1.2.10
+
+* 补充 map 的 regionchange 事件中的 causedBy 字段
+
 ## 1.2.9
 
 * map 的部分字段支持传入 json 串，以兼容 react
