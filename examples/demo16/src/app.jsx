@@ -113,13 +113,13 @@ const App = (props, store) => {
             <div>
                 我是 scroll-view：
                 <wx-scroll-view {...scrollViewProps}>
-                <div>
-                    <div class="block block1"></div>
-                    <div class="block block2"></div>
-                    <div class="block block3"></div>
-                    <div class="block block4"></div>
-                    <div class="block block5"></div>
-                </div>
+                    <div>
+                        <div class="block block1"></div>
+                        <div class="block block2"></div>
+                        <div class="block block3"></div>
+                        <div class="block block4"></div>
+                        <div class="block block5"></div>
+                    </div>
                 </wx-scroll-view>
             </div>
             <div>
