@@ -69,7 +69,7 @@ const App = (props, store) => {
     setTimeout(() => {
         window.$$forceRender() // 强制清空 setData 队列
         setScrollIntoView('a3')
-    })
+    }, 0)
 
     return (
         <div>
