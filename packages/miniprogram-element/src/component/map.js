@@ -33,18 +33,21 @@ function dealWithReactAttr(value) {
 module.exports = {
     properties: [{
         name: 'longitude',
+        // canBeUserChanged: true,
         get(domNode) {
             const value = parseFloat(domNode.getAttribute('longitude'))
             return !isNaN(value) ? value : 39.92
         },
     }, {
         name: 'latitude',
+        // canBeUserChanged: true,
         get(domNode) {
             const value = parseFloat(domNode.getAttribute('latitude'))
             return !isNaN(value) ? value : 116.46
         },
     }, {
         name: 'scale',
+        // canBeUserChanged: true,
         get(domNode) {
             const value = parseFloat(domNode.getAttribute('scale'))
             return !isNaN(value) ? value : 16
@@ -103,11 +106,13 @@ module.exports = {
         },
     }, {
         name: 'rotate',
+        canBeUserChanged: true,
         get(domNode) {
             return +domNode.getAttribute('rotate') || 0
         },
     }, {
         name: 'skew',
+        canBeUserChanged: true,
         get(domNode) {
             return +domNode.getAttribute('skew') || 0
         },
@@ -184,7 +189,20 @@ module.exports = {
         },
 
         onMapRegionChange(evt) {
-            if (evt.detail && !evt.detail.causedBy) evt.detail.causedBy = evt.causedBy
+            const domNode = this.getDomNodeFromEvt(evt)
+            if (!domNode) return
+
+            if (!evt.detail.causedBy) evt.detail.causedBy = evt.causedBy
+            if (evt.type === 'end' || evt.detail.type === 'end') {
+                // 可被用户行为改变的值，需要记录
+                domNode._oldValues = domNode._oldValues || {}
+                // 以下三项官方未支持
+                // domNode._oldValues.longitude = evt.detail.longitude
+                // domNode._oldValues.latitude = evt.detail.latitude
+                // domNode._oldValues.scale = evt.detail.scale
+                domNode._oldValues.rotate = evt.detail.rotate
+                domNode._oldValues.skew = evt.detail.skew
+            }
 
             this.callSingleEvent('regionchange', evt)
         },

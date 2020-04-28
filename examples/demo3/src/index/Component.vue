@@ -399,15 +399,16 @@
           <slider v-else-if="wxPrefix === 2" min="50" max="200" :show-value="true" @change="onSliderChange"></slider>
         </template>
         <template v-else-if="item === 'map'">
-          <wx-component v-if="!wxPrefix" :behavior="item" :class="item" :longitude="113.324520" :latitude="23.099994" :scale="14" :controls="map.controls" :markers="map.markers" :polyline="map.polyline" :show-location="true" @markertap="onMapMarkerTap" @regionchange="onMapRegionChange" @controltap="onMapControlTap">
+          <wx-component v-if="!wxPrefix" :behavior="item" :class="item" :longitude="map.longitude" :latitude="map.latitude" :scale="map.scale" :controls="map.controls" :markers="map.markers" :polyline="map.polyline" :show-location="true" @markertap="onMapMarkerTap" @regionchange="onMapRegionChange" @controltap="onMapControlTap">
             <Inner></Inner>
           </wx-component>
-          <wx-map v-else-if="wxPrefix === 1" :class="item" :longitude="113.324520" :latitude="23.099994" :scale="14" :controls="map.controls" :markers="map.markers" :polyline="map.polyline" :show-location="true" @markertap="onMapMarkerTap" @regionchange="onMapRegionChange" @controltap="onMapControlTap">
+          <wx-map v-else-if="wxPrefix === 1" :class="item" :longitude="map.longitude" :latitude="map.latitude" :scale="map.scale" :controls="map.controls" :markers="map.markers" :polyline="map.polyline" :show-location="true" @markertap="onMapMarkerTap" @regionchange="onMapRegionChange" @controltap="onMapControlTap">
             <Inner></Inner>
           </wx-map>
-          <map v-else-if="wxPrefix === 2" :class="item" :longitude="113.324520" :latitude="23.099994" :scale="14" :controls="map.controls" :markers="map.markers" :polyline="map.polyline" :show-location="true" @markertap="onMapMarkerTap" @regionchange="onMapRegionChange" @controltap="onMapControlTap">
+          <map v-else-if="wxPrefix === 2" :class="item" :longitude="map.longitude" :latitude="map.latitude" :scale="map.scale" :controls="map.controls" :markers="map.markers" :polyline="map.polyline" :show-location="true" @markertap="onMapMarkerTap" @regionchange="onMapRegionChange" @controltap="onMapControlTap">
             <Inner></Inner>
           </map>
+          <button @click="resetMap">reset</button>
         </template>
         <template v-else-if="item === 'cover-view'">
           <wx-compoennt v-if="!wxPrefix" :behavior="item">测试 cover-view</wx-compoennt>
@@ -666,6 +667,11 @@ export default {
       intersection: {
         appear: false,
       },
+      map: {
+        longitude: 113.324520,
+        latitude: 23.099994,
+        scale: 14,
+      },
     }
   },
   watch: {
@@ -914,6 +920,10 @@ export default {
 
     onCanvasTouchStart(evt) {
       console.log('onCanvasTouchStart', evt)
+    },
+
+    resetMap() {
+
     },
   }
 }
