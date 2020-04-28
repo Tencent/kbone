@@ -408,7 +408,8 @@
           <map v-else-if="wxPrefix === 2" :class="item" :longitude="map.longitude" :latitude="map.latitude" :scale="map.scale" :controls="map.controls" :markers="map.markers" :polyline="map.polyline" :show-location="true" @markertap="onMapMarkerTap" @regionchange="onMapRegionChange" @controltap="onMapControlTap">
             <Inner></Inner>
           </map>
-          <button @click="resetMap">reset</button>
+          <!-- 基础库暂未支持 regionchange 事件提供坐标和 scale，故注释 -->
+          <!-- <button @click="resetMap">reset</button> -->
         </template>
         <template v-else-if="item === 'cover-view'">
           <wx-compoennt v-if="!wxPrefix" :behavior="item">测试 cover-view</wx-compoennt>
