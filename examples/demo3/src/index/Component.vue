@@ -923,7 +923,9 @@ export default {
     },
 
     resetMap() {
-
+      this.map.longitude = 113.324520
+      this.map.latitude = 23.099994
+      this.map.scale = 14
     },
   }
 }
