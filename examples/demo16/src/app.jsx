@@ -61,6 +61,7 @@ const App = (props, store) => {
         'scroll-y': true,
         'scroll-with-animation': true,
         'refresher-enabled': true,
+        'scroll-into-view': 'a3',
     }
 
     return (
@@ -114,11 +115,11 @@ const App = (props, store) => {
                 我是 scroll-view：
                 <wx-scroll-view {...scrollViewProps}>
                     <div>
-                        <div class="block block1"></div>
-                        <div class="block block2"></div>
-                        <div class="block block3"></div>
-                        <div class="block block4"></div>
-                        <div class="block block5"></div>
+                        <div id="a1" class="block block1"></div>
+                        <div id="a2" class="block block2"></div>
+                        <div id="a3" class="block block3"></div>
+                        <div id="a4" class="block block4"></div>
+                        <div id="a5" class="block block5"></div>
                     </div>
                 </wx-scroll-view>
             </div>
