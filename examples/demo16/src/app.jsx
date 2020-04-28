@@ -61,7 +61,7 @@ const App = (props, store) => {
         'scroll-y': true,
         'scroll-with-animation': true,
         'refresher-enabled': true,
-        'scroll-into-view': 'a3',
+        // 'scroll-into-view': 'a3', // 在一个 setData 中设置子节点和 scroll-into-view 的时候，基础库会优先处理 scroll-into-view，导致计算滚动不正确
     }
 
     return (
@@ -100,18 +100,6 @@ const App = (props, store) => {
                 />
             </div>
             <div>
-                我是 map
-                <wx-map {...mapProps}></wx-map>
-            </div>
-            <div>
-                我是 picker：
-                <wx-picker range={pickerRange1}>选择国家1</wx-picker>
-                <wx-picker range={pickerRange2} range-key="name">选择国家2</wx-picker>
-                <div>
-                    <button onClick={() => setPickerRange1(['中国', '外国'])}>更新 picker1</button>
-                </div>
-            </div>
-            <div>
                 我是 scroll-view：
                 <wx-scroll-view {...scrollViewProps}>
                     <div>
@@ -122,6 +110,18 @@ const App = (props, store) => {
                         <div id="a5" class="block block5"></div>
                     </div>
                 </wx-scroll-view>
+            </div>
+            <div>
+                我是 map
+                <wx-map {...mapProps}></wx-map>
+            </div>
+            <div>
+                我是 picker：
+                <wx-picker range={pickerRange1}>选择国家1</wx-picker>
+                <wx-picker range={pickerRange2} range-key="name">选择国家2</wx-picker>
+                <div>
+                    <button onClick={() => setPickerRange1(['中国', '外国'])}>更新 picker1</button>
+                </div>
             </div>
             <div>
                 我是 picker-view：
