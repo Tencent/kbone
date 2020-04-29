@@ -121,6 +121,9 @@ Page({
         // 处理 intersectionObserver 获取
         this.window.$$createIntersectionObserver = options => wx.createIntersectionObserver(this, options)
 
+        // 处理 openerEventChannel 获取
+        this.window.$$getOpenerEventChannel = () => this.getOpenerEventChannel()
+
         // 初始化页面显示状态
         this.document.$$visibilityState = 'prerender'
 

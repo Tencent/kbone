@@ -1,5 +1,9 @@
 # 更新日志
 
+## 0.9.14
+
+* 支持 window.$$getOpenerEventChannel
+
 ## 0.9.12
 
 * 支持 document 的 visibilitychange 事件
