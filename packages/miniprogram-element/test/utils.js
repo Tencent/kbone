@@ -100,6 +100,7 @@ function err(msg) {
  */
 simulate.checkBoolean = async function(component, node, attrName, attributeName, defaultValue) {
     function getData(component) {
+        if (component.data.wxCompName === 'picker-view') return component.data
         return component.data.childNodes && component.data.childNodes[0] && component.data.childNodes[0].extra || component.data
     }
 
@@ -132,6 +133,7 @@ simulate.checkBoolean = async function(component, node, attrName, attributeName,
  */
 simulate.checkNumber = async function(component, node, attrName, attributeName, defaultValue) {
     function getData(component) {
+        if (component.data.wxCompName === 'picker-view') return component.data
         return component.data.childNodes && component.data.childNodes[0] && component.data.childNodes[0].extra || component.data
     }
 
@@ -169,6 +171,7 @@ simulate.checkNumber = async function(component, node, attrName, attributeName, 
  */
 simulate.checkString = async function(component, node, attrName, attributeName, defaultValue) {
     function getData(component) {
+        if (component.data.wxCompName === 'picker-view') return component.data
         return component.data.childNodes && component.data.childNodes[0] && component.data.childNodes[0].extra || component.data
     }
 
@@ -196,6 +199,7 @@ simulate.checkString = async function(component, node, attrName, attributeName, 
  */
 simulate.checkUrl = async function(component, node, attrName, attributeName, defaultValue) {
     function getData(component) {
+        if (component.data.wxCompName === 'picker-view') return component.data
         return component.data.childNodes && component.data.childNodes[0] && component.data.childNodes[0].extra || component.data
     }
 
@@ -233,6 +237,7 @@ simulate.checkUrl = async function(component, node, attrName, attributeName, def
  */
 simulate.checkArray = async function(component, node, attrName, attributeName, defaultValue, testData) {
     function getData(component) {
+        if (component.data.wxCompName === 'picker-view') return component.data
         return component.data.childNodes && component.data.childNodes[0] && component.data.childNodes[0].extra || component.data
     }
 

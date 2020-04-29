@@ -36,9 +36,9 @@ test('picker-view', async() => {
     expect(pickerView.dom.childNodes[0].childNodes[1].childNodes[0].innerHTML).toBe('2')
     expect(pickerView.dom.childNodes[0].childNodes[2].childNodes[0].classList.contains('element--h5-span')).toBe(true)
     expect(pickerView.dom.childNodes[0].childNodes[2].childNodes[0].innerHTML).toBe('3')
-    expect(pickerView.data.innerChildNodes[0].extra).toEqual({hidden: false})
-    expect(pickerView.data.innerChildNodes[1].extra).toEqual({hidden: false})
-    expect(pickerView.data.innerChildNodes[2].extra).toEqual({hidden: false})
+    expect(pickerView.data.childNodes[0].extra).toEqual({hidden: false})
+    expect(pickerView.data.childNodes[1].extra).toEqual({hidden: false})
+    expect(pickerView.data.childNodes[2].extra).toEqual({hidden: false})
 
     // value
     await _.checkArray(pickerView, node, 'value', 'value', [], [9999, 1, 1])

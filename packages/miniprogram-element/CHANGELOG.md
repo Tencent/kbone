@@ -1,5 +1,9 @@
 # 更新日志
 
+## 1.2.12
+
+* 修复 picker 子节点更新失败问题
+
 ## 1.2.10
 
 * 补充 map 的 regionchange 事件中的 causedBy 字段
