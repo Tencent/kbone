@@ -4,7 +4,8 @@
     <button @click="onClickBack">回到上一页</button>
     <button @click="sendPage1">发布消息给首页</button>
     <button @click="sendPage23">发布消息给页面2和页面3</button>
-    <div>count: {{count}} - name: {{data.name || ''}}</div>
+    <div>count: {{count}} - {{say && say.word || ''}} name: {{info.name || ''}}</div>
+    <div>{{list.join(', ')}}</div>
     <Storage name="4"></Storage>
     <Footer></Footer>
   </div>
@@ -24,7 +25,7 @@ export default {
     Storage,
   },
   computed: {
-    ...mapState(['count', 'data'])
+    ...mapState(['count', 'say', 'info', 'list'])
   },
   mounted() {
     window.$$subscribe('polling', count => console.log('页面4收到来自首页的轮询消息 --> ' + count))

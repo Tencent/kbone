@@ -33,118 +33,149 @@ test('storage', () => {
     localStorage.setItem('a', '123')
     expect(event).toBe(null)
     expect(event2).toMatchObject({
-        key: 'a', newValue: '123', oldValue: null, target: window2, url: window.location.href
+        key: 'a', newValue: '123', oldValue: null, url: window.location.href
     })
+    expect(event2.target).toBe(window2)
     expect(localStorage2.getItem('a')).toBe('123')
     localStorage2.setItem('c', '321')
     expect(event).toMatchObject({
-        key: 'c', newValue: '321', oldValue: null, target: window, url: window2.location.href
+        key: 'c', newValue: '321', oldValue: null, url: window2.location.href
     })
+    expect(event.target).toBe(window)
     expect(event2).toMatchObject({
-        key: 'a', newValue: '123', oldValue: null, target: window2, url: window.location.href
+        key: 'a', newValue: '123', oldValue: null, url: window.location.href
     })
+    expect(event2.target).toBe(window2)
     expect(localStorage.getItem('c')).toBe('321')
 
 
     // setItem/storage event
     localStorage.setItem('a', '1')
     expect(event).toMatchObject({
-        key: 'c', newValue: '321', oldValue: null, target: window, url: window2.location.href
+        key: 'c', newValue: '321', oldValue: null, url: window2.location.href
     })
+    expect(event.target).toBe(window)
     expect(event2).toMatchObject({
-        key: 'a', newValue: '1', oldValue: '123', target: window2, url: window.location.href
+        key: 'a', newValue: '1', oldValue: '123', url: window.location.href
     })
+    expect(event2.target).toBe(window2)
     localStorage2.setItem('aa', '1')
     expect(event).toMatchObject({
-        key: 'aa', newValue: '1', oldValue: null, target: window, url: window2.location.href
+        key: 'aa', newValue: '1', oldValue: null, url: window2.location.href
     })
+    expect(event.target).toBe(window)
     expect(event2).toMatchObject({
-        key: 'a', newValue: '1', oldValue: '123', target: window2, url: window.location.href
+        key: 'a', newValue: '1', oldValue: '123', url: window.location.href
     })
+    expect(event2.target).toBe(window2)
     sessionStorage.setItem('b', '2')
     expect(event).toMatchObject({
-        key: 'aa', newValue: '1', oldValue: null, target: window, url: window2.location.href
+        key: 'aa', newValue: '1', oldValue: null, url: window2.location.href
     })
+    expect(event.target).toBe(window)
     expect(event2).toMatchObject({
-        key: 'b', newValue: '2', oldValue: null, target: window2, url: window.location.href
+        key: 'b', newValue: '2', oldValue: null, url: window.location.href
     })
+    expect(event2.target).toBe(window2)
     sessionStorage2.setItem('bb', '2')
     expect(event).toMatchObject({
-        key: 'bb', newValue: '2', oldValue: null, target: window, url: window2.location.href
+        key: 'bb', newValue: '2', oldValue: null, url: window2.location.href
     })
+    expect(event.target).toBe(window)
     expect(event2).toMatchObject({
-        key: 'b', newValue: '2', oldValue: null, target: window2, url: window.location.href
+        key: 'b', newValue: '2', oldValue: null, url: window.location.href
     })
+    expect(event2.target).toBe(window2)
     localStorage.setItem('c', '3')
     expect(event).toMatchObject({
-        key: 'bb', newValue: '2', oldValue: null, target: window, url: window2.location.href
+        key: 'bb', newValue: '2', oldValue: null, url: window2.location.href
     })
+    expect(event.target).toBe(window)
     expect(event2).toMatchObject({
-        key: 'c', newValue: '3', oldValue: '321', target: window2, url: window.location.href
+        key: 'c', newValue: '3', oldValue: '321', url: window.location.href
     })
+    expect(event2.target).toBe(window2)
     localStorage2.setItem('cc', '3')
     expect(event).toMatchObject({
-        key: 'cc', newValue: '3', oldValue: null, target: window, url: window2.location.href
+        key: 'cc', newValue: '3', oldValue: null, url: window2.location.href
     })
+    expect(event.target).toBe(window)
     expect(event2).toMatchObject({
-        key: 'c', newValue: '3', oldValue: '321', target: window2, url: window.location.href
+        key: 'c', newValue: '3', oldValue: '321', url: window.location.href
     })
+    expect(event2.target).toBe(window2)
     sessionStorage.setItem('d', '4')
     expect(event).toMatchObject({
-        key: 'cc', newValue: '3', oldValue: null, target: window, url: window2.location.href
+        key: 'cc', newValue: '3', oldValue: null, url: window2.location.href
     })
+    expect(event.target).toBe(window)
     expect(event2).toMatchObject({
-        key: 'd', newValue: '4', oldValue: null, target: window2, url: window.location.href
+        key: 'd', newValue: '4', oldValue: null, url: window.location.href
     })
+    expect(event2.target).toBe(window2)
     sessionStorage2.setItem('dd', '4')
     expect(event).toMatchObject({
-        key: 'dd', newValue: '4', oldValue: null, target: window, url: window2.location.href
+        key: 'dd', newValue: '4', oldValue: null, url: window2.location.href
     })
+    expect(event.target).toBe(window)
     expect(event2).toMatchObject({
-        key: 'd', newValue: '4', oldValue: null, target: window2, url: window.location.href
+        key: 'd', newValue: '4', oldValue: null, url: window.location.href
     })
+    expect(event2.target).toBe(window2)
     localStorage.setItem('e', '5')
     expect(event).toMatchObject({
-        key: 'dd', newValue: '4', oldValue: null, target: window, url: window2.location.href
+        key: 'dd', newValue: '4', oldValue: null, url: window2.location.href
     })
+    expect(event.target).toBe(window)
     expect(event2).toMatchObject({
-        key: 'e', newValue: '5', oldValue: null, target: window2, url: window.location.href
+        key: 'e', newValue: '5', oldValue: null, url: window.location.href
     })
+    expect(event2.target).toBe(window2)
     localStorage2.setItem('ee', '5')
     expect(event).toMatchObject({
-        key: 'ee', newValue: '5', oldValue: null, target: window, url: window2.location.href
+        key: 'ee', newValue: '5', oldValue: null, url: window2.location.href
     })
+    expect(event.target).toBe(window)
     expect(event2).toMatchObject({
-        key: 'e', newValue: '5', oldValue: null, target: window2, url: window.location.href
+        key: 'e', newValue: '5', oldValue: null, url: window.location.href
     })
+    expect(event2.target).toBe(window2)
     sessionStorage.setItem('f', '6')
     expect(event).toMatchObject({
-        key: 'ee', newValue: '5', oldValue: null, target: window, url: window2.location.href
+        key: 'ee', newValue: '5', oldValue: null, url: window2.location.href
     })
+    expect(event.target).toBe(window)
     expect(event2).toMatchObject({
-        key: 'f', newValue: '6', oldValue: null, target: window2, url: window.location.href
+        key: 'f', newValue: '6', oldValue: null, url: window.location.href
     })
+    expect(event2.target).toBe(window2)
     sessionStorage2.setItem('ff', '6')
     expect(event).toMatchObject({
-        key: 'ff', newValue: '6', oldValue: null, target: window, url: window2.location.href
+        key: 'ff', newValue: '6', oldValue: null, url: window2.location.href
     })
+    expect(event.target).toBe(window)
     expect(event2).toMatchObject({
-        key: 'f', newValue: '6', oldValue: null, target: window2, url: window.location.href
+        key: 'f', newValue: '6', oldValue: null, url: window.location.href
     })
+    expect(event2.target).toBe(window2)
     localStorage.setItem('g', '7')
     expect(event).toMatchObject({
-        key: 'ff', newValue: '6', oldValue: null, target: window, url: window2.location.href
+        key: 'ff', newValue: '6', oldValue: null, url: window2.location.href
     })
+    expect(event.target).toBe(window)
     expect(event2).toMatchObject({
-        key: 'g', newValue: '7', oldValue: null, target: window2, url: window.location.href
+        key: 'g', newValue: '7', oldValue: null, url: window.location.href
     })
+    expect(event2.target).toBe(window2)
     localStorage2.setItem('gg', '7')
     expect(event).toMatchObject({
-        key: 'gg', newValue: '7', oldValue: null, target: window, url: window2.location.href
+        key: 'gg', newValue: '7', oldValue: null, url: window2.location.href
     })
+    expect(event.target).toBe(window)
     expect(event2).toMatchObject({
-        key: 'g', newValue: '7', oldValue: null, target: window2, url: window.location.href
+        key: 'g', newValue: '7', oldValue: null, url: window.location.href
     })
+    expect(event2.target).toBe(window2)
 
     // length
     expect(localStorage.length).toBe(8)
@@ -211,32 +242,40 @@ test('storage', () => {
     // removeItem
     localStorage.removeItem('c')
     expect(event).toMatchObject({
-        key: 'gg', newValue: '7', oldValue: null, target: window, url: window2.location.href
+        key: 'gg', newValue: '7', oldValue: null, url: window2.location.href
     })
+    expect(event.target).toBe(window)
     expect(event2).toMatchObject({
-        key: 'c', newValue: null, oldValue: '3', target: window2, url: window.location.href
+        key: 'c', newValue: null, oldValue: '3', url: window.location.href
     })
+    expect(event2.target).toBe(window2)
     localStorage2.removeItem('cc')
     expect(event).toMatchObject({
-        key: 'cc', newValue: null, oldValue: '3', target: window, url: window2.location.href
+        key: 'cc', newValue: null, oldValue: '3', url: window2.location.href
     })
+    expect(event.target).toBe(window)
     expect(event2).toMatchObject({
-        key: 'c', newValue: null, oldValue: '3', target: window2, url: window.location.href
+        key: 'c', newValue: null, oldValue: '3', url: window.location.href
     })
+    expect(event2.target).toBe(window2)
     sessionStorage.removeItem('d')
     expect(event).toMatchObject({
-        key: 'cc', newValue: null, oldValue: '3', target: window, url: window2.location.href
+        key: 'cc', newValue: null, oldValue: '3', url: window2.location.href
     })
+    expect(event.target).toBe(window)
     expect(event2).toMatchObject({
-        key: 'd', newValue: null, oldValue: '4', target: window2, url: window.location.href
+        key: 'd', newValue: null, oldValue: '4', url: window.location.href
     })
+    expect(event2.target).toBe(window2)
     sessionStorage2.removeItem('dd')
     expect(event).toMatchObject({
-        key: 'dd', newValue: null, oldValue: '4', target: window, url: window2.location.href
+        key: 'dd', newValue: null, oldValue: '4', url: window2.location.href
     })
+    expect(event.target).toBe(window)
     expect(event2).toMatchObject({
-        key: 'd', newValue: null, oldValue: '4', target: window2, url: window.location.href
+        key: 'd', newValue: null, oldValue: '4', url: window.location.href
     })
+    expect(event2.target).toBe(window2)
 
     expect(localStorage.length).toBe(6)
     expect(sessionStorage.length).toBe(2)
@@ -292,32 +331,40 @@ test('storage', () => {
     // clear
     localStorage.clear()
     expect(event).toMatchObject({
-        key: 'dd', newValue: null, oldValue: '4', target: window, url: window2.location.href
+        key: 'dd', newValue: null, oldValue: '4', url: window2.location.href
     })
+    expect(event.target).toBe(window)
     expect(event2).toMatchObject({
-        key: null, newValue: null, oldValue: null, target: window2, url: window.location.href
+        key: null, newValue: null, oldValue: null, url: window.location.href
     })
+    expect(event2.target).toBe(window2)
     localStorage2.clear()
     expect(event).toMatchObject({
-        key: null, newValue: null, oldValue: null, target: window, url: window2.location.href
+        key: null, newValue: null, oldValue: null, url: window2.location.href
     })
+    expect(event.target).toBe(window)
     expect(event2).toMatchObject({
-        key: null, newValue: null, oldValue: null, target: window2, url: window.location.href
+        key: null, newValue: null, oldValue: null, url: window.location.href
     })
+    expect(event2.target).toBe(window2)
     sessionStorage.clear()
     expect(event).toMatchObject({
-        key: null, newValue: null, oldValue: null, target: window, url: window2.location.href
+        key: null, newValue: null, oldValue: null, url: window2.location.href
     })
+    expect(event.target).toBe(window)
     expect(event2).toMatchObject({
-        key: null, newValue: null, oldValue: null, target: window2, url: window.location.href
+        key: null, newValue: null, oldValue: null, url: window.location.href
     })
+    expect(event2.target).toBe(window2)
     sessionStorage2.clear()
     expect(event).toMatchObject({
-        key: null, newValue: null, oldValue: null, target: window, url: window2.location.href
+        key: null, newValue: null, oldValue: null, url: window2.location.href
     })
+    expect(event.target).toBe(window)
     expect(event2).toMatchObject({
-        key: null, newValue: null, oldValue: null, target: window2, url: window.location.href
+        key: null, newValue: null, oldValue: null, url: window.location.href
     })
+    expect(event2.target).toBe(window2)
 
     expect(localStorage.length).toBe(0)
     expect(sessionStorage.length).toBe(0)

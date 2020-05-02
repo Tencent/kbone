@@ -7,8 +7,7 @@
 	"scripts": {
 		"test": "jest --bail",
 		"test-debug": "node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand --bail",
-		"coverage": "jest --coverage --bail",
-		"codecov": "jest --coverage && codecov"
+		"coverage": "jest --coverage --bail"
 	},
 	"jest": {
 		"testEnvironment": "node",
