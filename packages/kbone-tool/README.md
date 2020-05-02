@@ -18,7 +18,7 @@ npm install --save kbone-tool
 
 将全局状态（如 vuex 的 state）放到 window.$$global 中存储时调用。
 
-跨页面共享全局状态时，会存在状态的 observer 对象被覆盖的情况，导致某些场景更新不会触发到其他页面中。下述以 vuex 的使用作为例子：
+跨页面共享全局状态时，会存在状态的 observer 对象被覆盖的情况，导致某些场景更新不会触发到其他页面中，userGlobal 方法即用于解决此问题。下述以 vuex 的使用作为例子：
 
 ```js
 import * as kbone from 'kbone-tool'
