@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import * as kbone from 'kbone-tool'
 
-// 使用全局状态，意味着多个页面需要共同 observe 一个对象，存在 observer 对象被覆盖的可能性，此方法的调用是为了确保每个页面可以拿到准确的 observer
+// 使用全局状态
 kbone.vue.useGlobal()
 
 Vue.use(Vuex)
