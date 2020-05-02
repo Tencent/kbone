@@ -1,6 +1,6 @@
 {
   "name": "kbone-tool",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "some tools for kbone",
   "main": "dist/index.min.js",
   "scripts": {
