@@ -1,9 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import * as kbone from 'kbone-tool'
+// import * as kbone from 'kbone-tool'
 
-// 使用全局状态
-kbone.vue.useGlobal()
+// kbone.vue.useGlobal()
 
 Vue.use(Vuex)
 
