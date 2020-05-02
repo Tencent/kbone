@@ -3,7 +3,6 @@ window.$$global = {}
 const kboneTool = require('../dist/index.min')
 
 test('useGlobal', () => {
-    kboneTool.vue.useGlobal()
     let count = 0
     const state = {
         count: 0,
@@ -14,6 +13,7 @@ test('useGlobal', () => {
     // __ob__ 处理
     const setOb = pageId => {
         document.$$pageId = pageId
+        kboneTool.vue.useGlobal()
         const ob = {
             dep: {
                 notify() {

@@ -22,11 +22,10 @@ function setFlag(obj, key, val) {
  * 当在 vue 中使用全局状态（如 vuex）的时候使用，对 Object.defineProperty 进行封装
  */
 function useGlobal() {
+    const pageId = document.$$pageId
+
     Object.defineProperty = function(obj, key, descriptor) {
         if (obj === undefined || obj === null) return defineProperty(obj, key, descriptor)
-
-        const pageId = document.$$pageId
-
         if (key === '__ob__') {
             // 处理 __ob__
             descriptor.set = function(val) {
@@ -34,7 +33,7 @@ function useGlobal() {
                 OBSERVER_CACHE[pageId].set(obj, val)
 
                 // 修改通知方法，让其通知到所有页面
-                val.dep._notify = val.dep.notify
+                if (!val.dep._notify) val.dep._notify = val.dep.notify
                 val.dep.notify = function() {
                     Object.keys(OBSERVER_CACHE).forEach(pageId => {
                         if (!OBSERVER_CACHE[pageId]) return
