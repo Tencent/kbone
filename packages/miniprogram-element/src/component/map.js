@@ -3,8 +3,8 @@
  */
 
 /**
-  * 兼容开发者工具 bug
-  */
+ * 兼容开发者工具 bug
+ */
 function dealWithDevToolsEvt(evt) {
     if (!evt.detail) evt.detail = {}
     if (evt.markerId !== undefined) evt.detail.markerId = evt.markerId

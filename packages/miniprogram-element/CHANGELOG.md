@@ -1,5 +1,9 @@
 # 更新日志
 
+## 1.2.15
+
+* 修复 canvas touchxxx 事件和 canvastouchxxx 事件冲突问题
+
 ## 1.2.12
 
 * 修复 picker 子节点更新失败问题

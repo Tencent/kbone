@@ -95,7 +95,7 @@
         <video v-else-if="item === 'video'" class="video" src="http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400" :muted="true" :show-mute-btn="true" :controls="true">
           <Inner></Inner>
         </video>
-        <canvas v-else-if="item === 'canvas'" class="canvas" ref="canvas" type="2d" width="300" height="200" @canvastouchstart="onCanvasTouchStart">
+        <canvas v-else-if="item === 'canvas'" class="canvas" ref="canvas" type="2d" width="300" height="200" @touchstart="onCanvasTouchStart('normal', $event)" @canvastouchstart="onCanvasTouchStart('canvas', $event)" @longtap="onCanvasLongTap">
           <Inner style="margin-top: 100px;"></Inner>
         </canvas>
         <!-- 使用 wx-component 来创建内置组件 -->
@@ -919,8 +919,12 @@ export default {
       this.movable.scaleValue = 3
     },
 
-    onCanvasTouchStart(evt) {
-      console.log('onCanvasTouchStart', evt)
+    onCanvasTouchStart(type, evt) {
+      console.log(`onCanvasTouchStart[${type}]`, evt)
+    },
+
+    onCanvasLongTap(evt) {
+      console.log('onCanvasLongTap', evt)
     },
 
     resetMap() {

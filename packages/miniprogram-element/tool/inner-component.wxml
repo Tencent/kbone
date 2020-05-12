@@ -733,10 +733,6 @@
         hidden="{{hidden}}"
         data-private-node-id="{{nodeId}}"
         data-private-page-id="{{pageId}}"
-        bindtouchstart="onTouchStart"
-        bindtouchmove="onTouchMove"
-        bindtouchend="onTouchEnd"
-        bindtouchcancel="onTouchCancel"
         bindtap="onTap"
         
         type="{{type}}"
