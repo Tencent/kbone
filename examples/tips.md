@@ -110,3 +110,10 @@
 * 跨页面数据共享
 * localStorage
 * sessionStorage
+
+## demo23
+
+* vue
+* 单页
+* vue-router
+* hash mode
