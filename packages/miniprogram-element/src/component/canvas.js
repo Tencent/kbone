@@ -56,10 +56,12 @@ module.exports = {
         },
 
         onCanvasLongTap(evt) {
+            dealWithEvt(evt)
             this.callSingleEvent('longtap', evt)
         },
 
         onCanvasError(evt) {
+            dealWithEvt(evt)
             this.callSingleEvent('error', evt)
         },
     },

@@ -1,6 +1,6 @@
 # 更新日志
 
-## 1.2.15
+## 1.2.16
 
 * 修复 canvas touchxxx 事件和 canvastouchxxx 事件冲突问题
 
