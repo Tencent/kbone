@@ -1,5 +1,9 @@
 # 更新日志
 
+## 1.2.17
+
+* 支持 canvas 的 disable-event 属性
+
 ## 1.2.16
 
 * 修复 canvas touchxxx 事件和 canvastouchxxx 事件冲突问题

@@ -726,7 +726,9 @@
 </template>
 <!-- 画布 -->
 <template name="canvas">
+    <!-- canvas 这里支持了 disableEvent 判断，用于兼容 iOS 端绑定了 canvas touch 事件后，触发不了页面滚动的 bug -->
     <canvas
+        wx:if="{{!disableEvent}}"
         id="{{id}}"
         class="{{className}}"
         style="{{style}}"
@@ -743,6 +745,21 @@
         bindtouchend="onCanvasTouchEnd"
         bindtouchcancel="onCanvasTouchCancel"
         bindlongtap="onCanvasLongTap"
+        binderror="onCanvasError"
+    ><element wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{true}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element></canvas>
+    <canvas
+        wx:else
+        id="{{id}}"
+        class="{{className}}"
+        style="{{style}}"
+        hidden="{{hidden}}"
+        data-private-node-id="{{nodeId}}"
+        data-private-page-id="{{pageId}}"
+        bindtap="onTap"
+        
+        type="{{type}}"
+        canvas-id="{{canvasId}}"
+        disable-scroll="{{disableScroll}}"
         binderror="onCanvasError"
     ><element wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{true}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element></canvas>
 </template>

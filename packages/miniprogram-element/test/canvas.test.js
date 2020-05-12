@@ -29,6 +29,9 @@ test('canvas', async() => {
     // disableScroll
     await _.checkBoolean(body, node, 'disableScroll', 'disable-scroll', false)
 
+    // disableEvent
+    await _.checkBoolean(body, node, 'disableEvent', 'disable-event', false)
+
     // event
     await _.checkEvent(body.querySelector('.h5-canvas'), node, [['touchstart', 'canvastouchstart'], ['touchmove', 'canvastouchmove'], ['touchend', 'canvastouchend'], ['touchcancel', 'canvastouchcancel'], 'longtap', 'error'])
 

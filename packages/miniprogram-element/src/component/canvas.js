@@ -29,6 +29,12 @@ module.exports = {
         get(domNode) {
             return !!domNode.getAttribute('disable-scroll')
         },
+    }, {
+        // kbone 自定义的特殊属性，用于兼容 iOS 端绑定了 canvas touch 事件后，触发不了页面滚动的 bug
+        name: 'disableEvent',
+        get(domNode) {
+            return !!domNode.getAttribute('disable-event')
+        },
     }],
     handles: {
         onCanvasTouchStart(evt) {
