@@ -1,5 +1,10 @@
 # 更新日志
 
+## 1.2.10
+
+* 设置 location.herf 和调用 location.replace 不触发页面刷新时，需要检测 hashchange
+* 调用 history.back/history.forward/history.go 时，需要检测 hashchange
+
 ## 1.2.7
 
 * 支持 document.visibilityState
