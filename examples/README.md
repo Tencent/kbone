@@ -69,3 +69,4 @@ npm install
 * demo21：vue + 分包 + kbone 混合原生小程序开发
 * demo22：vue + 跨页面通信 + 跨页面数据共享
 * demo23：vue + vue-router（hash mode）
+* demo24：react + 多页

@@ -117,3 +117,8 @@
 * 单页
 * vue-router
 * hash mode
+
+## demo24
+
+* react
+* 多页
