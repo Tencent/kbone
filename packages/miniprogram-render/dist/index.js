@@ -1,16 +1,16 @@
 module.exports = (function() {
 var __MODS__ = {};
 var __DEFINE__ = function(modId, func, req) { var m = { exports: {}, _tempexports: {} }; __MODS__[modId] = { status: 0, func: func, req: req, m: m }; };
-var __REQUIRE__ = function(modId, source) { if(!__MODS__[modId]) return require(source); if(!__MODS__[modId].status) { var m = __MODS__[modId].m; m._exports = m._tempexports; var desp = Object.getOwnPropertyDescriptor(m, "exports"); if (desp && desp.configurable) Object.defineProperty(m, "exports", { set: function (val) { if(typeof val === "object" && val !== m._exports) { m._exports.__proto__ = val.__proto__; Object.keys(val).forEach(function (k) { m._exports[k] = val[k]; }); } m._tempexports = val }, get: function () { return m._tempexports; } }); __MODS__[modId].status = 1; __MODS__[modId].func(__MODS__[modId].req, m, m.exports); } return __MODS__[modId].m.exports; };
+var __REQUIRE__ = function(modId, source) { if(!__MODS__[modId]) return; if(!__MODS__[modId].status) { var m = __MODS__[modId].m; m._exports = m._tempexports; var desp = Object.getOwnPropertyDescriptor(m, "exports"); if (desp && desp.configurable) Object.defineProperty(m, "exports", { set: function (val) { if(typeof val === "object" && val !== m._exports) { m._exports.__proto__ = val.__proto__; Object.keys(val).forEach(function (k) { m._exports[k] = val[k]; }); } m._tempexports = val }, get: function () { return m._tempexports; } }); __MODS__[modId].status = 1; __MODS__[modId].func(__MODS__[modId].req, m, m.exports); } return __MODS__[modId].m.exports; };
 var __REQUIRE_WILDCARD__ = function(obj) { if(obj && obj.__esModule) { return obj; } else { var newObj = {}; if(obj != null) { for(var k in obj) { if (Object.prototype.hasOwnProperty.call(obj, k)) newObj[k] = obj[k]; } } newObj.default = obj; return newObj; } };
 var __REQUIRE_DEFAULT__ = function(obj) { return obj && obj.__esModule ? obj.default : obj; };
-__DEFINE__(1589353392144, function(require, module, exports) {
-const tool = require('./util/tool')
-const cache = require('./util/cache')
-const Window = require('./window')
-const Document = require('./document')
-const EventTarget = require('./event/event-target')
-const Event = require('./event/event')
+__DEFINE__(1589356259409, function(_require, module, exports) {
+const tool = _require('./util/tool')
+const cache = _require('./util/cache')
+const Window = _require('./window')
+const Document = _require('./document')
+const EventTarget = _require('./event/event-target')
+const Event = _require('./event/event')
 
 module.exports = {
     createPage(route, config) {
@@ -47,9 +47,9 @@ module.exports = {
     },
 }
 
-}, function(modId) {var map = {"./util/tool":1589353392145,"./util/cache":1589353392146,"./window":1589353392147,"./document":1589353392148,"./event/event-target":1589353392149,"./event/event":1589353392150}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353392145, function(require, module, exports) {
-const cache = require('./cache')
+}, function(modId) {var map = {"./util/tool":1589356259410,"./util/cache":1589356259411,"./window":1589356259412,"./document":1589356259413,"./event/event-target":1589356259414,"./event/event":1589356259415}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1589356259410, function(_require, module, exports) {
+const cache = _require('./cache')
 
 /**
  * 驼峰转连字符
@@ -173,8 +173,8 @@ module.exports = {
     isTagNameSupport,
 }
 
-}, function(modId) { var map = {"./cache":1589353392146}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353392146, function(require, module, exports) {
+}, function(modId) { var map = {"./cache":1589356259411}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1589356259411, function(_require, module, exports) {
 const pageMap = {}
 let configCache = {}
 const cookieCache = {}
@@ -272,29 +272,29 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353392147, function(require, module, exports) {
-const Document = require('./document')
-const EventTarget = require('./event/event-target')
-const Event = require('./event/event')
-const OriginalCustomEvent = require('./event/custom-event')
-const Location = require('./bom/location')
-const Navigator = require('./bom/navigator')
-const Screen = require('./bom/screen')
-const History = require('./bom/history')
-const Miniprogram = require('./bom/miniprogram')
-const LocalStorage = require('./bom/local-storage')
-const SessionStorage = require('./bom/session-storage')
-const Performance = require('./bom/performance')
-const OriginalXMLHttpRequest = require('./bom/xml-http-request')
-const Node = require('./node/node')
-const Element = require('./node/element')
-const TextNode = require('./node/text-node')
-const Comment = require('./node/comment')
-const ClassList = require('./node/class-list')
-const Style = require('./node/style')
-const Attribute = require('./node/attribute')
-const cache = require('./util/cache')
-const tool = require('./util/tool')
+__DEFINE__(1589356259412, function(_require, module, exports) {
+const Document = _require('./document')
+const EventTarget = _require('./event/event-target')
+const Event = _require('./event/event')
+const OriginalCustomEvent = _require('./event/custom-event')
+const Location = _require('./bom/location')
+const Navigator = _require('./bom/navigator')
+const Screen = _require('./bom/screen')
+const History = _require('./bom/history')
+const Miniprogram = _require('./bom/miniprogram')
+const LocalStorage = _require('./bom/local-storage')
+const SessionStorage = _require('./bom/session-storage')
+const Performance = _require('./bom/performance')
+const OriginalXMLHttpRequest = _require('./bom/xml-http-request')
+const Node = _require('./node/node')
+const Element = _require('./node/element')
+const TextNode = _require('./node/text-node')
+const Comment = _require('./node/comment')
+const ClassList = _require('./node/class-list')
+const Style = _require('./node/style')
+const Attribute = _require('./node/attribute')
+const cache = _require('./util/cache')
+const tool = _require('./util/tool')
 
 let lastRafTime = 0
 const WINDOW_PROTOTYPE_MAP = {
@@ -918,26 +918,26 @@ class Window extends EventTarget {
 
 module.exports = Window
 
-}, function(modId) { var map = {"./document":1589353392148,"./event/event-target":1589353392149,"./event/event":1589353392150,"./event/custom-event":1589353392151,"./bom/location":1589353392165,"./bom/navigator":1589353392175,"./bom/screen":1589353392176,"./bom/history":1589353392177,"./bom/miniprogram":1589353392178,"./bom/local-storage":1589353392179,"./bom/session-storage":1589353392180,"./bom/performance":1589353392181,"./bom/xml-http-request":1589353392182,"./node/node":1589353392154,"./node/element":1589353392155,"./node/text-node":1589353392162,"./node/comment":1589353392163,"./node/class-list":1589353392156,"./node/style":1589353392158,"./node/attribute":1589353392160,"./util/cache":1589353392146,"./util/tool":1589353392145}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353392148, function(require, module, exports) {
-const EventTarget = require('./event/event-target')
-const Tree = require('./tree/tree')
-const Node = require('./node/node')
-const Element = require('./node/element')
-const TextNode = require('./node/text-node')
-const Comment = require('./node/comment')
-const tool = require('./util/tool')
-const cache = require('./util/cache')
-const A = require('./node/element/a')
-const Image = require('./node/element/image')
-const Input = require('./node/element/input')
-const Textarea = require('./node/element/textarea')
-const Video = require('./node/element/video')
-const Canvas = require('./node/element/canvas')
-const NotSupport = require('./node/element/not-support')
-const WxComponent = require('./node/element/wx-component')
-const WxCustomComponent = require('./node/element/wx-custom-component')
-const Cookie = require('./bom/cookie')
+}, function(modId) { var map = {"./document":1589356259413,"./event/event-target":1589356259414,"./event/event":1589356259415,"./event/custom-event":1589356259416,"./bom/location":1589356259430,"./bom/navigator":1589356259440,"./bom/screen":1589356259441,"./bom/history":1589356259442,"./bom/miniprogram":1589356259443,"./bom/local-storage":1589356259444,"./bom/session-storage":1589356259445,"./bom/performance":1589356259446,"./bom/xml-http-request":1589356259447,"./node/node":1589356259419,"./node/element":1589356259420,"./node/text-node":1589356259427,"./node/comment":1589356259428,"./node/class-list":1589356259421,"./node/style":1589356259423,"./node/attribute":1589356259425,"./util/cache":1589356259411,"./util/tool":1589356259410}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1589356259413, function(_require, module, exports) {
+const EventTarget = _require('./event/event-target')
+const Tree = _require('./tree/tree')
+const Node = _require('./node/node')
+const Element = _require('./node/element')
+const TextNode = _require('./node/text-node')
+const Comment = _require('./node/comment')
+const tool = _require('./util/tool')
+const cache = _require('./util/cache')
+const A = _require('./node/element/a')
+const Image = _require('./node/element/image')
+const Input = _require('./node/element/input')
+const Textarea = _require('./node/element/textarea')
+const Video = _require('./node/element/video')
+const Canvas = _require('./node/element/canvas')
+const NotSupport = _require('./node/element/not-support')
+const WxComponent = _require('./node/element/wx-component')
+const WxCustomComponent = _require('./node/element/wx-custom-component')
+const Cookie = _require('./bom/cookie')
 
 const CONSTRUCTOR_MAP = {
     A,
@@ -1314,10 +1314,10 @@ class Document extends EventTarget {
 
 module.exports = Document
 
-}, function(modId) { var map = {"./event/event-target":1589353392149,"./tree/tree":1589353392152,"./node/node":1589353392154,"./node/element":1589353392155,"./node/text-node":1589353392162,"./node/comment":1589353392163,"./util/tool":1589353392145,"./util/cache":1589353392146,"./node/element/a":1589353392164,"./node/element/image":1589353392166,"./node/element/input":1589353392167,"./node/element/textarea":1589353392168,"./node/element/video":1589353392169,"./node/element/canvas":1589353392170,"./node/element/not-support":1589353392171,"./node/element/wx-component":1589353392172,"./node/element/wx-custom-component":1589353392173,"./bom/cookie":1589353392174}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353392149, function(require, module, exports) {
-const Event = require('./event')
-const CustomEvent = require('./custom-event')
+}, function(modId) { var map = {"./event/event-target":1589356259414,"./tree/tree":1589356259417,"./node/node":1589356259419,"./node/element":1589356259420,"./node/text-node":1589356259427,"./node/comment":1589356259428,"./util/tool":1589356259410,"./util/cache":1589356259411,"./node/element/a":1589356259429,"./node/element/image":1589356259431,"./node/element/input":1589356259432,"./node/element/textarea":1589356259433,"./node/element/video":1589356259434,"./node/element/canvas":1589356259435,"./node/element/not-support":1589356259436,"./node/element/wx-component":1589356259437,"./node/element/wx-custom-component":1589356259438,"./bom/cookie":1589356259439}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1589356259414, function(_require, module, exports) {
+const Event = _require('./event')
+const CustomEvent = _require('./custom-event')
 
 /**
  * 比较 touch 列表
@@ -1644,8 +1644,8 @@ class EventTarget {
 
 module.exports = EventTarget
 
-}, function(modId) { var map = {"./event":1589353392150,"./custom-event":1589353392151}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353392150, function(require, module, exports) {
+}, function(modId) { var map = {"./event":1589356259415,"./custom-event":1589356259416}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1589356259415, function(_require, module, exports) {
 /**
  * 检查节点间的关系
  */
@@ -1834,8 +1834,8 @@ Event.BUBBLING_PHASE = 3
 module.exports = Event
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353392151, function(require, module, exports) {
-const Event = require('./event')
+__DEFINE__(1589356259416, function(_require, module, exports) {
+const Event = _require('./event')
 
 class CustomEvent extends Event {
     constructor(name = '', options = {}) {
@@ -1848,9 +1848,9 @@ class CustomEvent extends Event {
 
 module.exports = CustomEvent
 
-}, function(modId) { var map = {"./event":1589353392150}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353392152, function(require, module, exports) {
-const QuerySelector = require('./query-selector')
+}, function(modId) { var map = {"./event":1589356259415}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1589356259417, function(_require, module, exports) {
+const QuerySelector = _require('./query-selector')
 
 /**
  * 遍历 dom 树，收集类和标签对应的节点列表
@@ -1981,8 +1981,8 @@ class Tree {
 
 module.exports = Tree
 
-}, function(modId) { var map = {"./query-selector":1589353392153}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353392153, function(require, module, exports) {
+}, function(modId) { var map = {"./query-selector":1589356259418}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1589356259418, function(_require, module, exports) {
 /**
  * 感谢 sizzle：https://github.com/jquery/sizzle/tree/master
  */
@@ -2405,9 +2405,9 @@ class QuerySelector {
 module.exports = QuerySelector
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353392154, function(require, module, exports) {
-const EventTarget = require('../event/event-target')
-const cache = require('../util/cache')
+__DEFINE__(1589356259419, function(_require, module, exports) {
+const EventTarget = _require('../event/event-target')
+const cache = _require('../util/cache')
 
 class Node extends EventTarget {
     /**
@@ -2547,16 +2547,16 @@ Node.DOCUMENT_FRAGMENT_NODE = 11
 
 module.exports = Node
 
-}, function(modId) { var map = {"../event/event-target":1589353392149,"../util/cache":1589353392146}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353392155, function(require, module, exports) {
-const Node = require('./node')
-const ClassList = require('./class-list')
-const Style = require('./style')
-const Attribute = require('./attribute')
-const cache = require('../util/cache')
-const parser = require('../tree/parser')
-const tool = require('../util/tool')
-const Pool = require('../util/pool')
+}, function(modId) { var map = {"../event/event-target":1589356259414,"../util/cache":1589356259411}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1589356259420, function(_require, module, exports) {
+const Node = _require('./node')
+const ClassList = _require('./class-list')
+const Style = _require('./style')
+const Attribute = _require('./attribute')
+const cache = _require('../util/cache')
+const parser = _require('../tree/parser')
+const tool = _require('../util/tool')
+const Pool = _require('../util/pool')
 
 const pool = new Pool()
 
@@ -3500,13 +3500,13 @@ class Element extends Node {
 
 module.exports = Element
 
-}, function(modId) { var map = {"./node":1589353392154,"./class-list":1589353392156,"./style":1589353392158,"./attribute":1589353392160,"../util/cache":1589353392146,"../tree/parser":1589353392161,"../util/tool":1589353392145,"../util/pool":1589353392157}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353392156, function(require, module, exports) {
+}, function(modId) { var map = {"./node":1589356259419,"./class-list":1589356259421,"./style":1589356259423,"./attribute":1589356259425,"../util/cache":1589356259411,"../tree/parser":1589356259426,"../util/tool":1589356259410,"../util/pool":1589356259422}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1589356259421, function(_require, module, exports) {
 /**
  * babel extends 无法直接继承 Array，所以换种方法来继承：https://babeljs.io/docs/en/caveats/#classes
  */
-const Pool = require('../util/pool')
-const cache = require('../util/cache')
+const Pool = _require('../util/pool')
+const cache = _require('../util/cache')
 
 const pool = new Pool()
 
@@ -3656,8 +3656,8 @@ ClassList.prototype = Object.assign([], {
 
 module.exports = ClassList
 
-}, function(modId) { var map = {"../util/pool":1589353392157,"../util/cache":1589353392146}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353392157, function(require, module, exports) {
+}, function(modId) { var map = {"../util/pool":1589356259422,"../util/cache":1589356259411}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1589356259422, function(_require, module, exports) {
 class Pool {
     constructor(size) {
         this.$_size = size || 3000
@@ -3684,11 +3684,11 @@ class Pool {
 module.exports = Pool
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353392158, function(require, module, exports) {
-const styleList = require('./style-list')
-const tool = require('../util/tool')
-const Pool = require('../util/pool')
-const cache = require('../util/cache')
+__DEFINE__(1589356259423, function(_require, module, exports) {
+const styleList = _require('./style-list')
+const tool = _require('../util/tool')
+const Pool = _require('../util/pool')
+const cache = _require('../util/cache')
 
 const pool = new Pool()
 
@@ -3844,8 +3844,8 @@ Object.defineProperties(Style.prototype, properties)
 
 module.exports = Style
 
-}, function(modId) { var map = {"./style-list":1589353392159,"../util/tool":1589353392145,"../util/pool":1589353392157,"../util/cache":1589353392146}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353392159, function(require, module, exports) {
+}, function(modId) { var map = {"./style-list":1589356259424,"../util/tool":1589356259410,"../util/pool":1589356259422,"../util/cache":1589356259411}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1589356259424, function(_require, module, exports) {
 /**
  * 支持的样式属性列表，默认只包含常用的样式属性
  */
@@ -3875,10 +3875,10 @@ module.exports = [
 ]
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353392160, function(require, module, exports) {
-const Pool = require('../util/pool')
-const cache = require('../util/cache')
-const tool = require('../util/tool')
+__DEFINE__(1589356259425, function(_require, module, exports) {
+const Pool = _require('../util/pool')
+const cache = _require('../util/cache')
+const tool = _require('../util/tool')
 
 const pool = new Pool()
 
@@ -4098,8 +4098,8 @@ class Attribute {
 
 module.exports = Attribute
 
-}, function(modId) { var map = {"../util/pool":1589353392157,"../util/cache":1589353392146,"../util/tool":1589353392145}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353392161, function(require, module, exports) {
+}, function(modId) { var map = {"../util/pool":1589356259422,"../util/cache":1589356259411,"../util/tool":1589356259410}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1589356259426, function(_require, module, exports) {
 /**
  * 感谢 John Resig： https://johnresig.com/files/htmlparser.js
  */
@@ -4371,11 +4371,11 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353392162, function(require, module, exports) {
-const Node = require('./node')
-const tool = require('../util/tool')
-const Pool = require('../util/pool')
-const cache = require('../util/cache')
+__DEFINE__(1589356259427, function(_require, module, exports) {
+const Node = _require('./node')
+const tool = _require('../util/tool')
+const Pool = _require('../util/pool')
+const cache = _require('../util/cache')
 
 const pool = new Pool()
 
@@ -4500,12 +4500,12 @@ class TextNode extends Node {
 
 module.exports = TextNode
 
-}, function(modId) { var map = {"./node":1589353392154,"../util/tool":1589353392145,"../util/pool":1589353392157,"../util/cache":1589353392146}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353392163, function(require, module, exports) {
-const Node = require('./node')
-const tool = require('../util/tool')
-const Pool = require('../util/pool')
-const cache = require('../util/cache')
+}, function(modId) { var map = {"./node":1589356259419,"../util/tool":1589356259410,"../util/pool":1589356259422,"../util/cache":1589356259411}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1589356259428, function(_require, module, exports) {
+const Node = _require('./node')
+const tool = _require('../util/tool')
+const Pool = _require('../util/pool')
+const cache = _require('../util/cache')
 
 const pool = new Pool()
 
@@ -4583,12 +4583,12 @@ class Comment extends Node {
 
 module.exports = Comment
 
-}, function(modId) { var map = {"./node":1589353392154,"../util/tool":1589353392145,"../util/pool":1589353392157,"../util/cache":1589353392146}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353392164, function(require, module, exports) {
-const Element = require('../element')
-const Location = require('../../bom/location')
-const cache = require('../../util/cache')
-const Pool = require('../../util/pool')
+}, function(modId) { var map = {"./node":1589356259419,"../util/tool":1589356259410,"../util/pool":1589356259422,"../util/cache":1589356259411}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1589356259429, function(_require, module, exports) {
+const Element = _require('../element')
+const Location = _require('../../bom/location')
+const cache = _require('../../util/cache')
+const Pool = _require('../../util/pool')
 
 const pool = new Pool()
 
@@ -4750,14 +4750,14 @@ class HTMLAnchorElement extends Element {
 
 module.exports = HTMLAnchorElement
 
-}, function(modId) { var map = {"../element":1589353392155,"../../bom/location":1589353392165,"../../util/cache":1589353392146,"../../util/pool":1589353392157}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353392165, function(require, module, exports) {
+}, function(modId) { var map = {"../element":1589356259420,"../../bom/location":1589356259430,"../../util/cache":1589356259411,"../../util/pool":1589356259422}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1589356259430, function(_require, module, exports) {
 /**
  * 暂不对 ipv6 地址做支持
  */
-const EventTarget = require('../event/event-target')
-const tool = require('../util/tool')
-const cache = require('../util/cache')
+const EventTarget = _require('../event/event-target')
+const tool = _require('../util/tool')
+const cache = _require('../util/cache')
 
 class Location extends EventTarget {
     constructor(pageId) {
@@ -5341,12 +5341,12 @@ class Location extends EventTarget {
 
 module.exports = Location
 
-}, function(modId) { var map = {"../event/event-target":1589353392149,"../util/tool":1589353392145,"../util/cache":1589353392146}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353392166, function(require, module, exports) {
-const Element = require('../element')
-const Event = require('../../event/event')
-const Pool = require('../../util/pool')
-const cache = require('../../util/cache')
+}, function(modId) { var map = {"../event/event-target":1589356259414,"../util/tool":1589356259410,"../util/cache":1589356259411}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1589356259431, function(_require, module, exports) {
+const Element = _require('../element')
+const Event = _require('../../event/event')
+const Pool = _require('../../util/pool')
+const cache = _require('../../util/cache')
 
 const pool = new Pool()
 
@@ -5521,11 +5521,11 @@ class Image extends Element {
 
 module.exports = Image
 
-}, function(modId) { var map = {"../element":1589353392155,"../../event/event":1589353392150,"../../util/pool":1589353392157,"../../util/cache":1589353392146}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353392167, function(require, module, exports) {
-const Element = require('../element')
-const Pool = require('../../util/pool')
-const cache = require('../../util/cache')
+}, function(modId) { var map = {"../element":1589356259420,"../../event/event":1589356259415,"../../util/pool":1589356259422,"../../util/cache":1589356259411}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1589356259432, function(_require, module, exports) {
+const Element = _require('../element')
+const Pool = _require('../../util/pool')
+const cache = _require('../../util/cache')
 
 const pool = new Pool()
 
@@ -5703,11 +5703,11 @@ class HTMLInputElement extends Element {
 
 module.exports = HTMLInputElement
 
-}, function(modId) { var map = {"../element":1589353392155,"../../util/pool":1589353392157,"../../util/cache":1589353392146}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353392168, function(require, module, exports) {
-const Element = require('../element')
-const Pool = require('../../util/pool')
-const cache = require('../../util/cache')
+}, function(modId) { var map = {"../element":1589356259420,"../../util/pool":1589356259422,"../../util/cache":1589356259411}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1589356259433, function(_require, module, exports) {
+const Element = _require('../element')
+const Pool = _require('../../util/pool')
+const cache = _require('../../util/cache')
 
 const pool = new Pool()
 
@@ -5882,11 +5882,11 @@ class HTMLTextAreaElement extends Element {
 
 module.exports = HTMLTextAreaElement
 
-}, function(modId) { var map = {"../element":1589353392155,"../../util/pool":1589353392157,"../../util/cache":1589353392146}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353392169, function(require, module, exports) {
-const Element = require('../element')
-const Pool = require('../../util/pool')
-const cache = require('../../util/cache')
+}, function(modId) { var map = {"../element":1589356259420,"../../util/pool":1589356259422,"../../util/cache":1589356259411}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1589356259434, function(_require, module, exports) {
+const Element = _require('../element')
+const Pool = _require('../../util/pool')
+const cache = _require('../../util/cache')
 
 const pool = new Pool()
 
@@ -6050,11 +6050,11 @@ class HTMLVideoElement extends Element {
 
 module.exports = HTMLVideoElement
 
-}, function(modId) { var map = {"../element":1589353392155,"../../util/pool":1589353392157,"../../util/cache":1589353392146}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353392170, function(require, module, exports) {
-const Element = require('../element')
-const Pool = require('../../util/pool')
-const cache = require('../../util/cache')
+}, function(modId) { var map = {"../element":1589356259420,"../../util/pool":1589356259422,"../../util/cache":1589356259411}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1589356259435, function(_require, module, exports) {
+const Element = _require('../element')
+const Pool = _require('../../util/pool')
+const cache = _require('../../util/cache')
 
 const pool = new Pool()
 
@@ -6187,11 +6187,11 @@ class HTMLCanvasElement extends Element {
 
 module.exports = HTMLCanvasElement
 
-}, function(modId) { var map = {"../element":1589353392155,"../../util/pool":1589353392157,"../../util/cache":1589353392146}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353392171, function(require, module, exports) {
-const Element = require('../element')
-const Pool = require('../../util/pool')
-const cache = require('../../util/cache')
+}, function(modId) { var map = {"../element":1589356259420,"../../util/pool":1589356259422,"../../util/cache":1589356259411}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1589356259436, function(_require, module, exports) {
+const Element = _require('../element')
+const Pool = _require('../../util/pool')
+const cache = _require('../../util/cache')
 
 const pool = new Pool()
 
@@ -6250,11 +6250,11 @@ class NotSupport extends Element {
 
 module.exports = NotSupport
 
-}, function(modId) { var map = {"../element":1589353392155,"../../util/pool":1589353392157,"../../util/cache":1589353392146}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353392172, function(require, module, exports) {
-const Element = require('../element')
-const Pool = require('../../util/pool')
-const cache = require('../../util/cache')
+}, function(modId) { var map = {"../element":1589356259420,"../../util/pool":1589356259422,"../../util/cache":1589356259411}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1589356259437, function(_require, module, exports) {
+const Element = _require('../element')
+const Pool = _require('../../util/pool')
+const cache = _require('../../util/cache')
 
 const pool = new Pool()
 
@@ -6337,11 +6337,11 @@ class WxComponent extends Element {
 
 module.exports = WxComponent
 
-}, function(modId) { var map = {"../element":1589353392155,"../../util/pool":1589353392157,"../../util/cache":1589353392146}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353392173, function(require, module, exports) {
-const Element = require('../element')
-const Pool = require('../../util/pool')
-const cache = require('../../util/cache')
+}, function(modId) { var map = {"../element":1589356259420,"../../util/pool":1589356259422,"../../util/cache":1589356259411}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1589356259438, function(_require, module, exports) {
+const Element = _require('../element')
+const Pool = _require('../../util/pool')
+const cache = _require('../../util/cache')
 
 const pool = new Pool()
 
@@ -6404,10 +6404,10 @@ class WxCustomComponent extends Element {
 
 module.exports = WxCustomComponent
 
-}, function(modId) { var map = {"../element":1589353392155,"../../util/pool":1589353392157,"../../util/cache":1589353392146}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353392174, function(require, module, exports) {
-const Location = require('./location')
-const cache = require('../util/cache')
+}, function(modId) { var map = {"../element":1589356259420,"../../util/pool":1589356259422,"../../util/cache":1589356259411}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1589356259439, function(_require, module, exports) {
+const Location = _require('./location')
+const cache = _require('../util/cache')
 
 class Cookie {
     constructor(pageName) {
@@ -6693,8 +6693,8 @@ class Cookie {
 
 module.exports = Cookie
 
-}, function(modId) { var map = {"./location":1589353392165,"../util/cache":1589353392146}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353392175, function(require, module, exports) {
+}, function(modId) { var map = {"./location":1589356259430,"../util/cache":1589356259411}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1589356259440, function(_require, module, exports) {
 class Navigator {
     constructor() {
         this.$_language = ''
@@ -6777,8 +6777,8 @@ class Navigator {
 module.exports = Navigator
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353392176, function(require, module, exports) {
-const EventTarget = require('../event/event-target')
+__DEFINE__(1589356259441, function(_require, module, exports) {
+const EventTarget = _require('../event/event-target')
 
 class Screen extends EventTarget {
     constructor() {
@@ -6810,13 +6810,13 @@ class Screen extends EventTarget {
 
 module.exports = Screen
 
-}, function(modId) { var map = {"../event/event-target":1589353392149}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353392177, function(require, module, exports) {
+}, function(modId) { var map = {"../event/event-target":1589356259414}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1589356259442, function(_require, module, exports) {
 /**
  * 暂不维护跳转后页面的历史，不做页面刷新的操作
  */
-const Location = require('./location')
-const EventTarget = require('../event/event-target')
+const Location = _require('./location')
+const EventTarget = _require('../event/event-target')
 
 class History extends EventTarget {
     constructor(location) {
@@ -6946,9 +6946,9 @@ class History extends EventTarget {
 
 module.exports = History
 
-}, function(modId) { var map = {"./location":1589353392165,"../event/event-target":1589353392149}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353392178, function(require, module, exports) {
-const cache = require('../util/cache')
+}, function(modId) { var map = {"./location":1589356259430,"../event/event-target":1589356259414}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1589356259443, function(_require, module, exports) {
+const cache = _require('../util/cache')
 
 let pageUrlRouteMap = null
 
@@ -7050,9 +7050,9 @@ class Miniprogram {
 
 module.exports = Miniprogram
 
-}, function(modId) { var map = {"../util/cache":1589353392146}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353392179, function(require, module, exports) {
-const Event = require('../event/event')
+}, function(modId) { var map = {"../util/cache":1589356259411}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1589356259444, function(_require, module, exports) {
+const Event = _require('../event/event')
 
 class LocalStorage {
     constructor(window) {
@@ -7156,9 +7156,9 @@ class LocalStorage {
 
 module.exports = LocalStorage
 
-}, function(modId) { var map = {"../event/event":1589353392150}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353392180, function(require, module, exports) {
-const Event = require('../event/event')
+}, function(modId) { var map = {"../event/event":1589356259415}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1589356259445, function(_require, module, exports) {
+const Event = _require('../event/event')
 
 class SessionStorage {
     constructor(window) {
@@ -7255,8 +7255,8 @@ class SessionStorage {
 
 module.exports = SessionStorage
 
-}, function(modId) { var map = {"../event/event":1589353392150}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353392181, function(require, module, exports) {
+}, function(modId) { var map = {"../event/event":1589356259415}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1589356259446, function(_require, module, exports) {
 class Performance {
     constructor(timeOrigin) {
         this.$_timeOrigin = timeOrigin
@@ -7287,8 +7287,8 @@ class Performance {
 module.exports = Performance
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353392182, function(require, module, exports) {
-const EventTarget = require('../event/event-target')
+__DEFINE__(1589356259447, function(_require, module, exports) {
+const EventTarget = _require('../event/event-target')
 
 const SUPPORT_METHOD = ['OPTIONS', 'GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'TRACE', 'CONNECT']
 const STATUS_TEXT_MAP = {
@@ -7579,7 +7579,7 @@ XMLHttpRequest.DONE = 4
 
 module.exports = XMLHttpRequest
 
-}, function(modId) { var map = {"../event/event-target":1589353392149}; return __REQUIRE__(map[modId], modId); })
-return __REQUIRE__(1589353392144);
+}, function(modId) { var map = {"../event/event-target":1589356259414}; return __REQUIRE__(map[modId], modId); })
+return __REQUIRE__(1589356259409);
 })()
 //# sourceMappingURL=index.js.map

@@ -1,14 +1,14 @@
 module.exports = (function() {
 var __MODS__ = {};
 var __DEFINE__ = function(modId, func, req) { var m = { exports: {}, _tempexports: {} }; __MODS__[modId] = { status: 0, func: func, req: req, m: m }; };
-var __REQUIRE__ = function(modId, source) { if(!__MODS__[modId]) return require(source); if(!__MODS__[modId].status) { var m = __MODS__[modId].m; m._exports = m._tempexports; var desp = Object.getOwnPropertyDescriptor(m, "exports"); if (desp && desp.configurable) Object.defineProperty(m, "exports", { set: function (val) { if(typeof val === "object" && val !== m._exports) { m._exports.__proto__ = val.__proto__; Object.keys(val).forEach(function (k) { m._exports[k] = val[k]; }); } m._tempexports = val }, get: function () { return m._tempexports; } }); __MODS__[modId].status = 1; __MODS__[modId].func(__MODS__[modId].req, m, m.exports); } return __MODS__[modId].m.exports; };
+var __REQUIRE__ = function(modId, source) { if(!__MODS__[modId]) return; if(!__MODS__[modId].status) { var m = __MODS__[modId].m; m._exports = m._tempexports; var desp = Object.getOwnPropertyDescriptor(m, "exports"); if (desp && desp.configurable) Object.defineProperty(m, "exports", { set: function (val) { if(typeof val === "object" && val !== m._exports) { m._exports.__proto__ = val.__proto__; Object.keys(val).forEach(function (k) { m._exports[k] = val[k]; }); } m._tempexports = val }, get: function () { return m._tempexports; } }); __MODS__[modId].status = 1; __MODS__[modId].func(__MODS__[modId].req, m, m.exports); } return __MODS__[modId].m.exports; };
 var __REQUIRE_WILDCARD__ = function(obj) { if(obj && obj.__esModule) { return obj; } else { var newObj = {}; if(obj != null) { for(var k in obj) { if (Object.prototype.hasOwnProperty.call(obj, k)) newObj[k] = obj[k]; } } newObj.default = obj; return newObj; } };
 var __REQUIRE_DEFAULT__ = function(obj) { return obj && obj.__esModule ? obj.default : obj; };
-__DEFINE__(1589353393367, function(require, module, exports) {
+__DEFINE__(1589356260721, function(_require, module, exports) {
 const mp = require('miniprogram-render')
-const _ = require('./util/tool')
-const initHandle = require('./util/init-handle')
-const component = require('./util/component')
+const _ = _require('./util/tool')
+const initHandle = _require('./util/init-handle')
+const component = _require('./util/component')
 
 const {
     cache,
@@ -437,11 +437,11 @@ Component({
     }
 })
 
-}, function(modId) {var map = {"./util/tool":1589353393368,"./util/init-handle":1589353393405,"./util/component":1589353393370}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353393368, function(require, module, exports) {
+}, function(modId) {var map = {"./util/tool":1589356260722,"./util/init-handle":1589356260759,"./util/component":1589356260724}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1589356260722, function(_require, module, exports) {
 const mp = require('miniprogram-render')
-const initData = require('./init-data')
-const component = require('./component')
+const initData = _require('./init-data')
+const component = _require('./component')
 
 const {
     cache,
@@ -772,146 +772,146 @@ module.exports = {
     compareVersion,
 }
 
-}, function(modId) { var map = {"./init-data":1589353393369,"./component":1589353393370}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353393369, function(require, module, exports) {
-const component = require('./component')
+}, function(modId) { var map = {"./init-data":1589356260723,"./component":1589356260724}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1589356260723, function(_require, module, exports) {
+const component = _require('./component')
 
 module.exports = component.properties
 
-}, function(modId) { var map = {"./component":1589353393370}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353393370, function(require, module, exports) {
+}, function(modId) { var map = {"./component":1589356260724}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1589356260724, function(_require, module, exports) {
 const wxComponentMap = {
     // 视图容器
     'cover-image': {
         wxCompName: 'cover-image',
-        config: require('../component/cover-image'),
+        config: _require('../component/cover-image'),
     },
     'cover-view': {
         wxCompName: 'cover-view',
-        config: require('../component/cover-view'),
+        config: _require('../component/cover-view'),
     },
     'movable-area': {
         wxCompName: 'movable-area',
-        config: require('../component/movable-area'),
+        config: _require('../component/movable-area'),
     },
     'scroll-view': {
         wxCompName: 'scroll-view',
-        config: require('../component/scroll-view'),
+        config: _require('../component/scroll-view'),
     },
     swiper: {
         wxCompName: 'swiper',
-        config: require('../component/swiper'),
+        config: _require('../component/swiper'),
     },
     view: {
         wxCompName: 'view',
-        config: require('../component/view'),
+        config: _require('../component/view'),
     },
     // 基础内容
     icon: {
         wxCompName: 'icon',
-        config: require('../component/icon'),
+        config: _require('../component/icon'),
     },
     progress: {
         wxCompName: 'progress',
-        config: require('../component/progress'),
+        config: _require('../component/progress'),
     },
     'rich-text': {
         wxCompName: 'rich-text',
-        config: require('../component/rich-text'),
+        config: _require('../component/rich-text'),
     },
     text: {
         wxCompName: 'text',
-        config: require('../component/text'),
+        config: _require('../component/text'),
     },
     // 表单组件
     button: {
         wxCompName: 'button',
-        config: require('../component/button'),
+        config: _require('../component/button'),
     },
     editor: {
         wxCompName: 'editor',
-        config: require('../component/editor'),
+        config: _require('../component/editor'),
     },
     form: {
         wxCompName: 'form',
-        config: require('../component/form'),
+        config: _require('../component/form'),
     },
     INPUT: {
         wxCompName: 'input',
-        config: require('../component/input'),
+        config: _require('../component/input'),
     },
     picker: {
         wxCompName: 'picker',
-        config: require('../component/picker'),
+        config: _require('../component/picker'),
     },
     'picker-view': {
         wxCompName: 'picker-view',
-        config: require('../component/picker-view'),
+        config: _require('../component/picker-view'),
     },
     slider: {
         wxCompName: 'slider',
-        config: require('../component/slider'),
+        config: _require('../component/slider'),
     },
     switch: {
         wxCompName: 'switch',
-        config: require('../component/switch'),
+        config: _require('../component/switch'),
     },
     TEXTAREA: {
         wxCompName: 'textarea',
-        config: require('../component/textarea'),
+        config: _require('../component/textarea'),
     },
     // 导航
     navigator: {
         wxCompName: 'navigator',
-        config: require('../component/navigator'),
+        config: _require('../component/navigator'),
     },
     // 媒体组件
     camera: {
         wxCompName: 'camera',
-        config: require('../component/camera'),
+        config: _require('../component/camera'),
     },
     image: {
         wxCompName: 'image',
-        config: require('../component/image'),
+        config: _require('../component/image'),
     },
     'live-player': {
         wxCompName: 'live-player',
-        config: require('../component/live-player'),
+        config: _require('../component/live-player'),
     },
     'live-pusher': {
         wxCompName: 'live-pusher',
-        config: require('../component/live-pusher'),
+        config: _require('../component/live-pusher'),
     },
     VIDEO: {
         wxCompName: 'video',
-        config: require('../component/video'),
+        config: _require('../component/video'),
     },
     // 地图
     map: {
         wxCompName: 'map',
-        config: require('../component/map'),
+        config: _require('../component/map'),
     },
     // 画布
     CANVAS: {
         wxCompName: 'canvas',
-        config: require('../component/canvas'),
+        config: _require('../component/canvas'),
     },
     // 开放能力
     ad: {
         wxCompName: 'ad',
-        config: require('../component/ad'),
+        config: _require('../component/ad'),
     },
     'official-account': {
         wxCompName: 'official-account',
-        config: require('../component/official-account'),
+        config: _require('../component/official-account'),
     },
     'open-data': {
         wxCompName: 'open-data',
-        config: require('../component/open-data'),
+        config: _require('../component/open-data'),
     },
     'web-view': {
         wxCompName: 'web-view',
-        config: require('../component/web-view'),
+        config: _require('../component/web-view'),
     },
     // 特殊补充
     capture: {
@@ -929,9 +929,9 @@ const wxComponentMap = {
 }
 
 const wxSubComponentMap = {
-    'movable-view': require('../component/movable-view'),
-    'swiper-item': require('../component/swiper-item'),
-    'picker-view-column': require('../component/picker-view-column'),
+    'movable-view': _require('../component/movable-view'),
+    'swiper-item': _require('../component/swiper-item'),
+    'picker-view-column': _require('../component/picker-view-column'),
 }
 
 const wxComponentKeys = Object.keys(wxComponentMap)
@@ -957,8 +957,8 @@ module.exports = {
     wxSubComponentMap,
 }
 
-}, function(modId) { var map = {"../component/cover-image":1589353393371,"../component/cover-view":1589353393372,"../component/movable-area":1589353393373,"../component/scroll-view":1589353393374,"../component/swiper":1589353393375,"../component/view":1589353393376,"../component/icon":1589353393377,"../component/progress":1589353393378,"../component/rich-text":1589353393379,"../component/text":1589353393380,"../component/button":1589353393381,"../component/editor":1589353393382,"../component/form":1589353393383,"../component/input":1589353393384,"../component/picker":1589353393385,"../component/picker-view":1589353393386,"../component/slider":1589353393387,"../component/switch":1589353393388,"../component/textarea":1589353393389,"../component/navigator":1589353393390,"../component/camera":1589353393391,"../component/image":1589353393392,"../component/live-player":1589353393393,"../component/live-pusher":1589353393394,"../component/video":1589353393395,"../component/map":1589353393396,"../component/canvas":1589353393397,"../component/ad":1589353393398,"../component/official-account":1589353393399,"../component/open-data":1589353393400,"../component/web-view":1589353393401,"../component/movable-view":1589353393402,"../component/swiper-item":1589353393403,"../component/picker-view-column":1589353393404}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353393371, function(require, module, exports) {
+}, function(modId) { var map = {"../component/cover-image":1589356260725,"../component/cover-view":1589356260726,"../component/movable-area":1589356260727,"../component/scroll-view":1589356260728,"../component/swiper":1589356260729,"../component/view":1589356260730,"../component/icon":1589356260731,"../component/progress":1589356260732,"../component/rich-text":1589356260733,"../component/text":1589356260734,"../component/button":1589356260735,"../component/editor":1589356260736,"../component/form":1589356260737,"../component/input":1589356260738,"../component/picker":1589356260739,"../component/picker-view":1589356260740,"../component/slider":1589356260741,"../component/switch":1589356260742,"../component/textarea":1589356260743,"../component/navigator":1589356260744,"../component/camera":1589356260745,"../component/image":1589356260746,"../component/live-player":1589356260747,"../component/live-pusher":1589356260748,"../component/video":1589356260749,"../component/map":1589356260750,"../component/canvas":1589356260751,"../component/ad":1589356260752,"../component/official-account":1589356260753,"../component/open-data":1589356260754,"../component/web-view":1589356260755,"../component/movable-view":1589356260756,"../component/swiper-item":1589356260757,"../component/picker-view-column":1589356260758}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1589356260725, function(_require, module, exports) {
 const mp = require('miniprogram-render')
 
 const {
@@ -989,7 +989,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353393372, function(require, module, exports) {
+__DEFINE__(1589356260726, function(_require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/cover-view.html
  */
@@ -1005,7 +1005,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353393373, function(require, module, exports) {
+__DEFINE__(1589356260727, function(_require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/movable-area.html
  */
@@ -1020,7 +1020,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353393374, function(require, module, exports) {
+__DEFINE__(1589356260728, function(_require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/scroll-view.html
  */
@@ -1155,7 +1155,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353393375, function(require, module, exports) {
+__DEFINE__(1589356260729, function(_require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/swiper.html
  */
@@ -1260,7 +1260,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353393376, function(require, module, exports) {
+__DEFINE__(1589356260730, function(_require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/view.html
  */
@@ -1292,7 +1292,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353393377, function(require, module, exports) {
+__DEFINE__(1589356260731, function(_require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/icon.html
  */
@@ -1317,7 +1317,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353393378, function(require, module, exports) {
+__DEFINE__(1589356260732, function(_require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/progress.html
  */
@@ -1381,7 +1381,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353393379, function(require, module, exports) {
+__DEFINE__(1589356260733, function(_require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/rich-text.html
  */
@@ -1401,7 +1401,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353393380, function(require, module, exports) {
+__DEFINE__(1589356260734, function(_require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/text.html
  */
@@ -1426,7 +1426,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353393381, function(require, module, exports) {
+__DEFINE__(1589356260735, function(_require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/button.html
  */
@@ -1559,7 +1559,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353393382, function(require, module, exports) {
+__DEFINE__(1589356260736, function(_require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/editor.html
  */
@@ -1614,7 +1614,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353393383, function(require, module, exports) {
+__DEFINE__(1589356260737, function(_require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/form.html
  *
@@ -1648,7 +1648,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353393384, function(require, module, exports) {
+__DEFINE__(1589356260738, function(_require, module, exports) {
 const mp = require('miniprogram-render')
 
 const {
@@ -1873,7 +1873,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353393385, function(require, module, exports) {
+__DEFINE__(1589356260739, function(_require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/picker.html
  */
@@ -1975,7 +1975,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353393386, function(require, module, exports) {
+__DEFINE__(1589356260740, function(_require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/picker-view.html
  */
@@ -2034,7 +2034,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353393387, function(require, module, exports) {
+__DEFINE__(1589356260741, function(_require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/slider.html
  */
@@ -2125,7 +2125,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353393388, function(require, module, exports) {
+__DEFINE__(1589356260742, function(_require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/switch.html
  */
@@ -2169,7 +2169,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353393389, function(require, module, exports) {
+__DEFINE__(1589356260743, function(_require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/textarea.html
  */
@@ -2323,7 +2323,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353393390, function(require, module, exports) {
+__DEFINE__(1589356260744, function(_require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/navigator.html
  */
@@ -2408,7 +2408,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353393391, function(require, module, exports) {
+__DEFINE__(1589356260745, function(_require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/camera.html
  */
@@ -2454,7 +2454,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353393392, function(require, module, exports) {
+__DEFINE__(1589356260746, function(_require, module, exports) {
 const mp = require('miniprogram-render')
 
 const {
@@ -2505,7 +2505,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353393393, function(require, module, exports) {
+__DEFINE__(1589356260747, function(_require, module, exports) {
 const mp = require('miniprogram-render')
 
 const {
@@ -2600,7 +2600,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353393394, function(require, module, exports) {
+__DEFINE__(1589356260748, function(_require, module, exports) {
 const mp = require('miniprogram-render')
 
 const {
@@ -2738,7 +2738,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353393395, function(require, module, exports) {
+__DEFINE__(1589356260749, function(_require, module, exports) {
 const mp = require('miniprogram-render')
 
 const {
@@ -2937,7 +2937,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353393396, function(require, module, exports) {
+__DEFINE__(1589356260750, function(_require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/map.html
  */
@@ -3156,7 +3156,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353393397, function(require, module, exports) {
+__DEFINE__(1589356260751, function(_require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/canvas.html
  */
@@ -3233,7 +3233,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353393398, function(require, module, exports) {
+__DEFINE__(1589356260752, function(_require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/ad.html
  */
@@ -3265,7 +3265,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353393399, function(require, module, exports) {
+__DEFINE__(1589356260753, function(_require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/official-account.html
  */
@@ -3283,7 +3283,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353393400, function(require, module, exports) {
+__DEFINE__(1589356260754, function(_require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/open-data.html
  */
@@ -3308,7 +3308,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353393401, function(require, module, exports) {
+__DEFINE__(1589356260755, function(_require, module, exports) {
 const mp = require('miniprogram-render')
 
 const {
@@ -3343,7 +3343,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353393402, function(require, module, exports) {
+__DEFINE__(1589356260756, function(_require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/movable-view.html
  */
@@ -3467,7 +3467,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353393403, function(require, module, exports) {
+__DEFINE__(1589356260757, function(_require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/swiper-item.html
  */
@@ -3482,7 +3482,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353393404, function(require, module, exports) {
+__DEFINE__(1589356260758, function(_require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/picker-view-column.html
  */
@@ -3492,9 +3492,9 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589353393405, function(require, module, exports) {
-const _ = require('./tool')
-const component = require('./component')
+__DEFINE__(1589356260759, function(_require, module, exports) {
+const _ = _require('./tool')
+const component = _require('./component')
 
 const {
     NOT_SUPPORT,
@@ -3541,7 +3541,7 @@ module.exports = {
     ...handles,
 }
 
-}, function(modId) { var map = {"./tool":1589353393368,"./component":1589353393370}; return __REQUIRE__(map[modId], modId); })
-return __REQUIRE__(1589353393367);
+}, function(modId) { var map = {"./tool":1589356260722,"./component":1589356260724}; return __REQUIRE__(map[modId], modId); })
+return __REQUIRE__(1589356260721);
 })()
 //# sourceMappingURL=index.js.map

@@ -106,6 +106,13 @@ function parseDeps(code, jsPath) {
         if (node.type === 'CallExpression' && callee && callee.type === 'Identifier' && callee.name === 'require' && args && args.length === 1) {
             if (args[0].type === 'Literal') {
                 deps.push(args[0].value)
+
+                // 针对 miniprogram-render，保留原有的 require 语句
+                if (args[0].value !== 'miniprogram-render') {
+                    const adjust = {start: node.start, end: node.end}
+                    adjust.adjustContent = `_require('${args[0].value}')`
+                    adjustList.push(adjust)
+                }
             } else {
                 // require 变量
                 console.warn(`require variable is not allowed: ${jsPath} at line ${node.loc.start.line} ~ ${node.loc.end.line}`)
@@ -414,21 +421,21 @@ function packJs(mainJsPath) {
         'module.exports = (function() {',
         'var __MODS__ = {};',
         'var __DEFINE__ = function(modId, func, req) { var m = { exports: {}, _tempexports: {} }; __MODS__[modId] = { status: 0, func: func, req: req, m: m }; };',
-        'var __REQUIRE__ = function(modId, source) { if(!__MODS__[modId]) return require(source); if(!__MODS__[modId].status) { var m = __MODS__[modId].m; m._exports = m._tempexports; var desp = Object.getOwnPropertyDescriptor(m, "exports"); if (desp && desp.configurable) Object.defineProperty(m, "exports", { set: function (val) { if(typeof val === "object" && val !== m._exports) { m._exports.__proto__ = val.__proto__; Object.keys(val).forEach(function (k) { m._exports[k] = val[k]; }); } m._tempexports = val }, get: function () { return m._tempexports; } }); __MODS__[modId].status = 1; __MODS__[modId].func(__MODS__[modId].req, m, m.exports); } return __MODS__[modId].m.exports; };',
+        'var __REQUIRE__ = function(modId, source) { if(!__MODS__[modId]) return; if(!__MODS__[modId].status) { var m = __MODS__[modId].m; m._exports = m._tempexports; var desp = Object.getOwnPropertyDescriptor(m, "exports"); if (desp && desp.configurable) Object.defineProperty(m, "exports", { set: function (val) { if(typeof val === "object" && val !== m._exports) { m._exports.__proto__ = val.__proto__; Object.keys(val).forEach(function (k) { m._exports[k] = val[k]; }); } m._tempexports = val }, get: function () { return m._tempexports; } }); __MODS__[modId].status = 1; __MODS__[modId].func(__MODS__[modId].req, m, m.exports); } return __MODS__[modId].m.exports; };',
         'var __REQUIRE_WILDCARD__ = function(obj) { if(obj && obj.__esModule) { return obj; } else { var newObj = {}; if(obj != null) { for(var k in obj) { if (Object.prototype.hasOwnProperty.call(obj, k)) newObj[k] = obj[k]; } } newObj.default = obj; return newObj; } };',
         'var __REQUIRE_DEFAULT__ = function(obj) { return obj && obj.__esModule ? obj.default : obj; };'
     ]
     if (jsList.length) {
         // 入口文件
         const mainJsInfo = jsList.shift()
-        jsContent.push(`__DEFINE__(${mainJsInfo.id}, function(require, module, exports) {`)
+        jsContent.push(`__DEFINE__(${mainJsInfo.id}, function(_require, module, exports) {`)
         addJsToMap(map, mainJsInfo.content, mainJsInfo.name, jsContent.length) // 添加到 sourcemap
         jsContent.push(mainJsInfo.content)
         jsContent.push(`}, function(modId) {var map = ${JSON.stringify(mainJsInfo.depsMap)}; return __REQUIRE__(map[modId], modId); })`)
 
         // 其他依赖文件
         for (const jsInfo of jsList) {
-            jsContent.push(`__DEFINE__(${jsInfo.id}, function(require, module, exports) {`)
+            jsContent.push(`__DEFINE__(${jsInfo.id}, function(_require, module, exports) {`)
             addJsToMap(map, jsInfo.content, jsInfo.name, jsContent.length) // 添加到 sourcemap
             jsContent.push(jsInfo.content)
             jsContent.push(`}, function(modId) { var map = ${JSON.stringify(jsInfo.depsMap)}; return __REQUIRE__(map[modId], modId); })`)
