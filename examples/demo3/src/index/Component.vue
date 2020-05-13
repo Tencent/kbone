@@ -482,10 +482,12 @@
         </template>
         <template v-else-if="item === 'scroll-view'">
           <div>
-            <wx-component ref="scroll-view" v-if="!wxPrefix" :behavior="item" :class="item + '-y'" :scroll-into-view="'y1' + scrollView.yDest" :scroll-y="true" :scroll-with-animation="true" @scroll="onScrollViewScroll"><Inner2 type="y1"/></wx-component>
-            <wx-scroll-view ref="scroll-view" v-else-if="wxPrefix === 1" :class="item + '-y'" :scroll-into-view="'y2' + scrollView.yDest" :scroll-y="true" :scroll-with-animation="true" @scroll="onScrollViewScroll"><Inner2 type="y2"/></wx-scroll-view>
-            <scroll-view ref="scroll-view" v-else-if="wxPrefix === 2" :class="item + '-y'" :scroll-into-view="'y3' + scrollView.yDest" :scroll-y="true" :scroll-with-animation="true" @scroll="onScrollViewScroll"><Inner2 type="y3"/></scroll-view>
+            <wx-component ref="scroll-view" v-if="!wxPrefix" :behavior="item" :class="item + '-y'" :scroll-into-view="'y1' + scrollView.yDest" :scroll-top="scrollView.scrollTop" :scroll-y="true" :scroll-with-animation="scrollView.yAnimation" @scroll="onScrollViewScroll"><Inner2 type="y1"/></wx-component>
+            <wx-scroll-view ref="scroll-view" v-else-if="wxPrefix === 1" :class="item + '-y'" :scroll-into-view="'y2' + scrollView.yDest" :scroll-top="scrollView.scrollTop" :scroll-y="true" :scroll-with-animation="scrollView.yAnimation" @scroll="onScrollViewScroll"><Inner2 type="y2"/></wx-scroll-view>
+            <scroll-view ref="scroll-view" v-else-if="wxPrefix === 2" :class="item + '-y'" :scroll-into-view="'y3' + scrollView.yDest" :scroll-top="scrollView.scrollTop" :scroll-y="true" :scroll-with-animation="scrollView.yAnimation" @scroll="onScrollViewScroll"><Inner2 type="y3"/></scroll-view>
             <div class="scroll-view-btn" @click="onClickScrollViewYBtn">滚动到第三个滑块</div>
+            <div class="scroll-view-btn" @click="onClickScrollViewYTopBtn">滚动到 120px 处</div>
+            <div class="scroll-view-btn" @click="onClickScrollViewYAnimBtn">{{scrollView.yAnimation ? '关闭' : '打开'}}动画</div>
           </div>
           <div>
             <wx-component ref="scroll-view" v-if="!wxPrefix" :behavior="item" :class="item + '-x'" :scroll-into-view="'x1' + scrollView.xDest" :scroll-x="true" :scroll-with-animation="true" @scroll="onScrollViewScroll"><Inner2 type="x1"/></wx-component>
@@ -633,6 +635,8 @@ export default {
       scrollView: {
         yDest: '',
         xDest: '',
+        scrollTop: 0,
+        yAnimation: true,
       },
       pickerView: {
         years: years,
@@ -851,9 +855,23 @@ export default {
       if (domNodes[0]) {
         const wxPrefix = this.wxPrefix
         const prefix = wxPrefix === 1 ? 'y2' : wxPrefix === 2 ? 'y3' : 'y1'
+        // 会被 vue 给 diff 掉，得走 setAttribute
         domNodes[0].setAttribute('scroll-into-view', prefix + 'block3')
       }
       this.scrollView.yDest = 'block3'
+    },
+
+    onClickScrollViewYTopBtn() {
+      const domNodes = this.$refs['scroll-view'] || []
+      if (domNodes[0]) {
+        // 会被 vue 给 diff 掉，得走 setAttribute
+        domNodes[0].setAttribute('scroll-top', 120)
+      }
+      this.scrollView.scrollTop = 120
+    },
+
+    onClickScrollViewYAnimBtn() {
+      this.scrollView.yAnimation = !this.scrollView.yAnimation
     },
 
     onClickScrollViewXBtn() {
