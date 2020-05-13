@@ -4,7 +4,7 @@ var __DEFINE__ = function(modId, func, req) { var m = { exports: {}, _tempexport
 var __REQUIRE__ = function(modId, source) { if(!__MODS__[modId]) return require(source); if(!__MODS__[modId].status) { var m = __MODS__[modId].m; m._exports = m._tempexports; var desp = Object.getOwnPropertyDescriptor(m, "exports"); if (desp && desp.configurable) Object.defineProperty(m, "exports", { set: function (val) { if(typeof val === "object" && val !== m._exports) { m._exports.__proto__ = val.__proto__; Object.keys(val).forEach(function (k) { m._exports[k] = val[k]; }); } m._tempexports = val }, get: function () { return m._tempexports; } }); __MODS__[modId].status = 1; __MODS__[modId].func(__MODS__[modId].req, m, m.exports); } return __MODS__[modId].m.exports; };
 var __REQUIRE_WILDCARD__ = function(obj) { if(obj && obj.__esModule) { return obj; } else { var newObj = {}; if(obj != null) { for(var k in obj) { if (Object.prototype.hasOwnProperty.call(obj, k)) newObj[k] = obj[k]; } } newObj.default = obj; return newObj; } };
 var __REQUIRE_DEFAULT__ = function(obj) { return obj && obj.__esModule ? obj.default : obj; };
-__DEFINE__(1589351928216, function(require, module, exports) {
+__DEFINE__(1589353393367, function(require, module, exports) {
 const mp = require('miniprogram-render')
 const _ = require('./util/tool')
 const initHandle = require('./util/init-handle')
@@ -437,8 +437,8 @@ Component({
     }
 })
 
-}, function(modId) {var map = {"./util/tool":1589351928217,"./util/init-handle":1589351928254,"./util/component":1589351928219}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589351928217, function(require, module, exports) {
+}, function(modId) {var map = {"./util/tool":1589353393368,"./util/init-handle":1589353393405,"./util/component":1589353393370}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1589353393368, function(require, module, exports) {
 const mp = require('miniprogram-render')
 const initData = require('./init-data')
 const component = require('./component')
@@ -772,14 +772,14 @@ module.exports = {
     compareVersion,
 }
 
-}, function(modId) { var map = {"./init-data":1589351928218,"./component":1589351928219}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589351928218, function(require, module, exports) {
+}, function(modId) { var map = {"./init-data":1589353393369,"./component":1589353393370}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1589353393369, function(require, module, exports) {
 const component = require('./component')
 
 module.exports = component.properties
 
-}, function(modId) { var map = {"./component":1589351928219}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589351928219, function(require, module, exports) {
+}, function(modId) { var map = {"./component":1589353393370}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1589353393370, function(require, module, exports) {
 const wxComponentMap = {
     // 视图容器
     'cover-image': {
@@ -957,8 +957,8 @@ module.exports = {
     wxSubComponentMap,
 }
 
-}, function(modId) { var map = {"../component/cover-image":1589351928220,"../component/cover-view":1589351928221,"../component/movable-area":1589351928222,"../component/scroll-view":1589351928223,"../component/swiper":1589351928224,"../component/view":1589351928225,"../component/icon":1589351928226,"../component/progress":1589351928227,"../component/rich-text":1589351928228,"../component/text":1589351928229,"../component/button":1589351928230,"../component/editor":1589351928231,"../component/form":1589351928232,"../component/input":1589351928233,"../component/picker":1589351928234,"../component/picker-view":1589351928235,"../component/slider":1589351928236,"../component/switch":1589351928237,"../component/textarea":1589351928238,"../component/navigator":1589351928239,"../component/camera":1589351928240,"../component/image":1589351928241,"../component/live-player":1589351928242,"../component/live-pusher":1589351928243,"../component/video":1589351928244,"../component/map":1589351928245,"../component/canvas":1589351928246,"../component/ad":1589351928247,"../component/official-account":1589351928248,"../component/open-data":1589351928249,"../component/web-view":1589351928250,"../component/movable-view":1589351928251,"../component/swiper-item":1589351928252,"../component/picker-view-column":1589351928253}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589351928220, function(require, module, exports) {
+}, function(modId) { var map = {"../component/cover-image":1589353393371,"../component/cover-view":1589353393372,"../component/movable-area":1589353393373,"../component/scroll-view":1589353393374,"../component/swiper":1589353393375,"../component/view":1589353393376,"../component/icon":1589353393377,"../component/progress":1589353393378,"../component/rich-text":1589353393379,"../component/text":1589353393380,"../component/button":1589353393381,"../component/editor":1589353393382,"../component/form":1589353393383,"../component/input":1589353393384,"../component/picker":1589353393385,"../component/picker-view":1589353393386,"../component/slider":1589353393387,"../component/switch":1589353393388,"../component/textarea":1589353393389,"../component/navigator":1589353393390,"../component/camera":1589353393391,"../component/image":1589353393392,"../component/live-player":1589353393393,"../component/live-pusher":1589353393394,"../component/video":1589353393395,"../component/map":1589353393396,"../component/canvas":1589353393397,"../component/ad":1589353393398,"../component/official-account":1589353393399,"../component/open-data":1589353393400,"../component/web-view":1589353393401,"../component/movable-view":1589353393402,"../component/swiper-item":1589353393403,"../component/picker-view-column":1589353393404}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1589353393371, function(require, module, exports) {
 const mp = require('miniprogram-render')
 
 const {
@@ -989,7 +989,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589351928221, function(require, module, exports) {
+__DEFINE__(1589353393372, function(require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/cover-view.html
  */
@@ -1005,7 +1005,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589351928222, function(require, module, exports) {
+__DEFINE__(1589353393373, function(require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/movable-area.html
  */
@@ -1020,7 +1020,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589351928223, function(require, module, exports) {
+__DEFINE__(1589353393374, function(require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/scroll-view.html
  */
@@ -1155,7 +1155,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589351928224, function(require, module, exports) {
+__DEFINE__(1589353393375, function(require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/swiper.html
  */
@@ -1260,7 +1260,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589351928225, function(require, module, exports) {
+__DEFINE__(1589353393376, function(require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/view.html
  */
@@ -1292,7 +1292,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589351928226, function(require, module, exports) {
+__DEFINE__(1589353393377, function(require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/icon.html
  */
@@ -1317,7 +1317,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589351928227, function(require, module, exports) {
+__DEFINE__(1589353393378, function(require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/progress.html
  */
@@ -1381,7 +1381,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589351928228, function(require, module, exports) {
+__DEFINE__(1589353393379, function(require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/rich-text.html
  */
@@ -1401,7 +1401,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589351928229, function(require, module, exports) {
+__DEFINE__(1589353393380, function(require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/text.html
  */
@@ -1426,7 +1426,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589351928230, function(require, module, exports) {
+__DEFINE__(1589353393381, function(require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/button.html
  */
@@ -1559,7 +1559,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589351928231, function(require, module, exports) {
+__DEFINE__(1589353393382, function(require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/editor.html
  */
@@ -1614,7 +1614,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589351928232, function(require, module, exports) {
+__DEFINE__(1589353393383, function(require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/form.html
  *
@@ -1648,7 +1648,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589351928233, function(require, module, exports) {
+__DEFINE__(1589353393384, function(require, module, exports) {
 const mp = require('miniprogram-render')
 
 const {
@@ -1873,7 +1873,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589351928234, function(require, module, exports) {
+__DEFINE__(1589353393385, function(require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/picker.html
  */
@@ -1975,7 +1975,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589351928235, function(require, module, exports) {
+__DEFINE__(1589353393386, function(require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/picker-view.html
  */
@@ -2034,7 +2034,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589351928236, function(require, module, exports) {
+__DEFINE__(1589353393387, function(require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/slider.html
  */
@@ -2125,7 +2125,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589351928237, function(require, module, exports) {
+__DEFINE__(1589353393388, function(require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/switch.html
  */
@@ -2169,7 +2169,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589351928238, function(require, module, exports) {
+__DEFINE__(1589353393389, function(require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/textarea.html
  */
@@ -2323,7 +2323,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589351928239, function(require, module, exports) {
+__DEFINE__(1589353393390, function(require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/navigator.html
  */
@@ -2408,7 +2408,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589351928240, function(require, module, exports) {
+__DEFINE__(1589353393391, function(require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/camera.html
  */
@@ -2454,7 +2454,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589351928241, function(require, module, exports) {
+__DEFINE__(1589353393392, function(require, module, exports) {
 const mp = require('miniprogram-render')
 
 const {
@@ -2505,7 +2505,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589351928242, function(require, module, exports) {
+__DEFINE__(1589353393393, function(require, module, exports) {
 const mp = require('miniprogram-render')
 
 const {
@@ -2600,7 +2600,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589351928243, function(require, module, exports) {
+__DEFINE__(1589353393394, function(require, module, exports) {
 const mp = require('miniprogram-render')
 
 const {
@@ -2738,7 +2738,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589351928244, function(require, module, exports) {
+__DEFINE__(1589353393395, function(require, module, exports) {
 const mp = require('miniprogram-render')
 
 const {
@@ -2937,7 +2937,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589351928245, function(require, module, exports) {
+__DEFINE__(1589353393396, function(require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/map.html
  */
@@ -3156,7 +3156,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589351928246, function(require, module, exports) {
+__DEFINE__(1589353393397, function(require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/canvas.html
  */
@@ -3233,7 +3233,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589351928247, function(require, module, exports) {
+__DEFINE__(1589353393398, function(require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/ad.html
  */
@@ -3265,7 +3265,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589351928248, function(require, module, exports) {
+__DEFINE__(1589353393399, function(require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/official-account.html
  */
@@ -3283,7 +3283,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589351928249, function(require, module, exports) {
+__DEFINE__(1589353393400, function(require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/open-data.html
  */
@@ -3308,7 +3308,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589351928250, function(require, module, exports) {
+__DEFINE__(1589353393401, function(require, module, exports) {
 const mp = require('miniprogram-render')
 
 const {
@@ -3343,7 +3343,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589351928251, function(require, module, exports) {
+__DEFINE__(1589353393402, function(require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/movable-view.html
  */
@@ -3467,7 +3467,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589351928252, function(require, module, exports) {
+__DEFINE__(1589353393403, function(require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/swiper-item.html
  */
@@ -3482,7 +3482,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589351928253, function(require, module, exports) {
+__DEFINE__(1589353393404, function(require, module, exports) {
 /**
  * https://developers.weixin.qq.com/miniprogram/dev/component/picker-view-column.html
  */
@@ -3492,7 +3492,7 @@ module.exports = {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1589351928254, function(require, module, exports) {
+__DEFINE__(1589353393405, function(require, module, exports) {
 const _ = require('./tool')
 const component = require('./component')
 
@@ -3541,7 +3541,7 @@ module.exports = {
     ...handles,
 }
 
-}, function(modId) { var map = {"./tool":1589351928217,"./component":1589351928219}; return __REQUIRE__(map[modId], modId); })
-return __REQUIRE__(1589351928216);
+}, function(modId) { var map = {"./tool":1589353393368,"./component":1589353393370}; return __REQUIRE__(map[modId], modId); })
+return __REQUIRE__(1589353393367);
 })()
 //# sourceMappingURL=index.js.map
