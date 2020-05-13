@@ -1,11 +1,13 @@
 const path = require('path')
 const fs = require('fs')
+const {pack, copyFile} = require('./pack')
 
 const domSubTreeLevel = 10
 const destDir = path.resolve(__dirname, '../src/template')
 const subtreeDestPath = path.join(destDir, './subtree.wxml')
 const subtreeCoverDestPath = path.join(destDir, './subtree-cover.wxml')
 const innerComponentDestPath = path.join(destDir, './inner-component.wxml')
+const indexDestPath = path.join(destDir, '../index.wxml')
 
 /**
  * 获取 subtree.wxml 生成单次循环内容
@@ -124,9 +126,39 @@ function createInnerComponentTemplate() {
     fs.writeFileSync(innerComponentDestPath, template, 'utf8')
 }
 
+/**
+ * 生成 src/index.wxml
+ */
+function createIndexTemplate() {
+    const template = fs.readFileSync(path.join(__dirname, './index.wxml'), 'utf8')
+        .replace(/[\n\r\t]+/g, ' ')
+        .replace(/\s+/g, ' ')
+
+    // 写入文件
+    fs.writeFileSync(indexDestPath, template, 'utf8')
+}
+
 function main() {
     createSubtreeTemplate()
     createSubtreeCoverTemplate()
     createInnerComponentTemplate()
+    createIndexTemplate()
+
+    // 主组件
+    pack(path.join(__dirname, '../src/index.js'), path.join(__dirname, '../dist'))
+    copyFile(indexDestPath, path.join(__dirname, '../dist/index.wxml'))
+    copyFile(path.join(__dirname, '../src/index.json'), path.join(__dirname, '../dist/index.json'))
+    copyFile(path.join(__dirname, '../src/index.wxss'), path.join(__dirname, '../dist/index.wxss'))
+
+    // template 目录
+    copyFile(subtreeDestPath, path.join(__dirname, '../dist/template/subtree.wxml'))
+    copyFile(subtreeCoverDestPath, path.join(__dirname, '../dist/template/subtree-cover.wxml'))
+    copyFile(innerComponentDestPath, path.join(__dirname, '../dist/template/inner-component.wxml'))
+
+    // custom-component 目录
+    copyFile(path.join(__dirname, '../src/custom-component/index.wxml'), path.join(__dirname, '../dist/custom-component/index.wxml'))
+    copyFile(path.join(__dirname, '../src/custom-component/index.wxss'), path.join(__dirname, '../dist/custom-component/index.wxss'))
+    copyFile(path.join(__dirname, '../src/custom-component/index.json'), path.join(__dirname, '../dist/custom-component/index.json'))
+    copyFile(path.join(__dirname, '../src/custom-component/index.js'), path.join(__dirname, '../dist/custom-component/index.js'))
 }
 main()

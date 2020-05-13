@@ -3,7 +3,7 @@
 	"version": "1.2.17",
 	"description": "web's adapter for miniprogram",
 	"main": "src/index.js",
-	"miniprogram": "src",
+	"miniprogram": "dist",
 	"scripts": {
 		"build": "node tool/index.js",
 		"test": "jest --bail",
@@ -31,11 +31,10 @@
 		"miniprogram-render": "*"
 	},
 	"devDependencies": {
-		"jest": "^24.9.0",
-		"miniprogram-simulate": "^1.2.1"
+		"acorn": "^7.2.0",
+		"jest": "^26.0.1",
+		"miniprogram-simulate": "^1.2.1",
+		"source-map": "^0.7.3"
 	},
-	"gitHead": "fd8f52e897a2484b77c50bddae4b63fc883b9883",
-	"dependencies": {
-		"miniprogram-render": "^1.2.10"
-	}
+	"gitHead": "fd8f52e897a2484b77c50bddae4b63fc883b9883"
 }

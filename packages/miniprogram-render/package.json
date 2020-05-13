@@ -3,8 +3,9 @@
 	"version": "1.2.10",
 	"description": "web's adapter for miniprogram",
 	"main": "src/index.js",
-	"miniprogram": "src",
+	"miniprogram": "dist",
 	"scripts": {
+		"build": "node tool/index.js",
 		"test": "jest --bail",
 		"test-debug": "node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand --bail",
 		"coverage": "jest --coverage --bail"

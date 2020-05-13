@@ -1,5 +1,9 @@
 # 更新日志
 
+## 1.3.0
+
+* 对源文件进行合并打包操作
+
 ## 1.2.10
 
 * 设置 location.herf 和调用 location.replace 不触发页面刷新时，需要检测 hashchange
