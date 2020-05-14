@@ -101,25 +101,25 @@ class HTMLCanvasElement extends Element {
      * 对外属性和方法
      */
     get width() {
-        return +this.$_attrs.get('width') || 0
+        if (this.$_node) return this.$_node.width
+        else return +this.$_attrs.get('width') || 0
     }
 
     set width(value) {
         if (typeof value !== 'number' || !isFinite(value) || value < 0) return
 
-        // 如果走 setter，在没有进行过 $$prepare 时才设置到样式中
         if (this.$_node) this.$_node.width = value
         else this.$_attrs.set('width', value)
     }
 
     get height() {
-        return +this.$_attrs.get('height') || 0
+        if (this.$_node) return this.$_node.height
+        else return +this.$_attrs.get('height') || 0
     }
 
     set height(value) {
         if (typeof value !== 'number' || !isFinite(value) || value < 0) return
 
-        // 如果走 setter，在没有进行过 $$prepare 时才设置到样式中
         if (this.$_node) this.$_node.height = value
         else this.$_attrs.set('height', value)
     }
