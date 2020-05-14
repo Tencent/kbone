@@ -1,6 +1,5 @@
 const path = require('path')
 const fs = require('fs')
-const {pack, copyFile} = require('./pack')
 
 const domSubTreeLevel = 10
 const destDir = path.resolve(__dirname, '../src/template')
@@ -143,22 +142,5 @@ function main() {
     createSubtreeCoverTemplate()
     createInnerComponentTemplate()
     createIndexTemplate()
-
-    // 主组件
-    pack(path.join(__dirname, '../src/index.js'), path.join(__dirname, '../dist'))
-    copyFile(indexDestPath, path.join(__dirname, '../dist/index.wxml'))
-    copyFile(path.join(__dirname, '../src/index.json'), path.join(__dirname, '../dist/index.json'))
-    copyFile(path.join(__dirname, '../src/index.wxss'), path.join(__dirname, '../dist/index.wxss'))
-
-    // template 目录
-    copyFile(subtreeDestPath, path.join(__dirname, '../dist/template/subtree.wxml'))
-    copyFile(subtreeCoverDestPath, path.join(__dirname, '../dist/template/subtree-cover.wxml'))
-    copyFile(innerComponentDestPath, path.join(__dirname, '../dist/template/inner-component.wxml'))
-
-    // custom-component 目录
-    copyFile(path.join(__dirname, '../src/custom-component/index.wxml'), path.join(__dirname, '../dist/custom-component/index.wxml'))
-    copyFile(path.join(__dirname, '../src/custom-component/index.wxss'), path.join(__dirname, '../dist/custom-component/index.wxss'))
-    copyFile(path.join(__dirname, '../src/custom-component/index.json'), path.join(__dirname, '../dist/custom-component/index.json'))
-    copyFile(path.join(__dirname, '../src/custom-component/index.js'), path.join(__dirname, '../dist/custom-component/index.js'))
 }
 main()
