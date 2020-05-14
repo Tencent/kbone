@@ -83,16 +83,16 @@ class HTMLCanvasElement extends Element {
     /**
      * 初始化长宽
      */
-    $_initRect(fromRectSetter) {
+    $_initRect() {
         const width = parseInt(this.$_attrs.get('width'), 10)
         const height = parseInt(this.$_attrs.get('height'), 10)
 
         if (typeof width === 'number' && width >= 0) {
-            if (!fromRectSetter || (fromRectSetter && !this.$_node)) this.$_style.width = `${width}px` // 如果走 width/height setter，在没有进行过 $$prepare 时才设置到样式中
+            this.$_style.width = `${width}px`
             if (this.$_node) this.$_node.width = width
         }
         if (typeof height === 'number' && height >= 0) {
-            if (!fromRectSetter || (fromRectSetter && !this.$_node)) this.$_style.height = `${height}px` // 如果走 width/height setter，在没有进行过 $$prepare 时才设置到样式中
+            this.$_style.height = `${height}px`
             if (this.$_node) this.$_node.height = height
         }
     }
@@ -107,8 +107,9 @@ class HTMLCanvasElement extends Element {
     set width(value) {
         if (typeof value !== 'number' || !isFinite(value) || value < 0) return
 
-        this.$_attrs.set('width', value)
-        this.$_initRect(true)
+        // 如果走 setter，在没有进行过 $$prepare 时才设置到样式中
+        if (this.$_node) this.$_node.width = value
+        else this.$_attrs.set('width', value)
     }
 
     get height() {
@@ -118,8 +119,9 @@ class HTMLCanvasElement extends Element {
     set height(value) {
         if (typeof value !== 'number' || !isFinite(value) || value < 0) return
 
-        this.$_attrs.set('height', value)
-        this.$_initRect(true)
+        // 如果走 setter，在没有进行过 $$prepare 时才设置到样式中
+        if (this.$_node) this.$_node.height = value
+        else this.$_attrs.set('height', value)
     }
 
     getContext(type) {

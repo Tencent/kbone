@@ -3,6 +3,7 @@
 ## 1.4.0
 
 * 因工具调试面板 sourcemap 处理相关问题，撤销文件合并打包操作
+* 对已经执行过 $$prepare 的 canvas 节点设置 width/height 不再将其写入到 style 中
 
 ## 1.3.1
 
