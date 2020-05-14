@@ -98,6 +98,11 @@ class Attribute {
 
             map[name] = value
 
+            // canvas 如果有 node 对象，需要将 width/height 设置进去
+            if ((name === 'width' || name === 'height') && element.tagName === 'CANVAS' && element.$$node) {
+                element.$$node[name] = value
+            }
+
             // 其他字段的设置需要触发父组件更新
             this.$_doUpdate()
         }

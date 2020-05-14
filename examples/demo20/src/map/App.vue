@@ -29,6 +29,7 @@ export default {
     getChart(this.$refs.canvas, echarts, {
       width: this.width,
       height: this.height,
+      devicePixelRatio: systemInfo.devicePixelRatio,
     }).then(this.initChart)
   },
   methods: {

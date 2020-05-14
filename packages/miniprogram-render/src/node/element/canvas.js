@@ -72,6 +72,10 @@ class HTMLCanvasElement extends Element {
         })
     }
 
+    get $$node() {
+        return this.$_node
+    }
+
     /**
      * 更新父组件树
      */
@@ -89,11 +93,9 @@ class HTMLCanvasElement extends Element {
 
         if (typeof width === 'number' && width >= 0) {
             this.$_style.width = `${width}px`
-            if (this.$_node) this.$_node.width = width
         }
         if (typeof height === 'number' && height >= 0) {
             this.$_style.height = `${height}px`
-            if (this.$_node) this.$_node.height = height
         }
     }
 

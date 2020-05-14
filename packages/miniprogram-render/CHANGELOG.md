@@ -3,6 +3,7 @@
 ## 1.4.1
 
 * 对已经执行过 $$prepare 的 canvas 节点读取 width/height，直接从小程序节点中读取
+* 修复 canvas style 被改变时，会强制将 width/height 设置在 node 对象上的问题
 
 ## 1.4.0
 
