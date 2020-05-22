@@ -68,8 +68,8 @@ Component({
 
         // 监听全局事件
         this.onChildNodesUpdate = tool.throttle(this.onChildNodesUpdate.bind(this))
-        this.domNode.$$clearEvent('$$childNodesUpdate')
-        this.domNode.addEventListener('$$childNodesUpdate', this.onChildNodesUpdate)
+        this.domNode.$$clearEvent('$$childNodesUpdate', {$$namespace: 'root'})
+        this.domNode.addEventListener('$$childNodesUpdate', this.onChildNodesUpdate, {$$namespace: 'root'})
         this.onSelfNodeUpdate = tool.throttle(this.onSelfNodeUpdate.bind(this))
         this.domNode.$$clearEvent('$$domNodeUpdate')
         this.domNode.addEventListener('$$domNodeUpdate', this.onSelfNodeUpdate)

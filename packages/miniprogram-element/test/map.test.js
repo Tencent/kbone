@@ -135,7 +135,7 @@ test('map', async() => {
     await _.checkBoolean(body, node, 'enableTraffic', 'enable-traffic', false)
 
     // setting
-    expect(_.getData(body).setting).toBe(undefined)
+    expect(_.getData(body).setting).toEqual({})
     node.setAttribute('setting', {skew: 0, rotate: 0, showLocation: false})
     await _.sleep(10)
     expect(_.getData(body).setting).toEqual({skew: 0, rotate: 0, showLocation: false})

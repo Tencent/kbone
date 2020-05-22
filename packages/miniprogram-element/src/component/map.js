@@ -166,7 +166,7 @@ module.exports = {
     }, {
         name: 'setting',
         get(domNode) {
-            return dealWithReactAttr(domNode.getAttribute('setting'))
+            return dealWithReactAttr(domNode.getAttribute('setting')) || {}
         },
     }],
     handles: {
