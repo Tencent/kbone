@@ -24,6 +24,7 @@
             <wx-catch @click="onParentClick">
               <button @click="onClick">catch-inner2({{eventCount}})</button>
             </wx-catch>
+            <wx-catch>{{eventCountComputed}}</wx-catch>
             <div class="event-cnt">
               <wx-animation :class="['event-t', transition ? 'event-t-s' : 'event-t-e']" @transitionend="onTransitionEnd"></wx-animation>
               <button @click="startTranstion">transition</button>
@@ -678,6 +679,11 @@ export default {
         scale: 14,
       },
     }
+  },
+  computed: {
+    eventCountComputed() {
+      return `catch-inner3(${this.eventCount})`
+    },
   },
   watch: {
     'input.inputText'(value) {
