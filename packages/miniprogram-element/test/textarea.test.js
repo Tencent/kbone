@@ -74,6 +74,12 @@ test('textarea', async() => {
     // adjustPosition
     await _.checkBoolean(body, node, 'adjustPosition', 'adjust-position', true)
 
+    // hold-keyboard
+    await _.checkBoolean(body, node, 'holdKeyboard', 'hold-keyboard', false)
+
+    // disable-default-padding
+    await _.checkBoolean(body, node, 'disableDefaultPadding', 'disable-default-padding', false)
+
     // event
     await _.checkEvent(body.querySelector('.h5-textarea'), node, ['focus', 'blur', 'linechange', 'input', 'confirm', 'keyboardheightchange'])
 

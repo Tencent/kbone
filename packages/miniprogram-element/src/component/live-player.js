@@ -74,6 +74,23 @@ module.exports = {
             const value = domNode.getAttribute('auto-pause-if-open-native')
             return value !== undefined ? !!value : true
         },
+    }, {
+        name: 'pictureInPictureMode',
+        get(domNode) {
+            let value = domNode.getAttribute('picture-in-picture-mode')
+            if (typeof value === 'string') {
+                // react 会直接将属性值转成字符串
+                try {
+                    value = JSON.parse(value)
+                } catch (err) {
+                    value = value.split(',')
+                }
+
+                if (Array.isArray(value) && value.length === 1) value = '' + value[0]
+            }
+
+            return value
+        },
     }],
     handles: {
         onLivePlayerStateChange(evt) {
@@ -88,5 +105,16 @@ module.exports = {
             this.callSingleEvent('netstatus', evt)
         },
 
+        onLivePlayerAudioVolumeNotify(evt) {
+            this.callSingleEvent('audiovolumenotify', evt)
+        },
+
+        onLivePlayerEnterPictureInPicture(evt) {
+            this.callSingleEvent('enterpictureinpicture', evt)
+        },
+
+        onLivePlayerLeavePictureInPicture(evt) {
+            this.callSingleEvent('leavepictureinpicture', evt)
+        },
     },
 }

@@ -26,6 +26,11 @@ module.exports = {
             return domNode.getAttribute('mode') || 'scaleToFill'
         },
     }, {
+        name: 'webp',
+        get(domNode) {
+            return !!domNode.getAttribute('webp')
+        },
+    }, {
         name: 'lazyLoad',
         get(domNode) {
             return !!domNode.getAttribute('lazy-load')

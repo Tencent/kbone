@@ -17,6 +17,20 @@ module.exports = {
         get(domNode) {
             return domNode.getAttribute('lang') || 'en'
         },
+    }, {
+        name: 'defaultText',
+        get(domNode) {
+            return domNode.getAttribute('default-text') || ''
+        },
+    }, {
+        name: 'defaultAvatar',
+        get(domNode) {
+            return domNode.getAttribute('default-avatar') || ''
+        },
     }],
-    handles: {},
+    handles: {
+        onOpenDataError(evt) {
+            this.callSingleEvent('error', evt)
+        },
+    },
 }

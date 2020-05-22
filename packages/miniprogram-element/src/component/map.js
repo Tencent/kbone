@@ -127,6 +127,11 @@ module.exports = {
             return !!domNode.getAttribute('show-compass')
         },
     }, {
+        name: 'showScale',
+        get(domNode) {
+            return !!domNode.getAttribute('show-scale')
+        },
+    }, {
         name: 'enableOverlooking',
         get(domNode) {
             return !!domNode.getAttribute('enable-overlooking')
@@ -157,6 +162,11 @@ module.exports = {
         name: 'enableTraffic',
         get(domNode) {
             return !!domNode.getAttribute('enable-traffic')
+        },
+    }, {
+        name: 'setting',
+        get(domNode) {
+            return dealWithReactAttr(domNode.getAttribute('setting'))
         },
     }],
     handles: {

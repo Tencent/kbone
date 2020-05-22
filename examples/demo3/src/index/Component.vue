@@ -713,6 +713,8 @@ export default {
 
     const canvas = this.$refs.canvas[0]
     canvas.$$prepare().then(domNode => {
+      domNode.width = 300
+      domNode.height = 200
       const context = domNode.getContext('2d')
 
       context.strokeStyle = '#00ff00'

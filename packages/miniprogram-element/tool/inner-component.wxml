@@ -162,6 +162,7 @@
         background-color="{{backgroundColor}}"
         active="{{active}}"
         active-mode="{{activeMode}}"
+        duration="{{duration}}"
         bindactiveend="onProgressActiveEnd"
     ></progress>
 </template>
@@ -352,6 +353,7 @@
         selection-start="{{selectionStart}}"
         selection-end="{{selectionEnd}}"
         adjust-position="{{adjustPosition}}"
+        hold-keyboard="{{holdKeyboard}}"
         bindinput="onInputInput"
         bindfocus="onInputFocus"
         bindblur="onInputBlur"
@@ -373,6 +375,7 @@
         bindtouchcancel="onTouchCancel"
         bindtap="onTap"
 
+        header-text="{{headerText}}"
         mode="{{mode}}"
         disabled="{{disabled}}"
         range="{{range}}"
@@ -468,6 +471,8 @@
         selection-start="{{selectionStart}}"
         selection-end="{{selectionEnd}}"
         adjust-position="{{adjustPosition}}"
+        hold-keyboard="{{holdKeyboard}}"
+        disable-default-padding="{{disableDefaultPadding}}"
         bindfocus="onTextareaFocus"
         bindblur="onTextareaBlur"
         bindlinechange="onTextareaLineChange"
@@ -524,6 +529,7 @@
         bindtap="onTap"
 
         mode="{{mode}}"
+        resolution="{{resolution}}"
         device-position="{{devicePosition}}"
         flash="{{flash}}"
         frame-size="{{frameSize}}"
@@ -550,6 +556,7 @@
         rendering-mode="{{renderingMode}}"
         src="{{src}}"
         mode="{{mode}}"
+        webp="{{webp}}"
         lazy-load="{{lazyLoad}}"
         show-menu-by-longpress="{{showMenuByLongpress}}"
         bindload="onImageLoad"
@@ -582,9 +589,13 @@
         sound-mode="{{soundMode}}"
         auto-pause-if-navigate="{{autoPauseIfNavigate}}"
         auto-pause-if-open-native="{{autoPauseIfOpenNative}}"
+        picture-in-picture-mode="{{pictureInPictureMode}}"
         bindstatechange="onLivePlayerStateChange"
         bindfullscreenchange="onLivePlayerFullScreenChange"
         bindnetstatus="onLivePlayerNetStatus"
+        bindaudiovolumenotify="onLivePlayerAudioVolumeNotify"
+        bindenterpictureinpicture="onLivePlayerEnterPictureInPicture"
+        bindleavepictureinpicture="onLivePlayerLeavePictureInPicture"
     ><element wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{true}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element></live-player>
 </template>
 <template name="live-pusher">
@@ -619,6 +630,15 @@
         device-position="{{devicePosition}}"
         background-mute="{{backgroundMute}}"
         mirror="{{mirror}}"
+        remote-mirror="{{remoteMirror}}"
+        local-mirror="{{localMirror}}"
+        audio-reverb-type="{{audioReverbType}}"
+        enable-mic="{{enableMic}}"
+        enable-agc="{{enableAgc}}"
+        enable-ans="{{enableAns}}"
+        audio-volume-type="{{audioVolumeType}}"
+        video-width="{{videoWidth}}"
+        video-height="{{videoHeight}}"
         bindstatechange="onLivePusherStateChange"
         bindnetstatus="onLivePusherNetStatus"
         binderror="onLivePusherError"
@@ -628,6 +648,7 @@
     ><element wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{true}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element></live-pusher>
 </template>
 <template name="video">
+    <!-- pictureInPictureShowProgress 因为编译器限制了属性长度，所以暂时用驼峰式写法 -->
     <video 
         id="{{id}}"
         class="{{className}}"
@@ -667,6 +688,13 @@
         auto-pause-if-open-native="{{autoPauseIfOpenNative}}"
         vslide-gesture="{{vslideGesture}}"
         vslide-gesture-in-fullscreen="{{vslideGestureInFullscreen}}"
+        ad-unit-id="{{adUnitId}}"
+        poster-for-crawler="{{posterForCrawler}}"
+        show-casting-button="{{showCastingButton}}"
+        picture-in-picture-mode="{{pictureInPictureMode}}"
+        pictureInPictureShowProgress="{{pictureInPictureShowProgress}}"
+        enable-auto-rotation="{{enableAutoRotation}}"
+        show-screen-lock-button="{{showScreenLockButton}}"
         bindplay="onVideoPlay"
         bindpause="onVideoPause"
         bindended="onVideoEnded"
@@ -675,6 +703,10 @@
         bindwaiting="onVideoWaiting"
         binderror="onVideoError"
         bindprogress="onVideoProgress"
+        bindloadedmetadata="onVideoLoadedMetaData"
+        bindcontrolstoggle="onVideoControlsToggle"
+        bindenterpictureinpicture="onVideoEnterPictureInPicture"
+        bindleavepictureinpicture="onVideoLeavePictureInPicture"
     ><element wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element></video>
 </template>
 <!-- 地图 -->
@@ -708,12 +740,14 @@
         skew="{{skew}}"
         enable-3D="{{enable3D}}"
         show-compass="{{showCompass}}"
+        show-scale="{{showScale}}"
         enable-overlooking="{{enableOverlooking}}"
         enable-zoom="{{enableZoom}}"
         enable-scroll="{{enableScroll}}"
         enable-rotate="{{enableRotate}}"
         enable-satellite="{{enableSatellite}}"
         enable-traffic="{{enableTraffic}}"
+        setting="{{setting}}"
         bindtap="onMapTap"
         bindmarkertap="onMapMarkerTap"
         bindlabeltap="onMapLabelTap"
@@ -780,6 +814,8 @@
         
         unit-id="{{unitId}}"
         ad-intervals="{{adIntervals}}"
+        ad-type="{{adType}}"
+        ad-theme="{{adTheme}}"
         bindload="onAdLoad"
         binderror="onAdError"
         bindclose="onAdClose"
@@ -820,6 +856,9 @@
         type="{{type}}"
         open-gid="{{openGid}}"
         lang="{{lang}}"
+        default-text="{{defaultText}}"
+        default-avatar="{{defaultAvatar}}"
+        binderror="onOpenDataError"
     ></open-data>
 </template>
 <template name="web-view">

@@ -113,6 +113,9 @@ test('input', async() => {
     // adjustPosition
     await _.checkBoolean(body, node, 'adjustPosition', 'adjust-position', true)
 
+    // holdKeyboard
+    await _.checkBoolean(body, node, 'holdKeyboard', 'hold-keyboard', false)
+
     // checked
     await _.checkBoolean(body, node, 'checked', 'checked', false)
 

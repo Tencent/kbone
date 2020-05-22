@@ -30,6 +30,9 @@ test('image', async() => {
     // mode
     await _.checkString(body, node, 'mode', 'mode', 'scaleToFill')
 
+    // webp
+    await _.checkBoolean(body, node, 'webp', 'webp', false)
+
     // lazyLoad
     await _.checkBoolean(body, node, 'lazyLoad', 'lazy-load', false)
 

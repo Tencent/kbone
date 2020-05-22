@@ -30,6 +30,15 @@ test('open-data', async() => {
     // lang
     await _.checkString(body, node, 'lang', 'lang', 'en')
 
+    // defaultText
+    await _.checkString(body, node, 'defaultText', 'default-text', '')
+
+    // defaultAvatar
+    await _.checkString(body, node, 'defaultAvatar', 'default-avatar', '')
+
+    // event
+    await _.checkEvent(body.querySelector('.h5-wx-component'), node, ['error'])
+
     page.document.body.removeChild(node)
     document.body.removeChild(wrapper)
 })

@@ -75,6 +75,34 @@ test('live-pusher', async() => {
     // mirror
     await _.checkBoolean(body, node, 'mirror', 'mirror', false)
 
+    // remoteMirror
+    await _.checkBoolean(body, node, 'remoteMirror', 'remote-mirror', false)
+
+    // localMirror
+    await _.checkString(body, node, 'localMirror', 'local-mirror', 'auto')
+
+    // audioReverbType
+    await _.checkNumber(body, node, 'audioReverbType', 'audio-reverb-type', 0)
+
+    // enableMic
+    await _.checkBoolean(body, node, 'enableMic', 'enable-mic', true)
+
+    // enableAgc
+    await _.checkBoolean(body, node, 'enableAgc', 'enable-agc', false)
+
+    // enableAns
+    await _.checkBoolean(body, node, 'enableAns', 'enable-ans', false)
+
+    // audioVolumeType
+    await _.checkString(body, node, 'audioVolumeType', 'audio-volume-type', 'voicecall')
+
+    // videoWidth
+    await _.checkNumber(body, node, 'videoWidth', 'video-width', 360)
+
+    // videoHeight
+    await _.checkNumber(body, node, 'videoHeight', 'video-height', 640)
+
+
     // event
     await _.checkEvent(body.querySelector('.h5-wx-component'), node, ['statechange', 'netstatus', 'error', 'bgmstart', 'bgmprogress', 'bgmcomplete'])
 

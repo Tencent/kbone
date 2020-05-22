@@ -57,8 +57,23 @@ test('live-player', async() => {
     // autoPauseIfOpenNative
     await _.checkBoolean(body, node, 'autoPauseIfOpenNative', 'auto-pause-if-open-native', true)
 
+    // pictureInPictureMode
+    expect(_.getData(body).pictureInPictureMode).toBe(undefined)
+    node.setAttribute('picture-in-picture-mode', '')
+    await _.sleep(10)
+    await _.checkString(body, node, 'pictureInPictureMode', 'picture-in-picture-mode', '')
+    node.setAttribute('picture-in-picture-mode', ['push', 'pop'])
+    await _.sleep(10)
+    expect(_.getData(body).pictureInPictureMode).toEqual(['push', 'pop'])
+    node.setAttribute('picture-in-picture-mode', JSON.stringify(['pop', 'push']))
+    await _.sleep(10)
+    expect(_.getData(body).pictureInPictureMode).toEqual(['pop', 'push'])
+    node.setAttribute('picture-in-picture-mode', ['push', 'pop'].toString())
+    await _.sleep(10)
+    expect(_.getData(body).pictureInPictureMode).toEqual(['push', 'pop'])
+
     // event
-    await _.checkEvent(body.querySelector('.h5-wx-component'), node, ['statechange', 'fullscreenchange', 'netstatus'])
+    await _.checkEvent(body.querySelector('.h5-wx-component'), node, ['statechange', 'fullscreenchange', 'netstatus', 'audiovolumenotify', 'enterpictureinpicture', 'leavepictureinpicture'])
 
     page.document.body.removeChild(node)
     document.body.removeChild(wrapper)

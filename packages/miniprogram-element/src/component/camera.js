@@ -8,6 +8,11 @@ module.exports = {
             return domNode.getAttribute('mode') || 'normal'
         },
     }, {
+        name: 'resolution',
+        get(domNode) {
+            return domNode.getAttribute('resolution') || 'medium'
+        },
+    }, {
         name: 'devicePosition',
         get(domNode) {
             return domNode.getAttribute('device-position') || 'back'

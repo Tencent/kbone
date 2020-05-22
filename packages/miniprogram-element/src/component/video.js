@@ -151,6 +151,53 @@ module.exports = {
             const value = domNode.getAttribute('vslide-gesture-in-fullscreen')
             return value !== undefined ? !!value : true
         },
+    }, {
+        name: 'adUnitId',
+        get(domNode) {
+            return domNode.getAttribute('ad-unit-id') || ''
+        },
+    }, {
+        name: 'posterForCrawler',
+        get(domNode) {
+            return domNode.getAttribute('poster-for-crawler') || ''
+        },
+    }, {
+        name: 'showCastingButton',
+        get(domNode) {
+            return !!domNode.getAttribute('show-casting-button')
+        },
+    }, {
+        name: 'pictureInPictureMode',
+        get(domNode) {
+            let value = domNode.getAttribute('picture-in-picture-mode')
+            if (typeof value === 'string') {
+                // react 会直接将属性值转成字符串
+                try {
+                    value = JSON.parse(value)
+                } catch (err) {
+                    value = value.split(',')
+                }
+
+                if (Array.isArray(value) && value.length === 1) value = '' + value[0]
+            }
+
+            return value
+        },
+    }, {
+        name: 'pictureInPictureShowProgress',
+        get(domNode) {
+            return !!domNode.getAttribute('picture-in-picture-show-progress')
+        },
+    }, {
+        name: 'enableAutoRotation',
+        get(domNode) {
+            return !!domNode.getAttribute('enable-auto-rotation')
+        },
+    }, {
+        name: 'showScreenLockButton',
+        get(domNode) {
+            return !!domNode.getAttribute('show-screen-lock-button')
+        },
     }],
     handles: {
         onVideoPlay(evt) {
@@ -191,6 +238,22 @@ module.exports = {
 
             domNode.$$setAttributeWithoutUpdate('buffered', evt.detail.buffered)
             this.callSingleEvent('progress', evt)
+        },
+
+        onVideoLoadedMetaData(evt) {
+            this.callSingleEvent('loadedmetadata', evt)
+        },
+
+        onVideoControlsToggle(evt) {
+            this.callSingleEvent('controlstoggle', evt)
+        },
+
+        onVideoEnterPictureInPicture(evt) {
+            this.callSingleEvent('enterpictureinpicture', evt)
+        },
+
+        onVideoLeavePictureInPicture(evt) {
+            this.callSingleEvent('leavepictureinpicture', evt)
         },
     },
 }
