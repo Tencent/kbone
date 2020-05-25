@@ -1,5 +1,9 @@
 # 更新日志
 
+## 0.9.15
+
+* 支持 document.documentElement.scrollTop
+
 ## 0.9.14
 
 * 支持 window.$$getOpenerEventChannel

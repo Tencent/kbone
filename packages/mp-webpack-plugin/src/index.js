@@ -202,7 +202,7 @@ class MpPlugin {
                 let reachBottomFunction = ''
                 let pullDownRefreshFunction = ''
                 if (addPageScroll) {
-                    pageScrollFunction = () => 'onPageScroll({ scrollTop }) {if (this.window) {this.window.document.documentElement.scrollTop = scrollTop || 0;this.window.$$trigger(\'scroll\');}},'
+                    pageScrollFunction = () => 'onPageScroll({ scrollTop }) {if (this.window) {this.window.document.documentElement.$$scrollTop = scrollTop || 0;this.window.$$trigger(\'scroll\');}},'
                 }
                 if (reachBottom) {
                     reachBottomFunction = () => 'onReachBottom() {if (this.window) {this.window.$$trigger(\'reachbottom\');}},'

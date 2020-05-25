@@ -99,7 +99,6 @@ class Document extends EventTarget {
             type: Node.DOCUMENT_NODE,
         })
         this.$_node.$$updateParent(this) // documentElement 的 parentNode 是 document
-        this.$_node.scrollTop = 0
 
         // head 元素
         this.$_head = this.createElement('head')

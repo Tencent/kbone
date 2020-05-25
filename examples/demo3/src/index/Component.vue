@@ -1070,16 +1070,6 @@ textarea .wx-comp-textarea {
   display: inline-block;
 }
 
-button {
-  display: block;
-  width: 100%;
-  height: 30px;
-  line-height: 30px;
-  text-align: center;
-  font-size: 20px;
-  border: 1px solid #ddd;
-}
-
 .swiper {
   display: block;
   height: 150px;

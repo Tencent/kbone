@@ -164,6 +164,12 @@ global.wx = {
             complete()
         }
     },
+    pageScrollTo(options) {
+        expect(options.duration).toBe(0)
+        expect(options.scrollTop).toBe(global.testScrollTop)
+
+        global.testNextScrollTop = global.testScrollTop
+    },
 }
 
 const currentPages = []

@@ -1,5 +1,9 @@
 # 更新日志
 
+## 1.4.3
+
+* 支持 document.documentElement.scrollTop
+
 ## 1.4.2
 
 * 修复部分内置组件第一级子节点更新不正确的问题

@@ -47,6 +47,9 @@ class Element extends Node {
         this.$_style = null
         this.$_attrs = null
 
+        this.$$scrollTop = 0
+        this.$$scrollTimeStamp = 0 // 最近一次滚动事件触发的时间戳
+
         this.$_initAttrs(options.attrs)
 
         // 补充实例的属性，用于 'xxx' in XXX 判断
@@ -74,6 +77,9 @@ class Element extends Node {
         this.$_classList = null
         this.$_style = null
         this.$_attrs = null
+
+        this.$$scrollTop = 0
+        this.$$scrollTimeStamp = 0
     }
 
     /**
@@ -654,6 +660,20 @@ class Element extends Node {
     set src(value) {
         value = '' + value
         this.$_attrs.set('src', value)
+    }
+
+    get scrollTop() {
+        // 只有配置了 windowScroll 才能拿到准确值；如果没有配置，则需要通过 document.body.$$getBoundingClientRect 来获取准确值
+        return this.$$scrollTop
+    }
+
+    set scrollTop(value) {
+        if (this.$_tagName !== 'html') return // 只有 document.documentElement 支持设置 scrollTop
+        if (+new Date() - this.$$scrollTimeStamp < 500) return // 为了兼容 mp-webpack-plugin@0.9.14 及以前的版本，在滚动事件触发后的 500ms 内，设置 scrollTop 不予处理
+
+        value = parseInt(value, 10)
+        wx.pageScrollTo({scrollTop: value, duration: 0})
+        this.$$scrollTop = value
     }
 
     cloneNode(deep) {
