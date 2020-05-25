@@ -6,6 +6,7 @@ const destDir = path.resolve(__dirname, '../src/template')
 const subtreeDestPath = path.join(destDir, './subtree.wxml')
 const subtreeCoverDestPath = path.join(destDir, './subtree-cover.wxml')
 const innerComponentDestPath = path.join(destDir, './inner-component.wxml')
+const indexDestPath = path.join(destDir, '../index.wxml')
 
 /**
  * 获取 subtree.wxml 生成单次循环内容
@@ -16,7 +17,7 @@ function getSubtreeSimple(i) {
     const isFirst = i === 1
     const subContent = [
         `<block wx:if="{{${itemName}.type === 'text'}}">{{${itemName}.content}}</block>`,
-        `<image wx:elif="{{${itemName}.isImage}}" data-private-node-id="{{${itemName}.nodeId}}" data-private-page-id="{{${itemName}.pageId}}" id="{{${itemName}.id}}" class="{{${itemName}.className || ''}}" style="{{${itemName}.style || ''}}" src="{{${itemName}.src}}" rendering-mode="{{${itemName}.mode ? 'backgroundImage' : 'img'}}" mode="{{${itemName}.mode}}" lazy-load="{{${itemName}.lazyLoad}}" show-menu-by-longpress="{{${itemName}.showMenuByLongpress}}" bindtouchstart="onTouchStart" bindtouchmove="onTouchMove" bindtouchend="onTouchEnd" bindtouchcancel="onTouchCancel" bindtap="onTap" bindload="onImgLoad" binderror="onImgError"></image>`,
+        `<image wx:elif="{{${itemName}.isImage}}" data-private-node-id="{{${itemName}.nodeId}}" data-private-page-id="{{${itemName}.pageId}}" id="{{${itemName}.id}}" class="{{${itemName}.className || ''}}" style="{{${itemName}.style || ''}}" src="{{${itemName}.src}}" rendering-mode="{{${itemName}.mode ? 'backgroundImage' : 'img'}}" mode="{{${itemName}.mode}}" webp="{{${itemName}.webp}}" lazy-load="{{${itemName}.lazyLoad}}" show-menu-by-longpress="{{${itemName}.showMenuByLongpress}}" bindtouchstart="onTouchStart" bindtouchmove="onTouchMove" bindtouchend="onTouchEnd" bindtouchcancel="onTouchCancel" bindtap="onTap" bindload="onImgLoad" binderror="onImgError"></image>`,
         `<template wx:elif="{{${itemName}.useTemplate}}" is="{{${itemName}.extra.wxCompName}}" data="{{...${itemName}.extra}}"/>`,
         `<view wx:elif="{{${itemName}.isLeaf${isLast ? '' : ' || ' + itemName + '.isSimple'}}}" data-private-node-id="{{${itemName}.nodeId}}" data-private-page-id="{{${itemName}.pageId}}" id="{{${itemName}.id}}" class="{{${itemName}.className || ''}}" style="{{${itemName}.style || ''}}" bindtouchstart="onTouchStart" bindtouchmove="onTouchMove" bindtouchend="onTouchEnd" bindtouchcancel="onTouchCancel" bindtap="onTap">{{${itemName}.content}}${isLast ? '</view>' : ''}`
     ]
@@ -124,9 +125,22 @@ function createInnerComponentTemplate() {
     fs.writeFileSync(innerComponentDestPath, template, 'utf8')
 }
 
+/**
+ * 生成 src/index.wxml
+ */
+function createIndexTemplate() {
+    const template = fs.readFileSync(path.join(__dirname, './index.wxml'), 'utf8')
+        .replace(/[\n\r\t]+/g, ' ')
+        .replace(/\s+/g, ' ')
+
+    // 写入文件
+    fs.writeFileSync(indexDestPath, template, 'utf8')
+}
+
 function main() {
     createSubtreeTemplate()
     createSubtreeCoverTemplate()
     createInnerComponentTemplate()
+    createIndexTemplate()
 }
 main()

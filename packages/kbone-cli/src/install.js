@@ -31,6 +31,6 @@ function secede(line, done) {
     })
 
     line.on('error', function(reason) {
-        console.log('An error occured while executing the NPM command.', reason)
+        console.log('An error occurred while executing the NPM command.', reason)
     })
 }

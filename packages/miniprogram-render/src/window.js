@@ -122,6 +122,13 @@ class Window extends EventTarget {
                 currentTarget: this,
             })
         })
+
+        // 监听滚动事件
+        this.addEventListener('scroll', () => {
+            const document = this.document
+            // 记录最近一次滚动事件触发的时间戳
+            if (document) document.documentElement.$$scrollTimeStamp = +new Date()
+        })
     }
 
     /**

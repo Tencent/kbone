@@ -1,5 +1,22 @@
 # 更新日志
 
+## 0.9.15
+
+* 支持 document.documentElement.scrollTop
+
+## 0.9.14
+
+* 支持 window.$$getOpenerEventChannel
+
+## 0.9.12
+
+* 支持 document 的 visibilitychange 事件
+
+## 0.9.9
+
+* 自动构建 npm 逻辑支持检测 npm 包是否已被安装进而跳过此过程
+* 构建时自动删除 wxss 不支持的 ~ 选择器相关样式
+
 ## 0.9.8
 
 * 支持获取第三方自定义组件的实例

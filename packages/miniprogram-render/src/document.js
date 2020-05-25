@@ -103,7 +103,6 @@ class Document extends EventTarget {
             type: Node.DOCUMENT_NODE,
         })
         this.$_node.$$updateParent(this) // documentElement 的 parentNode 是 document
-        this.$_node.scrollTop = 0
 
         // head 元素
         this.$_head = this.createElement('head')
@@ -154,6 +153,13 @@ class Document extends EventTarget {
     get $$notNeedPrefix() {
         if (!this.$_config) this.$_config = cache.getConfig()
         return this.$_config && this.$_config.runtime && this.$_config.runtime.wxComponent === 'noprefix'
+    }
+
+    /**
+     * 设置页面显示状态
+     */
+    set $$visibilityState(value) {
+        this.$_visibilityState = value
     }
 
     /**
@@ -281,6 +287,14 @@ class Document extends EventTarget {
         if (!value || typeof value !== 'string') return
 
         this.$_cookie.setCookie(value, this.URL)
+    }
+
+    get visibilityState() {
+        return this.$_visibilityState
+    }
+
+    get hidden() {
+        return this.$_visibilityState === 'visible'
     }
 
     getElementById(id) {

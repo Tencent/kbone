@@ -202,7 +202,7 @@ class MpPlugin {
                 let reachBottomFunction = ''
                 let pullDownRefreshFunction = ''
                 if (addPageScroll) {
-                    pageScrollFunction = () => 'onPageScroll({ scrollTop }) {if (this.window) {this.window.document.documentElement.scrollTop = scrollTop || 0;this.window.$$trigger(\'scroll\');}},'
+                    pageScrollFunction = () => 'onPageScroll({ scrollTop }) {if (this.window) {this.window.document.documentElement.$$scrollTop = scrollTop || 0;this.window.$$trigger(\'scroll\');}},'
                 }
                 if (reachBottom) {
                     reachBottomFunction = () => 'onReachBottom() {if (this.window) {this.window.$$trigger(\'reachbottom\');}},'
@@ -452,18 +452,22 @@ class MpPlugin {
             }
         })
 
-        const hasBuiltNpm = false
+        let hasBuiltNpm = false
         compiler.hooks.done.tapAsync(PluginName, (stats, callback) => {
             // 处理自动安装小程序依赖
             const autoBuildNpm = generateConfig.autoBuildNpm || false
             const distDir = path.dirname(stats.compilation.outputOptions.path)
 
-            if (hasBuiltNpm || !autoBuildNpm) return callback()
+            hasBuiltNpm = _.isFileExisted(path.resolve(distDir, './node_modules/miniprogram-element/package.json')) && _.isFileExisted(path.resolve(distDir, './node_modules/miniprogram-render/package.json'))
+
+            if (hasBuiltNpm || !autoBuildNpm) {
+                if (hasBuiltNpm) console.log(colors.bold('\ndependencies has been built\n'))
+                return callback()
+            }
 
             const build = () => {
-                ['miniprogram-element', 'miniprogram-render'].forEach(name => {
-                    _.copyDir(path.resolve(distDir, `./node_modules/${name}/src`), path.resolve(distDir, `./miniprogram_npm/${name}`))
-                })
+                _.copyDir(path.resolve(distDir, './node_modules/miniprogram-element/src'), path.resolve(distDir, './miniprogram_npm/miniprogram-element'))
+                _.copyDir(path.resolve(distDir, './node_modules/miniprogram-render/src'), path.resolve(distDir, './miniprogram_npm/miniprogram-render'))
                 callback()
             }
             console.log(colors.bold('\nstart building dependencies...\n'))

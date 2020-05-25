@@ -27,6 +27,12 @@ test('ad', async() => {
     // adIntervals
     await _.checkNumber(body, node, 'adIntervals', 'ad-intervals', 0)
 
+    // adType
+    await _.checkString(body, node, 'adType', 'ad-type', 'banner')
+
+    // adTheme
+    await _.checkString(body, node, 'adTheme', 'ad-theme', 'white')
+
     // event
     await _.checkEvent(body.querySelector('.h5-wx-component'), node, ['load', 'error', 'close'])
 

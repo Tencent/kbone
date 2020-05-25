@@ -79,7 +79,7 @@ function init(args) {
                         })
                         process.chdir(customPrjName || '.')
 
-                        // install ndoe package modules
+                        // install node package modules
                         info(
                             '正在安装依赖',
                             '你可以使用 ctrl + c 退出，然后自行安装。'

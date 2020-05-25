@@ -2,6 +2,7 @@ const Element = require('../element')
 const Location = require('../../bom/location')
 const cache = require('../../util/cache')
 const Pool = require('../../util/pool')
+const tool = require('../../util/tool')
 
 const pool = new Pool()
 
@@ -73,10 +74,10 @@ class HTMLAnchorElement extends Element {
      */
     $$dealWithAttrsForGenerateHtml(html, node) {
         const href = node.href
-        if (href) html += ` href="${href}"`
+        if (href) html += ` href="${tool.escapeForHtmlGeneration(href)}"`
 
         const target = node.target
-        if (target) html += ` target="${target}"`
+        if (target) html += ` target="${tool.escapeForHtmlGeneration(target)}"`
 
         return html
     }

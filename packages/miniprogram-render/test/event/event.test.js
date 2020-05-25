@@ -173,10 +173,10 @@ test('event', () => {
 
     document.removeEventListener('click', onDocEvent2, true)
     a.removeEventListener('click', onAEvent2, true)
-    c.removeEventListener('click', onCEvent2, true)
+    c.removeEventListener('click', onCEvent2, {capture: true})
     document.removeEventListener('click', onDocEvent3)
     a.removeEventListener('click', onAEvent3)
-    b.removeEventListener('click', onBEvent3)
+    b.removeEventListener('click', onBEvent3, {capture: false})
     c.removeEventListener('click', onCEvent3)
 
     // stopImmediatePropagation

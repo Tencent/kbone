@@ -75,7 +75,9 @@ class History extends EventTarget {
             if (next >= 0 && next < this.$_stack.length && this.$_currentIndex !== next) {
                 this.$_currentIndex = next
                 // 替换 href，但不做跳转（理论上此处应该做跳转，但是在小程序环境里不适合）
+                this.$_location.$$startCheckHash()
                 this.$_location.$$setHrefWithoutCheck(this.$_stack[this.$_currentIndex].url)
+                this.$_location.$$endCheckHash(true) // 因为不跳转，所以要强制触发 hashchange 检测
 
                 this.$$trigger('popstate', {
                     event: {

@@ -48,7 +48,6 @@ module.exports = {
         },
     }, {
         name: 'scale',
-        canBeUserChanged: true,
         get(domNode) {
             return !!domNode.getAttribute('scale')
         },
@@ -66,6 +65,7 @@ module.exports = {
         },
     }, {
         name: 'scaleValue',
+        canBeUserChanged: true,
         get(domNode) {
             const value = parseFloat(domNode.getAttribute('scale-value'))
             return !isNaN(value) ? value : 1

@@ -12,7 +12,7 @@ const {
     wxSubComponentMap,
 } = component
 
-const ELEMENT_DIFF_KEYS = ['nodeId', 'pageId', 'tagName', 'compName', 'id', 'className', 'style', 'src', 'mode', 'lazyLoad', 'showMenuByLongpress', 'useTemplate', 'isImage', 'isLeaf', 'isSimple', 'content', 'extra']
+const ELEMENT_DIFF_KEYS = ['nodeId', 'pageId', 'tagName', 'compName', 'id', 'className', 'style', 'src', 'mode', 'webp', 'lazyLoad', 'showMenuByLongpress', 'useTemplate', 'isImage', 'isLeaf', 'isSimple', 'content', 'extra']
 const TEXT_NODE_DIFF_KEYS = ['nodeId', 'pageId', 'content']
 const NEET_SPLIT_CLASS_STYLE_FROM_CUSTOM_ELEMENT = ['WX-COMPONENT', 'WX-CUSTOM-COMPONENT'] // 需要分离 class 和 style 的节点
 const NEET_BEHAVIOR_NORMAL_CUSTOM_ELEMENT_PARENT = ['swiper', 'movable-area']
@@ -74,6 +74,7 @@ function filterNodes(domNode, level, component) {
         if (domInfo.isImage) {
             domInfo.src = child.src ? tool.completeURL(child.src, window.location.origin, true) : ''
             domInfo.mode = child.getAttribute('mode') || ''
+            domInfo.webp = !!child.getAttribute('webp')
             domInfo.lazyLoad = !!child.getAttribute('lazy-load')
             domInfo.showMenuByLongpress = !!child.getAttribute('show-menu-by-longpress')
         }
@@ -235,8 +236,8 @@ function dealWithLeafAndSimple(childNodes, onChildNodesUpdate) {
             const childNode = Object.assign({}, originChildNode)
 
             if (childNode.isImage || childNode.isLeaf || childNode.isSimple || childNode.useTemplate) {
-                childNode.domNode.$$clearEvent('$$childNodesUpdate')
-                childNode.domNode.addEventListener('$$childNodesUpdate', onChildNodesUpdate)
+                childNode.domNode.$$clearEvent('$$childNodesUpdate', {$$namespace: 'child'})
+                childNode.domNode.addEventListener('$$childNodesUpdate', onChildNodesUpdate, {$$namespace: 'child'})
             }
 
             delete childNode.domNode

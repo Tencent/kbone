@@ -1,5 +1,46 @@
 # 更新日志
 
+## 1.4.3
+
+* 支持 document.documentElement.scrollTop
+* 对生成 innerHTML/outerHTML 时节点属性值里 `"` 进行实体字符替换
+
+## 1.4.2
+
+* 修复部分内置组件第一级子节点更新不正确的问题
+
+## 1.4.1
+
+* 对已经执行过 $$prepare 的 canvas 节点读取 width/height，直接从小程序节点中读取
+* 修复 canvas style 被改变时，会强制将 width/height 设置在 node 对象上的问题
+
+## 1.4.0
+
+* 因工具调试面板 sourcemap 处理相关问题，撤销文件合并打包操作
+* 对已经执行过 $$prepare 的 canvas 节点设置 width/height 不再将其写入到 style 中
+
+## 1.3.1
+
+* 修复生成的代码无法通过代码保护的问题
+
+## 1.3.0
+
+* 对源文件进行合并打包操作
+
+## 1.2.10
+
+* 设置 location.herf 和调用 location.replace 不触发页面刷新时，需要检测 hashchange
+* 调用 history.back/history.forward/history.go 时，需要检测 hashchange
+
+## 1.2.7
+
+* 支持 document.visibilityState
+* 支持 document.hidden
+
+## 1.2.6
+
+* storage 事件对齐 Web 端表现
+
 ## 1.2.0
 
 * 支持跨页面通信

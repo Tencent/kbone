@@ -21,6 +21,9 @@ test('picker', async() => {
     page.document.body.appendChild(node)
     await _.sleep(10)
 
+    // header-text
+    await _.checkString(body, node, 'headerText', 'header-text', '')
+
     // mode
     await _.checkString(body, node, 'mode', 'mode', 'selector')
 

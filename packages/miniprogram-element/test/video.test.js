@@ -106,8 +106,41 @@ test('video', async() => {
     // vslideGestureInFullscreen
     await _.checkBoolean(body, node, 'vslideGestureInFullscreen', 'vslide-gesture-in-fullscreen', true)
 
+    // adUnitId
+    await _.checkString(body, node, 'adUnitId', 'ad-unit-id', '')
+
+    // posterForCrawler
+    await _.checkString(body, node, 'posterForCrawler', 'poster-for-crawler', '')
+
+    // showCastingButton
+    await _.checkBoolean(body, node, 'showCastingButton', 'show-casting-button', false)
+
+    // pictureInPictureMode
+    expect(_.getData(body).pictureInPictureMode).toBe(undefined)
+    node.setAttribute('picture-in-picture-mode', '')
+    await _.sleep(10)
+    await _.checkString(body, node, 'pictureInPictureMode', 'picture-in-picture-mode', '')
+    node.setAttribute('picture-in-picture-mode', ['push', 'pop'])
+    await _.sleep(10)
+    expect(_.getData(body).pictureInPictureMode).toEqual(['push', 'pop'])
+    node.setAttribute('picture-in-picture-mode', JSON.stringify(['pop', 'push']))
+    await _.sleep(10)
+    expect(_.getData(body).pictureInPictureMode).toEqual(['pop', 'push'])
+    node.setAttribute('picture-in-picture-mode', ['push', 'pop'].toString())
+    await _.sleep(10)
+    expect(_.getData(body).pictureInPictureMode).toEqual(['push', 'pop'])
+
+    // pictureInPictureShowProgress
+    await _.checkBoolean(body, node, 'pictureInPictureShowProgress', 'picture-in-picture-show-progress', false)
+
+    // enableAutoRotation
+    await _.checkBoolean(body, node, 'enableAutoRotation', 'enable-auto-rotation', false)
+
+    // showScreenLockButton
+    await _.checkBoolean(body, node, 'showScreenLockButton', 'show-screen-lock-button', false)
+
     // event
-    await _.checkEvent(body.querySelector('.h5-video'), node, ['play', 'pause', 'ended', 'timeupdate', 'fullscreenchange', 'waiting', 'error', 'progress'])
+    await _.checkEvent(body.querySelector('.h5-video'), node, ['play', 'pause', 'ended', 'timeupdate', 'fullscreenchange', 'waiting', 'error', 'progress', 'loadedmetadata', 'controlstoggle', 'enterpictureinpicture', 'leavepictureinpicture'])
 
     page.document.body.removeChild(node)
     document.body.removeChild(wrapper)

@@ -252,3 +252,22 @@ test('document: addEventListener/removeEventListener/dispatchEvent', () => {
 
     expect(res).toEqual(['test1', 'test1', 'test2', 'test2'])
 })
+
+test('document: scrollTop', () => {
+    const div = document.createElement('div')
+    document.body.appendChild(div)
+
+    global.testScrollTop = 20
+
+    div.scrollTop = 20
+    expect(div.scrollTop).toBe(0)
+    expect(global.testNextScrollTop).toBe(undefined)
+
+    document.body.scrollTop = 20
+    expect(document.body.scrollTop).toBe(0)
+    expect(global.testNextScrollTop).toBe(undefined)
+
+    document.documentElement.scrollTop = 20
+    expect(document.documentElement.scrollTop).toBe(20)
+    expect(global.testNextScrollTop).toBe(20)
+})

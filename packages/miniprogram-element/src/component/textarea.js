@@ -89,6 +89,16 @@ module.exports = {
             const value = domNode.getAttribute('adjust-position')
             return value !== undefined ? !!value : true
         },
+    }, {
+        name: 'holdKeyboard',
+        get(domNode) {
+            return !!domNode.getAttribute('hold-keyboard')
+        },
+    }, {
+        name: 'disableDefaultPadding',
+        get(domNode) {
+            return !!domNode.getAttribute('disable-default-padding')
+        },
     }],
     handles: {
         onTextareaFocus(evt) {

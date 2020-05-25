@@ -1,14 +1,13 @@
 {
 	"name": "vue-improve-loader",
-	"version": "0.3.3",
+	"version": "0.3.5",
 	"description": "a tool for develop miniprogram with vue",
 	"main": "src/index.js",
 	"miniprogram": "src",
 	"scripts": {
 		"test": "jest --bail",
 		"test-debug": "node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand --bail",
-		"coverage": "jest --coverage --bail",
-		"codecov": "jest --coverage && codecov"
+		"coverage": "jest --coverage --bail"
 	},
 	"jest": {
 		"testEnvironment": "node",

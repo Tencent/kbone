@@ -19,7 +19,10 @@ module.exports = {
 	},
 	app: {
 		navigationBarTitleText: 'miniprogram-project',
-	},	
+	},
+	global: {
+		windowScroll: true,
+	},
 	projectConfig: {
 		appid: '',
         projectname: 'kbone-demo3',

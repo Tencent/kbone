@@ -105,6 +105,54 @@ module.exports = {
         get(domNode) {
             return !!domNode.getAttribute('mirror')
         },
+    }, {
+        name: 'remoteMirror',
+        get(domNode) {
+            return !!domNode.getAttribute('remote-mirror')
+        },
+    }, {
+        name: 'localMirror',
+        get(domNode) {
+            return domNode.getAttribute('local-mirror') || 'auto'
+        },
+    }, {
+        name: 'audioReverbType',
+        get(domNode) {
+            return +domNode.getAttribute('audio-reverb-type') || 0
+        },
+    }, {
+        name: 'enableMic',
+        get(domNode) {
+            const value = domNode.getAttribute('enable-mic')
+            return value !== undefined ? !!value : true
+        },
+    }, {
+        name: 'enableAgc',
+        get(domNode) {
+            return !!domNode.getAttribute('enable-agc')
+        },
+    }, {
+        name: 'enableAns',
+        get(domNode) {
+            return !!domNode.getAttribute('enable-ans')
+        },
+    }, {
+        name: 'audioVolumeType',
+        get(domNode) {
+            return domNode.getAttribute('audio-volume-type') || 'voicecall'
+        },
+    }, {
+        name: 'videoWidth',
+        get(domNode) {
+            const value = parseFloat(domNode.getAttribute('video-width'))
+            return !isNaN(value) ? value : 360
+        },
+    }, {
+        name: 'videoHeight',
+        get(domNode) {
+            const value = parseFloat(domNode.getAttribute('video-height'))
+            return !isNaN(value) ? value : 640
+        },
     }],
     handles: {
         onLivePusherStateChange(evt) {

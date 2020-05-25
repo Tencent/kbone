@@ -113,6 +113,9 @@ test('map', async() => {
     // showCompass
     await _.checkBoolean(body, node, 'showCompass', 'show-compass', false)
 
+    // showScale
+    await _.checkBoolean(body, node, 'showScale', 'show-scale', false)
+
     // enableOverlooking
     await _.checkBoolean(body, node, 'enableOverlooking', 'enable-overlooking', false)
 
@@ -130,6 +133,19 @@ test('map', async() => {
 
     // enableTraffic
     await _.checkBoolean(body, node, 'enableTraffic', 'enable-traffic', false)
+
+    // setting
+    expect(_.getData(body).setting).toEqual({})
+    node.setAttribute('setting', {skew: 0, rotate: 0, showLocation: false})
+    await _.sleep(10)
+    expect(_.getData(body).setting).toEqual({skew: 0, rotate: 0, showLocation: false})
+    node.setAttribute('setting', JSON.stringify({
+        showScale: false, subKey: '', layerStyle: -1, enableZoom: true
+    }))
+    await _.sleep(10)
+    expect(_.getData(body).setting).toEqual({
+        showScale: false, subKey: '', layerStyle: -1, enableZoom: true
+    })
 
     // event
     await _.checkEvent(body.querySelector('.h5-wx-component'), node, ['tap', 'markertap', 'labeltap', 'controltap', 'callouttap', 'updated', 'regionchange', 'poitap'])

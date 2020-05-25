@@ -52,6 +52,12 @@ module.exports = {
         get(domNode) {
             return domNode.getAttribute('active-mode') || 'backwards'
         },
+    }, {
+        name: 'duration',
+        get(domNode) {
+            const value = parseFloat(domNode.getAttribute('duration'))
+            return !isNaN(value) ? value : 30
+        },
     }],
     handles: {
         onProgressActiveEnd(evt) {

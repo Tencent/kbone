@@ -3,6 +3,11 @@
  */
 module.exports = {
     properties: [{
+        name: 'headerText',
+        get(domNode) {
+            return domNode.getAttribute('header-text') || ''
+        },
+    }, {
         name: 'mode',
         get(domNode) {
             return domNode.getAttribute('mode') || 'selector'

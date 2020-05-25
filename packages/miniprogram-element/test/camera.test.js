@@ -24,6 +24,9 @@ test('camera', async() => {
     // mode
     await _.checkString(body, node, 'mode', 'mode', 'normal')
 
+    // resolution
+    await _.checkString(body, node, 'resolution', 'resolution', 'medium')
+
     // devicePosition
     await _.checkString(body, node, 'devicePosition', 'device-position', 'back')
 

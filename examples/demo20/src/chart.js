@@ -67,6 +67,7 @@ export function getChart(canvas, echarts, options) {
       const chart = echarts.init(canvas, null, {
           width: options.width || 300,
           height: options.height || 150,
+          devicePixelRatio: options.devicePixelRatio,
       })
 
       resolve(chart)

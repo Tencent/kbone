@@ -164,7 +164,16 @@ global.wx = {
             complete()
         }
     },
+    pageScrollTo(options) {
+        expect(options.duration).toBe(0)
+        expect(options.scrollTop).toBe(global.testScrollTop)
+
+        global.testNextScrollTop = global.testScrollTop
+    },
 }
+
+const currentPages = []
+global.getCurrentPages = () => currentPages
 
 module.exports = {
     html,
@@ -175,6 +184,7 @@ module.exports = {
         res.window.$$miniprogram.init(realUrl)
         res.document.body.innerHTML = html
 
+        currentPages.push(res)
         return res
     },
     async sleep(time) {

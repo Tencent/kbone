@@ -24,6 +24,7 @@
             <wx-catch @click="onParentClick">
               <button @click="onClick">catch-inner2({{eventCount}})</button>
             </wx-catch>
+            <wx-catch>{{eventCountComputed}}</wx-catch>
             <div class="event-cnt">
               <wx-animation :class="['event-t', transition ? 'event-t-s' : 'event-t-e']" @transitionend="onTransitionEnd"></wx-animation>
               <button @click="startTranstion">transition</button>
@@ -95,7 +96,7 @@
         <video v-else-if="item === 'video'" class="video" src="http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400" :muted="true" :show-mute-btn="true" :controls="true">
           <Inner></Inner>
         </video>
-        <canvas v-else-if="item === 'canvas'" class="canvas" ref="canvas" type="2d" width="300" height="200">
+        <canvas v-else-if="item === 'canvas'" class="canvas" ref="canvas" type="2d" width="300" height="200" @touchstart="onCanvasTouchStart('normal', $event)" @canvastouchstart="onCanvasTouchStart('canvas', $event)" @longtap="onCanvasLongTap">
           <Inner style="margin-top: 100px;"></Inner>
         </canvas>
         <div v-else-if="item === 'select'">
@@ -410,15 +411,17 @@
           <slider v-else-if="wxPrefix === 2" min="50" max="200" :show-value="true" @change="onSliderChange"></slider>
         </template>
         <template v-else-if="item === 'map'">
-          <wx-component v-if="!wxPrefix" :behavior="item" :class="item" :longitude="113.324520" :latitude="23.099994" :scale="14" :controls="map.controls" :markers="map.markers" :polyline="map.polyline" :show-location="true" @markertap="onMapMarkerTap" @regionchange="onMapRegionChange" @controltap="onMapControlTap">
+          <wx-component v-if="!wxPrefix" :behavior="item" :class="item" :longitude="map.longitude" :latitude="map.latitude" :scale="map.scale" :controls="map.controls" :markers="map.markers" :polyline="map.polyline" :show-location="true" @markertap="onMapMarkerTap" @regionchange="onMapRegionChange" @controltap="onMapControlTap">
             <Inner></Inner>
           </wx-component>
-          <wx-map v-else-if="wxPrefix === 1" :class="item" :longitude="113.324520" :latitude="23.099994" :scale="14" :controls="map.controls" :markers="map.markers" :polyline="map.polyline" :show-location="true" @markertap="onMapMarkerTap" @regionchange="onMapRegionChange" @controltap="onMapControlTap">
+          <wx-map v-else-if="wxPrefix === 1" :class="item" :longitude="map.longitude" :latitude="map.latitude" :scale="map.scale" :controls="map.controls" :markers="map.markers" :polyline="map.polyline" :show-location="true" @markertap="onMapMarkerTap" @regionchange="onMapRegionChange" @controltap="onMapControlTap">
             <Inner></Inner>
           </wx-map>
-          <map v-else-if="wxPrefix === 2" :class="item" :longitude="113.324520" :latitude="23.099994" :scale="14" :controls="map.controls" :markers="map.markers" :polyline="map.polyline" :show-location="true" @markertap="onMapMarkerTap" @regionchange="onMapRegionChange" @controltap="onMapControlTap">
+          <map v-else-if="wxPrefix === 2" :class="item" :longitude="map.longitude" :latitude="map.latitude" :scale="map.scale" :controls="map.controls" :markers="map.markers" :polyline="map.polyline" :show-location="true" @markertap="onMapMarkerTap" @regionchange="onMapRegionChange" @controltap="onMapControlTap">
             <Inner></Inner>
           </map>
+          <!-- 基础库暂未支持 regionchange 事件提供坐标和 scale，故注释 -->
+          <!-- <button @click="resetMap">reset</button> -->
         </template>
         <template v-else-if="item === 'cover-view'">
           <wx-compoennt v-if="!wxPrefix" :behavior="item">测试 cover-view</wx-compoennt>
@@ -491,10 +494,12 @@
         </template>
         <template v-else-if="item === 'scroll-view'">
           <div>
-            <wx-component ref="scroll-view" v-if="!wxPrefix" :behavior="item" :class="item + '-y'" :scroll-into-view="'y1' + scrollView.yDest" :scroll-y="true" :scroll-with-animation="true" @scroll="onScrollViewScroll"><Inner2 type="y1"/></wx-component>
-            <wx-scroll-view ref="scroll-view" v-else-if="wxPrefix === 1" :class="item + '-y'" :scroll-into-view="'y2' + scrollView.yDest" :scroll-y="true" :scroll-with-animation="true" @scroll="onScrollViewScroll"><Inner2 type="y2"/></wx-scroll-view>
-            <scroll-view ref="scroll-view" v-else-if="wxPrefix === 2" :class="item + '-y'" :scroll-into-view="'y3' + scrollView.yDest" :scroll-y="true" :scroll-with-animation="true" @scroll="onScrollViewScroll"><Inner2 type="y3"/></scroll-view>
+            <wx-component ref="scroll-view" v-if="!wxPrefix" :behavior="item" :class="item + '-y'" :scroll-into-view="'y1' + scrollView.yDest" :scroll-top="scrollView.scrollTop" :scroll-y="true" :scroll-with-animation="scrollView.yAnimation" @scroll="onScrollViewScroll"><Inner2 type="y1"/></wx-component>
+            <wx-scroll-view ref="scroll-view" v-else-if="wxPrefix === 1" :class="item + '-y'" :scroll-into-view="'y2' + scrollView.yDest" :scroll-top="scrollView.scrollTop" :scroll-y="true" :scroll-with-animation="scrollView.yAnimation" @scroll="onScrollViewScroll"><Inner2 type="y2"/></wx-scroll-view>
+            <scroll-view ref="scroll-view" v-else-if="wxPrefix === 2" :class="item + '-y'" :scroll-into-view="'y3' + scrollView.yDest" :scroll-top="scrollView.scrollTop" :scroll-y="true" :scroll-with-animation="scrollView.yAnimation" @scroll="onScrollViewScroll"><Inner2 type="y3"/></scroll-view>
             <div class="scroll-view-btn" @click="onClickScrollViewYBtn">滚动到第三个滑块</div>
+            <div class="scroll-view-btn" @click="onClickScrollViewYTopBtn">滚动到 120px 处</div>
+            <div class="scroll-view-btn" @click="onClickScrollViewYAnimBtn">{{scrollView.yAnimation ? '关闭' : '打开'}}动画</div>
           </div>
           <div>
             <wx-component ref="scroll-view" v-if="!wxPrefix" :behavior="item" :class="item + '-x'" :scroll-into-view="'x1' + scrollView.xDest" :scroll-x="true" :scroll-with-animation="true" @scroll="onScrollViewScroll"><Inner2 type="x1"/></wx-component>
@@ -646,6 +651,8 @@ export default {
       scrollView: {
         yDest: '',
         xDest: '',
+        scrollTop: 0,
+        yAnimation: true,
       },
       pickerView: {
         years: years,
@@ -681,7 +688,17 @@ export default {
       intersection: {
         appear: false,
       },
+      map: {
+        longitude: 113.324520,
+        latitude: 23.099994,
+        scale: 14,
+      },
     }
+  },
+  computed: {
+    eventCountComputed() {
+      return `catch-inner3(${this.eventCount})`
+    },
   },
   watch: {
     'input.inputText'(value) {
@@ -711,6 +728,8 @@ export default {
 
     const canvas = this.$refs.canvas[0]
     canvas.$$prepare().then(domNode => {
+      domNode.width = 300
+      domNode.height = 200
       const context = domNode.getContext('2d')
 
       context.strokeStyle = '#00ff00'
@@ -863,9 +882,23 @@ export default {
       if (domNodes[0]) {
         const wxPrefix = this.wxPrefix
         const prefix = wxPrefix === 1 ? 'y2' : wxPrefix === 2 ? 'y3' : 'y1'
+        // 会被 vue 给 diff 掉，得走 setAttribute
         domNodes[0].setAttribute('scroll-into-view', prefix + 'block3')
       }
       this.scrollView.yDest = 'block3'
+    },
+
+    onClickScrollViewYTopBtn() {
+      const domNodes = this.$refs['scroll-view'] || []
+      if (domNodes[0]) {
+        // 会被 vue 给 diff 掉，得走 setAttribute
+        domNodes[0].setAttribute('scroll-top', 120)
+      }
+      this.scrollView.scrollTop = 120
+    },
+
+    onClickScrollViewYAnimBtn() {
+      this.scrollView.yAnimation = !this.scrollView.yAnimation
     },
 
     onClickScrollViewXBtn() {
@@ -929,6 +962,20 @@ export default {
         domNodes[0].setAttribute('scale-value', 3)
       }
       this.movable.scaleValue = 3
+    },
+
+    onCanvasTouchStart(type, evt) {
+      console.log(`onCanvasTouchStart[${type}]`, evt)
+    },
+
+    onCanvasLongTap(evt) {
+      console.log('onCanvasLongTap', evt)
+    },
+
+    resetMap() {
+      this.map.longitude = 113.324520
+      this.map.latitude = 23.099994
+      this.map.scale = 14
     },
   }
 }
@@ -1040,16 +1087,6 @@ textarea .wx-comp-textarea {
 
 .ipt-group input {
   display: inline-block;
-}
-
-button {
-  display: block;
-  width: 100%;
-  height: 30px;
-  line-height: 30px;
-  text-align: center;
-  font-size: 20px;
-  border: 1px solid #ddd;
 }
 
 .swiper {

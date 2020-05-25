@@ -148,6 +148,10 @@ test('element: innerHTML/outerHTML', () => {
     expect(node1.innerHTML).toBe('<span id="abc"></span><div id="cc" class="a b c" style="position:absolute;top:10px;left:20px;">123<span id="cba">555</span>321</div><br />')
     expect(node1.outerHTML).toBe('<article id="outer"><span id="abc"></span><div id="cc" class="a b c" style="position:absolute;top:10px;left:20px;">123<span id="cba">555</span>321</div><br /></article>')
 
+    node2.id = '"<abc>"'
+    expect(node1.innerHTML).toBe('<span id="&quot;<abc>&quot;"></span><div id="cc" class="a b c" style="position:absolute;top:10px;left:20px;">123<span id="cba">555</span>321</div><br />')
+    expect(node1.outerHTML).toBe('<article id="outer"><span id="&quot;<abc>&quot;"></span><div id="cc" class="a b c" style="position:absolute;top:10px;left:20px;">123<span id="cba">555</span>321</div><br /></article>')
+
     node1.innerHTML = '<div id="a">321<span id="inner" b="inner">765</span>123</div><div id="c">555</div><p style="color: green; text-align: center;">I am content</p>'
     expect(node1.childNodes.length).toBe(3)
     expect(node1.childNodes[0].id).toBe('a')
@@ -167,7 +171,7 @@ test('element: innerHTML/outerHTML', () => {
     expect(node1.childNodes[2].childNodes.length).toBe(1)
     expect(node1.childNodes[2].childNodes[0].textContent).toBe('I am content')
     expect(parentUpdateCount).toBe(1)
-    expect(node1UpdateCount).toBe(7)
+    expect(node1UpdateCount).toBe(8)
 
     node1.outerHTML = '<header id="outer2"><div id="a">321<span id="inner" b="inner">765</span>123</div><div id="c">555</div><p style="color: green; text-align: center;">I am content</p></header>'
     expect(node1.tagName).toBe('HEADER')
@@ -190,7 +194,7 @@ test('element: innerHTML/outerHTML', () => {
     expect(node1.childNodes[2].childNodes.length).toBe(1)
     expect(node1.childNodes[2].childNodes[0].textContent).toBe('I am content')
     expect(parentUpdateCount).toBe(2)
-    expect(node1UpdateCount).toBe(7)
+    expect(node1UpdateCount).toBe(8)
 
     node1.parentNode.addEventListener('$$childNodesUpdate', onParentUpdate)
     node1.addEventListener('$$childNodesUpdate', onNode1Update)

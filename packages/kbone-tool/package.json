@@ -1,0 +1,40 @@
+{
+  "name": "kbone-tool",
+  "version": "0.0.4",
+  "description": "some tools for kbone",
+  "main": "dist/index.min.js",
+  "scripts": {
+    "build": "webpack",
+    "test": "npm run build && jest --bail",
+    "test-debug": "node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand --bail",
+    "coverage": "jest --coverage --bail"
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "testMatch": [
+      "**/test/**/*.test.js"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.js"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wechat-miniprogram/kbone.git"
+  },
+  "author": "wechat-miniprogram",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-stage-3": "^6.24.1",
+    "jest": "^24.8.0",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.2.3"
+  },
+  "bugs": {
+    "url": "https://github.com/wechat-miniprogram/kbone/issues"
+  },
+  "homepage": "https://github.com/wechat-miniprogram/kbone#readme"
+}

@@ -4,8 +4,9 @@
     "scripts": {
         "prepare": "lerna bootstrap",
         "check": "npm run lint && npm run test",
+        "build": "cd packages/miniprogram-element && npm run build && cd ../..",
         "publish": "lerna publish",
-        "test": "cd packages/vue-improve-loader && npm run test && cd ../miniprogram-render && npm run test && cd ../miniprogram-element && npm run test && cd ../..",
+        "test": "npm run build && cd packages/vue-improve-loader && npm run test && cd ../miniprogram-render && npm run test && cd ../miniprogram-element && npm run test && cd ../kbone-tool && npm run test && cd ../..",
         "lint": "eslint \"packages/*/src/**/*.js\" --fix && eslint \"packages/*/test/**/*.js\" --fix && eslint \"packages/*/tool/**/*.js\" --fix"
     },
     "repository": {

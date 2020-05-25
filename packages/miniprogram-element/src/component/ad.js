@@ -12,6 +12,16 @@ module.exports = {
         get(domNode) {
             return +domNode.getAttribute('ad-intervals') || 0
         },
+    }, {
+        name: 'adType',
+        get(domNode) {
+            return domNode.getAttribute('ad-type') || 'banner'
+        },
+    }, {
+        name: 'adTheme',
+        get(domNode) {
+            return domNode.getAttribute('ad-theme') || 'white'
+        },
     }],
     handles: {
         onAdLoad(evt) {

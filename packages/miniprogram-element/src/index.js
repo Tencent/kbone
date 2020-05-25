@@ -38,7 +38,6 @@ Component({
     data: {
         wxCompName: '', // 需要渲染的内置组件名
         wxCustomCompName: '', // 需要渲染的自定义组件名
-        innerChildNodes: [], // 内置组件的孩子节点
         childNodes: [], // 孩子节点
     },
     options: {
@@ -69,8 +68,8 @@ Component({
 
         // 监听全局事件
         this.onChildNodesUpdate = tool.throttle(this.onChildNodesUpdate.bind(this))
-        this.domNode.$$clearEvent('$$childNodesUpdate')
-        this.domNode.addEventListener('$$childNodesUpdate', this.onChildNodesUpdate)
+        this.domNode.$$clearEvent('$$childNodesUpdate', {$$namespace: 'root'})
+        this.domNode.addEventListener('$$childNodesUpdate', this.onChildNodesUpdate, {$$namespace: 'root'})
         this.onSelfNodeUpdate = tool.throttle(this.onSelfNodeUpdate.bind(this))
         this.domNode.$$clearEvent('$$domNodeUpdate')
         this.domNode.addEventListener('$$domNodeUpdate', this.onSelfNodeUpdate)
@@ -81,16 +80,7 @@ Component({
 
         // 初始化孩子节点
         const childNodes = _.filterNodes(this.domNode, DOM_SUB_TREE_LEVEL - 1, this)
-        const dataChildNodes = _.dealWithLeafAndSimple(childNodes, this.onChildNodesUpdate)
-        if (data.wxCompName || data.wxCustomCompName) {
-            // 内置组件/自定义组件
-            data.innerChildNodes = dataChildNodes
-            data.childNodes = []
-        } else {
-            // 普通标签
-            data.innerChildNodes = []
-            data.childNodes = dataChildNodes
-        }
+        data.childNodes = _.dealWithLeafAndSimple(childNodes, this.onChildNodesUpdate)
 
         // 执行一次 setData
         if (Object.keys(data).length) this.setData(data)
@@ -111,21 +101,10 @@ Component({
 
             // 儿子节点有变化
             const childNodes = _.filterNodes(this.domNode, DOM_SUB_TREE_LEVEL - 1, this)
-            const oldChildNodes = this.data.wxCompName || this.data.wxCustomCompName ? this.data.innerChildNodes : this.data.childNodes
-            if (_.checkDiffChildNodes(childNodes, oldChildNodes)) {
-                const dataChildNodes = _.dealWithLeafAndSimple(childNodes, this.onChildNodesUpdate)
-                const newData = {}
-                if (this.data.wxCompName || this.data.wxCustomCompName) {
-                    // 部分内置组件/自定义组件
-                    newData.innerChildNodes = dataChildNodes
-                    newData.childNodes = []
-                } else {
-                    // 普通标签/其他组件
-                    newData.innerChildNodes = []
-                    newData.childNodes = dataChildNodes
-                }
-
-                this.setData(newData)
+            if (_.checkDiffChildNodes(childNodes, this.data.childNodes)) {
+                this.setData({
+                    childNodes: _.dealWithLeafAndSimple(childNodes, this.onChildNodesUpdate),
+                })
             }
 
             // 触发子节点变化
@@ -443,7 +422,7 @@ Component({
         getDomNodeFromEvt(evt) {
             if (!evt) return
             const pageId = this.pageId
-            const originNodeId = evt.currentTarget.dataset.privateNodeId || this.nodeId
+            const originNodeId = evt.currentTarget && evt.currentTarget.dataset.privateNodeId || this.nodeId
             return cache.getNode(pageId, originNodeId)
         },
 

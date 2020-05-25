@@ -4,7 +4,9 @@
     <button @click="onClickBack">回到上一页</button>
     <button @click="sendPage1">发布消息给首页</button>
     <button @click="sendPage23">发布消息给页面2和页面3</button>
-    <div>count: {{count}} - name: {{data.name || ''}}</div>
+    <div>count: {{count}} - {{say && say.word || ''}} name: {{info.name || ''}}</div>
+    <div>{{list.join(', ')}}</div>
+    <Storage name="4"></Storage>
     <Footer></Footer>
   </div>
 </template>
@@ -13,15 +15,17 @@
 import {mapState} from 'vuex'
 import Header from '../common/Header.vue'
 import Footer from '../common/Footer.vue'
+import Storage from '../common/Storage.vue'
 
 export default {
   name: 'App',
   components: {
     Header,
-    Footer
+    Footer,
+    Storage,
   },
   computed: {
-    ...mapState(['count', 'data'])
+    ...mapState(['count', 'say', 'info', 'list'])
   },
   mounted() {
     window.$$subscribe('polling', count => console.log('页面4收到来自首页的轮询消息 --> ' + count))

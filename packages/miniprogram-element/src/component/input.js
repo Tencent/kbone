@@ -102,6 +102,11 @@ module.exports = {
             return value !== undefined ? !!value : true
         },
     }, {
+        name: 'holdKeyboard',
+        get(domNode) {
+            return !!domNode.getAttribute('hold-keyboard')
+        },
+    }, {
         name: 'checked',
         canBeUserChanged: true,
         get(domNode) {
