@@ -228,18 +228,18 @@ class Element extends Node {
             let html = `<${tagName}`
 
             // 属性
-            if (node.id) html += ` id="${node.id}"`
-            if (node.className) html += ` class="${node.className}"`
+            if (node.id) html += ` id="${tool.escapeForHtmlGeneration(node.id)}"`
+            if (node.className) html += ` class="${tool.escapeForHtmlGeneration(node.className)}"`
 
             const styleText = node.style.cssText
-            if (styleText) html += ` style="${styleText}"`
+            if (styleText) html += ` style="${tool.escapeForHtmlGeneration(styleText)}"`
 
             const src = node.src
-            if (src) html += ` src=${src}`
+            if (src) html += ` src=${tool.escapeForHtmlGeneration(src)}`
 
             const dataset = node.dataset
             Object.keys(dataset).forEach(name => {
-                html += ` data-${tool.toDash(name)}="${dataset[name]}"`
+                html += ` data-${tool.toDash(name)}="${tool.escapeForHtmlGeneration(dataset[name])}"`
             })
 
             html = this.$$dealWithAttrsForGenerateHtml(html, node)

@@ -71,3 +71,9 @@ test('tool: isTagNameSupport', () => {
     expect(tool.isTagNameSupport('IFRAME')).toBe(false)
     expect(tool.isTagNameSupport('SPAN')).toBe(true)
 })
+
+test('tool: escapeForHtmlGeneration', () => {
+    expect(tool.escapeForHtmlGeneration('"<abc>"')).toBe('&quot;<abc>&quot;')
+    expect(tool.escapeForHtmlGeneration('""')).toBe('&quot;&quot;')
+    expect(tool.escapeForHtmlGeneration('{"abc": "321", "haha": 123}')).toBe('{&quot;abc&quot;: &quot;321&quot;, &quot;haha&quot;: 123}')
+})

@@ -1,6 +1,7 @@
 const Element = require('../element')
 const Pool = require('../../util/pool')
 const cache = require('../../util/cache')
+const tool = require('../../util/tool')
 
 const pool = new Pool()
 
@@ -43,19 +44,19 @@ class HTMLInputElement extends Element {
      */
     $$dealWithAttrsForGenerateHtml(html, node) {
         const type = node.type
-        if (type) html += ` type="${type}"`
+        if (type) html += ` type="${tool.escapeForHtmlGeneration(type)}"`
 
         const value = node.value
-        if (value) html += ` value="${value}"`
+        if (value) html += ` value="${tool.escapeForHtmlGeneration(value)}"`
 
         const disabled = node.disabled
         if (disabled) html += ' disabled'
 
         const maxlength = node.maxlength
-        if (maxlength) html += ` maxlength="${maxlength}"`
+        if (maxlength) html += ` maxlength="${tool.escapeForHtmlGeneration(maxlength)}"`
 
         const placeholder = node.placeholder
-        if (placeholder) html += ` placeholder="${placeholder.replace(/"/g, '\\"')}"`
+        if (placeholder) html += ` placeholder="${tool.escapeForHtmlGeneration(placeholder.replace(/"/g, '\\"'))}"`
 
         return html
     }

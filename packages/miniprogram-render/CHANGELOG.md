@@ -3,6 +3,7 @@
 ## 1.4.3
 
 * 支持 document.documentElement.scrollTop
+* 对生成 innerHTML/outerHTML 时节点属性值里 `"` 进行实体字符替换
 
 ## 1.4.2
 
