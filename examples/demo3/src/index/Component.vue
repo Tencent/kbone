@@ -99,6 +99,17 @@
         <canvas v-else-if="item === 'canvas'" class="canvas" ref="canvas" type="2d" width="300" height="200" @touchstart="onCanvasTouchStart('normal', $event)" @canvastouchstart="onCanvasTouchStart('canvas', $event)" @longtap="onCanvasLongTap">
           <Inner style="margin-top: 100px;"></Inner>
         </canvas>
+        <div v-else-if="item === 'select'">
+          <select v-model="select.selected" @change="onSelectChange">
+            <option disabled value="">请选择</option>
+            <option>A</option>
+            <option>B</option>
+            <option>C</option>
+          </select>
+          <span>Selected: {{ select.selected }}</span>
+        </div>
+
+
         <!-- 使用 wx-component 来创建内置组件 -->
         <template v-else-if="item === 'view'">
           <wx-component v-if="!wxPrefix" :behavior="item">我是视图</wx-component>
@@ -552,6 +563,7 @@ export default {
         'img',
         'input',
         'textarea',
+        'select',
         'label',
         'video',
         'canvas',
@@ -593,6 +605,9 @@ export default {
         size: [20, 30, 40, 50, 60, 70],
         color: ['red', 'orange', 'yellow', 'green', 'rgb(0,255,255)', 'blue', 'purple'],
         type: ['success', 'success_no_circle', 'info', 'warn', 'waiting', 'cancel', 'download', 'search', 'clear']
+      },
+      select: {
+        selected: 'A'
       },
       input: {
         inputText: '',
@@ -768,6 +783,10 @@ export default {
 
     onRootClick() {
       console.log('root click')
+    },
+
+    onSelectChange(e) {
+       console.log(e)
     },
 
     startTranstion() {

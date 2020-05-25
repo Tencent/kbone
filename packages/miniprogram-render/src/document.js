@@ -12,6 +12,8 @@ const Input = require('./node/element/input')
 const Textarea = require('./node/element/textarea')
 const Video = require('./node/element/video')
 const Canvas = require('./node/element/canvas')
+const Select = require('./node/element/select')
+const Option = require('./node/element/option')
 const NotSupport = require('./node/element/not-support')
 const WxComponent = require('./node/element/wx-component')
 const WxCustomComponent = require('./node/element/wx-custom-component')
@@ -24,6 +26,8 @@ const CONSTRUCTOR_MAP = {
     TEXTAREA: Textarea,
     VIDEO: Video,
     CANVAS: Canvas,
+    SELECT: Select,
+    OPTION: Option,
     'WX-COMPONENT': WxComponent,
 }
 const WX_COMPONENT_MAP = {}

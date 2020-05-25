@@ -56,6 +56,12 @@ const App = (props, store) => {
         {name: '巴西'},
         {name: '日本'}
     ])
+    const [selectOptions, setSelectOptions] = useState([
+        {name: '葡萄柚', value: 'grapefruit'},
+        {name: '柠檬', value: 'lime'},
+        {name: '椰子', value: 'coconut'}
+    ])
+    const [favorite, setFavorite] = useState('lime')
     const [scrollIntoView, setScrollIntoView] = useState('')
     const scrollViewProps = {
         className: 'scroll-view-y',
@@ -97,7 +103,7 @@ const App = (props, store) => {
                     type="radio"
                     name="radio"
                     value="1"
-                    onChange={e => console.log('change', e)}
+                    onChange={e => console.log('change', e.target.value)}
                 />
                 <input
                     type="radio"
@@ -105,6 +111,23 @@ const App = (props, store) => {
                     value="2"
                     onChange={e => console.log('change', e)}
                 />
+            </div>
+            <div>
+                我是 picker-view：
+                <wx-picker range={pickerRange1} onChange={e => console.log('change', e)}>选择国家1</wx-picker>
+                <wx-picker range={pickerRange2} range-key="name" onChange={e => console.log('change', e)}>选择国家2</wx-picker>
+            </div>
+            <div>
+                选择你喜欢的风味:
+                <select value={favorite} defaultValue="coconut" onChange={e => {console.log('change', e.target.value), setFavorite(e.target.value)}}>
+                    {
+                        selectOptions.map(opt => {
+                            return <option value={opt.value}>{opt.name}</option>
+                        })
+                    }
+                </select>
+                <div>我想吃的水果是：{favorite}</div>
+                <button onClick={e => setSelectOptions(selectOptions.concat([{name: '芒果', value: "mango"}])) }>我还想吃芒果</button>
             </div>
             <div>
                 我是 scroll-view：
