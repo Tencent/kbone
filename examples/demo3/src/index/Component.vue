@@ -106,10 +106,8 @@
             <option>B</option>
             <option>C</option>
           </select>
-          <span>Selected: {{ select.selected }}</span>
+          <span>Selected: {{select.selected}}</span>
         </div>
-
-
         <!-- 使用 wx-component 来创建内置组件 -->
         <template v-else-if="item === 'view'">
           <wx-component v-if="!wxPrefix" :behavior="item">我是视图</wx-component>
@@ -607,7 +605,7 @@ export default {
         type: ['success', 'success_no_circle', 'info', 'warn', 'waiting', 'cancel', 'download', 'search', 'clear']
       },
       select: {
-        selected: 'A'
+        selected: 'A',
       },
       input: {
         inputText: '',
@@ -785,8 +783,8 @@ export default {
       console.log('root click')
     },
 
-    onSelectChange(e) {
-       console.log(e)
+    onSelectChange(evt) {
+       console.log('onSelectChange', evt)
     },
 
     startTranstion() {

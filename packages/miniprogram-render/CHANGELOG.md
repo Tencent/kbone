@@ -1,5 +1,9 @@
 # 更新日志
 
+## 1.4.4
+
+* 支持 select/option 标签
+
 ## 1.4.3
 
 * 支持 document.documentElement.scrollTop

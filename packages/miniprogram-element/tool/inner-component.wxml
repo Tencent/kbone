@@ -363,34 +363,6 @@
 </template>
 <template name="picker">
     <picker
-        wx:if="{{type === 'select'}}"
-        id="{{id}}"
-        class="{{className}}"
-        style="{{style}}"
-        hidden="{{hidden}}"
-        data-private-node-id="{{nodeId}}"
-        data-private-page-id="{{pageId}}"
-        bindtouchstart="onTouchStart"
-        bindtouchmove="onTouchMove"
-        bindtouchend="onTouchEnd"
-        bindtouchcancel="onTouchCancel"
-        bindtap="onTap"
-
-        mode="{{mode}}"
-        disabled="{{disabled}}"
-        range="{{range}}"
-        range-key="{{rangeKey}}"
-        value="{{selectedIndex}}"
-        start="{{start}}"
-        end="{{end}}"
-        fields="{{fields}}"
-        custom-item="{{customItem}}"
-        bindchange="onPickerChange"
-        bindcolumnchange="onPickerColumnChange"
-        bindcancel="onPickerCancel"
-    ><element wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element></picker>
-    <picker
-        wx:else
         id="{{id}}"
         class="{{className}}"
         style="{{style}}"

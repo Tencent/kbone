@@ -65,9 +65,10 @@ class HTMLTextAreaElement extends Element {
      * 调用 outerHTML 的 setter 时用于处理额外的属性
      */
     $$dealWithAttrsForOuterHTML(node) {
+        this.name = node.name || ''
         this.type = node.type || ''
         this.value = node.value || ''
-        this.disabled = node.disabled || ''
+        this.disabled = !!node.disabled
         this.maxlength = node.maxlength
         this.placeholder = node.placeholder || ''
 

@@ -20,12 +20,14 @@ module.exports = {
     }, {
         name: 'range',
         get(domNode) {
-            let value = domNode.options || domNode.getAttribute('range')
-            // for select
-            if (typeof value === "object") {
-                return value
+            if (domNode.tagName === 'SELECT') {
+                return domNode.options.map(item => ({
+                    label: item.label,
+                    value: item.value,
+                }))
             }
 
+            let value = domNode.getAttribute('range')
             if (typeof value === 'string') {
                 // react 会直接将属性值转成字符串
                 try {
@@ -39,23 +41,18 @@ module.exports = {
     }, {
         name: 'rangeKey',
         get(domNode) {
-            return domNode.rangeKey || domNode.getAttribute('range-key') || ''
-        },
-    }, {
-        name: 'selectedIndex',
-        get(domNode) {
-            return domNode.selectedIndex || 0
+            if (domNode.tagName === 'SELECT') return 'label'
+
+            return domNode.getAttribute('range-key') || ''
         },
     }, {
         name: 'value',
         canBeUserChanged: true,
         get(domNode) {
+            if (domNode.tagName === 'SELECT') return +domNode.selectedIndex || 0
+
             const mode = domNode.getAttribute('mode') || 'selector'
             let value = domNode.getAttribute('value')
-
-            if (domNode.tagName == 'SELECT') {
-                return +domNode.selectedIndex || 0
-            }
 
             if (mode === 'selector') {
                 return +value || 0
@@ -99,16 +96,22 @@ module.exports = {
             const domNode = this.getDomNodeFromEvt(evt)
             if (!domNode) return
 
+            let value = evt.detail.value
+
             // 可被用户行为改变的值，需要记录
             domNode._oldValues = domNode._oldValues || {}
-            domNode._oldValues.value = evt.detail.value
+            domNode._oldValues.value = value
 
-            if (domNode.tagName == 'SELECT') {
-                domNode.$$setAttributeWithoutUpdate('value', domNode.options && domNode.options[evt.detail.value] ? domNode.options[evt.detail.value].value : '')
-                domNode.$$setAttributeWithoutUpdate('selectedIndex', Number(evt.detail.value))
+            if (domNode.tagName === 'SELECT') {
+                value = +value
+                domNode.$$setAttributeWithoutUpdate('value', domNode.options[value] && domNode.options[value].value || '')
+                domNode.$$setAttributeWithoutUpdate('selectedIndex', value)
+                domNode.$$resetOptions()
+
                 this.callEvent('change', evt)
             } else {
-                domNode.$$setAttributeWithoutUpdate('value', evt.detail.value)
+                domNode.$$setAttributeWithoutUpdate('value', value)
+
                 this.callSingleEvent('change', evt)
             }
         },

@@ -103,7 +103,7 @@ const App = (props, store) => {
                     type="radio"
                     name="radio"
                     value="1"
-                    onChange={e => console.log('change', e.target.value)}
+                    onChange={e => console.log('change', e)}
                 />
                 <input
                     type="radio"
@@ -119,7 +119,7 @@ const App = (props, store) => {
             </div>
             <div>
                 选择你喜欢的风味:
-                <select value={favorite} defaultValue="coconut" onChange={e => {console.log('change', e.target.value), setFavorite(e.target.value)}}>
+                <select value={favorite} defaultValue="coconut" onChange={e => {console.log('change', e), setFavorite(e.target.value)}}>
                     {
                         selectOptions.map(opt => {
                             return <option value={opt.value}>{opt.name}</option>
@@ -127,7 +127,7 @@ const App = (props, store) => {
                     }
                 </select>
                 <div>我想吃的水果是：{favorite}</div>
-                <button onClick={e => setSelectOptions(selectOptions.concat([{name: '芒果', value: "mango"}])) }>我还想吃芒果</button>
+                <button onClick={() => setSelectOptions(selectOptions.concat([{name: '芒果', value: 'mango'}]))}>我还想吃芒果</button>
             </div>
             <div>
                 我是 scroll-view：
