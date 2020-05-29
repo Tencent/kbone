@@ -224,6 +224,7 @@
         binderror="onButtonError"
         bindopensetting="onButtonOpenSetting"
         bindlaunchapp="onButtonLaunchApp"
+        bindgetrealnameauthinfo = "onButtonGetRealnameAuthInfo"
     ><element wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element></button>
 </template>
 <template name="editor">

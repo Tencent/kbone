@@ -126,5 +126,9 @@ module.exports = {
             this.callSingleEvent('launchapp', evt)
         },
 
+        onButtonGetRealnameAuthInfo(evt) {
+            // 已废弃，建议使用：https://developers.weixin.qq.com/miniprogram/dev/framework/cityservice/cityservice-checkrealnameinfo.html
+            this.callSingleEvent('getrealnameauthinfo', evt)
+        },
     },
 }

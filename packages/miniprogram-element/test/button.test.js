@@ -79,7 +79,7 @@ test('button', async() => {
     await _.checkString(body, node, 'businessId', 'business-id', '')
 
     // event
-    await _.checkEvent(body.querySelector('.h5-wx-component'), node, ['getuserinfo', 'contact', 'getphonenumber', 'error', 'opensetting', 'launchapp'])
+    await _.checkEvent(body.querySelector('.h5-wx-component'), node, ['getuserinfo', 'contact', 'getphonenumber', 'error', 'opensetting', 'launchapp', 'getrealnameauthinfo'])
 
     page.document.body.removeChild(node)
     document.body.removeChild(wrapper)

@@ -1,5 +1,9 @@
 # 更新日志
 
+## next version
+
+* 补充部分 border 相关属性到样式列表中
+
 ## 1.4.4
 
 * 支持 select/option 标签

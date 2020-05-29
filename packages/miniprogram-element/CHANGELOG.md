@@ -1,5 +1,9 @@
 # 更新日志
 
+## next version
+
+* 支持 button 的 getrealnameauthinfo 事件
+
 ## 1.4.2
 
 * 支持 select/option 标签
