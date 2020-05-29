@@ -78,6 +78,7 @@
         bindtouchend="onTouchEnd"
         bindtouchcancel="onTouchCancel"
         bindtap="onTap"
+        bindlongpress="onLongPress"
         hidden="{{item.extra.hidden}}"
     ><template is="subtree" data="{{childNodes: item.childNodes, inCover}}"/></picker-view-column>
 </block></picker-view>

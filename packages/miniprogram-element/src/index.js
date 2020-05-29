@@ -363,6 +363,12 @@ Component({
             }
         },
 
+        onLongPress(evt) {
+            if (this.document && this.document.$$checkEvent(evt)) {
+                this.callEvent('longpress', evt)
+            }
+        },
+
         /**
          * 图片相关事件
          */
@@ -395,6 +401,10 @@ Component({
 
         onCaptureTap(evt) {
             this.callSingleEvent('click', evt)
+        },
+
+        onCaptureLongPress(evt) {
+            this.callSingleEvent('longpress', evt)
         },
 
         /**

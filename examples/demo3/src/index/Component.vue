@@ -14,38 +14,39 @@
           </div>
         </div>
         <div v-if="item === 'event'">
-          <div @click="onRootClick">
-            <wx-capture @touchstart="onParentTouchStart" @touchend="onParentTouchEnd" @click="onParentClick">
-              <button @click="onClick">capture-inner({{eventCount}})</button>
+          <div @click="log('root click')" @longpress="log('root longpress')">
+            <button @touchstart="log('touchstart')" @touchmove="log('touchmove')" @touchend="log('touchend')" @touchcancel="log('touchcancel')" @click="log('click')" @longpress="log('longpress')">normal event</button>
+            <wx-capture @touchstart="log('parent touchstart')" @touchend="log('parent touchend')" @click="log('parent click')" @longpress="log('parent longpress')">
+              <button @click="onClick" @longpress="log('longpress')">capture-inner({{eventCount}})</button>
             </wx-capture>
-            <wx-catch @touchstart="onParentTouchStart" @touchend="onParentTouchEnd" @click="onParentClick">
-              <button @click="onClick">catch-inner1({{eventCount}})</button>
+            <wx-catch @touchstart="log('parent touchstart')" @touchend="log('parent touchend')" @click="log('parent click')" @longpress="log('parent longpress')">
+              <button @click="onClick" @longpress="log('longpress')">catch-inner1({{eventCount}})</button>
             </wx-catch>
-            <wx-catch @click="onParentClick">
-              <button @click="onClick">catch-inner2({{eventCount}})</button>
+            <wx-catch @click="log('parent click')">
+              <button @click="onClick" @longpress="log('longpress')">catch-inner2({{eventCount}})</button>
             </wx-catch>
             <wx-catch>{{eventCountComputed}}</wx-catch>
             <div class="event-cnt">
-              <wx-animation :class="['event-t', transition ? 'event-t-s' : 'event-t-e']" @transitionend="onTransitionEnd"></wx-animation>
+              <wx-animation :class="['event-t', transition ? 'event-t-s' : 'event-t-e']" @transitionend="log('transition end')"></wx-animation>
               <button @click="startTranstion">transition</button>
             </div>
             <div class="event-cnt">
-              <wx-animation class="event-a" @animationstart="onAnimationStart" @animationiteration="onAnimationIteration" @animationend="onAnimationEnd"></wx-animation>
+              <wx-animation class="event-a" @animationstart="log('animation start')" @animationiteration="log('animation iteration')" @animationend="log('animation end')"></wx-animation>
             </div>
           </div>
         </div>
         <!-- 可使用 html 标签替代的内置组件 -->
         <div v-else-if="item === 'img'">
-          <img src="https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg" width="50" height="50" @load="onImgLoad" />
-          <img src="https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg" mode="top" width="50" height="50" @load="onImgLoad" />
+          <img src="https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg" width="50" height="50" @load="log('onImgLoad', $event)" />
+          <img src="https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg" mode="top" width="50" height="50" @load="log('onImgLoad', $event)" />
         </div>
         <div v-else-if="item === 'input'">
-          <input type="text" placeholder="请输入文本内容" @input="onInput" v-model="input.inputText" @change="onInputChange" />
-          <input type="number" placeholder="请输入数字内容" @input="onInput" v-model="input.inputNumber" data-is-number="yes" />
+          <input type="text" placeholder="请输入文本内容" @input="log('onInput', $event.target.value, $event)" v-model="input.inputText" @change="log('onInputChange', $event.target.value, $event)" />
+          <input type="number" placeholder="请输入数字内容" @input="log('onInput', $event.target.value, $event)" v-model="input.inputNumber" data-is-number="yes" />
           <input type="radio" />
-          <input type="radio" name="radio" value="radio1" @input="onInput" v-model="input.inputRadio" />
-          <input type="radio" name="radio" value="radio2" @input="onInput" v-model="input.inputRadio" />
-          <input type="checkbox" @input="onInput" v-model="input.inputCheckbox" />
+          <input type="radio" name="radio" value="radio1" @input="log('onInput', $event.target.value, $event)" v-model="input.inputRadio" />
+          <input type="radio" name="radio" value="radio2" @input="log('onInput', $event.target.value, $event)" v-model="input.inputRadio" />
+          <input type="checkbox" @input="log('onInput', $event.target.value, $event)" v-model="input.inputCheckbox" />
           <input type="hidden" value="I am Hidden" />
         </div>
         <textarea v-else-if="item === 'textarea'" class="textarea-node" style="height: 30px;" placeholder="请输入内容" maxlength="50" :auto-height="true" adjust-position="" value="我是 textarea" @input="onTextareaInput" />
@@ -53,54 +54,54 @@
           <!-- input -->
           <label>
             <div>输入框1</div>
-            <input placeholder="输入框1" @change="onLabelChange"/>
+            <input placeholder="输入框1" @change="log('onLabelChange', $event.detail)"/>
           </label>
           <label for="input2">
             <div>输入框2</div>
           </label>
-          <input id="input2" placeholder="输入框2" @change="onLabelChange"/>
+          <input id="input2" placeholder="输入框2" @change="log('onLabelChange', $event.detail)"/>
           <!-- radio -->
           <label>
             <div>radio1</div>
-            <input name="label-radio" type="radio" checked="checked" @change="onLabelChange"/>
+            <input name="label-radio" type="radio" checked="checked" @change="log('onLabelChange', $event.detail)"/>
           </label>
           <label for="input3">
             <div>radio2</div>
           </label>
-          <input name="label-radio" type="radio" id="input3" @change="onLabelChange"/>
+          <input name="label-radio" type="radio" id="input3" @change="log('onLabelChange', $event.detail)"/>
           <!-- checkbox -->
           <label>
             <div>checkbox1</div>
-            <input type="checkbox" @change="onLabelChange"/>
+            <input type="checkbox" @change="log('onLabelChange', $event.detail)"/>
           </label>
           <label for="input4">
             <div>checkbox2</div>
           </label>
-          <input type="checkbox" id="input4" @change="onLabelChange"/>
+          <input type="checkbox" id="input4" @change="log('onLabelChange', $event.detail)"/>
           <!-- switch -->
           <label>
             <div>switch1</div>
             <template>
-              <wx-component v-if="!wxPrefix" behavior="switch" @change="onLabelChange"></wx-component>
-              <wx-switch v-else class="switch-node" @change="onLabelChange"></wx-switch>
+              <wx-component v-if="!wxPrefix" behavior="switch" @change="log('onLabelChange', $event.detail)"></wx-component>
+              <wx-switch v-else class="switch-node" @change="log('onLabelChange', $event.detail)"></wx-switch>
             </template>
           </label>
           <label for="switch2">
             <div>switch2</div>
           </label>
           <template>
-            <wx-component v-if="!wxPrefix" behavior="switch" id="switch2" @change="onLabelChange"></wx-component>
-            <wx-switch v-else id="switch2" @change="onLabelChange"></wx-switch>
+            <wx-component v-if="!wxPrefix" behavior="switch" id="switch2" @change="log('onLabelChange', $event.detail)"></wx-component>
+            <wx-switch v-else id="switch2" @change="log('onLabelChange', $event.detail)"></wx-switch>
           </template>
         </div>
         <video v-else-if="item === 'video'" class="video" src="http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400" :muted="true" :show-mute-btn="true" :controls="true">
           <Inner></Inner>
         </video>
-        <canvas v-else-if="item === 'canvas'" class="canvas" ref="canvas" type="2d" width="300" height="200" @touchstart="onCanvasTouchStart('normal', $event)" @canvastouchstart="onCanvasTouchStart('canvas', $event)" @longtap="onCanvasLongTap">
+        <canvas v-else-if="item === 'canvas'" class="canvas" ref="canvas" type="2d" width="300" height="200" @touchstart="onCanvasTouchStart('normal', $event)" @canvastouchstart="onCanvasTouchStart('canvas', $event)" @longtap="log('onCanvasLongTap', $event)">
           <Inner style="margin-top: 100px;"></Inner>
         </canvas>
         <div v-else-if="item === 'select'">
-          <select v-model="select.selected" @change="onSelectChange">
+          <select v-model="select.selected" @change="log('onSelectChange', $event)">
             <option disabled value="">请选择</option>
             <option>A</option>
             <option>B</option>
@@ -128,19 +129,19 @@
           <rich-text v-else-if="wxPrefix === 2" :nodes="richText.nodes"></rich-text>
         </template>
         <template v-else-if="item === 'swiper'">
-          <wx-component v-if="!wxPrefix" :behavior="item" :class="item" :indicator-dots="swiper.indicatorDots" :autoplay="swiper.autoplay" :interval="5000" :duration="500" @change="onSwiperChange">
+          <wx-component v-if="!wxPrefix" :behavior="item" :class="item" :indicator-dots="swiper.indicatorDots" :autoplay="swiper.autoplay" :interval="5000" :duration="500" @change="log('onSwiperChange', $event.detail)">
             <wx-component behavior="swiper-item" class="swiper-item-1" item-id="1"><span>A</span></wx-component>
             <wx-component behavior="swiper-item" class="swiper-item-2" item-id="2"><span>B</span></wx-component>
             <wx-component behavior="swiper-item" class="swiper-item-3" item-id="3"><span>C</span></wx-component>
             <div>不会被渲染</div>
           </wx-component>
-          <wx-swiper v-else-if="wxPrefix === 1" :class="item" :indicator-dots="swiper.indicatorDots" :autoplay="swiper.autoplay" :interval="5000" :duration="500" @change="onSwiperChange">
+          <wx-swiper v-else-if="wxPrefix === 1" :class="item" :indicator-dots="swiper.indicatorDots" :autoplay="swiper.autoplay" :interval="5000" :duration="500" @change="log('onSwiperChange', $event.detail)">
             <wx-swiper-item class="swiper-item-1" item-id="1"><span>A</span></wx-swiper-item>
             <wx-swiper-item class="swiper-item-2" item-id="2"><span>B</span></wx-swiper-item>
             <wx-swiper-item class="swiper-item-3" item-id="3"><span>C</span></wx-swiper-item>
             <div>不会被渲染</div>
           </wx-swiper>
-          <swiper v-else-if="wxPrefix === 2" :class="item" :indicator-dots="swiper.indicatorDots" :autoplay="swiper.autoplay" :interval="5000" :duration="500" @change="onSwiperChange">
+          <swiper v-else-if="wxPrefix === 2" :class="item" :indicator-dots="swiper.indicatorDots" :autoplay="swiper.autoplay" :interval="5000" :duration="500" @change="log('onSwiperChange', $event.detail)">
             <swiper-item class="swiper-item-1" item-id="1"><span>A</span></swiper-item>
             <swiper-item class="swiper-item-2" item-id="2"><span>B</span></swiper-item>
             <swiper-item class="swiper-item-3" item-id="3"><span>C</span></swiper-item>
@@ -155,15 +156,15 @@
         </template>
         <template v-else-if="item === 'movable'">
           <wx-component v-if="!wxPrefix" :behavior="item" :class="item" :scale-area="true">
-            <wx-component ref="movable-view" class="movable-view" behavior="movable-view" direction="all" :inertia="true" :out-of-bounds="true" :x="movable.x" :y="movable.y" :scale-value="movable.scaleValue" :scale="true" @change="onMovableChange" @scale="onMovableScale"><span>text</span></wx-component>
+            <wx-component ref="movable-view" class="movable-view" behavior="movable-view" direction="all" :inertia="true" :out-of-bounds="true" :x="movable.x" :y="movable.y" :scale-value="movable.scaleValue" :scale="true" @change="log('onMovableChange', $event.detail)" @scale="log('onMovableScale', $event.detail)"><span>text</span></wx-component>
             <wx-component class="movable-view" behavior="movable-view" direction="all" :x="0" :y="0">plaintext</wx-component>
           </wx-component>
           <wx-movable-area v-else-if="wxPrefix === 1" :class="item" :scale-area="true">
-            <wx-movable-view ref="movable-view" class="movable-view" direction="all" :inertia="true" :out-of-bounds="true" :x="movable.x" :y="movable.y" :scale-value="movable.scaleValue" :scale="true" @change="onMovableChange" @scale="onMovableScale"><span>text</span></wx-movable-view>
+            <wx-movable-view ref="movable-view" class="movable-view" direction="all" :inertia="true" :out-of-bounds="true" :x="movable.x" :y="movable.y" :scale-value="movable.scaleValue" :scale="true" @change="log('onMovableChange', $event.detail)" @scale="log('onMovableScale', $event.detail)"><span>text</span></wx-movable-view>
             <wx-movable-view class="movable-view" direction="all" :x="0" :y="0">plaintext</wx-movable-view>
           </wx-movable-area>
           <movable-area v-else-if="wxPrefix === 2" :class="item" :scale-area="true">
-            <movable-view ref="movable-view" class="movable-view" direction="all" :inertia="true" :out-of-bounds="true" :x="movable.x" :y="movable.y" :scale-value="movable.scaleValue" :scale="true" @change="onMovableChange" @scale="onMovableScale"><span>text</span></movable-view>
+            <movable-view ref="movable-view" class="movable-view" direction="all" :inertia="true" :out-of-bounds="true" :x="movable.x" :y="movable.y" :scale-value="movable.scaleValue" :scale="true" @change="log('onMovableChange', $event.detail)" @scale="log('onMovableScale', $event.detail)"><span>text</span></movable-view>
             <movable-view class="movable-view" direction="all" :x="0" :y="0">plaintext</movable-view>
           </movable-area>
           <wx-button @click="onClickMovableMove">move to (30px, 30px)</wx-button>
@@ -226,9 +227,9 @@
           <wx-component v-if="!wxPrefix" :behavior="item" className="wx-button-custom" open-type="share">分享</wx-component>
           <wx-button v-else-if="wxPrefix === 1" className="wx-button-custom" open-type="share">分享</wx-button>
           <button v-else-if="wxPrefix === 2" className="wx-button-custom" open-type="share">分享</button>
-          <wx-component v-if="!wxPrefix" :behavior="item" open-type="getPhoneNumber" @getphonenumber="onGetPhoneNumber">获取手机号</wx-component>
-          <wx-button v-else-if="wxPrefix === 1" open-type="getPhoneNumber" @getphonenumber="onGetPhoneNumber">获取手机号</wx-button>
-          <button v-else-if="wxPrefix === 2" open-type="getPhoneNumber" @getphonenumber="onGetPhoneNumber">获取手机号</button>
+          <wx-component v-if="!wxPrefix" :behavior="item" open-type="getPhoneNumber" @getphonenumber="log('onGetPhoneNumber', $event)">获取手机号</wx-component>
+          <wx-button v-else-if="wxPrefix === 1" open-type="getPhoneNumber" @getphonenumber="log('onGetPhoneNumber', $event)">获取手机号</wx-button>
+          <button v-else-if="wxPrefix === 2" open-type="getPhoneNumber" @getphonenumber="log('onGetPhoneNumber', $event)">获取手机号</button>
           <wx-component v-if="!wxPrefix" :behavior="item">
             <span>span1</span>
             <input type="checkbox"/>
@@ -327,21 +328,21 @@
         <template v-else-if="item === 'picker'">
           <div v-if="!wxPrefix">
             <wx-component :behavior="item" :value="1" :range="['美国', '中国', '巴西', '日本']">点击&nbsp;&nbsp;选择国家</wx-component>
-            <wx-component :behavior="item" mode="region" @change="onPickerChange">
+            <wx-component :behavior="item" mode="region" @change="log('onPickerChange', $event.detail)">
               <span>点击&nbsp;&nbsp;</span>
               <span>选择城市</span>
             </wx-component>
           </div>
           <div v-else-if="wxPrefix === 1">
             <wx-picker :value="1" :range="['美国', '中国', '巴西', '日本']">点击&nbsp;&nbsp;选择国家</wx-picker>
-            <wx-picker mode="region" @change="onPickerChange">
+            <wx-picker mode="region" @change="log('onPickerChange', $event.detail)">
               <span>点击&nbsp;&nbsp;</span>
               <span>选择城市</span>
             </wx-picker>
           </div>
           <div v-else-if="wxPrefix === 2">
             <picker :value="1" :range="['美国', '中国', '巴西', '日本']">点击&nbsp;&nbsp;选择国家</picker>
-            <picker mode="region" @change="onPickerChange">
+            <picker mode="region" @change="log('onPickerChange', $event.detail)">
               <span>点击&nbsp;&nbsp;</span>
               <span>选择城市</span>
             </picker>
@@ -391,31 +392,31 @@
         </template>
         <template v-else-if="item === 'switch'">
           <div v-if="!wxPrefix">
-            <wx-component :behavior="item" type="switch" :checked="true" @change="onSwitchChange"></wx-component>
-            <wx-component :behavior="item" type="checkbox" @change="onSwitchChange"></wx-component>
+            <wx-component :behavior="item" type="switch" :checked="true" @change="log('onSwitchChange', $event.detail)"></wx-component>
+            <wx-component :behavior="item" type="checkbox" @change="log('onSwitchChange', $event.detail)"></wx-component>
           </div>
           <div v-else-if="wxPrefix === 1">
-            <wx-switch type="switch" :checked="true" @change="onSwitchChange"></wx-switch>
-            <wx-switch type="checkbox" @change="onSwitchChange"></wx-switch>
+            <wx-switch type="switch" :checked="true" @change="log('onSwitchChange', $event.detail)"></wx-switch>
+            <wx-switch type="checkbox" @change="log('onSwitchChange', $event.detail)"></wx-switch>
           </div>
           <div v-else-if="wxPrefix === 2">
-            <switch type="switch" :checked="true" @change="onSwitchChange"></switch>
-            <switch type="checkbox" @change="onSwitchChange"></switch>
+            <switch type="switch" :checked="true" @change="log('onSwitchChange', $event.detail)"></switch>
+            <switch type="checkbox" @change="log('onSwitchChange', $event.detail)"></switch>
           </div>
         </template>
         <template v-else-if="item === 'slider'">
-          <wx-component v-if="!wxPrefix" :behavior="item" min="50" max="200" :show-value="true" @change="onSliderChange"></wx-component>
-          <wx-slider v-else-if="wxPrefix === 1" min="50" max="200" :show-value="true" @change="onSliderChange"></wx-slider>
-          <slider v-else-if="wxPrefix === 2" min="50" max="200" :show-value="true" @change="onSliderChange"></slider>
+          <wx-component v-if="!wxPrefix" :behavior="item" min="50" max="200" :show-value="true" @change="log('onSliderChange', $event.detail)"></wx-component>
+          <wx-slider v-else-if="wxPrefix === 1" min="50" max="200" :show-value="true" @change="log('onSliderChange', $event.detail)"></wx-slider>
+          <slider v-else-if="wxPrefix === 2" min="50" max="200" :show-value="true" @change="log('onSliderChange', $event.detail)"></slider>
         </template>
         <template v-else-if="item === 'map'">
-          <wx-component v-if="!wxPrefix" :behavior="item" :class="item" :longitude="map.longitude" :latitude="map.latitude" :scale="map.scale" :controls="map.controls" :markers="map.markers" :polyline="map.polyline" :show-location="true" @markertap="onMapMarkerTap" @regionchange="onMapRegionChange" @controltap="onMapControlTap">
+          <wx-component v-if="!wxPrefix" :behavior="item" :class="item" :longitude="map.longitude" :latitude="map.latitude" :scale="map.scale" :controls="map.controls" :markers="map.markers" :polyline="map.polyline" :show-location="true" @markertap="log('onMapMarkerTap', $event.detail)" @regionchange="log('onMapRegionChange', $event.detail)" @controltap="log('onMapControlTap', $event.detail)">
             <Inner></Inner>
           </wx-component>
-          <wx-map v-else-if="wxPrefix === 1" :class="item" :longitude="map.longitude" :latitude="map.latitude" :scale="map.scale" :controls="map.controls" :markers="map.markers" :polyline="map.polyline" :show-location="true" @markertap="onMapMarkerTap" @regionchange="onMapRegionChange" @controltap="onMapControlTap">
+          <wx-map v-else-if="wxPrefix === 1" :class="item" :longitude="map.longitude" :latitude="map.latitude" :scale="map.scale" :controls="map.controls" :markers="map.markers" :polyline="map.polyline" :show-location="true" @markertap="log('onMapMarkerTap', $event.detail)" @regionchange="log('onMapRegionChange', $event.detail)" @controltap="log('onMapControlTap', $event.detail)">
             <Inner></Inner>
           </wx-map>
-          <map v-else-if="wxPrefix === 2" :class="item" :longitude="map.longitude" :latitude="map.latitude" :scale="map.scale" :controls="map.controls" :markers="map.markers" :polyline="map.polyline" :show-location="true" @markertap="onMapMarkerTap" @regionchange="onMapRegionChange" @controltap="onMapControlTap">
+          <map v-else-if="wxPrefix === 2" :class="item" :longitude="map.longitude" :latitude="map.latitude" :scale="map.scale" :controls="map.controls" :markers="map.markers" :polyline="map.polyline" :show-location="true" @markertap="log('onMapMarkerTap', $event.detail)" @regionchange="log('onMapRegionChange', $event.detail)" @controltap="log('onMapControlTap', $event.detail)">
             <Inner></Inner>
           </map>
           <!-- 基础库暂未支持 regionchange 事件提供坐标和 scale，故注释 -->
@@ -438,31 +439,31 @@
           </cover-view>
         </template>
         <template v-else-if="item === 'live-player'">
-          <wx-component v-if="!wxPrefix" :behavior="item" :class="item" mode="live" :autoplay="true" src="rtmp://live.hkstv.hk.lxdns.com/live/hks" @statechange="onLivePlayerStateChange">
+          <wx-component v-if="!wxPrefix" :behavior="item" :class="item" mode="live" :autoplay="true" src="rtmp://live.hkstv.hk.lxdns.com/live/hks" @statechange="log('onLivePlayerStateChange', $event.detail)">
             <Inner></Inner>
           </wx-component>
-          <wx-live-player v-else-if="wxPrefix === 1" :class="item" mode="live" :autoplay="true" src="rtmp://live.hkstv.hk.lxdns.com/live/hks" @statechange="onLivePlayerStateChange">
+          <wx-live-player v-else-if="wxPrefix === 1" :class="item" mode="live" :autoplay="true" src="rtmp://live.hkstv.hk.lxdns.com/live/hks" @statechange="log('onLivePlayerStateChange', $event.detail)">
             <Inner></Inner>
           </wx-live-player>
-          <live-player v-else-if="wxPrefix === 2" :class="item" mode="live" :autoplay="true" src="rtmp://live.hkstv.hk.lxdns.com/live/hks" @statechange="onLivePlayerStateChange">
+          <live-player v-else-if="wxPrefix === 2" :class="item" mode="live" :autoplay="true" src="rtmp://live.hkstv.hk.lxdns.com/live/hks" @statechange="log('onLivePlayerStateChange', $event.detail)">
             <Inner></Inner>
           </live-player>
         </template>
         <template v-else-if="item === 'live-pusher'">
-          <wx-component v-if="!wxPrefix" :behavior="item" :class="item" mode="RTC" :autopush="true" url="https://domain/push_stream" @statechange="onLivePusherStateChange">
+          <wx-component v-if="!wxPrefix" :behavior="item" :class="item" mode="RTC" :autopush="true" url="https://domain/push_stream" @statechange="log('onLivePusherStateChange', $event.detail)">
             <Inner></Inner>
           </wx-component>
-          <wx-live-pusher v-else-if="wxPrefix === 1" :class="item" mode="RTC" :autopush="true" url="https://domain/push_stream" @statechange="onLivePusherStateChange">
+          <wx-live-pusher v-else-if="wxPrefix === 1" :class="item" mode="RTC" :autopush="true" url="https://domain/push_stream" @statechange="log('onLivePusherStateChange', $event.detail)">
             <Inner></Inner>
           </wx-live-pusher>
-          <live-pusher v-else-if="wxPrefix === 2" :class="item" mode="RTC" :autopush="true" url="https://domain/push_stream" @statechange="onLivePusherStateChange">
+          <live-pusher v-else-if="wxPrefix === 2" :class="item" mode="RTC" :autopush="true" url="https://domain/push_stream" @statechange="log('onLivePusherStateChange', $event.detail)">
             <Inner></Inner>
           </live-pusher>
         </template>
         <template v-else-if="item === 'editor'">
-          <wx-component v-if="!wxPrefix" :behavior="item" placeholder="请输入内容" :show-img-size="true" :show-img-toolbar="true" :show-img-resize="true" @statuschange="onEditorStatusChange" @ready="onEditorReady"></wx-component>
-          <wx-editor v-else-if="wxPrefix === 1" placeholder="请输入内容" :show-img-size="true" :show-img-toolbar="true" :show-img-resize="true" @statuschange="onEditorStatusChange" @ready="onEditorReady"></wx-editor>
-          <editor v-else-if="wxPrefix === 2" placeholder="请输入内容" :show-img-size="true" :show-img-toolbar="true" :show-img-resize="true" @statuschange="onEditorStatusChange" @ready="onEditorReady"></editor>
+          <wx-component v-if="!wxPrefix" :behavior="item" placeholder="请输入内容" :show-img-size="true" :show-img-toolbar="true" :show-img-resize="true" @statuschange="log('onEditorStatusChange', $event.detail)" @ready="log('onEditorReady', $event.detail)"></wx-component>
+          <wx-editor v-else-if="wxPrefix === 1" placeholder="请输入内容" :show-img-size="true" :show-img-toolbar="true" :show-img-resize="true" @statuschange="log('onEditorStatusChange', $event.detail)" @ready="log('onEditorReady', $event.detail)"></wx-editor>
+          <editor v-else-if="wxPrefix === 2" placeholder="请输入内容" :show-img-size="true" :show-img-toolbar="true" :show-img-resize="true" @statuschange="log('onEditorStatusChange', $event.detail)" @ready="log('onEditorReady', $event.detail)"></editor>
         </template>
         <template v-else-if="item === 'camera'">
           <wx-component v-if="!wxPrefix" :behavior="item" :class="item">
@@ -476,14 +477,14 @@
           </camera>
         </template>
         <template v-else-if="item === 'ad'">
-          <wx-component v-if="!wxPrefix" :behavior="item" :class="item" unit-id="123" @error="onAdError"></wx-component>
-          <wx-ad v-else-if="wxPrefix === 1" :class="item" unit-id="123" @error="onAdError"></wx-ad>
-          <ad v-else-if="wxPrefix === 2" :class="item" unit-id="123" @error="onAdError"></ad>
+          <wx-component v-if="!wxPrefix" :behavior="item" :class="item" unit-id="123" @error="log('onAdError', $event.detail)"></wx-component>
+          <wx-ad v-else-if="wxPrefix === 1" :class="item" unit-id="123" @error="log('onAdError', $event.detail)"></wx-ad>
+          <ad v-else-if="wxPrefix === 2" :class="item" unit-id="123" @error="log('onAdError', $event.detail)"></ad>
         </template>
         <template v-else-if="item === 'official-account'">
-          <wx-component v-if="!wxPrefix" :behavior="item" :class="item" @error="onOfficialAccountError"></wx-component>
-          <wx-official-account v-else-if="wxPrefix === 1" :class="item" @error="onOfficialAccountError"></wx-official-account>
-          <official-account v-else-if="wxPrefix === 2" :class="item" @error="onOfficialAccountError"></official-account>
+          <wx-component v-if="!wxPrefix" :behavior="item" :class="item" @error="log('onOfficialAccountError', $event.detail)"></wx-component>
+          <wx-official-account v-else-if="wxPrefix === 1" :class="item" @error="log('onOfficialAccountError', $event.detail)"></wx-official-account>
+          <official-account v-else-if="wxPrefix === 2" :class="item" @error="log('onOfficialAccountError', $event.detail)"></official-account>
         </template>
         <template v-else-if="item === 'web-view'">
           <wx-component v-if="!wxPrefix" :behavior="item" :class="item" src="https://www.qq.com/"></wx-component>
@@ -492,17 +493,17 @@
         </template>
         <template v-else-if="item === 'scroll-view'">
           <div>
-            <wx-component ref="scroll-view" v-if="!wxPrefix" :behavior="item" :class="item + '-y'" :scroll-into-view="'y1' + scrollView.yDest" :scroll-top="scrollView.scrollTop" :scroll-y="true" :scroll-with-animation="scrollView.yAnimation" @scroll="onScrollViewScroll"><Inner2 type="y1"/></wx-component>
-            <wx-scroll-view ref="scroll-view" v-else-if="wxPrefix === 1" :class="item + '-y'" :scroll-into-view="'y2' + scrollView.yDest" :scroll-top="scrollView.scrollTop" :scroll-y="true" :scroll-with-animation="scrollView.yAnimation" @scroll="onScrollViewScroll"><Inner2 type="y2"/></wx-scroll-view>
-            <scroll-view ref="scroll-view" v-else-if="wxPrefix === 2" :class="item + '-y'" :scroll-into-view="'y3' + scrollView.yDest" :scroll-top="scrollView.scrollTop" :scroll-y="true" :scroll-with-animation="scrollView.yAnimation" @scroll="onScrollViewScroll"><Inner2 type="y3"/></scroll-view>
+            <wx-component ref="scroll-view" v-if="!wxPrefix" :behavior="item" :class="item + '-y'" :scroll-into-view="'y1' + scrollView.yDest" :scroll-top="scrollView.scrollTop" :scroll-y="true" :scroll-with-animation="scrollView.yAnimation" @scroll="log('onScrollViewScroll', $event.detail)"><Inner2 type="y1"/></wx-component>
+            <wx-scroll-view ref="scroll-view" v-else-if="wxPrefix === 1" :class="item + '-y'" :scroll-into-view="'y2' + scrollView.yDest" :scroll-top="scrollView.scrollTop" :scroll-y="true" :scroll-with-animation="scrollView.yAnimation" @scroll="log('onScrollViewScroll', $event.detail)"><Inner2 type="y2"/></wx-scroll-view>
+            <scroll-view ref="scroll-view" v-else-if="wxPrefix === 2" :class="item + '-y'" :scroll-into-view="'y3' + scrollView.yDest" :scroll-top="scrollView.scrollTop" :scroll-y="true" :scroll-with-animation="scrollView.yAnimation" @scroll="log('onScrollViewScroll', $event.detail)"><Inner2 type="y3"/></scroll-view>
             <div class="scroll-view-btn" @click="onClickScrollViewYBtn">滚动到第三个滑块</div>
             <div class="scroll-view-btn" @click="onClickScrollViewYTopBtn">滚动到 120px 处</div>
             <div class="scroll-view-btn" @click="onClickScrollViewYAnimBtn">{{scrollView.yAnimation ? '关闭' : '打开'}}动画</div>
           </div>
           <div>
-            <wx-component ref="scroll-view" v-if="!wxPrefix" :behavior="item" :class="item + '-x'" :scroll-into-view="'x1' + scrollView.xDest" :scroll-x="true" :scroll-with-animation="true" @scroll="onScrollViewScroll"><Inner2 type="x1"/></wx-component>
-            <wx-scroll-view ref="scroll-view" v-else-if="wxPrefix === 1" :class="item + '-x'" :scroll-into-view="'x2' + scrollView.xDest" :scroll-x="true" :scroll-with-animation="true" @scroll="onScrollViewScroll"><Inner2 type="x2"/></wx-scroll-view>
-            <scroll-view ref="scroll-view" v-else-if="wxPrefix === 2" :class="item + '-x'" :scroll-into-view="'x3' + scrollView.xDest" :scroll-x="true" :scroll-with-animation="true" @scroll="onScrollViewScroll"><Inner2 type="x3"/></scroll-view>
+            <wx-component ref="scroll-view" v-if="!wxPrefix" :behavior="item" :class="item + '-x'" :scroll-into-view="'x1' + scrollView.xDest" :scroll-x="true" :scroll-with-animation="true" @scroll="log('onScrollViewScroll', $event.detail)"><Inner2 type="x1"/></wx-component>
+            <wx-scroll-view ref="scroll-view" v-else-if="wxPrefix === 1" :class="item + '-x'" :scroll-into-view="'x2' + scrollView.xDest" :scroll-x="true" :scroll-with-animation="true" @scroll="log('onScrollViewScroll', $event.detail)"><Inner2 type="x2"/></wx-scroll-view>
+            <scroll-view ref="scroll-view" v-else-if="wxPrefix === 2" :class="item + '-x'" :scroll-into-view="'x3' + scrollView.xDest" :scroll-x="true" :scroll-with-animation="true" @scroll="log('onScrollViewScroll', $event.detail)"><Inner2 type="x3"/></scroll-view>
             <div class="scroll-view-btn" @click="onClickScrollViewXBtn">滚动到第二个滑块</div>
           </div>
         </template>
@@ -762,117 +763,25 @@ export default {
       })
   },
   methods: {
+    log(text, arg) {
+      console.log(text, arg)
+    },
+
     onClick() {
       this.eventCount++
       console.log('click')
-    },
-
-    onParentTouchStart() {
-      console.log('parent touchstart')
-    },
-
-    onParentTouchEnd() {
-      console.log('parent touchend')
-    },
-
-    onParentClick() {
-      console.log('parent click')
-    },
-
-    onRootClick() {
-      console.log('root click')
-    },
-
-    onSelectChange(evt) {
-       console.log('onSelectChange', evt)
     },
 
     startTranstion() {
       this.transition = !this.transition
     },
 
-    onTransitionEnd() {
-      console.log('transition end')
-    },
-
-    onAnimationStart() {
-      console.log('animation start')
-    },
-
-    onAnimationIteration() {
-      console.log('animation iteration')
-    },
-
-    onAnimationEnd() {
-      console.log('animation end')
-    },
-
     onInput(evt) {
       console.log('onInput', evt.target.value, evt)
     },
 
-    onInputChange(evt) {
-      console.log('onInputChange', evt.target.value, evt)
-    },
-
     onTextareaInput(evt) {
       console.log('onTextareaInput', evt.target.value)
-    },
-
-    onImgLoad(evt) {
-      console.log('onImgLoad')
-    },
-
-    onPickerChange(evt) {
-      console.log('onPickerChange', evt.detail)
-    },
-
-    onMapMarkerTap(evt) {
-      console.log('onMapMarkerTap', evt.detail)
-    },
-
-    onMapRegionChange(evt) {
-      console.log('onMapRegionChange', evt.detail)
-    },
-
-    onMapControlTap(evt) {
-      console.log('onMapControlTap', evt.detail)
-    },
-
-    onLivePlayerStateChange(evt) {
-      console.log('onLivePlayerStateChange', evt.detail)
-    },
-
-    onLivePusherStateChange(evt) {
-      console.log('onLivePusherStateChange', evt.detail)
-    },
-
-    onSwitchChange(evt) {
-      console.log('onSwitchChange', evt.detail)
-    },
-
-    onLabelChange(evt) {
-      console.log('onLabelChange', evt.detail)
-    },
-
-    onSliderChange(evt) {
-      console.log('onSliderChange', evt.detail)
-    },
-
-    onEditorStatusChange(evt) {
-      console.log('onEditorStatusChange', evt.detail)
-    },
-
-    onEditorReady(evt) {
-      console.log('onEditorReady', evt.detail)
-    },
-
-    onAdError(evt) {
-      console.log('onAdError', evt.detail)
-    },
-
-    onScrollViewScroll(evt) {
-      console.log('onScrollViewScroll', evt.detail)
     },
 
     onClickScrollViewYBtn() {
@@ -909,10 +818,6 @@ export default {
       this.scrollView.xDest = 'block2'
     },
 
-    onOfficialAccountError(evt) {
-      console.log('onOfficialAccountError', evt.detail)
-    },
-
     onFormSubmit(evt) {
       console.log('form submit', evt.$$from, evt.detail)
     },
@@ -921,28 +826,12 @@ export default {
       console.log('form reset', evt.$$from)
     },
 
-    onSwiperChange(evt) {
-      console.log('onSwiperChange', evt.detail)
-    },
-
     onPickerViewChange(evt) {
       this.pickerView.year = this.pickerView.years[evt.detail.value[0]]
       this.pickerView.month = this.pickerView.months[evt.detail.value[1]]
       this.pickerView.day = this.pickerView.days[evt.detail.value[2]]
       this.pickerView.value = evt.detail.value
       console.log('onPickerViewChange', evt.detail)
-    },
-
-    onMovableChange(evt) {
-      console.log('onMovableChange', evt.detail)
-    },
-
-    onMovableScale(evt) {
-      console.log('onMovableScale', evt.detail)
-    },
-
-    onGetPhoneNumber(evt) {
-      console.log('onGetPhoneNumber', evt)
     },
 
     onClickMovableMove() {
@@ -964,10 +853,6 @@ export default {
 
     onCanvasTouchStart(type, evt) {
       console.log(`onCanvasTouchStart[${type}]`, evt)
-    },
-
-    onCanvasLongTap(evt) {
-      console.log('onCanvasLongTap', evt)
     },
 
     resetMap() {

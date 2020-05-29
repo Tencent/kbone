@@ -1,8 +1,9 @@
 # 更新日志
 
-## next version
+## 1.4.3
 
 * 支持 button 的 getrealnameauthinfo 事件
+* 支持 longpress 事件
 
 ## 1.4.2
 

@@ -12,6 +12,7 @@
         bindtouchend="onTouchEnd"
         bindtouchcancel="onTouchCancel"
         bindtap="onTap"
+        bindlongpress="onLongPress"
 
         src="{{src}}"
         bindload="onCoverImageLoad"
@@ -31,6 +32,7 @@
         bindtouchend="onTouchEnd"
         bindtouchcancel="onTouchCancel"
         bindtap="onTap"
+        bindlongpress="onLongPress"
 
         scale-area="{{scaleArea}}"
     ><block wx:for="{{childNodes}}" wx:key="nodeId">
@@ -47,6 +49,7 @@
             bindtouchend="onTouchEnd"
             bindtouchcancel="onTouchCancel"
             bindtap="onTap"
+            bindlongpress="onLongPress"
             
             direction="{{item.extra.direction}}"
             inertia="{{item.extra.inertia}}"
@@ -81,6 +84,7 @@
         bindtouchend="onTouchEnd"
         bindtouchcancel="onTouchCancel"
         bindtap="onTap"
+        bindlongpress="onLongPress"
 
         indicator-dots="{{indicatorDots}}"
         indicator-color="{{indicatorColor}}"
@@ -112,7 +116,8 @@
             bindtouchmove="onTouchMove"
             bindtouchend="onTouchEnd"
             bindtouchcancel="onTouchCancel"
-            bindtap="onTap"            
+            bindtap="onTap"
+            bindlongpress="onLongPress"
 
             item-id="{{item.extra.itemId}}"
         ><element wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{item.nodeId}}" data-private-page-id="{{item.pageId}}" generic:custom-component="custom-component"></element></swiper-item>
@@ -132,6 +137,7 @@
         bindtouchend="onTouchEnd"
         bindtouchcancel="onTouchCancel"
         bindtap="onTap"
+        bindlongpress="onLongPress"
 
         type="{{type}}"
         size="{{size}}"
@@ -151,6 +157,7 @@
         bindtouchend="onTouchEnd"
         bindtouchcancel="onTouchCancel"
         bindtap="onTap"
+        bindlongpress="onLongPress"
 
         percent="{{percent}}"
         show-info="{{showInfo}}"
@@ -179,6 +186,7 @@
         bindtouchend="onTouchEnd"
         bindtouchcancel="onTouchCancel"
         bindtap="onTap"
+        bindlongpress="onLongPress"
 
         nodes="{{nodes}}"
         space="{{space}}"
@@ -198,6 +206,7 @@
         bindtouchend="onTouchEnd"
         bindtouchcancel="onTouchCancel"
         bindtap="onTap"
+        bindlongpress="onLongPress"
 
         size="{{size}}"
         type="{{type}}"
@@ -240,6 +249,7 @@
         bindtouchend="onTouchEnd"
         bindtouchcancel="onTouchCancel"
         bindtap="onTap"
+        bindlongpress="onLongPress"
 
         read-only="{{readOnly}}"
         placeholder="{{placeholder}}"
@@ -266,6 +276,7 @@
         bindtouchend="onTouchEnd"
         bindtouchcancel="onTouchCancel"
         bindtap="onTap"
+        bindlongpress="onLongPress"
 
         report-submit="{{reportSubmit}}"
         report-submit-timeout="{{reportSubmitTimeout}}"
@@ -294,6 +305,7 @@
         bindtouchend="onTouchEnd"
         bindtouchcancel="onTouchCancel"
         bindtap="onTap"
+        bindlongpress="onLongPress"
 
         value="{{value}}"
         disabled="{{disabled}}"
@@ -317,6 +329,7 @@
         bindtouchend="onTouchEnd"
         bindtouchcancel="onTouchCancel"
         bindtap="onTap"
+        bindlongpress="onLongPress"
 
         value="{{value}}"
         disabled="{{disabled}}"
@@ -336,6 +349,7 @@
         bindtouchend="onTouchEnd"
         bindtouchcancel="onTouchCancel"
         bindtap="onTap"
+        bindlongpress="onLongPress"
         
         value="{{value}}"
         type="{{type}}"
@@ -375,6 +389,7 @@
         bindtouchend="onTouchEnd"
         bindtouchcancel="onTouchCancel"
         bindtap="onTap"
+        bindlongpress="onLongPress"
 
         header-text="{{headerText}}"
         mode="{{mode}}"
@@ -404,6 +419,7 @@
         bindtouchend="onTouchEnd"
         bindtouchcancel="onTouchCancel"
         bindtap="onTap"
+        bindlongpress="onLongPress"
 
         min="{{min}}"
         max="{{max}}"
@@ -434,6 +450,7 @@
         bindtouchend="onTouchEnd"
         bindtouchcancel="onTouchCancel"
         bindtap="onTap"
+        bindlongpress="onLongPress"
 
         checked="{{checked}}"
         disabled="{{disabled}}"
@@ -455,6 +472,7 @@
         bindtouchend="onTouchEnd"
         bindtouchcancel="onTouchCancel"
         bindtap="onTap"
+        bindlongpress="onLongPress"
 
         value="{{value}}"
         placeholder="{{placeholder}}"
@@ -496,6 +514,7 @@
         bindtouchend="onTouchEnd"
         bindtouchcancel="onTouchCancel"
         bindtap="onTap"
+        bindlongpress="onLongPress"
 
         target="{{target}}"
         url="{{url}}"
@@ -528,6 +547,7 @@
         bindtouchend="onTouchEnd"
         bindtouchcancel="onTouchCancel"
         bindtap="onTap"
+        bindlongpress="onLongPress"
 
         mode="{{mode}}"
         resolution="{{resolution}}"
@@ -553,6 +573,7 @@
         bindtouchend="onTouchEnd"
         bindtouchcancel="onTouchCancel"
         bindtap="onTap"
+        bindlongpress="onLongPress"
 
         rendering-mode="{{renderingMode}}"
         src="{{src}}"
@@ -577,6 +598,7 @@
         bindtouchend="onTouchEnd"
         bindtouchcancel="onTouchCancel"
         bindtap="onTap"
+        bindlongpress="onLongPress"
 
         src="{{src}}"
         mode="{{mode}}"
@@ -612,6 +634,7 @@
         bindtouchend="onTouchEnd"
         bindtouchcancel="onTouchCancel"
         bindtap="onTap"
+        bindlongpress="onLongPress"
 
         url="{{url}}"
         mode="{{mode}}"
@@ -662,6 +685,7 @@
         bindtouchend="onTouchEnd"
         bindtouchcancel="onTouchCancel"
         bindtap="onTap"
+        bindlongpress="onLongPress"
 
         src="{{src}}"
         duration="{{duration}}"
@@ -723,7 +747,7 @@
         bindtouchmove="onTouchMove"
         bindtouchend="onTouchEnd"
         bindtouchcancel="onTouchCancel"
-        bindtap="onTap"
+        bindlongpress="onLongPress"
         
         longitude="{{longitude}}"
         latitude="{{latitude}}"
@@ -771,6 +795,7 @@
         data-private-node-id="{{nodeId}}"
         data-private-page-id="{{pageId}}"
         bindtap="onTap"
+        bindlongpress="onLongPress"
         
         type="{{type}}"
         canvas-id="{{canvasId}}"
@@ -791,6 +816,7 @@
         data-private-node-id="{{nodeId}}"
         data-private-page-id="{{pageId}}"
         bindtap="onTap"
+        bindlongpress="onLongPress"
         
         type="{{type}}"
         canvas-id="{{canvasId}}"
@@ -812,6 +838,7 @@
         bindtouchend="onTouchEnd"
         bindtouchcancel="onTouchCancel"
         bindtap="onTap"
+        bindlongpress="onLongPress"
         
         unit-id="{{unitId}}"
         ad-intervals="{{adIntervals}}"
@@ -835,6 +862,7 @@
         bindtouchend="onTouchEnd"
         bindtouchcancel="onTouchCancel"
         bindtap="onTap"
+        bindlongpress="onLongPress"
 
         bindload="onOfficialAccountLoad"
         binderror="onOfficialAccountError"
@@ -853,6 +881,7 @@
         bindtouchend="onTouchEnd"
         bindtouchcancel="onTouchCancel"
         bindtap="onTap"
+        bindlongpress="onLongPress"
 
         type="{{type}}"
         open-gid="{{openGid}}"
@@ -875,6 +904,7 @@
         bindtouchend="onTouchEnd"
         bindtouchcancel="onTouchCancel"
         bindtap="onTap"
+        bindlongpress="onLongPress"
         
         src="{{src}}"
         bindmessage="onWebviewMessage"
@@ -896,6 +926,7 @@
         capture-bind:touchend="onCaptureTouchEnd"
         capture-bind:touchcancel="onCaptureTouchCancel"
         capture-bind:tap="onCaptureTap"
+        capture-bind:longpress="onCaptureLongPress"
     ><element wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element></view>
 </template>
 <template name="catch">
@@ -911,6 +942,7 @@
         catchtouchend="{{touchEnd}}"
         catchtouchcancel="{{touchCancel}}"
         catchtap="onTap"
+        catchlongpress="onLongPress"
     ><element wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element></view>
 </template>
 <template name="animation">
@@ -926,6 +958,7 @@
         bindtouchend="onTouchEnd"
         bindtouchcancel="onTouchCancel"
         bindtap="onTap"
+        bindlongpress="onLongPress"
         bindtransitionend="onTransitionEnd"
         bindanimationstart="onAnimationStart"
         bindanimationiteration="onAnimationIteration"
