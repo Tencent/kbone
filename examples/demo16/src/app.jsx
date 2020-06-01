@@ -62,20 +62,13 @@ const App = (props, store) => {
         {name: '椰子', value: 'coconut'}
     ])
     const [favorite, setFavorite] = useState('lime')
-    const [scrollIntoView, setScrollIntoView] = useState('')
     const scrollViewProps = {
         className: 'scroll-view-y',
         'scroll-y': 'true',
         'scroll-with-animation': 'true',
         'refresher-enabled': 'true',
-        'scroll-into-view': scrollIntoView,
-        // 'scroll-into-view': 'a3', // 在一个 setData 中设置子节点和 scroll-into-view 的时候，基础库会优先处理 scroll-into-view，导致计算滚动不正确
+        'scroll-into-view': 'a3',
     }
-
-    setTimeout(() => {
-        window.$$forceRender() // 强制清空 setData 队列
-        setScrollIntoView('a3')
-    }, 0)
 
     return (
         <div>
