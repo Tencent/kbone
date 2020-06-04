@@ -237,14 +237,16 @@ class EventTarget {
         if (handlers._namespace) {
             Object.keys(handlers._namespace).forEach(namespace => {
                 const namespaceHandlers = handlers._namespace[namespace]
-                namespaceHandlers.forEach(handler => {
-                    if (event && event.$$immediateStop) return
-                    try {
-                        handler.call(this || null, event, ...args)
-                    } catch (err) {
-                        console.error(err)
-                    }
-                })
+                if (namespaceHandlers) {
+                    namespaceHandlers.forEach(handler => {
+                        if (event && event.$$immediateStop) return
+                        try {
+                            handler.call(this || null, event, ...args)
+                        } catch (err) {
+                            console.error(err)
+                        }
+                    })
+                }
             })
         }
     }
@@ -286,8 +288,17 @@ class EventTarget {
     /**
      * 清空某个事件的所有句柄
      */
-    $$clearEvent(eventName, isCapture = false, namespace) {
+    $$clearEvent(eventName, options) {
         if (typeof eventName !== 'string') return
+
+        let isCapture = false
+        let namespace = null
+
+        if (typeof options === 'boolean') isCapture = options
+        else if (typeof options === 'object') {
+            isCapture = !!options.capture
+            namespace = options.$$namespace
+        }
 
         eventName = eventName.toLowerCase()
         const handlers = this.$_getHandlers(eventName, isCapture)
@@ -319,7 +330,7 @@ class EventTarget {
 
         if (typeof options === 'boolean') isCapture = options
         else if (typeof options === 'object') {
-            isCapture = options.capture
+            isCapture = !!options.capture
             namespace = options.$$namespace
         }
 
@@ -344,7 +355,7 @@ class EventTarget {
 
         if (typeof options === 'boolean') isCapture = options
         else if (typeof options === 'object') {
-            isCapture = options.capture
+            isCapture = !!options.capture
             namespace = options.$$namespace
         }
 

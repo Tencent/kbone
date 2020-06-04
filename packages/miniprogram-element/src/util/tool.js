@@ -241,8 +241,8 @@ function dealWithLeafAndSimple(childNodes, onChildNodesUpdate) {
         childNodes = childNodes.map(originChildNode => {
             const childNode = Object.assign({}, originChildNode)
 
+            childNode.domNode.$$clearEvent('$$childNodesUpdate', {$$namespace: 'child'})
             if (childNode.isImage || childNode.isLeaf || childNode.isSimple || childNode.useTemplate) {
-                childNode.domNode.$$clearEvent('$$childNodesUpdate', {$$namespace: 'child'})
                 childNode.domNode.addEventListener('$$childNodesUpdate', onChildNodesUpdate, {$$namespace: 'child'})
             }
 
