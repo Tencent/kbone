@@ -47,7 +47,7 @@
     hidden="{{hidden}}"
     hover-class="{{hoverClass}}"
     hover-stop-propagation="{{hoverStopPropagation}}"
-    hover-start-time="{{hoverStayTime}}"
+    hover-start-time="{{hoverStartTime}}"
     hover-stay-time="{{hoverStayTime}}"
 ><template is="subtree" data="{{childNodes: childNodes, inCover}}"/></view>
 <!-- 表单组件 -->
