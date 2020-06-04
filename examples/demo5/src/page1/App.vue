@@ -6,6 +6,7 @@
     <a href="/c" target="_blank">新开页面跳转</a>
     <button @click="onClickJump">当前页跳转</button>
     <button @click="onClickOpen">新开页面跳转</button>
+    <button @click="onClickSpa">打开 spa 页面</button>
     <Footer></Footer>
   </div>
 </template>
@@ -61,6 +62,10 @@ export default {
 
     onClickOpen() {
       window.open('/c')
+    },
+
+    onClickSpa() {
+      window.open('/spa')
     },
   },
 }
