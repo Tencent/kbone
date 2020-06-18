@@ -401,6 +401,9 @@ class MpPlugin {
             // package.json
             const userPackageConfigJson = options.packageConfig || {}
             const packageConfigJson = Object.assign({}, packageConfigJsonTmpl)
+            packageConfigJson.dependencies = Object.assign({}, packageConfigJson.dependencies)
+            if (generateConfig.renderVersion) packageConfigJson.dependencies['miniprogram-render'] = generateConfig.renderVersion
+            if (generateConfig.elementVersion) packageConfigJson.dependencies['miniprogram-element'] = generateConfig.elementVersion
             const packageConfigJsonContent = JSON.stringify(_.merge(packageConfigJson, userPackageConfigJson), null, '\t')
             addFile(compilation, '../package.json', packageConfigJsonContent)
 

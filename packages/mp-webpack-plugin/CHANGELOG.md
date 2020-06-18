@@ -1,5 +1,9 @@
 # 更新日志
 
+## 0.9.16
+
+* 支持配置 miniprogram-render / miniprogram-element 的版本
+
 ## 0.9.15
 
 * 支持 document.documentElement.scrollTop

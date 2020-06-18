@@ -11,7 +11,9 @@ module.exports = {
 		accessDenied: 'index',
 	},
 	generate: {
-        appWxss: 'none',
+		appWxss: 'none',
+		renderVersion: 'latest',
+		elementVersion: 'latest',
 	},
 	runtime: {
 		// wxComponent: 'noprefix',
