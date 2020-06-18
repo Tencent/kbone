@@ -75,8 +75,8 @@ class XMLHttpRequest extends EventTarget {
     }
 
     /**
-   * readyState 变化
-   */
+     * readyState 变化
+     */
     $_callReadyStateChange(readyState) {
         const hasChange = readyState !== this.$_readyState
         this.$_readyState = readyState
@@ -85,8 +85,8 @@ class XMLHttpRequest extends EventTarget {
     }
 
     /**
-   * 执行请求
-   */
+     * 执行请求
+     */
     $_callRequest() {
         if (this.$_timeout) {
             this.$_startTime = +new Date()
@@ -132,8 +132,8 @@ class XMLHttpRequest extends EventTarget {
     }
 
     /**
-   * 请求成功
-   */
+     * 请求成功
+     */
     $_requestSuccess({data, statusCode, header}) {
         this.$_status = statusCode
         this.$_resHeader = header
@@ -159,8 +159,8 @@ class XMLHttpRequest extends EventTarget {
     }
 
     /**
-   * 请求失败
-   */
+     * 请求失败
+     */
     $_requestFail({errMsg}) {
         this.$_status = 0
         this.$_statusText = errMsg
@@ -169,8 +169,8 @@ class XMLHttpRequest extends EventTarget {
     }
 
     /**
-   * 请求完成
-   */
+     * 请求完成
+     */
     $_requestComplete() {
         this.$_startTime = null
         this.$_requestTask = null
@@ -182,8 +182,8 @@ class XMLHttpRequest extends EventTarget {
     }
 
     /**
-   * 对外属性和方法
-   */
+     * 对外属性和方法
+     */
     get timeout() {
         return this.$_timeout
     }
