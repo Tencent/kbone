@@ -15,11 +15,10 @@ const {
 const ELEMENT_DIFF_KEYS = ['nodeId', 'pageId', 'tagName', 'compName', 'id', 'className', 'style', 'src', 'mode', 'webp', 'lazyLoad', 'showMenuByLongpress', 'useTemplate', 'isImage', 'isLeaf', 'isSimple', 'content', 'extra']
 const TEXT_NODE_DIFF_KEYS = ['nodeId', 'pageId', 'content']
 const NEET_SPLIT_CLASS_STYLE_FROM_CUSTOM_ELEMENT = ['WX-COMPONENT', 'WX-CUSTOM-COMPONENT'] // 需要分离 class 和 style 的节点
-const NEET_BEHAVIOR_NORMAL_CUSTOM_ELEMENT_PARENT = ['swiper', 'movable-area']
+const NEET_BEHAVIOR_NORMAL_CUSTOM_ELEMENT_PARENT = ['swiper', 'movable-area', 'picker-view']
 const NEET_BEHAVIOR_NORMAL_CUSTOM_ELEMENT = ['swiper-item', 'movable-view', 'picker-view-column']
 const NEET_RENDER_TO_CUSTOM_ELEMENT = ['IFRAME', ...NEET_SPLIT_CLASS_STYLE_FROM_CUSTOM_ELEMENT] // 必须渲染成自定义组件的节点
-const NOT_SUPPORT = ['IFRAME']
-const USE_TEMPLATE = ['cover-image', 'movable-area', 'movable-view', 'swiper', 'swiper-item', 'icon', 'progress', 'rich-text', 'button', 'editor', 'form', 'INPUT', 'picker', 'SELECT', 'slider', 'switch', 'TEXTAREA', 'navigator', 'camera', 'image', 'live-player', 'live-pusher', 'VIDEO', 'map', 'CANVAS', 'ad', 'official-account', 'open-data', 'web-view', 'capture', 'catch', 'animation'] // 使用 template 渲染
+const USE_TEMPLATE = ['cover-image', 'movable-area', 'movable-view', 'swiper', 'swiper-item', 'icon', 'progress', 'rich-text', 'text', 'button', 'editor', 'form', 'INPUT', 'picker', 'SELECT', 'picker-view', 'picker-view-column', 'slider', 'switch', 'TEXTAREA', 'navigator', 'camera', 'image', 'live-player', 'live-pusher', 'VIDEO', 'map', 'CANVAS', 'ad', 'official-account', 'open-data', 'web-view', 'capture', 'catch', 'animation', 'not-support'] // 使用 template 渲染
 const IN_COVER = ['cover-view'] // 子节点必须使用 cover-view/cover-image
 
 /**
@@ -30,7 +29,6 @@ function filterNodes(domNode, level, component) {
     let childNodes = domNode.childNodes || []
 
     if (typeof childNodes.map !== 'function') return []
-    if (NOT_SUPPORT.indexOf(domNode.tagName) >= 0) return [] // 不支持标签，不渲染子节点
 
     if (domNode.tagName === 'SELECT') {
         // select 标签只渲染和 select 值相同的 option
@@ -86,7 +84,8 @@ function filterNodes(domNode, level, component) {
         }
 
         // 判断是否使用 template 渲染
-        const templateName = domInfo.tagName === 'wx-component' ? child.behavior : child.tagName
+        let templateName = domInfo.tagName === 'wx-component' ? child.behavior : child.tagName
+        templateName = !mp.$$adapter.tool.isTagNameSupport(templateName) ? 'not-support' : templateName
         domInfo.useTemplate = !domInfo.isImage && USE_TEMPLATE.indexOf(templateName) !== -1
         if (domInfo.useTemplate) {
             const wxCompName = wxCompNameMap[templateName]
@@ -114,6 +113,16 @@ function filterNodes(domNode, level, component) {
                 extra.touchMove = child.$$hasEventHandler('touchmove') ? 'onTouchMove' : ''
                 extra.touchEnd = child.$$hasEventHandler('touchend') ? 'onTouchEnd' : ''
                 extra.touchCancel = child.$$hasEventHandler('touchcancel') ? 'onTouchCancel' : ''
+            }
+
+            // text 组件存在 bug，其子节点无法使用自定义组件的方式来渲染，会存在无法更新的问题，需要基础库解决，故此处只渲染其文本内容
+            if (wxCompName === 'text') {
+                extra.content = child.textContent
+            }
+
+            // 不支持的节点，展示占位文本
+            if (wxCompName === 'not-support') {
+                extra.content = child.textContent
             }
         }
 
@@ -326,7 +335,6 @@ function compareVersion(v1, v2) {
 }
 
 module.exports = {
-    NOT_SUPPORT,
     USE_TEMPLATE,
     IN_COVER,
     filterNodes,

@@ -2,7 +2,6 @@ const _ = require('./tool')
 const component = require('./component')
 
 const {
-    NOT_SUPPORT,
     USE_TEMPLATE,
 } = _
 const {
@@ -32,14 +31,6 @@ module.exports = {
             data.wxCustomCompName = domNode.behavior
             data.nodeId = this.nodeId
             data.pageId = this.pageId
-        } else if (NOT_SUPPORT.indexOf(tagName) >= 0) {
-            // 不支持标签
-            data.wxCompName = 'not-support'
-            data.content = domNode.textContent
-        } else {
-            // 可替换 html 标签
-            const wxCompName = wxCompNameMap[tagName]
-            if (wxCompName) data.wxCompName = wxCompName
         }
     },
 

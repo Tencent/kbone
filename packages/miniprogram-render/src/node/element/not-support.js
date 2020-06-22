@@ -55,6 +55,10 @@ class NotSupport extends Element {
             pool.add(this)
         }
     }
+
+    get behavior() {
+        return 'not-support'
+    }
 }
 
 module.exports = NotSupport

@@ -7,6 +7,7 @@ const subtreeDestPath = path.join(destDir, './subtree.wxml')
 const subtreeCoverDestPath = path.join(destDir, './subtree-cover.wxml')
 const innerComponentDestPath = path.join(destDir, './inner-component.wxml')
 const indexDestPath = path.join(destDir, '../index.wxml')
+const indexVhostDestPath = path.join(destDir, '../index-vhost.wxml')
 
 /**
  * 获取 subtree.wxml 生成单次循环内容
@@ -135,6 +136,7 @@ function createIndexTemplate() {
 
     // 写入文件
     fs.writeFileSync(indexDestPath, template, 'utf8')
+    fs.writeFileSync(indexVhostDestPath, template, 'utf8')
 }
 
 function main() {

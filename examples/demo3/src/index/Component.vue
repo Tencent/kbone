@@ -509,8 +509,8 @@
         </template>
         <!-- 不支持标签 -->
         <template v-else-if="item === 'xxxx'" >
-          <wx-component v-if="!wxPrefix" :behavior="item"></wx-component>
-          <wx-xxxx v-else-if="wxPrefix === 1"></wx-xxxx>
+          <wx-component v-if="!wxPrefix" :behavior="item">会作为普通标签渲染</wx-component>
+          <wx-xxxx v-else-if="wxPrefix === 1">会作为普通标签渲染</wx-xxxx>
         </template>
         <iframe v-else-if="item === 'iframe'"></iframe>
         <div v-else-if="item === 'intersection'">

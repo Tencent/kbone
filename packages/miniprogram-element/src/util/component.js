@@ -148,6 +148,10 @@ const wxComponentMap = {
         wxCompName: 'animation',
         config: {},
     },
+    'not-support': {
+        wxCompName: 'not-support',
+        config: {},
+    },
 }
 
 const wxSubComponentMap = {
