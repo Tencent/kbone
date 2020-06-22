@@ -15,13 +15,17 @@
         </div>
         <div v-if="item === 'event'">
           <div @click="log('root click')" @longpress="log('root longpress')">
+            <div>touchstart -> touchend -> click -> root click</div>
             <button @touchstart="log('touchstart')" @touchmove="log('touchmove')" @touchend="log('touchend')" @touchcancel="log('touchcancel')" @click="log('click')" @longpress="log('longpress')">normal event</button>
+            <div>parent touchstart -> parent touchend -> parent click -> click -> root click</div>
             <wx-capture @touchstart="log('parent touchstart')" @touchend="log('parent touchend')" @click="log('parent click')" @longpress="log('parent longpress')">
               <button @click="onClick" @longpress="log('longpress')">capture-inner({{eventCount}})</button>
             </wx-capture>
+            <div>parent touchstart -> parent touchend</div>
             <wx-catch @touchstart="log('parent touchstart')" @touchend="log('parent touchend')" @click="log('parent click')" @longpress="log('parent longpress')">
               <button @click="onClick" @longpress="log('longpress')">catch-inner1({{eventCount}})</button>
             </wx-catch>
+            <div>click -> parent click</div>
             <wx-catch @click="log('parent click')">
               <button @click="onClick" @longpress="log('longpress')">catch-inner2({{eventCount}})</button>
             </wx-catch>
