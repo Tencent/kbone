@@ -93,7 +93,6 @@ module.exports = Behavior({
          * 监听子节点变化
          */
         onChildNodesUpdate() {
-            // 判断是否已被销毁
             if (!this.pageId || !this.nodeId) return
 
             // 儿子节点有变化
@@ -123,32 +122,28 @@ module.exports = Behavior({
          * 监听当前节点变化
          */
         onSelfNodeUpdate() {
-            // 判断是否已被销毁
             if (!this.pageId || !this.nodeId) return
 
-            let newData = null
             const domNode = this.domNode
             const data = this.data
             const tagName = domNode.tagName
 
-            // 使用 template 渲染
+            if (tagName !== 'WX-COMPONENT' && tagName !== 'WX-CUSTOM-COMPONENT') return
             if (USE_TEMPLATE.indexOf(tagName) !== -1 || USE_TEMPLATE.indexOf(domNode.behavior) !== -1) return
-
+            
+            const newData = {}
             if (tagName === 'WX-COMPONENT') {
                 // 内置组件，目前只有 view 和 scroll-view 组件需要进入
-                newData = {}
                 if (data.wxCompName !== domNode.behavior) newData.wxCompName = domNode.behavior
                 const wxCompName = wxCompNameMap[domNode.behavior]
                 if (wxCompName) _.checkComponentAttr(wxCompName, domNode, newData, data)
             } else if (tagName === 'WX-CUSTOM-COMPONENT') {
                 // 自定义组件
-                newData = {}
                 if (data.wxCustomCompName !== domNode.behavior) newData.wxCustomCompName = domNode.behavior
                 if (data.nodeId !== this.nodeId) data.nodeId = this.nodeId
                 if (data.pageId !== this.pageId) data.pageId = this.pageId
             }
-
-            if (newData && Object.keys(newData)) this.setData(newData)
+            if (Object.keys(newData)) this.setData(newData)
         },
 
         /**

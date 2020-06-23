@@ -12,7 +12,13 @@ const {
     wxSubComponentMap,
 } = component
 
-const ELEMENT_DIFF_KEYS = ['nodeId', 'pageId', 'tagName', 'compName', 'id', 'className', 'style', 'src', 'mode', 'webp', 'lazyLoad', 'showMenuByLongpress', 'useTemplate', 'isImage', 'isLeaf', 'isSimple', 'content', 'extra']
+const ELEMENT_DIFF_KEYS = [
+    'nodeId', 'pageId', 'id', 'className', 'style', // 通用字段
+    'isImage', 'src', 'mode', 'webp', 'lazyLoad', 'showMenuByLongpress', // image
+    'useTemplate', 'extra', 'compName', // template 渲染
+    'isLeaf', 'content', // leaf
+    'isSimple' // 普通节点
+]
 const TEXT_NODE_DIFF_KEYS = ['nodeId', 'pageId', 'content']
 const NEET_SPLIT_CLASS_STYLE_FROM_CUSTOM_ELEMENT = ['WX-COMPONENT', 'WX-CUSTOM-COMPONENT'] // 需要分离 class 和 style 的节点
 const NEET_BEHAVIOR_NORMAL_CUSTOM_ELEMENT_PARENT = ['swiper', 'movable-area', 'picker-view']
@@ -90,7 +96,9 @@ function filterNodes(domNode, level, component) {
         if (domInfo.useTemplate) {
             const wxCompName = wxCompNameMap[templateName]
             const extra = {}
+
             if (wxCompName) checkComponentAttr(wxCompName, child, extra, null, `h5-${domInfo.tagName} ${domInfo.tagName === 'wx-component' ? 'wx-' + child.behavior : ''}`)
+
             extra.pageId = domInfo.pageId
             extra.nodeId = domInfo.nodeId
             extra.inCover = component.data.inCover
@@ -198,8 +206,7 @@ function checkDiffChildNodes(newChildNodes, oldChildNodes) {
         const newGrandChildNodes = newChild.childNodes || []
         const oldGrandChildNodes = oldChild.childNodes || []
         if (newGrandChildNodes.length || oldGrandChildNodes.length) {
-            const checkRes = checkDiffChildNodes(newGrandChildNodes, oldGrandChildNodes)
-            if (checkRes) return true
+            if (checkDiffChildNodes(newGrandChildNodes, oldGrandChildNodes)) return true
         }
     }
 
@@ -220,9 +227,10 @@ function checkComponentAttr(name, domNode, destData, oldData, extraClass = '') {
             if (canBeUserChanged) {
                 // 可被用户行为改变的属性，除了 data 外，还需要对比监听到上次用户行为修改的值
                 const oldValues = domNode._oldValues
-                if (!oldData || !isEqual(newValue, oldData[name]) || (oldValues && !isEqual(newValue, oldValues[name]))) {
+                const isOldValuesChanged = oldValues ? !isEqual(newValue, oldValues[name]) : false
+                if (!oldData || !isEqual(newValue, oldData[name]) || isOldValuesChanged) {
                     destData[name] = newValue
-                    destData.forceUpdate = true // 避免被 diff 掉，需要强制更新
+                    if (isOldValuesChanged) destData.forceUpdate = true // 避免被 diff 掉，需要强制更新
                 }
             } else if (!oldData || !isEqual(newValue, oldData[name])) {
                 // 对比 data
