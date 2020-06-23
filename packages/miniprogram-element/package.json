@@ -32,7 +32,7 @@
 	},
 	"devDependencies": {
 		"jest": "^26.0.1",
-		"miniprogram-simulate": "^1.2.1"
+		"miniprogram-simulate": "^1.2.6"
 	},
 	"gitHead": "fd8f52e897a2484b77c50bddae4b63fc883b9883"
 }

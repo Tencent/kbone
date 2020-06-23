@@ -30,12 +30,12 @@ test('swiper', async() => {
 
     // 检查 swiper-item
     expect(swiper.dom.childNodes.length).toBe(3)
-    expect(swiper.dom.childNodes[0].childNodes[0].childNodes[0].classList.contains('element--h5-span')).toBe(true)
-    expect(swiper.dom.childNodes[0].childNodes[0].childNodes[0].innerHTML).toBe('1')
-    expect(swiper.dom.childNodes[1].childNodes[0].childNodes[0].classList.contains('element--h5-span')).toBe(true)
-    expect(swiper.dom.childNodes[1].childNodes[0].childNodes[0].innerHTML).toBe('2')
-    expect(swiper.dom.childNodes[2].childNodes[0].childNodes[0].classList.contains('element--h5-span')).toBe(true)
-    expect(swiper.dom.childNodes[2].childNodes[0].childNodes[0].innerHTML).toBe('3')
+    expect(swiper.dom.childNodes[0].childNodes[0].classList.contains('element-vhost--h5-span')).toBe(true)
+    expect(swiper.dom.childNodes[0].childNodes[0].innerHTML).toBe('1')
+    expect(swiper.dom.childNodes[1].childNodes[0].classList.contains('element-vhost--h5-span')).toBe(true)
+    expect(swiper.dom.childNodes[1].childNodes[0].innerHTML).toBe('2')
+    expect(swiper.dom.childNodes[2].childNodes[0].classList.contains('element-vhost--h5-span')).toBe(true)
+    expect(swiper.dom.childNodes[2].childNodes[0].innerHTML).toBe('3')
     expect(body.data.childNodes[0].extra.childNodes[0].extra).toEqual({hidden: false, itemId: '1'})
     expect(body.data.childNodes[0].extra.childNodes[1].extra).toEqual({hidden: false, itemId: '2'})
     expect(body.data.childNodes[0].extra.childNodes[2].extra).toEqual({hidden: false, itemId: ''})

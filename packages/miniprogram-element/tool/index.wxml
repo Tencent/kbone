@@ -42,13 +42,6 @@
     hover-start-time="{{hoverStartTime}}"
     hover-stay-time="{{hoverStayTime}}"
 ><template is="subtree" data="{{childNodes: childNodes, inCover}}"/></view>
-<!-- 自定义组件 -->
-<custom-component
-    wx:elif="{{!!wxCustomCompName}}"
-    name="{{wxCustomCompName}}"
-    data-private-node-id="{{nodeId}}"
-    data-private-page-id="{{pageId}}"
-><template is="subtree" data="{{childNodes: childNodes, inCover}}"/></custom-component>
 <!-- 子节点 -->
 <template wx:elif="{{inCover === true}}" is="subtree-cover" data="{{childNodes, inCover}}"></template>
 <template wx:else is="subtree" data="{{childNodes, inCover}}"></template>

@@ -24,7 +24,7 @@ const NEET_SPLIT_CLASS_STYLE_FROM_CUSTOM_ELEMENT = ['WX-COMPONENT', 'WX-CUSTOM-C
 const NEET_BEHAVIOR_NORMAL_CUSTOM_ELEMENT_PARENT = ['swiper', 'movable-area', 'picker-view']
 const NEET_BEHAVIOR_NORMAL_CUSTOM_ELEMENT = ['swiper-item', 'movable-view', 'picker-view-column']
 const NEET_RENDER_TO_CUSTOM_ELEMENT = ['IFRAME', ...NEET_SPLIT_CLASS_STYLE_FROM_CUSTOM_ELEMENT] // 必须渲染成自定义组件的节点
-const USE_TEMPLATE = ['cover-image', 'movable-area', 'movable-view', 'swiper', 'swiper-item', 'icon', 'progress', 'rich-text', 'text', 'button', 'editor', 'form', 'INPUT', 'picker', 'SELECT', 'picker-view', 'picker-view-column', 'slider', 'switch', 'TEXTAREA', 'navigator', 'camera', 'image', 'live-player', 'live-pusher', 'VIDEO', 'map', 'CANVAS', 'ad', 'official-account', 'open-data', 'web-view', 'capture', 'catch', 'animation', 'not-support'] // 使用 template 渲染
+const USE_TEMPLATE = ['cover-image', 'movable-area', 'movable-view', 'swiper', 'swiper-item', 'icon', 'progress', 'rich-text', 'text', 'button', 'editor', 'form', 'INPUT', 'picker', 'SELECT', 'picker-view', 'picker-view-column', 'slider', 'switch', 'TEXTAREA', 'navigator', 'camera', 'image', 'live-player', 'live-pusher', 'VIDEO', 'map', 'CANVAS', 'ad', 'official-account', 'open-data', 'web-view', 'capture', 'catch', 'animation', 'not-support', 'WX-CUSTOM-COMPONENT'] // 使用 template 渲染
 const IN_COVER = ['cover-view'] // 子节点必须使用 cover-view/cover-image
 
 /**
@@ -123,14 +123,14 @@ function filterNodes(domNode, level, component) {
                 extra.touchCancel = child.$$hasEventHandler('touchcancel') ? 'onTouchCancel' : ''
             }
 
-            // text 组件存在 bug，其子节点无法使用自定义组件的方式来渲染，会存在无法更新的问题，需要基础库解决，故此处只渲染其文本内容
-            if (wxCompName === 'text') {
-                extra.content = child.textContent
-            }
+            // 1. text 组件存在 bug，其子节点无法使用自定义组件的方式来渲染，会存在无法更新的问题，需要基础库解决，故此处只渲染其文本内容
+            // 2. 不支持的节点，需要展示占位文本
+            if (wxCompName === 'text' || wxCompName === 'not-support') extra.content = child.textContent
 
-            // 不支持的节点，展示占位文本
-            if (wxCompName === 'not-support') {
-                extra.content = child.textContent
+            // 第三方自定义组件
+            if (templateName === 'WX-CUSTOM-COMPONENT') {
+                extra.wxCompName = 'custom-component'
+                extra.wxCustomCompName = child.behavior
             }
         }
 
@@ -188,7 +188,7 @@ function checkDiffChildNodes(newChildNodes, oldChildNodes) {
                 if (typeof oldValue !== 'object') return true
 
                 // 需要强制更新
-                if (key === 'extra' && newValue.forceUpdate) {
+                if (key === 'extra' && newValue && newValue.forceUpdate) {
                     newValue.forceUpdate = false
                     return true
                 }

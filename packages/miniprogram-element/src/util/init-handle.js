@@ -17,7 +17,7 @@ module.exports = {
         const domNode = this.domNode
         const tagName = domNode.tagName
 
-        if (tagName !== 'WX-COMPONENT' && tagName !== 'WX-CUSTOM-COMPONENT') return
+        // 使用 template 渲染
         if (USE_TEMPLATE.indexOf(tagName) !== -1 || USE_TEMPLATE.indexOf(domNode.behavior) !== -1) return
 
         if (tagName === 'WX-COMPONENT') {
@@ -26,11 +26,6 @@ module.exports = {
             const wxCompName = wxCompNameMap[data.wxCompName]
             if (wxCompName) _.checkComponentAttr(wxCompName, domNode, data)
             else console.warn(`value "${data.wxCompName}" is not supported for wx-component's behavior`)
-        } else if (tagName === 'WX-CUSTOM-COMPONENT') {
-            // 自定义组件
-            data.wxCustomCompName = domNode.behavior
-            data.nodeId = this.nodeId
-            data.pageId = this.pageId
         }
     },
 

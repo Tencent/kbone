@@ -21,11 +21,12 @@ const {
 const MAX_DOM_SUB_TREE_LEVEL = 10
 let DOM_SUB_TREE_LEVEL = 10
 
+console.warn('当前渲染模式版本：miniprogram-element@2.x 版本（要求最低基础库版本 2.11.2）。\n\n2.x 版本对比 1.x 版本去除了渲染内置组件时额外引入的一层节点，如果升级版本过程中遇到样式错乱问题，可尝试去除使用 1.x 版本时额外追加的兼容样式，也可选择退回 1.x 版本（退回版本可以使用 generate.renderVersion 和 generate.elementVersion 配置：https://wechat-miniprogram.github.io/kbone/docs/config/#generate-renderversion ）。')
+
 const version = wx.getSystemInfoSync().SDKVersion
 const behaviors = []
-if (_.compareVersion(version, '2.10.3') >= 0) {
-    behaviors.push('wx://form-field-button')
-}
+if (_.compareVersion(version, '2.10.3') >= 0) behaviors.push('wx://form-field-button')
+if (_.compareVersion(version, '2.11.2') < 0) console.warn('当前基础库版本低于 2.11.2，可能会存在部分功能不可用情况（如 text、picker-view 等组件不可用），请调整最低支持基础库。')
 
 module.exports = Behavior({
     behaviors,
@@ -68,8 +69,8 @@ module.exports = Behavior({
         this.domNode.$$clearEvent('$$childNodesUpdate', {$$namespace: 'root'})
         this.domNode.addEventListener('$$childNodesUpdate', this.onChildNodesUpdate, {$$namespace: 'root'})
         this.onSelfNodeUpdate = tool.throttle(this.onSelfNodeUpdate.bind(this))
-        this.domNode.$$clearEvent('$$domNodeUpdate')
-        this.domNode.addEventListener('$$domNodeUpdate', this.onSelfNodeUpdate)
+        this.domNode.$$clearEvent('$$domNodeUpdate', {$$namespace: 'root'})
+        this.domNode.addEventListener('$$domNodeUpdate', this.onSelfNodeUpdate, {$$namespace: 'root'})
 
         // 初始化
         this.init(data)
@@ -128,22 +129,18 @@ module.exports = Behavior({
             const data = this.data
             const tagName = domNode.tagName
 
-            if (tagName !== 'WX-COMPONENT' && tagName !== 'WX-CUSTOM-COMPONENT') return
+            // 使用 template 渲染
             if (USE_TEMPLATE.indexOf(tagName) !== -1 || USE_TEMPLATE.indexOf(domNode.behavior) !== -1) return
-            
-            const newData = {}
+
             if (tagName === 'WX-COMPONENT') {
                 // 内置组件，目前只有 view 和 scroll-view 组件需要进入
-                if (data.wxCompName !== domNode.behavior) newData.wxCompName = domNode.behavior
+                const newData = {}
                 const wxCompName = wxCompNameMap[domNode.behavior]
+
+                if (data.wxCompName !== domNode.behavior) newData.wxCompName = domNode.behavior
                 if (wxCompName) _.checkComponentAttr(wxCompName, domNode, newData, data)
-            } else if (tagName === 'WX-CUSTOM-COMPONENT') {
-                // 自定义组件
-                if (data.wxCustomCompName !== domNode.behavior) newData.wxCustomCompName = domNode.behavior
-                if (data.nodeId !== this.nodeId) data.nodeId = this.nodeId
-                if (data.pageId !== this.pageId) data.pageId = this.pageId
+                if (Object.keys(newData)) this.setData(newData)
             }
-            if (Object.keys(newData)) this.setData(newData)
         },
 
         /**

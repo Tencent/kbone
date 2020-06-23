@@ -1061,3 +1061,17 @@
         bindlongpress="onLongPress"
     >{{content}}</view>
 </template>
+<!-- 自定义组件 -->
+<template name="custom-component">
+    <custom-component
+        name="{{wxCustomCompName}}"
+        data-private-node-id="{{nodeId}}"
+        data-private-page-id="{{pageId}}"
+        bindtouchstart="onTouchStart"
+        bindtouchmove="onTouchMove"
+        bindtouchend="onTouchEnd"
+        bindtouchcancel="onTouchCancel"
+        bindtap="onTap"
+        bindlongpress="onLongPress"
+    ><element-vhost wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element-vhost></custom-component>
+</template>
