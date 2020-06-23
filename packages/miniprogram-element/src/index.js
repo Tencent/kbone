@@ -149,10 +149,10 @@ Component({
             } else {
                 // 可替换 html 标签
                 const wxCompName = wxCompNameMap[tagName]
-                if (wxCompName) newData.wxCompName = wxCompName
+                if (data.wxCompName !== wxCompName) newData.wxCompName = wxCompName
             }
 
-            this.setData(newData)
+            if (Object.keys(newData)) this.setData(newData)
         },
 
         /**

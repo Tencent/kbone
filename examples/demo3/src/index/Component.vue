@@ -181,7 +181,7 @@
               <textarea name="textare-a" value="textare value" />
               <wx-switch name="switch-a" :checked="true" />
               <wx-slider name="slider-a" min="50" max="200" :show-value="true" />
-              <wx-picker name="picker-a" :value="1" :range="['美国', '中国', '巴西', '日本']">点击&nbsp;&nbsp;选择国家</wx-picker>
+              <wx-picker name="picker-a" :value="1" :range="pickerRange">点击&nbsp;&nbsp;选择国家</wx-picker>
               <div class="ipt-group"><input type="radio" name="radio-a" value="radio1" :checked="true" />radio1</div>
               <div class="ipt-group"><input type="radio" name="radio-a" value="radio2" />radio2</div>
               <div class="ipt-group"><input type="checkbox" name="checkbox-a" value="checkbox1" :checked="true" />checkbox1</div>
@@ -206,7 +206,7 @@
               <textarea name="textare-b" value="textare value" />
               <wx-switch name="switch-b" :checked="true" />
               <wx-slider name="slider-b" min="50" max="200" :show-value="true" />
-              <wx-picker name="picker-a" :value="1" :range="['美国', '中国', '巴西', '日本']">点击&nbsp;&nbsp;选择国家</wx-picker>
+              <wx-picker name="picker-a" :value="1" :range="pickerRange">点击&nbsp;&nbsp;选择国家</wx-picker>
               <div class="ipt-group"><input type="radio" name="radio-b" value="radio1" :checked="true" />radio1</div>
               <div class="ipt-group"><input type="radio" name="radio-b" value="radio2" />radio2</div>
               <div class="ipt-group"><input type="checkbox" name="checkbox-b" value="checkbox1" :checked="true" />checkbox1</div>
@@ -327,21 +327,21 @@
         </template>
         <template v-else-if="item === 'picker'">
           <div v-if="!wxPrefix">
-            <wx-component :behavior="item" :value="1" :range="['美国', '中国', '巴西', '日本']">点击&nbsp;&nbsp;选择国家</wx-component>
+            <wx-component :behavior="item" :value="1" :range="pickerRange">点击&nbsp;&nbsp;选择国家</wx-component>
             <wx-component :behavior="item" mode="region" @change="log('onPickerChange', $event.detail)">
               <span>点击&nbsp;&nbsp;</span>
               <span>选择城市</span>
             </wx-component>
           </div>
           <div v-else-if="wxPrefix === 1">
-            <wx-picker :value="1" :range="['美国', '中国', '巴西', '日本']">点击&nbsp;&nbsp;选择国家</wx-picker>
+            <wx-picker :value="1" :range="pickerRange">点击&nbsp;&nbsp;选择国家</wx-picker>
             <wx-picker mode="region" @change="log('onPickerChange', $event.detail)">
               <span>点击&nbsp;&nbsp;</span>
               <span>选择城市</span>
             </wx-picker>
           </div>
           <div v-else-if="wxPrefix === 2">
-            <picker :value="1" :range="['美国', '中国', '巴西', '日本']">点击&nbsp;&nbsp;选择国家</picker>
+            <picker :value="1" :range="pickerRange">点击&nbsp;&nbsp;选择国家</picker>
             <picker mode="region" @change="log('onPickerChange', $event.detail)">
               <span>点击&nbsp;&nbsp;</span>
               <span>选择城市</span>
@@ -614,6 +614,7 @@ export default {
         inputRadio: 'radio2',
         inputCheckbox: true,
       },
+      pickerRange: ['美国', '中国', '巴西', '日本'],
       map: {
         markers: [{
           iconPath: 'https://i.loli.net/2019/07/27/5d3c141367f2784840.jpg',
@@ -646,6 +647,10 @@ export default {
           },
           clickable: true,
         }],
+        longitude: 113.324520,
+        latitude: 23.099994,
+        scale: 14,
+      
       },
       scrollView: {
         yDest: '',
@@ -686,11 +691,6 @@ export default {
       },
       intersection: {
         appear: false,
-      },
-      map: {
-        longitude: 113.324520,
-        latitude: 23.099994,
-        scale: 14,
       },
     }
   },
