@@ -1,5 +1,4 @@
 const mp = require('miniprogram-render')
-const initData = require('./init-data')
 const component = require('./component')
 
 const {
@@ -8,6 +7,7 @@ const {
 } = mp.$$adapter
 
 const {
+    wxCompData,
     wxCompNameMap,
     wxSubComponentMap,
 } = component
@@ -217,7 +217,7 @@ function checkDiffChildNodes(newChildNodes, oldChildNodes) {
  * 检查组件属性
  */
 function checkComponentAttr(name, domNode, destData, oldData, extraClass = '') {
-    const attrs = initData[name]
+    const attrs = wxCompData[name]
 
     destData.wxCompName = name
 

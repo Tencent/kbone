@@ -1,6 +1,5 @@
 const mp = require('miniprogram-render')
 const _ = require('./util/tool')
-const initHandle = require('./util/init-handle')
 const component = require('./util/component')
 
 const {
@@ -14,6 +13,7 @@ const {
     IN_COVER,
 } = _
 const {
+    wxCompHandles,
     wxCompNameMap,
 } = component
 
@@ -90,6 +90,25 @@ module.exports = Behavior({
         this.document = null
     },
     methods: {
+        /**
+         * 初始化
+         */
+        init(data) {
+            const domNode = this.domNode
+            const tagName = domNode.tagName
+
+            // 使用 template 渲染
+            if (USE_TEMPLATE.indexOf(tagName) !== -1 || USE_TEMPLATE.indexOf(domNode.behavior) !== -1) return
+
+            if (tagName === 'WX-COMPONENT') {
+                // 内置组件，目前只有 view 和 scroll-view 组件需要进入
+                data.wxCompName = domNode.behavior
+                const wxCompName = wxCompNameMap[data.wxCompName]
+                if (wxCompName) _.checkComponentAttr(wxCompName, domNode, data)
+                else console.warn(`value "${data.wxCompName}" is not supported for wx-component's behavior`)
+            }
+        },
+
         /**
          * 监听子节点变化
          */
@@ -424,6 +443,6 @@ module.exports = Behavior({
             return cache.getNode(pageId, originNodeId)
         },
 
-        ...initHandle,
+        ...wxCompHandles,
     }
 })
