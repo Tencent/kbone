@@ -1,9 +1,23 @@
 const path = require('path')
 const fs = require('fs')
-const UglifyJS = require('uglify-js')
 
 const domSubTreeLevel = 10
 const destDir = path.resolve(__dirname, '../src/template')
+
+/**
+ * 移除注释
+ */
+function removeComment(content) {
+    let startIndex = content.indexOf('<!--')
+    while (startIndex >= 0) {
+        const endIndex = content.indexOf('-->', startIndex)
+        if (endIndex >= 0) content = content.substring(0, startIndex) + content.substring(endIndex + 3)
+
+        startIndex = content.indexOf('<!--', endIndex + 3)
+    }
+
+    return content
+}
 
 /**
  * 获取 subtree.wxml 生成单次循环内容
@@ -83,7 +97,6 @@ function getSubtreeCoverSimple(i) {
  */
 function createSubtreeTemplate() {
     const content = [
-        '<!-- 此文件由 tool/index.js 生成 -->',
         '<import src="./inner-component.wxml"/>',
         '<template name="subtree">',
         ...getSubtreeSimple(1),
@@ -99,7 +112,6 @@ function createSubtreeTemplate() {
  */
 function createSubtreeCoverTemplate() {
     const content = [
-        '<!-- 此文件由 tool/index.js 生成 -->',
         '<import src="./inner-component.wxml"/>',
         '<template name="subtree-cover">',
         ...getSubtreeCoverSimple(1),
@@ -114,21 +126,23 @@ function createSubtreeCoverTemplate() {
  * 生成 src/template/inner-component.wxml
  */
 function createInnerComponentTemplate() {
-    const template = fs.readFileSync(path.join(__dirname, './inner-component.wxml'), 'utf8')
+    let template = fs.readFileSync(path.join(__dirname, './inner-component.wxml'), 'utf8')
         .replace(/[\n\r\t]+/g, ' ')
         .replace(/\s+/g, ' ')
+    template = removeComment(template)
 
     // 写入文件
     fs.writeFileSync(path.join(destDir, './inner-component.wxml'), template, 'utf8')
 }
 
 /**
- * 生成 src/index.wxml
+ * 生成 src/index.wxml 和 src/index-vhost.wxml
  */
 function createIndexTemplate() {
-    const template = fs.readFileSync(path.join(__dirname, './index.wxml'), 'utf8')
+    let template = fs.readFileSync(path.join(__dirname, './index.wxml'), 'utf8')
         .replace(/[\n\r\t]+/g, ' ')
         .replace(/\s+/g, ' ')
+    template = removeComment(template)
 
     // 写入文件
     fs.writeFileSync(path.join(destDir, '../index.wxml'), template, 'utf8')

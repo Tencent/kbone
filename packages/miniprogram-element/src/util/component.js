@@ -74,7 +74,6 @@ const wxComponentMap = {
                 return value !== undefined && !isNaN(+value) ? +value : ''
             },
         }],
-        handles: {},
     },
     'movable-area': {
         wxCompName: 'movable-area',
@@ -84,7 +83,6 @@ const wxComponentMap = {
                 return !!domNode.getAttribute('scale-area')
             },
         }],
-        handles: {},
     },
     'scroll-view': {
         wxCompName: 'scroll-view',
@@ -341,7 +339,6 @@ const wxComponentMap = {
                 return !isNaN(value) ? value : 400
             },
         }],
-        handles: {},
     },
     // 基础内容
     icon: {
@@ -362,7 +359,6 @@ const wxComponentMap = {
                 return domNode.getAttribute('color') || ''
             },
         }],
-        handles: {},
     },
     progress: {
         wxCompName: 'progress',
@@ -442,7 +438,6 @@ const wxComponentMap = {
                 return domNode.getAttribute('space') || ''
             },
         }],
-        handles: {},
     },
     text: {
         wxCompName: 'text',
@@ -462,7 +457,6 @@ const wxComponentMap = {
                 return !!domNode.getAttribute('decode')
             },
         }],
-        handles: {},
     },
     // 表单组件
     button: {
@@ -2361,7 +2355,6 @@ const wxComponentMap = {
     },
     'official-account': {
         wxCompName: 'official-account',
-        properties: [],
         handles: {
             onOfficialAccountLoad(evt) {
                 this.callSingleEvent('load', evt)
@@ -2432,19 +2425,15 @@ const wxComponentMap = {
     // 特殊补充
     capture: {
         wxCompName: 'capture',
-        config: {},
     },
     catch: {
         wxCompName: 'catch',
-        config: {},
     },
     animation: {
         wxCompName: 'animation',
-        config: {},
     },
     'not-support': {
         wxCompName: 'not-support',
-        config: {},
     },
 }
 
@@ -2577,12 +2566,8 @@ const wxSubComponentMap = {
                 return domNode.getAttribute('item-id') || ''
             },
         }],
-        handles: {},
     },
-    'picker-view-column': {
-        properties: [],
-        handles: {},
-    },
+    'picker-view-column': {},
 }
 
 const wxComponentKeys = Object.keys(wxComponentMap)
@@ -2594,11 +2579,11 @@ wxComponentKeys.forEach(key => {
 
     wxCompNameMap[key] = wxCompName
     wxCompData[wxCompName] = properties || []
-    Object.assign(wxCompHandles, handles || {})
+    if (handles) Object.assign(wxCompHandles, handles)
 })
 Object.keys(wxSubComponentMap).forEach(key => {
     const {handles} = wxSubComponentMap[key]
-    Object.assign(wxCompHandles, handles || {})
+    if (handles) Object.assign(wxCompHandles, handles)
 })
 
 module.exports = {
