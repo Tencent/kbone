@@ -171,7 +171,7 @@ function checkDiffChildNodes(newChildNodes, oldChildNodes) {
                 if (typeof oldValue !== 'object') return true
 
                 // 需要强制更新
-                if (key === 'extra' && newValue.forceUpdate) {
+                if (key === 'extra' && newValue && newValue.forceUpdate) {
                     newValue.forceUpdate = false
                     return true
                 }
@@ -211,7 +211,7 @@ function checkComponentAttr(name, domNode, destData, oldData, extraClass = '') {
             if (canBeUserChanged) {
                 // 可被用户行为改变的属性，除了 data 外，还需要对比监听到上次用户行为修改的值
                 const oldValues = domNode._oldValues
-                const isOldValuesChanged = oldValues && !isEqual(newValue, oldValues[name])
+                const isOldValuesChanged = oldValues ? !isEqual(newValue, oldValues[name]) : false
                 if (!oldData || !isEqual(newValue, oldData[name]) || isOldValuesChanged) {
                     destData[name] = newValue
                     if (isOldValuesChanged) destData.forceUpdate = true // 避免被 diff 掉，需要强制更新
