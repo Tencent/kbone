@@ -1,6 +1,5 @@
 const path = require('path')
 const mp = require('miniprogram-render')
-// eslint-disable-next-line import/no-extraneous-dependencies
 const simulate = require('miniprogram-simulate')
 
 // 屏蔽 console.warn

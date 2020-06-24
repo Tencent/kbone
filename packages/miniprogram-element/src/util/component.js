@@ -59,7 +59,7 @@ const wxComponentMap = {
             onCoverImageLoad(evt) {
                 this.callSingleEvent('load', evt)
             },
-    
+
             onCoverImageError(evt) {
                 this.callSingleEvent('error', evt)
             },
@@ -174,44 +174,44 @@ const wxComponentMap = {
             onScrollViewScrolltoupper(evt) {
                 this.callSingleEvent('scrolltoupper', evt)
             },
-    
+
             onScrollViewScrolltolower(evt) {
                 this.callSingleEvent('scrolltolower', evt)
             },
-    
+
             onScrollViewScroll(evt) {
                 const domNode = this.getDomNodeFromEvt(evt)
                 if (!domNode) return
-    
+
                 domNode.$$setAttributeWithoutUpdate('scroll-into-view', '')
                 domNode.$$setAttributeWithoutUpdate('scroll-top', evt.detail.scrollTop)
                 domNode.$$setAttributeWithoutUpdate('scroll-left', evt.detail.scrollLeft)
-    
+
                 // 可被用户行为改变的值，需要记录
                 domNode._oldValues = domNode._oldValues || {}
                 domNode._oldValues.scrollIntoView = ''
                 domNode._oldValues.scrollTop = evt.detail.scrollTop
                 domNode._oldValues.scrollLeft = evt.detail.scrollLeft
-    
+
                 this.callSimpleEvent('scroll', evt)
             },
-    
+
             onScrollViewRefresherPulling(evt) {
                 this.callSingleEvent('refresherpulling', evt)
             },
-    
+
             onScrollViewRefresherRefresh(evt) {
                 this.callSingleEvent('refresherrefresh', evt)
             },
-    
+
             onScrollViewRefresherRestore(evt) {
                 this.callSingleEvent('refresherrestore', evt)
             },
-    
+
             onScrollViewRefresherAbort(evt) {
                 this.callSingleEvent('refresherabort', evt)
             },
-    
+
         },
     },
     swiper: {
@@ -295,20 +295,20 @@ const wxComponentMap = {
             onSwiperChange(evt) {
                 const domNode = this.getDomNodeFromEvt(evt)
                 if (!domNode) return
-    
+
                 domNode.$$setAttributeWithoutUpdate('current', evt.detail.current)
-    
+
                 // 可被用户行为改变的值，需要记录
                 domNode._oldValues = domNode._oldValues || {}
                 domNode._oldValues.current = evt.detail.current
-    
+
                 this.callSingleEvent('change', evt)
             },
-    
+
             onSwiperTransition(evt) {
                 this.callSingleEvent('transition', evt)
             },
-    
+
             onSwiperAnimationfinish(evt) {
                 this.callSingleEvent('animationfinish', evt)
             },
@@ -564,27 +564,27 @@ const wxComponentMap = {
             onButtonGetUserInfo(evt) {
                 this.callSingleEvent('getuserinfo', evt)
             },
-    
+
             onButtonContact(evt) {
                 this.callSingleEvent('contact', evt)
             },
-    
+
             onButtonGetPhoneNumber(evt) {
                 this.callSingleEvent('getphonenumber', evt)
             },
-    
+
             onButtonError(evt) {
                 this.callSingleEvent('error', evt)
             },
-    
+
             onButtonOpenSetting(evt) {
                 this.callSingleEvent('opensetting', evt)
             },
-    
+
             onButtonLaunchApp(evt) {
                 this.callSingleEvent('launchapp', evt)
             },
-    
+
             onButtonGetRealnameAuthInfo(evt) {
                 // 已废弃，建议使用：https://developers.weixin.qq.com/miniprogram/dev/framework/cityservice/cityservice-checkrealnameinfo.html
                 this.callSingleEvent('getrealnameauthinfo', evt)
@@ -623,19 +623,19 @@ const wxComponentMap = {
             onEditorReady(evt) {
                 this.callSingleEvent('ready', evt)
             },
-    
+
             onEditorFocus(evt) {
                 this.callSingleEvent('focus', evt)
             },
-    
+
             onEditorBlur(evt) {
                 this.callSingleEvent('blur', evt)
             },
-    
+
             onEditorInput(evt) {
                 this.callSingleEvent('input', evt)
             },
-    
+
             onEditorStatusChange(evt) {
                 this.callSingleEvent('statuschange', evt)
             },
@@ -659,11 +659,11 @@ const wxComponentMap = {
             onFormSubmit(evt) {
                 const domNode = this.getDomNodeFromEvt(evt)
                 if (!domNode) return
-    
+
                 domNode._formId = evt.detail.formId
                 // submit 事件由 kbone 模拟，不需要原生 submit 事件
             },
-    
+
             onFormReset() {
                 // reset 事件由 kbone 模拟，不需要原生 reset 事件
             },
@@ -785,76 +785,76 @@ const wxComponentMap = {
             onInputInput(evt) {
                 const domNode = this.getDomNodeFromEvt(evt)
                 if (!domNode) return
-    
+
                 const value = '' + evt.detail.value
                 domNode.$$setAttributeWithoutUpdate('value', value)
-    
+
                 // 可被用户行为改变的值，需要记录
                 domNode._oldValues = domNode._oldValues || {}
                 domNode._oldValues.value = value
-    
+
                 this.callEvent('input', evt)
             },
-    
+
             onInputFocus(evt) {
                 const domNode = this.getDomNodeFromEvt(evt)
                 if (!domNode) return
-    
+
                 domNode._inputOldValue = domNode.value
                 domNode.$$setAttributeWithoutUpdate('focus', true)
-    
+
                 // 可被用户行为改变的值，需要记录
                 domNode._oldValues = domNode._oldValues || {}
                 domNode._oldValues.focus = true
-    
+
                 this.callSimpleEvent('focus', evt)
             },
-    
+
             onInputBlur(evt) {
                 const domNode = this.getDomNodeFromEvt(evt)
                 if (!domNode) return
-    
+
                 domNode.$$setAttributeWithoutUpdate('focus', false)
-    
+
                 // 可被用户行为改变的值，需要记录
                 domNode._oldValues = domNode._oldValues || {}
                 domNode._oldValues.focus = false
-    
+
                 if (domNode._inputOldValue !== undefined && domNode.value !== domNode._inputOldValue) {
                     domNode._inputOldValue = undefined
                     this.callEvent('change', evt)
                 }
                 this.callSimpleEvent('blur', evt)
             },
-    
+
             onInputConfirm(evt) {
                 this.callSimpleEvent('confirm', evt)
             },
-    
+
             onInputKeyBoardHeightChange(evt) {
                 this.callSingleEvent('keyboardheightchange', evt)
             },
-    
+
             onRadioChange(evt) {
                 const domNode = this.getDomNodeFromEvt(evt)
                 if (!domNode) return
-    
+
                 const window = cache.getWindow(this.pageId)
                 const value = evt.detail.value
                 const name = domNode.name
-    
+
                 if (value === domNode.value) {
                     domNode.$$setAttributeWithoutUpdate('checked', true)
-    
+
                     // 可被用户行为改变的值，需要记录
                     domNode._oldValues = domNode._oldValues || {}
                     domNode._oldValues.checked = true
-    
+
                     const otherDomNodes = window.document.querySelectorAll(`input[name=${name}]`) || []
                     for (const otherDomNode of otherDomNodes) {
                         if (otherDomNode.type === 'radio' && otherDomNode !== domNode) {
                             otherDomNode.$$setAttributeWithoutUpdate('checked', false)
-    
+
                             // 可被用户行为改变的值，需要记录
                             otherDomNode._oldValues = otherDomNode._oldValues || {}
                             otherDomNode._oldValues.checked = false
@@ -864,21 +864,21 @@ const wxComponentMap = {
                 this.callEvent('input', evt)
                 this.callEvent('change', evt)
             },
-    
+
             onCheckboxChange(evt) {
                 const domNode = this.getDomNodeFromEvt(evt)
                 if (!domNode) return
-    
+
                 const value = evt.detail.value || []
                 if (value.indexOf(domNode.value) >= 0) {
                     domNode.$$setAttributeWithoutUpdate('checked', true)
-    
+
                     // 可被用户行为改变的值，需要记录
                     domNode._oldValues = domNode._oldValues || {}
                     domNode._oldValues.checked = true
                 } else {
                     domNode.$$setAttributeWithoutUpdate('checked', false)
-    
+
                     // 可被用户行为改变的值，需要记录
                     domNode._oldValues = domNode._oldValues || {}
                     domNode._oldValues.checked = false
@@ -914,7 +914,7 @@ const wxComponentMap = {
                         value: item.value,
                     }))
                 }
-    
+
                 let value = domNode.getAttribute('range')
                 if (typeof value === 'string') {
                     // react 会直接将属性值转成字符串
@@ -930,7 +930,7 @@ const wxComponentMap = {
             name: 'rangeKey',
             get(domNode) {
                 if (domNode.tagName === 'SELECT') return 'label'
-    
+
                 return domNode.getAttribute('range-key') || ''
             },
         }, {
@@ -938,10 +938,10 @@ const wxComponentMap = {
             canBeUserChanged: true,
             get(domNode) {
                 if (domNode.tagName === 'SELECT') return +domNode.selectedIndex || 0
-    
+
                 const mode = domNode.getAttribute('mode') || 'selector'
                 let value = domNode.getAttribute('value')
-    
+
                 if (mode === 'selector') {
                     return +value || 0
                 } else if (mode === 'multiSelector') {
@@ -955,7 +955,7 @@ const wxComponentMap = {
                     if (typeof value === 'string') value = value.split(',') // react 会直接将属性值转成字符串
                     return value || []
                 }
-    
+
                 return value
             },
         }, {
@@ -983,31 +983,31 @@ const wxComponentMap = {
             onPickerChange(evt) {
                 const domNode = this.getDomNodeFromEvt(evt)
                 if (!domNode) return
-    
+
                 let value = evt.detail.value
-    
+
                 // 可被用户行为改变的值，需要记录
                 domNode._oldValues = domNode._oldValues || {}
                 domNode._oldValues.value = value
-    
+
                 if (domNode.tagName === 'SELECT') {
                     value = +value
                     domNode.$$setAttributeWithoutUpdate('value', domNode.options[value] && domNode.options[value].value || '')
                     domNode.$$setAttributeWithoutUpdate('selectedIndex', value)
                     domNode.$$resetOptions()
-    
+
                     this.callEvent('change', evt)
                 } else {
                     domNode.$$setAttributeWithoutUpdate('value', value)
-    
+
                     this.callSingleEvent('change', evt)
                 }
             },
-    
+
             onPickerColumnChange(evt) {
                 this.callSingleEvent('columnchange', evt)
             },
-    
+
             onPickerCancel(evt) {
                 this.callSingleEvent('cancel', evt)
             },
@@ -1048,20 +1048,20 @@ const wxComponentMap = {
             onPickerViewChange(evt) {
                 const domNode = this.getDomNodeFromEvt(evt)
                 if (!domNode) return
-    
+
                 domNode.$$setAttributeWithoutUpdate('value', evt.detail.value)
-    
+
                 // 可被用户行为改变的值，需要记录
                 domNode._oldValues = domNode._oldValues || {}
                 domNode._oldValues.value = evt.detail.value
-    
+
                 this.callSingleEvent('change', evt)
             },
-    
+
             onPickerViewPickstart(evt) {
                 this.callSingleEvent('pickstart', evt)
             },
-    
+
             onPickerViewPickend(evt) {
                 this.callSingleEvent('pickend', evt)
             },
@@ -1138,16 +1138,16 @@ const wxComponentMap = {
             onSliderChange(evt) {
                 const domNode = this.getDomNodeFromEvt(evt)
                 if (!domNode) return
-    
+
                 domNode.$$setAttributeWithoutUpdate('value', evt.detail.value)
-    
+
                 // 可被用户行为改变的值，需要记录
                 domNode._oldValues = domNode._oldValues || {}
                 domNode._oldValues.value = evt.detail.value
-    
+
                 this.callSingleEvent('change', evt)
             },
-    
+
             onSliderChanging(evt) {
                 this.callSingleEvent('changing', evt)
             },
@@ -1181,13 +1181,13 @@ const wxComponentMap = {
             onSwitchChange(evt) {
                 const domNode = this.getDomNodeFromEvt(evt)
                 if (!domNode) return
-    
+
                 domNode.$$setAttributeWithoutUpdate('checked', evt.detail.value)
-    
+
                 // 可被用户行为改变的值，需要记录
                 domNode._oldValues = domNode._oldValues || {}
                 domNode._oldValues.checked = evt.detail.value
-    
+
                 this.callSingleEvent('change', evt)
             },
         },
@@ -1296,56 +1296,56 @@ const wxComponentMap = {
             onTextareaFocus(evt) {
                 const domNode = this.getDomNodeFromEvt(evt)
                 if (!domNode) return
-    
+
                 domNode._textareaOldValue = domNode.value
                 domNode.$$setAttributeWithoutUpdate('focus', true)
-    
+
                 // 可被用户行为改变的值，需要记录
                 domNode._oldValues = domNode._oldValues || {}
                 domNode._oldValues.focus = true
-    
+
                 this.callSimpleEvent('focus', evt)
             },
-    
+
             onTextareaBlur(evt) {
                 const domNode = this.getDomNodeFromEvt(evt)
                 if (!domNode) return
-    
+
                 domNode.$$setAttributeWithoutUpdate('focus', false)
-    
+
                 // 可被用户行为改变的值，需要记录
                 domNode._oldValues = domNode._oldValues || {}
                 domNode._oldValues.focus = false
-    
+
                 if (domNode._textareaOldValue !== undefined && domNode.value !== domNode._textareaOldValue) {
                     domNode._textareaOldValue = undefined
                     this.callEvent('change', evt)
                 }
                 this.callSimpleEvent('blur', evt)
             },
-    
+
             onTextareaLineChange(evt) {
                 this.callSingleEvent('linechange', evt)
             },
-    
+
             onTextareaInput(evt) {
                 const domNode = this.getDomNodeFromEvt(evt)
                 if (!domNode) return
-    
+
                 const value = '' + evt.detail.value
                 domNode.$$setAttributeWithoutUpdate('value', value)
-    
+
                 // 可被用户行为改变的值，需要记录
                 domNode._oldValues = domNode._oldValues || {}
                 domNode._oldValues.value = value
-    
+
                 this.callEvent('input', evt)
             },
-    
+
             onTextareaConfirm(evt) {
                 this.callSimpleEvent('confirm', evt)
             },
-    
+
             onTextareaKeyBoardHeightChange(evt) {
                 this.callSingleEvent('keyboardheightchange', evt)
             },
@@ -1422,11 +1422,11 @@ const wxComponentMap = {
             onNavigatorSuccess(evt) {
                 this.callSingleEvent('success', evt)
             },
-    
+
             onNavigatorFail(evt) {
                 this.callSingleEvent('fail', evt)
             },
-    
+
             onNavigatorComplete(evt) {
                 this.callSingleEvent('complete', evt)
             },
@@ -1465,15 +1465,15 @@ const wxComponentMap = {
             onCameraStop(evt) {
                 this.callSingleEvent('stop', evt)
             },
-    
+
             onCameraError(evt) {
                 this.callSingleEvent('error', evt)
             },
-    
+
             onCameraInitDone(evt) {
                 this.callSingleEvent('initdone', evt)
             },
-    
+
             onCameraScanCode(evt) {
                 this.callSingleEvent('scancode', evt)
             },
@@ -1517,7 +1517,7 @@ const wxComponentMap = {
             onImageLoad(evt) {
                 this.callSingleEvent('load', evt)
             },
-    
+
             onImageError(evt) {
                 this.callSingleEvent('error', evt)
             },
@@ -1601,10 +1601,10 @@ const wxComponentMap = {
                     } catch (err) {
                         value = value.split(',')
                     }
-    
+
                     if (Array.isArray(value) && value.length === 1) value = '' + value[0]
                 }
-    
+
                 return value
             },
         }],
@@ -1612,23 +1612,23 @@ const wxComponentMap = {
             onLivePlayerStateChange(evt) {
                 this.callSingleEvent('statechange', evt)
             },
-    
+
             onLivePlayerFullScreenChange(evt) {
                 this.callSingleEvent('fullscreenchange', evt)
             },
-    
+
             onLivePlayerNetStatus(evt) {
                 this.callSingleEvent('netstatus', evt)
             },
-    
+
             onLivePlayerAudioVolumeNotify(evt) {
                 this.callSingleEvent('audiovolumenotify', evt)
             },
-    
+
             onLivePlayerEnterPictureInPicture(evt) {
                 this.callSingleEvent('enterpictureinpicture', evt)
             },
-    
+
             onLivePlayerLeavePictureInPicture(evt) {
                 this.callSingleEvent('leavepictureinpicture', evt)
             },
@@ -1785,27 +1785,27 @@ const wxComponentMap = {
             onLivePusherStateChange(evt) {
                 this.callSingleEvent('statechange', evt)
             },
-    
+
             onLivePusherNetStatus(evt) {
                 this.callSingleEvent('netstatus', evt)
             },
-    
+
             onLivePusherError(evt) {
                 this.callSingleEvent('error', evt)
             },
-    
+
             onLivePusherBgmStart(evt) {
                 this.callSingleEvent('bgmstart', evt)
             },
-    
+
             onLivePusherBgmProgress(evt) {
                 this.callSingleEvent('bgmprogress', evt)
             },
-    
+
             onLivePusherBgmComplete(evt) {
                 this.callSingleEvent('bgmcomplete', evt)
             },
-    
+
         },
     },
     VIDEO: {
@@ -1978,10 +1978,10 @@ const wxComponentMap = {
                     } catch (err) {
                         value = value.split(',')
                     }
-    
+
                     if (Array.isArray(value) && value.length === 1) value = '' + value[0]
                 }
-    
+
                 return value
             },
         }, {
@@ -2004,55 +2004,55 @@ const wxComponentMap = {
             onVideoPlay(evt) {
                 this.callSingleEvent('play', evt)
             },
-    
+
             onVideoPause(evt) {
                 this.callSingleEvent('pause', evt)
             },
-    
+
             onVideoEnded(evt) {
                 this.callSingleEvent('ended', evt)
             },
-    
+
             onVideoTimeUpdate(evt) {
                 const domNode = this.getDomNodeFromEvt(evt)
                 if (!domNode) return
-    
+
                 domNode.$$setAttributeWithoutUpdate('currentTime', evt.detail.currentTime)
                 this.callSingleEvent('timeupdate', evt)
             },
-    
+
             onVideoFullScreenChange(evt) {
                 this.callSingleEvent('fullscreenchange', evt)
             },
-    
+
             onVideoWaiting(evt) {
                 this.callSingleEvent('waiting', evt)
             },
-    
+
             onVideoError(evt) {
                 this.callSingleEvent('error', evt)
             },
-    
+
             onVideoProgress(evt) {
                 const domNode = this.getDomNodeFromEvt(evt)
                 if (!domNode) return
-    
+
                 domNode.$$setAttributeWithoutUpdate('buffered', evt.detail.buffered)
                 this.callSingleEvent('progress', evt)
             },
-    
+
             onVideoLoadedMetaData(evt) {
                 this.callSingleEvent('loadedmetadata', evt)
             },
-    
+
             onVideoControlsToggle(evt) {
                 this.callSingleEvent('controlstoggle', evt)
             },
-    
+
             onVideoEnterPictureInPicture(evt) {
                 this.callSingleEvent('enterpictureinpicture', evt)
             },
-    
+
             onVideoLeavePictureInPicture(evt) {
                 this.callSingleEvent('leavepictureinpicture', evt)
             },
@@ -2203,35 +2203,35 @@ const wxComponentMap = {
             onMapTap(evt) {
                 this.callSingleEvent('tap', evt)
             },
-    
+
             onMapMarkerTap(evt) {
                 dealWithDevToolsEvt(evt)
                 this.callSingleEvent('markertap', evt)
             },
-    
+
             onMapLabelTap(evt) {
                 dealWithDevToolsEvt(evt)
                 this.callSingleEvent('labeltap', evt)
             },
-    
+
             onMapControlTap(evt) {
                 dealWithDevToolsEvt(evt)
                 this.callSingleEvent('controltap', evt)
             },
-    
+
             onMapCalloutTap(evt) {
                 dealWithDevToolsEvt(evt)
                 this.callSingleEvent('callouttap', evt)
             },
-    
+
             onMapUpdated(evt) {
                 this.callSingleEvent('updated', evt)
             },
-    
+
             onMapRegionChange(evt) {
                 const domNode = this.getDomNodeFromEvt(evt)
                 if (!domNode) return
-    
+
                 if (!evt.detail.causedBy) evt.detail.causedBy = evt.causedBy
                 if (evt.type === 'end' || evt.detail.type === 'end') {
                     // 可被用户行为改变的值，需要记录
@@ -2243,15 +2243,15 @@ const wxComponentMap = {
                     domNode._oldValues.rotate = evt.detail.rotate
                     domNode._oldValues.skew = evt.detail.skew
                 }
-    
+
                 this.callSingleEvent('regionchange', evt)
             },
-    
+
             onMapPoiTap(evt) {
                 dealWithDevToolsEvt(evt)
                 this.callSingleEvent('poitap', evt)
             },
-    
+
         },
     },
     // 画布
@@ -2285,30 +2285,30 @@ const wxComponentMap = {
                 this.callSingleEvent('canvastouchstart', evt)
                 this.onTouchStart(evt)
             },
-    
+
             onCanvasTouchMove(evt) {
                 dealWithEvt(evt)
                 this.callSingleEvent('canvastouchmove', evt)
                 this.onTouchMove(evt)
             },
-    
+
             onCanvasTouchEnd(evt) {
                 dealWithEvt(evt)
                 this.callSingleEvent('canvastouchend', evt)
                 this.onTouchEnd(evt)
             },
-    
+
             onCanvasTouchCancel(evt) {
                 dealWithEvt(evt)
                 this.callSingleEvent('canvastouchcancel', evt)
                 this.onTouchCancel(evt)
             },
-    
+
             onCanvasLongTap(evt) {
                 dealWithEvt(evt)
                 this.callSingleEvent('longtap', evt)
             },
-    
+
             onCanvasError(evt) {
                 dealWithEvt(evt)
                 this.callSingleEvent('error', evt)
@@ -2343,11 +2343,11 @@ const wxComponentMap = {
             onAdLoad(evt) {
                 this.callSingleEvent('load', evt)
             },
-    
+
             onAdError(evt) {
                 this.callSingleEvent('error', evt)
             },
-    
+
             onAdClose(evt) {
                 this.callSingleEvent('close', evt)
             },
@@ -2412,11 +2412,11 @@ const wxComponentMap = {
             onWebviewMessage(evt) {
                 this.callSingleEvent('message', evt)
             },
-    
+
             onWebviewLoad(evt) {
                 this.callSingleEvent('load', evt)
             },
-    
+
             onWebviewError(evt) {
                 this.callSingleEvent('error', evt)
             },
@@ -2521,39 +2521,39 @@ const wxSubComponentMap = {
             onMovableViewChange(evt) {
                 const domNode = this.getDomNodeFromEvt(evt)
                 if (!domNode) return
-    
+
                 domNode.$$setAttributeWithoutUpdate('x', evt.detail.x)
                 domNode.$$setAttributeWithoutUpdate('y', evt.detail.y)
-    
+
                 // 可被用户行为改变的值，需要记录
                 domNode._oldValues = domNode._oldValues || {}
                 domNode._oldValues.x = evt.detail.x
                 domNode._oldValues.y = evt.detail.y
-    
+
                 this.callSingleEvent('change', evt)
             },
-    
+
             onMovableViewScale(evt) {
                 const domNode = this.getDomNodeFromEvt(evt)
                 if (!domNode) return
-    
+
                 domNode.$$setAttributeWithoutUpdate('x', evt.detail.x)
                 domNode.$$setAttributeWithoutUpdate('y', evt.detail.y)
                 domNode.$$setAttributeWithoutUpdate('scale-value', evt.detail.scale)
-    
+
                 // 可被用户行为改变的值，需要记录
                 domNode._oldValues = domNode._oldValues || {}
                 domNode._oldValues.x = evt.detail.x
                 domNode._oldValues.y = evt.detail.y
                 domNode._oldValues.scaleValue = evt.detail.scale
-    
+
                 this.callSingleEvent('scale', evt)
             },
-    
+
             onMovableViewHtouchmove(evt) {
                 this.callSingleEvent('htouchmove', evt)
             },
-    
+
             onMovableViewVtouchmove(evt) {
                 this.callSingleEvent('vtouchmove', evt)
             },

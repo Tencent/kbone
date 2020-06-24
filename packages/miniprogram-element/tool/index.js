@@ -1,5 +1,7 @@
 const path = require('path')
 const fs = require('fs')
+const webpack = require('webpack')
+const webpackConfig = require('./webpack.config')
 
 const domSubTreeLevel = 10
 const destDir = path.resolve(__dirname, '../src/template')
@@ -149,10 +151,35 @@ function createIndexTemplate() {
     fs.writeFileSync(path.join(destDir, '../index-vhost.wxml'), template, 'utf8')
 }
 
+/**
+ * 构建
+ */
+function build() {
+    webpack(webpackConfig).run((err, stats) => {
+        if (err) {
+            console.log(err)
+        } else {
+            console.log(stats.toString({
+                assets: true,
+                cached: false,
+                colors: true,
+                children: false,
+                errors: true,
+                warnings: true,
+                version: true,
+                modules: false,
+                publicPath: true,
+            }))
+        }
+    })
+}
+
 function main() {
     createSubtreeTemplate()
     createSubtreeCoverTemplate()
     createInnerComponentTemplate()
     createIndexTemplate()
+
+    build()
 }
 main()

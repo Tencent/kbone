@@ -1,0 +1,12 @@
+{
+    "component": true,
+    "usingComponents": {
+        "element": "./index",
+        "element-vhost": "./index-vhost"
+    },
+    "componentGenerics": {
+        "custom-component": {
+            "default": "./custom-component/index"
+        }
+    }
+}
