@@ -21,8 +21,8 @@ const ELEMENT_DIFF_KEYS = [
 ]
 const TEXT_NODE_DIFF_KEYS = ['nodeId', 'pageId', 'content']
 const NEET_SPLIT_CLASS_STYLE_FROM_CUSTOM_ELEMENT = ['WX-COMPONENT', 'WX-CUSTOM-COMPONENT'] // 需要分离 class 和 style 的节点
-const NEET_BEHAVIOR_NORMAL_CUSTOM_ELEMENT_PARENT = ['swiper', 'movable-area', 'picker-view']
-const NEET_BEHAVIOR_NORMAL_CUSTOM_ELEMENT = ['swiper-item', 'movable-view', 'picker-view-column']
+const RELATION_PARENT = ['swiper', 'movable-area', 'picker-view']
+const RELATION_CHILD = ['swiper-item', 'movable-view', 'picker-view-column']
 const NEET_RENDER_TO_CUSTOM_ELEMENT = ['IFRAME', ...NEET_SPLIT_CLASS_STYLE_FROM_CUSTOM_ELEMENT] // 必须渲染成自定义组件的节点
 const USE_TEMPLATE = ['cover-image', 'movable-area', 'movable-view', 'swiper', 'swiper-item', 'icon', 'progress', 'rich-text', 'text', 'button', 'editor', 'form', 'INPUT', 'picker', 'SELECT', 'picker-view', 'picker-view-column', 'slider', 'switch', 'TEXTAREA', 'navigator', 'camera', 'image', 'live-player', 'live-pusher', 'VIDEO', 'map', 'CANVAS', 'ad', 'official-account', 'open-data', 'web-view', 'capture', 'catch', 'animation', 'not-support', 'WX-CUSTOM-COMPONENT'] // 使用 template 渲染
 const IN_COVER = ['cover-view'] // 子节点必须使用 cover-view/cover-image
@@ -52,12 +52,10 @@ function filterNodes(domNode, level, component) {
 
         // 特殊节点
         if (NEET_SPLIT_CLASS_STYLE_FROM_CUSTOM_ELEMENT.indexOf(child.tagName) >= 0) {
-            if (domInfo.tagName === 'wx-component' && NEET_BEHAVIOR_NORMAL_CUSTOM_ELEMENT.indexOf(child.behavior) !== -1) {
+            if (domInfo.tagName === 'wx-component' && RELATION_CHILD.indexOf(child.behavior) !== -1) {
                 // 特殊内置组件，强制作为某内置组件的子组件，需要直接在当前模板渲染
                 domInfo.compName = child.behavior
-                domInfo.extra = {
-                    hidden: child.getAttribute('hidden') || false,
-                }
+                domInfo.extra = {hidden: child.getAttribute('hidden') || false}
 
                 // 补充该内置组件的属性
                 const {properties} = wxSubComponentMap[child.behavior] || {}
@@ -106,11 +104,23 @@ function filterNodes(domNode, level, component) {
             domInfo.extra = extra
 
             // 给 template 中的特殊节点用
-            if (NEET_BEHAVIOR_NORMAL_CUSTOM_ELEMENT_PARENT.indexOf(templateName) !== -1) {
-                const childNodes = filterNodes(child, 0) || []
-                extra.childNodes = childNodes.map(childNode => {
+            const relationIndex = RELATION_PARENT.indexOf(templateName)
+            if (relationIndex !== -1) {
+                const childNodes = (templateName === 'picker-view' ? filterNodes(child, 1) : filterNodes(child, 0)) || []
+                extra.childNodes = childNodes.filter(childNode => childNode.type === 'element' && childNode.compName === RELATION_CHILD[relationIndex]).map(childNode => {
                     const copyChildNode = Object.assign({}, childNode)
                     delete copyChildNode.domNode
+
+                    // picker-view-column 不支持监听自定义组件内子节点的变化，所以需要在当前自定义组件中渲染
+                    if (copyChildNode.childNodes) {
+                        copyChildNode.childNodes = copyChildNode.childNodes.map(grandchild => {
+                        // picker-view-column 的第一层子节点无法设置 style，不然会覆盖内置组件自己的样式
+                            const copyGrandchildNode = Object.assign({}, grandchild, {style: ''})
+                            delete copyGrandchildNode.domNode
+                            return copyGrandchildNode
+                        })
+                    }
+
                     return copyChildNode
                 })
             }

@@ -30,11 +30,11 @@ test('picker-view', async() => {
 
     // 检查 picker-view-column
     expect(pickerView.dom.childNodes.length).toBe(3)
-    expect(pickerView.dom.childNodes[0].childNodes[0].classList.contains('element-vhost--h5-span')).toBe(true)
+    expect(pickerView.dom.childNodes[0].childNodes[0].classList.contains('element--h5-span')).toBe(true)
     expect(pickerView.dom.childNodes[0].childNodes[0].innerHTML).toBe('1')
-    expect(pickerView.dom.childNodes[1].childNodes[0].classList.contains('element-vhost--h5-span')).toBe(true)
+    expect(pickerView.dom.childNodes[1].childNodes[0].classList.contains('element--h5-span')).toBe(true)
     expect(pickerView.dom.childNodes[1].childNodes[0].innerHTML).toBe('2')
-    expect(pickerView.dom.childNodes[2].childNodes[0].classList.contains('element-vhost--h5-span')).toBe(true)
+    expect(pickerView.dom.childNodes[2].childNodes[0].classList.contains('element--h5-span')).toBe(true)
     expect(pickerView.dom.childNodes[2].childNodes[0].innerHTML).toBe('3')
     expect(body.data.childNodes[0].extra.childNodes[0].extra).toEqual({hidden: false})
     expect(body.data.childNodes[0].extra.childNodes[1].extra).toEqual({hidden: false})
