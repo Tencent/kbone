@@ -640,7 +640,7 @@
         binderror="onCameraError"
         bindinitdone="onCameraInitDone"
         bindscancode="onCameraScanCode"
-    ><element-vhost wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{true}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element-vhost></camera>
+    ><element-vhost wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element-vhost></camera>
 </template>
 <template name="image">
     <image
@@ -701,7 +701,7 @@
         bindaudiovolumenotify="onLivePlayerAudioVolumeNotify"
         bindenterpictureinpicture="onLivePlayerEnterPictureInPicture"
         bindleavepictureinpicture="onLivePlayerLeavePictureInPicture"
-    ><element-vhost wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{true}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element-vhost></live-player>
+    ><element-vhost wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element-vhost></live-player>
 </template>
 <template name="live-pusher">
     <live-pusher
@@ -751,7 +751,7 @@
         bindbgmstart="onLivePusherBgmStart"
         bindbgmprogress="onLivePusherBgmProgress"
         bindbgmcomplete="onLivePusherBgmComplete"
-    ><element-vhost wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{true}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element-vhost></live-pusher>
+    ><element-vhost wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element-vhost></live-pusher>
 </template>
 <template name="video">
     <!-- pictureInPictureShowProgress 因为编译器限制了属性长度，所以暂时用驼峰式写法 -->

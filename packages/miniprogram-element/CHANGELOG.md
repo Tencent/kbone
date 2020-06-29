@@ -3,6 +3,7 @@
 ## 2.0.1
 
 * 修复 picker-view-column 的高度计算错误问题
+* 使用 view/image 代替 cover-view/cover-image 渲染 live-player、live-pusher、camera 的子节点
 
 ## 2.0.0
 

@@ -10,7 +10,6 @@ const {
 } = mp.$$adapter
 const {
     USE_TEMPLATE,
-    IN_COVER,
 } = _
 const {
     wxCompHandles,
@@ -74,7 +73,6 @@ module.exports = Behavior({
 
         // 初始化
         this.init(data)
-        if (IN_COVER.indexOf(data.wxCompName) !== -1) this.data.inCover = true
 
         // 初始化孩子节点
         const childNodes = _.filterNodes(this.domNode, DOM_SUB_TREE_LEVEL - 1, this)
