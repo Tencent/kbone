@@ -58,7 +58,6 @@ module.exports = Behavior({
         // 记录 dom
         this.domNode = cache.getNode(pageId, nodeId)
         if (!this.domNode) return
-        this.domNode._wxComponent = this
 
         // 存储 document
         this.document = cache.getDocument(pageId)
@@ -77,6 +76,9 @@ module.exports = Behavior({
         // 初始化孩子节点
         const childNodes = _.filterNodes(this.domNode, DOM_SUB_TREE_LEVEL - 1, this)
         data.childNodes = _.dealWithLeafAndSimple(childNodes, this.onChildNodesUpdate)
+
+        // 挂载该节点所处的自定义组件实例
+        if (data.wxCompName) this.domNode._wxComponent = this
 
         // 执行一次 setData
         if (Object.keys(data).length) this.setData(data)

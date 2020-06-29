@@ -46,6 +46,9 @@ function filterNodes(domNode, level, component) {
 
         if (domInfo.type !== 'element' && domInfo.type !== 'text') return
 
+        // 挂载该节点所处的自定义组件实例
+        child._wxComponent = component
+
         domInfo.className = domInfo.type === 'element' ? `h5-${domInfo.tagName} node-${domInfo.nodeId} ${domInfo.className || ''}` : '' // 增加默认 class
         domInfo.domNode = child
 
@@ -155,9 +158,6 @@ function filterNodes(domNode, level, component) {
             domInfo.content = ''
             domInfo.childNodes = filterNodes(child, level - 1, component)
         }
-
-        // 挂载该节点所处的自定义组件实例
-        child._wxComponent = component
 
         return domInfo
     }).filter(child => !!child)

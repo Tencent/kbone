@@ -1,5 +1,9 @@
 # 更新日志
 
+## 2.0.2
+
+* 元素节点提供 $$wxComponent 属性
+
 ## 2.0.1
 
 * 修复 picker-view-column 的高度计算错误问题
