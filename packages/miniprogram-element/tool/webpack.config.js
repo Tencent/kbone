@@ -25,6 +25,7 @@ module.exports = {
     externals: {
         'miniprogram-render': 'commonjs miniprogram-render',
     },
+    devtool: 'source-map',
     plugins: [
         new CopyPlugin({
             patterns: [
