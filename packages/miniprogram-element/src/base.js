@@ -25,7 +25,7 @@ console.warn('当前渲染模式版本：miniprogram-element@2.x 版本（要求
 const version = wx.getSystemInfoSync().SDKVersion
 const behaviors = []
 if (_.compareVersion(version, '2.10.3') >= 0) behaviors.push('wx://form-field-button')
-if (_.compareVersion(version, '2.11.2') < 0) console.warn('当前基础库版本低于 2.11.2，可能会存在部分功能不可用情况（如 text、picker-view 等组件不可用），请调整最低支持基础库。')
+if (_.compareVersion(version, '2.11.2') < 0) console.warn('当前基础库版本低于 2.11.2，建议调整最低支持基础库。')
 
 module.exports = Behavior({
     behaviors,
