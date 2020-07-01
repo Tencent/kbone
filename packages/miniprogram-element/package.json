@@ -1,6 +1,6 @@
 {
 	"name": "miniprogram-element",
-	"version": "2.0.3",
+	"version": "2.0.4",
 	"description": "web's adapter for miniprogram",
 	"main": "src/index.js",
 	"miniprogram": "dist",
