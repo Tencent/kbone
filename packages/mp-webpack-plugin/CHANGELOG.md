@@ -1,5 +1,9 @@
 # 更新日志
 
+## 1.0.1
+
+* 支持 generate.appEntryInject
+
 ## 0.9.16
 
 * 支持配置 miniprogram-render / miniprogram-element 的版本
