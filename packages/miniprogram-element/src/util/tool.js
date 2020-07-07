@@ -116,7 +116,7 @@ function filterNodes(domNode, level, component) {
                     // picker-view-column 不支持监听自定义组件内子节点的变化，所以需要在当前自定义组件中渲染
                     if (copyChildNode.childNodes) {
                         copyChildNode.childNodes = copyChildNode.childNodes.map(grandchild => {
-                        // picker-view-column 的第一层子节点无法设置 style，不然会覆盖内置组件自己的样式
+                            // picker-view-column 的第一层子节点无法设置 style，不然会覆盖内置组件自己的样式
                             const copyGrandchildNode = Object.assign({}, grandchild, {style: ''})
                             delete copyGrandchildNode.domNode
                             return copyGrandchildNode
