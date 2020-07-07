@@ -43,6 +43,11 @@ test('render', async() => {
             <wx-view class="element--h5-br element--node-${node8.$$nodeId}" data-private-node-id="${node8.$$nodeId}" data-private-page-id="${page.pageId}" style=""></wx-view>
         </wx-view>
     </element>`))
+    expect(node1.$$wxComponent).toBe(component.querySelector('.h5-body').instance)
+    expect(node2.$$wxComponent).toBe(component.querySelector('.h5-body').instance)
+    expect(node3.$$wxComponent).toBe(component.querySelector('.h5-body').instance)
+    expect(node5.$$wxComponent).toBe(component.querySelector('.h5-body').instance)
+    expect(node8.$$wxComponent).toBe(component.querySelector('.h5-body').instance)
 
     node1.removeChild(node3)
     node1.replaceChild(node4, node8)

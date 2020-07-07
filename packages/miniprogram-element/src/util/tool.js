@@ -1,5 +1,4 @@
 const mp = require('miniprogram-render')
-const initData = require('./init-data')
 const component = require('./component')
 
 const {
@@ -8,19 +7,24 @@ const {
 } = mp.$$adapter
 
 const {
+    wxCompData,
     wxCompNameMap,
     wxSubComponentMap,
 } = component
 
-const ELEMENT_DIFF_KEYS = ['nodeId', 'pageId', 'tagName', 'compName', 'id', 'className', 'style', 'src', 'mode', 'webp', 'lazyLoad', 'showMenuByLongpress', 'useTemplate', 'isImage', 'isLeaf', 'isSimple', 'content', 'extra']
+const ELEMENT_DIFF_KEYS = [
+    'nodeId', 'pageId', 'id', 'className', 'style', // 通用字段
+    'isImage', 'src', 'mode', 'webp', 'lazyLoad', 'showMenuByLongpress', // image
+    'useTemplate', 'extra', 'compName', // template 渲染
+    'isLeaf', 'content', // leaf
+    'isSimple' // 普通节点
+]
 const TEXT_NODE_DIFF_KEYS = ['nodeId', 'pageId', 'content']
 const NEET_SPLIT_CLASS_STYLE_FROM_CUSTOM_ELEMENT = ['WX-COMPONENT', 'WX-CUSTOM-COMPONENT'] // 需要分离 class 和 style 的节点
-const NEET_BEHAVIOR_NORMAL_CUSTOM_ELEMENT_PARENT = ['swiper', 'movable-area']
-const NEET_BEHAVIOR_NORMAL_CUSTOM_ELEMENT = ['swiper-item', 'movable-view', 'picker-view-column']
+const RELATION_PARENT = ['swiper', 'movable-area', 'picker-view']
+const RELATION_CHILD = ['swiper-item', 'movable-view', 'picker-view-column']
 const NEET_RENDER_TO_CUSTOM_ELEMENT = ['IFRAME', ...NEET_SPLIT_CLASS_STYLE_FROM_CUSTOM_ELEMENT] // 必须渲染成自定义组件的节点
-const NOT_SUPPORT = ['IFRAME']
-const USE_TEMPLATE = ['cover-image', 'movable-area', 'movable-view', 'swiper', 'swiper-item', 'icon', 'progress', 'rich-text', 'button', 'editor', 'form', 'INPUT', 'picker', 'SELECT', 'slider', 'switch', 'TEXTAREA', 'navigator', 'camera', 'image', 'live-player', 'live-pusher', 'VIDEO', 'map', 'CANVAS', 'ad', 'official-account', 'open-data', 'web-view', 'capture', 'catch', 'animation'] // 使用 template 渲染
-const IN_COVER = ['cover-view'] // 子节点必须使用 cover-view/cover-image
+const USE_TEMPLATE = ['cover-image', 'movable-area', 'movable-view', 'swiper', 'swiper-item', 'icon', 'progress', 'rich-text', 'text', 'button', 'editor', 'form', 'INPUT', 'picker', 'SELECT', 'picker-view', 'picker-view-column', 'slider', 'switch', 'TEXTAREA', 'navigator', 'camera', 'image', 'live-player', 'live-pusher', 'VIDEO', 'map', 'CANVAS', 'ad', 'official-account', 'open-data', 'web-view', 'capture', 'catch', 'animation', 'not-support', 'WX-CUSTOM-COMPONENT'] // 使用 template 渲染
 
 /**
  * 过滤子节点，只获取儿子节点
@@ -30,7 +34,6 @@ function filterNodes(domNode, level, component) {
     let childNodes = domNode.childNodes || []
 
     if (typeof childNodes.map !== 'function') return []
-    if (NOT_SUPPORT.indexOf(domNode.tagName) >= 0) return [] // 不支持标签，不渲染子节点
 
     if (domNode.tagName === 'SELECT') {
         // select 标签只渲染和 select 值相同的 option
@@ -43,17 +46,18 @@ function filterNodes(domNode, level, component) {
 
         if (domInfo.type !== 'element' && domInfo.type !== 'text') return
 
+        // 挂载该节点所处的自定义组件实例
+        child._wxComponent = component
+
         domInfo.className = domInfo.type === 'element' ? `h5-${domInfo.tagName} node-${domInfo.nodeId} ${domInfo.className || ''}` : '' // 增加默认 class
         domInfo.domNode = child
 
         // 特殊节点
         if (NEET_SPLIT_CLASS_STYLE_FROM_CUSTOM_ELEMENT.indexOf(child.tagName) >= 0) {
-            if (domInfo.tagName === 'wx-component' && NEET_BEHAVIOR_NORMAL_CUSTOM_ELEMENT.indexOf(child.behavior) !== -1) {
+            if (domInfo.tagName === 'wx-component' && RELATION_CHILD.indexOf(child.behavior) !== -1) {
                 // 特殊内置组件，强制作为某内置组件的子组件，需要直接在当前模板渲染
                 domInfo.compName = child.behavior
-                domInfo.extra = {
-                    hidden: child.getAttribute('hidden') || false,
-                }
+                domInfo.extra = {hidden: child.getAttribute('hidden') || false}
 
                 // 补充该内置组件的属性
                 const {properties} = wxSubComponentMap[child.behavior] || {}
@@ -86,12 +90,15 @@ function filterNodes(domNode, level, component) {
         }
 
         // 判断是否使用 template 渲染
-        const templateName = domInfo.tagName === 'wx-component' ? child.behavior : child.tagName
+        let templateName = domInfo.tagName === 'wx-component' ? child.behavior : child.tagName
+        templateName = !mp.$$adapter.tool.isTagNameSupport(templateName) ? 'not-support' : templateName
         domInfo.useTemplate = !domInfo.isImage && USE_TEMPLATE.indexOf(templateName) !== -1
         if (domInfo.useTemplate) {
             const wxCompName = wxCompNameMap[templateName]
             const extra = {}
+
             if (wxCompName) checkComponentAttr(wxCompName, child, extra, null, `h5-${domInfo.tagName} ${domInfo.tagName === 'wx-component' ? 'wx-' + child.behavior : ''}`)
+
             extra.pageId = domInfo.pageId
             extra.nodeId = domInfo.nodeId
             extra.inCover = component.data.inCover
@@ -99,11 +106,23 @@ function filterNodes(domNode, level, component) {
             domInfo.extra = extra
 
             // 给 template 中的特殊节点用
-            if (NEET_BEHAVIOR_NORMAL_CUSTOM_ELEMENT_PARENT.indexOf(templateName) !== -1) {
-                const childNodes = filterNodes(child, 0) || []
-                extra.childNodes = childNodes.map(childNode => {
+            const relationIndex = RELATION_PARENT.indexOf(templateName)
+            if (relationIndex !== -1) {
+                const childNodes = (templateName === 'picker-view' ? filterNodes(child, 1) : filterNodes(child, 0)) || []
+                extra.childNodes = childNodes.filter(childNode => childNode.type === 'element' && childNode.compName === RELATION_CHILD[relationIndex]).map(childNode => {
                     const copyChildNode = Object.assign({}, childNode)
                     delete copyChildNode.domNode
+
+                    // picker-view-column 不支持监听自定义组件内子节点的变化，所以需要在当前自定义组件中渲染
+                    if (copyChildNode.childNodes) {
+                        copyChildNode.childNodes = copyChildNode.childNodes.map(grandchild => {
+                            // picker-view-column 的第一层子节点无法设置 style，不然会覆盖内置组件自己的样式
+                            const copyGrandchildNode = Object.assign({}, grandchild, {style: ''})
+                            delete copyGrandchildNode.domNode
+                            return copyGrandchildNode
+                        })
+                    }
+
                     return copyChildNode
                 })
             }
@@ -114,6 +133,16 @@ function filterNodes(domNode, level, component) {
                 extra.touchMove = child.$$hasEventHandler('touchmove') ? 'onTouchMove' : ''
                 extra.touchEnd = child.$$hasEventHandler('touchend') ? 'onTouchEnd' : ''
                 extra.touchCancel = child.$$hasEventHandler('touchcancel') ? 'onTouchCancel' : ''
+            }
+
+            // 1. text 组件存在 bug，其子节点无法使用自定义组件的方式来渲染，会存在无法更新的问题，需要基础库解决，故此处只渲染其文本内容
+            // 2. 不支持的节点，需要展示占位文本
+            if (wxCompName === 'text' || wxCompName === 'not-support') extra.content = child.textContent
+
+            // 第三方自定义组件
+            if (templateName === 'WX-CUSTOM-COMPONENT') {
+                extra.wxCompName = 'custom-component'
+                extra.wxCustomCompName = child.behavior
             }
         }
 
@@ -129,9 +158,6 @@ function filterNodes(domNode, level, component) {
             domInfo.content = ''
             domInfo.childNodes = filterNodes(child, level - 1, component)
         }
-
-        // 挂载该节点所处的自定义组件实例
-        child._wxComponent = component
 
         return domInfo
     }).filter(child => !!child)
@@ -189,8 +215,7 @@ function checkDiffChildNodes(newChildNodes, oldChildNodes) {
         const newGrandChildNodes = newChild.childNodes || []
         const oldGrandChildNodes = oldChild.childNodes || []
         if (newGrandChildNodes.length || oldGrandChildNodes.length) {
-            const checkRes = checkDiffChildNodes(newGrandChildNodes, oldGrandChildNodes)
-            if (checkRes) return true
+            if (checkDiffChildNodes(newGrandChildNodes, oldGrandChildNodes)) return true
         }
     }
 
@@ -201,7 +226,7 @@ function checkDiffChildNodes(newChildNodes, oldChildNodes) {
  * 检查组件属性
  */
 function checkComponentAttr(name, domNode, destData, oldData, extraClass = '') {
-    const attrs = initData[name]
+    const attrs = wxCompData[name]
 
     destData.wxCompName = name
 
@@ -327,9 +352,7 @@ function compareVersion(v1, v2) {
 }
 
 module.exports = {
-    NOT_SUPPORT,
     USE_TEMPLATE,
-    IN_COVER,
     filterNodes,
     checkDiffChildNodes,
     checkComponentAttr,

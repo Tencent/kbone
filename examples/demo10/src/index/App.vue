@@ -7,7 +7,7 @@
     <comp-b class="block" :prefix="prefixB">
       <div>comp-b slot</div>
     </comp-b>
-    <comp-c class="block">
+    <comp-c class="block" @touchstart="log('touchstart')" @touchend="log('touchend')" @click="log('click')">
       <div>comp-c slot</div>
     </comp-c>
     <button class="btn" @click="onClick">update</button>
@@ -33,6 +33,10 @@ export default {
 
     onEvent(evt) {
       console.log('someevent', evt)
+    },
+
+    log(str) {
+      console.log(str)
     },
   },
 }

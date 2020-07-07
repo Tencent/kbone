@@ -1,12 +1,25 @@
 const path = require('path')
 const fs = require('fs')
+const webpack = require('webpack')
+const webpackConfig = require('./webpack.config')
 
 const domSubTreeLevel = 10
 const destDir = path.resolve(__dirname, '../src/template')
-const subtreeDestPath = path.join(destDir, './subtree.wxml')
-const subtreeCoverDestPath = path.join(destDir, './subtree-cover.wxml')
-const innerComponentDestPath = path.join(destDir, './inner-component.wxml')
-const indexDestPath = path.join(destDir, '../index.wxml')
+
+/**
+ * 移除注释
+ */
+function removeComment(content) {
+    let startIndex = content.indexOf('<!--')
+    while (startIndex >= 0) {
+        const endIndex = content.indexOf('-->', startIndex)
+        if (endIndex >= 0) content = content.substring(0, startIndex) + content.substring(endIndex + 3)
+
+        startIndex = content.indexOf('<!--', endIndex + 3)
+    }
+
+    return content
+}
 
 /**
  * 获取 subtree.wxml 生成单次循环内容
@@ -17,7 +30,7 @@ function getSubtreeSimple(i) {
     const isFirst = i === 1
     const subContent = [
         `<block wx:if="{{${itemName}.type === 'text'}}">{{${itemName}.content}}</block>`,
-        `<image wx:elif="{{${itemName}.isImage}}" data-private-node-id="{{${itemName}.nodeId}}" data-private-page-id="{{${itemName}.pageId}}" id="{{${itemName}.id}}" class="{{${itemName}.className || ''}}" style="{{${itemName}.style || ''}}" src="{{${itemName}.src}}" rendering-mode="{{${itemName}.mode ? 'backgroundImage' : 'img'}}" mode="{{${itemName}.mode}}" webp="{{${itemName}.webp}}" lazy-load="{{${itemName}.lazyLoad}}" show-menu-by-longpress="{{${itemName}.showMenuByLongpress}}" bindtouchstart="onTouchStart" bindtouchmove="onTouchMove" bindtouchend="onTouchEnd" bindtouchcancel="onTouchCancel" bindtap="onTap" bindlongpress="onLongPress" bindload="onImgLoad" binderror="onImgError"></image>`,
+        `<template wx:elif="{{${itemName}.isImage}}" is="img" data="{{...${itemName}}}"/>`,
         `<template wx:elif="{{${itemName}.useTemplate}}" is="{{${itemName}.extra.wxCompName}}" data="{{...${itemName}.extra}}"/>`,
         `<view wx:elif="{{${itemName}.isLeaf${isLast ? '' : ' || ' + itemName + '.isSimple'}}}" data-private-node-id="{{${itemName}.nodeId}}" data-private-page-id="{{${itemName}.pageId}}" id="{{${itemName}.id}}" class="{{${itemName}.className || ''}}" style="{{${itemName}.style || ''}}" bindtouchstart="onTouchStart" bindtouchmove="onTouchMove" bindtouchend="onTouchEnd" bindtouchcancel="onTouchCancel" bindtap="onTap" bindlongpress="onLongPress">{{${itemName}.content}}${isLast ? '</view>' : ''}`
     ]
@@ -53,7 +66,7 @@ function getSubtreeCoverSimple(i) {
     const isLast = i === domSubTreeLevel
     const isFirst = i === 1
     const subContent = [
-        `<cover-image wx:if="{{${itemName}.isImage}}" data-private-node-id="{{${itemName}.nodeId}}" data-private-page-id="{{${itemName}.pageId}}" id="{{${itemName}.id}}" class="{{${itemName}.className || ''}}" style="{{${itemName}.style || ''}}" src="{{${itemName}.src}}" bindtouchstart="onTouchStart" bindtouchmove="onTouchMove" bindtouchend="onTouchEnd" bindtouchcancel="onTouchCancel" bindtap="onTap" bindlongpress="onLongPress" bindload="onImgLoad" binderror="onImgError"></cover-image>`,
+        `<template wx:if="{{${itemName}.isImage}}" is="cover-img" data="{{...${itemName}}}"/>`,
         `<template wx:elif="{{${itemName}.useTemplate}}" is="{{${itemName}.extra.wxCompName}}" data="{{...${itemName}.extra}}"/>`,
         `<cover-view wx:elif="{{${itemName}.type === 'text' || ${itemName}.isLeaf || ${itemName}.isSimple}}" data-private-node-id="{{${itemName}.nodeId}}" data-private-page-id="{{${itemName}.pageId}}" id="{{${itemName}.id}}" class="{{${itemName}.className || ''}}" style="{{${itemName}.style || ''}}" bindtouchstart="onTouchStart" bindtouchmove="onTouchMove" bindtouchend="onTouchEnd" bindtouchcancel="onTouchCancel" bindtap="onTap" bindlongpress="onLongPress">{{${itemName}.content}}${isLast ? '</cover-view>' : ''}`
     ]
@@ -86,7 +99,6 @@ function getSubtreeCoverSimple(i) {
  */
 function createSubtreeTemplate() {
     const content = [
-        '<!-- 此文件由 tool/index.js 生成 -->',
         '<import src="./inner-component.wxml"/>',
         '<template name="subtree">',
         ...getSubtreeSimple(1),
@@ -94,7 +106,7 @@ function createSubtreeTemplate() {
     ]
 
     // 写入文件
-    fs.writeFileSync(subtreeDestPath, content.join(''), 'utf8')
+    fs.writeFileSync(path.join(destDir, './subtree.wxml'), content.join(''), 'utf8')
 }
 
 /**
@@ -102,7 +114,6 @@ function createSubtreeTemplate() {
  */
 function createSubtreeCoverTemplate() {
     const content = [
-        '<!-- 此文件由 tool/index.js 生成 -->',
         '<import src="./inner-component.wxml"/>',
         '<template name="subtree-cover">',
         ...getSubtreeCoverSimple(1),
@@ -110,31 +121,56 @@ function createSubtreeCoverTemplate() {
     ]
 
     // 写入文件
-    fs.writeFileSync(subtreeCoverDestPath, content.join(''), 'utf8')
+    fs.writeFileSync(path.join(destDir, './subtree-cover.wxml'), content.join(''), 'utf8')
 }
 
 /**
  * 生成 src/template/inner-component.wxml
  */
 function createInnerComponentTemplate() {
-    const template = fs.readFileSync(path.join(__dirname, './inner-component.wxml'), 'utf8')
+    let template = fs.readFileSync(path.join(__dirname, './inner-component.wxml'), 'utf8')
         .replace(/[\n\r\t]+/g, ' ')
         .replace(/\s+/g, ' ')
+    template = removeComment(template)
 
     // 写入文件
-    fs.writeFileSync(innerComponentDestPath, template, 'utf8')
+    fs.writeFileSync(path.join(destDir, './inner-component.wxml'), template, 'utf8')
 }
 
 /**
  * 生成 src/index.wxml
  */
 function createIndexTemplate() {
-    const template = fs.readFileSync(path.join(__dirname, './index.wxml'), 'utf8')
+    let template = fs.readFileSync(path.join(__dirname, './index.wxml'), 'utf8')
         .replace(/[\n\r\t]+/g, ' ')
         .replace(/\s+/g, ' ')
+    template = removeComment(template)
 
     // 写入文件
-    fs.writeFileSync(indexDestPath, template, 'utf8')
+    fs.writeFileSync(path.join(destDir, '../index.wxml'), template, 'utf8')
+}
+
+/**
+ * 构建
+ */
+function build() {
+    webpack(webpackConfig).run((err, stats) => {
+        if (err) {
+            console.log(err)
+        } else {
+            console.log(stats.toString({
+                assets: true,
+                cached: false,
+                colors: true,
+                children: false,
+                errors: true,
+                warnings: true,
+                version: true,
+                modules: false,
+                publicPath: true,
+            }))
+        }
+    })
 }
 
 function main() {
@@ -142,5 +178,7 @@ function main() {
     createSubtreeCoverTemplate()
     createInnerComponentTemplate()
     createIndexTemplate()
+
+    build()
 }
 main()

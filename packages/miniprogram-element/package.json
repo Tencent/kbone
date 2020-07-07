@@ -3,9 +3,9 @@
 	"version": "1.4.7",
 	"description": "web's adapter for miniprogram",
 	"main": "src/index.js",
-	"miniprogram": "src",
+	"miniprogram": "dist",
 	"scripts": {
-		"build": "node tool/index.js",
+		"build": "rimraf dist && node tool/index.js",
 		"test": "jest --bail",
 		"test-debug": "node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand --bail",
 		"coverage": "jest --coverage --bail"
@@ -31,8 +31,12 @@
 		"miniprogram-render": "*"
 	},
 	"devDependencies": {
+		"copy-webpack-plugin": "^6.0.2",
 		"jest": "^26.0.1",
-		"miniprogram-simulate": "^1.2.1"
+		"miniprogram-simulate": "^1.2.6",
+		"rimraf": "^3.0.2",
+		"terser-webpack-plugin": "^3.0.6",
+		"webpack": "^4.43.0"
 	},
 	"gitHead": "fd8f52e897a2484b77c50bddae4b63fc883b9883"
 }

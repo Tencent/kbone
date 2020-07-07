@@ -1,7 +1,9 @@
 const path = require('path')
 const mp = require('miniprogram-render')
-// eslint-disable-next-line import/no-extraneous-dependencies
 const simulate = require('miniprogram-simulate')
+
+// 屏蔽 console.warn
+global.console.warn = () => {}
 
 /**
  * 构建页面
@@ -99,7 +101,6 @@ function err(msg) {
  * 获取 data
  */
 function getData(component) {
-    if (component.data.wxCompName === 'picker-view') return component.data
     return component.data.childNodes && component.data.childNodes[0] && component.data.childNodes[0].extra || component.data
 }
 simulate.getData = getData
