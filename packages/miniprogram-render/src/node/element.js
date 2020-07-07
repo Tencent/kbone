@@ -78,6 +78,8 @@ class Element extends Node {
         this.$_style = null
         this.$_attrs = null
 
+        this._wxComponent = null
+
         this.$$scrollTop = 0
         this.$$scrollTimeStamp = 0
     }
@@ -327,6 +329,13 @@ class Element extends Node {
     }
 
     /**
+     * 所属小程序自定义组件实例
+     */
+    get $$wxComponent() {
+        return this._wxComponent
+    }
+
+    /**
      * 调用 $_generateHtml 接口时用于处理额外的属性
      */
     $$dealWithAttrsForGenerateHtml(html) {
@@ -379,8 +388,7 @@ class Element extends Node {
 
             if (this.tagName === 'CANVAS') {
                 // TODO，为了兼容基础库的一个 bug，暂且如此实现
-                wx.createSelectorQuery().in(this._wxComponent).select(`.node-${this.$_nodeId}`).context(res => (res && res.context ? resolve(res.context) : reject()))
-                    .exec()
+                wx.createSelectorQuery().in(this.$$wxComponent).select(`.node-${this.$_nodeId}`).context(res => (res && res.context ? resolve(res.context) : reject())).exec()
             } else {
                 window.$$createSelectorQuery().select(`.miniprogram-root >>> .node-${this.$_nodeId}`).context(res => (res && res.context ? resolve(res.context) : reject())).exec()
             }
@@ -399,7 +407,7 @@ class Element extends Node {
 
             if (this.tagName === 'CANVAS') {
                 // TODO，为了兼容基础库的一个 bug，暂且如此实现
-                resolve(wx.createSelectorQuery().in(this._wxComponent).select(`.node-${this.$_nodeId}`))
+                resolve(wx.createSelectorQuery().in(this.$$wxComponent).select(`.node-${this.$_nodeId}`))
             } else {
                 resolve(window.$$createSelectorQuery().select(`.miniprogram-root >>> .node-${this.$_nodeId}`))
             }
