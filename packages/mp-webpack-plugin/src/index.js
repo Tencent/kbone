@@ -265,8 +265,9 @@ class MpPlugin {
             if (isEmitApp) {
                 // app js
                 const appAssets = assetsMap[appJsEntryName] || {js: [], css: []}
+                const appJsInject = generateConfig.appEntryInject || ''
                 const appJsContent = appJsTmpl
-                    .replace('/* INIT_FUNCTION */', `var fakeWindow = {};var fakeDocument = {};${appAssets.js.map(js => 'require(\'' + getAssetPath('', js, assetsSubpackageMap, '') + '\')(fakeWindow, fakeDocument);').join('')}var appConfig = fakeWindow.appOptions || {};`)
+                    .replace('/* INIT_FUNCTION */', `var fakeWindow = {};var fakeDocument = {};(function(window, document) {${appJsInject}})(fakeWindow, fakeDocument);${appAssets.js.map(js => 'require(\'' + getAssetPath('', js, assetsSubpackageMap, '') + '\')(fakeWindow, fakeDocument);').join('')}var appConfig = fakeWindow.appOptions || {};`)
                 addFile(compilation, '../app.js', appJsContent)
 
                 // app wxss
