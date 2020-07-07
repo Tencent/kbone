@@ -88,6 +88,11 @@ class XMLHttpRequest extends EventTarget {
      * 执行请求
      */
     $_callRequest() {
+        if (!this.$_window || !this.$_window.document) {
+            console.warn('this page has been unloaded, so this request will be canceled.')
+            return
+        }
+
         if (this.$_timeout) {
             this.$_startTime = +new Date()
 
@@ -110,9 +115,7 @@ class XMLHttpRequest extends EventTarget {
 
         // 头信息
         const header = Object.assign({}, this.$_header)
-        if (this.$_window) {
-            header.cookie = this.$_window.document.$$cookie
-        }
+        header.cookie = this.$_window.document.$$cookie
 
         // 补完 url
         let url = this.$_url
