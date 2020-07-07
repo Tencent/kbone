@@ -101,7 +101,6 @@ function err(msg) {
  * 获取 data
  */
 function getData(component) {
-    if (component.data.wxCompName === 'picker-view') return component.data
     return component.data.childNodes && component.data.childNodes[0] && component.data.childNodes[0].extra || component.data
 }
 simulate.getData = getData
