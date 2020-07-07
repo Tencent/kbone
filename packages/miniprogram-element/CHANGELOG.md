@@ -1,5 +1,33 @@
 # 更新日志
 
+## 2.0.6
+
+* 修复 cover-view 内置组件渲染不正确问题
+
+## 2.0.5
+
+* 提供 sourcemap
+
+## 2.0.2
+
+* 元素节点提供 $$wxComponent 属性
+
+## 2.0.1
+
+* 修复 picker-view-column 的高度计算错误问题
+* 使用 view/image 代替 cover-view/cover-image 渲染 live-player、live-pusher、camera 的子节点
+
+## 2.0.0
+
+* 更新内置组件渲染模式，使用自定义组件的 virtual host 特性进行渲染
+* 更新第三方自定义组件渲染模式，使用自定义组件的 virtual host 特性进行渲染
+
+## 1.5.0
+
+* 第三方自定义组件改为 v1.x 渲染模式
+* text/picker-view 内置组件改为 v1.x 渲染模式
+* 压缩混淆代码
+
 ## 1.4.5
 
 * 修复特殊 dom 结构会造成死循环的问题

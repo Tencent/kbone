@@ -19,6 +19,24 @@
         binderror="onCoverImageError"
     ></cover-image>
 </template>
+<template name="cover-view">
+    <cover-view
+        id="{{id}}"
+        class="{{className}}"
+        style="{{style}}"
+        hidden="{{hidden}}"
+        data-private-node-id="{{nodeId}}"
+        data-private-page-id="{{pageId}}"
+        bindtouchstart="onTouchStart"
+        bindtouchmove="onTouchMove"
+        bindtouchend="onTouchEnd"
+        bindtouchcancel="onTouchCancel"
+        bindtap="onTap"
+        bindlongpress="onLongPress"
+
+        scroll-top="{{scrollTop}}"
+    ><element-vhost wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element-vhost></cover-view>
+</template>
 <template name="movable-area">
     <movable-area
         id="{{id}}"
@@ -35,43 +53,43 @@
         bindlongpress="onLongPress"
 
         scale-area="{{scaleArea}}"
-    ><block wx:for="{{childNodes}}" wx:key="nodeId">
-        <movable-view
-            wx:if="{{item.type === 'element' && item.compName === 'movable-view'}}"
-            id="{{item.id}}"
-            class="{{item.className || ''}}"
-            style="{{item.style || ''}}"
-            hidden="{{item.extra.hidden}}"
-            data-private-node-id="{{item.nodeId}}"
-            data-private-page-id="{{item.pageId}}"
-            bindtouchstart="onTouchStart"
-            bindtouchmove="onTouchMove"
-            bindtouchend="onTouchEnd"
-            bindtouchcancel="onTouchCancel"
-            bindtap="onTap"
-            bindlongpress="onLongPress"
-            
-            direction="{{item.extra.direction}}"
-            inertia="{{item.extra.inertia}}"
-            out-of-bounds="{{item.extra.outOfBounds}}"
-            x="{{item.extra.x}}"
-            y="{{item.extra.y}}"
-            damping="{{item.extra.damping}}"
-            friction="{{item.extra.friction}}"
-            disabled="{{item.extra.disabled}}"
-            scale="{{item.extra.scale}}"
-            scale-min="{{item.extra.scaleMin}}"
-            scale-max="{{item.extra.scaleMax}}"
-            scale-value="{{item.extra.scaleValue}}"
-            animation="{{item.extra.animation}}"
-            bindchange="onMovableViewChange"
-            bindscale="onMovableViewScale"
-            bindhtouchmove="onMovableViewHtouchmove"
-            bindvtouchmove="onMovableViewVtouchmove"
-        ><element wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{item.nodeId}}" data-private-page-id="{{item.pageId}}" generic:custom-component="custom-component"></element></movable-view>
-    </block></movable-area>
+    ><movable-view
+        wx:for="{{childNodes}}"
+        wx:key="nodeId"
+        id="{{item.id}}"
+        class="{{item.className || ''}}"
+        style="{{item.style || ''}}"
+        hidden="{{item.extra.hidden}}"
+        data-private-node-id="{{item.nodeId}}"
+        data-private-page-id="{{item.pageId}}"
+        bindtouchstart="onTouchStart"
+        bindtouchmove="onTouchMove"
+        bindtouchend="onTouchEnd"
+        bindtouchcancel="onTouchCancel"
+        bindtap="onTap"
+        bindlongpress="onLongPress"
+        
+        direction="{{item.extra.direction}}"
+        inertia="{{item.extra.inertia}}"
+        out-of-bounds="{{item.extra.outOfBounds}}"
+        x="{{item.extra.x}}"
+        y="{{item.extra.y}}"
+        damping="{{item.extra.damping}}"
+        friction="{{item.extra.friction}}"
+        disabled="{{item.extra.disabled}}"
+        scale="{{item.extra.scale}}"
+        scale-min="{{item.extra.scaleMin}}"
+        scale-max="{{item.extra.scaleMax}}"
+        scale-value="{{item.extra.scaleValue}}"
+        animation="{{item.extra.animation}}"
+        bindchange="onMovableViewChange"
+        bindscale="onMovableViewScale"
+        bindhtouchmove="onMovableViewHtouchmove"
+        bindvtouchmove="onMovableViewVtouchmove"
+    ><element-vhost wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{item.nodeId}}" data-private-page-id="{{item.pageId}}" generic:custom-component="custom-component"></element-vhost></movable-view></movable-area>
 </template>
 <template name="swiper">
+    <!-- swiper-item 无法设置 style，不然会覆盖内置组件自己的滚动样式 -->
     <swiper
         id="{{id}}"
         class="{{className}}"
@@ -103,25 +121,23 @@
         bindchange="onSwiperChange"
         bindtransition="onSwiperTransition"
         bindanimationfinish="onSwiperAnimationfinish"
-    ><block wx:for="{{childNodes}}" wx:key="nodeId">
-        <!-- swiper-item 无法设置 style，不然会覆盖内置组件自己的滚动样式 -->
-        <swiper-item
-            wx:if="{{item.type === 'element' && item.compName === 'swiper-item'}}"
-            id="{{item.id}}"
-            class="{{item.className || ''}}"
-            hidden="{{item.extra.hidden}}"
-            data-private-node-id="{{item.nodeId}}"
-            data-private-page-id="{{item.pageId}}"
-            bindtouchstart="onTouchStart"
-            bindtouchmove="onTouchMove"
-            bindtouchend="onTouchEnd"
-            bindtouchcancel="onTouchCancel"
-            bindtap="onTap"
-            bindlongpress="onLongPress"
+    ><swiper-item
+        wx:for="{{childNodes}}"
+        wx:key="nodeId"
+        id="{{item.id}}"
+        class="{{item.className || ''}}"
+        hidden="{{item.extra.hidden}}"
+        data-private-node-id="{{item.nodeId}}"
+        data-private-page-id="{{item.pageId}}"
+        bindtouchstart="onTouchStart"
+        bindtouchmove="onTouchMove"
+        bindtouchend="onTouchEnd"
+        bindtouchcancel="onTouchCancel"
+        bindtap="onTap"
+        bindlongpress="onLongPress"
 
-            item-id="{{item.extra.itemId}}"
-        ><element wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{item.nodeId}}" data-private-page-id="{{item.pageId}}" generic:custom-component="custom-component"></element></swiper-item>
-    </block></swiper>
+        item-id="{{item.extra.itemId}}"
+    ><element-vhost wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{item.nodeId}}" data-private-page-id="{{item.pageId}}" generic:custom-component="custom-component"></element-vhost></swiper-item></swiper>
 </template>
 <!-- 基础内容 -->
 <template name="icon">
@@ -192,6 +208,26 @@
         space="{{space}}"
     ></rich-text>
 </template>
+<template name="text">
+    <text
+        id="{{id}}"
+        class="{{className}}"
+        style="{{style}}"
+        hidden="{{hidden}}"
+        data-private-node-id="{{nodeId}}"
+        data-private-page-id="{{pageId}}"
+        bindtouchstart="onTouchStart"
+        bindtouchmove="onTouchMove"
+        bindtouchend="onTouchEnd"
+        bindtouchcancel="onTouchCancel"
+        bindtap="onTap"
+        bindlongpress="onLongPress"
+
+        selectable="{{selectable}}"
+        space="{{space}}"
+        decode="{{decode}}"
+    >{{content}}</text>
+</template>
 <!-- 表单组件 -->
 <template name="button">
     <button
@@ -234,7 +270,7 @@
         bindopensetting="onButtonOpenSetting"
         bindlaunchapp="onButtonLaunchApp"
         bindgetrealnameauthinfo = "onButtonGetRealnameAuthInfo"
-    ><element wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element></button>
+    ><element-vhost wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element-vhost></button>
 </template>
 <template name="editor">
     <editor
@@ -282,7 +318,7 @@
         report-submit-timeout="{{reportSubmitTimeout}}"
         bindsubmit="onFormSubmit"
         bindreset="onFormReset"
-    ><element wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element></form>
+    ><element-vhost wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element-vhost></form>
 </template>
 <template name="input">
     <radio-group
@@ -404,7 +440,53 @@
         bindchange="onPickerChange"
         bindcolumnchange="onPickerColumnChange"
         bindcancel="onPickerCancel"
-    ><element wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element></picker>
+    ><element-vhost wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element-vhost></picker>
+</template>
+<template name="picker-view">
+    <picker-view
+        id="{{id}}"
+        class="{{className}}"
+        style="{{style}}"
+        hidden="{{hidden}}"
+        data-private-node-id="{{nodeId}}"
+        data-private-page-id="{{pageId}}"
+        bindtouchstart="onTouchStart"
+        bindtouchmove="onTouchMove"
+        bindtouchend="onTouchEnd"
+        bindtouchcancel="onTouchCancel"
+        bindtap="onTap"
+        bindlongpress="onLongPress"
+
+        value="{{value}}"
+        indicator-style="{{indicatorStyle}}"
+        indicator-class="{{indicatorClass}}"
+        mask-style="{{maskStyle}}"
+        mask-class="{{maskClass}}"
+        bindchange="onPickerViewChange"
+        bindpickstart="onPickerViewPickstart"
+        bindpickend="onPickerViewPickend"
+    ><picker-view-column
+        wx:for="{{childNodes}}"
+        wx:key="nodeId"
+        id="{{item.id}}"
+        class="{{item.className || ''}}"
+        style="{{item.style || ''}}"
+        hidden="{{item.extra.hidden}}"
+        data-private-node-id="{{item.nodeId}}"
+        data-private-page-id="{{item.pageId}}"
+        bindtouchstart="onTouchStart"
+        bindtouchmove="onTouchMove"
+        bindtouchend="onTouchEnd"
+        bindtouchcancel="onTouchCancel"
+        bindtap="onTap"
+        bindlongpress="onLongPress"
+    ><block wx:for="{{item.childNodes}}" wx:key="nodeId" wx:for-item="grandchild">
+        <block wx:if="{{grandchild.type === 'text'}}">{{grandchild.content}}</block>
+        <template wx:elif="{{grandchild.isImage}}" is="img" data="{{...grandchild}}"/>
+        <template wx:elif="{{grandchild.useTemplate}}" is="{{grandchild.extra.wxCompName}}" data="{{...grandchild.extra}}"/>
+        <view wx:elif="{{grandchild.isLeaf}}" data-private-node-id="{{grandchild.nodeId}}" data-private-page-id="{{grandchild.pageId}}" id="{{grandchild.id}}" class="{{grandchild.className || ''}}" bindtouchstart="onTouchStart" bindtouchmove="onTouchMove" bindtouchend="onTouchEnd" bindtouchcancel="onTouchCancel" bindtap="onTap" bindlongpress="onLongPress">{{grandchild.content}}</view>
+        <element wx:elif="{{grandchild.type === 'element'}}" in-cover="{{inCover}}" data-private-node-id="{{grandchild.nodeId}}" data-private-page-id="{{grandchild.pageId}}" id="{{grandchild.id}}" class="{{grandchild.className || ''}}" bindtouchstart="onTouchStart" bindtouchmove="onTouchMove" bindtouchend="onTouchEnd" bindtouchcancel="onTouchCancel" bindtap="onTap" bindlongpress="onLongPress" generic:custom-component="custom-component"></element>
+    </block></picker-view-column></picker-view>
 </template>
 <template name="slider">
     <slider
@@ -531,7 +613,7 @@
         bindsuccess="onNavigatorSuccess"
         bindfail="onNavigatorFail"
         bindcomplete="onNavigatorComplete"
-    ><element wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element></navigator>
+    ><element-vhost wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element-vhost></navigator>
 </template>
 <!-- 媒体组件 -->
 <template name="camera">
@@ -558,7 +640,7 @@
         binderror="onCameraError"
         bindinitdone="onCameraInitDone"
         bindscancode="onCameraScanCode"
-    ><element wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{true}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element></camera>
+    ><element-vhost wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element-vhost></camera>
 </template>
 <template name="image">
     <image
@@ -619,7 +701,7 @@
         bindaudiovolumenotify="onLivePlayerAudioVolumeNotify"
         bindenterpictureinpicture="onLivePlayerEnterPictureInPicture"
         bindleavepictureinpicture="onLivePlayerLeavePictureInPicture"
-    ><element wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{true}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element></live-player>
+    ><element-vhost wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element-vhost></live-player>
 </template>
 <template name="live-pusher">
     <live-pusher
@@ -669,7 +751,7 @@
         bindbgmstart="onLivePusherBgmStart"
         bindbgmprogress="onLivePusherBgmProgress"
         bindbgmcomplete="onLivePusherBgmComplete"
-    ><element wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{true}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element></live-pusher>
+    ><element-vhost wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element-vhost></live-pusher>
 </template>
 <template name="video">
     <!-- pictureInPictureShowProgress 因为编译器限制了属性长度，所以暂时用驼峰式写法 -->
@@ -732,7 +814,7 @@
         bindcontrolstoggle="onVideoControlsToggle"
         bindenterpictureinpicture="onVideoEnterPictureInPicture"
         bindleavepictureinpicture="onVideoLeavePictureInPicture"
-    ><element wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element></video>
+    ><element-vhost wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element-vhost></video>
 </template>
 <!-- 地图 -->
 <template name="map">
@@ -781,7 +863,7 @@
         bindupdated="onMapUpdated"
         bindregionchange="onMapRegionChange"
         bindpoitap="onMapPoiTap"
-    ><element wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element></map>
+    ><element-vhost wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element-vhost></map>
 </template>
 <!-- 画布 -->
 <template name="canvas">
@@ -806,7 +888,7 @@
         bindtouchcancel="onCanvasTouchCancel"
         bindlongtap="onCanvasLongTap"
         binderror="onCanvasError"
-    ><element wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{true}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element></canvas>
+    ><element-vhost wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{true}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element-vhost></canvas>
     <canvas
         wx:else
         id="{{id}}"
@@ -822,7 +904,7 @@
         canvas-id="{{canvasId}}"
         disable-scroll="{{disableScroll}}"
         binderror="onCanvasError"
-    ><element wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{true}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element></canvas>
+    ><element-vhost wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{true}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element-vhost></canvas>
 </template>
 <!-- 开放能力 -->
 <template name="ad">
@@ -927,7 +1009,7 @@
         capture-bind:touchcancel="onCaptureTouchCancel"
         capture-bind:tap="onCaptureTap"
         capture-bind:longpress="onCaptureLongPress"
-    ><element wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element></view>
+    ><element-vhost wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element-vhost></view>
 </template>
 <template name="catch">
     <view
@@ -943,7 +1025,7 @@
         catchtouchcancel="{{touchCancel}}"
         catchtap="onTap"
         catchlongpress="onLongPress"
-    ><element wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element></view>
+    ><element-vhost wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element-vhost></view>
 </template>
 <template name="animation">
     <view
@@ -963,5 +1045,79 @@
         bindanimationstart="onAnimationStart"
         bindanimationiteration="onAnimationIteration"
         bindanimationend="onAnimationEnd"
-    ><element wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element></view>
+    ><element-vhost wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element-vhost></view>
+</template>
+<!-- 其他 -->
+<template name="not-support">
+    <view
+        id="{{id}}"
+        class="{{className}}"
+        style="{{style}}"
+        hidden="{{hidden}}"
+        data-private-node-id="{{nodeId}}"
+        data-private-page-id="{{pageId}}"
+        bindtouchstart="onTouchStart"
+        bindtouchmove="onTouchMove"
+        bindtouchend="onTouchEnd"
+        bindtouchcancel="onTouchCancel"
+        bindtap="onTap"
+        bindlongpress="onLongPress"
+    >{{content}}</view>
+</template>
+<template name="img">
+    <image
+        id="{{id}}"
+        class="{{className || ''}}"
+        style="{{style || ''}}"
+        data-private-node-id="{{nodeId}}"
+        data-private-page-id="{{pageId}}"
+        bindtouchstart="onTouchStart"
+        bindtouchmove="onTouchMove"
+        bindtouchend="onTouchEnd"
+        bindtouchcancel="onTouchCancel"
+        bindtap="onTap"
+        bindlongpress="onLongPress"
+        
+        src="{{src}}"
+        rendering-mode="{{mode ? 'backgroundImage' : 'img'}}"
+        mode="{{mode}}"
+        webp="{{webp}}"
+        lazy-load="{{lazyLoad}}"
+        show-menu-by-longpress="{{showMenuByLongpress}}"
+        binderror="onImgError"
+        bindload="onImgLoad"
+    ></image>
+</template>
+<template name="cover-img">
+    <cover-image
+        id="{{id}}"
+        class="{{className || ''}}"
+        style="{{style || ''}}"
+        data-private-node-id="{{nodeId}}"
+        data-private-page-id="{{pageId}}"
+        bindtouchstart="onTouchStart"
+        bindtouchmove="onTouchMove"
+        bindtouchend="onTouchEnd"
+        bindtouchcancel="onTouchCancel"
+        bindtap="onTap"
+        bindlongpress="onLongPress"
+
+        src="{{src}}"
+        binderror="onImgError"
+        bindload="onImgLoad"
+    ></cover-image>
+</template>
+<!-- 自定义组件 -->
+<template name="custom-component">
+    <custom-component
+        name="{{wxCustomCompName}}"
+        data-private-node-id="{{nodeId}}"
+        data-private-page-id="{{pageId}}"
+        bindtouchstart="onTouchStart"
+        bindtouchmove="onTouchMove"
+        bindtouchend="onTouchEnd"
+        bindtouchcancel="onTouchCancel"
+        bindtap="onTap"
+        bindlongpress="onLongPress"
+    ><element-vhost wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element-vhost></custom-component>
 </template>

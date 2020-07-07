@@ -15,13 +15,17 @@
         </div>
         <div v-if="item === 'event'">
           <div @click="log('root click')" @longpress="log('root longpress')">
+            <div>touchstart -> touchend -> click -> root click</div>
             <button @touchstart="log('touchstart')" @touchmove="log('touchmove')" @touchend="log('touchend')" @touchcancel="log('touchcancel')" @click="log('click')" @longpress="log('longpress')">normal event</button>
+            <div>parent touchstart -> parent touchend -> parent click -> click -> root click</div>
             <wx-capture @touchstart="log('parent touchstart')" @touchend="log('parent touchend')" @click="log('parent click')" @longpress="log('parent longpress')">
               <button @click="onClick" @longpress="log('longpress')">capture-inner({{eventCount}})</button>
             </wx-capture>
+            <div>parent touchstart -> parent touchend</div>
             <wx-catch @touchstart="log('parent touchstart')" @touchend="log('parent touchend')" @click="log('parent click')" @longpress="log('parent longpress')">
               <button @click="onClick" @longpress="log('longpress')">catch-inner1({{eventCount}})</button>
             </wx-catch>
+            <div>click -> parent click</div>
             <wx-catch @click="log('parent click')">
               <button @click="onClick" @longpress="log('longpress')">catch-inner2({{eventCount}})</button>
             </wx-catch>
@@ -352,40 +356,40 @@
           <div>{{pickerView.year}}年{{pickerView.month}}月{{pickerView.day}}日</div>
           <div v-if="!wxPrefix">
             <wx-component :behavior="item" indicator-style="height: 50px;" style="width: 100%; height: 300px;" :value="pickerView.value" @change="onPickerViewChange">
-              <wx-component behavior="picker-view-column">
-                <div v-for="item in pickerView.years" :key="item" style="line-height: 50px">{{item}}年</div>
+              <wx-component behavior="picker-view-column" style="line-height: 50px">
+                <div v-for="item in pickerView.years" :key="item" >{{item}}年</div>
               </wx-component>
-              <wx-component behavior="picker-view-column">
-                <div v-for="item in pickerView.months" :key="item" style="line-height: 50px">{{item}}月</div>
+              <wx-component behavior="picker-view-column" style="line-height: 50px">
+                <div v-for="item in pickerView.months" :key="item">{{item}}月</div>
               </wx-component>
-              <wx-component behavior="picker-view-column">
-                <div v-for="item in pickerView.days" :key="item" style="line-height: 50px">{{item}}日</div>
+              <wx-component behavior="picker-view-column" style="line-height: 50px">
+                <div v-for="item in pickerView.days" :key="item">{{item}}日</div>
               </wx-component>
             </wx-component>
           </div>
           <div v-else-if="wxPrefix === 1">
             <wx-picker-view indicator-style="height: 50px;" style="width: 100%; height: 300px;" :value="pickerView.value" @change="onPickerViewChange">
-              <wx-picker-view-column>
-                <div v-for="item in pickerView.years" :key="item" style="line-height: 50px">{{item}}年</div>
+              <wx-picker-view-column style="line-height: 50px">
+                <div v-for="item in pickerView.years" :key="item">{{item}}年</div>
               </wx-picker-view-column>
-              <wx-picker-view-column>
-                <div v-for="item in pickerView.months" :key="item" style="line-height: 50px">{{item}}月</div>
+              <wx-picker-view-column style="line-height: 50px">
+                <div v-for="item in pickerView.months" :key="item">{{item}}月</div>
               </wx-picker-view-column>
-              <wx-picker-view-column>
-                <div v-for="item in pickerView.days" :key="item" style="line-height: 50px">{{item}}日</div>
+              <wx-picker-view-column style="line-height: 50px">
+                <div v-for="item in pickerView.days" :key="item">{{item}}日</div>
               </wx-picker-view-column>
             </wx-picker-view>
           </div>
           <div v-else-if="wxPrefix === 2">
             <picker-view indicator-style="height: 50px;" style="width: 100%; height: 300px;" :value="pickerView.value" @change="onPickerViewChange">
-              <picker-view-column>
-                <div v-for="item in pickerView.years" :key="item" style="line-height: 50px">{{item}}年</div>
+              <picker-view-column style="line-height: 50px">
+                <div v-for="item in pickerView.years" :key="item">{{item}}年</div>
               </picker-view-column>
-              <picker-view-column>
-                <div v-for="item in pickerView.months" :key="item" style="line-height: 50px">{{item}}月</div>
+              <picker-view-column style="line-height: 50px">
+                <div v-for="item in pickerView.months" :key="item">{{item}}月</div>
               </picker-view-column>
-              <picker-view-column>
-                <div v-for="item in pickerView.days" :key="item" style="line-height: 50px">{{item}}日</div>
+              <picker-view-column style="line-height: 50px">
+                <div v-for="item in pickerView.days" :key="item">{{item}}日</div>
               </picker-view-column>
             </picker-view>
           </div>
@@ -509,8 +513,8 @@
         </template>
         <!-- 不支持标签 -->
         <template v-else-if="item === 'xxxx'" >
-          <wx-component v-if="!wxPrefix" :behavior="item"></wx-component>
-          <wx-xxxx v-else-if="wxPrefix === 1"></wx-xxxx>
+          <wx-component v-if="!wxPrefix" :behavior="item">会作为普通标签渲染</wx-component>
+          <wx-xxxx v-else-if="wxPrefix === 1">会作为普通标签渲染</wx-xxxx>
         </template>
         <iframe v-else-if="item === 'iframe'"></iframe>
         <div v-else-if="item === 'intersection'">

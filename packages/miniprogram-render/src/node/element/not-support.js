@@ -36,13 +36,6 @@ class NotSupport extends Element {
     }
 
     /**
-     * 覆写父类的 $$destroy 方法
-     */
-    $$destroy() {
-        super.$$destroy()
-    }
-
-    /**
      * 覆写父类的回收实例方法
      */
     $$recycle() {
@@ -54,6 +47,10 @@ class NotSupport extends Element {
             // 复用 element 节点
             pool.add(this)
         }
+    }
+
+    get behavior() {
+        return 'not-support'
     }
 }
 

@@ -40,13 +40,6 @@ class HTMLOptionElement extends Element {
     }
 
     /**
-     * 覆写父类的 $$init 方法
-     */
-    $$init(options, tree) {
-        super.$$init(options, tree)
-    }
-
-    /**
      * 调用 $_generateHtml 接口时用于处理额外的属性，
      */
     $$dealWithAttrsForGenerateHtml(html, node) {
