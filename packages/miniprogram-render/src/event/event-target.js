@@ -101,7 +101,7 @@ class EventTarget {
                 timeStamp: miniprogramEvent.timeStamp,
                 touches: miniprogramEvent.touches,
                 changedTouches: miniprogramEvent.changedTouches,
-                bubbles: true, // 默认都可以冒泡 TODO
+                bubbles: true, // 默认都可以冒泡
                 $$extra: extra,
             })
         }

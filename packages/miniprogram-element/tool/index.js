@@ -131,6 +131,7 @@ function createInnerComponentTemplate() {
     let template = fs.readFileSync(path.join(__dirname, './inner-component.wxml'), 'utf8')
         .replace(/[\n\r\t]+/g, ' ')
         .replace(/\s+/g, ' ')
+        .replace(/>\s</g, '><')
     template = removeComment(template)
 
     // 写入文件
@@ -144,6 +145,7 @@ function createIndexTemplate() {
     let template = fs.readFileSync(path.join(__dirname, './index.wxml'), 'utf8')
         .replace(/[\n\r\t]+/g, ' ')
         .replace(/\s+/g, ' ')
+        .replace(/>\s</g, '><')
     template = removeComment(template)
 
     // 写入文件

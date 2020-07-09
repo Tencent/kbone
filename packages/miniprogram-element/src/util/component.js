@@ -119,12 +119,6 @@ const wxComponentMap = {
                 return domNode.getAttribute('scroll-left') || ''
             },
         }, {
-            name: 'scrollIntoView',
-            canBeUserChanged: true,
-            get(domNode) {
-                return domNode.getAttribute('scroll-into-view') || ''
-            },
-        }, {
             name: 'scrollWithAnimation',
             get(domNode) {
                 return !!domNode.getAttribute('scroll-with-animation')

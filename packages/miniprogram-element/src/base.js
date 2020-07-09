@@ -101,7 +101,7 @@ module.exports = Behavior({
             if (USE_TEMPLATE.indexOf(tagName) !== -1 || USE_TEMPLATE.indexOf(domNode.behavior) !== -1) return
 
             if (tagName === 'WX-COMPONENT') {
-                // 内置组件，目前只有 view 和 scroll-view 组件需要进入
+                // 内置组件，目前只有 view 组件需要进入
                 data.wxCompName = domNode.behavior
                 const wxCompName = wxCompNameMap[data.wxCompName]
                 if (wxCompName) _.checkComponentAttr(wxCompName, domNode, data)
@@ -152,7 +152,7 @@ module.exports = Behavior({
             if (USE_TEMPLATE.indexOf(tagName) !== -1 || USE_TEMPLATE.indexOf(domNode.behavior) !== -1) return
 
             if (tagName === 'WX-COMPONENT') {
-                // 内置组件，目前只有 view 和 scroll-view 组件需要进入
+                // 内置组件，目前只有 view 组件需要进入
                 const newData = {}
                 const wxCompName = wxCompNameMap[domNode.behavior]
 

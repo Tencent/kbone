@@ -88,6 +88,45 @@
         bindvtouchmove="onMovableViewVtouchmove"
     ><element-vhost wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{item.nodeId}}" data-private-page-id="{{item.pageId}}" generic:custom-component="custom-component"></element-vhost></movable-view></movable-area>
 </template>
+<template name="scroll-view">
+    <scroll-view
+        id="{{id}}"
+        class="{{className}}"
+        style="{{style}}"
+        hidden="{{hidden}}"
+        data-private-node-id="{{nodeId}}"
+        data-private-page-id="{{pageId}}"
+        bindtouchstart="onTouchStart"
+        bindtouchmove="onTouchMove"
+        bindtouchend="onTouchEnd"
+        bindtouchcancel="onTouchCancel"
+        bindtap="onTap"
+        bindlongpress="onLongPress"
+
+        scroll-x="{{scrollX}}"
+        scroll-y="{{scrollY}}"
+        upper-threshold="{{upperThreshold}}"
+        lower-threshold="{{lowerThreshold}}"
+        scroll-top="{{scrollTop}}"
+        scroll-left="{{scrollLeft}}"
+        scroll-with-animation="{{scrollWithAnimation}}"
+        enable-back-to-top="{{enableBackToTop}}"
+        enable-flex="{{enableFlex}}"
+        scroll-anchoring="{{scrollAnchoring}}"
+        refresher-enabled="{{refresherEnabled}}"
+        refresher-threshold="{{refresherThreshold}}"
+        refresher-default-style="{{refresherDefaultStyle}}"
+        refresher-background="{{refresherBackground}}"
+        refresher-triggered="{{refresherTriggered}}"
+        bindscrolltoupper="onScrollViewScrolltoupper"
+        bindscrolltolower="onScrollViewScrolltolower"
+        bindscroll="onScrollViewScroll"
+        bindrefresherpulling="onScrollViewRefresherPulling"
+        bindrefresherrefresh="onScrollViewRefresherRefresh"
+        bindrefresherrestore="onScrollViewRefresherRestore"
+        bindrefresherabort="onScrollViewRefresherAbort"
+    ><element-vhost wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element-vhost></scroll-view>
+</template>
 <template name="swiper">
     <!-- swiper-item 无法设置 style，不然会覆盖内置组件自己的滚动样式 -->
     <swiper

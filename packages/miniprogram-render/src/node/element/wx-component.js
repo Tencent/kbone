@@ -1,6 +1,7 @@
 const Element = require('../element')
 const Pool = require('../../util/pool')
 const cache = require('../../util/cache')
+const tool = require('../../util/tool')
 
 const pool = new Pool()
 
@@ -77,6 +78,31 @@ class WxComponent extends Element {
 
         if (!isNaN(value)) {
             this.$_attrs.set('scroll-left', value)
+        }
+    }
+
+    setAttribute(name, value) {
+        super.setAttribute(name, value)
+
+        if (name === 'scroll-into-view') {
+            // TODO：scroll-into-view 先转成 scroll-top 来处理，等基础库支持
+            const scrollItem = this.ownerDocument.getElementById(value)
+            if (!scrollItem) return
+
+            const propName = this.getAttribute('scroll-x') ? 'scroll-left' : this.getAttribute('scroll-y') ? 'scroll-top' : ''
+            if (!propName) return
+
+            const window = cache.getWindow(this.$_pageId)
+            Promise.all([
+                new Promise(resolve => window.$$createSelectorQuery().select(`.miniprogram-root >>> .node-${this.$_nodeId}`).fields({rect: true, scrollOffset: true}).exec(resolve)),
+                scrollItem.$$getBoundingClientRect()
+            ]).then(res => {
+                const rectName = propName === 'scroll-left' ? 'left' : 'top'
+                const scrollRect = res[0][0]
+                const itemRect = res[1]
+
+                super.setAttribute(propName, itemRect[rectName] - scrollRect[rectName] + scrollRect[tool.toCamel(propName)])
+            }).catch(console.error)
         }
     }
 }

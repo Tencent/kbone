@@ -20,59 +20,54 @@ test('scroll-view', async() => {
     node.setAttribute('behavior', 'scroll-view')
     page.document.body.appendChild(node)
     await _.sleep(10)
-    const scrollView = body.querySelector('.h5-wx-component')
 
     // scrollX
-    await _.checkBoolean(scrollView, node, 'scrollX', 'scroll-x', false)
+    await _.checkBoolean(body, node, 'scrollX', 'scroll-x', false)
 
     // scrollY
-    await _.checkBoolean(scrollView, node, 'scrollY', 'scroll-y', false)
+    await _.checkBoolean(body, node, 'scrollY', 'scroll-y', false)
 
     // upperThreshold
-    await _.checkString(scrollView, node, 'upperThreshold', 'upper-threshold', '50')
+    await _.checkString(body, node, 'upperThreshold', 'upper-threshold', '50')
 
     // lowerThreshold
-    await _.checkString(scrollView, node, 'lowerThreshold', 'lower-threshold', '50')
+    await _.checkString(body, node, 'lowerThreshold', 'lower-threshold', '50')
 
     // scrollTop
-    await _.checkString(scrollView, node, 'scrollTop', 'scroll-top', '')
+    await _.checkString(body, node, 'scrollTop', 'scroll-top', '')
 
     // scrollLeft
-    await _.checkString(scrollView, node, 'scrollLeft', 'scroll-left', '')
-
-    // scrollIntoView
-    await _.checkString(scrollView, node, 'scrollIntoView', 'scroll-into-view', '')
+    await _.checkString(body, node, 'scrollLeft', 'scroll-left', '')
 
     // scrollWithAnimation
-    await _.checkBoolean(scrollView, node, 'scrollWithAnimation', 'scroll-with-animation', false)
+    await _.checkBoolean(body, node, 'scrollWithAnimation', 'scroll-with-animation', false)
 
     // enableBackToTop
-    await _.checkBoolean(scrollView, node, 'enableBackToTop', 'enable-back-to-top', false)
+    await _.checkBoolean(body, node, 'enableBackToTop', 'enable-back-to-top', false)
 
     // enableFlex
-    await _.checkBoolean(scrollView, node, 'enableFlex', 'enable-flex', false)
+    await _.checkBoolean(body, node, 'enableFlex', 'enable-flex', false)
 
     // scrollAnchoring
-    await _.checkBoolean(scrollView, node, 'scrollAnchoring', 'scroll-anchoring', false)
+    await _.checkBoolean(body, node, 'scrollAnchoring', 'scroll-anchoring', false)
 
     // refresherEnabled
-    await _.checkBoolean(scrollView, node, 'refresherEnabled', 'refresher-enabled', false)
+    await _.checkBoolean(body, node, 'refresherEnabled', 'refresher-enabled', false)
 
     // refresherThreshold
-    await _.checkString(scrollView, node, 'refresherThreshold', 'refresher-threshold', '45')
+    await _.checkString(body, node, 'refresherThreshold', 'refresher-threshold', '45')
 
     // refresherDefaultStyle
-    await _.checkString(scrollView, node, 'refresherDefaultStyle', 'refresher-default-style', 'black')
+    await _.checkString(body, node, 'refresherDefaultStyle', 'refresher-default-style', 'black')
 
     // refresherBackground
-    await _.checkString(scrollView, node, 'refresherBackground', 'refresher-background', '#FFF')
+    await _.checkString(body, node, 'refresherBackground', 'refresher-background', '#FFF')
 
     // refresherTriggered
-    await _.checkBoolean(scrollView, node, 'refresherTriggered', 'refresher-triggered', false)
+    await _.checkBoolean(body, node, 'refresherTriggered', 'refresher-triggered', false)
 
     // event
-    const wxScrollView = scrollView.querySelector('.wx-comp-scroll-view')
-    await _.checkEvent(wxScrollView, node, ['scrolltoupper', 'scrolltolower', 'refresherpulling', 'refresherrefresh', 'refresherrestore', 'refresherabort'])
+    await _.checkEvent(body.querySelector('.h5-wx-component'), node, ['scrolltoupper', 'scrolltolower', 'refresherpulling', 'refresherrefresh', 'refresherrestore', 'refresherabort'])
 
     page.document.body.removeChild(node)
     document.body.removeChild(wrapper)
