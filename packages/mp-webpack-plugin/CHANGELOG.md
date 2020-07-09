@@ -1,5 +1,9 @@
 # 更新日志
 
+## 1.1.0
+
+* 支持页面的 onShareTimeline/onAddToFavorites/onResize/onTabItemTap 事件
+
 ## 1.0.1
 
 * 支持 generate.appEntryInject

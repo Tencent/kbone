@@ -19,6 +19,9 @@ export default {
     Header,
     Footer,
   },
+  mounted() {
+    window.onTabItemTap = data => console.log('onTabItemTap page2: ', data)
+  },
 }
 </script>
 

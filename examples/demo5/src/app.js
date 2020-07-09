@@ -25,4 +25,10 @@ App({
     onPageNotFound(options) {
         console.log('App.onPageNotFound --> ', options)
     },
+    onUnhandledRejection(options) {
+        console.log('App.onUnhandledRejection --> ', options)
+    },
+    onThemeChange(options) {
+        console.log('App.onThemeChange --> ', options)
+    },
 })

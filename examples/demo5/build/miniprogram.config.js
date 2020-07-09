@@ -23,9 +23,11 @@ module.exports = {
 	},
 	app: {
 		navigationBarTitleText: 'miniprogram-project',
+		pageOrientation: 'auto',
 	},
 	global: {
 		share: true,
+		shareTimeline: true,
 	},
 	pages: {
 		page1: {

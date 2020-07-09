@@ -31,6 +31,29 @@ function dealWithPage(evt, window, value) {
     }
 }
 
+/**
+ * 处理 query 参数
+ */
+function dealWithShareQuery(window, name, data) {
+    if (window && window[name]) {
+        const shareOptions = Object.assign({}, window[name](data))
+
+        if (shareOptions.miniprogramQuery) {
+            shareOptions.query = shareOptions.miniprogramQuery
+        } else {
+            const query = {
+                type: 'share',
+                targeturl: encodeURIComponent(window.location.href),
+                search: encodeURIComponent(shareOptions.query || ''),
+            }
+            const currentQuery = Object.keys(query).map(key => `${key}=${query[key] || ''}`).join('&')
+            shareOptions.query = currentQuery
+        }
+
+        return shareOptions
+    }
+}
+
 Page({
     data: {
         pageId: '',
@@ -86,8 +109,11 @@ Page({
         }
 
         // 处理分享显示
-        if (!pageConfig.share) {
-            wx.hideShareMenu()
+        if (!pageConfig.share || !pageConfig.shareTimeline) {
+            const menus = []
+            if (!pageConfig.share) menus.push('shareAppMessage')
+            if (!pageConfig.shareTimeline) menus.push('shareTimeline')
+            wx.hideShareMenu({menus})
         }
 
         // 处理 document 更新
@@ -186,7 +212,6 @@ Page({
                 let route = this.route
 
                 if (shareOptions.path) {
-                    shareOptions.path = shareOptions.path[0] === '/' ? window.location.origin + shareOptions.path : shareOptions.path
                     const {pathname} = window.location.constructor.$$parse(shareOptions.path)
                     const matchRoute = window.$$miniprogram.getMatchRoute(pathname || '/')
                     if (matchRoute) route = matchRoute
@@ -208,6 +233,18 @@ Page({
 
             return shareOptions
         }
+    },
+    onShareTimeline() {
+        return dealWithShareQuery(this.window, 'onShareTimeline')
+    },
+    onAddToFavorites(data) {
+        return dealWithShareQuery(this.window, 'onAddToFavorites', data)
+    },
+    onResize() {
+        if (this.window) this.window.$$trigger('resize')
+    },
+    onTabItemTap(data) {
+        if (this.window && this.window.onTabItemTap) this.window.onTabItemTap(data)
     },
     /* PAGE_SCROLL_FUNCTION */
     /* REACH_BOTTOM_FUNCTION */
