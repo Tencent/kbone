@@ -1,5 +1,10 @@
 # 更新日志
 
+## 1.1.1
+
+* 支持 kbone 渲染前的加载视图
+* 抽取 page js 文件中的公共代码
+
 ## 1.1.0
 
 * 支持页面的 onShareTimeline/onAddToFavorites/onResize/onTabItemTap 事件

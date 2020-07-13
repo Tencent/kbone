@@ -11,6 +11,7 @@ const _ = require('./tool/utils')
 
 const PluginName = 'MpPlugin'
 const appJsTmpl = fs.readFileSync(path.resolve(__dirname, './tmpl/app.tmpl.js'), 'utf8')
+const pageBaseJsTmpl = fs.readFileSync(path.resolve(__dirname, './tmpl/page.base.tmpl.js'), 'utf8')
 const pageJsTmpl = fs.readFileSync(path.resolve(__dirname, './tmpl/page.tmpl.js'), 'utf8')
 const appDisplayWxssTmpl = fs.readFileSync(path.resolve(__dirname, './tmpl/app.display.tmpl.wxss'), 'utf8')
 const appExtraWxssTmpl = fs.readFileSync(path.resolve(__dirname, './tmpl/app.extra.tmpl.wxss'), 'utf8')
@@ -182,6 +183,7 @@ class MpPlugin {
             for (const entryName of entryNames) {
                 const assets = assetsMap[entryName]
                 const pageConfig = pageConfigMap[entryName] = Object.assign({}, globalConfig, pageConfigMap[entryName] || {})
+                const loadingView = pageConfig && pageConfig.loadingView
                 const addPageScroll = pageConfig && pageConfig.windowScroll
                 const pageBackgroundColor = pageConfig && (pageConfig.pageBackgroundColor || pageConfig.backgroundColor) // 兼容原有的 backgroundColor
                 const reachBottom = pageConfig && pageConfig.reachBottom
@@ -218,14 +220,14 @@ class MpPlugin {
 
                 // 页面 wxml
                 let pageWxmlContent = `<element wx:if="{{pageId}}" class="{{bodyClass}}" style="{{bodyStyle}}" data-private-node-id="e-body" data-private-page-id="{{pageId}}" ${wxCustomComponentRoot ? 'generic:custom-component="custom-component"' : ''}></element>`
-                if (rem || pageStyle) {
-                    pageWxmlContent = `<page-meta ${rem ? 'root-font-size="{{rootFontSize}}"' : ''} ${pageStyle ? 'page-style="{{pageStyle}}"' : ''}></page-meta>` + pageWxmlContent
-                }
+                if (loadingView) pageWxmlContent = `<loading-view wx:if="{{loading}}" class="miniprogram-loading-view" page-name="${entryName}"></loading-view>` + pageWxmlContent
+                if (rem || pageStyle) pageWxmlContent = `<page-meta ${rem ? 'root-font-size="{{rootFontSize}}"' : ''} ${pageStyle ? 'page-style="{{pageStyle}}"' : ''}></page-meta>` + pageWxmlContent
                 addFile(compilation, `../${pageRoute}.wxml`, pageWxmlContent)
 
                 // 页面 wxss
                 let pageWxssContent = assets.css.map(css => `@import "${getAssetPath(assetPathPrefix, css, assetsSubpackageMap)}";`).join('\n')
-                if (pageBackgroundColor) pageWxssContent = `page { background-color: ${pageBackgroundColor}; }\n` + pageWxssContent
+                if (loadingView) pageWxssContent = '.miniprogram-loading-view{position:fixed;top:0;left:0;bottom:0;right:0;z-index:0;}.miniprogram-root{display:block;position:relative;z-index:1;background:#fff;}' + pageWxssContent
+                if (pageBackgroundColor) pageWxssContent = `page{background-color:${pageBackgroundColor};}\n` + pageWxssContent
                 addFile(compilation, `../${pageRoute}.wxss`, adjustCss(pageWxssContent))
 
                 // 页面 json
@@ -236,17 +238,20 @@ class MpPlugin {
                         element: 'miniprogram-element',
                     },
                 }
-                if (wxCustomComponentRoot) {
-                    pageJson.usingComponents['custom-component'] = `${assetPathPrefix}../../custom-component/index`
-                }
-                if (reachBottom && typeof reachBottomDistance === 'number') {
-                    pageJson.onReachBottomDistance = reachBottomDistance
-                }
+                if (loadingView) pageJson.usingComponents['loading-view'] = `${assetPathPrefix}../../loading-view/index`
+                if (wxCustomComponentRoot) pageJson.usingComponents['custom-component'] = `${assetPathPrefix}../../custom-component/index`
+                if (reachBottom && typeof reachBottomDistance === 'number') pageJson.onReachBottomDistance = reachBottomDistance
                 const pageJsonContent = JSON.stringify(pageJson, null, '\t')
                 addFile(compilation, `../${pageRoute}.json`, pageJsonContent)
 
+                // 页面共用 base.js
+                addFile(compilation, `../${packageName ? packageName + '/' : ''}pages/base.js`, pageBaseJsTmpl)
+
                 // 记录页面路径
                 if (!packageName) pages.push(pageRoute)
+
+                // 拷贝 loadingView 目录到项目根目录下
+                if (loadingView) _.copyDir(loadingView, path.resolve(outputPath, '../loading-view'))
             }
 
             // 追加 webview 页面

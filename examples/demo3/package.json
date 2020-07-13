@@ -1,6 +1,5 @@
 {
   "scripts": {
-    "build": "rimraf dist/web && cross-env NODE_ENV=production webpack --config build/webpack.config.js --progress --hide-modules",
     "mp": "cross-env NODE_ENV=production webpack --config build/webpack.mp.config.js --progress --hide-modules"
   },
   "dependencies": {

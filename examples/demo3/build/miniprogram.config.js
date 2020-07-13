@@ -1,4 +1,6 @@
-module.exports = {	
+const path = require('path')
+
+module.exports = {
 	origin: 'https://test.miniprogram.com',	
 	entry: '/',	
 	router: {		
@@ -24,6 +26,7 @@ module.exports = {
 	},
 	global: {
 		windowScroll: true,
+		loadingView: path.join(__dirname, '../src/loading-view'),
 	},
 	projectConfig: {
 		appid: '',
