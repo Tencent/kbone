@@ -88,8 +88,8 @@ module.exports = {
     resolve: {
         extensions: ['*', '.js', '.jsx', '.json'],
         alias: {
-            react: isOptimize ? path.resolve(__dirname, '../node_modules/react/index.js') : path.resolve(__dirname, '../node_modules/react/umd/react.development.js'),
-            'react-dom': isOptimize ? path.resolve(__dirname, '../node_modules/react-dom/index.js') : path.resolve(__dirname, '../node_modules/react-dom/umd/react-dom.development.js'),
+            react: isOptimize ? 'react/index.js' : 'react/umd/react.development.js',
+            'react-dom': isOptimize ? 'react-dom/index.js' : 'react-dom/umd/react-dom.development.js',
         },
     },
     plugins: [
