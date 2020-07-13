@@ -184,6 +184,7 @@ class MpPlugin {
                 const assets = assetsMap[entryName]
                 const pageConfig = pageConfigMap[entryName] = Object.assign({}, globalConfig, pageConfigMap[entryName] || {})
                 const loadingView = pageConfig && pageConfig.loadingView
+                const loadingViewName = pageConfig && pageConfig.loadingViewName || 'index'
                 const addPageScroll = pageConfig && pageConfig.windowScroll
                 const pageBackgroundColor = pageConfig && (pageConfig.pageBackgroundColor || pageConfig.backgroundColor) // 兼容原有的 backgroundColor
                 const reachBottom = pageConfig && pageConfig.reachBottom
@@ -238,7 +239,7 @@ class MpPlugin {
                         element: 'miniprogram-element',
                     },
                 }
-                if (loadingView) pageJson.usingComponents['loading-view'] = `${assetPathPrefix}../../loading-view/index`
+                if (loadingView) pageJson.usingComponents['loading-view'] = `${assetPathPrefix}../../loading-view/${loadingViewName}`
                 if (wxCustomComponentRoot) pageJson.usingComponents['custom-component'] = `${assetPathPrefix}../../custom-component/index`
                 if (reachBottom && typeof reachBottomDistance === 'number') pageJson.onReachBottomDistance = reachBottomDistance
                 const pageJsonContent = JSON.stringify(pageJson, null, '\t')

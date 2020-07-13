@@ -27,6 +27,7 @@ module.exports = {
 	global: {
 		windowScroll: true,
 		loadingView: path.join(__dirname, '../src/loading-view'),
+		loadingViewName: 'loading',
 	},
 	projectConfig: {
 		appid: '',
