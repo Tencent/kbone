@@ -5,6 +5,7 @@
     <a href="/b">跳转 tabbar 页面</a>
     <a href="/c" target="_blank">跳转普通页面</a>
     <a href="/d">跳转不存在的页面</a>
+    <button @click="setStorage">设置 localStorage</button>
     <Footer></Footer>
   </div>
 </template>
@@ -21,6 +22,12 @@ export default {
   },
   mounted() {
     window.onTabItemTap = data => console.log('onTabItemTap page1: ', data)
+    window.addEventListener('storage', evt => console.log('page1 storage', `${evt.key}: ${evt.oldValue} => ${evt.newValue}`))
+  },
+  methods: {
+    setStorage() {
+      localStorage.setItem('page1Key', +new Date())
+    },
   },
 }
 </script>

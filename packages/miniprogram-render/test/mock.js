@@ -172,9 +172,6 @@ global.wx = {
     },
 }
 
-const currentPages = []
-global.getCurrentPages = () => currentPages
-
 module.exports = {
     html,
     createPage(type = 'home', realUrl) {
@@ -184,7 +181,6 @@ module.exports = {
         res.window.$$miniprogram.init(realUrl)
         res.document.body.innerHTML = html
 
-        currentPages.push(res)
         return res
     },
     async sleep(time) {
