@@ -35,6 +35,13 @@ function getWindow(pageId) {
 }
 
 /**
+ * 获取 window 列表
+ */
+function getWindowList() {
+    return Object.keys(pageMap).map(pageId => pageMap[pageId].window)
+}
+
+/**
  * 存储 domNode 映射
  */
 function setNode(pageId, nodeId, domNode = null) {
@@ -87,6 +94,7 @@ module.exports = {
     destroy,
     getDocument,
     getWindow,
+    getWindowList,
     setNode,
     getNode,
     setConfig,
