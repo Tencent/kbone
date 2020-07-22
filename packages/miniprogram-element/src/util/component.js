@@ -34,6 +34,16 @@ function dealWithReactAttr(value) {
 }
 
 /**
+ * 处理布尔值，兼容各种 Web 框架
+ */
+function dealWithBoolValue(domNode, attrName, defaultIsTrue) {
+    const value = domNode.getAttribute(attrName)
+    if (value === 'false') return false
+    if (defaultIsTrue && value === undefined) return true
+    return !!value
+}
+
+/**
  * 兼容 canvas 相关 touch 事件，基础库没有提供 currentTarget 的问题
  */
 function dealWithEvt(evt) {
@@ -119,7 +129,7 @@ const wxComponentMap = {
         properties: [{
             name: 'scaleArea',
             get(domNode) {
-                return !!domNode.getAttribute('scale-area')
+                return dealWithBoolValue(domNode, 'scale-area')
             },
         }],
     },
@@ -128,12 +138,12 @@ const wxComponentMap = {
         properties: [{
             name: 'scrollX',
             get(domNode) {
-                return !!domNode.getAttribute('scroll-x')
+                return dealWithBoolValue(domNode, 'scroll-x')
             },
         }, {
             name: 'scrollY',
             get(domNode) {
-                return !!domNode.getAttribute('scroll-y')
+                return dealWithBoolValue(domNode, 'scroll-y')
             },
         }, {
             name: 'upperThreshold',
@@ -160,27 +170,27 @@ const wxComponentMap = {
         }, {
             name: 'scrollWithAnimation',
             get(domNode) {
-                return !!domNode.getAttribute('scroll-with-animation')
+                return dealWithBoolValue(domNode, 'scroll-with-animation')
             },
         }, {
             name: 'enableBackToTop',
             get(domNode) {
-                return !!domNode.getAttribute('enable-back-to-top')
+                return dealWithBoolValue(domNode, 'enable-back-to-top')
             },
         }, {
             name: 'enableFlex',
             get(domNode) {
-                return !!domNode.getAttribute('enable-flex')
+                return dealWithBoolValue(domNode, 'enable-flex')
             },
         }, {
             name: 'scrollAnchoring',
             get(domNode) {
-                return !!domNode.getAttribute('scroll-anchoring')
+                return dealWithBoolValue(domNode, 'scroll-anchoring')
             },
         }, {
             name: 'refresherEnabled',
             get(domNode) {
-                return !!domNode.getAttribute('refresher-enabled')
+                return dealWithBoolValue(domNode, 'refresher-enabled')
             },
         }, {
             name: 'refresherThreshold',
@@ -200,7 +210,7 @@ const wxComponentMap = {
         }, {
             name: 'refresherTriggered',
             get(domNode) {
-                return !!domNode.getAttribute('refresher-triggered')
+                return dealWithBoolValue(domNode, 'refresher-triggered')
             },
         }],
         handles: {
@@ -252,7 +262,7 @@ const wxComponentMap = {
         properties: [{
             name: 'indicatorDots',
             get(domNode) {
-                return !!domNode.getAttribute('indicator-dots')
+                return dealWithBoolValue(domNode, 'indicator-dots')
             },
         }, {
             name: 'indicatorColor',
@@ -267,7 +277,7 @@ const wxComponentMap = {
         }, {
             name: 'autoplay',
             get(domNode) {
-                return !!domNode.getAttribute('autoplay')
+                return dealWithBoolValue(domNode, 'autoplay')
             },
         }, {
             name: 'current',
@@ -290,12 +300,12 @@ const wxComponentMap = {
         }, {
             name: 'circular',
             get(domNode) {
-                return !!domNode.getAttribute('circular')
+                return dealWithBoolValue(domNode, 'circular')
             },
         }, {
             name: 'vertical',
             get(domNode) {
-                return !!domNode.getAttribute('vertical')
+                return dealWithBoolValue(domNode, 'vertical')
             },
         }, {
             name: 'previousMargin',
@@ -316,7 +326,7 @@ const wxComponentMap = {
         }, {
             name: 'skipHiddenItemLayout',
             get(domNode) {
-                return !!domNode.getAttribute('skip-hidden-item-layout')
+                return dealWithBoolValue(domNode, 'skip-hidden-item-layout')
             },
         }, {
             name: 'easingFunction',
@@ -357,7 +367,7 @@ const wxComponentMap = {
         }, {
             name: 'hoverStopPropagation',
             get(domNode) {
-                return !!domNode.getAttribute('hover-stop-propagation')
+                return dealWithBoolValue(domNode, 'hover-stop-propagation')
             },
         }, {
             name: 'hoverStartTime',
@@ -403,7 +413,7 @@ const wxComponentMap = {
         }, {
             name: 'showInfo',
             get(domNode) {
-                return !!domNode.getAttribute('show-info')
+                return dealWithBoolValue(domNode, 'show-info')
             },
         }, {
             name: 'borderRadius',
@@ -438,7 +448,7 @@ const wxComponentMap = {
         }, {
             name: 'active',
             get(domNode) {
-                return !!domNode.getAttribute('active')
+                return dealWithBoolValue(domNode, 'active')
             },
         }, {
             name: 'activeMode',
@@ -477,7 +487,7 @@ const wxComponentMap = {
         properties: [{
             name: 'selectable',
             get(domNode) {
-                return !!domNode.getAttribute('selectable')
+                return dealWithBoolValue(domNode, 'selectable')
             },
         }, {
             name: 'space',
@@ -487,7 +497,7 @@ const wxComponentMap = {
         }, {
             name: 'decode',
             get(domNode) {
-                return !!domNode.getAttribute('decode')
+                return dealWithBoolValue(domNode, 'decode')
             },
         }],
     },
@@ -508,17 +518,17 @@ const wxComponentMap = {
         }, {
             name: 'plain',
             get(domNode) {
-                return !!domNode.getAttribute('plain')
+                return dealWithBoolValue(domNode, 'plain')
             },
         }, {
             name: 'disabled',
             get(domNode) {
-                return !!domNode.getAttribute('disabled')
+                return dealWithBoolValue(domNode, 'disabled')
             },
         }, {
             name: 'loading',
             get(domNode) {
-                return !!domNode.getAttribute('loading')
+                return dealWithBoolValue(domNode, 'loading')
             },
         }, {
             name: 'formType',
@@ -538,7 +548,7 @@ const wxComponentMap = {
         }, {
             name: 'hoverStopPropagation',
             get(domNode) {
-                return !!domNode.getAttribute('hover-stop-propagation')
+                return dealWithBoolValue(domNode, 'hover-stop-propagation')
             },
         }, {
             name: 'hoverStartTime',
@@ -585,7 +595,7 @@ const wxComponentMap = {
         }, {
             name: 'showMessageCard',
             get(domNode) {
-                return !!domNode.getAttribute('show-message-card')
+                return dealWithBoolValue(domNode, 'show-message-card')
             },
         }, {
             name: 'businessId',
@@ -629,7 +639,7 @@ const wxComponentMap = {
         properties: [{
             name: 'readOnly',
             get(domNode) {
-                return !!domNode.getAttribute('read-only')
+                return dealWithBoolValue(domNode, 'read-only')
             },
         }, {
             name: 'placeholder',
@@ -639,17 +649,17 @@ const wxComponentMap = {
         }, {
             name: 'showImgSize',
             get(domNode) {
-                return !!domNode.getAttribute('show-img-size')
+                return dealWithBoolValue(domNode, 'show-img-size')
             },
         }, {
             name: 'showImgToolbar',
             get(domNode) {
-                return !!domNode.getAttribute('show-img-toolbar')
+                return dealWithBoolValue(domNode, 'show-img-toolbar')
             },
         }, {
             name: 'showImgResize',
             get(domNode) {
-                return !!domNode.getAttribute('show-img-resize')
+                return dealWithBoolValue(domNode, 'show-img-resize')
             },
         }],
         handles: {
@@ -680,7 +690,7 @@ const wxComponentMap = {
         properties: [{
             name: 'reportSubmit',
             get(domNode) {
-                return !!domNode.getAttribute('report-submit')
+                return dealWithBoolValue(domNode, 'report-submit')
             },
         }, {
             name: 'reportSubmitTimeout',
@@ -719,7 +729,7 @@ const wxComponentMap = {
         }, {
             name: 'password',
             get(domNode) {
-                return domNode.type !== 'password' ? !!domNode.getAttribute('password') : true
+                return domNode.type !== 'password' ? dealWithBoolValue(domNode, 'password') : true
             },
         }, {
             name: 'placeholder',
@@ -755,13 +765,13 @@ const wxComponentMap = {
         }, {
             name: 'autoFocus',
             get(domNode) {
-                return !!domNode.getAttribute('autofocus')
+                return dealWithBoolValue(domNode, 'autofocus')
             },
         }, {
             name: 'focus',
             canBeUserChanged: true,
             get(domNode) {
-                return !!domNode.getAttribute('focus')
+                return dealWithBoolValue(domNode, 'focus')
             },
         }, {
             name: 'confirmType',
@@ -771,7 +781,7 @@ const wxComponentMap = {
         }, {
             name: 'confirmHold',
             get(domNode) {
-                return !!domNode.getAttribute('confirm-hold')
+                return dealWithBoolValue(domNode, 'confirm-hold')
             },
         }, {
             name: 'cursor',
@@ -794,19 +804,18 @@ const wxComponentMap = {
         }, {
             name: 'adjustPosition',
             get(domNode) {
-                const value = domNode.getAttribute('adjust-position')
-                return value !== undefined ? !!value : true
+                return dealWithBoolValue(domNode, 'adjust-position', true)
             },
         }, {
             name: 'holdKeyboard',
             get(domNode) {
-                return !!domNode.getAttribute('hold-keyboard')
+                return dealWithBoolValue(domNode, 'hold-keyboard')
             },
         }, {
             name: 'checked',
             canBeUserChanged: true,
             get(domNode) {
-                return !!domNode.getAttribute('checked')
+                return dealWithBoolValue(domNode, 'checked')
             },
         }, {
             name: 'color',
@@ -936,7 +945,7 @@ const wxComponentMap = {
         }, {
             name: 'disabled',
             get(domNode) {
-                return !!domNode.getAttribute('disabled')
+                return dealWithBoolValue(domNode, 'disabled')
             },
         }, {
             name: 'range',
@@ -1122,7 +1131,7 @@ const wxComponentMap = {
         }, {
             name: 'disabled',
             get(domNode) {
-                return !!domNode.getAttribute('disabled')
+                return dealWithBoolValue(domNode, 'disabled')
             },
         }, {
             name: 'value',
@@ -1164,7 +1173,7 @@ const wxComponentMap = {
         }, {
             name: 'showValue',
             get(domNode) {
-                return !!domNode.getAttribute('show-value')
+                return dealWithBoolValue(domNode, 'show-value')
             },
         }],
         handles: {
@@ -1192,12 +1201,12 @@ const wxComponentMap = {
             name: 'checked',
             canBeUserChanged: true,
             get(domNode) {
-                return !!domNode.getAttribute('checked')
+                return dealWithBoolValue(domNode, 'checked')
             },
         }, {
             name: 'disabled',
             get(domNode) {
-                return !!domNode.getAttribute('disabled')
+                return dealWithBoolValue(domNode, 'disabled')
             },
         }, {
             name: 'type',
@@ -1262,22 +1271,22 @@ const wxComponentMap = {
         }, {
             name: 'autoFocus',
             get(domNode) {
-                return !!domNode.getAttribute('autofocus')
+                return dealWithBoolValue(domNode, 'autofocus')
             },
         }, {
             name: 'focus',
             get(domNode) {
-                return !!domNode.getAttribute('focus')
+                return dealWithBoolValue(domNode, 'focus')
             },
         }, {
             name: 'autoHeight',
             get(domNode) {
-                return !!domNode.getAttribute('auto-height')
+                return dealWithBoolValue(domNode, 'auto-height')
             },
         }, {
             name: 'fixed',
             get(domNode) {
-                return !!domNode.getAttribute('fixed')
+                return dealWithBoolValue(domNode, 'fixed')
             },
         }, {
             name: 'cursorSpacing',
@@ -1293,8 +1302,7 @@ const wxComponentMap = {
         }, {
             name: 'showConfirmBar',
             get(domNode) {
-                const value = domNode.getAttribute('show-confirm-bar')
-                return value !== undefined ? !!value : true
+                return dealWithBoolValue(domNode, 'show-confirm-bar', true)
             },
         }, {
             name: 'selectionStart',
@@ -1311,18 +1319,17 @@ const wxComponentMap = {
         }, {
             name: 'adjustPosition',
             get(domNode) {
-                const value = domNode.getAttribute('adjust-position')
-                return value !== undefined ? !!value : true
+                return dealWithBoolValue(domNode, 'adjust-position', true)
             },
         }, {
             name: 'holdKeyboard',
             get(domNode) {
-                return !!domNode.getAttribute('hold-keyboard')
+                return dealWithBoolValue(domNode, 'hold-keyboard')
             },
         }, {
             name: 'disableDefaultPadding',
             get(domNode) {
-                return !!domNode.getAttribute('disable-default-padding')
+                return dealWithBoolValue(domNode, 'disable-default-padding')
             },
         }],
         handles: {
@@ -1436,7 +1443,7 @@ const wxComponentMap = {
         }, {
             name: 'hoverStopPropagation',
             get(domNode) {
-                return !!domNode.getAttribute('hover-stop-propagation')
+                return dealWithBoolValue(domNode, 'hover-stop-propagation')
             },
         }, {
             name: 'hoverStartTime',
@@ -1533,17 +1540,17 @@ const wxComponentMap = {
         }, {
             name: 'webp',
             get(domNode) {
-                return !!domNode.getAttribute('webp')
+                return dealWithBoolValue(domNode, 'webp')
             },
         }, {
             name: 'lazyLoad',
             get(domNode) {
-                return !!domNode.getAttribute('lazy-load')
+                return dealWithBoolValue(domNode, 'lazy-load')
             },
         }, {
             name: 'showMenuByLongpress',
             get(domNode) {
-                return !!domNode.getAttribute('show-menu-by-longpress')
+                return dealWithBoolValue(domNode, 'show-menu-by-longpress')
             },
         }],
         handles: {
@@ -1572,12 +1579,12 @@ const wxComponentMap = {
         }, {
             name: 'autoplay',
             get(domNode) {
-                return !!domNode.getAttribute('autoplay')
+                return dealWithBoolValue(domNode, 'autoplay')
             },
         }, {
             name: 'muted',
             get(domNode) {
-                return !!domNode.getAttribute('muted')
+                return dealWithBoolValue(domNode, 'muted')
             },
         }, {
             name: 'orientation',
@@ -1592,7 +1599,7 @@ const wxComponentMap = {
         }, {
             name: 'backgroundMute',
             get(domNode) {
-                return !!domNode.getAttribute('background-mute')
+                return dealWithBoolValue(domNode, 'background-mute')
             },
         }, {
             name: 'minCache',
@@ -1614,14 +1621,12 @@ const wxComponentMap = {
         }, {
             name: 'autoPauseIfNavigate',
             get(domNode) {
-                const value = domNode.getAttribute('auto-pause-if-navigate')
-                return value !== undefined ? !!value : true
+                return dealWithBoolValue(domNode, 'auto-pause-if-navigate', true)
             },
         }, {
             name: 'autoPauseIfOpenNative',
             get(domNode) {
-                const value = domNode.getAttribute('auto-pause-if-open-native')
-                return value !== undefined ? !!value : true
+                return dealWithBoolValue(domNode, 'auto-pause-if-open-native', true)
             },
         }, {
             name: 'pictureInPictureMode',
@@ -1684,24 +1689,22 @@ const wxComponentMap = {
         }, {
             name: 'autopush',
             get(domNode) {
-                return !!domNode.getAttribute('autopush')
+                return dealWithBoolValue(domNode, 'autopush')
             },
         }, {
             name: 'muted',
             get(domNode) {
-                return !!domNode.getAttribute('muted')
+                return dealWithBoolValue(domNode, 'muted')
             },
         }, {
             name: 'enableCamera',
             get(domNode) {
-                const value = domNode.getAttribute('enable-camera')
-                return value !== undefined ? !!value : true
+                return dealWithBoolValue(domNode, 'enable-camera', true)
             },
         }, {
             name: 'autoFocus',
             get(domNode) {
-                const value = domNode.getAttribute('auto-focus')
-                return value !== undefined ? !!value : true
+                return dealWithBoolValue(domNode, 'auto-focus', true)
             },
         }, {
             name: 'orientation',
@@ -1748,7 +1751,7 @@ const wxComponentMap = {
         }, {
             name: 'zoom',
             get(domNode) {
-                return !!domNode.getAttribute('zoom')
+                return dealWithBoolValue(domNode, 'zoom')
             },
         }, {
             name: 'devicePosition',
@@ -1758,17 +1761,17 @@ const wxComponentMap = {
         }, {
             name: 'backgroundMute',
             get(domNode) {
-                return !!domNode.getAttribute('background-mute')
+                return dealWithBoolValue(domNode, 'background-mute')
             },
         }, {
             name: 'mirror',
             get(domNode) {
-                return !!domNode.getAttribute('mirror')
+                return dealWithBoolValue(domNode, 'mirror')
             },
         }, {
             name: 'remoteMirror',
             get(domNode) {
-                return !!domNode.getAttribute('remote-mirror')
+                return dealWithBoolValue(domNode, 'remote-mirror')
             },
         }, {
             name: 'localMirror',
@@ -1783,18 +1786,17 @@ const wxComponentMap = {
         }, {
             name: 'enableMic',
             get(domNode) {
-                const value = domNode.getAttribute('enable-mic')
-                return value !== undefined ? !!value : true
+                return dealWithBoolValue(domNode, 'enable-mic', true)
             },
         }, {
             name: 'enableAgc',
             get(domNode) {
-                return !!domNode.getAttribute('enable-agc')
+                return dealWithBoolValue(domNode, 'enable-agc')
             },
         }, {
             name: 'enableAns',
             get(domNode) {
-                return !!domNode.getAttribute('enable-ans')
+                return dealWithBoolValue(domNode, 'enable-ans')
             },
         }, {
             name: 'audioVolumeType',
@@ -1868,12 +1870,12 @@ const wxComponentMap = {
         }, {
             name: 'danmuBtn',
             get(domNode) {
-                return !!domNode.getAttribute('danmu-btn')
+                return dealWithBoolValue(domNode, 'danmu-btn')
             },
         }, {
             name: 'enableDanmu',
             get(domNode) {
-                return !!domNode.getAttribute('enable-danmu')
+                return dealWithBoolValue(domNode, 'enable-danmu')
             },
         }, {
             name: 'autoplay',
@@ -1904,32 +1906,27 @@ const wxComponentMap = {
         }, {
             name: 'showProgress',
             get(domNode) {
-                const value = domNode.getAttribute('show-progress')
-                return value !== undefined ? !!value : true
+                return dealWithBoolValue(domNode, 'show-progress', true)
             },
         }, {
             name: 'showFullscreenBtn',
             get(domNode) {
-                const value = domNode.getAttribute('show-fullscreen-btn')
-                return value !== undefined ? !!value : true
+                return dealWithBoolValue(domNode, 'show-fullscreen-btn', true)
             },
         }, {
             name: 'showPlayBtn',
             get(domNode) {
-                const value = domNode.getAttribute('show-play-btn')
-                return value !== undefined ? !!value : true
+                return dealWithBoolValue(domNode, 'show-play-btn', true)
             },
         }, {
             name: 'showCenterPlayBtn',
             get(domNode) {
-                const value = domNode.getAttribute('show-center-play-btn')
-                return value !== undefined ? !!value : true
+                return dealWithBoolValue(domNode, 'show-center-play-btn', true)
             },
         }, {
             name: 'enableProgressGesture',
             get(domNode) {
-                const value = domNode.getAttribute('enable-progress-gesture')
-                return value !== undefined ? !!value : true
+                return dealWithBoolValue(domNode, 'enable-progress-gesture', true)
             },
         }, {
             name: 'objectFit',
@@ -1945,7 +1942,7 @@ const wxComponentMap = {
         }, {
             name: 'showMuteBtn',
             get(domNode) {
-                return !!domNode.getAttribute('show-mute-btn')
+                return dealWithBoolValue(domNode, 'show-mute-btn')
             },
         }, {
             name: 'title',
@@ -1960,30 +1957,27 @@ const wxComponentMap = {
         }, {
             name: 'enablePlayGesture',
             get(domNode) {
-                return !!domNode.getAttribute('enable-play-gesture')
+                return dealWithBoolValue(domNode, 'enable-play-gesture')
             },
         }, {
             name: 'autoPauseIfNavigate',
             get(domNode) {
-                const value = domNode.getAttribute('auto-pause-if-navigate')
-                return value !== undefined ? !!value : true
+                return dealWithBoolValue(domNode, 'auto-pause-if-navigate', true)
             },
         }, {
             name: 'autoPauseIfOpenNative',
             get(domNode) {
-                const value = domNode.getAttribute('auto-pause-if-open-native')
-                return value !== undefined ? !!value : true
+                return dealWithBoolValue(domNode, 'auto-pause-if-open-native', true)
             },
         }, {
             name: 'vslideGesture',
             get(domNode) {
-                return !!domNode.getAttribute('vslide-gesture')
+                return dealWithBoolValue(domNode, 'vslide-gesture')
             },
         }, {
             name: 'vslideGestureInFullscreen',
             get(domNode) {
-                const value = domNode.getAttribute('vslide-gesture-in-fullscreen')
-                return value !== undefined ? !!value : true
+                return dealWithBoolValue(domNode, 'vslide-gesture-in-fullscreen', true)
             },
         }, {
             name: 'adUnitId',
@@ -1998,7 +1992,7 @@ const wxComponentMap = {
         }, {
             name: 'showCastingButton',
             get(domNode) {
-                return !!domNode.getAttribute('show-casting-button')
+                return dealWithBoolValue(domNode, 'show-casting-button')
             },
         }, {
             name: 'pictureInPictureMode',
@@ -2020,17 +2014,17 @@ const wxComponentMap = {
         }, {
             name: 'pictureInPictureShowProgress',
             get(domNode) {
-                return !!domNode.getAttribute('picture-in-picture-show-progress')
+                return dealWithBoolValue(domNode, 'picture-in-picture-show-progress')
             },
         }, {
             name: 'enableAutoRotation',
             get(domNode) {
-                return !!domNode.getAttribute('enable-auto-rotation')
+                return dealWithBoolValue(domNode, 'enable-auto-rotation')
             },
         }, {
             name: 'showScreenLockButton',
             get(domNode) {
-                return !!domNode.getAttribute('show-screen-lock-button')
+                return dealWithBoolValue(domNode, 'show-screen-lock-button')
             },
         }],
         handles: {
@@ -2175,7 +2169,7 @@ const wxComponentMap = {
         }, {
             name: 'showLocation',
             get(domNode) {
-                return !!domNode.getAttribute('show-location')
+                return dealWithBoolValue(domNode, 'show-location')
             },
         }, {
             name: 'polygons',
@@ -2209,49 +2203,47 @@ const wxComponentMap = {
         }, {
             name: 'enable3D',
             get(domNode) {
-                return !!domNode.getAttribute('enable-3D')
+                return dealWithBoolValue(domNode, 'enable-3D')
             },
         }, {
             name: 'showCompass',
             get(domNode) {
-                return !!domNode.getAttribute('show-compass')
+                return dealWithBoolValue(domNode, 'show-compass')
             },
         }, {
             name: 'showScale',
             get(domNode) {
-                return !!domNode.getAttribute('show-scale')
+                return dealWithBoolValue(domNode, 'show-scale')
             },
         }, {
             name: 'enableOverlooking',
             get(domNode) {
-                return !!domNode.getAttribute('enable-overlooking')
+                return dealWithBoolValue(domNode, 'enable-overlooking')
             },
         }, {
             name: 'enableZoom',
             get(domNode) {
-                const value = domNode.getAttribute('enable-zoom')
-                return value !== undefined ? !!value : true
+                return dealWithBoolValue(domNode, 'enable-zoom', true)
             },
         }, {
             name: 'enableScroll',
             get(domNode) {
-                const value = domNode.getAttribute('enable-scroll')
-                return value !== undefined ? !!value : true
+                return dealWithBoolValue(domNode, 'enable-scroll', true)
             },
         }, {
             name: 'enableRotate',
             get(domNode) {
-                return !!domNode.getAttribute('enable-rotate')
+                return dealWithBoolValue(domNode, 'enable-rotate')
             },
         }, {
             name: 'enableSatellite',
             get(domNode) {
-                return !!domNode.getAttribute('enable-satellite')
+                return dealWithBoolValue(domNode, 'enable-satellite')
             },
         }, {
             name: 'enableTraffic',
             get(domNode) {
-                return !!domNode.getAttribute('enable-traffic')
+                return dealWithBoolValue(domNode, 'enable-traffic')
             },
         }, {
             name: 'setting',
@@ -2330,13 +2322,13 @@ const wxComponentMap = {
         }, {
             name: 'disableScroll',
             get(domNode) {
-                return !!domNode.getAttribute('disable-scroll')
+                return dealWithBoolValue(domNode, 'disable-scroll')
             },
         }, {
             // kbone 自定义的特殊属性，用于兼容 iOS 端绑定了 canvas touch 事件后，触发不了页面滚动的 bug
             name: 'disableEvent',
             get(domNode) {
-                return !!domNode.getAttribute('disable-event')
+                return dealWithBoolValue(domNode, 'disable-event')
             },
         }],
         handles: {
@@ -2510,12 +2502,12 @@ const wxSubComponentMap = {
         }, {
             name: 'inertia',
             get(domNode) {
-                return !!domNode.getAttribute('inertia')
+                return dealWithBoolValue(domNode, 'inertia')
             },
         }, {
             name: 'outOfBounds',
             get(domNode) {
-                return !!domNode.getAttribute('out-of-bounds')
+                return dealWithBoolValue(domNode, 'out-of-bounds')
             },
         }, {
             name: 'x',
@@ -2544,12 +2536,12 @@ const wxSubComponentMap = {
         }, {
             name: 'disabled',
             get(domNode) {
-                return !!domNode.getAttribute('disabled')
+                return dealWithBoolValue(domNode, 'disabled')
             },
         }, {
             name: 'scale',
             get(domNode) {
-                return !!domNode.getAttribute('scale')
+                return dealWithBoolValue(domNode, 'scale')
             },
         }, {
             name: 'scaleMin',
@@ -2573,8 +2565,7 @@ const wxSubComponentMap = {
         }, {
             name: 'animation',
             get(domNode) {
-                const value = domNode.getAttribute('animation')
-                return value !== undefined ? !!value : true
+                return dealWithBoolValue(domNode, 'animation', true)
             },
         }],
         handles: {
