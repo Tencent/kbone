@@ -102,7 +102,6 @@ test('live-pusher', async() => {
     // videoHeight
     await _.checkNumber(body, node, 'videoHeight', 'video-height', 640)
 
-
     // event
     await _.checkEvent(body.querySelector('.h5-wx-component'), node, ['statechange', 'netstatus', 'error', 'bgmstart', 'bgmprogress', 'bgmcomplete'])
 

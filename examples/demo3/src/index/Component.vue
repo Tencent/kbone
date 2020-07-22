@@ -127,6 +127,11 @@
           <wx-text v-else-if="wxPrefix === 1" :selectable="true">{{'this is first line\nthis is second line'}}</wx-text>
           <text v-else-if="wxPrefix === 2" :selectable="true">{{'this is first line\nthis is second line'}}</text>
         </template>
+        <template v-else-if="item === 'match-media'">
+          <wx-component v-if="!wxPrefix" :behavior="item" min-width="300" max-width="600"><view>当页面宽度在 300 ~ 500 px 之间时展示这里</view></wx-component>
+          <wx-match-media v-else-if="wxPrefix === 1" min-width="300" max-width="600"><view>当页面宽度在 300 ~ 500 px 之间时展示这里</view></wx-match-media>
+          <match-media v-else-if="wxPrefix === 2" min-width="300" max-width="600"><view>当页面宽度在 300 ~ 500 px 之间时展示这里</view></match-media>
+        </template>
         <template v-else-if="item === 'rich-text'">
           <wx-component v-if="!wxPrefix" :behavior="item" :nodes="richText.nodes"></wx-component>
           <wx-rich-text v-else-if="wxPrefix === 1" :nodes="richText.nodes"></wx-rich-text>
@@ -572,6 +577,7 @@ export default {
         'canvas',
         'view',
         'text',
+        'match-media',
         'rich-text',
         'swiper',
         'movable',

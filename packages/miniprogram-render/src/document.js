@@ -32,7 +32,7 @@ const CONSTRUCTOR_MAP = {
 }
 const WX_COMPONENT_MAP = {}
 const WX_COMPONENT_LIST = [
-    'movable-view', 'cover-image', 'cover-view', 'movable-area', 'scroll-view', 'swiper', 'swiper-item', 'view',
+    'cover-image', 'cover-view', 'match-media', 'movable-area', 'movable-view', 'scroll-view', 'swiper', 'swiper-item', 'view',
     'icon', 'progress', 'rich-text', 'text',
     'button', 'checkbox', 'checkbox-group', 'editor', 'form', 'input', 'label', 'picker', 'picker-view', 'picker-view-column', 'radio', 'radio-group', 'slider', 'switch', 'textarea',
     'functional-page-navigator', 'navigator',

@@ -37,6 +37,30 @@
         scroll-top="{{scrollTop}}"
     ><element-vhost wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element-vhost></cover-view>
 </template>
+<template name="match-media">
+    <match-media
+        id="{{id}}"
+        class="{{className}}"
+        style="{{style}}"
+        hidden="{{hidden}}"
+        data-private-node-id="{{nodeId}}"
+        data-private-page-id="{{pageId}}"
+        bindtouchstart="onTouchStart"
+        bindtouchmove="onTouchMove"
+        bindtouchend="onTouchEnd"
+        bindtouchcancel="onTouchCancel"
+        bindtap="onTap"
+        bindlongpress="onLongPress"
+
+        min-width="{{minWidth}}"
+        max-width="{{maxWidth}}"
+        width="{{width}}"
+        min-height="{{minHeight}}"
+        max-height="{{maxHeight}}"
+        height="{{height}}"
+        orientation="{{orientation}}"
+    ><element-vhost wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element-vhost></match-media>
+</template>
 <template name="movable-area">
     <movable-area
         id="{{id}}"

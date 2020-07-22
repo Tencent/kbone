@@ -75,6 +75,45 @@ const wxComponentMap = {
             },
         }],
     },
+    'match-media': {
+        wxCompName: 'match-media',
+        properties: [{
+            name: 'minWidth',
+            get(domNode) {
+                return +domNode.getAttribute('min-width') || 0
+            },
+        }, {
+            name: 'maxWidth',
+            get(domNode) {
+                return +domNode.getAttribute('max-width') || 0
+            },
+        }, {
+            name: 'width',
+            get(domNode) {
+                return +domNode.getAttribute('width') || 0
+            },
+        }, {
+            name: 'minHeight',
+            get(domNode) {
+                return +domNode.getAttribute('min-height') || 0
+            },
+        }, {
+            name: 'maxHeight',
+            get(domNode) {
+                return +domNode.getAttribute('max-height') || 0
+            },
+        }, {
+            name: 'height',
+            get(domNode) {
+                return +domNode.getAttribute('height') || 0
+            },
+        }, {
+            name: 'orientation',
+            get(domNode) {
+                return domNode.getAttribute('orientation') || ''
+            },
+        }],
+    },
     'movable-area': {
         wxCompName: 'movable-area',
         properties: [{
