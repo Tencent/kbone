@@ -495,6 +495,11 @@
           <wx-official-account v-else-if="wxPrefix === 1" :class="item" @error="log('onOfficialAccountError', $event.detail)"></wx-official-account>
           <official-account v-else-if="wxPrefix === 2" :class="item" @error="log('onOfficialAccountError', $event.detail)"></official-account>
         </template>
+        <template v-else-if="item === 'voip-room'">
+          <wx-component v-if="!wxPrefix" :behavior="item" :class="item" @error="log('onVoipRoomError', $event.detail)"><Inner></Inner></wx-component>
+          <wx-voip-room v-else-if="wxPrefix === 1" :class="item" @error="log('onVoipRoomError', $event.detail)"><Inner></Inner></wx-voip-room>
+          <voip-room v-else-if="wxPrefix === 2" :class="item" @error="log('onVoipRoomError', $event.detail)"><Inner></Inner></voip-room>
+        </template>
         <template v-else-if="item === 'web-view'">
           <wx-component v-if="!wxPrefix" :behavior="item" :class="item" src="https://www.qq.com/"></wx-component>
           <wx-web-view v-else-if="wxPrefix === 1" :class="item" src="https://www.qq.com/"></wx-web-view>
@@ -602,6 +607,7 @@ export default {
         'editor',
         'ad',
         'official-account',
+        'voip-room',
         'scroll-view',
         // 'web-view',
         'xxxx',

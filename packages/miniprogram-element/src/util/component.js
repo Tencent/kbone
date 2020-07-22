@@ -2091,11 +2091,36 @@ const wxComponentMap = {
             },
         },
     },
+    'voip-room': {
+        wxCompName: 'voip-room',
+        properties: [{
+            name: 'openid',
+            get(domNode) {
+                return domNode.getAttribute('openid') || ''
+            },
+        }, {
+            name: 'mode',
+            get(domNode) {
+                return domNode.getAttribute('mode') || 'camera'
+            },
+        }, {
+            name: 'devicePosition',
+            get(domNode) {
+                return domNode.getAttribute('device-position') || 'front'
+            },
+        }],
+        handles: {
+            onVoipRoomError(evt) {
+                this.callSingleEvent('error', evt)
+            },
+        },
+    },
     // 地图
     map: {
         wxCompName: 'map',
         properties: [{
             name: 'longitude',
+            // TODO：需要客户端支持在 regionchange 中返回
             // canBeUserChanged: true,
             get(domNode) {
                 const value = parseFloat(domNode.getAttribute('longitude'))
@@ -2103,6 +2128,7 @@ const wxComponentMap = {
             },
         }, {
             name: 'latitude',
+            // TODO：需要客户端支持在 regionchange 中返回
             // canBeUserChanged: true,
             get(domNode) {
                 const value = parseFloat(domNode.getAttribute('latitude'))
@@ -2110,6 +2136,7 @@ const wxComponentMap = {
             },
         }, {
             name: 'scale',
+            // TODO：需要客户端支持在 regionchange 中返回
             // canBeUserChanged: true,
             get(domNode) {
                 const value = parseFloat(domNode.getAttribute('scale'))

@@ -36,7 +36,7 @@ const WX_COMPONENT_LIST = [
     'icon', 'progress', 'rich-text', 'text',
     'button', 'checkbox', 'checkbox-group', 'editor', 'form', 'input', 'label', 'picker', 'picker-view', 'picker-view-column', 'radio', 'radio-group', 'slider', 'switch', 'textarea',
     'functional-page-navigator', 'navigator',
-    'audio', 'camera', 'image', 'live-player', 'live-pusher', 'video',
+    'audio', 'camera', 'image', 'live-player', 'live-pusher', 'video', 'voip-room',
     'map',
     'canvas',
     'ad', 'official-account', 'open-data', 'web-view',

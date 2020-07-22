@@ -879,6 +879,27 @@
         bindleavepictureinpicture="onVideoLeavePictureInPicture"
     ><element-vhost wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element-vhost></video>
 </template>
+<template name="voip-room">
+    <voip-room
+        id="{{id}}"
+        class="{{className}}"
+        style="{{style}}"
+        hidden="{{hidden}}"
+        data-private-node-id="{{nodeId}}"
+        data-private-page-id="{{pageId}}"
+        bindtouchstart="onTouchStart"
+        bindtouchmove="onTouchMove"
+        bindtouchend="onTouchEnd"
+        bindtouchcancel="onTouchCancel"
+        bindtap="onTap"
+        bindlongpress="onLongPress"
+
+        openid="{{openid}}"
+        mode="{{mode}}"
+        device-position="{{devicePosition}}"
+        binderror="onVoipRoomError"
+    ><element-vhost wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{true}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element-vhost></voip-room>
+</template>
 <!-- 地图 -->
 <template name="map">
     <map

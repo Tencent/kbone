@@ -2,7 +2,7 @@
 
 ## 2.0.8
 
-* 支持 match-media 内置组件
+* 支持 match-media/voip-room 内置组件
 
 ## 2.0.7
 
