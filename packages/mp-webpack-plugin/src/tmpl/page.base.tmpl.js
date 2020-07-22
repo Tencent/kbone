@@ -1,3 +1,34 @@
+/**
+ * 判断基础库版本
+ */
+function compareVersion(v1, v2) {
+    v1 = v1.split('.')
+    v2 = v2.split('.')
+    const len = Math.max(v1.length, v2.length)
+
+    while (v1.length < len) {
+        v1.push('0')
+    }
+    while (v2.length < len) {
+        v2.push('0')
+    }
+
+    for (let i = 0; i < len; i++) {
+        const num1 = parseInt(v1[i], 10)
+        const num2 = parseInt(v2[i], 10)
+
+        if (num1 > num2) {
+            return 1
+        } else if (num1 < num2) {
+            return -1
+        }
+    }
+
+    return 0
+}
+
+const version = wx.getSystemInfoSync().SDKVersion
+
 module.exports = function(mp, config, init) {
     /**
      * 处理一些特殊的页面
@@ -50,7 +81,7 @@ module.exports = function(mp, config, init) {
         }
     }
 
-    return {
+    const pageOptions = {
         data: {
             pageId: '',
             bodyClass: 'h5-body miniprogram-root',
@@ -107,10 +138,15 @@ module.exports = function(mp, config, init) {
 
             // 处理分享显示
             if (!pageConfig.share || !pageConfig.shareTimeline) {
-                const menus = []
-                if (!pageConfig.share) menus.push('shareAppMessage')
-                if (!pageConfig.shareTimeline) menus.push('shareTimeline')
-                wx.hideShareMenu({menus})
+                if (compareVersion(version, '2.11.3') < 0) {
+                    // 低版本基础库不支持 munus 字段
+                    if (!pageConfig.share) wx.hideShareMenu()
+                } else {
+                    const menus = []
+                    if (!pageConfig.share) menus.push('shareAppMessage')
+                    if (!pageConfig.shareTimeline) menus.push('shareTimeline')
+                    wx.hideShareMenu({menus})
+                }
             }
 
             // 处理 document 更新
@@ -230,9 +266,6 @@ module.exports = function(mp, config, init) {
                 return shareOptions
             }
         },
-        onShareTimeline() {
-            return dealWithShareQuery(this.window, 'onShareTimeline')
-        },
         onAddToFavorites(data) {
             return dealWithShareQuery(this.window, 'onAddToFavorites', data)
         },
@@ -243,4 +276,12 @@ module.exports = function(mp, config, init) {
             if (this.window && this.window.onTabItemTap) this.window.onTabItemTap(data)
         },
     }
+
+    if (compareVersion(version, '2.11.3') >= 0) {
+        pageOptions.onShareTimeline = function() {
+            return dealWithShareQuery(this.window, 'onShareTimeline')
+        }
+    }
+
+    return pageOptions
 }
