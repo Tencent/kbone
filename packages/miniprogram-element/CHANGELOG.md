@@ -3,7 +3,7 @@
 ## 2.0.11
 
 * 支持 match-media/voip-room 内置组件
-* 布尔值属性支持设置 'false' 字符串来表示 false 值
+* 内置组件布尔值属性支持设置 'false' 字符串来表示 false 值
 
 ## 2.0.9
 
