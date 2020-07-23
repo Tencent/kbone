@@ -6,7 +6,7 @@
         "check": "npm run lint && npm run test",
         "build": "cd packages/miniprogram-element && npm run build && cd ../..",
         "publish": "lerna publish",
-        "v1": "lerna publish --dist-tag v1",
+        "v1": "lerna publish --dist-tag core-v1",
         "test": "npm run build && cd packages/vue-improve-loader && npm run test && cd ../miniprogram-render && npm run test && cd ../miniprogram-element && npm run test && cd ../kbone-tool && npm run test && cd ../..",
         "lint": "eslint \"packages/*/src/**/*.js\" --fix && eslint \"packages/*/test/**/*.js\" --fix && eslint \"packages/*/tool/**/*.js\" --fix"
     },
