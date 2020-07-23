@@ -52,9 +52,7 @@ function throttle(func) {
                 waitFuncSet.delete(func)
                 func()
             }
-        }).catch(() => {
-            // ignore
-        })
+        }).catch(console.error)
     }
 }
 

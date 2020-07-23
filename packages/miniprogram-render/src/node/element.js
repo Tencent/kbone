@@ -370,9 +370,9 @@ class Element extends Node {
             if (!window) reject()
 
             if (this.tagName === 'BODY') {
-                window.$$createSelectorQuery().selectViewport().scrollOffset(res => (res ? resolve(res) : reject())).exec()
+                window.$$createSelectorQuery().selectViewport().scrollOffset(res => (res ? resolve(res) : reject(new Error('body not found in webview')))).exec()
             } else {
-                window.$$createSelectorQuery().select(`.miniprogram-root >>> .node-${this.$_nodeId}`).boundingClientRect(res => (res ? resolve(res) : reject())).exec()
+                window.$$createSelectorQuery().select(`.miniprogram-root >>> .node-${this.$_nodeId}`).boundingClientRect(res => (res ? resolve(res) : reject(new Error('element not found in webview')))).exec()
             }
         })
     }
@@ -897,6 +897,41 @@ class Element extends Node {
         // 保留对象/数组/布尔值/undefined 原始内容，方便处理小程序内置组件的使用
         const valueType = typeof value
         if (valueType !== 'object' && valueType !== 'boolean' && value !== undefined && !Array.isArray(value)) value = '' + value
+
+        if (name === 'kbone-attribute-map' || name === 'kbone-event-map') {
+            value = value || {}
+            if (typeof value === 'string') value = JSON.parse(value) // 确保存入的是对象
+            const oldValue = this.getAttribute(name)
+            const keys = Object.keys(value)
+            const oldKeys = oldValue ? Object.keys(oldValue) : null
+
+            if (name === 'kbone-attribute-map') {
+                // 特殊属性，用于批量设置属性
+                keys.forEach(key => this.setAttribute(key, value[key]))
+                if (oldKeys) {
+                    oldKeys.forEach(key => {
+                        if (!Object.prototype.hasOwnProperty.call(value, key)) this.removeAttribute(key)
+                    })
+                }
+            } else {
+                // 特殊属性，用于批量监听事件
+                const window = cache.getWindow(this.$_pageId)
+
+                if (oldKeys) {
+                    oldKeys.forEach(key => {
+                    // 先删除所有旧的 handler
+                        let handler = oldValue[key]
+                        handler = typeof handler !== 'function' ? window[handler] : handler
+                        this.removeEventListener(key, handler)
+                    })
+                }
+                keys.forEach(key => {
+                    let handler = value[key]
+                    handler = typeof handler !== 'function' ? window[handler] : handler
+                    this.addEventListener(key, handler)
+                })
+            }
+        }
 
         if (name === 'id') {
             // id 要提前到此处特殊处理

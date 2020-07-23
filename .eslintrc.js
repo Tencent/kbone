@@ -100,6 +100,7 @@ module.exports = {
     'no-control-regex': 'off',
     'no-await-in-loop': 'off',
     'import/no-extraneous-dependencies': 'off',
+    'promise/no-nesting': 'off',
   },
   'globals': {
     'window': true,

@@ -1,5 +1,10 @@
 # 更新日志
 
+## 2.0.9
+
+* 支持特殊属性 kbone-attribute-map/kbone-event-map
+* 修复 scroll-into-view 在初始化时设置不生效问题
+
 ## 2.0.8
 
 * 支持 match-media/voip-room 内置组件

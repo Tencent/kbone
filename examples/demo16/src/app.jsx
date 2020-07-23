@@ -62,6 +62,7 @@ const App = (props, store) => {
         {name: '椰子', value: 'coconut'}
     ])
     const [favorite, setFavorite] = useState('lime')
+    // const [scrollIntoView, setScrollIntoView]
     const scrollViewProps = {
         className: 'scroll-view-y',
         'scroll-y': 'true',
@@ -106,7 +107,7 @@ const App = (props, store) => {
                 />
             </div>
             <div>
-                我是 picker-view：
+                我是 picker
                 <wx-picker range={pickerRange1} onChange={e => console.log('change', e)}>选择国家1</wx-picker>
                 <wx-picker range={pickerRange2} range-key="name" onChange={e => console.log('change', e)}>选择国家2</wx-picker>
             </div>

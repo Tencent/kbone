@@ -86,22 +86,25 @@ class WxComponent extends Element {
 
         if (name === 'scroll-into-view') {
             // TODO：scroll-into-view 先转成 scroll-top 来处理，等基础库支持
-            const scrollItem = this.ownerDocument.getElementById(value)
-            if (!scrollItem) return
+            tool.flushThrottleCache() // 先清空 setData
+            Promise.resolve().then(() => {
+                const scrollItem = this.ownerDocument.getElementById(value)
+                if (!scrollItem) return
 
-            const propName = this.getAttribute('scroll-x') ? 'scroll-left' : this.getAttribute('scroll-y') ? 'scroll-top' : ''
-            if (!propName) return
+                const propName = this.getAttribute('scroll-x') ? 'scroll-left' : this.getAttribute('scroll-y') ? 'scroll-top' : ''
+                if (!propName) return
 
-            const window = cache.getWindow(this.$_pageId)
-            Promise.all([
-                new Promise(resolve => window.$$createSelectorQuery().select(`.miniprogram-root >>> .node-${this.$_nodeId}`).fields({rect: true, scrollOffset: true}).exec(resolve)),
-                scrollItem.$$getBoundingClientRect()
-            ]).then(res => {
-                const rectName = propName === 'scroll-left' ? 'left' : 'top'
-                const scrollRect = res[0][0]
-                const itemRect = res[1]
+                const window = cache.getWindow(this.$_pageId)
+                Promise.all([
+                    new Promise(resolve => window.$$createSelectorQuery().select(`.miniprogram-root >>> .node-${this.$_nodeId}`).fields({rect: true, scrollOffset: true}).exec(resolve)),
+                    scrollItem.$$getBoundingClientRect()
+                ]).then(res => {
+                    const rectName = propName === 'scroll-left' ? 'left' : 'top'
+                    const scrollRect = res[0][0]
+                    const itemRect = res[1]
 
-                super.setAttribute(propName, itemRect[rectName] - scrollRect[rectName] + scrollRect[tool.toCamel(propName)])
+                    super.setAttribute(propName, itemRect[rectName] - scrollRect[rectName] + scrollRect[tool.toCamel(propName)])
+                }).catch(console.error)
             }).catch(console.error)
         }
     }

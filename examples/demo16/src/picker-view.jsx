@@ -3,29 +3,24 @@ import React from 'react'
 class PickerView extends React.Component {
     constructor(props) {
         super(props)
-        this.pickerView = React.createRef()
-        this.state = {
-            value: [0, 1],
-        }
-        this.onChange = evt => {
-            console.log(evt.detail.value)
+        const pickerViewChangeTs = +new Date()
+        window[pickerViewChangeTs] = this.onChange = evt => {
+            console.log('picker-view', evt.detail.value)
             this.setState({
                 value: evt.detail.value,
             })
         }
-    }
-
-    componentDidMount() {
-        this.pickerView.current.addEventListener('change', this.onChange)
-    }
-
-    componentWillUnmount() {
-        this.pickerView.current.removeEventListener('change', this.onChange)
+        this.state = {
+            value: [0, 1],
+            eventMap: JSON.stringify({
+                change: pickerViewChangeTs,
+            }),
+        }
     }
 
     render() {
         return (
-            <wx-picker-view ref={this.pickerView} style={{width: '100%', height: '300px'}} value={this.state.value}>
+            <wx-picker-view style={{width: '100%', height: '300px'}} value={this.state.value} kbone-event-map={this.state.eventMap}>
                 <wx-picker-view-column>
                     <div>春</div>
                     <div>夏</div>

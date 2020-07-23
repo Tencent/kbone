@@ -6,10 +6,12 @@ const ClassList = require('../../src/node/class-list')
 const Style = require('../../src/node/style')
 const cache = require('../../src/util/cache')
 
+let window
 let document
 
 beforeAll(() => {
     const res = mock.createPage('home')
+    window = res.window
     document = res.document
 })
 
@@ -668,6 +670,77 @@ test('element: setAttribute/getAttribute/hasAttribute/removeAttribute', () => {
     expect(node.getAttribute('array-attr')).toBe(arr)
     expect(attributes.length).toEqual(2)
     expect(updateCount).toBe(14)
+
+    // kbone-attribute-map
+    const node2 = document.createElement('div')
+    node2.setAttribute('kbone-attribute-map', {
+        a: 123, b: 'haha', d: null, g: {c: 'hehe'}
+    })
+    expect(node2.getAttribute('kbone-attribute-map')).toEqual({
+        a: 123, b: 'haha', d: null, g: {c: 'hehe'}
+    })
+    expect(node2.getAttribute('a')).toBe('123')
+    expect(node2.getAttribute('b')).toBe('haha')
+    expect(node2.getAttribute('d')).toBe(null)
+    expect(node2.getAttribute('g')).toEqual({c: 'hehe'})
+    node2.setAttribute('kbone-attribute-map', {c: 'june', d: 321})
+    expect(node2.getAttribute('kbone-attribute-map')).toEqual({c: 'june', d: 321})
+    expect(node2.getAttribute('a')).toBe(undefined)
+    expect(node2.getAttribute('b')).toBe(undefined)
+    expect(node2.getAttribute('c')).toBe('june')
+    expect(node2.getAttribute('d')).toBe('321')
+    expect(node2.getAttribute('g')).toEqual(undefined)
+    node2.setAttribute('kbone-attribute-map', '{"c": 111, "d": "oh my god", "h": {"a": 123}}')
+    expect(node2.getAttribute('c')).toBe('111')
+    expect(node2.getAttribute('d')).toBe('oh my god')
+    expect(node2.getAttribute('h')).toEqual({a: 123})
+    node2.setAttribute('kbone-attribute-map', {})
+    expect(node2.getAttribute('c')).toBe(undefined)
+    expect(node2.getAttribute('d')).toBe(undefined)
+    expect(node2.getAttribute('h')).toBe(undefined)
+
+    // kbone-event-map
+    const node3 = document.createElement('div')
+    let tapCount = 0
+    let longTapCount = 0
+    const onTap = () => tapCount++
+    const onLongTap = () => longTapCount++
+    window.haha = onTap
+    window.hehe = onLongTap
+    node3.$$trigger('tap')
+    node3.$$trigger('longtap')
+    expect(tapCount).toBe(0)
+    expect(longTapCount).toBe(0)
+    node3.setAttribute('kbone-event-map', {tap: onTap, longtap: onLongTap})
+    node3.$$trigger('tap')
+    node3.$$trigger('longtap')
+    expect(tapCount).toBe(1)
+    expect(longTapCount).toBe(1)
+    node3.setAttribute('kbone-event-map', {tap: onTap})
+    node3.$$trigger('tap')
+    node3.$$trigger('longtap')
+    expect(tapCount).toBe(2)
+    expect(longTapCount).toBe(1)
+    node3.setAttribute('kbone-event-map', '{"longtap": "hehe"}')
+    node3.$$trigger('tap')
+    node3.$$trigger('longtap')
+    expect(tapCount).toBe(2)
+    expect(longTapCount).toBe(2)
+    node3.setAttribute('kbone-event-map', '{"tap": "haha", "longtap": "hehe"}')
+    node3.$$trigger('tap')
+    node3.$$trigger('longtap')
+    expect(tapCount).toBe(3)
+    expect(longTapCount).toBe(3)
+    node3.setAttribute('kbone-event-map', {tap: 'haha'})
+    node3.$$trigger('tap')
+    node3.$$trigger('longtap')
+    expect(tapCount).toBe(4)
+    expect(longTapCount).toBe(3)
+    node3.setAttribute('kbone-event-map', {})
+    node3.$$trigger('tap')
+    node3.$$trigger('longtap')
+    expect(tapCount).toBe(4)
+    expect(longTapCount).toBe(3)
 
     parent.removeEventListener('$$childNodesUpdate', onUpdate)
     document.body.removeChild(parent)
