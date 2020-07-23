@@ -46,7 +46,7 @@
         </div>
         <div v-else-if="item === 'input'">
           <input type="text" placeholder="请输入文本内容" @input="log('onInput', $event.target.value, $event)" v-model="input.inputText" @change="log('onInputChange', $event.target.value, $event)" />
-          <input type="number" placeholder="请输入数字内容" @input="log('onInput', $event.target.value, $event)" v-model="input.inputNumber" data-is-number="yes" />
+          <input type="number" placeholder="请输入数字内容" :kbone-event-map="{input: evt => log('onInput', evt.target.value, evt)}" v-model="input.inputNumber" data-is-number="yes" />
           <input type="radio" />
           <input type="radio" name="radio" value="radio1" @input="log('onInput', $event.target.value, $event)" v-model="input.inputRadio" />
           <input type="radio" name="radio" value="radio2" @input="log('onInput', $event.target.value, $event)" v-model="input.inputRadio" />
