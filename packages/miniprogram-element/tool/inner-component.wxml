@@ -333,6 +333,9 @@
         bindopensetting="onButtonOpenSetting"
         bindlaunchapp="onButtonLaunchApp"
         bindgetrealnameauthinfo = "onButtonGetRealnameAuthInfo"
+
+        share-type="{{shareType}}"
+        share-mode="{{shareMode}}"
     ><element-vhost wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element-vhost></button>
 </template>
 <template name="editor">

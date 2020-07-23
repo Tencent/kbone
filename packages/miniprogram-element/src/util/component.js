@@ -34,13 +34,21 @@ function dealWithReactAttr(value) {
 }
 
 /**
- * 处理布尔值，兼容各种 Web 框架
+ * 处理布尔值
  */
 function dealWithBoolValue(domNode, attrName, defaultIsTrue) {
     const value = domNode.getAttribute(attrName)
     if (value === 'false') return false
     if (defaultIsTrue && value === undefined) return true
     return !!value
+}
+
+/**
+ * 处理数值
+ */
+function dealWithNumber(domNode, attrName, defaultValue) {
+    const value = parseFloat(domNode.getAttribute(attrName))
+    return !isNaN(value) ? value : defaultValue
 }
 
 /**
@@ -80,8 +88,7 @@ const wxComponentMap = {
         properties: [{
             name: 'scrollTop',
             get(domNode) {
-                const value = domNode.getAttribute('scroll-top')
-                return value !== undefined && !isNaN(+value) ? +value : ''
+                return domNode.getAttribute('scroll-top')
             },
         }],
     },
@@ -288,14 +295,12 @@ const wxComponentMap = {
         }, {
             name: 'interval',
             get(domNode) {
-                const value = parseFloat(domNode.getAttribute('interval'))
-                return !isNaN(value) ? value : 5000
+                return dealWithNumber(domNode, 'interval', 5000)
             },
         }, {
             name: 'duration',
             get(domNode) {
-                const value = parseFloat(domNode.getAttribute('duration'))
-                return !isNaN(value) ? value : 500
+                return dealWithNumber(domNode, 'duration', 500)
             },
         }, {
             name: 'circular',
@@ -320,8 +325,7 @@ const wxComponentMap = {
         }, {
             name: 'displayMultipleItems',
             get(domNode) {
-                const value = parseFloat(domNode.getAttribute('display-multiple-items'))
-                return !isNaN(value) ? value : 1
+                return dealWithNumber(domNode, 'display-multiple-items', 1)
             },
         }, {
             name: 'skipHiddenItemLayout',
@@ -372,14 +376,12 @@ const wxComponentMap = {
         }, {
             name: 'hoverStartTime',
             get(domNode) {
-                const value = parseFloat(domNode.getAttribute('hover-start-time'))
-                return !isNaN(value) ? value : 50
+                return dealWithNumber(domNode, 'hover-start-time', 50)
             },
         }, {
             name: 'hoverStayTime',
             get(domNode) {
-                const value = parseFloat(domNode.getAttribute('hover-stay-time'))
-                return !isNaN(value) ? value : 400
+                return dealWithNumber(domNode, 'hover-stay-time', 400)
             },
         }],
     },
@@ -458,8 +460,7 @@ const wxComponentMap = {
         }, {
             name: 'duration',
             get(domNode) {
-                const value = parseFloat(domNode.getAttribute('duration'))
-                return !isNaN(value) ? value : 30
+                return dealWithNumber(domNode, 'duration', 30)
             },
         }],
         handles: {
@@ -553,14 +554,12 @@ const wxComponentMap = {
         }, {
             name: 'hoverStartTime',
             get(domNode) {
-                const value = parseFloat(domNode.getAttribute('hover-start-time'))
-                return !isNaN(value) ? value : 20
+                return dealWithNumber(domNode, 'hover-start-time', 20)
             },
         }, {
             name: 'hoverStayTime',
             get(domNode) {
-                const value = parseFloat(domNode.getAttribute('hover-stay-time'))
-                return !isNaN(value) ? value : 70
+                return dealWithNumber(domNode, 'hover-stay-time', 70)
             },
         }, {
             name: 'lang',
@@ -601,6 +600,18 @@ const wxComponentMap = {
             name: 'businessId',
             get(domNode) {
                 return domNode.getAttribute('business-id') || ''
+            },
+        }, {
+            // qq 小程序特有属性
+            name: 'shareType',
+            get(domNode) {
+                return dealWithNumber(domNode, 'share-type', 27)
+            },
+        }, {
+            // qq 小程序特有属性
+            name: 'shareMode',
+            get(domNode) {
+                return domNode.getAttribute('share-mode')
             },
         }],
         handles: {
@@ -754,8 +765,7 @@ const wxComponentMap = {
         }, {
             name: 'maxlength',
             get(domNode) {
-                const value = parseFloat(domNode.maxlength)
-                return !isNaN(value) ? value : 140
+                return dealWithNumber(domNode, 'maxlength', 140)
             },
         }, {
             name: 'cursorSpacing',
@@ -786,20 +796,17 @@ const wxComponentMap = {
         }, {
             name: 'cursor',
             get(domNode) {
-                const value = parseFloat(domNode.getAttribute('cursor'))
-                return !isNaN(value) ? value : -1
+                return dealWithNumber(domNode, 'cursor', -1)
             },
         }, {
             name: 'selectionStart',
             get(domNode) {
-                const value = parseFloat(domNode.getAttribute('selection-start'))
-                return !isNaN(value) ? value : -1
+                return dealWithNumber(domNode, 'selection-start', -1)
             },
         }, {
             name: 'selectionEnd',
             get(domNode) {
-                const value = parseFloat(domNode.getAttribute('selection-end'))
-                return !isNaN(value) ? value : -1
+                return dealWithNumber(domNode, 'selection-end', -1)
             },
         }, {
             name: 'adjustPosition',
@@ -1119,14 +1126,12 @@ const wxComponentMap = {
         }, {
             name: 'max',
             get(domNode) {
-                const value = parseFloat(domNode.getAttribute('max'))
-                return !isNaN(value) ? value : 100
+                return dealWithNumber(domNode, 'max', 100)
             },
         }, {
             name: 'step',
             get(domNode) {
-                const value = parseFloat(domNode.getAttribute('step'))
-                return !isNaN(value) ? value : 1
+                return dealWithNumber(domNode, 'step', 1)
             },
         }, {
             name: 'disabled',
@@ -1162,8 +1167,7 @@ const wxComponentMap = {
         }, {
             name: 'blockSize',
             get(domNode) {
-                const value = parseFloat(domNode.getAttribute('block-size'))
-                return !isNaN(value) ? value : 28
+                return dealWithNumber(domNode, 'block-size', 28)
             },
         }, {
             name: 'blockColor',
@@ -1265,8 +1269,7 @@ const wxComponentMap = {
         }, {
             name: 'maxlength',
             get(domNode) {
-                const value = parseFloat(domNode.maxlength)
-                return !isNaN(value) ? value : 140
+                return dealWithNumber(domNode, 'maxlength', 140)
             }
         }, {
             name: 'autoFocus',
@@ -1296,8 +1299,7 @@ const wxComponentMap = {
         }, {
             name: 'cursor',
             get(domNode) {
-                const value = parseFloat(domNode.getAttribute('cursor'))
-                return !isNaN(value) ? value : -1
+                return dealWithNumber(domNode, 'cursor', -1)
             },
         }, {
             name: 'showConfirmBar',
@@ -1307,14 +1309,12 @@ const wxComponentMap = {
         }, {
             name: 'selectionStart',
             get(domNode) {
-                const value = parseFloat(domNode.getAttribute('selection-start'))
-                return !isNaN(value) ? value : -1
+                return dealWithNumber(domNode, 'selection-start', -1)
             },
         }, {
             name: 'selectionEnd',
             get(domNode) {
-                const value = parseFloat(domNode.getAttribute('selection-end'))
-                return !isNaN(value) ? value : -1
+                return dealWithNumber(domNode, 'selection-end', -1)
             },
         }, {
             name: 'adjustPosition',
@@ -1412,8 +1412,7 @@ const wxComponentMap = {
         }, {
             name: 'delta',
             get(domNode) {
-                const value = parseFloat(domNode.getAttribute('delta'))
-                return !isNaN(value) ? value : 1
+                return dealWithNumber(domNode, 'delta', 1)
             },
         }, {
             name: 'appId',
@@ -1448,14 +1447,12 @@ const wxComponentMap = {
         }, {
             name: 'hoverStartTime',
             get(domNode) {
-                const value = parseFloat(domNode.getAttribute('hover-start-time'))
-                return !isNaN(value) ? value : 50
+                return dealWithNumber(domNode, 'hover-start-time', 50)
             },
         }, {
             name: 'hoverStayTime',
             get(domNode) {
-                const value = parseFloat(domNode.getAttribute('hover-stay-time'))
-                return !isNaN(value) ? value : 600
+                return dealWithNumber(domNode, 'hover-stay-time', 600)
             },
         }],
         handles: {
@@ -1604,14 +1601,12 @@ const wxComponentMap = {
         }, {
             name: 'minCache',
             get(domNode) {
-                const value = parseFloat(domNode.getAttribute('min-cache'))
-                return !isNaN(value) ? value : 1
+                return dealWithNumber(domNode, 'min-cache', 1)
             },
         }, {
             name: 'maxCache',
             get(domNode) {
-                const value = parseFloat(domNode.getAttribute('max-cache'))
-                return !isNaN(value) ? value : 3
+                return dealWithNumber(domNode, 'max-cache', 3)
             },
         }, {
             name: 'soundMode',
@@ -1729,14 +1724,12 @@ const wxComponentMap = {
         }, {
             name: 'minBitrate',
             get(domNode) {
-                const value = parseFloat(domNode.getAttribute('min-bitrate'))
-                return !isNaN(value) ? value : 200
+                return dealWithNumber(domNode, 'min-bitrate', 200)
             },
         }, {
             name: 'maxBitrate',
             get(domNode) {
-                const value = parseFloat(domNode.getAttribute('max-bitrate'))
-                return !isNaN(value) ? value : 1000
+                return dealWithNumber(domNode, 'max-bitrate', 1000)
             },
         }, {
             name: 'waitingImage',
@@ -1806,14 +1799,12 @@ const wxComponentMap = {
         }, {
             name: 'videoWidth',
             get(domNode) {
-                const value = parseFloat(domNode.getAttribute('video-width'))
-                return !isNaN(value) ? value : 360
+                return dealWithNumber(domNode, 'video-width', 360)
             },
         }, {
             name: 'videoHeight',
             get(domNode) {
-                const value = parseFloat(domNode.getAttribute('video-height'))
-                return !isNaN(value) ? value : 640
+                return dealWithNumber(domNode, 'video-height', 640)
             },
         }],
         handles: {
@@ -1900,8 +1891,7 @@ const wxComponentMap = {
         }, {
             name: 'direction',
             get(domNode) {
-                const value = parseFloat(domNode.getAttribute('direction'))
-                return !isNaN(value) ? value : -1
+                return dealWithNumber(domNode, 'direction', -1)
             },
         }, {
             name: 'showProgress',
@@ -2117,24 +2107,21 @@ const wxComponentMap = {
             // TODO：需要客户端支持在 regionchange 中返回
             // canBeUserChanged: true,
             get(domNode) {
-                const value = parseFloat(domNode.getAttribute('longitude'))
-                return !isNaN(value) ? value : 39.92
+                return dealWithNumber(domNode, 'longitude', 39.92)
             },
         }, {
             name: 'latitude',
             // TODO：需要客户端支持在 regionchange 中返回
             // canBeUserChanged: true,
             get(domNode) {
-                const value = parseFloat(domNode.getAttribute('latitude'))
-                return !isNaN(value) ? value : 116.46
+                return dealWithNumber(domNode, 'latitude', 116.46)
             },
         }, {
             name: 'scale',
             // TODO：需要客户端支持在 regionchange 中返回
             // canBeUserChanged: true,
             get(domNode) {
-                const value = parseFloat(domNode.getAttribute('scale'))
-                return !isNaN(value) ? value : 16
+                return dealWithNumber(domNode, 'scale', 16)
             },
         }, {
             name: 'markers',
@@ -2185,8 +2172,7 @@ const wxComponentMap = {
         }, {
             name: 'layerStyle',
             get(domNode) {
-                const value = parseFloat(domNode.getAttribute('layer-style'))
-                return !isNaN(value) ? value : 1
+                return dealWithNumber(domNode, 'layer-style', 1)
             },
         }, {
             name: 'rotate',
@@ -2524,14 +2510,12 @@ const wxSubComponentMap = {
         }, {
             name: 'damping',
             get(domNode) {
-                const value = parseFloat(domNode.getAttribute('damping'))
-                return !isNaN(value) ? value : 20
+                return dealWithNumber(domNode, 'damping', 20)
             },
         }, {
             name: 'friction',
             get(domNode) {
-                const value = parseFloat(domNode.getAttribute('friction'))
-                return !isNaN(value) ? value : 2
+                return dealWithNumber(domNode, 'friction', 2)
             },
         }, {
             name: 'disabled',
@@ -2546,21 +2530,18 @@ const wxSubComponentMap = {
         }, {
             name: 'scaleMin',
             get(domNode) {
-                const value = parseFloat(domNode.getAttribute('scale-min'))
-                return !isNaN(value) ? value : 0.5
+                return dealWithNumber(domNode, 'scale-min', 0.5)
             },
         }, {
             name: 'scaleMax',
             get(domNode) {
-                const value = parseFloat(domNode.getAttribute('scale-max'))
-                return !isNaN(value) ? value : 10
+                return dealWithNumber(domNode, 'scale-max', 10)
             },
         }, {
             name: 'scaleValue',
             canBeUserChanged: true,
             get(domNode) {
-                const value = parseFloat(domNode.getAttribute('scale-value'))
-                return !isNaN(value) ? value : 1
+                return dealWithNumber(domNode, 'scale-value', 1)
             },
         }, {
             name: 'animation',

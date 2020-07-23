@@ -1,5 +1,9 @@
 # 更新日志
 
+## 2.0.13
+
+* 支持 qq 小程序 button 内置组件的 share-type/share-mode 属性
+
 ## 2.0.11
 
 * 支持 match-media/voip-room 内置组件
