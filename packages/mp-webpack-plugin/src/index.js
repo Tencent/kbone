@@ -252,7 +252,10 @@ class MpPlugin {
                 if (!packageName) pages.push(pageRoute)
 
                 // 拷贝 loadingView 目录到项目根目录下
-                if (loadingView) _.copyDir(loadingView, path.resolve(outputPath, '../loading-view'))
+                if (loadingView) {
+                    compilation.contextDependencies.add(loadingView) // 支持 watch
+                    _.copyDir(loadingView, path.resolve(outputPath, '../loading-view'))
+                }
             }
 
             // 追加 webview 页面
@@ -333,6 +336,7 @@ class MpPlugin {
                         // 自定义 tabBar
                         const customTabBarDir = tabBar.custom
                         tabBar.custom = true
+                        compilation.contextDependencies.add(customTabBarDir) // 支持 watch
                         _.copyDir(customTabBarDir, path.resolve(outputPath, '../custom-tab-bar'))
                     }
 
@@ -419,6 +423,7 @@ class MpPlugin {
 
             // 自定义组件，生成到 miniprogram_npm 中
             if (wxCustomComponentRoot) {
+                compilation.contextDependencies.add(wxCustomComponentRoot) // 支持 watch
                 _.copyDir(wxCustomComponentRoot, path.resolve(outputPath, '../custom-component/components'))
 
                 const realUsingComponents = {}
