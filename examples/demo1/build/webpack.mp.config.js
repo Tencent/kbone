@@ -96,6 +96,9 @@ module.exports = {
             }
         ]
     },
+    node: {
+        global: false, // 可让业务代码访问到小程序的 global
+    },
     resolve: {
         extensions: ['*', '.js', '.vue', '.json']
     },
