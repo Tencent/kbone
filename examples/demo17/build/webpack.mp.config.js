@@ -91,7 +91,10 @@ module.exports = {
         }]
     },
     resolve: {
-        extensions: ['*', '.js', '.jsx', '.json']
+        extensions: ['*', '.js', '.jsx', '.json'],
+        alias: {
+            preact: isOptimize ? 'preact/dist/preact.js' : 'preact/src/index.js',
+        },
     },
     plugins: [
         new webpack.DefinePlugin({
