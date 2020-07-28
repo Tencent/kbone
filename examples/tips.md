@@ -126,3 +126,10 @@
 
 * react
 * 多页
+
+## demo25
+
+* vue
+* 多页
+* worker
+* sharedWorker

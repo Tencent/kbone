@@ -70,3 +70,4 @@ npm install
 * demo22：vue + 跨页面通信 + 跨页面数据共享
 * demo23：vue + vue-router（hash mode）
 * demo24：react + 多页
+* demo25：vue + worker + sharedWorker
