@@ -1,8 +1,12 @@
 <template>
   <div class="cnt">
     <Header></Header>
-    <a href="/page1.html">回到首页</a>
-    <button @click="onClickJump">回到首页</button>
+    <button @click="createWorker">创建 worker</button>
+    <button @click="stopWorker">关闭 worker</button>
+    <button @click="sendMsgToWorker">发送信息给 worker</button>
+    <button @click="createSharedWorker">创建 sharedWorker</button>
+    <button @click="stopSharedWorker">关闭 sharedWorker</button>
+    <button @click="sendMsgToSharedWorker">发送信息给 worker</button>
     <Footer></Footer>
   </div>
 </template>
@@ -17,13 +21,49 @@ export default {
     Header,
     Footer
   },
-  mounted() {
-    // cookie
-    console.log('cookie [page2]：', document.cookie)
-  },
   methods: {
-    onClickJump() {
-      window.location.href = '/page1.html'
+    createWorker() {
+      this.worker = new Worker('./worker.js')
+      console.log('worker create')
+      this.worker.onmessage = evt => {
+        console.log('worker.onmessage: ', evt.data)
+      }
+      this.worker.addEventListener('message', evt => {
+        console.log('worker.addEventListener: ', evt.data)
+      })
+    },
+
+    stopWorker() {
+      if (this.worker) {
+        this.worker.terminate()
+        console.log('worker terminate')
+      }
+    },
+
+    sendMsgToWorker() {
+      if (this.worker) this.worker.postMessage({from: 'page2', to: 'worker'})
+    },
+
+    createSharedWorker() {
+      this.sharedWorker = new SharedWorker('./sharedWorker.js')
+      console.log('sharedWorker create')
+      this.sharedWorker.port.onmessage = evt => {
+        console.log('sharedWorker.onmessage: ', evt.data)
+      }
+      this.sharedWorker.port.addEventListener('message', evt => {
+        console.log('sharedWorker.addEventListener: ', evt.data)
+      })
+    },
+
+    stopSharedWorker() {
+      if (this.sharedWorker) {
+        this.sharedWorker.port.close()
+        console.log('sharedWorker terminate')
+      }
+    },
+
+    sendMsgToSharedWorker() {
+      if (this.sharedWorker) this.sharedWorker.port.postMessage({from: 'page2', to: 'sharedWorker'})
     },
   },
 }

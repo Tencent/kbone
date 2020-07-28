@@ -1,7 +1,12 @@
 <template>
   <div class="cnt">
     <Header></Header>
-    <button @click="onClickBack">回到上一页</button>
+    <button @click="createWorker">创建 worker</button>
+    <button @click="stopWorker">关闭 worker</button>
+    <button @click="sendMsgToWorker">发送信息给 worker</button>
+    <button @click="createSharedWorker">创建 sharedWorker</button>
+    <button @click="stopSharedWorker">关闭 sharedWorker</button>
+    <button @click="sendMsgToSharedWorker">发送信息给 worker</button>
     <Footer></Footer>
   </div>
 </template>
@@ -16,17 +21,49 @@ export default {
     Header,
     Footer
   },
-  mounted() {
-    // cookie
-    console.log('cookie [page3]：', document.cookie)
-  },
   methods: {
-    onClickBack() {
-      if (process.env.isMiniprogram) {
-        wx.navigateBack()
-      } else {
-        window.close()
+    createWorker() {
+      this.worker = new Worker('./worker.js')
+      console.log('worker create')
+      this.worker.onmessage = evt => {
+        console.log('worker.onmessage: ', evt.data)
       }
+      this.worker.addEventListener('message', evt => {
+        console.log('worker.addEventListener: ', evt.data)
+      })
+    },
+
+    stopWorker() {
+      if (this.worker) {
+        this.worker.terminate()
+        console.log('worker terminate')
+      }
+    },
+
+    sendMsgToWorker() {
+      if (this.worker) this.worker.postMessage({from: 'page3', to: 'worker'})
+    },
+
+    createSharedWorker() {
+      this.sharedWorker = new SharedWorker('./sharedWorker.js')
+      console.log('sharedWorker create')
+      this.sharedWorker.port.onmessage = evt => {
+        console.log('sharedWorker.onmessage: ', evt.data)
+      }
+      this.sharedWorker.port.addEventListener('message', evt => {
+        console.log('sharedWorker.addEventListener: ', evt.data)
+      })
+    },
+
+    stopSharedWorker() {
+      if (this.sharedWorker) {
+        this.sharedWorker.port.close()
+        console.log('sharedWorker terminate')
+      }
+    },
+
+    sendMsgToSharedWorker() {
+      if (this.sharedWorker) this.sharedWorker.port.postMessage({from: 'page3', to: 'sharedWorker'})
     },
   },
 }

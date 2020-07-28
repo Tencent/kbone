@@ -1,10 +1,14 @@
 <template>
   <div class="cnt">
     <Header></Header>
-    <a href="/page2.html">当前页跳转</a>
-    <a href="/page3.html" target="_blank">新开页面跳转</a>
-    <button @click="onClickJump">当前页跳转</button>
-    <button @click="onClickOpen">新开页面跳转</button>
+    <a href="/page2.html" target="_blank">打开 page2</a>
+    <a href="/page3.html" target="_blank">打开 page3</a>
+    <button @click="createWorker">创建 worker</button>
+    <button @click="stopWorker">关闭 worker</button>
+    <button @click="sendMsgToWorker">发送信息给 worker</button>
+    <button @click="createSharedWorker">创建 sharedWorker</button>
+    <button @click="stopSharedWorker">关闭 sharedWorker</button>
+    <button @click="sendMsgToSharedWorker">发送信息给 worker</button>
     <Footer></Footer>
   </div>
 </template>
@@ -19,19 +23,49 @@ export default {
     Header,
     Footer
   },
-  mounted() {
-    // cookie
-    console.log('before set cookie [page1]', document.cookie)
-    document.cookie = `time=${+new Date()}; expires=Wed Jan 01 2220 00:00:00 GMT+0800; path=/`
-    console.log('after set cookie [page1]', document.cookie)
-  },
   methods: {
-    onClickJump() {
-      window.location.href = '/page2.html'
+    createWorker() {
+      this.worker = new Worker('./worker.js')
+      console.log('worker create')
+      this.worker.onmessage = evt => {
+        console.log('worker.onmessage: ', evt.data)
+      }
+      this.worker.addEventListener('message', evt => {
+        console.log('worker.addEventListener: ', evt.data)
+      })
     },
 
-    onClickOpen() {
-      window.open('/page3.html')
+    stopWorker() {
+      if (this.worker) {
+        this.worker.terminate()
+        console.log('worker terminate')
+      }
+    },
+
+    sendMsgToWorker() {
+      if (this.worker) this.worker.postMessage({from: 'page1', to: 'worker'})
+    },
+
+    createSharedWorker() {
+      this.sharedWorker = new SharedWorker('./sharedWorker.js')
+      console.log('sharedWorker create')
+      this.sharedWorker.port.onmessage = evt => {
+        console.log('sharedWorker.onmessage: ', evt.data)
+      }
+      this.sharedWorker.port.addEventListener('message', evt => {
+        console.log('sharedWorker.addEventListener: ', evt.data)
+      })
+    },
+
+    stopSharedWorker() {
+      if (this.sharedWorker) {
+        this.sharedWorker.port.close()
+        console.log('sharedWorker terminate')
+      }
+    },
+
+    sendMsgToSharedWorker() {
+      if (this.sharedWorker) this.sharedWorker.port.postMessage({from: 'page1', to: 'sharedWorker'})
     },
   },
 }
