@@ -12,7 +12,8 @@ const {
 function checkComponentAttr({props = []}, name, domNode, destData, oldData) {
     if (props.length) {
         for (const name of props) {
-            const newValue = domNode.getAttribute(name)
+            let newValue = domNode.getAttribute(name)
+            newValue = newValue !== undefined ? newValue : null
             if (!oldData || oldData[name] !== newValue) destData[name] = newValue
         }
     }
