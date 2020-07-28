@@ -1,5 +1,9 @@
 # 更新日志
 
+## 2.0.10
+
+* 修复 cloneNode 没有复制 attribute 对象的问题
+
 ## 2.0.9
 
 * 支持特殊属性 kbone-attribute-map/kbone-event-map

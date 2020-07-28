@@ -327,6 +327,8 @@ test('element: cloneNode', () => {
     node1.className = 'a b c'
     node1.style.display = 'block'
     node1.style.background = 'red'
+    node1.setAttribute('test', 123)
+    node1.setAttribute('mode', 'clone')
     const node2 = document.createElement('article')
     const node3 = document.createElement('span')
     const node4 = document.createElement('nav')
@@ -345,6 +347,8 @@ test('element: cloneNode', () => {
     expect(node7.id).toBe(node1.id)
     expect(node7.className).toBe(node1.className)
     expect(node7.style.cssText).toBe(node1.style.cssText)
+    expect(node7.getAttribute('test')).toBe(node1.getAttribute('test'))
+    expect(node7.getAttribute('mode')).toBe('clone')
     expect(node7.childNodes.length).toBe(0)
 
     const node8 = node1.cloneNode(true)
@@ -354,6 +358,8 @@ test('element: cloneNode', () => {
     expect(node8.id).toBe(node1.id)
     expect(node8.className).toBe(node1.className)
     expect(node8.style.cssText).toBe(node1.style.cssText)
+    expect(node8.getAttribute('test')).toBe(node1.getAttribute('test'))
+    expect(node8.getAttribute('mode')).toBe('clone')
     expect(node8.childNodes.length).toBe(node1.childNodes.length)
     expect(node8.childNodes[0]).not.toBe(node1.childNodes[0])
     expect(node8.childNodes[0].tagName).toBe(node1.childNodes[0].tagName)

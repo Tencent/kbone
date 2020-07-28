@@ -65,6 +65,13 @@ class Attribute {
     }
 
     /**
+     * 属性映射表
+     */
+    get map() {
+        return this.$_map
+    }
+
+    /**
      * 属性列表，需要动态更新
      */
     get list() {

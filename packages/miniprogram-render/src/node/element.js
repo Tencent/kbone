@@ -706,6 +706,12 @@ class Element extends Node {
             nodeId: `b-${tool.getId()}`, // 运行时生成，使用 b- 前缀
         })
 
+        // 属性
+        if (this.$__attrs) {
+            const attrsMap = this.$_attrs.map
+            Object.keys(attrsMap).forEach(attrName => newNode.setAttribute(attrName, attrsMap[attrName]))
+        }
+
         if (deep) {
             // 深克隆
             for (const child of this.$_children) {
