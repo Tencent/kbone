@@ -70,35 +70,33 @@ module.exports = {
         ] : [],
     },
     module: {
-        rules: [
-            {
-                test: /\.css$/,
-                use: [
-                    MiniCssExtractPlugin.loader,
-                    'css-loader'
-                ],
-            },
-            {
-                test: /\.vue$/,
-                loader: [
-                    'vue-loader',
-                ],
-            },
-            {
-                test: /\.js$/,
-                use: [
-                    'babel-loader'
-                ],
-                exclude: /node_modules/
-            },
-            {
-                test: /\.(png|jpg|gif|svg)$/,
-                loader: 'file-loader',
-                options: {
-                    name: '[name].[ext]?[hash]'
-                }
+        rules: [{
+            test: /\.css$/,
+            use: [
+                MiniCssExtractPlugin.loader,
+                'css-loader'
+            ],
+        }, {
+            test: /\.vue$/,
+            loader: [
+                'vue-loader',
+            ],
+        },  {
+            test: /normal\.worker\.js$/,
+            use: ['worker-loader', 'babel-loader'],
+        }, {
+            test: /\.js$/,
+            use: [
+                'babel-loader'
+            ],
+            exclude: /node_modules/
+        }, {
+            test: /\.(png|jpg|gif|svg)$/,
+            loader: 'file-loader',
+            options: {
+                name: '[name].[ext]?[hash]'
             }
-        ]
+        }]
     },
     resolve: {
         extensions: ['*', '.js', '.vue', '.json']

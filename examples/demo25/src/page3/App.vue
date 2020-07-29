@@ -23,7 +23,7 @@ export default {
   },
   methods: {
     createWorker() {
-      this.worker = new Worker('./worker.js')
+      this.worker = new Worker('../worker/worker.js', {type:'module'})
       console.log('worker create')
       this.worker.onmessage = evt => {
         console.log('worker.onmessage: ', evt.data)
@@ -45,7 +45,7 @@ export default {
     },
 
     createSharedWorker() {
-      this.sharedWorker = new SharedWorker('./sharedWorker.js')
+      this.sharedWorker = new SharedWorker('../worker/sharedWorker.js', {type:'module'})
       console.log('sharedWorker create')
       this.sharedWorker.port.onmessage = evt => {
         console.log('sharedWorker.onmessage: ', evt.data)

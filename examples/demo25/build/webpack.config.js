@@ -1,7 +1,8 @@
 const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const { VueLoaderPlugin } = require('vue-loader')
+const {VueLoaderPlugin} = require('vue-loader')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const WorkerPlugin = require('worker-plugin')
 
 module.exports = {
   mode: 'production',
@@ -9,10 +10,6 @@ module.exports = {
     page1: path.resolve(__dirname, '../src/page1/main.js'),
     page2: path.resolve(__dirname, '../src/page2/main.js'),
     page3: path.resolve(__dirname, '../src/page3/main.js'),
-    
-    // TODO：worker-loader 暂时还不支持 sharedWorker 目前
-    worker: path.resolve(__dirname, '../src/worker/worker.js'),
-    sharedWorker: path.resolve(__dirname, '../src/worker/shared.worker.js'),
   },
   output: {
     path: path.resolve(__dirname, '../dist/web'),
@@ -20,6 +17,30 @@ module.exports = {
     filename: '[name].js'
   },
   target: 'web',
+  optimization: {
+    runtimeChunk: false,
+    splitChunks: {
+      chunks: 'all',
+      minSize: 1000,
+      maxSize: 0,
+      minChunks: 1,
+      maxAsyncRequests: 100,
+      maxInitialRequests: 100,
+      automaticNameDelimiter: '~',
+      name: true,
+      cacheGroups: {
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10
+        },
+        default: {
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true
+        }
+      }
+    },
+  },
   module: {
     rules: [{
       test: /\.css$/,
@@ -64,6 +85,9 @@ module.exports = {
       filename: 'page3.html',
       chunks: ['page3'],
       template: path.join(__dirname, '../index.html')
+    }),
+    new WorkerPlugin({
+      sharedWorker: true,
     }),
   ],
 }
