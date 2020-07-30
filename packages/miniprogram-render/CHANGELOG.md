@@ -3,6 +3,7 @@
 ## 2.0.11
 
 * 支持 worker/sharedWorker
+* 修复 dom 查找 api 不支持 html 标签的问题
 
 ## 2.0.10
 

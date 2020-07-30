@@ -336,6 +336,13 @@ class Element extends Node {
     }
 
     /**
+     * 获取子节点列表
+     */
+    get $$children() {
+        return this.$_children
+    }
+
+    /**
      * 调用 $_generateHtml 接口时用于处理额外的属性
      */
     $$dealWithAttrsForGenerateHtml(html) {

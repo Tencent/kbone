@@ -109,6 +109,7 @@ class Document extends EventTarget {
 
         // 更新 body 的 parentNode
         this.$_tree.root.$$updateParent(this.$_node)
+        this.$_node.$$children.push(this.$_tree.root)
 
         // 持久化 cookie
         if (cookieStore !== 'memory' && cookieStore !== 'globalmemory') {
@@ -306,31 +307,31 @@ class Document extends EventTarget {
     getElementsByTagName(tagName) {
         if (typeof tagName !== 'string') return []
 
-        return this.$_tree.getByTagName(tagName)
+        return this.$_tree.getByTagName(tagName, this.documentElement)
     }
 
     getElementsByClassName(className) {
         if (typeof className !== 'string') return []
 
-        return this.$_tree.getByClassName(className)
+        return this.$_tree.getByClassName(className, this.documentElement)
     }
 
     getElementsByName(name) {
         if (typeof name !== 'string') return []
 
-        return this.$_tree.query(`*[name=${name}]`)
+        return this.$_tree.query(`*[name=${name}]`, this.documentElement)
     }
 
     querySelector(selector) {
         if (typeof selector !== 'string') return
 
-        return this.$_tree.query(selector)[0] || null
+        return this.$_tree.query(selector, this.documentElement)[0] || null
     }
 
     querySelectorAll(selector) {
         if (typeof selector !== 'string') return []
 
-        return this.$_tree.query(selector)
+        return this.$_tree.query(selector, this.documentElement)
     }
 
     createElement(tagName) {

@@ -57,6 +57,9 @@ test('document: cookie', () => {
 })
 
 test('document: getElementById', () => {
+    document.documentElement.id = 'html'
+    expect(document.getElementById('html')).toBe(document.documentElement)
+
     const node1 = document.getElementById('bb')
     expect(node1).toBeInstanceOf(Element)
     expect(node1.tagName).toBe('DIV')
@@ -71,6 +74,8 @@ test('document: getElementById', () => {
 })
 
 test('document: getElementsByTagName', () => {
+    expect(document.getElementsByTagName('html')[0]).toBe(document.documentElement)
+
     const nodes = document.getElementsByTagName('span')
     expect(nodes.length).toBe(3)
     expect(nodes[0]).toBeInstanceOf(Element)
@@ -82,6 +87,9 @@ test('document: getElementsByTagName', () => {
 })
 
 test('document: getElementsByClassName', () => {
+    document.documentElement.classList.add('html')
+    expect(document.getElementsByClassName('html')[0]).toBe(document.documentElement)
+
     const nodes = document.getElementsByClassName('bb4')
     expect(nodes.length).toBe(3)
     expect(nodes[0]).toBeInstanceOf(Element)
@@ -106,6 +114,8 @@ test('document: getElementsByName', () => {
 })
 
 test('document: querySelector', () => {
+    expect(document.querySelector('html')).toBe(document.documentElement)
+
     const node1 = document.querySelector('#bb')
     expect(node1).toBeInstanceOf(Element)
     expect(node1.tagName).toBe('DIV')
@@ -118,9 +128,12 @@ test('document: querySelector', () => {
 
     expect(document.querySelector('#aa')).toBe(null)
     expect(document.querySelector('body')).toBe(document.body)
+    expect(document.querySelector('html body')).toBe(document.body)
 })
 
 test('document: querySelectorAll', () => {
+    expect(document.querySelectorAll('html')[0]).toBe(document.documentElement)
+
     const nodes = document.querySelectorAll('#bb .bb4')
     expect(nodes.length).toBe(3)
     expect(nodes[0]).toBeInstanceOf(Element)
@@ -131,6 +144,7 @@ test('document: querySelectorAll', () => {
     expect(nodes[2]).toBeInstanceOf(Element)
     expect(nodes[2].tagName).toBe('SPAN')
 
+    expect(document.querySelectorAll('html #bb .bb4').length).toBe(3)
     expect(document.querySelectorAll('#aa').length).toBe(0)
 })
 
