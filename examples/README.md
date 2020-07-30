@@ -71,3 +71,4 @@ npm install
 * demo23：vue + vue-router（hash mode）
 * demo24：react + 多页
 * demo25：vue + worker + sharedWorker
+* demo26：vue3（beta）

@@ -134,3 +134,8 @@
 * 分包
 * worker
 * sharedWorker
+
+## demo26
+
+* vue3
+* 多页

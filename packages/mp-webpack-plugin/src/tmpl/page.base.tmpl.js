@@ -217,7 +217,10 @@ module.exports = function(mp, config, init) {
             this.document.$$visibilityState = 'unloaded'
             this.window.$$trigger('beforeunload')
             this.window.$$trigger('wxunload')
-            if (this.app && this.app.$destroy) this.app.$destroy()
+            if (this.app) {
+                if (this.app.$destroy) this.app.$destroy()
+                if (this.app.unmount) this.app.unmount()
+            }
             this.document.body.$$recycle() // 回收 dom 节点
             this.window.$$destroy()
 
