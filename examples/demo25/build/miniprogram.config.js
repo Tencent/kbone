@@ -10,6 +10,12 @@ module.exports = {
 		notFound: 'page1',		
 		accessDenied: 'page1',
 	},
+	generate: {
+		worker: true,
+		subpackages: {
+			package1: ['page3'],
+		},
+	},
 	runtime: {
 		cookieStore: 'globalstorage',
 	},

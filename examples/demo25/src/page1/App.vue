@@ -8,7 +8,7 @@
     <button @click="sendMsgToWorker">发送信息给 worker</button>
     <button @click="createSharedWorker">创建 sharedWorker</button>
     <button @click="stopSharedWorker">关闭 sharedWorker</button>
-    <button @click="sendMsgToSharedWorker">发送信息给 worker</button>
+    <button @click="sendMsgToSharedWorker">发送信息给 sharedWorker</button>
     <Footer></Footer>
   </div>
 </template>
@@ -16,6 +16,8 @@
 <script>
 import Header from '../common/Header.vue'
 import Footer from '../common/Footer.vue'
+import MyWorker from '../worker/worker'
+import MySharedWorker from '../worker/sharedWorker'
 
 export default {
   name: 'App',
@@ -25,13 +27,13 @@ export default {
   },
   methods: {
     createWorker() {
-      this.worker = new Worker('../worker/worker.js', {type:'module'})
+      this.worker = new MyWorker()
       console.log('worker create')
       this.worker.onmessage = evt => {
-        console.log('worker.onmessage: ', evt.data)
+        console.log('worker.onmessage: ', evt, evt.data)
       }
       this.worker.addEventListener('message', evt => {
-        console.log('worker.addEventListener: ', evt.data)
+        console.log('worker.addEventListener: ', evt, evt.data)
       })
     },
 
@@ -47,13 +49,13 @@ export default {
     },
 
     createSharedWorker() {
-      this.sharedWorker = new SharedWorker('../worker/sharedWorker.js', {type:'module'})
+      this.sharedWorker = new SharedWorker(MySharedWorker.toString().match(/"(.*?)"/)[1])
       console.log('sharedWorker create')
       this.sharedWorker.port.onmessage = evt => {
-        console.log('sharedWorker.onmessage: ', evt.data)
+        console.log('sharedWorker.onmessage: ', evt, evt.data)
       }
       this.sharedWorker.port.addEventListener('message', evt => {
-        console.log('sharedWorker.addEventListener: ', evt.data)
+        console.log('sharedWorker.addEventListener: ', evt, evt.data)
       })
     },
 

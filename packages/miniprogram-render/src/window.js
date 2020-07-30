@@ -7,8 +7,8 @@ const Navigator = require('./bom/navigator')
 const Screen = require('./bom/screen')
 const History = require('./bom/history')
 const Miniprogram = require('./bom/miniprogram')
-const LocalStorage = require('./bom/local-storage')
-const SessionStorage = require('./bom/session-storage')
+const {SessionStorage, LocalStorage} = require('./bom/storage')
+const WorkerImpl = require('./bom/worker')
 const Performance = require('./bom/performance')
 const OriginalXMLHttpRequest = require('./bom/xml-http-request')
 const Node = require('./node/node')
@@ -44,6 +44,7 @@ class Window extends EventTarget {
     constructor(pageId) {
         super()
 
+        const config = cache.getConfig()
         const timeOrigin = +new Date()
         const that = this
 
@@ -80,10 +81,10 @@ class Window extends EventTarget {
                 super(name, options)
             }
         }
-        this.$_xmlHttpRequestConstructor = class XMLHttpRequest extends OriginalXMLHttpRequest {
-            constructor() {
-                super(that)
-            }
+        this.$_xmlHttpRequestConstructor = class XMLHttpRequest extends OriginalXMLHttpRequest {constructor() { super(that) }}
+        if (config.generate && config.generate.worker) {
+            this.$_workerConstructor = class Worker extends WorkerImpl.Worker {constructor(url) { super(url, that) }}
+            this.$_sharedWorkerConstructor = class SharedWorker extends WorkerImpl.SharedWorker {constructor(url) { super(url, that) }}
         }
 
         // react 环境兼容
@@ -213,6 +214,7 @@ class Window extends EventTarget {
 
         const pageId = this.$_pageId
 
+        WorkerImpl.destroy(pageId)
         Object.keys(subscribeMap).forEach(name => {
             const handlersMap = subscribeMap[name]
             if (handlersMap[pageId]) handlersMap[pageId] = null
@@ -607,6 +609,14 @@ class Window extends EventTarget {
 
     get XMLHttpRequest() {
         return this.$_xmlHttpRequestConstructor
+    }
+
+    get Worker() {
+        return this.$_workerConstructor
+    }
+
+    get SharedWorker() {
+        return this.$_sharedWorkerConstructor
     }
 
     open(url) {

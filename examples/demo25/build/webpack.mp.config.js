@@ -81,9 +81,22 @@ module.exports = {
             loader: [
                 'vue-loader',
             ],
-        },  {
-            test: /normal\.worker\.js$/,
-            use: ['worker-loader', 'babel-loader'],
+        }, {
+            test: /sharedWorker\.js$/,
+            use: [{
+                loader: 'worker-loader',
+                options: {
+                    name: 'workers/[hash].worker.js',
+                },
+            }, 'babel-loader'],
+        }, {
+            test: /worker\.js$/,
+            use: [{
+                loader: 'worker-loader',
+                options: {
+                    name: 'workers/[hash].worker.js',
+                },
+            }, 'babel-loader'],
         }, {
             test: /\.js$/,
             use: [

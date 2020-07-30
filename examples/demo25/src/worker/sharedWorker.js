@@ -5,8 +5,8 @@ onconnect = evt => {
 
     port.addEventListener('message', evt => {
         count++
-        console.log(`sharedWorker receive message(${count}): `, evt.data)
-        port.postMessage({from: 'sharedWorker', to: evt.data.from})
+        console.log(`sharedWorker receive message(${count}): `, evt, evt.data)
+        port.postMessage({from: 'sharedWorker', to: evt.data.from, count})
     })
 
     port.start()

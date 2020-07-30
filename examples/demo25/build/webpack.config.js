@@ -2,7 +2,6 @@ const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const {VueLoaderPlugin} = require('vue-loader')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const WorkerPlugin = require('worker-plugin')
 
 module.exports = {
   mode: 'production',
@@ -52,6 +51,12 @@ module.exports = {
       test: /\.vue$/,
       loader: 'vue-loader',
     }, {
+      test: /sharedWorker\.js$/,
+      use: ['worker-loader', 'babel-loader'],
+    }, {
+      test: /worker\.js$/,
+      use: ['worker-loader', 'babel-loader'],
+    }, {
       test: /\.js$/,
       loader: 'babel-loader',
       exclude: /node_modules/
@@ -85,9 +90,6 @@ module.exports = {
       filename: 'page3.html',
       chunks: ['page3'],
       template: path.join(__dirname, '../index.html')
-    }),
-    new WorkerPlugin({
-      sharedWorker: true,
     }),
   ],
 }

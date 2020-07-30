@@ -131,5 +131,6 @@
 
 * vue
 * 多页
+* 分包
 * worker
 * sharedWorker

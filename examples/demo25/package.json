@@ -29,6 +29,6 @@
     "vue-template-compiler": "^2.6.10",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.2.3",
-    "worker-plugin": "^4.0.3"
+    "worker-loader": "^2.0.0"
   }
 }

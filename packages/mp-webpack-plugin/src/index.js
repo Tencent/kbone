@@ -13,6 +13,7 @@ const PluginName = 'MpPlugin'
 const appJsTmpl = fs.readFileSync(path.resolve(__dirname, './tmpl/app.tmpl.js'), 'utf8')
 const pageBaseJsTmpl = fs.readFileSync(path.resolve(__dirname, './tmpl/page.base.tmpl.js'), 'utf8')
 const pageJsTmpl = fs.readFileSync(path.resolve(__dirname, './tmpl/page.tmpl.js'), 'utf8')
+const workerJsTmpl = fs.readFileSync(path.resolve(__dirname, './tmpl/worker.tmpl.js'), 'utf8')
 const appDisplayWxssTmpl = fs.readFileSync(path.resolve(__dirname, './tmpl/app.display.tmpl.wxss'), 'utf8')
 const appExtraWxssTmpl = fs.readFileSync(path.resolve(__dirname, './tmpl/app.extra.tmpl.wxss'), 'utf8')
 const appWxssTmpl = fs.readFileSync(path.resolve(__dirname, './tmpl/app.tmpl.wxss'), 'utf8')
@@ -38,6 +39,8 @@ const globalVars = [
     'cancelAnimationFrame',
     'getComputedStyle',
     'XMLHttpRequest',
+    'Worker',
+    'SharedWorker',
 ]
 
 /**
@@ -53,10 +56,19 @@ function addFile(compilation, filename, content) {
 /**
  * 给 chunk 头尾追加内容
  */
-function wrapChunks(compilation, chunks, globalVarsConfig) {
+function wrapChunks(compilation, chunks, globalVarsConfig, workerConfig) {
     chunks.forEach(chunk => {
         chunk.files.forEach(fileName => {
-            if (ModuleFilenameHelpers.matchObject({test: /\.js$/}, fileName)) {
+            if (workerConfig) {
+                if (typeof workerConfig !== 'string') workerConfig = 'common/workers'
+                workerConfig = path.relative('common', workerConfig)
+            }
+            if (workerConfig && ModuleFilenameHelpers.matchObject({test: new RegExp(`${workerConfig}/(.)*.js$`)}, fileName)) {
+                // web worker js
+                const headerContent = workerJsTmpl.replace(/[\r\n\t\s]+/, ' ')
+
+                compilation.assets[fileName] = new ConcatSource('(function(){', headerContent, compilation.assets[fileName], '})()')
+            } else if (ModuleFilenameHelpers.matchObject({test: /\.js$/}, fileName)) {
                 // 页面 js
                 const headerContent = 'module.exports = function(window, document) {var App = function(options) {window.appOptions = options};' + globalVars.map(item => `var ${item} = window.${item}`).join(';') + ';'
                 let customHeaderContent = globalVarsConfig.map(item => `var ${item[0]} = ${item[1] ? item[1] : 'window[\'' + item[0] + '\']'}`).join(';')
@@ -270,6 +282,7 @@ class MpPlugin {
             const appConfig = generateConfig.app || 'default'
             const isEmitApp = appConfig !== 'noemit'
             const isEmitProjectConfig = appConfig !== 'noconfig'
+            let workersDir = 'common/workers'
 
             if (isEmitApp) {
                 // app js
@@ -316,6 +329,7 @@ class MpPlugin {
                     ...userAppJson,
                 }
                 if (tabBarConfig.list && tabBarConfig.list.length) {
+                    // tabBar
                     const tabBar = Object.assign({}, tabBarConfig)
                     tabBar.list = tabBarConfig.list.map(item => {
                         const iconPathName = item.iconPath ? _.md5File(item.iconPath) + path.extname(item.iconPath) : ''
@@ -341,6 +355,11 @@ class MpPlugin {
                     }
 
                     appJson.tabBar = tabBar
+                }
+                if (generateConfig.worker) {
+                    // workers
+                    workersDir = typeof generateConfig.worker === 'string' ? generateConfig.worker : workersDir
+                    appJson.workers = workersDir
                 }
                 const appJsonContent = JSON.stringify(appJson, null, '\t')
                 addFile(compilation, '../app.json', appJsonContent)
@@ -392,6 +411,7 @@ class MpPlugin {
                 origin: options.origin || 'https://miniprogram.default',
                 entry: options.entry || '/',
                 router,
+                generate: {worker: workersDir},
                 runtime: Object.assign({
                     subpackagesMap,
                     tabBarMap,
@@ -455,13 +475,12 @@ class MpPlugin {
         compiler.hooks.compilation.tap(PluginName, compilation => {
             // 处理头尾追加内容
             const globalVarsConfig = generateConfig.globalVars || []
+            const workerConfig = generateConfig.worker
             if (this.afterOptimizations) {
-                compilation.hooks.afterOptimizeChunkAssets.tap(PluginName, chunks => {
-                    wrapChunks(compilation, chunks, globalVarsConfig)
-                })
+                compilation.hooks.afterOptimizeChunkAssets.tap(PluginName, chunks => wrapChunks(compilation, chunks, globalVarsConfig, workerConfig))
             } else {
                 compilation.hooks.optimizeChunkAssets.tapAsync(PluginName, (chunks, callback) => {
-                    wrapChunks(compilation, chunks, globalVarsConfig)
+                    wrapChunks(compilation, chunks, globalVarsConfig, workerConfig)
                     callback()
                 })
             }

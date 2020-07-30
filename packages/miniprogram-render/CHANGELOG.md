@@ -1,5 +1,9 @@
 # 更新日志
 
+## 2.0.11
+
+* 支持 worker/sharedWorker
+
 ## 2.0.10
 
 * 修复 cloneNode 没有复制 attribute 对象的问题

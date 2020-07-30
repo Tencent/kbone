@@ -1,5 +1,9 @@
 # 更新日志
 
+## 1.1.6
+
+* 支持 worker/sharedWorker
+
 ## 1.1.4
 
 * 支持第三方自定义组件/自定义 tabbar/loading view 目录的 watch
