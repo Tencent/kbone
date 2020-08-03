@@ -8,6 +8,7 @@
     <button @click="onClickOpen">新开页面跳转</button>
     <button @click="onClickSpa">打开 spa 页面</button>
     <button @click="onClickPromiseReject">promise reject 模拟</button>
+    <a href="/waterfall">前往瀑布流页面</a>
     <Footer></Footer>
   </div>
 </template>

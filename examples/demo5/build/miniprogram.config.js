@@ -10,6 +10,7 @@ module.exports = {
 			'/spa/a',
 			'/spa/c',
 		],
+		page5: ['/waterfall'],
 	},	
 	redirect: {		
 		notFound: 'page1',		
@@ -35,10 +36,23 @@ module.exports = {
 				navigationBarTitleText: 'page1',
 			},
 		},
+		page5: {
+			reachBottom: true,
+		},
 	},
 	projectConfig: {
 		appid: '',
-        projectname: 'kbone-demo5',
+		projectname: 'kbone-demo5',
+		condition: {
+			miniprogram: {
+				list: [{
+					id: -1,
+					name: 'waterfall',
+					pathName: 'pages/page5/index',
+					query: `type=open&targeturl=${encodeURIComponent('/waterfall')}`,
+				}],
+			},
+		},
 	},
 	packageConfig: {
 		author: 'wechat-miniprogram',

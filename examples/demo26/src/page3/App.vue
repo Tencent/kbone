@@ -12,7 +12,6 @@ import Header from '../common/Header.vue'
 import Footer from '../common/Footer.vue'
 
 export default {
-  name: 'App',
   components: {
     Header,
     Footer
@@ -25,13 +24,14 @@ export default {
     Vue.onUnmounted(() => {
       console.log('page3 unmounted')
     })
-  },
-  methods: {
-    onClickBack() {
-      if (process.env.isMiniprogram) {
-        wx.navigateBack()
-      }
-    },
+
+    return {
+      onClickBack() {
+        if (process.env.isMiniprogram) {
+          wx.navigateBack()
+        }
+      },
+    }
   },
 }
 </script>

@@ -13,7 +13,6 @@ import Header from '../common/Header.vue'
 import Footer from '../common/Footer.vue'
 
 export default {
-  name: 'App',
   components: {
     Header,
     Footer
@@ -26,11 +25,12 @@ export default {
     Vue.onUnmounted(() => {
       console.log('page2 unmounted')
     })
-  },
-  methods: {
-    onClickJump() {
-      window.location.href = '/a'
-    },
+
+    return {
+      onClickJump() {
+        window.location.href = '/a'
+      },
+    }
   },
 }
 </script>

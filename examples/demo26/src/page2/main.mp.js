@@ -6,9 +6,7 @@ export default function createApp() {
   container.id = 'app'
   document.body.appendChild(container)
 
-  const app = Vue.createApp({
-    render: () => Vue.h(App)
-  })
+  const app = Vue.createApp(App)
   app.mount('#app')
   return app
 }

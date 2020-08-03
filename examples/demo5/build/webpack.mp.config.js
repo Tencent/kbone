@@ -17,6 +17,7 @@ module.exports = {
         page2: path.resolve(__dirname, '../src/page2/main.mp.js'),
         page3: path.resolve(__dirname, '../src/page3/main.mp.js'),
         page4: path.resolve(__dirname, '../src/page4/main.mp.js'),
+        page5: path.resolve(__dirname, '../src/page5/main.mp.js'),
     },
     output: {
         path: path.resolve(__dirname, '../dist/mp/common'), // 放到小程序代码目录中的 common 目录下

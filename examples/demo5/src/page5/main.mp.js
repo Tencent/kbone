@@ -1,4 +1,4 @@
-import * as Vue from 'vue'
+import Vue from 'vue'
 import App from './App.vue'
 
 export default function createApp() {
@@ -6,7 +6,8 @@ export default function createApp() {
   container.id = 'app'
   document.body.appendChild(container)
 
-  const app = Vue.createApp(App)
-  app.mount('#app')
-  return app
+  return new Vue({
+    el: '#app',
+    render: h => h(App)
+  })
 }
