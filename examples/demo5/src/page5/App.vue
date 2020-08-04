@@ -1,7 +1,8 @@
 <template>
   <div class="cnt">
-    <div class="item" v-for="(item, index) in list" :key="index">
-      <div class="head">{{index + 1}}</div>
+    <button @click="bigUpdate">大更新</button>
+    <div class="item" v-for="item in list" :key="item">
+      <div class="head" :class="{green: item > 1000, red: item > 10000}">{{item}}</div>
       <div class="info">
         <div class="line"></div>
         <div class="line"></div>
@@ -21,19 +22,44 @@ export default {
     }
   },
   created() {
-    for (let i = 0; i < 50; i++) this.list.push(i)
+    // 初始是全量更新
+    let key = 0
+    for (let i = 0; i < 50; i++) this.list.push(++key)
 
     window.addEventListener('reachbottom', () => {
-      for (let i = 0; i < 5; i++) this.list.push(i)
+      // 局部更新
+      for (let i = 1, len = this.list.length; i <= 5; i++) {
+        if (i === 5 || i === 1) this.list[len - i] += 10000 // 修改
+        if (i === 2) this.list.splice(len - i, 1) // 删除
+      }
+      for (let i = 0; i < 5; i++) this.list.push(++key) // 追加
     })
   },
-  methods: {},
+  methods: {
+    bigUpdate() {
+      // 触发全量更新
+      for (let i = 0; i < 50; i++) this.list[i] += 1000 // 修改
+      for (let i = 0, len = this.list.length; i < 50; i++) this.list.push(i + len)
+
+    },
+  },
 }
 </script>
 
 <style>
 html {
   background-color: #eee;
+}
+button {
+  display: block;
+  width: 100%;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  font-size: 20px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  margin-bottom: 20px;
 }
 .cnt {
   margin-top: 20px;
@@ -54,6 +80,12 @@ html {
   font-size: 16px;
   text-align: center;
   line-height: 80px;
+}
+.green {
+  background-color: green;
+}
+.red {
+  background-color: red;
 }
 .info {
   flex: 1;

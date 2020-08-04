@@ -40,6 +40,9 @@ module.exports = {
 			reachBottom: true,
 		},
 	},
+	optimization: {
+		// setDataMode: 'original',
+	},
 	projectConfig: {
 		appid: '',
 		projectname: 'kbone-demo5',

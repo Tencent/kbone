@@ -26,6 +26,8 @@ const RELATION_CHILD = ['swiper-item', 'movable-view', 'picker-view-column']
 const NEET_RENDER_TO_CUSTOM_ELEMENT = ['IFRAME', ...NEET_SPLIT_CLASS_STYLE_FROM_CUSTOM_ELEMENT] // 必须渲染成自定义组件的节点
 const USE_TEMPLATE = ['cover-image', 'cover-view', 'match-media', 'movable-area', 'movable-view', 'scroll-view', 'swiper', 'swiper-item', 'icon', 'progress', 'rich-text', 'text', 'button', 'editor', 'form', 'INPUT', 'picker', 'SELECT', 'picker-view', 'picker-view-column', 'slider', 'switch', 'TEXTAREA', 'navigator', 'camera', 'image', 'live-player', 'live-pusher', 'VIDEO', 'voip-room', 'map', 'CANVAS', 'ad', 'official-account', 'open-data', 'web-view', 'capture', 'catch', 'animation', 'not-support', 'WX-CUSTOM-COMPONENT'] // 使用 template 渲染
 
+const hasOwnProperty = Object.prototype.hasOwnProperty
+
 /**
  * 过滤子节点，只获取儿子节点
  */
@@ -62,8 +64,15 @@ function filterNodes(domNode, level, component) {
                 // 补充该内置组件的属性
                 const {properties} = wxSubComponentMap[child.behavior] || {}
                 if (properties && properties.length) {
-                    properties.forEach(({name, get}) => {
-                        domInfo.extra[name] = get(child)
+                    properties.forEach(({name, get, canBeUserChanged = false}) => {
+                        const newValue = get(child)
+                        domInfo.extra[name] = newValue
+
+                        if (canBeUserChanged) {
+                            // 可被用户行为改变的属性，除了 data 外，还需要对比监听到上次用户行为修改的值
+                            const oldValues = child._oldValues
+                            if (oldValues && !isEqual(newValue, oldValues[name])) domInfo.extra.forceUpdate = true // 避免被 diff 掉，需要强制更新
+                        }
                     })
                 }
 
@@ -223,6 +232,93 @@ function checkDiffChildNodes(newChildNodes, oldChildNodes) {
 }
 
 /**
+ * 获取新旧子节点的更新数据
+ */
+function getDiffChildNodes(newItem, oldItem, destData, prefix, isExtra) {
+    const newType = typeof newItem
+    const oldType = typeof oldItem
+    const countLimit = 100
+
+    if (newType === 'object' && oldType === 'object') {
+        const newIsArray = Array.isArray(newItem)
+        const oldIsArray = Array.isArray(oldItem)
+
+        if (newIsArray && oldIsArray) {
+            // 数组
+            if (newItem.length < oldItem.length) {
+                // 存在数据删除，无法应用 data path
+                destData[prefix] = newItem
+                if ((destData.count++) > countLimit) return true
+            } else {
+                for (let i = 0, len = newItem.length; i < len; i++) {
+                    const isInterrupt = getDiffChildNodes(newItem[i], oldItem[i], destData, `${prefix}[${i}]`)
+                    if (isInterrupt) return true
+                }
+            }
+        } else if (!newIsArray && !oldIsArray) {
+            // 对象
+            const newItemType = newItem.type
+            const oldItemType = oldItem.type
+            const keys = newItemType === 'element' ? ['childNodes'].concat(ELEMENT_DIFF_KEYS) : TEXT_NODE_DIFF_KEYS
+            const newIsNode = !isExtra && (newItemType === 'element' || newItemType === 'text')
+            const oldIsNode = !isExtra && (newItemType === 'element' || newItemType === 'text')
+
+            if (newIsNode && oldIsNode && newItemType === oldItemType) {
+                // 都是 element 节点，或者都是 text 节点
+                for (const key of keys) {
+                    const dataPath = `${prefix}.${key}`
+                    const isInterrupt = getDiffChildNodes(newItem[key], oldItem[key], destData, dataPath, key === 'extra')
+                    if (isInterrupt) return true
+                }
+            } else if (!newIsNode && !oldIsNode) {
+                // 普通对象
+                if (isExtra && newItem.forceUpdate) {
+                    // 需要强制更新的 extra 对象
+                    newItem.forceUpdate = false
+                    destData[prefix] = newItem
+                    if ((destData.count++) > countLimit) return true
+                } else {
+                    const newKeys = Object.keys(newItem)
+                    for (const key of newKeys) {
+                        const dataPath = `${prefix}.${key}`
+                        if (!hasOwnProperty.call(oldItem, key)) {
+                            // 新增的 key
+                            destData[dataPath] = newItem[key]
+                            if ((destData.count++) > countLimit) return true
+                        } else {
+                            const isInterrupt = getDiffChildNodes(newItem[key], oldItem[key], destData, dataPath)
+                            if (isInterrupt) return true
+                        }
+                    }
+
+                    const oldKeys = Object.keys(oldItem)
+                    for (const key of oldKeys) {
+                        const dataPath = `${prefix}.${key}`
+                        if (!hasOwnProperty.call(newItem, key)) {
+                            // 删除的 key
+                            destData[dataPath] = null
+                            if ((destData.count++) > countLimit) return true
+                        }
+                    }
+                }
+            } else {
+                // 节点类型不同
+                destData[prefix] = newItem
+                if ((destData.count++) > countLimit) return true
+            }
+        } else {
+            // 类型不同
+            destData[prefix] = newItem
+            if ((destData.count++) > countLimit) return true
+        }
+    } else if (!isEqual(newItem, oldItem)) {
+        // 值不等
+        destData[prefix] = newItem
+        if ((destData.count++) > countLimit) return true
+    }
+}
+
+/**
  * 检查组件属性
  */
 function checkComponentAttr(name, domNode, destData, oldData, extraClass = '') {
@@ -355,6 +451,7 @@ module.exports = {
     USE_TEMPLATE,
     filterNodes,
     checkDiffChildNodes,
+    getDiffChildNodes,
     checkComponentAttr,
     dealWithLeafAndSimple,
     checkEventAccessDomNode,

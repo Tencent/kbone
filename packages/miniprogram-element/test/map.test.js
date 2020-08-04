@@ -143,7 +143,7 @@ test('map', async() => {
         showScale: false, subKey: '', layerStyle: -1, enableZoom: true
     }))
     await _.sleep(10)
-    expect(_.getData(body).setting).toEqual({
+    expect(_.getData(body).setting).toMatchObject({
         showScale: false, subKey: '', layerStyle: -1, enableZoom: true
     })
 

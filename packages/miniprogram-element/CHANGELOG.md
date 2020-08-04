@@ -1,5 +1,9 @@
 # 更新日志
 
+## 2.1.0
+
+* 优化 setData
+
 ## 2.0.13
 
 * 支持 qq 小程序 button 内置组件的 share-type/share-mode 属性

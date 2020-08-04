@@ -29,6 +29,9 @@ module.exports = {
 		loadingView: path.join(__dirname, '../src/loading-view'),
 		loadingViewName: 'loading',
 	},
+	optimization: {
+		// setDataMode: 'original',
+	},
 	projectConfig: {
 		appid: '',
         projectname: 'kbone-demo3',

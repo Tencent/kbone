@@ -20,6 +20,9 @@ const {
 const MAX_DOM_SUB_TREE_LEVEL = 10
 let DOM_SUB_TREE_LEVEL = 10
 
+// setData 的模式，默认使用 data path 模式
+let isOriginalSetData = false
+
 console.warn('当前渲染模式版本：miniprogram-element@2.x 版本。\n\n2.x 版本对比 1.x 版本去除了渲染内置组件时额外引入的一层节点，此模式基于 2.11.2 基础库实现，如果在 2.11.2 版本之前的基础库环境运行，则会降级成 1.x 渲染模式。\n\n渲染过程如果升级版本过程中遇到样式错乱问题，可尝试去除使用 1.x 版本时额外追加的强依赖结构的兼容样式，也可选择退回 1.x 版本（退回版本可以使用 generate.renderVersion 和 generate.elementVersion 配置：https://wechat-miniprogram.github.io/kbone/docs/config/#generate-renderversion ，指定 tag 为 core-v1 即可）。')
 
 const version = wx.getSystemInfoSync().SDKVersion
@@ -46,6 +49,8 @@ module.exports = Behavior({
         // 根据配置重置全局变量
         const domSubTreeLevel = +config.optimization.domSubTreeLevel
         if (domSubTreeLevel >= 1 && domSubTreeLevel <= MAX_DOM_SUB_TREE_LEVEL) DOM_SUB_TREE_LEVEL = domSubTreeLevel
+
+        isOriginalSetData = config.optimization.setDataMode === 'original'
     },
     attached() {
         const nodeId = this.dataset.privateNodeId
@@ -117,10 +122,31 @@ module.exports = Behavior({
 
             // 儿子节点有变化
             const childNodes = _.filterNodes(this.domNode, DOM_SUB_TREE_LEVEL - 1, this)
-            if (_.checkDiffChildNodes(childNodes, this.data.childNodes)) {
-                this.setData({
-                    childNodes: _.dealWithLeafAndSimple(childNodes, this.onChildNodesUpdate),
-                })
+            if (isOriginalSetData) {
+                // 全量 setData
+                if (_.checkDiffChildNodes(childNodes, this.data.childNodes)) {
+                    this.setData({
+                        childNodes: _.dealWithLeafAndSimple(childNodes, this.onChildNodesUpdate),
+                    })
+                }
+            } else {
+                // 使用 data path 的模式
+                const destData = {count: 0}
+                const newChildNodes = _.dealWithLeafAndSimple(childNodes, this.onChildNodesUpdate)
+
+                if (!this.data.childNodes.length) {
+                    this.setData({childNodes: newChildNodes})
+                } else {
+                    const isInterrupt = _.getDiffChildNodes(newChildNodes, this.data.childNodes, destData, 'childNodes')
+
+                    if (isInterrupt) {
+                        // key 数量超出阈值，转为 setData 完整数据
+                        this.setData({childNodes: newChildNodes})
+                    } else if (destData.count) {
+                        delete destData.count
+                        this.setData(destData)
+                    }
+                }
             }
 
             // 触发子节点变化

@@ -2599,7 +2599,6 @@ const wxSubComponentMap = {
             },
         }],
     },
-    'picker-view-column': {},
 }
 
 const wxComponentKeys = Object.keys(wxComponentMap)

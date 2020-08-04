@@ -13,6 +13,9 @@
 	"jest": {
 		"testEnvironment": "jsdom",
 		"testURL": "https://jest.test",
+		"testMatch": [
+			"**/test/*.test.js"
+		],
 		"collectCoverageFrom": [
 			"src/**/*.js"
 		],

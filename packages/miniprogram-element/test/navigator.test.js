@@ -46,7 +46,7 @@ test('navigator', async() => {
     expect(body.data.childNodes[0].extra.extraData).toEqual({a: 123, b: 321})
     node.setAttribute('extra-data', undefined)
     await _.sleep(10)
-    expect(body.data.childNodes[0].extra.extraData).toEqual({})
+    expect(body.data.childNodes[0].extra.extraData).toEqual({a: null, b: null})
 
     // version
     await _.checkString(body, node, 'version', 'version', 'release')
