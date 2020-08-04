@@ -7,6 +7,7 @@
     <router-view></router-view>
     <button class="btn" @click="consoleGlobal">console global</button>
     <button class="btn" @click="throwError">throw an error</button>
+    <button class="btn" ref="btn" @click="updateStyle">update style</button>
     <div style="margin-left: 20px;">
       <p>这是<span>1</span>段中间插入了span的文本</p>
     </div>
@@ -61,6 +62,16 @@ export default {
       setTimeout(() => {
         throw new Error('I am an error')
       }, 0)
+    },
+
+    updateStyle() {
+      if (this.$refs.btn.style.backgroundColor === '#000') {
+        this.$refs.btn.style.backgroundColor = '#dff1e7'
+        this.$refs.btn.style.color = '#000'
+      } else {
+        this.$refs.btn.style.backgroundColor = '#000'
+        this.$refs.btn.style.color = '#fff'
+      }
     },
   },
 }
