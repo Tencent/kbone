@@ -1,6 +1,6 @@
 {
 	"name": "reduce-loader",
-	"version": "0.3.1",
+	"version": "0.3.2",
 	"description": "a tool for develop miniprogram to reduce some code",
 	"main": "src/index.js",
 	"miniprogram": "src",

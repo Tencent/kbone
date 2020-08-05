@@ -1,6 +1,6 @@
 {
 	"name": "file-wrapper-loader",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "a tool for wrapper the import file",
 	"main": "src/index.js",
 	"miniprogram": "src",
