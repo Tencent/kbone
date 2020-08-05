@@ -1,13 +1,13 @@
-# reduce-loader
+# file-wrapper-loader
 
 ## 介绍
 
-一个用于代码精简的 webpack loader，在小程序场景下构建可以去除代码中不需要的依赖。
+一个用于补充代码包裹的 webpack loader，用于在依赖代码前后注入包裹代码。
 
 ## 安装
 
 ```
-npm install --save-dev reduce-loader
+npm install --save-dev file-wrapper-loader
 ```
 
 ## 使用

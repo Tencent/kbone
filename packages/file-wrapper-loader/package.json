@@ -1,7 +1,7 @@
 {
-	"name": "reduce-loader",
-	"version": "0.3.1",
-	"description": "a tool for develop miniprogram to reduce some code",
+	"name": "file-wrapper-loader",
+	"version": "0.0.1",
+	"description": "a tool for wrapper the import file",
 	"main": "src/index.js",
 	"miniprogram": "src",
 	"scripts": {},
@@ -10,5 +10,8 @@
 		"url": "https://github.com/wechat-miniprogram/kbone.git"
 	},
 	"author": "wechat-miniprogram",
-	"license": "MIT"
+	"license": "MIT",
+	"devDependencies": {
+		"loader-utils": "^2.0.0"
+	}
 }
