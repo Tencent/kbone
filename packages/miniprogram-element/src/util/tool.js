@@ -375,7 +375,7 @@ function dealWithLeafAndSimple(childNodes, onChildNodesUpdate) {
             }
 
             delete childNode.domNode
-            if (childNode.childNodes) childNode.childNodes = dealWithLeafAndSimple(childNode.childNodes, onChildNodesUpdate)
+            childNode.childNodes = dealWithLeafAndSimple(childNode.childNodes, onChildNodesUpdate) || []
 
             return childNode
         })
