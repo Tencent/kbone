@@ -30,6 +30,7 @@ const WINDOW_PROTOTYPE_MAP = {
     history: History.prototype,
     localStorage: LocalStorage.prototype,
     sessionStorage: SessionStorage.prototype,
+    XMLHttpRequest: OriginalXMLHttpRequest.prototype,
     event: Event.prototype,
 }
 const ELEMENT_PROTOTYPE_MAP = {
@@ -72,16 +73,23 @@ class Window extends EventTarget {
         // 补充实例的属性，用于 'xxx' in XXX 判断
         this.onhashchange = null
 
+        // HTMLElement 构造器
         this.$_elementConstructor = function HTMLElement(...args) {
             return Element.$$create(...args)
         }
+
+        // CustomEvent 构造器
         this.$_customEventConstructor = class CustomEvent extends OriginalCustomEvent {
             constructor(name = '', options = {}) {
                 options.timeStamp = +new Date() - timeOrigin
                 super(name, options)
             }
         }
+
+        // XMLHttpRequest 构造器
         this.$_xmlHttpRequestConstructor = class XMLHttpRequest extends OriginalXMLHttpRequest {constructor() { super(that) }}
+
+        // Worker/SharedWorker 构造器
         if (config.generate && config.generate.worker) {
             this.$_workerConstructor = class Worker extends WorkerImpl.Worker {constructor(url) { super(url, that) }}
             this.$_sharedWorkerConstructor = class SharedWorker extends WorkerImpl.SharedWorker {constructor(url) { super(url, that) }}
