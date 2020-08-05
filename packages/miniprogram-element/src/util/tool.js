@@ -175,10 +175,16 @@ function filterNodes(domNode, level, component) {
 /**
  * 判断两值是否相等
  */
-function isEqual(a, b) {
+function isEqual(a, b, notStrict) {
     if (typeof a === 'number' && typeof b === 'number') {
         // 值为数值，需要考虑精度
         return parseInt(a * 1000, 10) === parseInt(b * 1000, 10)
+    }
+
+    if (notStrict) {
+        // 非严格模式，当其中一方为 undefined，则直接判断另一方的真值
+        if (b === undefined) return !a
+        if (a === undefined) return !b
     }
 
     return a === b
@@ -332,7 +338,7 @@ function checkComponentAttr(name, domNode, destData, oldData, extraClass = '') {
             if (canBeUserChanged) {
                 // 可被用户行为改变的属性，除了 data 外，还需要对比监听到上次用户行为修改的值
                 const oldValues = domNode._oldValues
-                const isOldValuesChanged = oldValues ? !isEqual(newValue, oldValues[name]) : false
+                const isOldValuesChanged = oldValues ? !isEqual(newValue, oldValues[name], true) : false
                 if (!oldData || !isEqual(newValue, oldData[name]) || isOldValuesChanged) {
                     destData[name] = newValue
                     if (isOldValuesChanged) destData.forceUpdate = true // 避免被 diff 掉，需要强制更新
