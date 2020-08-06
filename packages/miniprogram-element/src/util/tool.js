@@ -319,6 +319,7 @@ function getDiffChildNodes(newItem, oldItem, destData, prefix, isExtra) {
         }
     } else if (!isEqual(newItem, oldItem)) {
         // 值不等
+        newItem = newType === 'undefined' ? null : newItem
         destData[prefix] = newItem
         if ((destData.count++) > countLimit) return true
     }

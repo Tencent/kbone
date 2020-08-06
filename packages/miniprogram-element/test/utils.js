@@ -184,6 +184,7 @@ simulate.checkString = async function(component, node, attrName, attributeName, 
     expect(getData(component)[attrName]).toBe('fghij')
 
     node.setAttribute(attributeName, '')
+    defaultValue = defaultValue === undefined ? null : defaultValue
     await simulate.sleep(10)
     if (getData(component)[attrName] !== defaultValue) err(`${node.tagName}.${attrName}`)
     expect(getData(component)[attrName]).toBe(defaultValue)
@@ -237,6 +238,7 @@ simulate.checkArray = async function(component, node, attrName, attributeName, d
     expect(getData(component)[attrName]).toEqual([])
 
     node.setAttribute(attributeName, undefined)
+    defaultValue = defaultValue === undefined ? null : defaultValue
     await simulate.sleep(10)
     expect(getData(component)[attrName]).toEqual(defaultValue)
 }

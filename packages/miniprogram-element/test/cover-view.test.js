@@ -43,7 +43,7 @@ test('cover-view', async() => {
     expect(body.data.childNodes[0].extra.scrollTop).toBe('abc')
     node.setAttribute('scroll-top', undefined)
     await _.sleep(10)
-    expect(body.data.childNodes[0].extra.scrollTop).toBe(undefined)
+    expect(body.data.childNodes[0].extra.scrollTop).toBe(null)
 
     page.document.body.removeChild(node)
     document.body.removeChild(wrapper)
