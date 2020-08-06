@@ -12,27 +12,27 @@ npm install --save-dev file-wrapper-loader
 
 ## 使用
 
-webpack 配置：
+举个例子，在小程序端 import tim-wx-sdk 或 cos-wx-sdk-v5 包进来，在存在 window 对象的时候会运行报错，因此我们需要在运行依赖包前将 window 对象置空。我们可以对符合条件的代码前后追加内容，以达到在特殊场景的兼容效果：
 
 ```js
-const webpack = require('webpack')
-
 module.exports = {
     // ... 其他配置
-    plugins: [
-        new webpack.DefinePlugin({
-            'process.env.isMiniprogram': true, // 注入环境变量，用于业务代码判断
-        }),
-        // ... 其他插件
-    ],
+    module: {
+        rules: [
+            {
+                test: /tim-wx-sdk|cos-wx-sdk-v5/,
+                use: [{
+                    loader: 'file-wrapper-loader',
+                    options: {
+                        before: 'var window=undefined;', // 代码前面追加内容
+                        after: ';console.log("test");', // 代码后面追加内容
+                    }
+                }],
+                include: /node_modules/,
+            },
+            // ... 其他 rule
+        ],
+    },
 }
 
-```
-
-业务代码：
-
-```js
-import Header from '../common/Header.vue' // 正常 import
-import Footer from 'reduce-loader!../common/Footer.vue' // 在 process.env.isMiniprogram 为 true 的情况下，import 进来的 Footer 是一个空对象
-import 'reduce-loader!./web' // 在 process.env.isMiniprogram 为 true 的情况下，import 进来的是一个空串
 ```
