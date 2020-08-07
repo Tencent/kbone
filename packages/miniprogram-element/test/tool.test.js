@@ -104,6 +104,38 @@ test('tool.getDiffChildNodes', () => {
     expect(destData['childNodes[0].childNodes[0].className']).toBe('bb')
     expect(destData['childNodes[1].childNodes[0].id']).toBe(4)
     expect(destData['childNodes[1].id']).toBe(3)
+    newChildNodes = [{
+        id: 1,
+        type: 'element',
+        childNodes: [{id: 2, type: 'element'}],
+    }]
+    oldChildNodes = [{
+        id: 1,
+        type: 'element',
+        childNodes: [{id: 2, content: 'test', type: 'element'}],
+    }]
+    destData = {count: 0}
+    isInterrupt = _.getDiffChildNodes(newChildNodes, oldChildNodes, destData, 'childNodes')
+    expect(isInterrupt).toBe(undefined)
+    expect(destData.count).toBe(1)
+    expect(Object.keys(destData)).toEqual(['count', 'childNodes[0].childNodes[0].content'])
+    expect(destData['childNodes[0].childNodes[0].content']).toBe(null)
+    newChildNodes = [{
+        id: 1,
+        type: 'element',
+        childNodes: [{id: 2, extra: null, type: 'element'}],
+    }]
+    oldChildNodes = [{
+        id: 1,
+        type: 'element',
+        childNodes: [{id: 2, extra: {}, type: 'element'}],
+    }]
+    destData = {count: 0}
+    isInterrupt = _.getDiffChildNodes(newChildNodes, oldChildNodes, destData, 'childNodes')
+    expect(isInterrupt).toBe(undefined)
+    expect(destData.count).toBe(1)
+    expect(Object.keys(destData)).toEqual(['count', 'childNodes[0].childNodes[0].extra'])
+    expect(destData['childNodes[0].childNodes[0].extra']).toBe(null)
 
     // 强制更新
     newChildNodes = [{

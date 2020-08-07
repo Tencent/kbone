@@ -245,7 +245,7 @@ function getDiffChildNodes(newItem, oldItem, destData, prefix, isExtra) {
     const oldType = typeof oldItem
     const countLimit = 100
 
-    if (newType === 'object' && oldType === 'object') {
+    if (newType === 'object' && oldType === 'object' && newItem !== null && oldItem !== null) {
         const newIsArray = Array.isArray(newItem)
         const oldIsArray = Array.isArray(oldItem)
 
