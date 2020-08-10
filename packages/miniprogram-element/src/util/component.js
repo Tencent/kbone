@@ -2558,7 +2558,7 @@ const wxSubComponentMap = {
                 domNode.$$setAttributeWithoutUpdate('y', evt.detail.y)
 
                 // 可被用户行为改变的值，需要记录
-                domNode._oldValues = domNode._oldValues || {}
+                domNode._oldValues = domNode._oldValues || {scaleValue: dealWithNumber(domNode, 'scale-value', 1)}
                 domNode._oldValues.x = evt.detail.x
                 domNode._oldValues.y = evt.detail.y
 
