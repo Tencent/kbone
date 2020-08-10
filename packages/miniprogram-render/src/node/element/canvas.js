@@ -61,11 +61,12 @@ class HTMLCanvasElement extends Element {
     $$prepare() {
         return new Promise((resolve, reject) => {
             this.$$getNodesRef().then(nodesRef => nodesRef.node(res => {
+                const {width, height} = this
                 this.$_node = res.node
 
                 // 设置 canvas 宽高
-                this.$_node.width = this.width
-                this.$_node.height = this.height
+                this.$_node.width = width
+                this.$_node.height = height
 
                 resolve(this)
             }).exec()).catch(reject)
