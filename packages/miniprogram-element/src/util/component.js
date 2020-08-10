@@ -240,8 +240,8 @@ const wxComponentMap = {
                 // 可被用户行为改变的值，需要记录
                 domNode._oldValues = domNode._oldValues || {}
                 domNode._oldValues.scrollIntoView = ''
-                domNode._oldValues.scrollTop = evt.detail.scrollTop
-                domNode._oldValues.scrollLeft = evt.detail.scrollLeft
+                domNode._oldValues.scrollTop = evt.detail.scrollTop || ''
+                domNode._oldValues.scrollLeft = evt.detail.scrollLeft || ''
 
                 this.callSimpleEvent('scroll', evt)
             },
