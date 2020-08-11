@@ -240,7 +240,7 @@ function checkDiffChildNodes(newChildNodes, oldChildNodes) {
 /**
  * 获取新旧子节点的更新数据
  */
-function getDiffChildNodes(newItem, oldItem, destData, prefix, isExtra) {
+function getDiffChildNodes(newItem, oldItem, destData, prefix, isExtra, domNode) {
     const newType = typeof newItem
     const oldType = typeof oldItem
     const countLimit = 100
@@ -273,7 +273,8 @@ function getDiffChildNodes(newItem, oldItem, destData, prefix, isExtra) {
                 // 都是 element 节点，或者都是 text 节点
                 for (const key of keys) {
                     const dataPath = `${prefix}.${key}`
-                    const isInterrupt = getDiffChildNodes(newItem[key], oldItem[key], destData, dataPath, key === 'extra')
+                    const currentDomNode = key === 'extra' ? cache.getNode(newItem.pageId, newItem.nodeId) : null
+                    const isInterrupt = getDiffChildNodes(newItem[key], oldItem[key], destData, dataPath, key === 'extra', currentDomNode)
                     if (isInterrupt) return true
                 }
             } else if (!newIsNode && !oldIsNode) {
@@ -292,7 +293,12 @@ function getDiffChildNodes(newItem, oldItem, destData, prefix, isExtra) {
                             destData[dataPath] = newItem[key]
                             if ((destData.count++) > countLimit) return true
                         } else {
-                            const isInterrupt = getDiffChildNodes(newItem[key], oldItem[key], destData, dataPath)
+                            let oldItemValue = oldItem[key]
+
+                            // 部分属性可能被手动修改，但是不会即时更新到 data 上，需要通过 _oldValues 判断
+                            if (domNode && domNode._oldValues && domNode._oldValues[key] !== undefined) oldItemValue = domNode._oldValues[key]
+
+                            const isInterrupt = getDiffChildNodes(newItem[key], oldItemValue, destData, dataPath)
                             if (isInterrupt) return true
                         }
                     }

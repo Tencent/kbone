@@ -507,9 +507,9 @@
         </template>
         <template v-else-if="item === 'scroll-view'">
           <div>
-            <wx-component ref="scroll-view" v-if="!wxPrefix" :behavior="item" :class="item + '-y'" :scroll-into-view="'y1' + scrollView.yDest" :scroll-top="scrollView.scrollTop" :scroll-y="true" :scroll-with-animation="scrollView.yAnimation" @scroll="log('onScrollViewScroll', $event.detail)"><Inner2 type="y1"/></wx-component>
-            <wx-scroll-view ref="scroll-view" v-else-if="wxPrefix === 1" :class="item + '-y'" :scroll-into-view="'y2' + scrollView.yDest" :scroll-top="scrollView.scrollTop" :scroll-y="true" :scroll-with-animation="scrollView.yAnimation" @scroll="log('onScrollViewScroll', $event.detail)"><Inner2 type="y2"/></wx-scroll-view>
-            <scroll-view ref="scroll-view" v-else-if="wxPrefix === 2" :class="item + '-y'" :scroll-into-view="'y3' + scrollView.yDest" :scroll-top="scrollView.scrollTop" :scroll-y="true" :scroll-with-animation="scrollView.yAnimation" @scroll="log('onScrollViewScroll', $event.detail)"><Inner2 type="y3"/></scroll-view>
+            <wx-component ref="scroll-view" v-if="!wxPrefix" :behavior="item" :class="item + '-y'" :scroll-into-view="'y1' + scrollView.yDest" :scroll-top="scrollView.scrollTop" :scroll-y="true" :scroll-with-animation="scrollView.yAnimation" @scroll="onScrollViewScroll"><Inner2 :class="`scroll-num-${scrollView.count}`" type="y1"/></wx-component>
+            <wx-scroll-view ref="scroll-view" v-else-if="wxPrefix === 1" :class="item + '-y'" :scroll-into-view="'y2' + scrollView.yDest" :scroll-top="scrollView.scrollTop" :scroll-y="true" :scroll-with-animation="scrollView.yAnimation" @scroll="onScrollViewScroll"><Inner2 :class="`scroll-num-${scrollView.count}`" type="y2"/></wx-scroll-view>
+            <scroll-view ref="scroll-view" v-else-if="wxPrefix === 2" :class="item + '-y'" :scroll-into-view="'y3' + scrollView.yDest" :scroll-top="scrollView.scrollTop" :scroll-y="true" :scroll-with-animation="scrollView.yAnimation" @scroll="onScrollViewScroll"><Inner2 :class="`scroll-num-${scrollView.count}`" type="y3"/></scroll-view>
             <div class="scroll-view-btn" @click="onClickScrollViewYBtn">滚动到第三个滑块</div>
             <div class="scroll-view-btn" @click="onClickScrollViewYTopBtn">滚动到 120px 处</div>
             <div class="scroll-view-btn" @click="onClickScrollViewYAnimBtn">{{scrollView.yAnimation ? '关闭' : '打开'}}动画</div>
@@ -673,6 +673,7 @@ export default {
         xDest: '',
         scrollTop: 0,
         yAnimation: true,
+        count: 0,
       },
       pickerView: {
         years: years,
@@ -873,6 +874,11 @@ export default {
       this.map.longitude = 113.324520
       this.map.latitude = 23.099994
       this.map.scale = 14
+    },
+
+    onScrollViewScroll(evt) {
+      this.log('onScrollViewScroll', evt.detail)
+      this.scrollView.count++
     },
   }
 }
