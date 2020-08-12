@@ -187,6 +187,28 @@ function isEqual(a, b, notStrict) {
         if (a === undefined) return !b
     }
 
+    if (typeof a === 'object' && typeof b === 'object') {
+        if (a === null || b === null) return a === b
+
+        const isAArray = Array.isArray(a)
+        const isBArray = Array.isArray(b)
+        if (isAArray && isBArray) {
+            if (a.length !== b.length) return false
+            for (let i = 0, len = a.length; i < len; i++) {
+                if (!isEqual(a[i], b[i], notStrict)) return false
+            }
+            return true
+        } else if (!isBArray && !isBArray) {
+            const aKeys = Object.keys(a)
+            const bKeys = Object.keys(b)
+            if (aKeys.length !== bKeys.length) return false
+            for (const key of aKeys) {
+                if (!isEqual(a[key], b[key], notStrict)) return false
+            }
+            return true
+        }
+    }
+
     return a === b
 }
 
@@ -218,8 +240,13 @@ function checkDiffChildNodes(newChildNodes, oldChildNodes) {
                 }
 
                 const objectKeys = Object.keys(newValue)
+                const domNode = key === 'extra' ? newChild.domNode : null
+                const oldValues = domNode && domNode._oldValues
                 for (const objectKey of objectKeys) {
-                    if (!isEqual(newValue[objectKey], oldValue[objectKey])) return true
+                    let oldItemValue = oldValue[objectKey]
+
+                    if (oldValues && oldValues[objectKey] !== undefined) oldItemValue = oldValues[objectKey]
+                    if (!isEqual(newValue[objectKey], oldItemValue)) return true
                 }
             } else if (!isEqual(newValue, oldValue)) {
                 return true
