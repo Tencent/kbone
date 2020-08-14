@@ -70,8 +70,6 @@ const replaceTagNamePlugin = postcss.plugin('replaceTagName', () => root => {
                     return
                 } else {
                     selector = selector.replace(/(.*)\*(?!=)(.*)/g, (all, $1, $2) => {
-                        if ($2[0] === '=') return all
-
                         selectors.push(`${$1}page${$2}`)
                         return `${$1}[class^="h5-"]${$2}`
                     })
