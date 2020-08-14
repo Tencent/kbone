@@ -57,15 +57,25 @@ const replaceTagNamePlugin = postcss.plugin('replaceTagName', () => root => {
                 })
 
                 // 处理 * 号选择器
-                selector = selector.replace(/(.*)\*(.*)/g, (all, $1, $2) => {
-                    if ($2[0] === '=') return all
+                const splitRes = selector.split('*')
+                let count = 0
+                if (splitRes.length > 2) {
+                    for (let i = 1, len = splitRes.length; i < len; i++) {
+                        if (splitRes[i][0] !== '=') count++
+                    }
+                }
+                if (count >= 2) {
+                    // 不支持单个 selector 包含多个 * 号选择器
+                    console.warn(colors.bold(`\nselector ${colors.yellow(selector)} is not supported in wxss, so it will be deleted\n`))
+                    return
+                } else {
+                    selector = selector.replace(/(.*)\*(?!=)(.*)/g, (all, $1, $2) => {
+                        if ($2[0] === '=') return all
 
-                    tagList.forEach(tagName => selectors.push(`${$1}.h5-${tagName}${$2}`))
-
-                    selectors.push(`${$1}page${$2}`)
-
-                    return ''
-                })
+                        selectors.push(`${$1}page${$2}`)
+                        return `${$1}[class^="h5-"]${$2}`
+                    })
+                }
 
                 if (selector.trim()) selectors.push(selector)
             })
