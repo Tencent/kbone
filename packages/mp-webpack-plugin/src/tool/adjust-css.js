@@ -6,10 +6,15 @@ const replaceRegexp = new RegExp(`(\\W|\\b)(${['html', ...tagList].join('|')})(\
 const prefixRegexp = /[a-zA-Z0-9:.#_-]/
 const suffixRegexp = /[a-zA-Z0-9_-]/
 
+let options = {}
+
 /**
  * 替换标签名
  */
 const replaceTagNamePlugin = postcss.plugin('replaceTagName', () => root => {
+    const optimization = options.optimization || {}
+    const wxssUniversalSelector = optimization.wxssUniversalSelector || 'taglist'
+
     root.walk(child => {
         if (child.type === 'atrule') {
             // 处理 wxss 不支持的 @ 前缀
@@ -57,21 +62,34 @@ const replaceTagNamePlugin = postcss.plugin('replaceTagName', () => root => {
                 })
 
                 // 处理 * 号选择器
-                const splitRes = selector.split('*')
-                let count = 0
-                if (splitRes.length > 2) {
-                    for (let i = 1, len = splitRes.length; i < len; i++) {
-                        if (splitRes[i][0] !== '=') count++
+                if (wxssUniversalSelector === 'classprefix') {
+                    // 使用 class 属性前缀的方式
+                    const splitRes = selector.split('*')
+                    let count = 0
+                    if (splitRes.length > 2) {
+                        for (let i = 1, len = splitRes.length; i < len; i++) {
+                            if (splitRes[i][0] !== '=') count++
+                        }
                     }
-                }
-                if (count >= 2) {
-                    // 不支持单个 selector 包含多个 * 号选择器
-                    console.warn(colors.bold(`\nselector ${colors.yellow(selector)} is not supported in wxss, so it will be deleted\n`))
-                    return
+                    if (count >= 2) {
+                        // 不支持单个 selector 包含多个 * 号选择器
+                        console.warn(colors.bold(`\nselector ${colors.yellow(selector)} is not supported in wxss, so it will be deleted\n`))
+                        return
+                    } else {
+                        selector = selector.replace(/(.*)\*(?!=)(.*)/g, (all, $1, $2) => {
+                            selectors.push(`${$1}page${$2}`)
+                            return `${$1}[class^="h5-"]${$2}`
+                        })
+                    }
                 } else {
-                    selector = selector.replace(/(.*)\*(?!=)(.*)/g, (all, $1, $2) => {
+                    // 使用标签列表方式
+                    selector = selector.replace(/(.*)\*(.*)/g, (all, $1, $2) => {
+                        if ($2[0] === '=') return all
+
+                        tagList.forEach(tagName => selectors.push(`${$1}.h5-${tagName}${$2}`))
+
                         selectors.push(`${$1}page${$2}`)
-                        return `${$1}[class^="h5-"]${$2}`
+                        return ''
                     })
                 }
 
@@ -87,11 +105,17 @@ const replaceTagNamePlugin = postcss.plugin('replaceTagName', () => root => {
     })
 })
 
-module.exports = function(code) {
-    code = postcss([replaceTagNamePlugin]).process(code, {
-        from: undefined, // 主要是不想看到那个 warning
-        map: null,
-    })
+module.exports = {
+    setAdjustCssOptions(userOptions) {
+        if (userOptions) options = userOptions
+    },
 
-    return code.css
+    adjustCss(code) {
+        code = postcss([replaceTagNamePlugin]).process(code, {
+            from: undefined, // 主要是不想看到那个 warning
+            map: null,
+        })
+
+        return code.css
+    }
 }

@@ -1,5 +1,9 @@
 # 更新日志
 
+## 1.1.9
+
+* `*` 号选择器实现方式改成可选配置（optimization.wxssUniversalSelector）
+
 ## 1.1.8
 
 * `*` 号选择器改为 class 前缀选择器实现

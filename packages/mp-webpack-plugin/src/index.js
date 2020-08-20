@@ -6,7 +6,7 @@ const ModuleFilenameHelpers = require('webpack/lib/ModuleFilenameHelpers')
 const {RawSource} = require('webpack-sources')
 const pathToRegexp = require('path-to-regexp')
 const colors = require('colors/safe')
-const adjustCss = require('./tool/adjust-css')
+const {setAdjustCssOptions, adjustCss} = require('./tool/adjust-css')
 const _ = require('./tool/utils')
 
 const PluginName = 'MpPlugin'
@@ -97,6 +97,8 @@ class MpPlugin {
     apply(compiler) {
         const options = this.options
         const generateConfig = options.generate || {}
+
+        setAdjustCssOptions(options)
 
         compiler.hooks.emit.tapAsync(PluginName, (compilation, callback) => {
             const outputPath = compilation.outputOptions.path
