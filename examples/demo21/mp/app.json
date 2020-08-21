@@ -1,8 +1,6 @@
 {
   "pages": [
-    "pages/index/index",
-    "package1/pages/page1/index",
-    "package1/pages/page2/index"
+    "pages/index/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -11,5 +9,19 @@
     "navigationBarTextStyle": "black"
   },
   "style": "v2",
-  "sitemapLocation": "sitemap.json"
+  "sitemapLocation": "sitemap.json",
+  "useExtendedLib": {
+    "kbone": true
+  },
+  "subpackages": [{
+    "root": "package1",
+    "pages": [
+      "pages/page1/index",
+      "pages/page2/index"
+    ],
+    "independent": true,
+    "useExtendedLib": {
+      "kbone": true
+    }
+  }]
 }

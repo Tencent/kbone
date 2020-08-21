@@ -11,9 +11,6 @@ module.exports = {
 	},
 	generate: {
 		app: 'noemit',
-		subpackages: {
-			package1: ['page1', 'page2'],
-		},
 	},
 	app: {
 		navigationBarTitleText: 'miniprogram-project',
