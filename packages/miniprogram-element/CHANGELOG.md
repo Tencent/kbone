@@ -1,5 +1,9 @@
 # 更新日志
 
+## 2.1.10
+
+* 修复 picker-view-column 下的第一层子节点无法更新的问题
+
 ## 2.1.9
 
 * 修复 setDataMode 为 original 时进行 diff 没有对比当前最新值的问题

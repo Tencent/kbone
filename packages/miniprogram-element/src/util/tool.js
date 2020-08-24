@@ -120,16 +120,11 @@ function filterNodes(domNode, level, component) {
                 const childNodes = (templateName === 'picker-view' ? filterNodes(child, 1) : filterNodes(child, 0)) || []
                 extra.childNodes = childNodes.filter(childNode => childNode.type === 'element' && childNode.compName === RELATION_CHILD[relationIndex]).map(childNode => {
                     const copyChildNode = Object.assign({}, childNode)
-                    delete copyChildNode.domNode
 
                     // picker-view-column 不支持监听自定义组件内子节点的变化，所以需要在当前自定义组件中渲染
                     if (copyChildNode.childNodes) {
-                        copyChildNode.childNodes = copyChildNode.childNodes.map(grandchild => {
-                            // picker-view-column 的第一层子节点无法设置 style，不然会覆盖内置组件自己的样式
-                            const copyGrandchildNode = Object.assign({}, grandchild, {style: ''})
-                            delete copyGrandchildNode.domNode
-                            return copyGrandchildNode
-                        })
+                        // picker-view-column 的第一层子节点无法设置 style，不然会覆盖内置组件自己的样式
+                        copyChildNode.childNodes = copyChildNode.childNodes.map(grandchild => Object.assign({}, grandchild, {style: ''}))
                     }
 
                     return copyChildNode
@@ -410,6 +405,10 @@ function dealWithLeafAndSimple(childNodes, onChildNodesUpdate) {
 
             delete childNode.domNode
             childNode.childNodes = dealWithLeafAndSimple(childNode.childNodes, onChildNodesUpdate) || []
+            if (childNode.extra && childNode.extra.childNodes) {
+                // picker-view、movable-area、swiper 会有子节点挂在 extra.childNodes 中
+                childNode.extra.childNodes = dealWithLeafAndSimple(childNode.extra.childNodes, onChildNodesUpdate) || []
+            }
 
             return childNode
         })
