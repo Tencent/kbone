@@ -1,5 +1,9 @@
 # 更新日志
 
+## 1.1.10
+
+* autoBuildNpm 修改为优先拷贝 dist 目录
+
 ## 1.1.9
 
 * `*` 号选择器实现方式改成可选配置（optimization.wxssUniversalSelector）

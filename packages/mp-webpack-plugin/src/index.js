@@ -443,7 +443,7 @@ class MpPlugin {
             // node_modules
             addFile(compilation, '../node_modules/.miniprogram', '')
 
-            // 自定义组件，生成到 miniprogram_npm 中
+            // 自定义组件
             if (wxCustomComponentRoot) {
                 compilation.contextDependencies.add(wxCustomComponentRoot) // 支持 watch
                 _.copyDir(wxCustomComponentRoot, path.resolve(outputPath, '../custom-component/components'))
@@ -502,8 +502,19 @@ class MpPlugin {
             }
 
             const build = () => {
-                _.copyDir(path.resolve(distDir, './node_modules/miniprogram-element/src'), path.resolve(distDir, './miniprogram_npm/miniprogram-element'))
-                _.copyDir(path.resolve(distDir, './node_modules/miniprogram-render/src'), path.resolve(distDir, './miniprogram_npm/miniprogram-render'))
+                const elementDist = path.resolve(distDir, './node_modules/miniprogram-element/dist')
+                if (_.isFileExisted(elementDist)) {
+                    _.copyDir(elementDist, path.resolve(distDir, './miniprogram_npm/miniprogram-element'))
+                } else {
+                    _.copyDir(path.resolve(distDir, './node_modules/miniprogram-element/src'), path.resolve(distDir, './miniprogram_npm/miniprogram-element'))
+                }
+
+                const renderDist = path.resolve(distDir, './node_modules/miniprogram-render/dist')
+                if (_.isFileExisted(renderDist)) {
+                    _.copyDir(renderDist, path.resolve(distDir, './miniprogram_npm/miniprogram-render'))
+                } else {
+                    _.copyDir(path.resolve(distDir, './node_modules/miniprogram-render/src'), path.resolve(distDir, './miniprogram_npm/miniprogram-render'))
+                }
                 callback()
             }
             console.log(colors.bold('\nstart building dependencies...\n'))
