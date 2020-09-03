@@ -1,5 +1,9 @@
 # 更新日志
 
+## 2.1.2
+
+* 支持 XMLHttpRequest 对象的 withCredentials 属性
+
 ## 2.1.1
 
 * 修复 canvas 默认宽高问题

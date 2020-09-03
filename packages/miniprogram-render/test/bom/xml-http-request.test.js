@@ -70,6 +70,7 @@ test('XMLHttpRequest', async() => {
     }
     global.testXHRData.method = 'GET'
 
+    expect(xhr.withCredentials).toBe(true)
     expect(xhr.readyState).toBe(XMLHttpRequest.UNSENT)
     expect(readyStateChangeCount).toBe(0)
 
@@ -182,4 +183,29 @@ test('XMLHttpRequest', async() => {
     expect(loadCount).toBe(1)
     expect(xhr.responseText).toBe('success')
     expect(xhr.response).toBe('success')
+
+    // cors
+    xhr = new XMLHttpRequest()
+    global.testXHRData.url = 'https://a.com?a=12#haha'
+    global.testXHRData.header = {
+        Accept: '*/*',
+        cookie: 'aaa=bbb; ccc=ddd',
+    }
+    global.testXHRData.method = 'GET'
+    global.testXHRData.res = 'success'
+    xhr.open('GET', 'https://a.com?a=12#haha')
+    xhr.send()
+    xhr.withCredentials = false
+    global.testXHRData.header = {
+        Accept: '*/*',
+    }
+    xhr.$_readyState = XMLHttpRequest.OPENED // 利用私有字段调整 readyState，为了再次发送请求
+    xhr.send()
+    xhr.withCredentials = true
+    global.testXHRData.header = {
+        Accept: '*/*',
+        cookie: 'aaa=bbb; ccc=ddd',
+    }
+    xhr.$_readyState = XMLHttpRequest.OPENED // 利用私有字段调整 readyState，为了再次发送请求
+    xhr.send()
 })
