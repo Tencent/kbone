@@ -1259,7 +1259,7 @@ const wxComponentMap = {
         }, {
             name: 'placeholderClass',
             get(domNode) {
-                return domNode.getAttribute('placeholder-class') || 'input-placeholder'
+                return domNode.getAttribute('placeholder-class') || 'textarea-placeholder'
             },
         }, {
             name: 'disabled',

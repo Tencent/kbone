@@ -1,5 +1,9 @@
 # 更新日志
 
+## 2.1.11
+
+* 修复 textarea 的 placeholder-class 的默认值为 textarea-placeholder
+
 ## 2.1.10
 
 * 修复 picker-view-column 下的第一层子节点无法更新的问题

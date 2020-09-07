@@ -30,7 +30,7 @@ test('textarea', async() => {
     await _.checkString(body, node, 'placeholderStyle', 'placeholder-style', '')
 
     // placeholderClass
-    await _.checkString(body, node, 'placeholderClass', 'placeholder-class', 'input-placeholder')
+    await _.checkString(body, node, 'placeholderClass', 'placeholder-class', 'textarea-placeholder')
 
     // disabled
     await _.checkBoolean(body, node, 'disabled', 'disabled', false)
