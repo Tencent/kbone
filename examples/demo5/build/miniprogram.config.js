@@ -49,7 +49,7 @@ module.exports = {
 		condition: {
 			miniprogram: {
 				list: [{
-					id: -1,
+					id: -2,
 					name: 'waterfall',
 					pathName: 'pages/page5/index',
 					query: `type=open&targeturl=${encodeURIComponent('/waterfall')}`,
