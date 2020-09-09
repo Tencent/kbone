@@ -419,17 +419,19 @@
           <slider v-else-if="wxPrefix === 2" min="50" max="200" :show-value="true" @change="log('onSliderChange', $event.detail)"></slider>
         </template>
         <template v-else-if="item === 'map'">
-          <wx-component v-if="!wxPrefix" :behavior="item" :class="item" :longitude="map.longitude" :latitude="map.latitude" :scale="map.scale" :controls="map.controls" :markers="map.markers" :polyline="map.polyline" :show-location="true" @markertap="log('onMapMarkerTap', $event.detail)" @regionchange="log('onMapRegionChange', $event.detail)" @controltap="log('onMapControlTap', $event.detail)">
+          <wx-component v-if="!wxPrefix" :behavior="item" ref="map" :class="item" :longitude="map.longitude" :latitude="map.latitude" :scale="map.scale" :controls="map.controls" :markers="map.markers" :polyline="map.polyline" :show-location="true" @markertap="log('onMapMarkerTap', $event.detail)" @regionchange="log('onMapRegionChange', $event.detail)" @controltap="log('onMapControlTap', $event.detail)">
             <Inner></Inner>
+            <CustomCallout></CustomCallout>
           </wx-component>
-          <wx-map v-else-if="wxPrefix === 1" :class="item" :longitude="map.longitude" :latitude="map.latitude" :scale="map.scale" :controls="map.controls" :markers="map.markers" :polyline="map.polyline" :show-location="true" @markertap="log('onMapMarkerTap', $event.detail)" @regionchange="log('onMapRegionChange', $event.detail)" @controltap="log('onMapControlTap', $event.detail)">
+          <wx-map v-else-if="wxPrefix === 1" ref="map" :class="item" :longitude="map.longitude" :latitude="map.latitude" :scale="map.scale" :controls="map.controls" :markers="map.markers" :polyline="map.polyline" :show-location="true" @markertap="log('onMapMarkerTap', $event.detail)" @regionchange="log('onMapRegionChange', $event.detail)" @controltap="log('onMapControlTap', $event.detail)">
             <Inner></Inner>
+            <CustomCallout></CustomCallout>
           </wx-map>
-          <map v-else-if="wxPrefix === 2" :class="item" :longitude="map.longitude" :latitude="map.latitude" :scale="map.scale" :controls="map.controls" :markers="map.markers" :polyline="map.polyline" :show-location="true" @markertap="log('onMapMarkerTap', $event.detail)" @regionchange="log('onMapRegionChange', $event.detail)" @controltap="log('onMapControlTap', $event.detail)">
+          <map v-else-if="wxPrefix === 2" ref="map" :class="item" :longitude="map.longitude" :latitude="map.latitude" :scale="map.scale" :controls="map.controls" :markers="map.markers" :polyline="map.polyline" :show-location="true" @markertap="log('onMapMarkerTap', $event.detail)" @regionchange="log('onMapRegionChange', $event.detail)" @controltap="log('onMapControlTap', $event.detail)">
             <Inner></Inner>
+            <CustomCallout></CustomCallout>
           </map>
-          <!-- 基础库暂未支持 regionchange 事件提供坐标和 scale，故注释 -->
-          <!-- <button @click="resetMap">reset</button> -->
+          <button @click="resetMap">reset</button>
         </template>
         <template v-else-if="item === 'cover-view'">
           <wx-compoennt v-if="!wxPrefix" :behavior="item">测试 cover-view</wx-compoennt>
@@ -543,12 +545,14 @@
 <script>
 import Inner from './Inner.vue'
 import Inner2 from './Inner2.vue'
+import CustomCallout from './CustomCallout.vue'
 
 export default {
   name: 'Component',
   components: {
     Inner,
     Inner2,
+    CustomCallout,
   },
   props: ['wxPrefix'],
   data() {
@@ -633,12 +637,42 @@ export default {
       pickerRange: ['美国', '中国', '巴西', '日本'],
       map: {
         markers: [{
-          iconPath: 'https://i.loli.net/2019/07/27/5d3c141367f2784840.jpg',
-          id: 0,
-          latitude: 23.099994,
+          id: 1,
+          latitude: 23.098994,
+          longitude: 113.322520,
+          iconPath: require('./imgs/location.png'),
+          callout: {
+            content: '文本内容',
+            color: '#ff0000',
+            fontSize: 14,
+            borderWidth: 2,
+            borderRadius: 10,
+            borderColor: '#000000',
+            bgColor: '#fff',
+            padding: 5,
+            display: 'ALWAYS',
+            textAlign: 'center'
+          },
+        }, {
+          id: 2,
+          latitude: 23.097994,
+          longitude: 113.323520,
+          iconPath: require('./imgs/location.png'),
+          customCallout: {
+            anchorY: 0,
+            anchorX: 0,
+            display: 'ALWAYS'
+          },
+        }, {
+          id: 3,
+          latitude: 23.096994,
           longitude: 113.324520,
-          width: 50,
-          height: 50,
+          iconPath: require('./imgs/location.png'),
+          customCallout: {
+            anchorY: 10,
+            anchorX: 0,
+            display: 'ALWAYS',
+          },
         }],
         polyline: [{
           points: [{
@@ -871,6 +905,12 @@ export default {
     },
 
     resetMap() {
+      const domNodes = this.$refs['map'] || []
+      if (domNodes[0]) {
+        domNodes[0].setAttribute('longitude', 113.324520)
+        domNodes[0].setAttribute('latitude', 23.099994)
+        domNodes[0].setAttribute('scale', 14)
+      }
       this.map.longitude = 113.324520
       this.map.latitude = 23.099994
       this.map.scale = 14

@@ -318,6 +318,7 @@ class Element extends Node {
             id: this.id,
             className: this.className,
             style: this.$__style ? this.style.cssText : '',
+            slot: this.getAttribute('slot'),
         }
     }
 

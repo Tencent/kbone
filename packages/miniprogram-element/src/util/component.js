@@ -90,6 +90,19 @@ const wxComponentMap = {
             get(domNode) {
                 return domNode.getAttribute('scroll-top')
             },
+        }, {
+            // 是否需要强行开启 inCover
+            name: 'forceInCover',
+            get(domNode) {
+                // 地图自定义 callout
+                return domNode.getAttribute('marker-id') !== undefined
+            },
+        }, {
+            // 地图自定义 callout 相关属性
+            name: 'markerId',
+            get(domNode) {
+                return domNode.getAttribute('marker-id')
+            },
         }],
     },
     'match-media': {
@@ -2275,8 +2288,8 @@ const wxComponentMap = {
                     // 可被用户行为改变的值，需要记录
                     domNode._oldValues = domNode._oldValues || {}
                     // 以下三项官方未支持
-                    // domNode._oldValues.longitude = evt.detail.longitude
-                    // domNode._oldValues.latitude = evt.detail.latitude
+                    // domNode._oldValues.longitude = evt.detail.centerLocation && evt.detail.centerLocation.longitude
+                    // domNode._oldValues.latitude = evt.detail.centerLocation && evt.detail.centerLocation.latitude
                     // domNode._oldValues.scale = evt.detail.scale
                     domNode._oldValues.rotate = evt.detail.rotate
                     domNode._oldValues.skew = evt.detail.skew

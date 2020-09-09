@@ -1,5 +1,9 @@
 # 更新日志
 
+## 2.1.3
+
+* 支持 map 组件的自定义 callout
+
 ## 2.1.2
 
 * 支持 XMLHttpRequest 对象的 withCredentials 属性

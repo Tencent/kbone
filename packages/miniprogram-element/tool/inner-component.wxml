@@ -35,7 +35,8 @@
         bindlongpress="onLongPress"
 
         scroll-top="{{scrollTop}}"
-    ><element-vhost wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element-vhost></cover-view>
+        marker-id="{{markerId}}"
+    ><element-vhost wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{forceInCover || inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element-vhost></cover-view>
 </template>
 <template name="match-media">
     <match-media
@@ -950,7 +951,7 @@
         bindupdated="onMapUpdated"
         bindregionchange="onMapRegionChange"
         bindpoitap="onMapPoiTap"
-    ><element-vhost wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element-vhost></map>
+    ><block wx:if="{{hasSlots}}"><element wx:for="{{slots}}" wx:key="nodeId" in-cover="{{inCover}}" slot="{{item.slot}}" data-private-node-id="{{item.nodeId}}" data-private-page-id="{{item.pageId}}" generic:custom-component="custom-component"></element></block><element-vhost wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element-vhost></map>
 </template>
 <!-- 画布 -->
 <template name="canvas">

@@ -47,6 +47,7 @@ function filterNodes(domNode, level, component) {
         const domInfo = child.$$domInfo
 
         if (domInfo.type !== 'element' && domInfo.type !== 'text') return
+        if (domInfo.slot) return
 
         // 挂载该节点所处的自定义组件实例
         child._wxComponent = component
@@ -129,6 +130,22 @@ function filterNodes(domNode, level, component) {
 
                     return copyChildNode
                 })
+            }
+
+            // 地图如果存在 slot 节点，需要特殊处理
+            if (templateName === 'map') {
+                const slots = child.childNodes.map(childNode => {
+                    const slotDomInfo = childNode.$$domInfo
+                    return {
+                        slot: slotDomInfo.slot,
+                        nodeId: slotDomInfo.nodeId,
+                        pageId: slotDomInfo.pageId,
+                    }
+                }).filter(slot => !!slot.slot)
+
+                extra.hasSlots = slots.length
+                extra.hasChildren = slots.length < child.childNodes.length
+                extra.slots = slots
             }
 
             // wx-catch 的 touch 事件会导致 tap 事件的触发，需要真正被绑定后再补充句柄

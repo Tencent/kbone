@@ -45,6 +45,21 @@ test('cover-view', async() => {
     await _.sleep(10)
     expect(body.data.childNodes[0].extra.scrollTop).toBe(null)
 
+    // markerId
+    expect(body.data.childNodes[0].extra.markerId).toBe(undefined)
+    node.setAttribute('marker-id', 12)
+    await _.sleep(10)
+    expect(body.data.childNodes[0].extra.markerId).toBe('12')
+    node.setAttribute('marker-id', 0)
+    await _.sleep(10)
+    expect(body.data.childNodes[0].extra.markerId).toBe('0')
+    node.setAttribute('marker-id', 'abc')
+    await _.sleep(10)
+    expect(body.data.childNodes[0].extra.markerId).toBe('abc')
+    node.setAttribute('marker-id', undefined)
+    await _.sleep(10)
+    expect(body.data.childNodes[0].extra.markerId).toBe(null)
+
     page.document.body.removeChild(node)
     document.body.removeChild(wrapper)
 })

@@ -1,5 +1,9 @@
 # 更新日志
 
+## 2.1.12
+
+* 支持 map 组件的自定义 callout
+
 ## 2.1.11
 
 * 修复 textarea 的 placeholder-class 的默认值为 textarea-placeholder

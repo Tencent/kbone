@@ -89,10 +89,15 @@ module.exports = {
             },
             {
                 test: /\.(png|jpg|gif|svg)$/,
-                loader: 'file-loader',
-                options: {
-                    name: '[name].[ext]?[hash]'
-                }
+                use: [{
+                    loader: 'url-loader',
+                    options: {
+                        limit: 102400,
+                        name: '[name]_[hash:hex:6].[ext]',
+                        emitFile: false,
+                        esModule: false,
+                    }
+                }],
             }
         ]
     },
