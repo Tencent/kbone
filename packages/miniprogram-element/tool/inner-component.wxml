@@ -1198,7 +1198,7 @@
 <!-- 自定义组件 -->
 <template name="custom-component">
     <custom-component
-        name="{{wxCustomCompName}}"
+        kbone-custom-component-name="{{wxCustomCompName}}"
         data-private-node-id="{{nodeId}}"
         data-private-page-id="{{pageId}}"
         bindtouchstart="onTouchStart"

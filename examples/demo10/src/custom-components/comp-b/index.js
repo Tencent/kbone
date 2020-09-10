@@ -10,6 +10,10 @@ Component({
             type: String,
             value: 'defaultSuffix',
         },
+        name: {
+            type: String,
+            value: '',
+        },
     },
     data: {
         str: _.getWords() + 'comp-b',

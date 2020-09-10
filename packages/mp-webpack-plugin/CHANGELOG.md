@@ -1,5 +1,9 @@
 # 更新日志
 
+## 1.1.12
+
+* 修复使用第三方自定义组件不支持 name 属性问题（依赖升级：miniprogram-element@2.1.13 以上）
+
 ## 1.1.10
 
 * autoBuildNpm 修改为优先拷贝 dist 目录

@@ -21,7 +21,7 @@ module.exports = {
 				},
 				'comp-b': {
 					path: 'comp-b/index',
-					props: ['prefix'],
+					props: ['prefix', 'name'],
 				},
 				'comp-c': 'comp-c',
 			},

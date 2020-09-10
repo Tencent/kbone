@@ -29,7 +29,7 @@ function checkComponentAttr({props = []}, name, domNode, destData, oldData) {
 
 Component({
     properties: {
-        name: {
+        kboneCustomComponentName: {
             type: String,
             value: '',
         },
