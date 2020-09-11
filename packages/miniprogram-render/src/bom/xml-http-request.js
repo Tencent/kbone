@@ -145,6 +145,11 @@ class XMLHttpRequest extends EventTarget {
      * 请求成功
      */
     $_requestSuccess({data, statusCode, header}) {
+        if (!this.$_window || !this.$_window.document) {
+            console.warn('this page has been unloaded, so this request will be canceled.')
+            return
+        }
+
         this.$_status = statusCode
         this.$_resHeader = header
 
