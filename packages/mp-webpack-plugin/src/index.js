@@ -155,7 +155,9 @@ class MpPlugin {
 
             // 处理分包配置
             Object.keys(subpackagesConfig).forEach(packageName => {
-                const pages = subpackagesConfig[packageName] || []
+                let pages = subpackagesConfig[packageName] || []
+                if (!Array.isArray(pages)) pages = pages.pages
+
                 pages.forEach(entryName => {
                     subpackagesMap[entryName] = packageName
 
@@ -310,11 +312,19 @@ class MpPlugin {
                 const subpackages = []
                 const preloadRule = {}
                 Object.keys(subpackagesConfig).forEach(packageName => {
-                    const pages = subpackagesConfig[packageName] || []
+                    let pages = subpackagesConfig[packageName] || []
+                    let extraOptions = {}
+                    if (!Array.isArray(pages)) {
+                        extraOptions = Object.assign(extraOptions, pages)
+                        pages = pages.pages
+                        delete extraOptions.pages
+                    }
+
                     subpackages.push({
                         name: packageName,
                         root: packageName,
                         pages: pages.map(entryName => `pages/${entryName}/index`),
+                        ...extraOptions,
                     })
                 })
                 Object.keys(preloadRuleConfig).forEach(entryName => {
