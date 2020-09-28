@@ -91,6 +91,7 @@ module.exports = function(mp, config, init) {
             loading: true,
         },
         onLoad(query) {
+            mp = require('miniprogram-render')
             const pageName = mp.$$adapter.tool.getPageName(this.route)
             const pageConfig = this.pageConfig = config.pages[pageName] || {}
 
