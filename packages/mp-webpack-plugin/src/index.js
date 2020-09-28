@@ -447,7 +447,6 @@ class MpPlugin {
                 const userPackageConfigJson = options.packageConfigOverride || {}
                 const packageConfigJsonContent = JSON.stringify(userPackageConfigJson, null, '\t')
                 addFile(compilation, '../package.json', packageConfigJsonContent)
-
             } else {
                 // 合并模式
                 const userPackageConfigJson = options.packageConfig || {}

@@ -1195,9 +1195,10 @@
         bindload="onImgLoad"
     ></cover-image>
 </template>
-<!-- 自定义组件 -->
+<!-- 自定义组件，name 属性用于兼容旧版本 mp-webpack-plugin -->
 <template name="custom-component">
     <custom-component
+        name="{{wxCustomCompName}}"
         kbone-custom-component-name="{{wxCustomCompName}}"
         data-private-node-id="{{nodeId}}"
         data-private-page-id="{{pageId}}"
