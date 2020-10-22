@@ -85,6 +85,8 @@ npm run build
 
 更为详细的说明和指引，可点击[查看文档](https://wechat-miniprogram.github.io/kbone/docs/)。
 
+> PS：如果文档无法访问，可尝试访问[备份文档镜像](https://developers.weixin.qq.com/miniprogram/kbone/docs/)。
+
 ## 问题
 
 此方案虽然将整个 Web 端框架包含进来并提供了适配层，但是也不是银弹，无法满足所有场景，具体限制可参考[问题文档](https://wechat-miniprogram.github.io/kbone/docs/qa/)。如果还遇到其他问题，可在 [issue](https://github.com/wechat-miniprogram/kbone/issues) 中反馈。
