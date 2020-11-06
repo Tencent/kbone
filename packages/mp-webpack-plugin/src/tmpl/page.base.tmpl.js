@@ -152,8 +152,9 @@ module.exports = function(mp, config, init) {
             // 处理 document 更新
             this.document.documentElement.addEventListener('$$domNodeUpdate', () => {
                 if (pageConfig.rem) {
-                    const rootFontSize = this.document.documentElement.style.fontSize
-                    if (rootFontSize && rootFontSize !== this.data.rootFontSize) this.setData({rootFontSize})
+                    let rootFontSize = this.document.documentElement.style.fontSize
+                    if (!rootFontSize) rootFontSize = wx.getSystemInfoSync().screenWidth / 16 + 'px'
+                    if (rootFontSize !== this.data.rootFontSize) this.setData({rootFontSize})
                 }
                 if (pageConfig.pageStyle) {
                     const pageStyle = this.document.documentElement.style.cssText

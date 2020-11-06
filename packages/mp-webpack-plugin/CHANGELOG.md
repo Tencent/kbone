@@ -1,5 +1,9 @@
 # 更新日志
 
+## 1.1.16
+
+* page-meta 组件的 rootFontSize 默认值改为动态计算值
+
 ## 1.1.14
 
 * 支持 packageConfigOverride 配置
