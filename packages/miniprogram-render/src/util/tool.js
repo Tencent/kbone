@@ -33,6 +33,11 @@ function getPageRoute(pageId) {
  * 从 pageRoute 中获取小程序页面名称
  */
 function getPageName(pageRoute) {
+    const pluginMatchRes = pageRoute.match(/(?:^|\/)__plugin__\/(?:.*?)(\/.*)/)
+    if (pluginMatchRes && pluginMatchRes[1]) {
+        // 插件页面的 route 需要特殊处理
+        pageRoute = pluginMatchRes[1]
+    }
     const splitPageRoute = pageRoute.split('/')
     return splitPageRoute[1] === 'pages' ? splitPageRoute[2] : splitPageRoute[1]
 }
