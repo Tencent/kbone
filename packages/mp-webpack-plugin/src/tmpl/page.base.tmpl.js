@@ -190,8 +190,17 @@ module.exports = function(mp, config, init) {
             init(this.window, this.document)
             this.setData({pageId: this.pageId})
             this.app = this.window.createApp()
-            this.window.$$trigger('load')
-            this.window.$$trigger('wxload', {event: query})
+            if (typeof this.app.then === 'function') {
+                // createApp 是一个 promise
+                this.app.then(app => {
+                    this.app = app
+                    this.window.$$trigger('load')
+                    this.window.$$trigger('wxload', {event: query})
+                }).catch(console.error)
+            } else {
+                this.window.$$trigger('load')
+                this.window.$$trigger('wxload', {event: query})
+            }
         },
         onShow() {
             // 方便调试

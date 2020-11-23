@@ -1,5 +1,9 @@
 # 更新日志
 
+## 1.1.17
+
+* 入口文件暴露的 createApp 方法支持 async 函数
+
 ## 1.1.16
 
 * page-meta 组件的 rootFontSize 默认值改为动态计算值
