@@ -33,6 +33,7 @@ export default {
     console.log(TEST_VAR_FUNCTION)
     console.log(TEST_VAR_OTHERS)
     console.log(open)
+    console.log('self --> ', self)
     console.log('HTMLElement --> ', HTMLElement)
     console.log('Element --> ', Element)
     console.log('Node --> ', Node)
