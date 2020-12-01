@@ -148,20 +148,6 @@ module.exports = Behavior({
                     }
                 }
             }
-
-            // 触发子节点变化
-            const childNodeStack = [].concat(childNodes)
-            let childNode = childNodeStack.pop()
-            while (childNode) {
-                if (childNode.type === 'element' && !childNode.isImage && !childNode.isLeaf && !childNode.isSimple && !childNode.useTemplate) {
-                    childNode.domNode.$$trigger('$$childNodesUpdate')
-                }
-
-                if (childNode.childNodes && childNode.childNodes.length) {
-                    childNode.childNodes.forEach(subChildNode => childNodeStack.push(subChildNode))
-                }
-                childNode = childNodeStack.pop()
-            }
         },
 
         /**

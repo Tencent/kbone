@@ -1,5 +1,10 @@
 # 更新日志
 
+## 2.1.15
+
+* 修复 radio 互斥问题
+* 去除不必要的 $$childNodesUpdate 事件触发
+
 ## 2.1.14
 
 * 第三方自定义组件部分兼容旧版本的 mp-webpack-plugin

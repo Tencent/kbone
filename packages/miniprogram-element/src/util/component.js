@@ -915,7 +915,7 @@ const wxComponentMap = {
                     const otherDomNodes = window.document.querySelectorAll(`input[name=${name}]`) || []
                     for (const otherDomNode of otherDomNodes) {
                         if (otherDomNode.type === 'radio' && otherDomNode !== domNode) {
-                            otherDomNode.$$setAttributeWithoutUpdate('checked', false)
+                            otherDomNode.setAttribute('checked', false)
 
                             // 可被用户行为改变的值，需要记录
                             otherDomNode._oldValues = otherDomNode._oldValues || {}
