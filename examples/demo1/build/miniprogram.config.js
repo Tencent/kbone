@@ -30,7 +30,7 @@ module.exports = {
         pageStyle: true, // 是否支持修改页面样式
 	},
 	projectConfig: {
-		appid: '',
+		appid: 'wx14c7c4cd189644a1',
         projectname: 'kbone-demo1',
 	},
 	packageConfig: {

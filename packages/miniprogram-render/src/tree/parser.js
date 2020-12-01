@@ -80,12 +80,20 @@ function tokenize(content, handler) {
             }
 
             if (isText) {
-                const index = content.indexOf('<')
+                const indexStart = content.indexOf('<')
+                const indexEnd = content.indexOf('>')
 
-                const text = index < 0 ? content : content.substring(0, index)
-                content = index < 0 ? '' : content.substring(index)
+                // 简单自动纠错，只有 <、只有 >、> 在 < 前面、< 和 > 中间没有内容
+                let text = ''
+                if (indexStart === -1 || indexStart >= 0 && indexEnd === -1 || indexStart > indexEnd || (indexEnd > indexStart && !content.substring(indexStart + 1, indexEnd).trim())) {
+                    text = content.replace(/>/g, '&gt;').replace(/</g, '&lt;')
+                    content = ''
+                } else {
+                    text = content.substring(0, indexStart)
+                    content = content.substring(indexStart)
+                }
 
-                if (handler.text) handler.text(text)
+                if (handler.text && text) handler.text(text)
             }
         } else {
             const execRes = (new RegExp(`</${stack.last()}[^>]*>`)).exec(content)

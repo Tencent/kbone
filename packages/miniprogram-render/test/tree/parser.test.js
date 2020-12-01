@@ -83,6 +83,30 @@ test('tokenize html', () => {
     ])
     expect(res3.endStack).toEqual(['div', 'script', 'span', 'div'])
     expect(res3.textStack).toEqual(['123', 'var msg = "hello world";\n      console.log(msg);', 'haha', '321'])
+
+    const res4 = getTokenizeResult('<180abc')
+    expect(res4.startStack.length).toBe(0)
+    expect(res4.endStack.length).toBe(0)
+    expect(res4.textStack.length).toBe(1)
+    expect(res4.textStack).toEqual(['&lt;180abc'])
+
+    const res5 = getTokenizeResult('1>80abc')
+    expect(res5.startStack.length).toBe(0)
+    expect(res5.endStack.length).toBe(0)
+    expect(res5.textStack.length).toBe(1)
+    expect(res5.textStack).toEqual(['1&gt;80abc'])
+
+    const res6 = getTokenizeResult('1>80ab<cd<')
+    expect(res6.startStack.length).toBe(0)
+    expect(res6.endStack.length).toBe(0)
+    expect(res6.textStack.length).toBe(1)
+    expect(res6.textStack).toEqual(['1&gt;80ab&lt;cd&lt;'])
+
+    const res7 = getTokenizeResult('<>180abcd<>')
+    expect(res7.startStack.length).toBe(0)
+    expect(res7.endStack.length).toBe(0)
+    expect(res7.textStack.length).toBe(1)
+    expect(res7.textStack).toEqual(['&lt;&gt;180abcd&lt;&gt;'])
 })
 
 test('parse html', () => {
