@@ -10,6 +10,14 @@ Component({
             type: String,
             value: 'defaultSuffix',
         },
+        testObj: {
+            type: Object,
+            value: {},
+        },
+        testArr: {
+            type: Array,
+            value: [],
+        },
     },
     data: {
         str: _.getWords() + 'comp-a',

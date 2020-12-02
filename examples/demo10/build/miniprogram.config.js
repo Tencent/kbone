@@ -16,7 +16,7 @@ module.exports = {
 			usingComponents: {
 				'comp-a': {
 					path: 'comp-a',
-					props: ['prefix', 'suffix'],
+					props: ['prefix', 'suffix', 'testObj', 'testArr'],
 					events: ['someevent'],
 				},
 				'comp-b': {
@@ -31,7 +31,7 @@ module.exports = {
 		navigationBarTitleText: 'miniprogram-project',
 	},
 	projectConfig: {
-		appid: '',
+		appid: 'wx14c7c4cd189644a1',
         projectname: 'kbone-demo10',
 	},
 	packageConfig: {

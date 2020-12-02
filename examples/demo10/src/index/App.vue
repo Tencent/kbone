@@ -1,7 +1,7 @@
 <template>
   <div class="cnt">
     <h2>kbone</h2>
-    <comp-a ref="compA" class="block" :prefix="prefixA" :suffix="suffixA" @someevent="onEvent">
+    <comp-a ref="compA" class="block" :prefix="prefixA" :suffix="suffixA" :testObj="testObj" :testArr="testArr" @someevent="onEvent">
       <div>comp-a slot</div>
     </comp-a>
     <comp-b class="block" :prefix="prefixB" name="test">
@@ -21,12 +21,16 @@ export default {
     return {
       suffixA: 'suffix-a',
       prefixB: 'prefix-b',
+      testObj: {},
+      testArr: [],
     }
   },
   methods: {
     onClick() {
       this.prefixA = 'prefix-new-a'
       this.prefixB = 'prefix-new-b'
+      this.testObj = {a: 'hello', b: 'kbone'},
+      this.testArr = [1, 2, 3, 4, 5, 6, 7]
 
       this.$refs.compA._wxCustomComponent.printf()
     },
