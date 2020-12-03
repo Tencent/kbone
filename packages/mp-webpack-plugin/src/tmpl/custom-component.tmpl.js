@@ -62,7 +62,7 @@ function checkComponentAttr({props = []}, name, domNode, destData, oldData) {
     const newId = domNode.id
     if (!oldData || oldData.id !== newId) destData.id = newId
     const newClass = `wx-comp-${name} node-${domNode.$$nodeId} ${domNode.className || ''}`
-    if (!oldData || oldData.class !== newClass) destData.class = newClass
+    if (!oldData || oldData.className !== newClass) destData.className = newClass
     const newStyle = domNode.style.cssText
     if (!oldData || oldData.style !== newStyle) destData.style = newStyle
 }
