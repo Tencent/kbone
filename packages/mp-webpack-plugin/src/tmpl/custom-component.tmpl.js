@@ -9,16 +9,10 @@ const {
 /**
  * 判断两值是否相等
  */
-function isEqual(a, b, notStrict) {
+function isEqual(a, b) {
     if (typeof a === 'number' && typeof b === 'number') {
         // 值为数值，需要考虑精度
         return parseInt(a * 1000, 10) === parseInt(b * 1000, 10)
-    }
-
-    if (notStrict) {
-        // 非严格模式，当其中一方为 undefined，则直接判断另一方的真值
-        if (b === undefined) return !a
-        if (a === undefined) return !b
     }
 
     if (typeof a === 'object' && typeof b === 'object') {
@@ -29,7 +23,7 @@ function isEqual(a, b, notStrict) {
         if (isAArray && isBArray) {
             if (a.length !== b.length) return false
             for (let i = 0, len = a.length; i < len; i++) {
-                if (!isEqual(a[i], b[i], notStrict)) return false
+                if (!isEqual(a[i], b[i])) return false
             }
             return true
         } else if (!isBArray && !isBArray) {
@@ -37,7 +31,7 @@ function isEqual(a, b, notStrict) {
             const bKeys = Object.keys(b)
             if (aKeys.length !== bKeys.length) return false
             for (const key of aKeys) {
-                if (!isEqual(a[key], b[key], notStrict)) return false
+                if (!isEqual(a[key], b[key])) return false
             }
             return true
         }
