@@ -2404,6 +2404,30 @@ const wxComponentMap = {
             },
         },
     },
+    'ad-custom': {
+        wxCompName: 'ad-custom',
+        properties: [{
+            name: 'unitId',
+            get(domNode) {
+                return domNode.getAttribute('unit-id') || ''
+            },
+        }, {
+            name: 'adIntervals',
+            get(domNode) {
+                return +domNode.getAttribute('ad-intervals') || 0
+            },
+        }],
+        handles: {
+            onAdCustomLoad(evt) {
+                this.callSingleEvent('load', evt)
+            },
+
+            onAdCustomError(evt) {
+                this.callSingleEvent('error', evt)
+            },
+        },
+
+    },
     'official-account': {
         wxCompName: 'official-account',
         handles: {

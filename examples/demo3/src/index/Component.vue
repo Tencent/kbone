@@ -493,6 +493,11 @@
           <wx-ad v-else-if="wxPrefix === 1" :class="item" unit-id="123" @error="log('onAdError', $event.detail)"></wx-ad>
           <ad v-else-if="wxPrefix === 2" :class="item" unit-id="123" @error="log('onAdError', $event.detail)"></ad>
         </template>
+        <template v-else-if="item === 'ad-custom'">
+          <wx-component v-if="!wxPrefix" :behavior="item" :class="item" unit-id="123" @error="log('onAdCustomError', $event.detail)"></wx-component>
+          <wx-ad-custom v-else-if="wxPrefix === 1" :class="item" unit-id="123" @error="log('onAdCustomError', $event.detail)"></wx-ad-custom>
+          <ad-custom v-else-if="wxPrefix === 2" :class="item" unit-id="123" @error="log('onAdCustomError', $event.detail)"></ad-custom>
+        </template>
         <template v-else-if="item === 'official-account'">
           <wx-component v-if="!wxPrefix" :behavior="item" :class="item" @error="log('onOfficialAccountError', $event.detail)"></wx-component>
           <wx-official-account v-else-if="wxPrefix === 1" :class="item" @error="log('onOfficialAccountError', $event.detail)"></wx-official-account>
@@ -611,6 +616,7 @@ export default {
         'camera',
         'editor',
         'ad',
+        'ad-custom',
         'official-account',
         'voip-room',
         'scroll-view',

@@ -1019,6 +1019,27 @@
         bindclose="onAdClose"
     ></ad>
 </template>
+<template name="ad-custom">
+    <ad-custom
+        id="{{id}}"
+        class="{{className}}"
+        style="{{style}}"
+        hidden="{{hidden}}"
+        data-private-node-id="{{nodeId}}"
+        data-private-page-id="{{pageId}}"
+        bindtouchstart="onTouchStart"
+        bindtouchmove="onTouchMove"
+        bindtouchend="onTouchEnd"
+        bindtouchcancel="onTouchCancel"
+        bindtap="onTap"
+        bindlongpress="onLongPress"
+        
+        unit-id="{{unitId}}"
+        ad-intervals="{{adIntervals}}"
+        bindload="onAdCustomLoad"
+        binderror="onAdCustomError"
+    ></ad-custom>
+</template>
 <template name="official-account">
     <official-account
         id="{{id}}"
