@@ -404,6 +404,7 @@ img {
  */
 img {
     display: inline-block;
+    height: auto;
 }
 
 br {
