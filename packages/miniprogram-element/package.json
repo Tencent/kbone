@@ -41,5 +41,5 @@
 		"terser-webpack-plugin": "^3.0.6",
 		"webpack": "^4.43.0"
 	},
-	"gitHead": "c0a837bf42860eeb368cafb32853ee3843a9855b"
+	"gitHead": "335714e2b6cd9c12d159dfc0753c697e800974a4"
 }

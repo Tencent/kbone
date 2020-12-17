@@ -22,5 +22,5 @@
         "optimize-css-assets-webpack-plugin": "^5.0.3",
         "webpack": "^4.41.6"
     },
-    "gitHead": "cdaf3b88d456a88b4f4191c0badc862d95819040"
+    "gitHead": "335714e2b6cd9c12d159dfc0753c697e800974a4"
 }
