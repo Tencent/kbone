@@ -1,0 +1,26 @@
+:host {
+  display: flex;
+  align-items: center;
+
+  &([hidden]) {
+    display: none;
+  }
+}
+
+.wx-progress-bar {
+  flex: 1;
+  overflow: hidden;
+}
+
+.wx-progress-inner-bar {
+  width: 0;
+  height: 100%;
+}
+
+.wx-progress-info {
+  margin-top: 0;
+  margin-bottom: 0;
+  min-width: 2em;
+  margin-left: 15px;
+  font-size: 16px;
+}

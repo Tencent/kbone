@@ -1,0 +1,14 @@
+<div id="wrap" class="wx-scroll-view">
+  <div id="main" class="wx-scroll-view" style$="overflow-x: hidden; overflow-y: hidden;">
+    <wx-refresher id="refresher">
+      <!-- 不支持自定义 refresher -->
+      <!-- <slot name="refresher"></slot> -->
+    </wx-refresher>
+    <div id="content">
+      <slot></slot>
+    </div>
+  </div>
+  <div id="barWrap" style="display:none" class="wx-wins-scrollbar">
+    <div id="scrollbar" class="wx-wins-scrollbar-bar"></div>
+  </div>
+</div>

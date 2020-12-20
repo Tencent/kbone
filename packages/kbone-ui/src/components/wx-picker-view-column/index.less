@@ -1,0 +1,98 @@
+:host {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  flex: 1;
+  position: relative;
+  z-index: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+.wx-picker__mask {
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  top: 0;
+  height: 100%;
+  margin: 0 auto;
+  background: -webkit-linear-gradient(top, hsla(0, 0%, 100%, 0.95), hsla(0, 0%, 100%, 0.6)), -webkit-linear-gradient(bottom, hsla(0, 0%, 100%, 0.95), hsla(0, 0%, 100%, 0.6));
+  background: linear-gradient(180deg, hsla(0, 0%, 100%, 0.95), hsla(0, 0%, 100%, 0.6)), linear-gradient(0deg, hsla(0, 0%, 100%, 0.95), hsla(0, 0%, 100%, 0.6));
+  background-position: top, bottom;
+  background-size: 100% 102px;
+  background-repeat: no-repeat;
+}
+
+.wx-picker__indicator {
+  height: 34px;
+  top: 102px;
+}
+
+.wx-picker__indicator,
+.wx-picker__mask {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.wx-picker__content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  will-change: transform;
+}
+
+.wx-picker__indicator::after,
+.wx-picker__indicator::before {
+  content: " ";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  color: #e5e5e5;
+}
+
+.wx-picker__indicator::before {
+  top: 0;
+  border-top: 1px solid #e5e5e5;
+  -webkit-transform-origin: 0 0;
+  transform-origin: 0 0;
+  -webkit-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+}
+
+.wx-picker__indicator::after {
+  bottom: 0;
+  border-bottom: 1px solid #e5e5e5;
+  -webkit-transform-origin: 0 100%;
+  transform-origin: 0 100%;
+  -webkit-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+}
+
+@media (prefers-color-scheme: dark) {
+  .wx-picker__mask {
+    top: 0;
+    height: 100%;
+    margin: 0 auto;
+    background: -webkit-linear-gradient(top, rgba(44, 44, 44, 0.7), rgb(44, 44, 44)), -webkit-linear-gradient(bottom, rgb(44, 44, 44), rgba(44, 44, 44, 0.7));
+    background: linear-gradient(180deg, rgb(44, 44, 44) 0, rgba(44, 44, 44, 0.7) 100%), linear-gradient(180deg, rgba(44, 44, 44, 0.7) 0, rgb(44, 44, 44) 100%);
+    background-position: top, bottom;
+    background-size: 100% 102px;
+    background-repeat: no-repeat;
+  }
+
+  .wx-picker__indicator::after,
+  .wx-picker__indicator::before {
+    color: rgba(255, 255, 255, 0.05);
+  }
+
+  .wx-picker__indicator::before {
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .wx-picker__indicator::after {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+}

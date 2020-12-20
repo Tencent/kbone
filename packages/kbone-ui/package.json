@@ -1,0 +1,60 @@
+{
+    "name": "kbone-ui",
+    "version": "2.0.0",
+    "description": "Weui component Library for kbone-ui",
+    "main": "index.js",
+    "scripts": {
+        "dev": "rimraf dist && cross-env NODE_ENV=development webpack-dev-server --inline --progress --config tool/webpack.config.js",
+        "build": "rimraf dist && cross-env NODE_ENV=production webpack --config tool/webpack.config.js --progress --hide-modules",
+        "lint": "eslint src/**/*.js --fix && stylelint \"src/**/*.less\" --fix"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/wechat-miniprogram/kbone-ui.git"
+    },
+    "keywords": [
+        "kbone",
+        "kbone-ui",
+        "weui"
+    ],
+    "author": "wechat-miniprogram",
+    "license": "MIT",
+    "browserslist": [
+        "defaults",
+        "iOS >= 8"
+    ],
+    "devDependencies": {
+        "@babel/core": "^7.0.0",
+        "@babel/plugin-proposal-object-rest-spread": "^7.12.1",
+        "@babel/preset-env": "^7.0.0",
+        "autoprefixer": "^10.0.1",
+        "babel-loader": "^8.0.0",
+        "cross-env": "^5.0.5",
+        "css-loader": "^5.0.1",
+        "cssnano": "^4.1.10",
+        "eslint": "^5.14.1",
+        "eslint-config-airbnb-base": "13.1.0",
+        "eslint-friendly-formatter": "^4.0.1",
+        "eslint-loader": "^2.1.2",
+        "eslint-plugin-import": "^2.16.0",
+        "eslint-plugin-node": "^7.0.1",
+        "eslint-plugin-promise": "^3.8.0",
+        "html-webpack-plugin": "^4.0.0-beta.5",
+        "less": "^3.12.2",
+        "less-loader": "^7.0.2",
+        "optimize-css-assets-webpack-plugin": "^5.0.1",
+        "postcss": "^8.1.4",
+        "postcss-loader": "^4.0.4",
+        "raw-loader": "^4.0.2",
+        "rimraf": "^3.0.2",
+        "stylelint": "^13.7.2",
+        "stylelint-config-standard": "^20.0.0",
+        "stylelint-webpack-plugin": "^2.1.1",
+        "terser-webpack-plugin": "^3.0.6",
+        "thread-loader": "^3.0.1",
+        "url-loader": "^4.1.1",
+        "webpack": "^4.29.6",
+        "webpack-cli": "^3.2.3",
+        "webpack-dev-server": "^3.11.0"
+    }
+}

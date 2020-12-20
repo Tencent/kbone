@@ -1,0 +1,101 @@
+.wx-picker-dialog {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  transition: opacity 0.2s ease-in-out;
+
+  &.wx-picker-dialog-in {
+    opacity: 1;
+  }
+
+  &.wx-picker-dialog-out {
+    opacity: 0;
+  }
+
+  .wx-picker-dialog-mask {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+    z-index: 100;
+  }
+
+  .wx-picker-dialog-wrapper {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -250px;
+    margin-top: -150px;
+    width: 500px;
+    height: 300px;
+    background-color: #fff;
+    z-index: 1000;
+
+    .wx-picker-dialog-header {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+      .wx-picker-dialog-title,
+      .wx-picker-dialog-cancel,
+      .wx-picker-dialog-confirm {
+        padding: 15px;
+        font-size: 17px;
+        line-height: 1.4;
+        cursor: pointer;
+      }
+
+      .wx-picker-dialog-title {
+        cursor: none;
+      }
+
+      .wx-picker-dialog-cancel {
+        color: rgba(0, 0, 0, 0.5);
+      }
+
+      .wx-picker-dialog-confirm {
+        color: #07c160;
+      }
+    }
+
+    .wx-picker-dialog-cnt {
+      flex: 1;
+      overflow: hidden;
+
+      wx-picker-view {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .wx-picker-dialog-item {
+      line-height: 50px;
+      text-align: center;
+    }
+  }
+}
+
+@media only screen and (max-width: 959px) {
+  .wx-picker-dialog {
+    .wx-picker-dialog-wrapper {
+      top: auto;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: 0;
+      width: auto;
+
+      &::after {
+        content: "";
+        height: env(safe-area-inset-bottom);
+      }
+    }
+  }
+}
