@@ -119,14 +119,14 @@ export default class WxProgress extends Base {
      * 旧的进度值
      */
     get _lastPercent() {
-        let value = this.getNumberValue('_lastpercent')
+        let value = this.filterNumberValue(this.__lastpercent)
         if (value > 100) value = 100
         if (value < 0) value = 0
         return value
     }
 
     set _lastPercent(value) {
-        this.setAttribute('_lastpercent', value)
+        this.__lastpercent = value
     }
 
     /**

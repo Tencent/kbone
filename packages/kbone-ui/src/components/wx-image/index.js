@@ -178,12 +178,13 @@ export default class WxImage extends Base {
      * 展示图片
      */
     showImage(changeId) {
+        if (!this.src) return
         this._hasBeenShown = true // 标记这个图片已经至少被加载过一次
 
         this._loaded = false
-        let img = new Image()
         const src = this.src
-
+        
+        let img = new Image()
         img.onerror = evt => {
             evt.stopPropagation()
 
@@ -213,7 +214,6 @@ export default class WxImage extends Base {
 
         this.removeIntersectionObserver()
         img.src = src
-        this._src = src
         this.div.style.backgroundImage = `url('${src}')`
     }
 

@@ -2,7 +2,6 @@ const path = require('path')
 const eslintFriendlyFormatter = require('eslint-friendly-formatter')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
 const StylelintPlugin = require('stylelint-webpack-plugin')
 
 const isDevelop = process.env.NODE_ENV === 'development'
@@ -10,15 +9,16 @@ const isDevelop = process.env.NODE_ENV === 'development'
 module.exports = {
     mode: isDevelop ? 'development' : 'production',
     entry: {
-        index: path.resolve(__dirname, './src/index.js'),
+        index: path.resolve(__dirname, '../src/index.js'),
     },
     output: {
         path: path.resolve(__dirname, '../dist'),
-        filename: '[name].js',
+        filename: isDevelop ? '[name].dev.js' : '[name].js',
         library: 'KBoneUI',
         libraryTarget: 'umd',
     },
     target: 'web',
+    watch: isDevelop,
     optimization: {
         minimizer: isDevelop ? [] : [
             // 压缩CSS
@@ -40,14 +40,6 @@ module.exports = {
                 parallel: true,
             })
         ],
-    },
-    devServer: {
-        contentBase: path.join(__dirname, './dist'),
-        host: '0.0.0.0',
-        useLocalIp: true,
-        port: 9900,
-        hot: true,
-        open: true,
     },
     module: {
         rules: [{
@@ -108,12 +100,6 @@ module.exports = {
         extensions: ['.js', '.json'],
     },
     plugins: [
-        new HtmlWebpackPlugin({
-            filename: 'index.html',
-            chunks: ['index'],
-            template: path.join(__dirname, './index.html'),
-            inject: 'head',
-        }),
         new StylelintPlugin({
             files: '**/*.less',
             fix: true,

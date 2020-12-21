@@ -731,6 +731,8 @@ export default class WxSwiper extends Base {
      * 监听滚轮事件
      */
     onHandleWheel(evt) {
+        evt.preventDefault()
+
         if (!this._wheelStartTs) {
             if (this._scheduleTimeout) this._scheduleTimeout = clearTimeout(this._scheduleTimeout)
             this._touchViewportPosition = this._lastPosition

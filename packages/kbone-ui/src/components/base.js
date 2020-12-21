@@ -109,7 +109,14 @@ export default class Base extends HTMLElement {
      * 获取数字值的属性
      */
     getNumberValue(name, defaultValue = 0) {
-        const value = parseFloat(this.getAttribute(name))
+        return this.filterNumberValue(this.getAttribute(name), defaultValue)
+    }
+
+    /**
+     * 调整数字值的属性
+     */
+    filterNumberValue(value, defaultValue = 0) {
+        value = parseFloat(value)
         return !isNaN(value) ? value : defaultValue
     }
 

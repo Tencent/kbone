@@ -41,7 +41,7 @@ export default class WxSwitch extends Base {
         if (name === 'checked') {
             this.switchInput.classList.toggle('wx-switch-input-checked', this.checked)
             this.checkboxInput.classList.toggle('wx-checkbox-input-checked', this.checked)
-            this.switchInput.style.borderColor = this.checked ? this.color : ''
+            this.switchInput.style.borderColor = this.checked ? this.color : '' // 可能在 color 后面设置
         } else if (name === 'type') {
             const isCheckbox = this.type === 'checkbox'
             this.switchInput.style.display = isCheckbox ? 'none' : 'block'
@@ -49,6 +49,7 @@ export default class WxSwitch extends Base {
         } else if (name === 'color') {
             this.switchInput.style.backgroundColor = this.color
             this.checkboxInput.style.color = this.color
+            if (this.checked) this.switchInput.style.borderColor = this.color // 可能在 checked 后面设置
         } else if (name === 'disabled') {
             this.switchInput.classList.toggle('wx-switch-input-disabled', this.disabled)
             this.checkboxInput.classList.toggle('wx-checkbox-input-disabled', this.disabled)

@@ -135,7 +135,10 @@ export default class WxScrollView extends Base {
         } else if (name === 'refresher-background') {
             this.refresher.setAttribute('background', this.refresherBackground)
         } else if (name === 'refresher-triggered') {
-            this.refresher.setAttribute('triggered', this.refresherTriggered)
+            if (this.refresherEnabled) {
+                this.refresher.disableRefresher(false)
+                this.refresher.setAttribute('triggered', this.refresherTriggered)
+            }
         }
     }
 

@@ -78,7 +78,7 @@ export default class WxPicker extends Base {
 
         if (name === 'header-text') {
             this.titleDiv.innerText = this.headerText
-        } else if (name === 'mode' || name === 'fields') {
+        } else if (name === 'mode' || name === 'fields' || name === 'custom-item') {
             const mode = this.mode
             if (mode === 'time') {
                 this.adjustPickerViewColumn(2)
@@ -112,8 +112,8 @@ export default class WxPicker extends Base {
                 const customItem = this.customItem
                 if (customItem && !this._hasInitCustomItem) {
                     // 自定义第一项
-                    regionJson.unshift([customItem, []])
-                    regionJson.forEach(item1 => {
+                    this._regionJson.unshift([customItem, []])
+                    this._regionJson.forEach(item1 => {
                         item1[1].unshift([customItem, []])
                         item1[1].forEach(item2 => {
                             item2[1].unshift(customItem)
@@ -125,9 +125,9 @@ export default class WxPicker extends Base {
                 const list1 = []
                 const list2 = []
                 const list3 = []
-                regionJson.forEach(item => list1.push(`<div class="wx-picker-dialog-item">${item[0]}</div>`))
-                regionJson[0][1].forEach(item => list2.push(`<div class="wx-picker-dialog-item">${item[0]}</div>`))
-                regionJson[0][1][0][1].forEach(item => list3.push(`<div class="wx-picker-dialog-item">${item}</div>`))
+                this._regionJson.forEach(item => list1.push(`<div class="wx-picker-dialog-item">${item[0]}</div>`))
+                this._regionJson[0][1].forEach(item => list2.push(`<div class="wx-picker-dialog-item">${item[0]}</div>`))
+                this._regionJson[0][1][0][1].forEach(item => list3.push(`<div class="wx-picker-dialog-item">${item}</div>`))
                 this.pickerView.children[0].innerHTML = list1.join('')
                 this.pickerView.children[1].innerHTML = list2.join('')
                 this.pickerView.children[2].innerHTML = list3.join('')
@@ -242,6 +242,11 @@ export default class WxPicker extends Base {
         return this.getAttribute('custom-item')
     }
 
+    get _regionJson() {
+        if (!this.__regionJson) this.__regionJson = JSON.parse(JSON.stringify(regionJson))
+        return this.__regionJson
+    }
+
     /**
      * 调整 wx-picker-view-column 数量
      */
@@ -276,7 +281,7 @@ export default class WxPicker extends Base {
      * 调整市、县/区列
      */
     adjustRegionColumn(value, needUpdate1 = true, needUpdate2 = true) {
-        const item1 = regionJson.find(item => item[0] === value[0])
+        const item1 = this._regionJson.find(item => item[0] === value[0])
 
         if (needUpdate1) {
             const list1 = []
@@ -317,9 +322,9 @@ export default class WxPicker extends Base {
      * 获取调整后省市，返回的是序号
      */
     getLimitRegion(region) {
-        const index1 = regionJson.findIndex(item => item[0] === region[0])
-        const index2 = index1 >= 0 ? regionJson[index1][1].findIndex(item => item[0] === region[1]) : 0
-        const index3 = index2 >= 0 ? regionJson[index1][1][index2][1].findIndex(item => item === region[2]) : 0
+        const index1 = this._regionJson.findIndex(item => item[0] === region[0])
+        const index2 = index1 >= 0 ? this._regionJson[index1][1].findIndex(item => item[0] === region[1]) : 0
+        const index3 = index2 >= 0 ? this._regionJson[index1][1][index2][1].findIndex(item => item === region[2]) : 0
 
         return [index1 === -1 ? 0 : index1, index2 === -1 ? 0 : index2, index3 === -1 ? 0 : index3]
     }
@@ -436,7 +441,7 @@ export default class WxPicker extends Base {
             else if (fields === 'month') value = formatTime(new Date(date[0] + 1900, (date[1] || 0)), 'yyyy-MM')
             else value = formatTime(new Date(date[0] + 1900, (date[1] || 0), (date[2] || 0) + 1), 'yyyy-MM-dd')
         } else if (mode === 'region') {
-            const item1 = regionJson[value[0]]
+            const item1 = this._regionJson[value[0]]
             const item2 = item1[1][value[1]] || item1[1][0]
             const item3 = item2[1][value[2]] || item2[1][0]
             value = [item1[0], item2[0], item3] // 序号转为省市名称
