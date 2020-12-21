@@ -19,6 +19,7 @@ function getExtra(document) {
             SPAN: toArray(document.getElementsByTagName('span')),
             HEADER: toArray(document.getElementsByTagName('header')),
             FOOTER: toArray(document.getElementsByTagName('footer')),
+            'WX-COMPONENT': toArray(document.getElementsByTagName('wx-component')),
         },
         classMap: {
             aa: toArray(document.getElementsByClassName('aa')),
@@ -94,6 +95,12 @@ test('query-selector: parse selector', () => {
         {tag: '*', id: 'id', kinship: ' '},
         {tag: '*', class: ['class'], attr: [{name: 'name', opr: '^=', val: 'value'}]}
     ])
+
+    // 内置组件
+    expect(querySelector.parse('#id wx-xxx')).toEqual([
+        {tag: '*', id: 'id', kinship: ' '},
+        {tag: 'wx-xxx'}
+    ])
 })
 
 test('query-selector: exec select', () => {
@@ -124,4 +131,10 @@ test('query-selector: exec select', () => {
     const res4 = document.body.querySelectorAll('.bb footer > .bb4:nth-child(2n-1)')
     expect(res3[0]).toBe(res4[0])
     expect(res3[1]).toBe(res4[1])
+
+    // jsDom 的 dom 对象要手动设置 behavior 属性
+    document.body.querySelector('.bb wx-component[behavior=view]').behavior = 'view'
+    document.body.querySelector('.bb wx-component[behavior=text]').behavior = 'text'
+    expect(querySelector.exec('.bb wx-view', getExtra(document))[0]).toBe(document.body.querySelector('.bb wx-component[behavior=view]'))
+    expect(querySelector.exec('.bb wx-text', getExtra(document))[0]).toBe(document.body.querySelector('.bb wx-component[behavior=text]'))
 })

@@ -27,9 +27,9 @@
             <wx-movable-view
               v-for="item in wxMovableView.count"
               :key="item"
-              inertia
-              out-of-bounds
-              animation
+              :inertia="true"
+              :out-of-bounds="true"
+              :animation="true"
               direction="all"
               class="wx-movable-view"
               @change="log('[wx-movable-view change]', $event.detail)"
@@ -40,25 +40,25 @@
           </div>
         </wx-movable-area>
         <div class="opr-cnt">
-          <button class="opr-button move-1" @click="moveWxMovableView()">移动（随机）</button>
-          <button class="opr-button move-2" @click="moveWxMovableView(wxMovableView.x - 100, wxMovableView.y - 100)">移动（-100, -100）</button>
-          <button class="opr-button move-3" @click="moveWxMovableView(wxMovableView.x + 100, wxMovableView.y + 100)">移动（+100, +100）</button>
-          <button class="opr-button move-4" @click="moveWxMovableView(0, 0)">移动（0, 0）</button>
-          <button class="opr-button scale-1" @click="scaleWxMovableView()">放缩（随机）</button>
-          <button class="opr-button scale-2" @click="scaleWxMovableView(wxMovableView.scaleValue * 0.8)">放缩（0.8）</button>
-          <button class="opr-button scale-3" @click="scaleWxMovableView(wxMovableView.scaleValue * 1.2)">放缩（1.2）</button>
-          <button class="opr-button scale-4" @click="scaleWxMovableView(1)">放缩（1）</button>
-          <button class="opr-button add-view" @click="wxMovableView.count++">增加滑块</button>
-          <button class="opr-button reduce-view" @click="wxMovableView.count = Math.max(wxMovableView.count - 1, 0)">删除滑块</button>
-          <button class="opr-button clear-view" @click="wxMovableView.count = 0">清空滑块</button>
+          <wx-button class="opr-button move-1" @click="moveWxMovableView()">移动（随机）</wx-button>
+          <wx-button class="opr-button move-2" @click="moveWxMovableView(wxMovableView.x - 100, wxMovableView.y - 100)">移动（-100, -100）</wx-button>
+          <wx-button class="opr-button move-3" @click="moveWxMovableView(wxMovableView.x + 100, wxMovableView.y + 100)">移动（+100, +100）</wx-button>
+          <wx-button class="opr-button move-4" @click="moveWxMovableView(0, 0)">移动（0, 0）</wx-button>
+          <wx-button class="opr-button scale-1" @click="scaleWxMovableView()">放缩（随机）</wx-button>
+          <wx-button class="opr-button scale-2" @click="scaleWxMovableView(wxMovableView.scaleValue * 0.8)">放缩（0.8）</wx-button>
+          <wx-button class="opr-button scale-3" @click="scaleWxMovableView(wxMovableView.scaleValue * 1.2)">放缩（1.2）</wx-button>
+          <wx-button class="opr-button scale-4" @click="scaleWxMovableView(1)">放缩（1）</wx-button>
+          <wx-button class="opr-button add-view" @click="wxMovableView.count++">增加滑块</wx-button>
+          <wx-button class="opr-button reduce-view" @click="wxMovableView.count = Math.max(wxMovableView.count - 1, 0)">删除滑块</wx-button>
+          <wx-button class="opr-button clear-view" @click="wxMovableView.count = 0">清空滑块</wx-button>
         </div>
         <div class="opr-cnt">
           <div class="opr-label">惯性</div>
-          <wx-switch checked @change="wxMovableView.inertia = $event.detail.value.toString()"></wx-switch>
+          <wx-switch :checked="true" @change="wxMovableView.inertia = $event.detail.value.toString()"></wx-switch>
         </div>
         <div class="opr-cnt">
           <div class="opr-label">允许超过可移动区域</div>
-          <wx-switch checked @change="wxMovableView.outOfBounds = $event.detail.value.toString()"></wx-switch>
+          <wx-switch :checked="true" @change="wxMovableView.outOfBounds = $event.detail.value.toString()"></wx-switch>
         </div>
         <div class="opr-cnt">
           <div class="opr-label">禁用</div>
@@ -66,7 +66,7 @@
         </div>
         <div class="opr-cnt">
           <div class="opr-label">动画</div>
-          <wx-switch checked @change="wxMovableView.animation = $event.detail.value.toString()"></wx-switch>
+          <wx-switch :checked="true" @change="wxMovableView.animation = $event.detail.value.toString()"></wx-switch>
         </div>
         <div class="opr-cnt">
           <div class="opr-label">放缩区域为整个 area</div>
@@ -75,29 +75,29 @@
         <div class="opr-cnt">
           <div class="opr-label">阻尼系数</div>
           <div class="opr-box">
-            <wx-slider min="1" max="100" step="2" value="20" show-value @change="wxMovableView.damping = $event.detail.value"></wx-slider>
+            <wx-slider min="1" max="100" step="2" value="20" :show-value="true" @change="wxMovableView.damping = $event.detail.value"></wx-slider>
           </div>
         </div>
         <div class="opr-cnt">
           <div class="opr-label">摩擦系数</div>
           <div class="opr-box">
-            <wx-slider min="1" max="10" step="1" value="2" show-value @change="wxMovableView.friction = $event.detail.value"></wx-slider>
+            <wx-slider min="1" max="10" step="1" value="2" :show-value="true" @change="wxMovableView.friction = $event.detail.value"></wx-slider>
           </div>
         </div>
         <div class="opr-cnt">
           <div class="opr-label">放缩</div>
-          <wx-switch checked @change="wxMovableView.scale = $event.detail.value.toString()"></wx-switch>
+          <wx-switch :checked="true" @change="wxMovableView.scale = $event.detail.value.toString()"></wx-switch>
         </div>
         <div class="opr-cnt">
           <div class="opr-label">放缩最小值</div>
           <div class="opr-box">
-            <wx-slider min="0.5" max="1" step="0.1" value="0.5" show-value @change="wxMovableView.scaleMin = $event.detail.value"></wx-slider>
+            <wx-slider min="0.5" max="1" step="0.1" value="0.5" :show-value="true" @change="wxMovableView.scaleMin = $event.detail.value"></wx-slider>
           </div>
         </div>
         <div class="opr-cnt">
           <div class="opr-label">放缩最大值</div>
           <div class="opr-box">
-            <wx-slider min="1" max="10" step="1" value="10" show-value @change="wxMovableView.scaleMax = $event.detail.value"></wx-slider>
+            <wx-slider min="1" max="10" step="1" value="10" :show-value="true" @change="wxMovableView.scaleMax = $event.detail.value"></wx-slider>
           </div>
         </div>
         <div class="opr-cnt">
@@ -117,7 +117,7 @@
         <wx-scroll-view
           ref="wx-scroll-view-y"
           class="wx-scroll-view-y"
-          scroll-y
+          :scroll-y="true"
           :scroll-with-animation="wxScrollView.y.scrollWithAnimation"
           :refresher-enabled="wxScrollView.y.refresherEnabled"
           :refresher-triggered="wxScrollView.y.refresherTriggered"
@@ -138,13 +138,13 @@
           </div>
         </wx-scroll-view>
         <div class="opr-cnt opr-cnt-y">
-          <button class="opr-button" @click="setAttribute('wx-scroll-view-y', 'scroll-into-view', 'yblock3')">滑动到第三个</button>
-          <button class="opr-button" @click="setAttribute('wx-scroll-view-y', 'scroll-top', 120)">滚动到 120px 处</button>
-          <button class="opr-button" @click="wxScrollView.y.refresherTriggered = true">触发下拉</button>
+          <wx-button class="opr-button" @click="setAttribute('wx-scroll-view-y', 'scroll-into-view', 'yblock3')">滑动到第三个</wx-button>
+          <wx-button class="opr-button" @click="setAttribute('wx-scroll-view-y', 'scroll-top', 120)">滚动到 120px 处</wx-button>
+          <wx-button class="opr-button" @click="wxScrollView.y.refresherTriggered = true">触发下拉</wx-button>
         </div>
         <div class="opr-cnt opr-cnt-y">
           <div class="opr-label">动画</div>
-          <wx-switch checked @change="wxScrollView.y.scrollWithAnimation = $event.detail.value.toString()"></wx-switch>
+          <wx-switch :checked="true" @change="wxScrollView.y.scrollWithAnimation = $event.detail.value.toString()"></wx-switch>
         </div>
         <div class="opr-cnt opr-cnt-y">
           <div class="opr-label">下拉刷新</div>
@@ -153,7 +153,7 @@
         <wx-scroll-view
           ref="wx-scroll-view-x"
           class="wx-scroll-view-x"
-          scroll-x
+          :scroll-x="true"
           :scroll-with-animation="wxScrollView.x.scrollWithAnimation"
           @scroll="wxScrollView.x.scrollIntoView = ''; wxScrollView.x.scrollLeft = $event.detail.scrollLeft; log('[wx-scroll-view scroll]', $event.detail)"
           @scrolltoupper="log('[wx-scroll-view scrolltoupper]', $event.detail)"
@@ -168,12 +168,12 @@
           </div>
         </wx-scroll-view>
         <div class="opr-cnt">
-          <button class="opr-button" @click="setAttribute('wx-scroll-view-x', 'scroll-into-view', 'xblock3')">滑动到第二个</button>
-          <button class="opr-button" @click="setAttribute('wx-scroll-view-x', 'scroll-left', 120)">滚动到 120px 处</button>
+          <wx-button class="opr-button" @click="setAttribute('wx-scroll-view-x', 'scroll-into-view', 'xblock3')">滑动到第二个</wx-button>
+          <wx-button class="opr-button" @click="setAttribute('wx-scroll-view-x', 'scroll-left', 120)">滚动到 120px 处</wx-button>
         </div>
         <div class="opr-cnt">
           <div class="opr-label">动画</div>
-          <wx-switch checked @change="wxScrollView.x.scrollWithAnimation = $event.detail.value.toString()"></wx-switch>
+          <wx-switch :checked="true" @change="wxScrollView.x.scrollWithAnimation = $event.detail.value.toString()"></wx-switch>
         </div>
       </div>
     </div>
@@ -208,7 +208,7 @@
         </wx-swiper>
         <div class="opr-cnt">
           <div class="opr-label">指示点</div>
-          <wx-switch checked @change="wxSwiper.indicatorDots = $event.detail.value.toString()"></wx-switch>
+          <wx-switch :checked="true" @change="wxSwiper.indicatorDots = $event.detail.value.toString()"></wx-switch>
         </div>
         <div class="opr-cnt">
           <div class="opr-label">自动播放</div>
@@ -232,11 +232,11 @@
         </div>
         <div class="opr-cnt">
           <div class="opr-label">隐藏不显示的滑块</div>
-          <wx-switch checked @change="wxSwiper.skipHiddenItemLayout = $event.detail.value.toString()"></wx-switch>
+          <wx-switch :checked="true" @change="wxSwiper.skipHiddenItemLayout = $event.detail.value.toString()"></wx-switch>
         </div>
         <div class="opr-cnt">
           <div class="opr-label">开启 wheel 事件（kbone-ui 特有）</div>
-          <wx-switch checked @change="wxSwiper.kboneEnableWheel = $event.detail.value.toString()"></wx-switch>
+          <wx-switch :checked="true" @change="wxSwiper.kboneEnableWheel = $event.detail.value.toString()"></wx-switch>
         </div>
         <div class="opr-cnt">
           <div class="opr-label">指示点（默认）</div>
@@ -246,29 +246,29 @@
         <div class="opr-cnt">
           <div class="opr-label">时间间隔</div>
           <div class="opr-box">
-            <wx-slider min="1000" max="5000" step="500" value="3000" show-value @change="wxSwiper.interval = $event.detail.value"></wx-slider>
+            <wx-slider min="1000" max="5000" step="500" value="3000" :show-value="true" @change="wxSwiper.interval = $event.detail.value"></wx-slider>
           </div>
         </div>
         <div class="opr-cnt">
           <div class="opr-label">滑动时长</div>
           <div class="opr-box">
-            <wx-slider min="100" max="1000" step="100" value="500" show-value @change="wxSwiper.duration = $event.detail.value"></wx-slider>
+            <wx-slider min="100" max="1000" step="100" value="500" :show-value="true" @change="wxSwiper.duration = $event.detail.value"></wx-slider>
           </div>
         </div>
         <div class="opr-cnt">
           <div class="opr-label">总滑块数量</div>
           <div class="opr-box">
-            <wx-slider min="1" max="6" step="1" :value="wxSwiper.totalItems" show-value @change="wxSwiper.totalItems = $event.detail.value"></wx-slider>
+            <wx-slider min="1" max="6" step="1" :value="wxSwiper.totalItems" :show-value="true" @change="wxSwiper.totalItems = $event.detail.value"></wx-slider>
           </div>
         </div>
         <div class="opr-cnt">
           <div class="opr-label">展示滑块数量</div>
           <div class="opr-box">
-            <wx-slider min="1" max="3" step="1" value="1" show-value @change="onUpdateWxSwiperShowItems"></wx-slider>
+            <wx-slider min="1" max="3" step="1" value="1" :show-value="true" @change="onUpdateWxSwiperShowItems"></wx-slider>
           </div>
         </div>
         <div class="opr-cnt">
-            <button class="opr-button" @click="setAttribute('wx-swiper', 'current', 1)">跳转到第二个</button>
+            <wx-button class="opr-button" @click="setAttribute('wx-swiper', 'current', 1)">跳转到第二个</wx-button>
         </div>
         <div class="opr-cnt">
           <div class="opr-label">动画类型</div>
@@ -291,7 +291,7 @@
         <wx-view class="wx-view" :hover-class="wxView.hoverClass">
           <div>带 hover 的 view</div>
         </wx-view>
-        <button @click="onUpdateView">更新 hover 颜色</button>
+        <wx-button @click="onUpdateView">更新 hover 颜色</wx-button>
       </div>
     </div>
     <div class="item">
@@ -330,12 +330,12 @@
     <div class="item">
       <div class="title">wx-progress</div>
       <div class="comp-cnt">
-        <wx-progress ref="wx-progress-update" class="wx-progress" :percent="wxProgress.percent1" show-info stroke-width="3" @activeend="log('[wx-progress]', $event.detail)"></wx-progress>
-        <wx-progress ref="wx-progress-update" class="wx-progress" :percent="wxProgress.percent2" active stroke-width="6" @activeend="log('[wx-progress]', $event.detail)"></wx-progress>
-        <wx-progress ref="wx-progress-update" class="wx-progress" :percent="wxProgress.percent3" active stroke-width="6" active-mode="forwards" @activeend="log('[wx-progress]', $event.detail)"></wx-progress>
-        <wx-progress class="wx-progress" percent="60" active stroke-width="10" border-radius="5" @activeend="log('[wx-progress]', $event.detail)"></wx-progress>
-        <wx-progress class="wx-progress" percent="80" color="#10AEFF" active stroke-width="14" duration="10" @activeend="log('[wx-progress]', $event.detail)"></wx-progress>
-        <button @click="onUpdateWxProgress">更新进度</button>
+        <wx-progress ref="wx-progress-update" class="wx-progress" :percent="wxProgress.percent1" :show-info="true" stroke-width="3" @activeend="log('[wx-progress]', $event.detail)"></wx-progress>
+        <wx-progress ref="wx-progress-update" class="wx-progress" :percent="wxProgress.percent2" :active="true" stroke-width="6" @activeend="log('[wx-progress]', $event.detail)"></wx-progress>
+        <wx-progress ref="wx-progress-update" class="wx-progress" :percent="wxProgress.percent3" :active="true" stroke-width="6" active-mode="forwards" @activeend="log('[wx-progress]', $event.detail)"></wx-progress>
+        <wx-progress class="wx-progress" percent="60" :active="true" stroke-width="10" border-radius="5" @activeend="log('[wx-progress]', $event.detail)"></wx-progress>
+        <wx-progress class="wx-progress" percent="80" color="#10AEFF" :active="true" stroke-width="14" duration="10" @activeend="log('[wx-progress]', $event.detail)"></wx-progress>
+        <wx-button @click="onUpdateWxProgress">更新进度</wx-button>
       </div>
     </div>
     <div class="item">
@@ -349,24 +349,25 @@
       <div class="title">wx-text</div>
       <div class="comp-cnt">
         <div><wx-text class="wx-text">今天天气不错</wx-text></div>
-        <div><wx-text ref="wx-text" user-select decode></wx-text></div>
-        <button @click="onUpdateWxText">更新内容</button>
+        <div><wx-text ref="wx-text1" :user-select="true" :decode="true"></wx-text></div>
+        <div ref="wx-text2"></div>
+        <wx-button @click="onUpdateWxText">更新内容</wx-button>
       </div>
     </div>
     <div class="item">
       <div class="title">wx-button</div>
       <div class="comp-cnt wx-button-cnt">
         <wx-button class="wx-button" type="primary" @tap="log('[wx-button] tap', $event)" @longpress="log('[wx-button] longpress', $event)">页面主操作 Normal</wx-button>
-        <wx-button class="wx-button" type="primary" loading @tap="log('[wx-button] tap', $event)" @longpress="log('[wx-button] longpress', $event)">页面主操作 Loading</wx-button>
-        <wx-button class="wx-button" type="primary" disabled @tap="log('[wx-button] tap', $event)" @longpress="log('[wx-button] longpress', $event)">页面主操作 Disabled</wx-button>
+        <wx-button class="wx-button" type="primary" :loading="true" @tap="log('[wx-button] tap', $event)" @longpress="log('[wx-button] longpress', $event)">页面主操作 Loading</wx-button>
+        <wx-button class="wx-button" type="primary" :disabled="true" @tap="log('[wx-button] tap', $event)" @longpress="log('[wx-button] longpress', $event)">页面主操作 Disabled</wx-button>
         <wx-button class="wx-button" type="default" @tap="log('[wx-button] tap', $event)" @longpress="log('[wx-button] longpress', $event)">页面次要操作 Normal</wx-button>
-        <wx-button class="wx-button" type="default" disabled @tap="log('[wx-button] tap', $event)" @longpress="log('[wx-button] longpress', $event)">页面次要操作 Disabled</wx-button>
+        <wx-button class="wx-button" type="default" :disabled="true" @tap="log('[wx-button] tap', $event)" @longpress="log('[wx-button] longpress', $event)">页面次要操作 Disabled</wx-button>
         <wx-button class="wx-button" type="warn" @tap="log('[wx-button] tap', $event)" @longpress="log('[wx-button] longpress', $event)">警告类操作 Normal</wx-button>
-        <wx-button class="wx-button" type="warn" disabled @tap="log('[wx-button] tap', $event)" @longpress="log('[wx-button] longpress', $event)">警告类操作 Disabled</wx-button>
-        <wx-button class="wx-button" type="primary" plain @tap="log('[wx-button] tap', $event)" @longpress="log('[wx-button] longpress', $event)">按钮</wx-button>
-        <wx-button class="wx-button" type="primary" disabled plain @tap="log('[wx-button] tap', $event)" @longpress="log('[wx-button] longpress', $event)">不可点击的按钮</wx-button>
-        <wx-button class="wx-button" type="default" plain @tap="log('[wx-button] tap', $event)" @longpress="log('[wx-button] longpress', $event)">按钮</wx-button>
-        <wx-button class="wx-button" type="default" disabled plain @tap="log('[wx-button] tap', $event)" @longpress="log('[wx-button] longpress', $event)">按钮</wx-button>
+        <wx-button class="wx-button" type="warn" :disabled="true" @tap="log('[wx-button] tap', $event)" @longpress="log('[wx-button] longpress', $event)">警告类操作 Disabled</wx-button>
+        <wx-button class="wx-button" type="primary" :plain="true" @tap="log('[wx-button] tap', $event)" @longpress="log('[wx-button] longpress', $event)">按钮</wx-button>
+        <wx-button class="wx-button" type="primary" :disabled="true" plain @tap="log('[wx-button] tap', $event)" @longpress="log('[wx-button] longpress', $event)">不可点击的按钮</wx-button>
+        <wx-button class="wx-button" type="default" :plain="true" @tap="log('[wx-button] tap', $event)" @longpress="log('[wx-button] longpress', $event)">按钮</wx-button>
+        <wx-button class="wx-button" type="default" :disabled="true" :plain="true" @tap="log('[wx-button] tap', $event)" @longpress="log('[wx-button] longpress', $event)">按钮</wx-button>
         <div>
           <wx-button class="wx-button mini-btn" type="primary" size="mini" @tap="log('[wx-button] tap', $event)" @longpress="log('[wx-button] longpress', $event)">按钮</wx-button>
           <wx-button class="wx-button mini-btn" type="default" size="mini" @tap="log('[wx-button] tap', $event)" @longpress="log('[wx-button] longpress', $event)">按钮</wx-button>
@@ -377,36 +378,36 @@
     <div class="item">
       <div class="title">wx-picker</div>
       <div class="comp-cnt">
-          <wx-picker class="wx-picker" :range="JSON.stringify(wxPicker.range1)" :value="wxPicker.value1" @change="wxPicker.showText1 = wxPicker.range1[+$event.detail.value]" @cancel="log('[wx-picker] cancel', $event)">
-              <div>普通选择器：{{wxPicker.showText1}}</div>
-          </wx-picker>
-          <wx-picker class="wx-picker" header-text="selector" range-key="name" :range="JSON.stringify(wxPicker.range2)" :value="wxPicker.value2" @change="wxPicker.showText2 = wxPicker.range2[+$event.detail.value].name" @cancel="log('[wx-picker] cancel', $event)">
-              <div>普通选择器2：{{wxPicker.showText2}}</div>
-          </wx-picker>
-          <wx-picker class="wx-picker" mode="multiSelector" :range="JSON.stringify(wxPicker.range3)" :value="JSON.stringify(wxPicker.value3)" @change="wxPicker.showText3 = `${wxPicker.range3[0][+$event.detail.value[0]]} - ${wxPicker.range3[1][+$event.detail.value[1]]} - ${wxPicker.range3[2][+$event.detail.value[2]]}`" @cancel="log('[wx-picker] cancel', $event)" @columnchange="onWxpicker3ColumnChange">
-              <div>多列选择器：{{wxPicker.showText3}}</div>
-          </wx-picker>
-          <wx-picker class="wx-picker" mode="multiSelector" range-key="name" header-text="multiSelector" :range="JSON.stringify(wxPicker.range4)" :value="JSON.stringify(wxPicker.value4)" @change="wxPicker.showText4 = `${wxPicker.range4[0][+$event.detail.value[0]].name} - ${wxPicker.range4[1][+$event.detail.value[1]].name}`" @cancel="log('[wx-picker] cancel', $event)" @columnchange="onWxpicker4ColumnChange">
-              <div>多列选择器2：{{wxPicker.showText4}}</div>
-          </wx-picker>
-          <wx-picker class="wx-picker" mode="time" start="09:01" end="21:01" :value="wxPicker.value5" @change="wxPicker.value5 = $event.detail.value" @cancel="log('[wx-picker] cancel', $event)">
-              <div>时间选择器：{{wxPicker.value5}}</div>
-          </wx-picker>
-          <wx-picker class="wx-picker" mode="date" start="2015-09-01" end="2020-09-01" :value="wxPicker.value6" @change="wxPicker.value6 = $event.detail.value" @cancel="log('[wx-picker] cancel', $event)">
-              <div>日期选择器：{{wxPicker.value6}}</div>
-          </wx-picker>
-          <wx-picker class="wx-picker" mode="date" start="2015-09-01" end="2020-09-01" fields="month" :value="wxPicker.value7" @change="wxPicker.value7 = $event.detail.value" @cancel="log('[wx-picker] cancel', $event)">
-              <div>日期选择器2：{{wxPicker.value7}}</div>
-          </wx-picker>
-          <wx-picker class="wx-picker" mode="date" start="2015-09-01" end="2020-09-01" fields="year" :value="wxPicker.value8" @change="wxPicker.value8 = $event.detail.value" @cancel="log('[wx-picker] cancel', $event)">
-              <div>日期选择器2：{{wxPicker.value8}}</div>
-          </wx-picker>
-          <wx-picker class="wx-picker" mode="region" :value="JSON.stringify(wxPicker.value9)" @change="wxPicker.showText9 = $event.detail.value.join('-')" @cancel="log('[wx-picker] cancel', $event)">
-              <div>省市选择器：{{wxPicker.showText9}}</div>
-          </wx-picker>
-          <wx-picker class="wx-picker" mode="region" custom-item="全部" :value="JSON.stringify(wxPicker.value10)" @change="wxPicker.showText10 = $event.detail.value.join('-')" @cancel="log('[wx-picker] cancel', $event)">
-              <div>省市选择器2：{{wxPicker.showText10}}</div>
-          </wx-picker>
+        <wx-picker class="wx-picker" :range="JSON.stringify(wxPicker.range1)" :value="wxPicker.value1" @change="wxPicker.showText1 = wxPicker.range1[+$event.detail.value]" @cancel="log('[wx-picker] cancel', $event)">
+          <div>普通选择器：{{wxPicker.showText1}}</div>
+        </wx-picker>
+        <wx-picker class="wx-picker" header-text="selector" range-key="name" :range="JSON.stringify(wxPicker.range2)" :value="wxPicker.value2" @change="wxPicker.showText2 = wxPicker.range2[+$event.detail.value].name" @cancel="log('[wx-picker] cancel', $event)">
+          <div>普通选择器2：{{wxPicker.showText2}}</div>
+        </wx-picker>
+        <wx-picker class="wx-picker" mode="multiSelector" :range="JSON.stringify(wxPicker.range3)" :value="JSON.stringify(wxPicker.value3)" @change="wxPicker.showText3 = `${wxPicker.range3[0][+$event.detail.value[0]]} - ${wxPicker.range3[1][+$event.detail.value[1]]} - ${wxPicker.range3[2][+$event.detail.value[2]]}`" @cancel="log('[wx-picker] cancel', $event)" @columnchange="onWxpicker3ColumnChange">
+          <div>多列选择器：{{wxPicker.showText3}}</div>
+        </wx-picker>
+        <wx-picker class="wx-picker" mode="multiSelector" range-key="name" header-text="multiSelector" :range="JSON.stringify(wxPicker.range4)" :value="JSON.stringify(wxPicker.value4)" @change="wxPicker.showText4 = `${wxPicker.range4[0][+$event.detail.value[0]].name} - ${wxPicker.range4[1][+$event.detail.value[1]].name}`" @cancel="log('[wx-picker] cancel', $event)" @columnchange="onWxpicker4ColumnChange">
+          <div>多列选择器2：{{wxPicker.showText4}}</div>
+        </wx-picker>
+        <wx-picker class="wx-picker" mode="time" start="09:01" end="21:01" :value="wxPicker.value5" @change="wxPicker.value5 = $event.detail.value" @cancel="log('[wx-picker] cancel', $event)">
+          <div>时间选择器：{{wxPicker.value5}}</div>
+        </wx-picker>
+        <wx-picker class="wx-picker" mode="date" start="2015-09-01" end="2020-09-01" :value="wxPicker.value6" @change="wxPicker.value6 = $event.detail.value" @cancel="log('[wx-picker] cancel', $event)">
+          <div>日期选择器：{{wxPicker.value6}}</div>
+        </wx-picker>
+        <wx-picker class="wx-picker" mode="date" start="2015-09-01" end="2020-09-01" fields="month" :value="wxPicker.value7" @change="wxPicker.value7 = $event.detail.value" @cancel="log('[wx-picker] cancel', $event)">
+          <div>日期选择器2：{{wxPicker.value7}}</div>
+        </wx-picker>
+        <wx-picker class="wx-picker" mode="date" start="2015-09-01" end="2020-09-01" fields="year" :value="wxPicker.value8" @change="wxPicker.value8 = $event.detail.value" @cancel="log('[wx-picker] cancel', $event)">
+          <div>日期选择器2：{{wxPicker.value8}}</div>
+        </wx-picker>
+        <wx-picker class="wx-picker" mode="region" :value="JSON.stringify(wxPicker.value9)" @change="wxPicker.showText9 = $event.detail.value.join('-')" @cancel="log('[wx-picker] cancel', $event)">
+          <div>省市选择器：{{wxPicker.showText9}}</div>
+        </wx-picker>
+        <wx-picker class="wx-picker" mode="region" custom-item="全部" :value="JSON.stringify(wxPicker.value10)" @change="wxPicker.showText10 = $event.detail.value.join('-')" @cancel="log('[wx-picker] cancel', $event)">
+          <div>省市选择器2：{{wxPicker.showText10}}</div>
+        </wx-picker>
       </div>
     </div>
     <div class="item">
@@ -432,7 +433,7 @@
           </wx-picker-view-column>
         </wx-picker-view>
         <div class="opr-cnt">
-          <button class="opr-button" @click="onUpdateWxPickerView">更新值（随机）</button>
+          <wx-button class="opr-button" @click="onUpdateWxPickerView">更新值（随机）</wx-button>
         </div>
       </div>
     </div>
@@ -441,9 +442,9 @@
       <div class="comp-cnt">
         <wx-slider class="wx-slider" @change="log('[wx-slider] change', $event.detail)" @changing="log('[wx-slider] changing', $event.detail)"></wx-slider>
         <wx-slider class="wx-slider" min="1" max="21" step="2" value="15" @change="log('[wx-slider] change', $event.detail)" @changing="log('[wx-slider] changing', $event.detail)"></wx-slider>
-        <wx-slider class="wx-slider" min="12.3" max="27.5" step="0.2" value="15" show-value @change="log('[wx-slider] change', $event.detail)" @changing="log('[wx-slider] changing', $event.detail)"></wx-slider>
-        <wx-slider class="wx-slider" min="50" max="200" value="100" show-value @change="log('[wx-slider] change', $event.detail)" @changing="log('[wx-slider] changing', $event.detail)"></wx-slider>
-        <wx-slider class="wx-slider" min="50" max="200" value="110" disabled @change="log('[wx-slider] change', $event.detail)" @changing="log('[wx-slider] changing', $event.detail)"></wx-slider>
+        <wx-slider class="wx-slider" min="12.3" max="27.5" step="0.2" value="15" :show-value="true" @change="log('[wx-slider] change', $event.detail)" @changing="log('[wx-slider] changing', $event.detail)"></wx-slider>
+        <wx-slider class="wx-slider" min="50" max="200" value="100" :show-value="true" @change="log('[wx-slider] change', $event.detail)" @changing="log('[wx-slider] changing', $event.detail)"></wx-slider>
+        <wx-slider class="wx-slider" min="50" max="200" value="110" :disabled="true" @change="log('[wx-slider] change', $event.detail)" @changing="log('[wx-slider] changing', $event.detail)"></wx-slider>
         <wx-slider class="wx-slider" min="50" max="200" value="100" selected-color="red" color="#000" @change="log('[wx-slider] change', $event.detail)" @changing="log('[wx-slider] changing', $event.detail)"></wx-slider>
         <wx-slider class="wx-slider" min="50" max="200" value="100" active-color="red" background-color="#000" @change="log('[wx-slider] change', $event.detail)" @changing="log('[wx-slider] changing', $event.detail)"></wx-slider>
         <wx-slider class="wx-slider" min="50" max="200" value="100" block-size="15" block-color="red" @change="log('[wx-slider] change', $event.detail)" @changing="log('[wx-slider] changing', $event.detail)"></wx-slider>
@@ -452,11 +453,11 @@
     <div class="item">
       <div class="title">wx-switch</div>
       <div class="comp-cnt">
-        <wx-switch class="wx-switch" checked @change="log('[wx-switch]', $event.detail)"></wx-switch>
-        <wx-switch class="wx-switch" checked disabled @change="log('[wx-switch]', $event.detail)"></wx-switch>
-        <wx-switch class="wx-switch" checked color="red" @change="log('[wx-switch]', $event.detail)"></wx-switch>
+        <wx-switch class="wx-switch" :checked="true" @change="log('[wx-switch]', $event.detail)"></wx-switch>
+        <wx-switch class="wx-switch" :checked="true" :disabled="true" @change="log('[wx-switch]', $event.detail)"></wx-switch>
+        <wx-switch class="wx-switch" :checked="true" color="red" @change="log('[wx-switch]', $event.detail)"></wx-switch>
         <wx-switch class="wx-switch" type="checkbox" @change="log('[wx-switch]', $event.detail)"></wx-switch>
-        <wx-switch class="wx-switch" type="checkbox" disabled @change="log('[wx-switch]', $event.detail)"></wx-switch>
+        <wx-switch class="wx-switch" type="checkbox" :disabled="true" @change="log('[wx-switch]', $event.detail)"></wx-switch>
         <wx-switch class="wx-switch" type="checkbox" color="red" @change="log('[wx-switch]', $event.detail)"></wx-switch>
       </div>
     </div>
@@ -496,7 +497,7 @@
         <div>error</div>
         <wx-image class="wx-image" style="width: 200px; height: 200px; background-color: #eee;" src="https://june.haha/123456.jpg" @load="log('[wx-image] load', $event.detail)" @error="log('[wx-image] error', $event.detail)"></wx-image>
         <div>lazy-load</div>
-        <wx-image class="wx-image" style="width: 200px; height: 200px; background-color: #eee;" lazy-load src="https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg" @load="log('[wx-image] lazy-load load', $event.detail)" @error="log('[wx-image] lazy-load error', $event.detail)"></wx-image>
+        <wx-image class="wx-image" style="width: 200px; height: 200px; background-color: #eee;" :lazy-load="true" src="https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg" @load="log('[wx-image] lazy-load load', $event.detail)" @error="log('[wx-image] lazy-load error', $event.detail)"></wx-image>
       </div>
     </div>
     <div class="item">
@@ -627,7 +628,7 @@ export default {
   },
   mounted() {
     // wx-text
-    this.$refs['wx-text'].innerText = '&gt; this is first line\n&gt; this is second line'
+    this.$refs['wx-text1'].innerText = '&gt; this is first line\n&gt; this is second line'
   },
   methods: {
     log(...args) {
@@ -699,7 +700,7 @@ export default {
     },
 
     onUpdateWxText() {
-      this.$refs['wx-text'].innerHTML += '\n<wx-text id="wx-text-decode-1" decode></wx-text>\n<wx-text id="wx-text-decode-2"></wx-text>'
+      this.$refs['wx-text2'].innerHTML = '<wx-text id="wx-text-decode-1" decode="true"></wx-text><wx-text id="wx-text-decode-2"></wx-text>'
       this.$nextTick(() => {
         document.getElementById('wx-text-decode-1').innerText = '&gt; insert 1'
         document.getElementById('wx-text-decode-2').innerText = '&gt; insert 2'
@@ -804,10 +805,10 @@ export default {
   line-height: 40px;
   font-size: 16px;
   background-color: #b8e8ab;
-  padding-left: 30px;
+  padding-left: 20px;
 }
 .comp-cnt {
-  padding: 30px;
+  padding: 10px;
 }
 .red {
   color: red;
@@ -830,7 +831,7 @@ export default {
 .wx-movable-area {
   width: 300px;
   height: 300px;
-  margin: 20px;
+  margin: 20px 0;
   background-color: #ccc;
   overflow: hidden;
   z-index: 0;

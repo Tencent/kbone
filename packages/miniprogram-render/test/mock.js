@@ -75,6 +75,8 @@ const html = `<div class="aa">
             <span class="bb4" data-index=3>3</span>
         </footer>
         <div>tail</div>
+        <wx-component behavior="view">test wx-view</wx-component>
+        <wx-component behavior="text">test wx-text</wx-component>
     </div>
 </div>`
 

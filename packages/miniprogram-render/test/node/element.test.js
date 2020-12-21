@@ -518,6 +518,11 @@ test('node: getElementsByTagName', () => {
 
     expect(document.getElementsByTagName('header').length).toBe(1)
     expect(node.getElementsByTagName('header').length).toBe(0)
+
+    expect(document.getElementsByTagName('wx-view').length).toBe(1)
+    expect(document.getElementsByTagName('wx-view')[0]).toBeInstanceOf(Element)
+    expect(document.getElementsByTagName('wx-text').length).toBe(1)
+    expect(document.getElementsByTagName('wx-text')[0]).toBeInstanceOf(Element)
 })
 
 test('node: getElementsByClassName', () => {

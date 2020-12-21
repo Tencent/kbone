@@ -230,6 +230,7 @@ class Element extends Node {
             let html = `<${tagName}`
 
             // 属性
+            if (node.behavior) html += ` behavior="${tool.escapeForHtmlGeneration(node.behavior)}"`
             if (node.id) html += ` id="${tool.escapeForHtmlGeneration(node.id)}"`
             if (node.className) html += ` class="${tool.escapeForHtmlGeneration(node.className)}"`
 

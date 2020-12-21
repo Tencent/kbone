@@ -183,7 +183,7 @@ export default class WxImage extends Base {
 
         this._loaded = false
         const src = this.src
-        
+
         let img = new Image()
         img.onerror = evt => {
             evt.stopPropagation()

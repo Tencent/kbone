@@ -1,6 +1,7 @@
 /**
  * 感谢 sizzle：https://github.com/jquery/sizzle/tree/master
  */
+const tool = require('../util/tool')
 
 const PSEUDO_CHECK = {
     checked: node => node.checked || node.selected,
@@ -101,7 +102,12 @@ function checkHit(node, rule) {
 
     // 标签选择器
     if (tag && tag !== '*') {
-        if (node.tagName !== tag.toUpperCase()) return false
+        if (tool.checkIsWxComponent(tag.toLowerCase(), false)) {
+            // 内置组件
+            if (node.tagName !== 'WX-COMPONENT' || node.behavior !== tag.slice(3).toLowerCase()) return false
+        } else if (node.tagName !== tag.toUpperCase()) {
+            return false
+        }
     }
 
     // 伪类选择器
@@ -191,7 +197,7 @@ class QuerySelector {
         this.parseCacheKeys = []
 
         const idReg = '#([\\\\\\w-]+)' // id 选择器
-        const tagReg = '\\*|wx-component|[a-zA-Z-]\\w*' // 标签选择器
+        const tagReg = '\\*|wx-component|[a-zA-Z-]+\\w*' // 标签选择器
         const classReg = '\\.([\\\\\\w-]+)' // 类选择器
         const pseudoReg = ':([\\\\\\w-]+)(?:\\(([^\\(\\)]*|(?:\\([^\\)]+\\)|[^\\(\\)]*)+)\\))?' // 伪类选择器
         const attrReg = '\\[\\s*([\\\\\\w-]+)(?:([*^$|~!]?=)[\'"]?([^\'"\\[]+)[\'"]?)?\\s*\\]' // 属性选择器
@@ -359,8 +365,8 @@ class QuerySelector {
                 }
             }
         } else if (tag && tag !== '*') {
-            // 标签选择器，查询指定标签
-            const tagName = tag.toUpperCase()
+            // 标签选择器，查询指定标签，支持内置组件
+            const tagName = tool.checkIsWxComponent(tag.toLowerCase(), false) ? 'WX-COMPONENT' : tag.toUpperCase()
             const tagNodes = tagMap[tagName]
             if (tagNodes) hitNodes = tagNodes
         } else {

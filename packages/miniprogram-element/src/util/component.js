@@ -20,7 +20,7 @@ function dealWithDevToolsEvt(evt) {
 /**
  * 兼容 react
  */
-function dealWithReactAttr(value) {
+function dealWithObjectString(value) {
     if (typeof value === 'string') {
         // react 会直接将属性值转成字符串
         try {
@@ -487,7 +487,8 @@ const wxComponentMap = {
         properties: [{
             name: 'nodes',
             get(domNode) {
-                return domNode.getAttribute('nodes') || []
+                const value = dealWithObjectString(domNode.getAttribute('nodes'))
+                return value !== undefined ? value : []
             },
         }, {
             name: 'space',
@@ -979,12 +980,8 @@ const wxComponentMap = {
 
                 let value = domNode.getAttribute('range')
                 if (typeof value === 'string') {
-                    // react 会直接将属性值转成字符串
-                    try {
-                        value = JSON.parse(value)
-                    } catch (err) {
-                        value = value.split(',')
-                    }
+                    const parseValue = dealWithObjectString(value)
+                    value = parseValue !== undefined ? parseValue : value.split(',')
                 }
                 return value !== undefined ? value : []
             },
@@ -1007,14 +1004,21 @@ const wxComponentMap = {
                 if (mode === 'selector') {
                     return +value || 0
                 } else if (mode === 'multiSelector') {
-                    if (typeof value === 'string') value = value.split(',').map(item => parseInt(item, 10)) // react 会直接将属性值转成字符串
+                    if (typeof value === 'string') {
+                        const parseValue = dealWithObjectString(value)
+                        value = parseValue !== undefined ? parseValue : value.split(',')
+                        value = value.map(item => parseInt(item, 10))
+                    }
                     return value || []
                 } else if (mode === 'time') {
                     return value || ''
                 } else if (mode === 'date') {
                     return value || '0'
                 } else if (mode === 'region') {
-                    if (typeof value === 'string') value = value.split(',') // react 会直接将属性值转成字符串
+                    if (typeof value === 'string') {
+                        const parseValue = dealWithObjectString(value)
+                        value = parseValue !== undefined ? parseValue : value.split(',')
+                    }
                     return value || []
                 }
 
@@ -1082,7 +1086,11 @@ const wxComponentMap = {
             canBeUserChanged: true,
             get(domNode) {
                 let value = domNode.getAttribute('value')
-                if (typeof value === 'string') value = value.split(',').map(item => parseInt(item, 10)) // react 会直接将属性值转成字符串
+                if (typeof value === 'string') {
+                    const parseValue = dealWithObjectString(value)
+                    value = parseValue !== undefined ? parseValue : value.split(',')
+                    value = value.map(item => parseInt(item, 10))
+                }
                 return value !== undefined ? value : []
             },
         }, {
@@ -1641,12 +1649,8 @@ const wxComponentMap = {
             get(domNode) {
                 let value = domNode.getAttribute('picture-in-picture-mode')
                 if (typeof value === 'string') {
-                    // react 会直接将属性值转成字符串
-                    try {
-                        value = JSON.parse(value)
-                    } catch (err) {
-                        value = value.split(',')
-                    }
+                    const parseValue = dealWithObjectString(value)
+                    value = parseValue !== undefined ? parseValue : value.split(',')
 
                     if (Array.isArray(value) && value.length === 1) value = '' + value[0]
                 }
@@ -2002,12 +2006,8 @@ const wxComponentMap = {
             get(domNode) {
                 let value = domNode.getAttribute('picture-in-picture-mode')
                 if (typeof value === 'string') {
-                    // react 会直接将属性值转成字符串
-                    try {
-                        value = JSON.parse(value)
-                    } catch (err) {
-                        value = value.split(',')
-                    }
+                    const parseValue = dealWithObjectString(value)
+                    value = parseValue !== undefined ? parseValue : value.split(',')
 
                     if (Array.isArray(value) && value.length === 1) value = '' + value[0]
                 }
@@ -2139,31 +2139,31 @@ const wxComponentMap = {
         }, {
             name: 'markers',
             get(domNode) {
-                const value = dealWithReactAttr(domNode.getAttribute('markers'))
+                const value = dealWithObjectString(domNode.getAttribute('markers'))
                 return value !== undefined ? value : []
             },
         }, {
             name: 'polyline',
             get(domNode) {
-                const value = dealWithReactAttr(domNode.getAttribute('polyline'))
+                const value = dealWithObjectString(domNode.getAttribute('polyline'))
                 return value !== undefined ? value : []
             },
         }, {
             name: 'circles',
             get(domNode) {
-                const value = dealWithReactAttr(domNode.getAttribute('circles'))
+                const value = dealWithObjectString(domNode.getAttribute('circles'))
                 return value !== undefined ? value : []
             },
         }, {
             name: 'controls',
             get(domNode) {
-                const value = dealWithReactAttr(domNode.getAttribute('controls'))
+                const value = dealWithObjectString(domNode.getAttribute('controls'))
                 return value !== undefined ? value : []
             },
         }, {
             name: 'includePoints',
             get(domNode) {
-                const value = dealWithReactAttr(domNode.getAttribute('include-points'))
+                const value = dealWithObjectString(domNode.getAttribute('include-points'))
                 return value !== undefined ? value : []
             },
         }, {
@@ -2174,7 +2174,7 @@ const wxComponentMap = {
         }, {
             name: 'polygons',
             get(domNode) {
-                const value = dealWithReactAttr(domNode.getAttribute('polygons'))
+                const value = dealWithObjectString(domNode.getAttribute('polygons'))
                 return value !== undefined ? value : []
             },
         }, {
@@ -2247,7 +2247,7 @@ const wxComponentMap = {
         }, {
             name: 'setting',
             get(domNode) {
-                return dealWithReactAttr(domNode.getAttribute('setting')) || {}
+                return dealWithObjectString(domNode.getAttribute('setting')) || {}
             },
         }],
         handles: {

@@ -1,5 +1,10 @@
 # 更新日志
 
+## 2.2.0
+
+* innerHTML 补充 behavior 输出
+* getElementsByTagName/querySelector/querySelectorAll 支持内置组件标签
+
 ## 2.1.7
 
 * 支持 ad-custom 内置组件

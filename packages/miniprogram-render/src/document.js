@@ -30,33 +30,7 @@ const CONSTRUCTOR_MAP = {
     OPTION: Option,
     'WX-COMPONENT': WxComponent,
 }
-const WX_COMPONENT_MAP = {}
-const WX_COMPONENT_LIST = [
-    'cover-image', 'cover-view', 'match-media', 'movable-area', 'movable-view', 'scroll-view', 'swiper', 'swiper-item', 'view',
-    'icon', 'progress', 'rich-text', 'text',
-    'button', 'checkbox', 'checkbox-group', 'editor', 'form', 'input', 'label', 'picker', 'picker-view', 'picker-view-column', 'radio', 'radio-group', 'slider', 'switch', 'textarea',
-    'functional-page-navigator', 'navigator',
-    'audio', 'camera', 'image', 'live-player', 'live-pusher', 'video', 'voip-room',
-    'map',
-    'canvas',
-    'ad', 'ad-custom', 'official-account', 'open-data', 'web-view',
-    // 特殊补充
-    'capture', 'catch', 'animation'
-]
-WX_COMPONENT_LIST.forEach(name => WX_COMPONENT_MAP[name] = name)
 let WX_CUSTOM_COMPONENT_MAP = {}
-
-/**
- * 判断是否是内置组件
- */
-function checkIsWxComponent(tagName, notNeedPrefix) {
-    const hasPrefix = tagName.indexOf('wx-') === 0
-    if (notNeedPrefix) {
-        return hasPrefix ? WX_COMPONENT_MAP[tagName.slice(3)] : WX_COMPONENT_MAP[tagName]
-    } else {
-        return hasPrefix ? WX_COMPONENT_MAP[tagName.slice(3)] : false
-    }
-}
 
 class Document extends EventTarget {
     constructor(pageId, nodeIdMap) {
@@ -183,7 +157,7 @@ class Document extends EventTarget {
         if (constructorClass) {
             return constructorClass.$$create(options, tree)
         // eslint-disable-next-line no-cond-assign
-        } else if (wxComponentName = checkIsWxComponent(originTagName, this.$$notNeedPrefix)) {
+        } else if (wxComponentName = tool.checkIsWxComponent(originTagName, this.$$notNeedPrefix)) {
             // 内置组件的特殊写法，转成 wx-component 节点
             options.tagName = 'wx-component'
             options.attrs = options.attrs || {}

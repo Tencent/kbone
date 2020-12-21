@@ -1,5 +1,10 @@
 # 更新日志
 
+## 2.2.0
+
+* rich-text 的 nodes 支持 json 串
+* picker、picker-view 的 value 支持 json 串
+
 ## 2.1.16
 
 * 支持 ad-custom 内置组件

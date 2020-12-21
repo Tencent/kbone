@@ -9,7 +9,7 @@ module.exports = {
 		accessDenied: 'index',
 	},
 	generate: {
-		autoBuildNpm: 'npm',
+		appWxss: 'display',
 	},
 	app: {
 		navigationBarTitleText: 'miniprogram-project',

@@ -176,6 +176,18 @@ test('parse html', () => {
                 attrs: [],
                 unary: false,
                 children: [{type: 'text', content: 'tail'}],
+            }, {
+                type: 'element',
+                tagName: 'wx-component',
+                attrs: [{name: 'behavior', value: 'view'}],
+                unary: false,
+                children: [{type: 'text', content: 'test wx-view'}],
+            }, {
+                type: 'element',
+                tagName: 'wx-component',
+                attrs: [{name: 'behavior', value: 'text'}],
+                unary: false,
+                children: [{type: 'text', content: 'test wx-text'}],
             }],
         }],
     }])
