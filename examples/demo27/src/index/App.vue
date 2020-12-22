@@ -17,27 +17,71 @@
             :scale="wxMovableView.scale"
             :scale-min="wxMovableView.scaleMin"
             :scale-max="wxMovableView.scaleMax"
-            :direction="wxMovableView.direction"
+            direction="all"
             @change="log('[wx-movable-view change]', $event.detail)"
             @scale="log('[wx-movable-view scale]', $event.detail)"
             @htouchmove="log('[wx-movable-view htouchmove]', $event)"
             @vtouchmove="log('[wx-movable-view vtouchmove]', $event)"
           >text</wx-movable-view>
-          <div class="wx-movable-view-cnt">
+          <wx-movable-view
+            v-for="item in wxMovableView.count"
+            :key="item"
+            :inertia="true"
+            :out-of-bounds="true"
+            :animation="true"
+            direction="all"
+            class="wx-movable-view"
+            @change="log('[wx-movable-view change]', $event.detail)"
+            @scale="log('[wx-movable-view scale]', $event.detail)"
+            @htouchmove="log('[wx-movable-view htouchmove]', $event)"
+            @vtouchmove="log('[wx-movable-view vtouchmove]', $event)"
+          >text</wx-movable-view>
+          <template v-if="wxMovableView.addDirection">
             <wx-movable-view
-              v-for="item in wxMovableView.count"
-              :key="item"
               :inertia="true"
               :out-of-bounds="true"
               :animation="true"
               direction="all"
               class="wx-movable-view"
-              @change="log('[wx-movable-view change]', $event.detail)"
-              @scale="log('[wx-movable-view scale]', $event.detail)"
-              @htouchmove="log('[wx-movable-view htouchmove]', $event)"
-              @vtouchmove="log('[wx-movable-view vtouchmove]', $event)"
-            >text</wx-movable-view>
-          </div>
+              @change="log('[wx-movable-view all change]', $event.detail)"
+              @htouchmove="log('[wx-movable-view all htouchmove]', $event)"
+              @vtouchmove="log('[wx-movable-view all vtouchmove]', $event)"
+            >all</wx-movable-view>
+            <wx-movable-view
+              x="250"
+              :inertia="true"
+              :out-of-bounds="true"
+              :animation="true"
+              direction="vertical"
+              class="wx-movable-view"
+              @change="log('[wx-movable-view vertical change]', $event.detail)"
+              @htouchmove="log('[wx-movable-view vertical htouchmove]', $event)"
+              @vtouchmove="log('[wx-movable-view vertical vtouchmove]', $event)"
+            >v</wx-movable-view>
+            <wx-movable-view
+              y="250"
+              :inertia="true"
+              :out-of-bounds="true"
+              :animation="true"
+              direction="horizontal"
+              class="wx-movable-view"
+              @change="log('[wx-movable-view horizontal change]', $event.detail)"
+              @htouchmove="log('[wx-movable-view horizontal htouchmove]', $event)"
+              @vtouchmove="log('[wx-movable-view horizontal vtouchmove]', $event)"
+            >h</wx-movable-view>
+            <wx-movable-view
+              x="250"
+              y="250"
+              :inertia="true"
+              :out-of-bounds="true"
+              :animation="true"
+              direction="none"
+              class="wx-movable-view"
+              @change="log('[wx-movable-view none change]', $event.detail)"
+              @htouchmove="log('[wx-movable-view none htouchmove]', $event)"
+              @vtouchmove="log('[wx-movable-view none vtouchmove]', $event)"
+            >none</wx-movable-view>
+          </template>
         </wx-movable-area>
         <div class="opr-cnt">
           <wx-button class="opr-button move-1" @click="moveWxMovableView()">移动（随机）</wx-button>
@@ -51,6 +95,8 @@
           <wx-button class="opr-button add-view" @click="wxMovableView.count++">增加滑块</wx-button>
           <wx-button class="opr-button reduce-view" @click="wxMovableView.count = Math.max(wxMovableView.count - 1, 0)">删除滑块</wx-button>
           <wx-button class="opr-button clear-view" @click="wxMovableView.count = 0">清空滑块</wx-button>
+          <wx-button class="opr-button add-view" @click="wxMovableView.addDirection = true">增加四个不同方向滑块</wx-button>
+          <wx-button class="opr-button add-view" @click="wxMovableView.addDirection = false">删除四个不同方向滑块</wx-button>
         </div>
         <div class="opr-cnt">
           <div class="opr-label">惯性</div>
@@ -100,15 +146,6 @@
             <wx-slider min="1" max="10" step="1" value="10" :show-value="true" @change="wxMovableView.scaleMax = $event.detail.value"></wx-slider>
           </div>
         </div>
-        <div class="opr-cnt">
-          <div class="opr-label">方向</div>
-          <select class="direction" @change="onWxMovableViewDirectionChange">
-            <option value="all" selected>all</option>
-            <option value="vertical">vertical</option>
-            <option value="horizontal">horizontal</option>
-            <option value="none">none</option>
-          </select>
-        </div>
       </div>
     </div>
     <div class="item">
@@ -120,7 +157,6 @@
           :scroll-y="true"
           :scroll-with-animation="wxScrollView.y.scrollWithAnimation"
           :refresher-enabled="wxScrollView.y.refresherEnabled"
-          :refresher-triggered="wxScrollView.y.refresherTriggered"
           @scroll="log('[wx-scroll-view scroll]', $event.detail)"
           @scrolltoupper="log('[wx-scroll-view scrolltoupper]', $event.detail)"
           @scrolltolower="log('[wx-scroll-view scrolltolower]', $event.detail)"
@@ -140,7 +176,7 @@
         <div class="opr-cnt opr-cnt-y">
           <wx-button class="opr-button" @click="setAttribute('wx-scroll-view-y', 'scroll-into-view', 'yblock3')">滑动到第三个</wx-button>
           <wx-button class="opr-button" @click="setAttribute('wx-scroll-view-y', 'scroll-top', 120)">滚动到 120px 处</wx-button>
-          <wx-button class="opr-button" @click="wxScrollView.y.refresherTriggered = true">触发下拉</wx-button>
+          <wx-button class="opr-button" @click="setAttribute('wx-scroll-view-y', 'refresher-triggered', true)">触发下拉</wx-button>
         </div>
         <div class="opr-cnt opr-cnt-y">
           <div class="opr-label">动画</div>
@@ -187,8 +223,8 @@
           :autoplay="wxSwiper.autoplay"
           :circular="wxSwiper.circular"
           :vertical="wxSwiper.vertical"
-          :previous-margin="wxSwiper.margin ? '20px' : ''"
-          :next-margin="wxSwiper.margin ? '20px' : ''"
+          :previous-margin="wxSwiper.margin === 'true' ? '20px' : ''"
+          :next-margin="wxSwiper.margin === 'true' ? '20px' : ''"
           :snap-to-edge="wxSwiper.snapToEdge"
           :skip-hidden-item-layout="wxSwiper.skipHiddenItemLayout"
           :kbone-enable-wheel="wxSwiper.kboneEnableWheel"
@@ -365,7 +401,7 @@
         <wx-button class="wx-button" type="warn" @tap="log('[wx-button] tap', $event)" @longpress="log('[wx-button] longpress', $event)">警告类操作 Normal</wx-button>
         <wx-button class="wx-button" type="warn" :disabled="true" @tap="log('[wx-button] tap', $event)" @longpress="log('[wx-button] longpress', $event)">警告类操作 Disabled</wx-button>
         <wx-button class="wx-button" type="primary" :plain="true" @tap="log('[wx-button] tap', $event)" @longpress="log('[wx-button] longpress', $event)">按钮</wx-button>
-        <wx-button class="wx-button" type="primary" :disabled="true" plain @tap="log('[wx-button] tap', $event)" @longpress="log('[wx-button] longpress', $event)">不可点击的按钮</wx-button>
+        <wx-button class="wx-button" type="primary" :disabled="true" :plain="true" @tap="log('[wx-button] tap', $event)" @longpress="log('[wx-button] longpress', $event)">不可点击的按钮</wx-button>
         <wx-button class="wx-button" type="default" :plain="true" @tap="log('[wx-button] tap', $event)" @longpress="log('[wx-button] longpress', $event)">按钮</wx-button>
         <wx-button class="wx-button" type="default" :disabled="true" :plain="true" @tap="log('[wx-button] tap', $event)" @longpress="log('[wx-button] longpress', $event)">按钮</wx-button>
         <div>
@@ -537,14 +573,13 @@ export default {
         scaleValue: 1,
         scaleMin: undefined,
         scaleMax: undefined,
-        direction: 'all',
         count: 0,
+        addDirection: false,
       },
       wxScrollView: {
         y: {
           scrollWithAnimation: true,
           refresherEnabled: undefined,
-          refresherTriggered: undefined,
         },
         x: {
           scrollWithAnimation: true,
@@ -661,17 +696,9 @@ export default {
       this.$refs['wx-movable-view'].setAttribute('scale-value', scale)
     },
 
-    onWxMovableViewDirectionChange(evt) {
-      let value = 'all'
-      evt.target.querySelectorAll('option').forEach(option => {
-        if (option.selected) value = option.value
-      })
-      this.wxMovableView.direction = value
-    },
-
     onScrollViewXRefresherRefresh(evt) {
       this.log('[wx-scroll-view refresherrefresh]', evt.detail)
-      setTimeout(() => this.wxScrollView.y.refresherTriggered = false, 3000)
+      setTimeout(() => this.setAttribute('wx-scroll-view-y', 'refresher-triggered', false), 1000)
     },
 
     onUpdateWxSwiperShowItems(evt) {
@@ -847,15 +874,6 @@ export default {
   cursor: pointer;
   user-select: none;
   z-index: 10;
-}
-.wx-movable-view-cnt {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  right: 20px;
-  bottom: 20px;
-  background-color: #aaa;
-  z-index: 5;
 }
 .wx-scroll-view-y {
   width: 100%;

@@ -106,7 +106,16 @@ class HTMLSelectElement extends Element {
     }
 
     get value() {
-        return this.$_attrs.get('value')
+        let value = this.$_attrs.get('value')
+        if (value === undefined) {
+            // 没有设置 value 的时候，取 options 中被选中那项的 value
+            const option = this.options.find(option => !!option.selected)
+            if (option) {
+                value = option.value
+                this.$$setAttributeWithoutUpdate('value', value)
+            }
+        }
+        return value
     }
 
     set value(value) {

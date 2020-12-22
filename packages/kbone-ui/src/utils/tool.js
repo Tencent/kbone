@@ -1,4 +1,24 @@
 /**
+ * 判断环境
+ */
+const ua = window.navigator.userAgent
+const isSymbian = /(?:SymbianOS)/.test(ua) || /(?:Windows Phone)/.test(ua)
+const isAndroid = /(?:Android)/.test(ua)
+const isTablet = /(?:iPad|PlayBook)/.test(ua) || (isAndroid && !/(?:Mobile)/.test(ua)) || (/(?:Firefox)/.test(ua) && /(?:Tablet)/.test(ua))
+const isPhone = /(?:iPhone)/.test(ua) && !isTablet
+const isPc = !isPhone && !isAndroid && !isSymbian
+const isWeixin = ua.toLowerCase().indexOf('micromessenger') !== -1
+export const os = {
+    isPc,
+    isMobile: !isPc,
+    isPhone,
+    isTablet,
+    isAndroid,
+    isSymbian,
+    isWeixin,
+}
+
+/**
  * 查找符合条件的父节点
  */
 export function findParent(node, filter) {

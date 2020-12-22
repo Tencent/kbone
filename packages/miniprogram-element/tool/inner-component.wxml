@@ -179,6 +179,7 @@
         vertical="{{vertical}}"
         previous-margin="{{previousMargin}}"
         next-margin="{{nextMargin}}"
+        snap-to-edge="{{snapToEdge}}"
         display-multiple-items="{{displayMultipleItems}}"
         skip-hidden-item-layout="{{skipHiddenItemLayout}}"
         easing-function="{{easingFunction}}"

@@ -692,8 +692,8 @@ export default class WxMovableView extends Base {
 
             this._SFA = animation(this._STD, () => {
                 const options = this._STD.x()
-                const {x, y} = options
-                this.setTransform(x, y, options.scale, source, notTriggerChange, needTriggerScale)
+                const {x, y, scale} = options
+                this.setTransform(x, y, scale, source, notTriggerChange, needTriggerScale)
             }, () => {
                 if (this._SFA) this._SFA = this._SFA.cancel()
                 if (cb && typeof cb === 'function') cb()

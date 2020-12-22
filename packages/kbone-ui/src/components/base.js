@@ -1,3 +1,8 @@
+
+import {
+    os,
+} from '../utils/tool'
+
 const SIMULATING_TOUCH_MIN_MOVE = 5
 
 let globalConfig = {}
@@ -19,9 +24,11 @@ export default class Base extends HTMLElement {
     }
 
     connectedCallback() {
-        this.addEventListener('mousedown', this.onMouseDown, {capture: true, passive: false})
-        this.addEventListener('mousemove', this.onMouseMove, {capture: true, passive: false})
-        document.body.addEventListener('mouseup', this.onMouseUp, {capture: true, passive: false})
+        if (os.isPc) {
+            this.addEventListener('mousedown', this.onMouseDown, {capture: true, passive: false})
+            this.addEventListener('mousemove', this.onMouseMove, {capture: true, passive: false})
+            document.body.addEventListener('mouseup', this.onMouseUp, {capture: true, passive: false})
+        }
         this.addEventListener('blur', this.onBlur, {capture: true, passive: false})
         this.shadowRoot.addEventListener('touchstart', this.onBaseTouchStart)
         this.shadowRoot.addEventListener('touchmove', this.onBaseTouchMove)
@@ -31,9 +38,11 @@ export default class Base extends HTMLElement {
     }
 
     disconnectedCallback() {
-        this.removeEventListener('mousedown', this.onMouseDown, {capture: true, passive: false})
-        this.removeEventListener('mousemove', this.onMouseMove, {capture: true, passive: false})
-        document.body.removeEventListener('mouseup', this.onMouseUp, {capture: true, passive: false})
+        if (os.isPc) {
+            this.removeEventListener('mousedown', this.onMouseDown, {capture: true, passive: false})
+            this.removeEventListener('mousemove', this.onMouseMove, {capture: true, passive: false})
+            document.body.removeEventListener('mouseup', this.onMouseUp, {capture: true, passive: false})
+        }
         this.removeEventListener('blur', this.onBlur, {capture: true, passive: false})
         this.shadowRoot.removeEventListener('touchstart', this.onBaseTouchStart)
         this.shadowRoot.removeEventListener('touchmove', this.onBaseTouchMove)
@@ -53,6 +62,10 @@ export default class Base extends HTMLElement {
     /**
      * 属性
      */
+    get behavior() {
+        return this.tagName.toLowerCase().slice(3)
+    }
+
     get disabled() {
         return this.getBoolValue('disabled')
     }

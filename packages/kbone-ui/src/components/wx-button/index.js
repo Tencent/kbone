@@ -98,6 +98,14 @@ export default class WxButton extends Hover {
         return null
     }
 
+    get hoverStartTime() {
+        return this.getNumberValue('hover-start-time', 20)
+    }
+
+    get hoverStayTime() {
+        return this.getNumberValue('hover-stay-time', 70)
+    }
+
     /**
      * 监听按钮点击
      */

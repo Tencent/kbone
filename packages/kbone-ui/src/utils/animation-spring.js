@@ -3,6 +3,9 @@
  */
 const almostEqual = (a, b) => (a > (b - 0.4)) && (a < (b + 0.4))
 
+/**
+ * 参考：https://www.stewartcalculus.com/data/CALCULUS%20Concepts%20and%20Contexts/upfiles/3c3-AppsOf2ndOrders_Stu.pdf
+ */
 class Spring {
     constructor(mass, springConstant, damping) {
         this._m = mass
@@ -14,11 +17,23 @@ class Spring {
     }
 
     solve(initial, velocity) {
+        if (!initial) {
+            return {x: () => 0, dx: () => 0}
+        }
+
+        // 牛顿第二定律：f = ma = m * (d^2(x) / d(t^2))
+        // 胡克定律：f弹 = -kx
+        // 阻尼力：f阻 = -cv = -c * (dx / dt)
+        // 因为 f = f弹 + f阻，得 m * (d^2(x) / d(t^2)) + c * (dx / dt) + kx = 0
+        // 简化得：mx“ + cx' + kx = 0
         const c = this._c
         const m = this._m
         const k = this._k
+        // 解二阶常系数齐次线性微分方程：r = (-c +/- sqrt(c^2 - 4mk)) / 2m
         const cmk = c * c - 4 * m * k
         if (!cmk) {
+            // c^2 - 4mk = 0，临界阻尼
+            // x = (c1 + c2 * t) * e^(r * t)
             const r = -c / (2 * m)
             const c1 = initial
             const c2 = velocity / (r * initial)
@@ -30,6 +45,8 @@ class Spring {
                 },
             }
         } else if (cmk > 0) {
+            // c^2 - 4mk > 0，过阻尼
+            // x = c1 * e^(r1 * t) + c2 * e^(r2 * t)
             const r1 = (-c - Math.sqrt(cmk)) / (2 * m)
             const r2 = (-c + Math.sqrt(cmk)) / (2 * m)
             const c2 = (velocity - r1 * initial) / (r2 - r1)
@@ -68,14 +85,18 @@ class Spring {
                 }
             }
         } else {
+            // c^2 - 4mk < 0，欠阻尼
+            // w = sqrt(4 * m * k - c^2) / (2 * m)
+            // r = -c / (2 * m)
+            // x = e^(r * t) * (c1 * cos(w * t) + c2 * sin(w * t))
             const w = Math.sqrt(4 * m * k - c * c) / (2 * m)
             const r = -(c / 2 * m)
             const c1 = initial
             const c2 = (velocity - r * initial) / w
 
             return {
-                x(t) { return (Math.E ** (r * t)) * (c1 * Math.cos(w * t) + c2 * Math.sin(w * t)) },
-                dx(t) {
+                x: t => (Math.E ** (r * t)) * (c1 * Math.cos(w * t) + c2 * Math.sin(w * t)),
+                dx: t => {
                     const power = Math.E ** (r * t)
                     const cos = Math.cos(w * t)
                     const sin = Math.sin(w * t)

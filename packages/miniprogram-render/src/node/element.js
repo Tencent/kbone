@@ -744,6 +744,8 @@ class Element extends Node {
             nodes = [node]
         }
 
+        if (!nodes.length) hasUpdate = true // 列表为空也要触发 update，因为可能走 innerHTML 强行置空
+
         for (const node of nodes) {
             if (node === this) continue
             if (node.parentNode) node.parentNode.removeChild(node)

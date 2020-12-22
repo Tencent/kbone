@@ -230,7 +230,16 @@ const wxComponentMap = {
         }, {
             name: 'refresherTriggered',
             get(domNode) {
-                return dealWithBoolValue(domNode, 'refresher-triggered')
+                const value = dealWithBoolValue(domNode, 'refresher-triggered')
+
+                // 如果在禁止下拉刷新时设为 true，那么在重新开启下拉刷新时再设为 true 会被 diff 掉
+                const refresherEnabled = dealWithBoolValue(domNode, 'refresher-enabled')
+                if (!refresherEnabled && value) {
+                    domNode.$$setAttributeWithoutUpdate('refresher-triggered', false)
+                    return false
+                }
+
+                return value
             },
         }],
         handles: {
@@ -264,14 +273,23 @@ const wxComponentMap = {
             },
 
             onScrollViewRefresherRefresh(evt) {
+                const domNode = this.getDomNodeFromEvt(evt)
+                if (domNode) domNode.setAttribute('refresher-triggered', true)
+
                 this.callSingleEvent('refresherrefresh', evt)
             },
 
             onScrollViewRefresherRestore(evt) {
+                const domNode = this.getDomNodeFromEvt(evt)
+                if (domNode) domNode.setAttribute('refresher-triggered', false)
+
                 this.callSingleEvent('refresherrestore', evt)
             },
 
             onScrollViewRefresherAbort(evt) {
+                const domNode = this.getDomNodeFromEvt(evt)
+                if (domNode) domNode.setAttribute('refresher-triggered', false)
+
                 this.callSingleEvent('refresherabort', evt)
             },
 
@@ -334,6 +352,11 @@ const wxComponentMap = {
             name: 'nextMargin',
             get(domNode) {
                 return domNode.getAttribute('next-margin') || '0px'
+            },
+        }, {
+            name: 'snapToEdge',
+            get(domNode) {
+                return dealWithBoolValue(domNode, 'snap-to-edge')
             },
         }, {
             name: 'displayMultipleItems',
@@ -487,8 +510,9 @@ const wxComponentMap = {
         properties: [{
             name: 'nodes',
             get(domNode) {
-                const value = dealWithObjectString(domNode.getAttribute('nodes'))
-                return value !== undefined ? value : []
+                const value = domNode.getAttribute('nodes')
+                const parseValue = dealWithObjectString(value)
+                return parseValue !== undefined ? parseValue : (value || [])
             },
         }, {
             name: 'space',

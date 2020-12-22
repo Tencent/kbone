@@ -64,6 +64,7 @@ test('scroll-view', async() => {
     await _.checkString(body, node, 'refresherBackground', 'refresher-background', '#FFF')
 
     // refresherTriggered
+    node.setAttribute('refresher-enabled', true)
     await _.checkBoolean(body, node, 'refresherTriggered', 'refresher-triggered', false)
 
     // event

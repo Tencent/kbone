@@ -73,6 +73,9 @@ test('swiper', async() => {
     // next-margin
     await _.checkString(body, node, 'nextMargin', 'next-margin', '0px')
 
+    // snap-to-edge
+    await _.checkBoolean(body, node, 'snapToEdge', 'snap-to-edge', false)
+
     // display-multiple-items
     await _.checkNumber(body, node, 'displayMultipleItems', 'display-multiple-items', 1)
 

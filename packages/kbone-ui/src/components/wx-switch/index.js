@@ -68,8 +68,7 @@ export default class WxSwitch extends Base {
     }
 
     set checked(value) {
-        if (value) this.setAttribute('checked', 'checked')
-        else this.removeAttribute('checked')
+        this.setAttribute('checked', value)
     }
 
     get type() {

@@ -36,13 +36,13 @@ export default class WxProgress extends Base {
         if (this._timerId) this._timerId = clearInterval(this._timerId)
     }
 
-    attributeChangedCallback(name, oldValue, newValue) {
+    attributeChangedCallback(name, oldValue, newValue, isInit) {
         super.attributeChangedCallback(name, oldValue, newValue)
 
         if (name === 'percent') {
             if (this._timerId) this._timerId = clearInterval(this._timerId)
             this._lastPercent = oldValue || 0
-            this.activeAnimation(this.active)
+            if (!isInit) requestAnimationFrame(() => this.activeAnimation(this.active)) // 在 Web 框架中，可能先设置 percent 再设置 active
         } else if (name === 'show-info') {
             this.wxProgressInfo.style.display = this.showInfo ? 'block' : 'none'
         } else if (name === 'border-radius') {
@@ -158,6 +158,7 @@ export default class WxProgress extends Base {
                 }
                 ++this._curentPercent
             }
+            if (this._timerId) this._timerId = clearInterval(this._timerId)
             this._timerId = setInterval(next, this.duration)
             next()
         } else {
