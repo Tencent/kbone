@@ -696,6 +696,7 @@ export default class WxMovableView extends Base {
                 this.setTransform(x, y, scale, source, notTriggerChange, needTriggerScale)
             }, () => {
                 if (this._SFA) this._SFA = this._SFA.cancel()
+                this.setTransform(x, y, scale, source, notTriggerChange, needTriggerScale)
                 if (cb && typeof cb === 'function') cb()
             })
         } else {

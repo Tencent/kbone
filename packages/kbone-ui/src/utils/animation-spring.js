@@ -140,8 +140,8 @@ class Spring {
         this._startTime = Date.now()
         this._endPosition = x
         this._solution = {
-            x() { return 0 },
-            dx() { return 0 }
+            x: () => 0,
+            dx: () => 0,
         }
     }
 
