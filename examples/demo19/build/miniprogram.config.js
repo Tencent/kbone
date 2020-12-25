@@ -61,7 +61,7 @@ module.exports = {
 		style: 'v2',
 	},
 	projectConfig: {
-		appid: '',
+		appid: 'wx14c7c4cd189644a1',
 		projectname: 'kbone-demo19',
 		miniprogramRoot: 'miniprogram/',
 		cloudfunctionRoot: 'cloudfunctions/',

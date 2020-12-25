@@ -17,7 +17,7 @@ module.exports = {
 		navigationBarTitleText: 'miniprogram-project',
 	},
 	projectConfig: {
-		appid: '',
+		appid: 'wx14c7c4cd189644a1',
         projectname: 'kbone-demo18',
 	},
 	packageConfig: {

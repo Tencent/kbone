@@ -539,7 +539,7 @@ test('window: Node', () => {
     expect(window.Node).toBe(Node)
 })
 
-test('window: RegExp/Math/Number/Boolean/String/Date/Symbol/parseInt/parseFloat', () => {
+test('window: RegExp/Math/Number/Boolean/String/Date/Symbol/parseInt/parseFloat/console', () => {
     expect(window.RegExp).toBe(RegExp)
     expect(window.Math).toBe(Math)
     expect(window.Number).toBe(Number)
@@ -549,6 +549,7 @@ test('window: RegExp/Math/Number/Boolean/String/Date/Symbol/parseInt/parseFloat'
     expect(window.Symbol).toBe(Symbol)
     expect(window.parseInt).toBe(parseInt)
     expect(window.parseFloat).toBe(parseFloat)
+    expect(window.console).toBe(console)
 })
 
 test('window: XMLHttpRequest', () => {

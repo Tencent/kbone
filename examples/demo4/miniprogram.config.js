@@ -38,7 +38,7 @@ module.exports = {
 		attrValueReduce: 5000,
 	},
     projectConfig: {
-        appid: '',
+        appid: 'wx14c7c4cd189644a1',
         projectname: 'demo4',
     },
     packageConfig: {

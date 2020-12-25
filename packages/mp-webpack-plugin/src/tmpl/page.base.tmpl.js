@@ -190,7 +190,7 @@ module.exports = function(mp, config, init) {
             init(this.window, this.document)
             this.setData({pageId: this.pageId})
             this.app = this.window.createApp()
-            if (typeof this.app.then === 'function') {
+            if (this.app && typeof this.app.then === 'function') {
                 // createApp 是一个 promise
                 this.app.then(app => {
                     this.app = app

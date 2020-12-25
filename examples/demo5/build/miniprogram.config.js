@@ -44,7 +44,7 @@ module.exports = {
 		// setDataMode: 'original',
 	},
 	projectConfig: {
-		appid: '',
+		appid: 'wx14c7c4cd189644a1',
 		projectname: 'kbone-demo5',
 		condition: {
 			miniprogram: {
