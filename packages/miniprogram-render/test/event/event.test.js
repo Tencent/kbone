@@ -219,10 +219,13 @@ test('event: CustomEvent/dispatchEvent', () => {
     const c = document.querySelector('#bb4')
     const seqList = []
     let customEvent
+    let target = null
     let detail = null
     const onEvent = (node, type) => function(evt) {
         expect(this).toBe(node)
         expect(evt).toBe(customEvent)
+        expect(evt.target).toBe(target)
+        expect(evt.currentTarget).toBe(node)
         expect(evt.detail).toEqual(detail)
         seqList.push(type)
     }
@@ -246,10 +249,12 @@ test('event: CustomEvent/dispatchEvent', () => {
     expect(customEvent.type).toBe('testevent')
     expect(customEvent).toBeInstanceOf(Event)
 
+    target = b
     b.dispatchEvent(customEvent)
     expect(seqList).toEqual(['a', 'b', 'b'])
 
     seqList.length = 0
+    target = c
     c.dispatchEvent(customEvent)
     expect(seqList).toEqual(['a', 'b', 'c', 'c'])
 
@@ -264,10 +269,12 @@ test('event: CustomEvent/dispatchEvent', () => {
     expect(customEvent.bubbles).toBe(true)
 
     seqList.length = 0
+    target = b
     b.dispatchEvent(customEvent)
     expect(seqList).toEqual(['a', 'b', 'b', 'a'])
 
     seqList.length = 0
+    target = c
     c.dispatchEvent(customEvent)
     expect(seqList).toEqual(['a', 'b', 'c', 'c', 'b', 'a'])
 

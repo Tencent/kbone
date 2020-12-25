@@ -7,6 +7,10 @@
 * select 标签在没有设置 value 的时候，取选中的 option 的 value 作为 select 的 value
 * 修复设置 innerHTML 为空串无法删除子节点的问题
 
+## 2.1.9
+
+* 修复 dispatchEvent 触发的事件没有 target 的问题
+
 ## 2.1.8
 
 * 补充 console 到 window 下
