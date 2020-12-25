@@ -76,6 +76,7 @@ class EventTarget {
             // 传入的是事件对象
             event = eventName
             eventName = event.type
+            event.$$setTarget(target)
         }
 
         eventName = eventName.toLowerCase()

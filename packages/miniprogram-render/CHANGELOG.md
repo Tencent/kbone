@@ -1,5 +1,9 @@
 # 更新日志
 
+## 2.1.9
+
+* 修复 dispatchEvent 触发的事件没有 target 的问题
+
 ## 2.1.8
 
 * 补充 console 到 window 下
