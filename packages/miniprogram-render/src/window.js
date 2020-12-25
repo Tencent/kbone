@@ -605,6 +605,10 @@ class Window extends EventTarget {
         return parseFloat
     }
 
+    get console() {
+        return console
+    }
+
     get performance() {
         return this.$_performance
     }
