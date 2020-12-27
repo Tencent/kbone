@@ -12,6 +12,7 @@ import WxProgress from './components/wx-progress'
 import WxRichText from './components/wx-rich-text'
 import WxText from './components/wx-text/index'
 import WxButton from './components/wx-button'
+import WxInput from './components/wx-input'
 import WxPicker from './components/wx-picker'
 import WxPickerView from './components/wx-picker-view'
 import WxPickerViewColumn from './components/wx-picker-view-column'
@@ -31,6 +32,7 @@ const COMPONENT_MAP = {
     'wx-rich-text': WxRichText,
     'wx-text': WxText,
     'wx-button': WxButton,
+    'wx-input': WxInput,
     'wx-picker': WxPicker,
     'wx-picker-view': WxPickerView,
     'wx-picker-view-column': WxPickerViewColumn,
@@ -70,6 +72,9 @@ export default {
             // 标记滚动元素
             const scrollDom = evt.target !== document ? evt.target : document.documentElement.scrollTop ? document.documentElement : document.body
             scrollDom._scrolling = +new Date()
+        })
+        window.addEventListener('load', () => {
+            window._isLoaded = true
         })
     }
 }
