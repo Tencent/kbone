@@ -412,6 +412,14 @@
       </div>
     </div>
     <div class="item">
+      <div class="title">wx-input</div>
+      <div class="comp-cnt">
+        <wx-input value="默认 value 值" @input="log('[wx-input] input', $event.detail)" @focus="log('[wx-input] focus', $event.detail)" @blur="log('[wx-input] blur', $event.detail)" @confirm="log('[wx-input] confirm', $event.detail)"/>
+        <wx-input :focus="wxInput.focus" @blur="wxInput.focus = false" placeholder="自动聚焦"/>
+        <wx-button type="default" @tap="wxInput.focus = true">聚焦</wx-button>
+      </div>
+    </div>
+    <div class="item">
       <div class="title">wx-picker</div>
       <div class="comp-cnt">
         <wx-picker class="wx-picker" :range="JSON.stringify(wxPicker.range1)" :value="wxPicker.value1" @change="wxPicker.showText1 = wxPicker.range1[+$event.detail.value]" @cancel="log('[wx-picker] cancel', $event)">
@@ -629,6 +637,9 @@ export default {
             text: 'You never know what you\'re gonna get.'
           }]
         }])
+      },
+      wxInput: {
+        focus: true,
       },
       wxPicker: {
         range1: ['美国', '中国', '巴西', '日本'],

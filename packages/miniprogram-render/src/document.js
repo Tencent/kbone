@@ -28,8 +28,8 @@ const CONSTRUCTOR_MAP = {
     CANVAS: Canvas,
     SELECT: Select,
     OPTION: Option,
-    'WX-COMPONENT': WxComponent,
 }
+const WX_COMPONENT_TRANSFORM_LIST = ['input', 'textarea', 'canvas'] // 需要从 wx-xxx 转回 xxx 节点
 let WX_CUSTOM_COMPONENT_MAP = {}
 
 class Document extends EventTarget {
@@ -156,13 +156,32 @@ class Document extends EventTarget {
         const constructorClass = CONSTRUCTOR_MAP[tagName]
         if (constructorClass) {
             return constructorClass.$$create(options, tree)
+        } else if (tagName === 'WX-COMPONENT') {
+            options.attrs = options.attrs || {}
+            const behavior = options.attrs.behavior
+            if (behavior && WX_COMPONENT_TRANSFORM_LIST.indexOf(behavior) !== -1) {
+                // 需要转成普通 dom
+                options.tagName = behavior
+                delete options.attrs.behavior
+                const normalElement = CONSTRUCTOR_MAP[behavior.toUpperCase()] || Element
+                return normalElement.$$create(options, tree)
+            } else {
+                return WxComponent.$$create(options, tree)
+            }
         // eslint-disable-next-line no-cond-assign
         } else if (wxComponentName = tool.checkIsWxComponent(originTagName, this.$$notNeedPrefix)) {
             // 内置组件的特殊写法，转成 wx-component 节点
-            options.tagName = 'wx-component'
-            options.attrs = options.attrs || {}
-            options.attrs.behavior = wxComponentName
-            return WxComponent.$$create(options, tree)
+            if (WX_COMPONENT_TRANSFORM_LIST.indexOf(wxComponentName) !== -1) {
+                // 需要转成普通 dom
+                options.tagName = wxComponentName
+                const normalElement = CONSTRUCTOR_MAP[wxComponentName.toUpperCase()] || Element
+                return normalElement.$$create(options, tree)
+            } else {
+                options.tagName = 'wx-component'
+                options.attrs = options.attrs || {}
+                options.attrs.behavior = wxComponentName
+                return WxComponent.$$create(options, tree)
+            }
         } else if (WX_CUSTOM_COMPONENT_MAP[originTagName]) {
             // 自定义组件的特殊写法，转成 wx-custom-component 节点
             options.tagName = 'wx-custom-component'

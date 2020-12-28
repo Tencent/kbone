@@ -11,11 +11,13 @@ export default class WxInput extends Base {
         super()
 
         this.initShadowRoot(template.cloneNode(true), WxInput.observedAttributes, () => {
-            this.onDocumentTouchStart = this.onDocumentTouchStart.bind(this)
             this.onInputFocus = this.onInputFocus.bind(this)
             this.onInputBlur = this.onInputBlur.bind(this)
             this.onInputInput = this.onInputInput.bind(this)
+            this.onInputKeyDown = this.onInputKeyDown.bind(this)
+            this.onInputKeyUp = this.onInputKeyUp.bind(this)
             this.updateInput = this.updateInput.bind(this)
+            this.onDocumentTouchStart = this.onDocumentTouchStart.bind(this)
             this.wrapper = this.shadowRoot.querySelector('#wrapper')
             this.inputDom = this.shadowRoot.querySelector('#input')
             this.placeholderDom = this.shadowRoot.querySelector('#placeholder')
@@ -49,14 +51,21 @@ export default class WxInput extends Base {
         this.inputDom.addEventListener('keyup', this.onInputKeyUp)
         document.addEventListener('touchstart', this.onDocumentTouchStart)
 
-        this.onPlaceholderClassChange(this.placeholderDomClass)
+        this.onPlaceholderClassChange(this.placeholderClass)
         this.checkPlaceholderStyle(this.value)
         this._value = this.value
         this.updateInput()
 
         // 自动聚焦
-        if (window._isLoaded) this.doFocus(this.focus)
-        else window.addEventListener('load', () => this.doFocus(this.focus))
+        if (window._isLoaded) {
+            if (this._focusTimer) this._focusTimer = clearTimeout(this._focusTimer)
+            this._focusTimer = setTimeout(() => this.doFocus(this.focus), 500)
+        } else {
+            window.addEventListener('load', () => {
+                if (this._focusTimer) this._focusTimer = clearTimeout(this._focusTimer)
+                this._focusTimer = setTimeout(() => this.doFocus(this.focus), 500)
+            })
+        }
     }
 
     disconnectedCallback() {
@@ -76,7 +85,7 @@ export default class WxInput extends Base {
         document.removeEventListener('touchstart', this.onDocumentTouchStart)
     }
 
-    attributeChangedCallback(name, oldValue, newValue) {
+    attributeChangedCallback(name, oldValue, newValue, isInit) {
         super.attributeChangedCallback(name, oldValue, newValue)
 
         if (name === 'value') {
@@ -94,10 +103,10 @@ export default class WxInput extends Base {
             this.placeholderDom.innerText = this.placeholder
         } else if (name === 'placeholder-style') {
             if (oldValue === newValue) return
-            this.placeholderDom.style.cssText = this.placeholderDomStyle
+            this.placeholderDom.style.cssText = this.placeholderStyle
         } else if (name === 'placeholder-class') {
             if (oldValue === newValue) return
-            this.onPlaceholderClassChange(this.placeholderDomClass)
+            this.onPlaceholderClassChange(this.placeholderClass)
         } else if (name === 'disabled') {
             this.inputDom.disabled = this.disabled
         } else if (name === 'maxlength') {
@@ -107,6 +116,7 @@ export default class WxInput extends Base {
             if (value !== this.value) this.value = value
             this.inputDom.maxlength = maxlength
         } else if (name === 'focus') {
+            if (isInit) return
             this.doFocus(this.focus)
         }
     }
@@ -233,6 +243,7 @@ export default class WxInput extends Base {
      * 监听输入框聚焦
      */
     onInputFocus(evt, cursor, selectionStart, selectionEnd) {
+        if (evt) evt.stopPropagation()
         if (this.disabled || this._isFocusing) return
 
         this._isFocusing = true
@@ -252,6 +263,7 @@ export default class WxInput extends Base {
      * 监听输入框脱焦
      */
     onInputBlur(evt) {
+        evt.stopPropagation()
         this._isFocusing = false
         this.value = this._value
         if (this._getFormValueCb) this._getFormValueCb(this.value)
@@ -259,7 +271,6 @@ export default class WxInput extends Base {
         this.dispatchEvent(new CustomEvent('change', {bubbles: true, cancelable: true, detail: {value: this.value}}))
         this.dispatchEvent(new CustomEvent('blur', {bubbles: true, cancelable: true, detail: {value: this.value, cursor: this.inputDom.selectionEnd}}))
         this.checkPlaceholderStyle(this.value)
-        this.autofillHideDropdown()
     }
 
       
@@ -288,6 +299,7 @@ export default class WxInput extends Base {
      * 监听输入框输入
      */
     onInputInput(evt) {
+        evt.stopPropagation()
         const value = evt.target.value
         this._value = value // 先用一个变量存起来, 才不会影响输入
         this.checkPlaceholderStyle(value)
@@ -347,7 +359,7 @@ export default class WxInput extends Base {
         } else {
             if (!this._placeholderShow) {
                 placeholder.classList.add('input-placeholder')
-                this.placeholderDomStyle && placeholder.setAttribute('style', this.placeholderDomStyle)
+                this.placeholderStyle && placeholder.setAttribute('style', this.placeholderStyle)
                 if (list.length > 0) {
                     for (let i = 0; i < list.length; i++) {
                         placeholder.classList.add(list[i])

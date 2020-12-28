@@ -55,7 +55,7 @@ export default {
         })
 
         // 注册内部组件
-        if (components) {
+        if (components.length) {
             WxRefresher.register()
         }
 
