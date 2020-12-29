@@ -6,6 +6,7 @@
 * picker、picker-view 的 value 支持 json 串
 * 支持 swiper 的 snap-to-edge 属性
 * 修复 scroll-view 下拉刷新相关 bug
+* 支持 tap 事件
 
 ## 2.1.16
 

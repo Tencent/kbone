@@ -379,6 +379,7 @@ module.exports = Behavior({
         onTap(evt) {
             if (this.document && this.document.$$checkEvent(evt)) {
                 this.callEvent('click', evt, {button: 0}) // 默认左键
+                this.callEvent('tap', evt)
             }
         },
 

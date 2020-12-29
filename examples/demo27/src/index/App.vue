@@ -1,6 +1,6 @@
 <template>
   <div ref="cnt" class="cnt">
-    <div class="item">
+    <wx-view class="item">
       <div class="title">wx-movable-area/wx-movable-view</div>
       <div class="comp-cnt wx-movable-cnt">
         <wx-movable-area class="wx-movable-area">
@@ -147,8 +147,8 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="item">
+    </wx-view>
+    <wx-view class="item">
       <div class="title">wx-scroll-view</div>
       <div class="comp-cnt wx-scroll-view-cnt">
         <wx-scroll-view
@@ -212,8 +212,8 @@
           <wx-switch :checked="true" @change="wxScrollView.x.scrollWithAnimation = $event.detail.value.toString()"></wx-switch>
         </div>
       </div>
-    </div>
-    <div class="item">
+    </wx-view>
+    <wx-view class="item">
       <div class="title">wx-swiper/wx-swiper-item</div>
       <div class="comp-cnt wx-swiper-cnt">
         <wx-swiper
@@ -317,8 +317,8 @@
           </select>
         </div>
       </div>
-    </div>
-    <div class="item">
+    </wx-view>
+    <wx-view class="item">
       <div class="title">wx-view</div>
       <div class="comp-cnt">
         <wx-view class="wx-view">
@@ -329,8 +329,8 @@
         </wx-view>
         <wx-button @click="onUpdateView">更新 hover 颜色</wx-button>
       </div>
-    </div>
-    <div class="item">
+    </wx-view>
+    <wx-view class="item">
       <div class="title">wx-icon</div>
       <div class="comp-cnt">
         <div>
@@ -362,8 +362,8 @@
           <wx-icon type="clear" size="40"></wx-icon>
         </div>
       </div>
-    </div>
-    <div class="item">
+    </wx-view>
+    <wx-view class="item">
       <div class="title">wx-progress</div>
       <div class="comp-cnt">
         <wx-progress ref="wx-progress-update" class="wx-progress" :percent="wxProgress.percent1" :show-info="true" stroke-width="3" @activeend="log('[wx-progress]', $event.detail)"></wx-progress>
@@ -373,15 +373,15 @@
         <wx-progress class="wx-progress" percent="80" color="#10AEFF" :active="true" stroke-width="14" duration="10" @activeend="log('[wx-progress]', $event.detail)"></wx-progress>
         <wx-button @click="onUpdateWxProgress">更新进度</wx-button>
       </div>
-    </div>
-    <div class="item">
+    </wx-view>
+    <wx-view class="item">
       <div class="title">wx-rich-text</div>
       <div class="comp-cnt">
         <wx-rich-text class="wx-rich-text" space="emsp" :nodes="wxRichText.nodes1"></wx-rich-text>
         <wx-rich-text class="wx-rich-text" :nodes="wxRichText.nodes2"></wx-rich-text>
       </div>
-    </div>
-    <div class="item">
+    </wx-view>
+    <wx-view class="item">
       <div class="title">wx-text</div>
       <div class="comp-cnt">
         <div><wx-text class="wx-text">今天天气不错</wx-text></div>
@@ -389,8 +389,8 @@
         <div ref="wx-text2"></div>
         <wx-button @click="onUpdateWxText">更新内容</wx-button>
       </div>
-    </div>
-    <div class="item">
+    </wx-view>
+    <wx-view class="item">
       <div class="title">wx-button</div>
       <div class="comp-cnt wx-button-cnt">
         <wx-button class="wx-button" type="primary" @tap="log('[wx-button] tap', $event)" @longpress="log('[wx-button] longpress', $event)">页面主操作 Normal</wx-button>
@@ -410,30 +410,30 @@
           <wx-button class="wx-button mini-btn" type="warn" size="mini" @tap="log('[wx-button] tap', $event)" @longpress="log('[wx-button] longpress', $event)">按钮</wx-button>
         </div>
       </div>
-    </div>
-    <div class="item">
+    </wx-view>
+    <wx-view class="item">
       <div class="title">wx-input</div>
       <div class="comp-cnt">
-        <wx-input value="默认 value 值" @input="log('[wx-input] input', $event.detail)" @focus="log('[wx-input] focus', $event.detail)" @blur="log('[wx-input] blur', $event.detail)" @confirm="log('[wx-input] confirm', $event.detail)"/>
-        <wx-input placeholder="文本输入框" type="text" @input="log('[wx-input] input', $event.detail)"/>
-        <wx-input placeholder="整数输入框" type="number" @input="log('[wx-input] input', $event.detail)"/>
-        <wx-input placeholder="小数输入框" type="digit" @input="log('[wx-input] input', $event.detail)"/>
-        <wx-input placeholder="身份证输入框" type="idcard" @input="log('[wx-input] input', $event.detail)"/>
-        <wx-input placeholder="密码输入框" :password="true" @input="log('[wx-input] input', $event.detail)"/>
-        <wx-input placeholder="占位文本样式1" placeholder-style="color: red;" @input="log('[wx-input] input', $event.detail)"/>
-        <wx-input placeholder="占位文本样式2" placeholder-class="green" @input="log('[wx-input] input', $event.detail)"/>
-        <wx-input placeholder="禁用" :disabled="true" @input="log('[wx-input] input', $event.detail)"/>
-        <wx-input placeholder="最大输入长度为 10" maxlength="10" @input="log('[wx-input] input', $event.detail)"/>
-        <wx-input :focus="wxInput.focus" @blur="wxInput.focus = false" placeholder="自动聚焦" @input="log('[wx-input] input', $event.detail)"/>
+        <wx-input class="wx-input" value="默认 value 值" @input="log('[wx-input] input', $event.detail)" @focus="log('[wx-input] focus', $event.detail)" @blur="log('[wx-input] blur', $event.detail)" @confirm="log('[wx-input] confirm', $event.detail)"/>
+        <wx-input class="wx-input" placeholder="文本输入框" type="text" @input="log('[wx-input] input', $event.detail)"/>
+        <wx-input class="wx-input" placeholder="整数输入框" type="number" @input="log('[wx-input] input', $event.detail)"/>
+        <wx-input class="wx-input" placeholder="小数输入框" type="digit" @input="log('[wx-input] input', $event.detail)"/>
+        <wx-input class="wx-input" placeholder="身份证输入框" type="idcard" @input="log('[wx-input] input', $event.detail)"/>
+        <wx-input class="wx-input" placeholder="密码输入框" :password="true" @input="log('[wx-input] input', $event.detail)"/>
+        <wx-input class="wx-input" placeholder="占位文本样式1" placeholder-style="color: red;" @input="log('[wx-input] input', $event.detail)"/>
+        <wx-input class="wx-input" placeholder="占位文本样式2" placeholder-class="green" @input="log('[wx-input] input', $event.detail)"/>
+        <wx-input class="wx-input" placeholder="禁用" :disabled="true" @input="log('[wx-input] input', $event.detail)"/>
+        <wx-input class="wx-input" placeholder="最大输入长度为 10" maxlength="10" @input="log('[wx-input] input', $event.detail)"/>
+        <wx-input class="wx-input" :focus="wxInput.focus" @blur="wxInput.focus = false" placeholder="自动聚焦" @input="log('[wx-input] input', $event.detail)"/>
         <wx-button type="default" @tap="wxInput.focus = true">聚焦上面输入框</wx-button>
-        <wx-input placeholder="点击确认不失焦" :confirm-hold="true" @input="log('[wx-input] input', $event.detail)"/>
-        <wx-input ref="wx-input-cursor" value="焦点位置 -><- 在这里" cursor="7" @input="log('[wx-input] input', $event.detail)"/>
-        <wx-button type="default" @tap="onFocusWxInputCursor">聚焦上面输入框</wx-button>
-        <wx-input ref="wx-input-select" value="后面这些文字：这些要被选中，到此就结束了" selection-start="7" selection-end="13" @input="log('[wx-input] input', $event.detail)"/>
-        <wx-button type="default" @tap="onFocusWxInputSelect">聚焦上面输入框</wx-button>
+        <wx-input class="wx-input" placeholder="点击确认不失焦" :confirm-hold="true" @input="log('[wx-input] input', $event.detail)"/>
+        <wx-input class="wx-input" ref="wx-input-cursor" value="焦点位置 -><- 在这里" cursor="7" @input="log('[wx-input] input', $event.detail)"/>
+        <wx-button type="default" @tap="setAttribute('wx-input-cursor', 'focus', true)">聚焦上面输入框</wx-button>
+        <wx-input class="wx-input" ref="wx-input-select" value="后面这些文字：这些要被选中，到此就结束了" selection-start="7" selection-end="13" @input="log('[wx-input] input', $event.detail)"/>
+        <wx-button type="default" @tap="setAttribute('wx-input-select', 'focus', true)">聚焦上面输入框</wx-button>
       </div>
-    </div>
-    <div class="item">
+    </wx-view>
+    <wx-view class="item">
       <div class="title">wx-picker</div>
       <div class="comp-cnt">
         <wx-picker class="wx-picker" :range="JSON.stringify(wxPicker.range1)" :value="wxPicker.value1" @change="wxPicker.showText1 = wxPicker.range1[+$event.detail.value]" @cancel="log('[wx-picker] cancel', $event)">
@@ -467,8 +467,8 @@
           <div>省市选择器2：{{wxPicker.showText10}}</div>
         </wx-picker>
       </div>
-    </div>
-    <div class="item">
+    </wx-view>
+    <wx-view class="item">
       <div class="title">wx-picker-view/wx-picker-view-column</div>
       <div class="comp-cnt wx-picker-view-cnt">
         <wx-picker-view class="wx-picker-view" indicator-style="height: 50px;" :value="wxPickerView.value" @change="log('[wx-picker-view] change', $event.detail)" @pickstart="log('[wx-picker-view] pickstart', $event)" @pickend="log('[wx-picker-view] pickend', $event)">
@@ -494,8 +494,8 @@
           <wx-button class="opr-button" @click="onUpdateWxPickerView">更新值（随机）</wx-button>
         </div>
       </div>
-    </div>
-    <div class="item">
+    </wx-view>
+    <wx-view class="item">
       <div class="title">wx-slider</div>
       <div class="comp-cnt">
         <wx-slider class="wx-slider" @change="log('[wx-slider] change', $event.detail)" @changing="log('[wx-slider] changing', $event.detail)"></wx-slider>
@@ -507,8 +507,8 @@
         <wx-slider class="wx-slider" min="50" max="200" value="100" active-color="red" background-color="#000" @change="log('[wx-slider] change', $event.detail)" @changing="log('[wx-slider] changing', $event.detail)"></wx-slider>
         <wx-slider class="wx-slider" min="50" max="200" value="100" block-size="15" block-color="red" @change="log('[wx-slider] change', $event.detail)" @changing="log('[wx-slider] changing', $event.detail)"></wx-slider>
       </div>
-    </div>
-    <div class="item">
+    </wx-view>
+    <wx-view class="item">
       <div class="title">wx-switch</div>
       <div class="comp-cnt">
         <wx-switch class="wx-switch" :checked="true" @change="log('[wx-switch]', $event.detail)"></wx-switch>
@@ -518,8 +518,8 @@
         <wx-switch class="wx-switch" type="checkbox" :disabled="true" @change="log('[wx-switch]', $event.detail)"></wx-switch>
         <wx-switch class="wx-switch" type="checkbox" color="red" @change="log('[wx-switch]', $event.detail)"></wx-switch>
       </div>
-    </div>
-    <div class="item">
+    </wx-view>
+    <wx-view class="item">
       <div class="title">wx-image</div>
       <div class="comp-cnt">
         <div>缩放模式，不保持纵横比缩放图片，使图片的宽高完全拉伸至填满 wx-image 元素</div>
@@ -557,13 +557,13 @@
         <div>lazy-load</div>
         <wx-image class="wx-image" style="width: 200px; height: 200px; background-color: #eee;" :lazy-load="true" src="https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg" @load="log('[wx-image] lazy-load load', $event.detail)" @error="log('[wx-image] lazy-load error', $event.detail)"></wx-image>
       </div>
-    </div>
-    <div class="item">
+    </wx-view>
+    <wx-view class="item">
       <div class="title">操作</div>
       <div class="comp-cnt">
         <wx-button class="wx-button" type="primary" @click="onRemoveAll">删除全部</wx-button>
       </div>
-    </div>
+    </wx-view>
   </div>
 </template>
 <script>
@@ -757,14 +757,6 @@ export default {
         document.getElementById('wx-text-decode-1').innerText = '&gt; insert 1'
         document.getElementById('wx-text-decode-2').innerText = '&gt; insert 2'
       })
-    },
-
-    onFocusWxInputCursor() {
-      this.$refs['wx-input-cursor'].setAttribute('focus', true)
-    },
-
-    onFocusWxInputSelect() {
-      this.$refs['wx-input-select'].setAttribute('focus', true)
     },
 
     onWxpicker3ColumnChange(evt) {
@@ -983,6 +975,9 @@ export default {
 }
 .wx-view, .wx-progress, .wx-rich-text, .comp-cnt .wx-button {
   margin-bottom: 10px;
+}
+.wx-input {
+  width: 100%;
 }
 .wx-picker-view {
   width: 100%;
