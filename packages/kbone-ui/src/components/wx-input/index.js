@@ -58,11 +58,11 @@ export default class WxInput extends Base {
         // 自动聚焦
         if (window._isLoaded) {
             if (this._focusTimer) this._focusTimer = clearTimeout(this._focusTimer)
-            this._focusTimer = setTimeout(() => this.doFocus(this.focus), 500)
+            this._focusTimer = setTimeout(() => this.doFocus(this.autoFocus || this.focus), 500)
         } else {
             window.addEventListener('load', () => {
                 if (this._focusTimer) this._focusTimer = clearTimeout(this._focusTimer)
-                this._focusTimer = setTimeout(() => this.doFocus(this.focus), 500)
+                this._focusTimer = setTimeout(() => this.doFocus(this.autoFocus || this.focus), 500)
             })
         }
     }
@@ -112,12 +112,16 @@ export default class WxInput extends Base {
         } else if (name === 'maxlength') {
             if (oldValue === newValue) return
             const maxlength = this.maxlength
-            const value = this.value.slice(0, maxlength)
-            if (value !== this.value) this.value = value
-            this.inputDom.setAttribute('maxlength', maxlength)
+            if (maxlength > 0) {
+                const value = this.value.slice(0, maxlength)
+                if (value !== this.value) this.value = value
+                this.inputDom.setAttribute('maxlength', maxlength)
+            } else {
+                this.inputDom.removeAttribute('maxlength')
+            }
         } else if (name === 'focus') {
             if (isInit) return
-            this.doFocus(this.focus)
+            this.doFocus(this.autoFocus || this.focus)
         }
     }
 
@@ -164,6 +168,10 @@ export default class WxInput extends Base {
     get cursorSpacing() {
         // cursor-spacing 不支持
         return null
+    }
+
+    get autoFocus() {
+        return this.getBoolValue('auto-focus')
     }
 
     get focus() {

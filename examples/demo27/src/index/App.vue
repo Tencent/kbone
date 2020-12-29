@@ -423,7 +423,8 @@
         <wx-input class="wx-input" placeholder="占位文本样式1" placeholder-style="color: red;" @input="log('[wx-input] input', $event.detail)"/>
         <wx-input class="wx-input" placeholder="占位文本样式2" placeholder-class="green" @input="log('[wx-input] input', $event.detail)"/>
         <wx-input class="wx-input" placeholder="禁用" :disabled="true" @input="log('[wx-input] input', $event.detail)"/>
-        <wx-input class="wx-input" placeholder="最大输入长度为 10" maxlength="10" @input="log('[wx-input] input', $event.detail)"/>
+        <wx-input class="wx-input" :placeholder="`最大输入长度为 ${wxInput.maxlength > 0 ? wxInput.maxlength : '无限'}`" :maxlength="wxInput.maxlength" @input="log('[wx-input] input', $event.detail)"/>
+        <wx-button type="default" @tap="wxInput.maxlength = wxInput.maxlength > 0 ? -1 : 10">修改上面输入框的 maxlength</wx-button>
         <wx-input class="wx-input" :focus="wxInput.focus" @blur="wxInput.focus = false" placeholder="自动聚焦" @input="log('[wx-input] input', $event.detail)"/>
         <wx-button type="default" @tap="wxInput.focus = true">聚焦上面输入框</wx-button>
         <wx-input class="wx-input" placeholder="点击确认不失焦" :confirm-hold="true" @input="log('[wx-input] input', $event.detail)"/>
@@ -433,6 +434,14 @@
         <wx-button type="default" @tap="setAttribute('wx-input-select', 'focus', true)">聚焦上面输入框</wx-button>
       </div>
     </wx-view>
+    <!-- <wx-view class="item">
+      <div class="title">wx-textarea</div>
+      <div class="comp-cnt">
+        <wx-textarea class="wx-textarea" value="默认 value 值" @input="log('[wx-textarea] input', $event.detail)" @focus="log('[wx-textarea] focus', $event.detail)" @blur="log('[wx-textarea] blur', $event.detail)" @confirm="log('[wx-textarea] confirm', $event.detail)" @linechange="log('[wx-textarea] linechange', $event.detail)"/>
+        <wx-textarea class="wx-textarea" placeholder="占位文本样式1" placeholder-style="color: red;" @input="log('[wx-textarea] input', $event.detail)"/>
+        <wx-textarea class="wx-textarea" placeholder="占位文本样式2" placeholder-class="green" @input="log('[wx-textarea] input', $event.detail)"/>
+      </div>
+    </wx-view> -->
     <wx-view class="item">
       <div class="title">wx-picker</div>
       <div class="comp-cnt">
@@ -654,6 +663,7 @@ export default {
       },
       wxInput: {
         focus: true,
+        maxlength: 10,
       },
       wxPicker: {
         range1: ['美国', '中国', '巴西', '日本'],

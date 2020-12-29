@@ -246,7 +246,11 @@ export default class Base extends HTMLElement {
             this._preventTap = true
             this._longTapTimeout = clearTimeout(this._longTapTimeout)
         } else {
-            const target = evt.target === this.shadowRoot ? this : evt.target // 如果是 shadowRoot，表示没有子节点触发事件，则换回 this
+            let target = evt.target
+            if (target === this.shadowRoot || !this.shadowRoot.contains(target)) {
+                // 如果是 shadowRoot，表示没有子节点触发事件；如果不是子孙节点，表示是来自 slot，则换回 this
+                target = this
+            }
             this._preventTap = false
             this._longTapTimeout = setTimeout(() => {
                 // 触发 longpress 后不处罚 tap
@@ -277,7 +281,11 @@ export default class Base extends HTMLElement {
 
         this._longTapTimeout = clearTimeout(this._longTapTimeout)
         if ((this._baseX2 && Math.abs(this._baseX1 - this._baseX2) <= 30) && (this._baseY2 && Math.abs(this._baseY1 - this._baseY2) <= 30)) {
-            const target = evt.target === this.shadowRoot ? this : evt.target // 如果是 shadowRoot，表示没有子节点触发事件，则换回 this
+            let target = evt.target
+            if (target === this.shadowRoot || !this.shadowRoot.contains(target)) {
+                // 如果是 shadowRoot，表示没有子节点触发事件；如果不是子孙节点，表示是来自 slot，则换回 this
+                target = this
+            }
             const pageX = evt.changedTouches[0].pageX
             const pageY = evt.changedTouches[0].pageY
             const clientX = evt.changedTouches[0].clientX
@@ -302,7 +310,7 @@ export default class Base extends HTMLElement {
 
     onBaseTouchCancel() {
         this._preventTap = true
-        this._tapTimeout = clearTimeout(this._tapTimeout)
-        this._longTapTimeout = clearTimeout(this._longTapTimeout)
+        if (this._tapTimeout) this._tapTimeout = clearTimeout(this._tapTimeout)
+        if (this._longTapTimeout) this._longTapTimeout = clearTimeout(this._longTapTimeout)
     }
 }

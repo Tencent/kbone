@@ -89,7 +89,8 @@ export default class WxPickerView extends Scroller {
      * 监听点击
      */
     onTap(evt) {
-        if (evt.target === evt.currentTarget || this._scroller.isScrolling()) return
+        const target = this.shadowRoot.elementsFromPoint(evt.detail.clientX, evt.detail.clientY)
+        if (target === evt.currentTarget || this._scroller.isScrolling()) return
 
         const rect = this.getBoundingClientRect()
         const offsetY = evt.detail.clientY - rect.top - this._height / 2 // 偏离中心多远
