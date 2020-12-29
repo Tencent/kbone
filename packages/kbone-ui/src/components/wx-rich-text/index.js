@@ -1,17 +1,17 @@
 import Base from '../base'
 import tpl from './index.html'
+import style from './index.less'
 import HtmlFilter from '../../utils/html-filter'
 import HtmlParser from '../../utils/html-parser'
 
-let template = document.createElement('template')
-template.innerHTML = `${tpl}`
-template = template.content
+const template = document.createElement('template')
+template.innerHTML = `<style>${style}</style>${tpl}`
 
 export default class WxRichText extends Base {
     constructor() {
         super()
 
-        this.initShadowRoot(template.cloneNode(true), WxRichText.observedAttributes, () => {
+        this.initShadowRoot(template, WxRichText.observedAttributes, () => {
             this.richText = this.shadowRoot.querySelector('#rich-text')
         })
     }

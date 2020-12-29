@@ -2,9 +2,8 @@ import Base from '../base'
 import tpl from './index.html'
 import style from './index.less'
 
-let template = document.createElement('template')
+const template = document.createElement('template')
 template.innerHTML = `<style>${style}</style>${tpl}`
-template = template.content
 
 const PROGRESS_BACKGROUND_COLOR = '#EBEBEB'
 const PROGRESS_ACTIVE_COLOR = '#09BB07'
@@ -13,7 +12,7 @@ export default class WxProgress extends Base {
     constructor() {
         super()
 
-        this.initShadowRoot(template.cloneNode(true), WxProgress.observedAttributes, () => {
+        this.initShadowRoot(template, WxProgress.observedAttributes, () => {
             this.wxProgressBar = this.shadowRoot.querySelector('.wx-progress-bar')
             this.wxProgressInnerBar = this.shadowRoot.querySelector('.wx-progress-inner-bar')
             this.wxProgressInfo = this.shadowRoot.querySelector('.wx-progress-info')

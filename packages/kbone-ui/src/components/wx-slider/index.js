@@ -2,9 +2,8 @@ import Base from '../base'
 import tpl from './index.html'
 import style from './index.less'
 
-let template = document.createElement('template')
+const template = document.createElement('template')
 template.innerHTML = `<style>${style}</style>${tpl}`
-template = template.content
 
 const SLIDE_ACTIVE_COLOR = '#1AAD19'
 const SLIDE_BACKGROUND_COLOR = '#E9E9E9'
@@ -32,7 +31,7 @@ export default class WxSlider extends Base {
     constructor() {
         super()
 
-        this.initShadowRoot(template.cloneNode(true), WxSlider.observedAttributes, () => {
+        this.initShadowRoot(template, WxSlider.observedAttributes, () => {
             this.onHandleTouchStart = this.onHandleTouchStart.bind(this)
             this.onHandleTouchMove = this.onHandleTouchMove.bind(this)
             this.onHandleTouchEnd = this.onHandleTouchEnd.bind(this)

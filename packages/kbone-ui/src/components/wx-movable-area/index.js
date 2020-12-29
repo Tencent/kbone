@@ -2,9 +2,8 @@ import Base from '../base'
 import tpl from './index.html'
 import style from './index.less'
 
-let template = document.createElement('template')
+const template = document.createElement('template')
 template.innerHTML = `<style>${style}</style>${tpl}`
-template = template.content
 
 /**
  * 计算距离原点的距离
@@ -26,7 +25,7 @@ export default class WxMovableArea extends Base {
     constructor() {
         super()
 
-        this.initShadowRoot(template.cloneNode(true), WxMovableArea.observedAttributes, () => {
+        this.initShadowRoot(template, WxMovableArea.observedAttributes, () => {
             this.onUpdate = this.onUpdate.bind(this)
             this.onHandleTouchStart = this.onHandleTouchStart.bind(this)
             this.onHandleTouchMove = this.onHandleTouchMove.bind(this)

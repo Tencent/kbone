@@ -9,9 +9,8 @@ import {
     isEqual,
 } from '../../utils/tool'
 
-let template = document.createElement('template')
+const template = document.createElement('template')
 template.innerHTML = `<style>${style}</style>${tpl}`
-template = template.content
 
 const DAY_NUM = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
@@ -30,7 +29,7 @@ export default class WxPicker extends Base {
     constructor() {
         super()
 
-        this.initShadowRoot(template.cloneNode(true), WxPicker.observedAttributes, () => {
+        this.initShadowRoot(template, WxPicker.observedAttributes, () => {
             this.onWrapperTap = this.onWrapperTap.bind(this)
             this.onCancel = this.onCancel.bind(this)
             this.onConfirm = this.onConfirm.bind(this)

@@ -2,9 +2,8 @@ import Base from '../base'
 import tpl from './index.html'
 import style from './index.less'
 
-let template = document.createElement('template')
+const template = document.createElement('template')
 template.innerHTML = `<style>${style}</style>${tpl}`
-template = template.content
 
 const SCROLL_BOUNDARY_DELTA = 200
 
@@ -12,7 +11,7 @@ export default class WxScrollView extends Base {
     constructor() {
         super()
 
-        this.initShadowRoot(template.cloneNode(true), WxScrollView.observedAttributes, () => {
+        this.initShadowRoot(template, WxScrollView.observedAttributes, () => {
             this.onScroll = this.onScroll.bind(this)
             this.onHandleTouchStart = this.onHandleTouchStart.bind(this)
             this.onHandleTouchMove = this.onHandleTouchMove.bind(this)

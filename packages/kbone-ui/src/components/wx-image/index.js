@@ -2,9 +2,8 @@ import Base from '../base'
 import tpl from './index.html'
 import style from './index.less'
 
-let template = document.createElement('template')
+const template = document.createElement('template')
 template.innerHTML = `<style>${style}</style>${tpl}`
-template = template.content
 
 const MODE_LIST = ['scaleToFill', 'aspectFit', 'aspectFill', 'top', 'bottom', 'center', 'left', 'right', 'top left', 'top right', 'bottom left', 'bottom right']
 
@@ -12,7 +11,7 @@ export default class WxImage extends Base {
     constructor() {
         super()
 
-        this.initShadowRoot(template.cloneNode(true), WxImage.observedAttributes, () => {
+        this.initShadowRoot(template, WxImage.observedAttributes, () => {
             this._changeId = 0 // 记录不同 src 对应的 id
 
             this.onResize = this.onResize.bind(this)

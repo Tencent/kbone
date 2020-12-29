@@ -44,7 +44,7 @@ const COMPONENT_LIST = Object.keys(COMPONENT_MAP)
 
 export default {
     register(options = {}) {
-        const components = options.components || COMPONENT_LIST
+        const components = Array.isArray(options.components) ? options.components : COMPONENT_LIST
         const mode = options.mode || 'open'
         const style = options.style || {}
 

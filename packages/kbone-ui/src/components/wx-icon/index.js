@@ -3,15 +3,14 @@ import tpl from './index.html'
 import style from './index.less'
 import fontStyle from './font.less'
 
-let template = document.createElement('template')
+const template = document.createElement('template')
 template.innerHTML = `<style>${style}</style>${tpl}`
-template = template.content
 
 export default class WxIcon extends Base {
     constructor() {
         super()
 
-        this.initShadowRoot(template.cloneNode(true), WxIcon.observedAttributes, () => {
+        this.initShadowRoot(template, WxIcon.observedAttributes, () => {
             this.i = this.shadowRoot.querySelector('i')
         })
     }

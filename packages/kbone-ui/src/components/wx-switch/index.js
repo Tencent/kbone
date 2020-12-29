@@ -2,15 +2,14 @@ import Base from '../base'
 import tpl from './index.html'
 import style from './index.less'
 
-let template = document.createElement('template')
+const template = document.createElement('template')
 template.innerHTML = `<style>${style}</style>${tpl}`
-template = template.content
 
 export default class WxSwitch extends Base {
     constructor() {
         super()
 
-        this.initShadowRoot(template.cloneNode(true), WxSwitch.observedAttributes, () => {
+        this.initShadowRoot(template, WxSwitch.observedAttributes, () => {
             this.onInputTap = this.onInputTap.bind(this)
             this.switchInput = this.shadowRoot.querySelector('#switchInput')
             this.checkboxInput = this.shadowRoot.querySelector('#checkboxInput')

@@ -5,15 +5,14 @@ import {
     findParent,
 } from '../../utils/tool'
 
-let template = document.createElement('template')
+const template = document.createElement('template')
 template.innerHTML = `<style>${style}</style>${tpl}`
-template = template.content
 
 export default class WxSwiperItem extends Base {
     constructor() {
         super()
 
-        this.initShadowRoot(template.cloneNode(true), WxSwiperItem.observedAttributes)
+        this.initShadowRoot(template, WxSwiperItem.observedAttributes)
     }
 
     static register() {

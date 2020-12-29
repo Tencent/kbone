@@ -2,9 +2,8 @@ import Hover from '../hover'
 import tpl from './index.html'
 import style from './index.less'
 
-let template = document.createElement('template')
+const template = document.createElement('template')
 template.innerHTML = `<style>${style}</style>${tpl}`
-template = template.content
 
 export default class WxButton extends Hover {
     constructor() {
@@ -12,7 +11,7 @@ export default class WxButton extends Hover {
             defaultHoverClass: 'button-hover',
         })
 
-        this.initShadowRoot(template.cloneNode(true), WxButton.observedAttributes)
+        this.initShadowRoot(template, WxButton.observedAttributes)
     }
 
     static register() {

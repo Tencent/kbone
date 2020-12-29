@@ -86,7 +86,7 @@ export default class Base extends HTMLElement {
      * 初始化 shadowRoot
      */
     initShadowRoot(template, attributes, afterAttach) {
-        this.attachShadow({mode: this._mode}).appendChild(template)
+        this.attachShadow({mode: this._mode}).appendChild(template.content.cloneNode(true))
         this.addExtraStyle(this._style)
 
         if (afterAttach) afterAttach()

@@ -6,9 +6,8 @@ import {
 } from '../../utils/tool'
 import refresher from './refresher'
 
-let template = document.createElement('template')
+const template = document.createElement('template')
 template.innerHTML = `<style>${style}</style>${tpl}`
-template = template.content
 
 const DEFAULT_DOT_INIT_OFFSET = -12
 const DEFAULT_DOT_FULL_OFFSET = 1
@@ -23,7 +22,7 @@ export default class WxRefresher extends Base {
     constructor() {
         super()
 
-        this.initShadowRoot(template.cloneNode(true), WxRefresher.observedAttributes, () => {
+        this.initShadowRoot(template, WxRefresher.observedAttributes, () => {
             this.onPulling = this.onPulling.bind(this)
             this.onRefresh = this.onRefresh.bind(this)
             this.onRestore = this.onRestore.bind(this)

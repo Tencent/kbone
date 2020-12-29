@@ -10,9 +10,8 @@ import {
     animation,
 } from '../../utils/tool'
 
-let template = document.createElement('template')
+const template = document.createElement('template')
 template.innerHTML = `<style>${style}</style>${tpl}`
-template = template.content
 
 const MOVABLE_VIEW_SCALE_MIN = 0.5
 const MOVABLE_VIEW_SCALE_MAX = 10
@@ -135,7 +134,7 @@ export default class WxMovableView extends Base {
     constructor() {
         super()
 
-        this.initShadowRoot(template.cloneNode(true), WxMovableView.observedAttributes, () => {
+        this.initShadowRoot(template, WxMovableView.observedAttributes, () => {
             this.onHandleTouchStart = this.onHandleTouchStart.bind(this)
             this.onHandleTouchMove = this.onHandleTouchMove.bind(this)
             this.onHandleTouchEnd = this.onHandleTouchEnd.bind(this)

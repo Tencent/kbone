@@ -2,15 +2,14 @@ import Base from '../base'
 import tpl from './index.html'
 import style from './index.less'
 
-let template = document.createElement('template')
+const template = document.createElement('template')
 template.innerHTML = `<style>${style}</style>${tpl}`
-template = template.content
 
 export default class WxInput extends Base {
     constructor() {
         super()
 
-        this.initShadowRoot(template.cloneNode(true), WxInput.observedAttributes, () => {
+        this.initShadowRoot(template, WxInput.observedAttributes, () => {
             this.onInputFocus = this.onInputFocus.bind(this)
             this.onInputBlur = this.onInputBlur.bind(this)
             this.onInputInput = this.onInputInput.bind(this)
@@ -96,7 +95,8 @@ export default class WxInput extends Base {
             this._value = value
         } else if (name === 'type' || name === 'password') {
             if (oldValue === newValue) return
-            this.inputDom.type = this.password || this.type === 'password' ? 'password' : 'text'
+            const type = this.type
+            this.inputDom.setAttribute('type', this.password || type === 'password' ? 'password' : type === 'number' ? type : 'text')
         } else if (name === 'placeholder') {
             if (oldValue === newValue) return
             this.checkPlaceholderStyle(this.value)
@@ -114,7 +114,7 @@ export default class WxInput extends Base {
             const maxlength = this.maxlength
             const value = this.value.slice(0, maxlength)
             if (value !== this.value) this.value = value
-            this.inputDom.maxlength = maxlength
+            this.inputDom.setAttribute('maxlength', maxlength)
         } else if (name === 'focus') {
             if (isInit) return
             this.doFocus(this.focus)
@@ -138,7 +138,7 @@ export default class WxInput extends Base {
     }
 
     get password() {
-        return this.getBoolValue('password' )
+        return this.getBoolValue('password')
     }
 
     get placeholder() {
@@ -162,7 +162,8 @@ export default class WxInput extends Base {
     }
 
     get cursorSpacing() {
-        return this.getNumberValue('cursor-spacing')
+        // cursor-spacing 不支持
+        return null
     }
 
     get focus() {
@@ -170,11 +171,13 @@ export default class WxInput extends Base {
     }
 
     get confirmType() {
-        return this.getAttribute('confirm-type') || 'done'
+        // confirm-type 不支持
+        return null
     }
 
     get alwaysEmbed() {
-        return this.getBoolValue('always-embed')
+        // always-embed 不支持
+        return null
     }
 
     get confirmHold() {
@@ -206,11 +209,13 @@ export default class WxInput extends Base {
     }
 
     get adjustPosition() {
-        return this.getBoolValue('adjust-position', true)
+        // adjust-position 不支持
+        return null
     }
 
     get holdKeyboard() {
-        return this.getBoolValue('hold-keyboard')
+        // hold-keyboard 不支持
+        return null
     }
 
     /**
@@ -260,7 +265,7 @@ export default class WxInput extends Base {
     }
 
     /**
-     * 监听输入框脱焦
+     * 监听输入框失焦
      */
     onInputBlur(evt) {
         evt.stopPropagation()
@@ -273,7 +278,7 @@ export default class WxInput extends Base {
         this.checkPlaceholderStyle(this.value)
     }
 
-      
+
     /**
      * 监听输入框键盘键入
      */
@@ -300,11 +305,32 @@ export default class WxInput extends Base {
      */
     onInputInput(evt) {
         evt.stopPropagation()
-        const value = evt.target.value
-        this._value = value // 先用一个变量存起来, 才不会影响输入
+        let value = evt.target.value
+        if (this.type === 'digit') {
+            // 处理小数输入
+            value = value.trim()
+            let newValue = parseFloat(value)
+            if (isNaN(newValue)) {
+                value = ''
+            } else {
+                newValue = newValue.toString()
+                if (value.length !== newValue.length + 1 || value.indexOf('.') !== value.length - 1) {
+                    // 最后一个字符不是小数点
+                    value = newValue
+                }
+            }
+        } else if (this.type === 'idcard') {
+            // 处理身份证输入
+            if (!/^\d*X{0,1}\d*$/ig.test(value)) value = this._value
+            value = value.toUpperCase()
+        }
+        evt.target.value = value
+        if (this._value === value) return
+
+        this._value = value
         this.checkPlaceholderStyle(value)
-        
-        this.dispatchEvent(new CustomEvent('input', {bubbles: true, cancelable: true, detail: {value: this.value, cursor: this.inputDom.selectionStart, keyCode: this._keyCode}}))
+
+        this.dispatchEvent(new CustomEvent('input', {bubbles: true, cancelable: true, detail: {value, cursor: this.inputDom.selectionStart, keyCode: this._keyCode}}))
     }
 
     /**
@@ -335,7 +361,7 @@ export default class WxInput extends Base {
      */
     onPlaceholderClassChange(value) {
         this._placeholderClass = value.split(/\s+/)
-        this.placeholderDom.className = `input-placeholder ${this._placeholderClass.join(' ')}`
+        this.placeholderDom.className = this._placeholderClass.join(' ')
     }
 
     /**
@@ -354,12 +380,12 @@ export default class WxInput extends Base {
                     }
                 }
             }
-          placeholder.style.display = 'none'
-          this._placeholderShow = false
+            placeholder.style.display = 'none'
+            this._placeholderShow = false
         } else {
             if (!this._placeholderShow) {
                 placeholder.classList.add('input-placeholder')
-                this.placeholderStyle && placeholder.setAttribute('style', this.placeholderStyle)
+                if (this.placeholderStyle) placeholder.setAttribute('style', this.placeholderStyle)
                 if (list.length > 0) {
                     for (let i = 0; i < list.length; i++) {
                         placeholder.classList.add(list[i])
@@ -371,7 +397,7 @@ export default class WxInput extends Base {
             this._placeholderShow = true
         }
     }
-    
+
     /**
      * 获取组件值，由 wx-form 调用
      */

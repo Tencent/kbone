@@ -2,15 +2,14 @@ import Base from '../base'
 import tpl from './index.html'
 import style from './index.less'
 
-let template = document.createElement('template')
+const template = document.createElement('template')
 template.innerHTML = `<style>${style}</style>${tpl}`
-template = template.content
 
 export default class WxSwiper extends Base {
     constructor() {
         super()
 
-        this.initShadowRoot(template.cloneNode(true), WxSwiper.observedAttributes, () => {
+        this.initShadowRoot(template, WxSwiper.observedAttributes, () => {
             this.resetLayout = this.resetLayout.bind(this)
             this.animateFrame = this.animateFrame.bind(this)
             this.onHandleWheel = this.onHandleWheel.bind(this)

@@ -2,15 +2,14 @@ import Base from '../base'
 import tpl from './index.html'
 import style from './index.less'
 
-let template = document.createElement('template')
+const template = document.createElement('template')
 template.innerHTML = `<style>${style}</style>${tpl}`
-template = template.content
 
 export default class WxPickerView extends Base {
     constructor() {
         super()
 
-        this.initShadowRoot(template.cloneNode(true), WxPickerView.observedAttributes, () => {
+        this.initShadowRoot(template, WxPickerView.observedAttributes, () => {
             this._columns = []
         })
     }

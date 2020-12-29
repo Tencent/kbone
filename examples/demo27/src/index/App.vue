@@ -415,8 +415,22 @@
       <div class="title">wx-input</div>
       <div class="comp-cnt">
         <wx-input value="默认 value 值" @input="log('[wx-input] input', $event.detail)" @focus="log('[wx-input] focus', $event.detail)" @blur="log('[wx-input] blur', $event.detail)" @confirm="log('[wx-input] confirm', $event.detail)"/>
-        <wx-input :focus="wxInput.focus" @blur="wxInput.focus = false" placeholder="自动聚焦"/>
-        <wx-button type="default" @tap="wxInput.focus = true">聚焦</wx-button>
+        <wx-input placeholder="文本输入框" type="text" @input="log('[wx-input] input', $event.detail)"/>
+        <wx-input placeholder="整数输入框" type="number" @input="log('[wx-input] input', $event.detail)"/>
+        <wx-input placeholder="小数输入框" type="digit" @input="log('[wx-input] input', $event.detail)"/>
+        <wx-input placeholder="身份证输入框" type="idcard" @input="log('[wx-input] input', $event.detail)"/>
+        <wx-input placeholder="密码输入框" :password="true" @input="log('[wx-input] input', $event.detail)"/>
+        <wx-input placeholder="占位文本样式1" placeholder-style="color: red;" @input="log('[wx-input] input', $event.detail)"/>
+        <wx-input placeholder="占位文本样式2" placeholder-class="green" @input="log('[wx-input] input', $event.detail)"/>
+        <wx-input placeholder="禁用" :disabled="true" @input="log('[wx-input] input', $event.detail)"/>
+        <wx-input placeholder="最大输入长度为 10" maxlength="10" @input="log('[wx-input] input', $event.detail)"/>
+        <wx-input :focus="wxInput.focus" @blur="wxInput.focus = false" placeholder="自动聚焦" @input="log('[wx-input] input', $event.detail)"/>
+        <wx-button type="default" @tap="wxInput.focus = true">聚焦上面输入框</wx-button>
+        <wx-input placeholder="点击确认不失焦" :confirm-hold="true" @input="log('[wx-input] input', $event.detail)"/>
+        <wx-input ref="wx-input-cursor" value="焦点位置 -><- 在这里" cursor="7" @input="log('[wx-input] input', $event.detail)"/>
+        <wx-button type="default" @tap="onFocusWxInputCursor">聚焦上面输入框</wx-button>
+        <wx-input ref="wx-input-select" value="后面这些文字：这些要被选中，到此就结束了" selection-start="7" selection-end="13" @input="log('[wx-input] input', $event.detail)"/>
+        <wx-button type="default" @tap="onFocusWxInputSelect">聚焦上面输入框</wx-button>
       </div>
     </div>
     <div class="item">
@@ -743,6 +757,14 @@ export default {
         document.getElementById('wx-text-decode-1').innerText = '&gt; insert 1'
         document.getElementById('wx-text-decode-2').innerText = '&gt; insert 2'
       })
+    },
+
+    onFocusWxInputCursor() {
+      this.$refs['wx-input-cursor'].setAttribute('focus', true)
+    },
+
+    onFocusWxInputSelect() {
+      this.$refs['wx-input-select'].setAttribute('focus', true)
     },
 
     onWxpicker3ColumnChange(evt) {

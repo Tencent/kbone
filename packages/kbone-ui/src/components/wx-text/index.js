@@ -1,15 +1,14 @@
 import Base from '../base'
 import tpl from './index.html'
 
-let template = document.createElement('template')
+const template = document.createElement('template')
 template.innerHTML = `${tpl}`
-template = template.content
 
 export default class WxText extends Base {
     constructor() {
         super()
 
-        this.initShadowRoot(template.cloneNode(true), WxText.observedAttributes, () => {
+        this.initShadowRoot(template, WxText.observedAttributes, () => {
             this.main = this.shadowRoot.querySelector('#main')
         })
     }
