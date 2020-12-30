@@ -1323,6 +1323,7 @@ const wxComponentMap = {
             },
         }, {
             name: 'focus',
+            canBeUserChanged: true,
             get(domNode) {
                 return dealWithBoolValue(domNode, 'focus')
             },

@@ -434,14 +434,32 @@
         <wx-button type="default" @tap="setAttribute('wx-input-select', 'focus', true)">聚焦上面输入框</wx-button>
       </div>
     </wx-view>
-    <!-- <wx-view class="item">
+    <wx-view class="item">
       <div class="title">wx-textarea</div>
       <div class="comp-cnt">
         <wx-textarea class="wx-textarea" value="默认 value 值" @input="log('[wx-textarea] input', $event.detail)" @focus="log('[wx-textarea] focus', $event.detail)" @blur="log('[wx-textarea] blur', $event.detail)" @confirm="log('[wx-textarea] confirm', $event.detail)" @linechange="log('[wx-textarea] linechange', $event.detail)"/>
         <wx-textarea class="wx-textarea" placeholder="占位文本样式1" placeholder-style="color: red;" @input="log('[wx-textarea] input', $event.detail)"/>
         <wx-textarea class="wx-textarea" placeholder="占位文本样式2" placeholder-class="green" @input="log('[wx-textarea] input', $event.detail)"/>
+        <wx-textarea class="wx-textarea" placeholder="禁用" :disabled="true" @input="log('[wx-textarea] input', $event.detail)"/>
+        <wx-textarea class="wx-textarea" :placeholder="`最大输入长度为 ${wxTextarea.maxlength > 0 ? wxTextarea.maxlength : '无限'}`" :maxlength="wxTextarea.maxlength" @input="log('[wx-textarea] input', $event.detail)"/>
+        <wx-button type="default" @tap="wxTextarea.maxlength = wxTextarea.maxlength > 0 ? -1 : 10">修改上面 textarea 的 maxlength</wx-button>
+        <wx-textarea class="wx-textarea" :focus="wxTextarea.focus" @blur="wxTextarea.focus = false" placeholder="默认不聚焦" @input="log('[wx-textarea] input', $event.detail)"/>
+        <wx-button type="default" @tap="wxTextarea.focus = true">聚焦上面 textarea</wx-button>
+        <wx-textarea class="wx-textarea" placeholder="自动增高" :auto-hight="true" @input="log('[wx-textarea] input', $event.detail)"/>
+        <wx-button type="default" @tap="wxTextarea.showFixedDialog = true">显示 fixed textarea</wx-button>
+        <div class="fixed-dialog" v-if="wxTextarea.showFixedDialog">
+          <div class="fixed-dialog-mask" @click="wxTextarea.showFixedDialog = false"></div>
+          <div class="fixed-dialog-cnt">
+            <wx-textarea class="wx-textarea" placeholder="点击灰色蒙层可关闭" :fixed="true" @input="log('[wx-textarea] input', $event.detail)"/>
+          </div>
+        </div>
+        <wx-textarea class="wx-textarea" ref="wx-textarea-cursor" value="焦点位置 -><- 在这里" cursor="7" @input="log('[wx-textarea] input', $event.detail)"/>
+        <wx-button type="default" @tap="setAttribute('wx-textarea-cursor', 'focus', true)">聚焦上面输入框</wx-button>
+        <wx-textarea class="wx-textarea" ref="wx-textarea-select" value="后面这些文字：这些要被选中，到此就结束了" selection-start="7" selection-end="13" @input="log('[wx-textarea] input', $event.detail)"/>
+        <wx-button type="default" @tap="setAttribute('wx-textarea-select', 'focus', true)">聚焦上面输入框</wx-button>
+        <wx-textarea class="wx-textarea" placeholder="去掉 iOS 下的默认内边距" :disable-default-padding="true" @input="log('[wx-textarea] input', $event.detail)"/>
       </div>
-    </wx-view> -->
+    </wx-view>
     <wx-view class="item">
       <div class="title">wx-picker</div>
       <div class="comp-cnt">
@@ -664,6 +682,11 @@ export default {
       wxInput: {
         focus: true,
         maxlength: 10,
+      },
+      wxTextarea: {
+        focus: false,
+        maxlength: 10,
+        showFixedDialog: false,
       },
       wxPicker: {
         range1: ['美国', '中国', '巴西', '日本'],
@@ -890,6 +913,38 @@ export default {
 .opr-box {
   flex: 1;
 }
+.fixed-dialog {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 1000;
+}
+.fixed-dialog .fixed-dialog-mask {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, .5);
+}
+.fixed-dialog .fixed-dialog-cnt {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 300px;
+  height: 200px;
+  margin-left: -150px;
+  margin-top: -150px;
+  background-color: #fff;
+  border-radius: 10px;
+}
+.fixed-dialog .wx-textarea {
+  width: 200px;
+  height: 100px;
+  margin: 50px;
+}
 .wx-movable-area {
   width: 300px;
   height: 300px;
@@ -988,6 +1043,12 @@ export default {
 }
 .wx-input {
   width: 100%;
+}
+.wx-textarea {
+  border: 1px solid #a4a4a4;
+  border-radius: 10px;
+  width: 100%;
+  height: 50px;
 }
 .wx-picker-view {
   width: 100%;
