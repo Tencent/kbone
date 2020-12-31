@@ -445,7 +445,7 @@
         <wx-button type="default" @tap="wxTextarea.maxlength = wxTextarea.maxlength > 0 ? -1 : 10">修改上面 textarea 的 maxlength</wx-button>
         <wx-textarea class="wx-textarea" :focus="wxTextarea.focus" @blur="wxTextarea.focus = false" placeholder="默认不聚焦" @input="log('[wx-textarea] input', $event.detail)"/>
         <wx-button type="default" @tap="wxTextarea.focus = true">聚焦上面 textarea</wx-button>
-        <wx-textarea class="wx-textarea" placeholder="自动增高" :auto-hight="true" @input="log('[wx-textarea] input', $event.detail)"/>
+        <wx-textarea class="wx-textarea" placeholder="自动增高" :auto-height="true" @input="log('[wx-textarea] input', $event.detail)"/>
         <wx-button type="default" @tap="wxTextarea.showFixedDialog = true">显示 fixed textarea</wx-button>
         <div class="fixed-dialog" v-if="wxTextarea.showFixedDialog">
           <div class="fixed-dialog-mask" @click="wxTextarea.showFixedDialog = false"></div>
@@ -457,7 +457,6 @@
         <wx-button type="default" @tap="setAttribute('wx-textarea-cursor', 'focus', true)">聚焦上面输入框</wx-button>
         <wx-textarea class="wx-textarea" ref="wx-textarea-select" value="后面这些文字：这些要被选中，到此就结束了" selection-start="7" selection-end="13" @input="log('[wx-textarea] input', $event.detail)"/>
         <wx-button type="default" @tap="setAttribute('wx-textarea-select', 'focus', true)">聚焦上面输入框</wx-button>
-        <wx-textarea class="wx-textarea" placeholder="去掉 iOS 下的默认内边距" :disable-default-padding="true" @input="log('[wx-textarea] input', $event.detail)"/>
       </div>
     </wx-view>
     <wx-view class="item">
@@ -1070,5 +1069,8 @@ export default {
 }
 .wx-slider {
   margin-bottom: 30px;
+}
+.wx-textarea {
+  margin: 10px 0;
 }
 </style>

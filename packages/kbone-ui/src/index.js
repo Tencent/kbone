@@ -18,6 +18,7 @@ import WxPickerView from './components/wx-picker-view'
 import WxPickerViewColumn from './components/wx-picker-view-column'
 import WxSlider from './components/wx-slider'
 import WxSwitch from './components/wx-switch'
+import WxTextarea from './components/wx-textarea'
 import WxImage from './components/wx-image'
 
 const COMPONENT_MAP = {
@@ -38,6 +39,7 @@ const COMPONENT_MAP = {
     'wx-picker-view-column': WxPickerViewColumn,
     'wx-slider': WxSlider,
     'wx-switch': WxSwitch,
+    'wx-textarea': WxTextarea,
     'wx-image': WxImage,
 }
 const COMPONENT_LIST = Object.keys(COMPONENT_MAP)

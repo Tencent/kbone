@@ -127,3 +127,39 @@ export function isEqual(a, b) {
 
     return a === b
 }
+
+/**
+ * rgb 颜色转 16 进制
+ */
+export function transformRGB2Hex(rgbColor) {
+    try {
+        if (rgbColor.indexOf('#') >= 0) return rgbColor
+        const rgb = rgbColor.match(/\d+/g)
+        const hexColor = []
+        rgb.map((item, index) => {
+            if (index < 3) {
+                let hex = parseInt(item, 10)
+                hex = hex > 9 ? hex.toString(16) : `0${hex}`
+                hexColor.push(hex)
+            }
+            return item
+        })
+
+        if (rgb.length > 3) {
+            // rgba
+            let alpha = parseFloat(rgb.slice(3).join('.'), 10)
+            if (alpha === 0) {
+                hexColor.push('00')
+            } else if (alpha >= 1) {
+                hexColor.push('ff')
+            } else {
+                alpha = parseInt(alpha * 255, 10)
+                alpha = alpha > 9 ? alpha.toString(16) : '0' + alpha
+                hexColor.push(alpha)
+            }
+        }
+        return '#' + hexColor.join('')
+    } catch (err) {
+        return ''
+    }
+}

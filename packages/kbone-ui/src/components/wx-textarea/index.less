@@ -1,0 +1,64 @@
+.textarea-placeholder {
+  color: grey;
+}
+
+.textarea-placeholder-dark {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+:host {
+  cursor: auto;
+  width: 300px;
+  height: 150px;
+  display: block;
+  position: relative;
+  overflow: hidden;
+
+  &([hidden]) {
+    display: none;
+  }
+}
+
+textarea {
+  outline: none;
+  border: none;
+  resize: none;
+  background-color: transparent;
+  line-height: 1.2;
+  z-index: 2;
+  position: absolute;
+  padding: 0;
+  font-family: inherit;
+  background: transparent;
+}
+
+.wx-dev-textarea::-webkit-scrollbar {
+  display: none;
+}
+
+.compute {
+  color: transparent;
+  top: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+div {
+  word-break: break-all;
+  line-height: 1.2;
+  font-family: inherit;
+}
+
+.wx-dev-textarea {
+  position: absolute;
+
+  div {
+    position: absolute;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :host {
+    color: rgba(255, 255, 255, 0.8);
+  }
+}

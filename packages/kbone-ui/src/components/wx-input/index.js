@@ -89,7 +89,7 @@ export default class WxInput extends Base {
 
         if (name === 'value') {
             let value = this.value
-            if (this.maxlength > 0) value = value.slice(0, this.maxlength)
+            if (this.maxlength > 0 && value.length > this.maxlength) value = value.slice(0, this.maxlength)
             this.checkPlaceholderStyle(value)
             this.inputDom.value = value
             this._value = value
@@ -121,12 +121,12 @@ export default class WxInput extends Base {
             }
         } else if (name === 'focus') {
             if (isInit) return
-            this.doFocus(this.autoFocus || this.focus)
+            this.doFocus(this.focus)
         }
     }
 
     static get observedAttributes() {
-        return ['value', 'type', 'password', 'placeholder', 'placeholder-style', 'placeholder-class', 'disabled', 'maxlength', 'cursor-spacing', 'focus', 'confirm-type', 'always-embed', 'confirm-hold', 'cursor', 'selection-start', 'selection-end', 'adjust-position', 'hold-keyboard', ...Base.observedAttributes]
+        return ['value', 'type', 'password', 'placeholder', 'placeholder-style', 'placeholder-class', 'disabled', 'maxlength', 'cursor-spacing', 'auto-focus', 'focus', 'confirm-type', 'always-embed', 'confirm-hold', 'cursor', 'selection-start', 'selection-end', 'adjust-position', 'hold-keyboard', ...Base.observedAttributes]
     }
 
     get value() {
@@ -285,7 +285,6 @@ export default class WxInput extends Base {
         this.dispatchEvent(new CustomEvent('blur', {bubbles: true, cancelable: true, detail: {value: this.value, cursor: this.inputDom.selectionEnd}}))
         this.checkPlaceholderStyle(this.value)
     }
-
 
     /**
      * 监听输入框键盘键入
