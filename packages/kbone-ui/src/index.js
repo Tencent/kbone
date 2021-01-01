@@ -12,6 +12,8 @@ import WxProgress from './components/wx-progress'
 import WxRichText from './components/wx-rich-text'
 import WxText from './components/wx-text/index'
 import WxButton from './components/wx-button'
+import WxCheckbox from './components/wx-checkbox'
+import WxCheckboxGroup from './components/wx-checkbox-group'
 import WxInput from './components/wx-input'
 import WxPicker from './components/wx-picker'
 import WxPickerView from './components/wx-picker-view'
@@ -33,6 +35,8 @@ const COMPONENT_MAP = {
     'wx-rich-text': WxRichText,
     'wx-text': WxText,
     'wx-button': WxButton,
+    'wx-checkbox': WxCheckbox,
+    'wx-checkbox-group': WxCheckboxGroup,
     'wx-input': WxInput,
     'wx-picker': WxPicker,
     'wx-picker-view': WxPickerView,

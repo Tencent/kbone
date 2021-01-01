@@ -62,6 +62,7 @@ export default class WxPickerView extends Scroller {
         this._observer = null
         if (this._resizeObserver) this._resizeObserver.disconnect()
         this._resizeObserver = null
+        this._parent = null
 
         this.removeEventListener('tap', this.onTap)
         this.main.removeEventListener('touchstart', this.onScrollerTouchStart)

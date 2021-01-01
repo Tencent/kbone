@@ -224,6 +224,7 @@ export default class WxMovableView extends Base {
 
         if (this._observer) this._observer.disconnect()
         this._observer = null
+        this._parent = null
 
         this.removeEventListener('touchstart', this.onHandleTouchStart)
         this.removeEventListener('touchmove', this.onHandleTouchMove)

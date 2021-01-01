@@ -255,7 +255,14 @@ export default class Base extends HTMLElement {
             this._longTapTimeout = setTimeout(() => {
                 // 触发 longpress 后不处罚 tap
                 this._preventTap = true
-                if (target) target.dispatchEvent(new CustomEvent('longpress', {bubbles: true, cancelable: true}))
+                if (target) {
+                    const targetList = [target]
+                    if (target !== this) targetList.push(this) // 冒泡到 shadowRoot 的 longpress 事件不会冒泡到 host 去
+
+                    targetList.forEach(item => {
+                        item.dispatchEvent(new CustomEvent('longpress', {bubbles: true, cancelable: true}))
+                    })
+                }
             }, 350)
         }
     }
@@ -293,13 +300,18 @@ export default class Base extends HTMLElement {
             this._tapTimeout = setTimeout(() => {
                 if (!this._preventTap) {
                     if (target) {
-                        target.dispatchEvent(new CustomEvent('tap', {
-                            bubbles: true,
-                            cancelable: true,
-                            detail: {
-                                pageX, pageY, clientX, clientY
-                            }
-                        }))
+                        const targetList = [target]
+                        if (target !== this) targetList.push(this) // 冒泡到 shadowRoot 的 tap 事件不会冒泡到 host 去
+
+                        targetList.forEach(item => {
+                            item.dispatchEvent(new CustomEvent('tap', {
+                                bubbles: true,
+                                cancelable: true,
+                                detail: {
+                                    pageX, pageY, clientX, clientY
+                                }
+                            }))
+                        })
                     }
                 }
             }, 0)
