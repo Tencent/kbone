@@ -947,6 +947,7 @@ const wxComponentMap = {
                             otherDomNode._oldValues.checked = false
                         }
                     }
+                    this.callEvent('$$radioChange', evt)
                 }
                 this.callEvent('input', evt)
                 this.callEvent('change', evt)
@@ -970,6 +971,7 @@ const wxComponentMap = {
                     domNode._oldValues = domNode._oldValues || {}
                     domNode._oldValues.checked = false
                 }
+                this.callEvent('$$checkboxChange', evt)
                 this.callEvent('input', evt)
                 this.callEvent('change', evt)
             },

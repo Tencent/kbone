@@ -412,6 +412,23 @@
       </div>
     </wx-view>
     <wx-view class="item">
+      <div class="title">wx-checkbox-group/wx-checkbox</div>
+      <div class="comp-cnt">
+        <div><wx-checkbox></wx-checkbox><span>未选中</span></div>
+        <div><wx-checkbox :checked="true"></wx-checkbox><span>选中</span></div>
+        <div><wx-checkbox :disabled="true"></wx-checkbox><span>禁用 1</span></div>
+        <div><wx-checkbox :checked="true" :disabled="true"></wx-checkbox><span>禁用 2</span></div>
+        <div><wx-checkbox :checked="true" color="#FF0000"></wx-checkbox><span>颜色 - 红</span></div>
+        <wx-checkbox-group class="wx-checkbox-group" @change="log('[wx-checkbox] change', $event.detail)">
+          <div><wx-checkbox :checked="true" value="中"></wx-checkbox><span>中国</span></div>
+          <div><wx-checkbox :checked="true" value="俄"></wx-checkbox><span>俄罗斯</span></div>
+          <div><wx-checkbox value="美"></wx-checkbox><span>美国</span></div>
+          <div><wx-checkbox value="英"></wx-checkbox><span>英国</span></div>
+          <div><wx-checkbox value="法"></wx-checkbox><span>法国</span></div>
+        </wx-checkbox-group>
+      </div>
+    </wx-view>
+    <wx-view class="item">
       <div class="title">wx-input</div>
       <div class="comp-cnt">
         <wx-input class="wx-input" value="默认 value 值" @input="log('[wx-input] input', $event.detail)" @focus="log('[wx-input] focus', $event.detail)" @blur="log('[wx-input] blur', $event.detail)" @confirm="log('[wx-input] confirm', $event.detail)"/>
@@ -432,31 +449,6 @@
         <wx-button type="default" @tap="setAttribute('wx-input-cursor', 'focus', true)">聚焦上面输入框</wx-button>
         <wx-input class="wx-input" ref="wx-input-select" value="后面这些文字：这些要被选中，到此就结束了" selection-start="7" selection-end="13" @input="log('[wx-input] input', $event.detail)"/>
         <wx-button type="default" @tap="setAttribute('wx-input-select', 'focus', true)">聚焦上面输入框</wx-button>
-      </div>
-    </wx-view>
-    <wx-view class="item">
-      <div class="title">wx-textarea</div>
-      <div class="comp-cnt">
-        <wx-textarea class="wx-textarea" value="默认 value 值" @input="log('[wx-textarea] input', $event.detail)" @focus="log('[wx-textarea] focus', $event.detail)" @blur="log('[wx-textarea] blur', $event.detail)" @confirm="log('[wx-textarea] confirm', $event.detail)" @linechange="log('[wx-textarea] linechange', $event.detail)"/>
-        <wx-textarea class="wx-textarea" placeholder="占位文本样式1" placeholder-style="color: red;" @input="log('[wx-textarea] input', $event.detail)"/>
-        <wx-textarea class="wx-textarea" placeholder="占位文本样式2" placeholder-class="green" @input="log('[wx-textarea] input', $event.detail)"/>
-        <wx-textarea class="wx-textarea" placeholder="禁用" :disabled="true" @input="log('[wx-textarea] input', $event.detail)"/>
-        <wx-textarea class="wx-textarea" :placeholder="`最大输入长度为 ${wxTextarea.maxlength > 0 ? wxTextarea.maxlength : '无限'}`" :maxlength="wxTextarea.maxlength" @input="log('[wx-textarea] input', $event.detail)"/>
-        <wx-button type="default" @tap="wxTextarea.maxlength = wxTextarea.maxlength > 0 ? -1 : 10">修改上面 textarea 的 maxlength</wx-button>
-        <wx-textarea class="wx-textarea" :focus="wxTextarea.focus" @blur="wxTextarea.focus = false" placeholder="默认不聚焦" @input="log('[wx-textarea] input', $event.detail)"/>
-        <wx-button type="default" @tap="wxTextarea.focus = true">聚焦上面 textarea</wx-button>
-        <wx-textarea class="wx-textarea" placeholder="自动增高" :auto-height="true" @input="log('[wx-textarea] input', $event.detail)"/>
-        <wx-button type="default" @tap="wxTextarea.showFixedDialog = true">显示 fixed textarea</wx-button>
-        <div class="fixed-dialog" v-if="wxTextarea.showFixedDialog">
-          <div class="fixed-dialog-mask" @click="wxTextarea.showFixedDialog = false"></div>
-          <div class="fixed-dialog-cnt">
-            <wx-textarea class="wx-textarea" placeholder="点击灰色蒙层可关闭" :fixed="true" @input="log('[wx-textarea] input', $event.detail)"/>
-          </div>
-        </div>
-        <wx-textarea class="wx-textarea" ref="wx-textarea-cursor" value="焦点位置 -><- 在这里" cursor="7" @input="log('[wx-textarea] input', $event.detail)"/>
-        <wx-button type="default" @tap="setAttribute('wx-textarea-cursor', 'focus', true)">聚焦上面输入框</wx-button>
-        <wx-textarea class="wx-textarea" ref="wx-textarea-select" value="后面这些文字：这些要被选中，到此就结束了" selection-start="7" selection-end="13" @input="log('[wx-textarea] input', $event.detail)"/>
-        <wx-button type="default" @tap="setAttribute('wx-textarea-select', 'focus', true)">聚焦上面输入框</wx-button>
       </div>
     </wx-view>
     <wx-view class="item">
@@ -492,6 +484,23 @@
         <wx-picker class="wx-picker" mode="region" custom-item="全部" :value="JSON.stringify(wxPicker.value10)" @change="wxPicker.showText10 = $event.detail.value.join('-')" @cancel="log('[wx-picker] cancel', $event)">
           <div>省市选择器2：{{wxPicker.showText10}}</div>
         </wx-picker>
+      </div>
+    </wx-view>
+    <wx-view class="item">
+      <div class="title">wx-radio-group/wx-radio</div>
+      <div class="comp-cnt">
+        <div><wx-radio></wx-radio><span>未选中</span></div>
+        <div><wx-radio :checked="true"></wx-radio><span>选中</span></div>
+        <div><wx-radio :disabled="true"></wx-radio><span>禁用 1</span></div>
+        <div><wx-radio :checked="true" :disabled="true"></wx-radio><span>禁用 2</span></div>
+        <div><wx-radio :checked="true" color="#FF0000"></wx-radio><span>颜色 - 红</span></div>
+        <wx-radio-group class="wx-radio-group" @change="log('[wx-radio] change', $event.detail)">
+          <div><wx-radio :checked="true" value="中"></wx-radio><span>中国</span></div>
+          <div><wx-radio value="俄"></wx-radio><span>俄罗斯</span></div>
+          <div><wx-radio value="美"></wx-radio><span>美国</span></div>
+          <div><wx-radio value="英"></wx-radio><span>英国</span></div>
+          <div><wx-radio value="法"></wx-radio><span>法国</span></div>
+        </wx-radio-group>
       </div>
     </wx-view>
     <wx-view class="item">
@@ -543,6 +552,31 @@
         <wx-switch class="wx-switch" type="checkbox" @change="log('[wx-switch]', $event.detail)"></wx-switch>
         <wx-switch class="wx-switch" type="checkbox" :disabled="true" @change="log('[wx-switch]', $event.detail)"></wx-switch>
         <wx-switch class="wx-switch" type="checkbox" color="red" @change="log('[wx-switch]', $event.detail)"></wx-switch>
+      </div>
+    </wx-view>
+    <wx-view class="item">
+      <div class="title">wx-textarea</div>
+      <div class="comp-cnt">
+        <wx-textarea class="wx-textarea" value="默认 value 值" @input="log('[wx-textarea] input', $event.detail)" @focus="log('[wx-textarea] focus', $event.detail)" @blur="log('[wx-textarea] blur', $event.detail)" @confirm="log('[wx-textarea] confirm', $event.detail)" @linechange="log('[wx-textarea] linechange', $event.detail)"/>
+        <wx-textarea class="wx-textarea" placeholder="占位文本样式1" placeholder-style="color: red;" @input="log('[wx-textarea] input', $event.detail)"/>
+        <wx-textarea class="wx-textarea" placeholder="占位文本样式2" placeholder-class="green" @input="log('[wx-textarea] input', $event.detail)"/>
+        <wx-textarea class="wx-textarea" placeholder="禁用" :disabled="true" @input="log('[wx-textarea] input', $event.detail)"/>
+        <wx-textarea class="wx-textarea" :placeholder="`最大输入长度为 ${wxTextarea.maxlength > 0 ? wxTextarea.maxlength : '无限'}`" :maxlength="wxTextarea.maxlength" @input="log('[wx-textarea] input', $event.detail)"/>
+        <wx-button type="default" @tap="wxTextarea.maxlength = wxTextarea.maxlength > 0 ? -1 : 10">修改上面 textarea 的 maxlength</wx-button>
+        <wx-textarea class="wx-textarea" :focus="wxTextarea.focus" @blur="wxTextarea.focus = false" placeholder="默认不聚焦" @input="log('[wx-textarea] input', $event.detail)"/>
+        <wx-button type="default" @tap="wxTextarea.focus = true">聚焦上面 textarea</wx-button>
+        <wx-textarea class="wx-textarea" placeholder="自动增高" :auto-height="true" @input="log('[wx-textarea] input', $event.detail)"/>
+        <wx-button type="default" @tap="wxTextarea.showFixedDialog = true">显示 fixed textarea</wx-button>
+        <div class="fixed-dialog" v-if="wxTextarea.showFixedDialog">
+          <div class="fixed-dialog-mask" @click="wxTextarea.showFixedDialog = false"></div>
+          <div class="fixed-dialog-cnt">
+            <wx-textarea class="wx-textarea" placeholder="点击灰色蒙层可关闭" :fixed="true" @input="log('[wx-textarea] input', $event.detail)"/>
+          </div>
+        </div>
+        <wx-textarea class="wx-textarea" ref="wx-textarea-cursor" value="焦点位置 -><- 在这里" cursor="7" @input="log('[wx-textarea] input', $event.detail)"/>
+        <wx-button type="default" @tap="setAttribute('wx-textarea-cursor', 'focus', true)">聚焦上面输入框</wx-button>
+        <wx-textarea class="wx-textarea" ref="wx-textarea-select" value="后面这些文字：这些要被选中，到此就结束了" selection-start="7" selection-end="13" @input="log('[wx-textarea] input', $event.detail)"/>
+        <wx-button type="default" @tap="setAttribute('wx-textarea-select', 'focus', true)">聚焦上面输入框</wx-button>
       </div>
     </wx-view>
     <wx-view class="item">
@@ -1039,6 +1073,11 @@ export default {
 }
 .wx-view, .wx-progress, .wx-rich-text, .comp-cnt .wx-button {
   margin-bottom: 10px;
+}
+.wx-checkbox-group, .wx-radio-group {
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid #ccc;
 }
 .wx-input {
   width: 100%;

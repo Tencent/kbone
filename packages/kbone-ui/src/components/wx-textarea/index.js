@@ -99,7 +99,7 @@ export default class WxTextarea extends Base {
             this.placeholderDom.innerText = this.placeholder
         } else if (name === 'placeholder-style') {
             if (oldValue === newValue) return
-            this.stylecompute.style.cssText =`${this.placeholderStyle}; display: none;`
+            this.stylecompute.style.cssText = `${this.placeholderStyle}; display: none;`
             this.adjustComputedPlaceholderStyle()
         } else if (name === 'placeholder-class') {
             if (oldValue === newValue) return
@@ -416,7 +416,7 @@ export default class WxTextarea extends Base {
     getFormValue(cb) {
         this.value = this.textarea.value
         setTimeout(() => {
-          if (typeof cb === 'function') cb(this.value)
+            if (typeof cb === 'function') cb(this.value)
         }, 0)
     }
 

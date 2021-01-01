@@ -1,4 +1,5 @@
 const EventTarget = require('./event/event-target')
+const Event = require('./event/event')
 const Tree = require('./tree/tree')
 const Node = require('./node/node')
 const Element = require('./node/element')
@@ -29,8 +30,63 @@ const CONSTRUCTOR_MAP = {
     SELECT: Select,
     OPTION: Option,
 }
-const WX_COMPONENT_TRANSFORM_LIST = ['input', 'textarea', 'canvas'] // 需要从 wx-xxx 转回 xxx 节点
+const WX_COMPONENT_TRANSFORM_LIST = ['checkbox', 'checkbox-group', 'input', 'radio', 'radio-group', 'textarea', 'canvas'] // 需要从 wx-xxx 转回 xxx 节点
 let WX_CUSTOM_COMPONENT_MAP = {}
+
+/**
+ * 将部分 wx-xxx 组件转换成普通 dom 节点
+ */
+function transformWxComponent2Dom(wxComponentName, options, tree) {
+    let groupEvent = null
+    if (wxComponentName === 'radio' || wxComponentName === 'checkbox') {
+        options.attrs.type = wxComponentName
+        wxComponentName = 'input'
+    } else if (wxComponentName === 'radio-group' || wxComponentName === 'checkbox-group') {
+        groupEvent = wxComponentName.split('-')[0]
+        wxComponentName = 'div'
+    }
+    options.tagName = wxComponentName
+    delete options.attrs.behavior
+    const normalElement = CONSTRUCTOR_MAP[wxComponentName.toUpperCase()] || Element
+    const element = normalElement.$$create(options, tree)
+
+    if (groupEvent) {
+        // group 组件转成 div，监听底下的表单组件来做处理
+        element.addEventListener('change', evt => {
+            if (!evt.$$isGroup) evt.stopImmediatePropagation()
+        })
+        element.addEventListener(`$$${groupEvent}Change`, evt => {
+            const detail = {}
+            if (groupEvent === 'radio') {
+                (element.querySelectorAll('input[type=radio]') || []).forEach(item => {
+                    if (item !== evt.target) item.setAttribute('checked', false)
+                })
+                detail.value = evt.target.value
+            } else if (groupEvent === 'checkbox') {
+                detail.value = (element.querySelectorAll('input[type=checkbox]') || [])
+                    .filter(item => item.checked)
+                    .map(item => item.value)
+            }
+
+            element.$$trigger('change', {
+                event: new Event({
+                    timeStamp: evt.timeStamp,
+                    touches: evt.touches,
+                    changedTouches: evt.changedTouches,
+                    name: 'change',
+                    target: element,
+                    eventPhase: Event.AT_TARGET,
+                    detail,
+                    $$extra: {$$isGroup: true},
+                }),
+                currentTarget: element,
+            })
+        })
+    }
+
+    return element
+}
+
 
 class Document extends EventTarget {
     constructor(pageId, nodeIdMap) {
@@ -159,26 +215,15 @@ class Document extends EventTarget {
         } else if (tagName === 'WX-COMPONENT') {
             options.attrs = options.attrs || {}
             const behavior = options.attrs.behavior
-            if (behavior && WX_COMPONENT_TRANSFORM_LIST.indexOf(behavior) !== -1) {
-                // 需要转成普通 dom
-                options.tagName = behavior
-                delete options.attrs.behavior
-                const normalElement = CONSTRUCTOR_MAP[behavior.toUpperCase()] || Element
-                return normalElement.$$create(options, tree)
-            } else {
-                return WxComponent.$$create(options, tree)
-            }
+            if (behavior && WX_COMPONENT_TRANSFORM_LIST.indexOf(behavior) !== -1) return transformWxComponent2Dom(behavior, options, tree) // 需要转成普通 dom
+            else return WxComponent.$$create(options, tree)
         // eslint-disable-next-line no-cond-assign
         } else if (wxComponentName = tool.checkIsWxComponent(originTagName, this.$$notNeedPrefix)) {
             // 内置组件的特殊写法，转成 wx-component 节点
-            if (WX_COMPONENT_TRANSFORM_LIST.indexOf(wxComponentName) !== -1) {
-                // 需要转成普通 dom
-                options.tagName = wxComponentName
-                const normalElement = CONSTRUCTOR_MAP[wxComponentName.toUpperCase()] || Element
-                return normalElement.$$create(options, tree)
-            } else {
+            options.attrs = options.attrs || {}
+            if (WX_COMPONENT_TRANSFORM_LIST.indexOf(wxComponentName) !== -1) return transformWxComponent2Dom(wxComponentName, options, tree) // 需要转成普通 dom
+            else {
                 options.tagName = 'wx-component'
-                options.attrs = options.attrs || {}
                 options.attrs.behavior = wxComponentName
                 return WxComponent.$$create(options, tree)
             }
