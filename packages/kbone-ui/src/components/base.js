@@ -25,11 +25,11 @@ export default class Base extends HTMLElement {
 
     connectedCallback() {
         if (os.isPc) {
-            this.addEventListener('mousedown', this.onMouseDown, {capture: true, passive: false})
-            this.addEventListener('mousemove', this.onMouseMove, {capture: true, passive: false})
-            document.body.addEventListener('mouseup', this.onMouseUp, {capture: true, passive: false})
+            this.addEventListener('mousedown', this.onMouseDown)
+            this.addEventListener('mousemove', this.onMouseMove)
+            document.body.addEventListener('mouseup', this.onMouseUp)
         }
-        this.addEventListener('blur', this.onBlur, {capture: true, passive: false})
+        this.addEventListener('blur', this.onBlur)
         this.shadowRoot.addEventListener('touchstart', this.onBaseTouchStart)
         this.shadowRoot.addEventListener('touchmove', this.onBaseTouchMove)
         this.shadowRoot.addEventListener('touchend', this.onBaseTouchEnd)
@@ -39,11 +39,11 @@ export default class Base extends HTMLElement {
 
     disconnectedCallback() {
         if (os.isPc) {
-            this.removeEventListener('mousedown', this.onMouseDown, {capture: true, passive: false})
-            this.removeEventListener('mousemove', this.onMouseMove, {capture: true, passive: false})
-            document.body.removeEventListener('mouseup', this.onMouseUp, {capture: true, passive: false})
+            this.removeEventListener('mousedown', this.onMouseDown)
+            this.removeEventListener('mousemove', this.onMouseMove)
+            document.body.removeEventListener('mouseup', this.onMouseUp)
         }
-        this.removeEventListener('blur', this.onBlur, {capture: true, passive: false})
+        this.removeEventListener('blur', this.onBlur)
         this.shadowRoot.removeEventListener('touchstart', this.onBaseTouchStart)
         this.shadowRoot.removeEventListener('touchmove', this.onBaseTouchMove)
         this.shadowRoot.removeEventListener('touchend', this.onBaseTouchEnd)
@@ -196,6 +196,7 @@ export default class Base extends HTMLElement {
                 target: this._simulatingTouchTarget,
             })],
         })
+        touchEvent._isFromMouseEvent = true
         this._simulatingTouchTarget.dispatchEvent(touchEvent)
     }
 
@@ -203,6 +204,10 @@ export default class Base extends HTMLElement {
      * 模拟移动端事件
      */
     onMouseDown(evt) {
+        // 已经被底层组件处理过，就不再处理
+        if (evt._isProcessed) return
+        evt._isProcessed = true
+
         if (this._simulatingTouchTarget || evt.button !== 0) return
         const targets = this.shadowRoot.elementsFromPoint(evt.clientX, evt.clientY)
         if (!targets || !targets.length) return
@@ -236,6 +241,10 @@ export default class Base extends HTMLElement {
      * 移动端事件升级
      */
     onBaseTouchStart(evt) {
+        // 已经被底层组件处理过，就不再处理
+        if (evt._isProcessed) return
+        evt._isProcessed = true
+
         if (!evt.touches) return
 
         this._baseX1 = this._baseX2 = evt.touches[0].pageX
@@ -244,30 +253,28 @@ export default class Base extends HTMLElement {
         if (evt.touches.length > 1) {
             // 多指不触发 tap
             this._preventTap = true
-            this._longTapTimeout = clearTimeout(this._longTapTimeout)
+            if (this._longTapTimeout) this._longTapTimeout = clearTimeout(this._longTapTimeout)
         } else {
             let target = evt.target
-            if (target === this.shadowRoot || !this.shadowRoot.contains(target)) {
-                // 如果是 shadowRoot，表示没有子节点触发事件；如果不是子孙节点，表示是来自 slot，则换回 this
+            if (target === this.shadowRoot) {
+                // 如果是 shadowRoot，表示没有子节点触发事件，则换回 this
                 target = this
             }
             this._preventTap = false
+            if (this._longTapTimeout) this._longTapTimeout = clearTimeout(this._longTapTimeout)
             this._longTapTimeout = setTimeout(() => {
-                // 触发 longpress 后不处罚 tap
+                // 触发 longpress 后不触发 tap
                 this._preventTap = true
-                if (target) {
-                    const targetList = [target]
-                    if (target !== this) targetList.push(this) // 冒泡到 shadowRoot 的 longpress 事件不会冒泡到 host 去
-
-                    targetList.forEach(item => {
-                        item.dispatchEvent(new CustomEvent('longpress', {bubbles: true, cancelable: true}))
-                    })
-                }
+                if (target) target.dispatchEvent(new CustomEvent('longpress', {bubbles: true, cancelable: true}))
             }, 350)
         }
     }
 
     onBaseTouchMove(evt) {
+        // 已经被底层组件处理过，就不再处理
+        if (evt._isProcessed) return
+        evt._isProcessed = true
+
         if (!evt.touches) return
 
         const currentX = evt.touches[0].pageX
@@ -278,40 +285,38 @@ export default class Base extends HTMLElement {
             this._preventTap = true
         }
 
-        this._longTapTimeout = clearTimeout(this._longTapTimeout)
+        if (this._longTapTimeout) this._longTapTimeout = clearTimeout(this._longTapTimeout)
         this._baseX2 = currentX
         this._baseY2 = currentY
     }
 
     onBaseTouchEnd(evt) {
+        // 已经被底层组件处理过，就不再处理
+        if (evt._isProcessed) return
+        evt._isProcessed = true
+
         if (!evt.changedTouches) return
 
-        this._longTapTimeout = clearTimeout(this._longTapTimeout)
+        if (this._longTapTimeout) this._longTapTimeout = clearTimeout(this._longTapTimeout)
         if ((this._baseX2 && Math.abs(this._baseX1 - this._baseX2) <= 30) && (this._baseY2 && Math.abs(this._baseY1 - this._baseY2) <= 30)) {
             let target = evt.target
-            if (target === this.shadowRoot || !this.shadowRoot.contains(target)) {
-                // 如果是 shadowRoot，表示没有子节点触发事件；如果不是子孙节点，表示是来自 slot，则换回 this
+            if (target === this.shadowRoot) {
+                // 如果是 shadowRoot，表示没有子节点触发事件，则换回 this
                 target = this
             }
             const pageX = evt.changedTouches[0].pageX
             const pageY = evt.changedTouches[0].pageY
             const clientX = evt.changedTouches[0].clientX
             const clientY = evt.changedTouches[0].clientY
+            if (this._tapTimeout) this._tapTimeout = clearTimeout(this._tapTimeout)
             this._tapTimeout = setTimeout(() => {
                 if (!this._preventTap) {
                     if (target) {
-                        const targetList = [target]
-                        if (target !== this) targetList.push(this) // 冒泡到 shadowRoot 的 tap 事件不会冒泡到 host 去
-
-                        targetList.forEach(item => {
-                            item.dispatchEvent(new CustomEvent('tap', {
-                                bubbles: true,
-                                cancelable: true,
-                                detail: {
-                                    pageX, pageY, clientX, clientY
-                                }
-                            }))
-                        })
+                        target.dispatchEvent(new CustomEvent('tap', {
+                            bubbles: true,
+                            cancelable: true,
+                            detail: {pageX, pageY, clientX, clientY}
+                        }))
                     }
                 }
             }, 0)
@@ -320,7 +325,11 @@ export default class Base extends HTMLElement {
         this._baseX1 = this._baseX2 = this._baseY1 = this._baseY2 = null
     }
 
-    onBaseTouchCancel() {
+    onBaseTouchCancel(evt) {
+        // 已经被底层组件处理过，就不再处理
+        if (evt._isProcessed) return
+        evt._isProcessed = true
+
         this._preventTap = true
         if (this._tapTimeout) this._tapTimeout = clearTimeout(this._tapTimeout)
         if (this._longTapTimeout) this._longTapTimeout = clearTimeout(this._longTapTimeout)

@@ -413,11 +413,9 @@ export default class WxTextarea extends Base {
     /**
      * 获取组件值，由 wx-form 调用
      */
-    getFormValue(cb) {
+    getFormValue() {
         this.value = this.textarea.value
-        setTimeout(() => {
-            if (typeof cb === 'function') cb(this.value)
-        }, 0)
+        return this.value
     }
 
     /**

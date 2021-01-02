@@ -104,9 +104,17 @@ export default class WxRadio extends Base {
     }
 
     /**
+     * 获取组件值，由 wx-form 调用
+     */
+    getFormValue() {
+        return this._parent ? this._parent.value : ''
+    }
+
+    /**
      * 重置组件值，由 wx-form 调用
      */
     resetFormValue() {
-        this.checked = false
+        this.setAttribute('checked', 'false')
+        if (this._parent) this._parent.removeItem(this)
     }
 }

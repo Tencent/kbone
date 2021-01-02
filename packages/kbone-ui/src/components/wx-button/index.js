@@ -109,11 +109,8 @@ export default class WxButton extends Hover {
      * 监听按钮点击
      */
     onTap() {
-        if (this.formType === 'submit') {
-            this.dispatchEvent(new CustomEvent('formsubmit', {bubbles: true, cancelable: true}))
-        } else if (this.formType === 'reset') {
-            this.dispatchEvent(new CustomEvent('formreset', {bubbles: true, cancelable: true}))
-        }
+        if (this.formType === 'submit') this.dispatchEvent(new CustomEvent('formsubmit', {bubbles: true, cancelable: true}))
+        else if (this.formType === 'reset') this.dispatchEvent(new CustomEvent('formreset', {bubbles: true, cancelable: true}))
 
         if (this._lock) return
         this._lock = true

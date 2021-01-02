@@ -431,7 +431,7 @@
     <wx-view class="item">
       <div class="title">wx-form</div>
       <div class="comp-cnt">
-        <wx-form @submit="log('[wx-form] submit', $event.detail)" @reset="log('[wx-form] reset')">
+        <wx-form @submit="log('[wx-form] submit', $event.detail)" @reset="wxForm.wxPicker.showText = '美国'; log('[wx-form] reset')">
           <div><wx-input class="wx-input" name="wx-input" value="wx-input" placeholder="请输入内容"></wx-input></div>
           <div><wx-textarea class="wx-textarea" name="wx-textarea" value="wx-textarea" placeholder="请输入内容"></wx-textarea></div>
           <div><wx-switch name="wx-switch" :checked="true"></wx-switch>wx-switch</div>
@@ -446,7 +446,7 @@
           </wx-radio-group>
           <div>
             <wx-picker class="wx-picker" name="wx-picker" :range="JSON.stringify(wxForm.wxPicker.range)" :value="wxForm.wxPicker.value" @change="wxForm.wxPicker.showText = wxForm.wxPicker.range[+$event.detail.value]">
-              <div>{{wxPicker.showText1}}</div>
+              <div>{{wxForm.wxPicker.showText}}</div>
             </wx-picker>
           </div>
           <div>

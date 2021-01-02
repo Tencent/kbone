@@ -99,6 +99,6 @@ export default class WxSwitch extends Base {
      * 重置组件值，由 wx-form 调用
      */
     resetFormValue() {
-        this.checked = false
+        this.checked = 'false'
     }
 }

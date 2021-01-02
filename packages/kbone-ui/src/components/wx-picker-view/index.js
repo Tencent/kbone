@@ -164,4 +164,18 @@ export default class WxPickerView extends Base {
     onColumnValueChangeEnd() {
         this.dispatchEvent(new CustomEvent('pickend', {bubbles: true, cancelable: true}))
     }
+
+    /**
+     * 获取组件值，由 wx-form 调用
+     */
+    getFormValue() {
+        return this._columns.map(column => column._current || 0)
+    }
+
+    /**
+     * 重置组件值，由 wx-form 调用
+     */
+    resetFormValue() {
+        this.setAttribute('value', '[]')
+    }
 }
