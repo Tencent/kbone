@@ -15,6 +15,7 @@ import WxButton from './components/wx-button'
 import WxCheckbox from './components/wx-checkbox'
 import WxCheckboxGroup from './components/wx-checkbox-group'
 import WxInput from './components/wx-input'
+import WxLabel from './components/wx-label'
 import WxPicker from './components/wx-picker'
 import WxPickerView from './components/wx-picker-view'
 import WxPickerViewColumn from './components/wx-picker-view-column'
@@ -40,6 +41,7 @@ const COMPONENT_MAP = {
     'wx-checkbox': WxCheckbox,
     'wx-checkbox-group': WxCheckboxGroup,
     'wx-input': WxInput,
+    'wx-label': WxLabel,
     'wx-picker': WxPicker,
     'wx-picker-view': WxPickerView,
     'wx-picker-view-column': WxPickerViewColumn,

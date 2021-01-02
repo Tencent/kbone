@@ -5,5 +5,6 @@ module.exports = {
         'at-rule-no-unknown': null,
         'at-rule-name-case': null,
         'no-descending-specificity': null,
+        'no-empty-source': null,
     },
 }
