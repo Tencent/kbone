@@ -92,13 +92,15 @@ export default class WxRadio extends Base {
         if (this.disabled || this.checked) return
 
         this.checked = true
-        if (this._parent) this._parent.dispatchEvent(new CustomEvent('change', {
-            bubbles: true,
-            cancelable: true,
-            detail: {
-                value: this._parent.value,
-            }
-        }))
+        if (this._parent) {
+            this._parent.dispatchEvent(new CustomEvent('change', {
+                bubbles: true,
+                cancelable: true,
+                detail: {
+                    value: this._parent.value,
+                }
+            }))
+        }
     }
 
     /**

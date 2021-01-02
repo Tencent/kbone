@@ -339,6 +339,7 @@ module.exports = Behavior({
                         const switchList = form.querySelectorAll('wx-component[behavior=switch]').filter(item => !!item.getAttribute('name'))
                         const sliderList = form.querySelectorAll('wx-component[behavior=slider]').filter(item => !!item.getAttribute('name'))
                         const pickerList = form.querySelectorAll('wx-component[behavior=picker]').filter(item => !!item.getAttribute('name'))
+                        const pickerViewList = form.querySelectorAll('wx-component[behavior=picker-view]').filter(item => !!item.getAttribute('name'))
 
                         if (type === 'submit') {
                             const formData = {}
@@ -357,7 +358,19 @@ module.exports = Behavior({
                             if (textareaList.length) textareaList.forEach(item => formData[item.getAttribute('name')] = item.value)
                             if (switchList.length) switchList.forEach(item => formData[item.getAttribute('name')] = !!item.getAttribute('checked'))
                             if (sliderList.length) sliderList.forEach(item => formData[item.getAttribute('name')] = +item.getAttribute('value') || 0)
-                            if (pickerList.length) pickerList.forEach(item => formData[item.getAttribute('name')] = item.getAttribute('value'))
+                            if (pickerList.length || pickerViewList.length) {
+                                [].concat(pickerList, pickerViewList).forEach(item => {
+                                    let value = item.getAttribute('value')
+                                    if (typeof value === 'string') {
+                                        try {
+                                            value = JSON.parse(value)
+                                        } catch (err) {
+                                        // ignore
+                                        }
+                                    }
+                                    formData[item.getAttribute('name')] = value
+                                })
+                            }
 
                             const detail = {value: formData}
                             if (form._formId) {
@@ -381,6 +394,7 @@ module.exports = Behavior({
                             if (switchList.length) switchList.forEach(item => item.setAttribute('checked', undefined))
                             if (sliderList.length) sliderList.forEach(item => item.setAttribute('value', undefined))
                             if (pickerList.length) pickerList.forEach(item => item.setAttribute('value', undefined))
+                            if (pickerViewList.length) pickerViewList.forEach(item => item.setAttribute('value', undefined))
 
                             this.callSimpleEvent('reset', {extra: {$$from: 'button'}}, form)
                         }

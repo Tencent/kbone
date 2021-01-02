@@ -88,13 +88,15 @@ export default class WxCheckbox extends Base {
         if (this.disabled) return
 
         this.checked = !this.checked
-        if (this._parent) this._parent.dispatchEvent(new CustomEvent('change', {
-            bubbles: true,
-            cancelable: true,
-            detail: {
-                value: Array.prototype.slice.call(this._parent.value),
-            }
-        }))
+        if (this._parent) {
+            this._parent.dispatchEvent(new CustomEvent('change', {
+                bubbles: true,
+                cancelable: true,
+                detail: {
+                    value: Array.prototype.slice.call(this._parent.value),
+                }
+            }))
+        }
     }
 
     /**

@@ -44,7 +44,7 @@ export default class WxLabel extends Base {
      */
     onTap(evt) {
         if (evt.detail.source === 'label') return
-        
+
         let relatedNode
         if (this.for) {
             relatedNode = document.getElementById(this.for)
