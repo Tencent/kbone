@@ -250,6 +250,9 @@ module.exports = Behavior({
 
                             // 寻找 switch 节点
                             if (!targetDomNode) targetDomNode = domNode.querySelector('wx-component[behavior=switch]')
+
+                            // 寻找 button 节点
+                            if (!targetDomNode) targetDomNode = domNode.querySelector('wx-component[behavior=button]')
                         }
 
                         if (!targetDomNode || !!targetDomNode.getAttribute('disabled')) return
@@ -262,16 +265,41 @@ module.exports = Behavior({
                             if (type === 'radio') {
                                 targetDomNode.setAttribute('checked', true)
                                 const name = targetDomNode.name
-                                const otherDomNodes = window.document.querySelectorAll(`input[name=${name}]`) || []
-                                for (const otherDomNode of otherDomNodes) {
-                                    if (otherDomNode.type === 'radio' && otherDomNode !== targetDomNode) {
-                                        otherDomNode.setAttribute('checked', false)
+                                if (name) {
+                                    const otherDomNodes = window.document.querySelectorAll(`input[name=${name}]`) || []
+                                    for (const otherDomNode of otherDomNodes) {
+                                        if (otherDomNode.type === 'radio' && otherDomNode !== targetDomNode) {
+                                            otherDomNode.setAttribute('checked', false)
+                                        }
                                     }
+                                    this.callSimpleEvent('change', {detail: {value: targetDomNode.value}}, targetDomNode)
+                                } else {
+                                    const target = {dataset: {pageId: this.pageId, privateNodeId: targetDomNode.$$nodeId}}
+                                    this.callEvent('$$radioChange', {
+                                        target,
+                                        currentTarget: target,
+                                        timeStamp: evt.timeStamp,
+                                        touches: evt.touches,
+                                        changedTouches: evt.changedTouches,
+                                        detail: {},
+                                    })
                                 }
-                                this.callSimpleEvent('change', {detail: {value: targetDomNode.value}}, targetDomNode)
                             } else if (type === 'checkbox') {
+                                const name = targetDomNode.name
                                 targetDomNode.setAttribute('checked', !targetDomNode.checked)
-                                this.callSimpleEvent('change', {detail: {value: targetDomNode.checked ? [targetDomNode.value] : []}}, targetDomNode)
+                                if (name) {
+                                    this.callSimpleEvent('change', {detail: {value: targetDomNode.checked ? [targetDomNode.value] : []}}, targetDomNode)
+                                } else {
+                                    const target = {dataset: {pageId: this.pageId, privateNodeId: targetDomNode.$$nodeId}}
+                                    this.callEvent('$$checkboxChange', {
+                                        target,
+                                        currentTarget: target,
+                                        timeStamp: evt.timeStamp,
+                                        touches: evt.touches,
+                                        changedTouches: evt.changedTouches,
+                                        detail: {},
+                                    })
+                                }
                             } else {
                                 targetDomNode.focus()
                             }
@@ -283,6 +311,18 @@ module.exports = Behavior({
                                 const checked = !targetDomNode.getAttribute('checked')
                                 targetDomNode.setAttribute('checked', checked)
                                 this.callSimpleEvent('change', {detail: {value: checked}}, targetDomNode)
+                            } else if (behavior === 'button') {
+                                const target = {dataset: {pageId: this.pageId, privateNodeId: targetDomNode.$$nodeId}}
+                                const clickEvt = {
+                                    target,
+                                    currentTarget: target,
+                                    timeStamp: evt.timeStamp,
+                                    touches: evt.touches,
+                                    changedTouches: evt.changedTouches,
+                                    detail: {},
+                                }
+                                this.callEvent('click', clickEvt, {button: 0}) // 默认左键
+                                this.callEvent('tap', clickEvt)
                             }
                         }
                     } else if ((domNode.tagName === 'BUTTON' || (domNode.tagName === 'WX-COMPONENT' && domNode.behavior === 'button')) && evt.type === 'click' && !isCapture) {

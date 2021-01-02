@@ -30,7 +30,7 @@ const CONSTRUCTOR_MAP = {
     SELECT: Select,
     OPTION: Option,
 }
-const WX_COMPONENT_TRANSFORM_LIST = ['checkbox', 'checkbox-group', 'input', 'radio', 'radio-group', 'textarea', 'canvas'] // 需要从 wx-xxx 转回 xxx 节点
+const WX_COMPONENT_TRANSFORM_LIST = ['checkbox', 'checkbox-group', 'input', 'label', 'radio', 'radio-group', 'textarea', 'canvas'] // 需要从 wx-xxx 转回 xxx 节点
 let WX_CUSTOM_COMPONENT_MAP = {}
 
 /**
