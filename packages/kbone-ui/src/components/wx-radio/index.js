@@ -13,7 +13,7 @@ export default class WxRadio extends Base {
         super()
 
         this.initShadowRoot(template, WxRadio.observedAttributes, () => {
-            this.i = this.shadowRoot.querySelector('i')
+            this.input = this.shadowRoot.querySelector('#input')
         })
     }
 
@@ -25,25 +25,36 @@ export default class WxRadio extends Base {
         super.connectedCallback()
 
         this._parent = findParent(this, parentNode => parentNode.tagName === 'WX-RADIO-GROUP')
+        if (this._parent) this._parent.addItem(this)
+        this.addEventListener('tap', this.onTap)
     }
 
     disconnectedCallback() {
         super.disconnectedCallback()
 
         this._parent = null
+        if (this._parent) this._parent.removeItem(this)
+        this.removeEventListener('tap', this.onTap)
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
         super.attributeChangedCallback(name, oldValue, newValue)
 
+        if (oldValue === newValue) return
         if (name === 'value') {
-
+            if (this._parent) this._parent.renameItem(this, oldValue, newValue)
         } else if (name === 'checked') {
-            
+            if (this._parent) this._parent.onItemChange(this, oldValue, newValue)
+            this.input.classList.toggle('wx-radio-input-checked', this.checked)
+            const color = this.checked && !this.disabled ? this.color : ''
+            this.input.style.backgroundColor = color
+            this.input.style.borderColor = color
         } else if (name === 'disabled') {
-            
+            this.input.classList.toggle('wx-radio-input-disabled', this.disabled)
         } else if (name === 'color') {
-            
+            const color = this.checked && !this.disabled ? this.color : ''
+            this.input.style.backgroundColor = color
+            this.input.style.borderColor = color
         }
     }
 
@@ -55,11 +66,15 @@ export default class WxRadio extends Base {
      * 属性
      */
     get value() {
-        return this.getAttribute('value') || ''
+        return this.getAttribute('value')
     }
 
     get checked() {
         return this.getBoolValue('checked')
+    }
+
+    set checked(value) {
+        this.setAttribute('checked', value)
     }
 
     get disabled() {
@@ -68,5 +83,28 @@ export default class WxRadio extends Base {
 
     get color() {
         return this.getAttribute('color') || '#09BB07'
+    }
+
+    /**
+     * 监听点击事件
+     */
+    onTap() {
+        if (this.disabled || this.checked) return
+
+        this.checked = true
+        if (this._parent) this._parent.dispatchEvent(new CustomEvent('change', {
+            bubbles: true,
+            cancelable: true,
+            detail: {
+                value: this._parent.value,
+            }
+        }))
+    }
+
+    /**
+     * 重置组件值，由 wx-form 调用
+     */
+    resetFormValue() {
+        this.checked = false
     }
 }

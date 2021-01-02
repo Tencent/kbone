@@ -18,6 +18,8 @@ import WxInput from './components/wx-input'
 import WxPicker from './components/wx-picker'
 import WxPickerView from './components/wx-picker-view'
 import WxPickerViewColumn from './components/wx-picker-view-column'
+import WxRadio from './components/wx-radio'
+import WxRadioGroup from './components/wx-radio-group'
 import WxSlider from './components/wx-slider'
 import WxSwitch from './components/wx-switch'
 import WxTextarea from './components/wx-textarea'
@@ -41,6 +43,8 @@ const COMPONENT_MAP = {
     'wx-picker': WxPicker,
     'wx-picker-view': WxPickerView,
     'wx-picker-view-column': WxPickerViewColumn,
+    'wx-radio': WxRadio,
+    'wx-radio-group': WxRadioGroup,
     'wx-slider': WxSlider,
     'wx-switch': WxSwitch,
     'wx-textarea': WxTextarea,
