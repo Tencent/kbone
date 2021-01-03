@@ -1,3 +1,4 @@
+import registerDomExtend from './utils/dom-extend'
 import Base from './components/base'
 import WxRefresher from './inner-components/wx-refresher'
 
@@ -67,27 +68,25 @@ const COMPONENT_LIST = Object.keys(COMPONENT_MAP)
 export default {
     register(options = {}) {
         const components = Array.isArray(options.components) ? options.components : COMPONENT_LIST
-        const mode = options.mode || 'open'
-        const style = options.style || {}
 
         // 全局配置
         Base.setGlobal({
-            mode,
-            style,
+            mode: options.mode || 'open',
+            style: options.style || {},
         })
 
         // 注册内部组件
-        if (components.length) {
-            WxRefresher.register()
-        }
+        if (components.length) WxRefresher.register()
 
         // 注册组件
         for (const component of components) {
             const componentClass = COMPONENT_MAP[component]
-            if (componentClass) {
-                componentClass.register()
-            }
+            if (componentClass) componentClass.register()
         }
+
+        // dom/bom 扩展
+        const domExtend = options.domExtend === undefined ? true : domExtend
+        if (domExtend) registerDomExtend()
 
         // 监听事件
         window.addEventListener('scroll', evt => {

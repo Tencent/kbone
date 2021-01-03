@@ -735,6 +735,8 @@
     <wx-view class="item">
       <div class="title">操作</div>
       <div class="comp-cnt">
+        <wx-button class="wx-button" @click="do$$getBoundingClientRect">$$getBoundingClientRect</wx-button>
+        <wx-button class="wx-button" @click="do$$getComputedStyle">$$getComputedStyle</wx-button>
         <wx-button class="wx-button" type="primary" @click="onRemoveAll">删除全部</wx-button>
       </div>
     </wx-view>
@@ -1043,6 +1045,14 @@ export default {
       const daytime = Math.random() >= 0.5 ? 1 : 0
       console.log('[wx-picker-view] will update value ->', [year, month, date, daytime])
       this.wxPickerView.value = JSON.stringify([year, month, date, daytime])
+    },
+
+    do$$getBoundingClientRect(evt) {
+      evt.target.$$getBoundingClientRect().then(console.log)
+    },
+
+    do$$getComputedStyle(evt) {
+      window.$$getComputedStyle(evt.target, ['backgroundColor', 'fontSize']).then(console.log)
     },
 
     onRemoveAll() {
