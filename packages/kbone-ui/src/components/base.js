@@ -171,6 +171,7 @@ export default class Base extends HTMLElement {
      * 触发 touch 事件
      */
     triggerTouchEvent(eventName, evt, inChangedTouches) {
+        // 模拟的 touch 事件只在组件内部传递，不会冒泡出去
         const touchEvent = new TouchEvent(eventName, {
             cancelable: true,
             bubbles: true,
@@ -196,7 +197,6 @@ export default class Base extends HTMLElement {
                 target: this._simulatingTouchTarget,
             })],
         })
-        touchEvent._isFromMouseEvent = true
         this._simulatingTouchTarget.dispatchEvent(touchEvent)
     }
 
@@ -265,6 +265,7 @@ export default class Base extends HTMLElement {
             this._longTapTimeout = setTimeout(() => {
                 // 触发 longpress 后不触发 tap
                 this._preventTap = true
+                // 模拟的 longpress 在有内部结构时，只在组件内部传递，不会冒泡出去；在没有内部结构时，则直接冒泡出去
                 if (target) target.dispatchEvent(new CustomEvent('longpress', {bubbles: true, cancelable: true}))
             }, 350)
         }
@@ -312,6 +313,7 @@ export default class Base extends HTMLElement {
             this._tapTimeout = setTimeout(() => {
                 if (!this._preventTap) {
                     if (target) {
+                        // 模拟的 tap 在有内部结构时，只在组件内部传递，不会冒泡出去；在没有内部结构时，则直接冒泡出去
                         target.dispatchEvent(new CustomEvent('tap', {
                             bubbles: true,
                             cancelable: true,

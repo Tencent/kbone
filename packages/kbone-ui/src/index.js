@@ -27,6 +27,10 @@ import WxSwitch from './components/wx-switch'
 import WxTextarea from './components/wx-textarea'
 import WxImage from './components/wx-image'
 
+import WxCapture from './components/wx-capture'
+import WxCatch from './components/wx-catch'
+import WxAnimation from './components/wx-animation'
+
 const COMPONENT_MAP = {
     'wx-movable-area': WxMovableArea,
     'wx-movable-view': WxMovableView,
@@ -53,6 +57,10 @@ const COMPONENT_MAP = {
     'wx-switch': WxSwitch,
     'wx-textarea': WxTextarea,
     'wx-image': WxImage,
+
+    'wx-capture': WxCapture,
+    'wx-catch': WxCatch,
+    'wx-animation': WxAnimation,
 }
 const COMPONENT_LIST = Object.keys(COMPONENT_MAP)
 

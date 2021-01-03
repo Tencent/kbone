@@ -1,5 +1,5 @@
 <template>
-  <div ref="cnt" class="cnt">
+  <div v-if="show" class="cnt">
     <wx-view class="item">
       <div class="title">wx-movable-area/wx-movable-view</div>
       <div class="comp-cnt wx-movable-cnt">
@@ -690,6 +690,49 @@
       </div>
     </wx-view>
     <wx-view class="item">
+      <div class="title">wx-capture</div>
+      <div class="comp-cnt">
+        <div @touchstart="log('root touchstart')" @touchend="log('root touchend')" @click="log('root click')">
+          <div>touchstart -> root touchstart -> touchend -> root touchend -> click -> root click</div>
+          <wx-button @touchstart="log('touchstart')" @touchend="log('touchend')" @click="log('click')">normal event</wx-button>
+          <div>parent touchstart -> touchstart -> root touchstart -> parent touchend -> touchend -> root touchend -> parent click -> click -> root click</div>
+          <wx-capture @touchstart="log('parent touchstart')" @touchend="log('parent touchend')" @click="log('parent click')">
+            <wx-button @touchstart="log('touchstart')" @touchend="log('touchend')" @click="wxCapture.eventCount++; log('click')">capture-inner({{wxCapture.eventCount}})</wx-button>
+          </wx-capture>
+        </div>
+      </div>
+    </wx-view>
+    <wx-view class="item">
+      <div class="title">wx-catch</div>
+      <div class="comp-cnt">
+        <div @touchstart="log('root touchstart')" @touchend="log('root touchend')" @click="log('root click')">
+          <div>touchstart -> parent touchstart -> touchend -> parent touchend</div>
+          <wx-catch @touchstart="log('parent touchstart')" @touchend="log('parent touchend')" @click="log('parent click')">
+            <wx-button @touchstart="log('touchstart')" @touchend="log('touchend')" @click="wxCatch.eventCount++; log('click')">catch-inner1({{wxCatch.eventCount}})</wx-button>
+          </wx-catch>
+          <div>touchstart -> touchend -> click -> parent click</div>
+          <wx-catch @click="log('parent click')">
+            <wx-button @touchstart="log('touchstart')" @touchend="log('touchend')" @click="wxCatch.eventCount++; log('click')">catch-inner2({{wxCatch.eventCount}})</wx-button>
+          </wx-catch>
+          <wx-catch>catch-inner3({{wxCatch.eventCount}})</wx-catch>
+        </div>
+      </div>
+    </wx-view>
+    <wx-view class="item">
+      <div class="title">wx-animation</div>
+      <div class="comp-cnt">
+        <div class="event-cnt">
+          <div>transition end</div>
+          <wx-animation :class="['event-t', wxAnimation.transition ? 'event-t-s' : 'event-t-e']" @transitionend="log('transition end')"></wx-animation>
+          <wx-button @click="wxAnimation.transition = !wxAnimation.transition">transition</wx-button>
+        </div>
+        <div class="event-cnt">
+          <div>animation start -> animation iteration -> animation end</div>
+          <wx-animation class="event-a" @animationstart="log('animation start')" @animationiteration="log('animation iteration')" @animationend="log('animation end')"></wx-animation>
+        </div>
+      </div>
+    </wx-view>
+    <wx-view class="item">
       <div class="title">操作</div>
       <div class="comp-cnt">
         <wx-button class="wx-button" type="primary" @click="onRemoveAll">删除全部</wx-button>
@@ -712,6 +755,7 @@ export default {
     for (let i = 1; i <= 31; i++) wxPickerViewDate.push(i)
 
     return {
+      show: true,
       wxMovableView: {
         x: 0,
         y: 0,
@@ -833,6 +877,15 @@ export default {
         year: wxPickerViewYear,
         month: wxPickerViewMonth,
         date: wxPickerViewDate,
+      },
+      wxCapture: {
+        eventCount: 0,
+      },
+      wxCatch: {
+        eventCount: 0,
+      },
+      wxAnimation: {
+        transition: false,
       },
     }
   },
@@ -993,7 +1046,7 @@ export default {
     },
 
     onRemoveAll() {
-      this.$refs['cnt'].parentNode.innerHTML = ''
+      this.show = false
     },
   },
 }
@@ -1198,5 +1251,44 @@ export default {
 }
 .wx-textarea {
   margin: 10px 0;
+}
+.event-cnt {
+  position: relative;
+  height: 130px;
+}
+.event-t, .event-a {
+  left: 0;
+  width: 50px;
+  height: 50px;
+  background-color: red;
+  position: absolute;
+  transition: all 0.5s;
+}
+.event-t {
+  top: 80px;
+}
+.event-a {
+
+  top: 50px;
+}
+.event-t-s {
+  left: 50px;
+}
+.event-t-e {
+  left: 0;
+}
+@keyframes event-aa {
+  0% {
+    left: 0;
+  }
+  50% {
+    left: 50px
+  }
+  100% {
+    left: 0;
+  }
+}
+.event-a {
+  animation: 1s ease 0s 8 event-aa;
 }
 </style>
