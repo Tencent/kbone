@@ -85,7 +85,7 @@ export default {
         }
 
         // dom/bom 扩展
-        const domExtend = options.domExtend === undefined ? true : domExtend
+        const domExtend = options.domExtend === undefined ? true : options.domExtend
         if (domExtend) registerDomExtend()
 
         // 监听事件

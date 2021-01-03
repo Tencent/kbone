@@ -19,6 +19,20 @@ export const os = {
 }
 
 /**
+ * 驼峰转连字符
+ */
+export function toDash(str) {
+    return str.replace(/[A-Z]/g, all => `-${all.toLowerCase()}`)
+}
+
+/**
+ * 连字符转驼峰
+ */
+export function toCamel(str) {
+    return str.replace(/-([a-zA-Z])/g, (all, $1) => $1.toUpperCase())
+}
+
+/**
  * 查找符合条件的父节点
  */
 export function findParent(node, filter) {

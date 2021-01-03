@@ -1,6 +1,7 @@
 
 import {
     os,
+    toCamel,
 } from '../utils/tool'
 
 const SIMULATING_TOUCH_MIN_MOVE = 5
@@ -92,7 +93,7 @@ export default class Base extends HTMLElement {
         if (afterAttach) afterAttach()
 
         // 初始化属性
-        attributes.forEach(name => this.attributeChangedCallback(name, null, this[name], true))
+        attributes.forEach(name => this.attributeChangedCallback(name, null, this[toCamel(name)], true))
     }
 
     /**
