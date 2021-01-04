@@ -936,7 +936,7 @@ class Element extends Node {
 
                 if (oldKeys) {
                     oldKeys.forEach(key => {
-                    // 先删除所有旧的 handler
+                        // 先删除所有旧的 handler
                         let handler = oldValue[key]
                         handler = typeof handler !== 'function' ? window[handler] : handler
                         this.removeEventListener(key, handler)

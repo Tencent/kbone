@@ -84,19 +84,19 @@
           </template>
         </wx-movable-area>
         <div class="opr-cnt">
-          <wx-button class="opr-button move-1" @click="moveWxMovableView()">移动（随机）</wx-button>
-          <wx-button class="opr-button move-2" @click="moveWxMovableView(wxMovableView.x - 100, wxMovableView.y - 100)">移动（-100, -100）</wx-button>
-          <wx-button class="opr-button move-3" @click="moveWxMovableView(wxMovableView.x + 100, wxMovableView.y + 100)">移动（+100, +100）</wx-button>
-          <wx-button class="opr-button move-4" @click="moveWxMovableView(0, 0)">移动（0, 0）</wx-button>
-          <wx-button class="opr-button scale-1" @click="scaleWxMovableView()">放缩（随机）</wx-button>
-          <wx-button class="opr-button scale-2" @click="scaleWxMovableView(wxMovableView.scaleValue * 0.8)">放缩（0.8）</wx-button>
-          <wx-button class="opr-button scale-3" @click="scaleWxMovableView(wxMovableView.scaleValue * 1.2)">放缩（1.2）</wx-button>
-          <wx-button class="opr-button scale-4" @click="scaleWxMovableView(1)">放缩（1）</wx-button>
-          <wx-button class="opr-button add-view" @click="wxMovableView.count++">增加滑块</wx-button>
-          <wx-button class="opr-button reduce-view" @click="wxMovableView.count = Math.max(wxMovableView.count - 1, 0)">删除滑块</wx-button>
-          <wx-button class="opr-button clear-view" @click="wxMovableView.count = 0">清空滑块</wx-button>
-          <wx-button class="opr-button add-view" @click="wxMovableView.addDirection = true">增加四个不同方向滑块</wx-button>
-          <wx-button class="opr-button add-view" @click="wxMovableView.addDirection = false">删除四个不同方向滑块</wx-button>
+          <wx-button class="wx-button opr-button move-1" @click="moveWxMovableView()">移动（随机）</wx-button>
+          <wx-button class="wx-button opr-button move-2" @click="moveWxMovableView(wxMovableView.x - 100, wxMovableView.y - 100)">移动（-100, -100）</wx-button>
+          <wx-button class="wx-button opr-button move-3" @click="moveWxMovableView(wxMovableView.x + 100, wxMovableView.y + 100)">移动（+100, +100）</wx-button>
+          <wx-button class="wx-button opr-button move-4" @click="moveWxMovableView(0, 0)">移动（0, 0）</wx-button>
+          <wx-button class="wx-button opr-button scale-1" @click="scaleWxMovableView()">放缩（随机）</wx-button>
+          <wx-button class="wx-button opr-button scale-2" @click="scaleWxMovableView(wxMovableView.scaleValue * 0.8)">放缩（0.8）</wx-button>
+          <wx-button class="wx-button opr-button scale-3" @click="scaleWxMovableView(wxMovableView.scaleValue * 1.2)">放缩（1.2）</wx-button>
+          <wx-button class="wx-button opr-button scale-4" @click="scaleWxMovableView(1)">放缩（1）</wx-button>
+          <wx-button class="wx-button opr-button add-view" @click="wxMovableView.count++">增加滑块</wx-button>
+          <wx-button class="wx-button opr-button reduce-view" @click="wxMovableView.count = Math.max(wxMovableView.count - 1, 0)">删除滑块</wx-button>
+          <wx-button class="wx-button opr-button clear-view" @click="wxMovableView.count = 0">清空滑块</wx-button>
+          <wx-button class="wx-button opr-button add-view" @click="wxMovableView.addDirection = true">增加四个不同方向滑块</wx-button>
+          <wx-button class="wx-button opr-button add-view" @click="wxMovableView.addDirection = false">删除四个不同方向滑块</wx-button>
         </div>
         <div class="opr-cnt">
           <div class="opr-label">惯性</div>
@@ -174,9 +174,9 @@
           </div>
         </wx-scroll-view>
         <div class="opr-cnt opr-cnt-y">
-          <wx-button class="opr-button" @click="setAttribute('wx-scroll-view-y', 'scroll-into-view', 'yblock3')">滑动到第三个</wx-button>
-          <wx-button class="opr-button" @click="setAttribute('wx-scroll-view-y', 'scroll-top', 120)">滚动到 120px 处</wx-button>
-          <wx-button class="opr-button" @click="setAttribute('wx-scroll-view-y', 'refresher-triggered', true)">触发下拉</wx-button>
+          <wx-button class="wx-button opr-button" @click="setAttribute('wx-scroll-view-y', 'scroll-into-view', 'yblock3')">滑动到第三个</wx-button>
+          <wx-button class="wx-button opr-button" @click="setAttribute('wx-scroll-view-y', 'scroll-top', 120)">滚动到 120px 处</wx-button>
+          <wx-button class="wx-button opr-button" @click="setAttribute('wx-scroll-view-y', 'refresher-triggered', true)">触发下拉</wx-button>
         </div>
         <div class="opr-cnt opr-cnt-y">
           <div class="opr-label">动画</div>
@@ -204,8 +204,8 @@
           </div>
         </wx-scroll-view>
         <div class="opr-cnt">
-          <wx-button class="opr-button" @click="setAttribute('wx-scroll-view-x', 'scroll-into-view', 'xblock3')">滑动到第二个</wx-button>
-          <wx-button class="opr-button" @click="setAttribute('wx-scroll-view-x', 'scroll-left', 120)">滚动到 120px 处</wx-button>
+          <wx-button class="wx-button opr-button" @click="setAttribute('wx-scroll-view-x', 'scroll-into-view', 'xblock3')">滑动到第二个</wx-button>
+          <wx-button class="wx-button opr-button" @click="setAttribute('wx-scroll-view-x', 'scroll-left', 120)">滚动到 120px 处</wx-button>
         </div>
         <div class="opr-cnt">
           <div class="opr-label">动画</div>
@@ -304,7 +304,7 @@
           </div>
         </div>
         <div class="opr-cnt">
-            <wx-button class="opr-button" @click="setAttribute('wx-swiper', 'current', 1)">跳转到第二个</wx-button>
+            <wx-button class="wx-button opr-button" @click="setAttribute('wx-swiper', 'current', 1)">跳转到第二个</wx-button>
         </div>
         <div class="opr-cnt">
           <div class="opr-label">动画类型</div>
@@ -327,7 +327,7 @@
         <wx-view class="wx-view" :hover-class="wxView.hoverClass">
           <div>带 hover 的 view</div>
         </wx-view>
-        <wx-button @click="onUpdateView">更新 hover 颜色</wx-button>
+        <wx-button class="wx-button" @click="onUpdateView">更新 hover 颜色</wx-button>
       </div>
     </wx-view>
     <wx-view class="item">
@@ -371,7 +371,7 @@
         <wx-progress ref="wx-progress-update" class="wx-progress" :percent="wxProgress.percent3" :active="true" stroke-width="6" active-mode="forwards" @activeend="log('[wx-progress]', $event.detail)"></wx-progress>
         <wx-progress class="wx-progress" percent="60" :active="true" stroke-width="10" border-radius="5" @activeend="log('[wx-progress]', $event.detail)"></wx-progress>
         <wx-progress class="wx-progress" percent="80" color="#10AEFF" :active="true" stroke-width="14" duration="10" @activeend="log('[wx-progress]', $event.detail)"></wx-progress>
-        <wx-button @click="onUpdateWxProgress">更新进度</wx-button>
+        <wx-button class="wx-button" @click="onUpdateWxProgress">更新进度</wx-button>
       </div>
     </wx-view>
     <wx-view class="item">
@@ -387,7 +387,7 @@
         <div><wx-text class="wx-text">今天天气不错</wx-text></div>
         <div><wx-text ref="wx-text1" :user-select="true" :decode="true"></wx-text></div>
         <div ref="wx-text2"></div>
-        <wx-button @click="onUpdateWxText">更新内容</wx-button>
+        <wx-button class="wx-button" @click="onUpdateWxText">更新内容</wx-button>
       </div>
     </wx-view>
     <wx-view class="item">
@@ -462,8 +462,8 @@
               </wx-picker-view-column>
             </wx-picker-view>
           </div>
-          <wx-button form-type="submit">submit</wx-button>
-          <wx-button form-type="reset">reset</wx-button>
+          <wx-button class="wx-button" form-type="submit">submit</wx-button>
+          <wx-button class="wx-button" form-type="reset">reset</wx-button>
         </wx-form>
       </div>
     </wx-view>
@@ -480,14 +480,14 @@
         <wx-input class="wx-input" placeholder="占位文本样式2" placeholder-class="green" @input="log('[wx-input] input', $event.detail)"/>
         <wx-input class="wx-input" placeholder="禁用" :disabled="true" @input="log('[wx-input] input', $event.detail)"/>
         <wx-input class="wx-input" :placeholder="`最大输入长度为 ${wxInput.maxlength > 0 ? wxInput.maxlength : '无限'}`" :maxlength="wxInput.maxlength" @input="log('[wx-input] input', $event.detail)"/>
-        <wx-button type="default" @tap="wxInput.maxlength = wxInput.maxlength > 0 ? -1 : 10">修改上面输入框的 maxlength</wx-button>
+        <wx-button class="wx-button" type="default" @tap="wxInput.maxlength = wxInput.maxlength > 0 ? -1 : 10">修改上面输入框的 maxlength</wx-button>
         <wx-input class="wx-input" :focus="wxInput.focus" @blur="wxInput.focus = false" placeholder="自动聚焦" @input="log('[wx-input] input', $event.detail)"/>
-        <wx-button type="default" @tap="wxInput.focus = true">聚焦上面输入框</wx-button>
+        <wx-button class="wx-button" type="default" @tap="wxInput.focus = true">聚焦上面输入框</wx-button>
         <wx-input class="wx-input" placeholder="点击确认不失焦" :confirm-hold="true" @input="log('[wx-input] input', $event.detail)"/>
         <wx-input class="wx-input" ref="wx-input-cursor" value="焦点位置 -><- 在这里" cursor="7" @input="log('[wx-input] input', $event.detail)"/>
-        <wx-button type="default" @tap="setAttribute('wx-input-cursor', 'focus', true)">聚焦上面输入框</wx-button>
+        <wx-button class="wx-button" type="default" @tap="setAttribute('wx-input-cursor', 'focus', true)">聚焦上面输入框</wx-button>
         <wx-input class="wx-input" ref="wx-input-select" value="后面这些文字：这些要被选中，到此就结束了" selection-start="7" selection-end="13" @input="log('[wx-input] input', $event.detail)"/>
-        <wx-button type="default" @tap="setAttribute('wx-input-select', 'focus', true)">聚焦上面输入框</wx-button>
+        <wx-button class="wx-button" type="default" @tap="setAttribute('wx-input-select', 'focus', true)">聚焦上面输入框</wx-button>
       </div>
     </wx-view>
     <wx-view class="item">
@@ -518,7 +518,7 @@
           <wx-label><wx-switch type="checkbox" @change="log('[wx-label] switch change', $event.detail)"></wx-switch>wx-switch</wx-label>
         </div>
         <div class="add-margin-top">
-          <wx-label><wx-button @tap="log('[wx-label] button tap')">按钮</wx-button>wx-button</wx-label>
+          <wx-label><wx-button class="wx-button" @tap="log('[wx-label] button tap')">按钮</wx-button>wx-button</wx-label>
         </div>
       </div>
     </wx-view>
@@ -597,7 +597,7 @@
           </wx-picker-view-column>
         </wx-picker-view>
         <div class="opr-cnt">
-          <wx-button class="opr-button" @click="onUpdateWxPickerView">更新值（随机）</wx-button>
+          <wx-button class="wx-button opr-button" @click="onUpdateWxPickerView">更新值（随机）</wx-button>
         </div>
       </div>
     </wx-view>
@@ -633,11 +633,11 @@
         <wx-textarea class="wx-textarea" placeholder="占位文本样式2" placeholder-class="green" @input="log('[wx-textarea] input', $event.detail)"/>
         <wx-textarea class="wx-textarea" placeholder="禁用" :disabled="true" @input="log('[wx-textarea] input', $event.detail)"/>
         <wx-textarea class="wx-textarea" :placeholder="`最大输入长度为 ${wxTextarea.maxlength > 0 ? wxTextarea.maxlength : '无限'}`" :maxlength="wxTextarea.maxlength" @input="log('[wx-textarea] input', $event.detail)"/>
-        <wx-button type="default" @tap="wxTextarea.maxlength = wxTextarea.maxlength > 0 ? -1 : 10">修改上面 textarea 的 maxlength</wx-button>
+        <wx-button class="wx-button" type="default" @tap="wxTextarea.maxlength = wxTextarea.maxlength > 0 ? -1 : 10">修改上面 textarea 的 maxlength</wx-button>
         <wx-textarea class="wx-textarea" :focus="wxTextarea.focus" @blur="wxTextarea.focus = false" placeholder="默认不聚焦" @input="log('[wx-textarea] input', $event.detail)"/>
-        <wx-button type="default" @tap="wxTextarea.focus = true">聚焦上面 textarea</wx-button>
+        <wx-button class="wx-button" type="default" @tap="wxTextarea.focus = true">聚焦上面 textarea</wx-button>
         <wx-textarea class="wx-textarea" placeholder="自动增高" :auto-height="true" @input="log('[wx-textarea] input', $event.detail)"/>
-        <wx-button type="default" @tap="wxTextarea.showFixedDialog = true">显示 fixed textarea</wx-button>
+        <wx-button class="wx-button" type="default" @tap="wxTextarea.showFixedDialog = true">显示 fixed textarea</wx-button>
         <div class="fixed-dialog" v-if="wxTextarea.showFixedDialog">
           <div class="fixed-dialog-mask" @click="wxTextarea.showFixedDialog = false"></div>
           <div class="fixed-dialog-cnt">
@@ -645,9 +645,9 @@
           </div>
         </div>
         <wx-textarea class="wx-textarea" ref="wx-textarea-cursor" value="焦点位置 -><- 在这里" cursor="7" @input="log('[wx-textarea] input', $event.detail)"/>
-        <wx-button type="default" @tap="setAttribute('wx-textarea-cursor', 'focus', true)">聚焦上面输入框</wx-button>
+        <wx-button class="wx-button" type="default" @tap="setAttribute('wx-textarea-cursor', 'focus', true)">聚焦上面输入框</wx-button>
         <wx-textarea class="wx-textarea" ref="wx-textarea-select" value="后面这些文字：这些要被选中，到此就结束了" selection-start="7" selection-end="13" @input="log('[wx-textarea] input', $event.detail)"/>
-        <wx-button type="default" @tap="setAttribute('wx-textarea-select', 'focus', true)">聚焦上面输入框</wx-button>
+        <wx-button class="wx-button" type="default" @tap="setAttribute('wx-textarea-select', 'focus', true)">聚焦上面输入框</wx-button>
       </div>
     </wx-view>
     <wx-view class="item">
@@ -694,10 +694,10 @@
       <div class="comp-cnt">
         <div @touchstart="log('root touchstart')" @touchend="log('root touchend')" @click="log('root click')">
           <div>touchstart -> root touchstart -> touchend -> root touchend -> click -> root click</div>
-          <wx-button @touchstart="log('touchstart')" @touchend="log('touchend')" @click="log('click')">normal event</wx-button>
+          <wx-button class="wx-button" @touchstart="log('touchstart')" @touchend="log('touchend')" @click="log('click')">normal event</wx-button>
           <div>parent touchstart -> touchstart -> root touchstart -> parent touchend -> touchend -> root touchend -> parent click -> click -> root click</div>
           <wx-capture @touchstart="log('parent touchstart')" @touchend="log('parent touchend')" @click="log('parent click')">
-            <wx-button @touchstart="log('touchstart')" @touchend="log('touchend')" @click="wxCapture.eventCount++; log('click')">capture-inner({{wxCapture.eventCount}})</wx-button>
+            <wx-button class="wx-button" @touchstart="log('touchstart')" @touchend="log('touchend')" @click="wxCapture.eventCount++; log('click')">capture-inner({{wxCapture.eventCount}})</wx-button>
           </wx-capture>
         </div>
       </div>
@@ -708,11 +708,11 @@
         <div @touchstart="log('root touchstart')" @touchend="log('root touchend')" @click="log('root click')">
           <div>touchstart -> parent touchstart -> touchend -> parent touchend</div>
           <wx-catch @touchstart="log('parent touchstart')" @touchend="log('parent touchend')" @click="log('parent click')">
-            <wx-button @touchstart="log('touchstart')" @touchend="log('touchend')" @click="wxCatch.eventCount++; log('click')">catch-inner1({{wxCatch.eventCount}})</wx-button>
+            <wx-button class="wx-button" @touchstart="log('touchstart')" @touchend="log('touchend')" @click="wxCatch.eventCount++; log('click')">catch-inner1({{wxCatch.eventCount}})</wx-button>
           </wx-catch>
           <div>touchstart -> touchend -> click -> parent click</div>
           <wx-catch @click="log('parent click')">
-            <wx-button @touchstart="log('touchstart')" @touchend="log('touchend')" @click="wxCatch.eventCount++; log('click')">catch-inner2({{wxCatch.eventCount}})</wx-button>
+            <wx-button class="wx-button" @touchstart="log('touchstart')" @touchend="log('touchend')" @click="wxCatch.eventCount++; log('click')">catch-inner2({{wxCatch.eventCount}})</wx-button>
           </wx-catch>
           <wx-catch>catch-inner3({{wxCatch.eventCount}})</wx-catch>
         </div>
@@ -724,12 +724,30 @@
         <div class="event-cnt">
           <div>transition end</div>
           <wx-animation :class="['event-t', wxAnimation.transition ? 'event-t-s' : 'event-t-e']" @transitionend="log('transition end')"></wx-animation>
-          <wx-button @click="wxAnimation.transition = !wxAnimation.transition">transition</wx-button>
+          <wx-button class="wx-button" @click="wxAnimation.transition = !wxAnimation.transition">transition</wx-button>
         </div>
         <div class="event-cnt">
           <div>animation start -> animation iteration -> animation end</div>
           <wx-animation class="event-a" @animationstart="log('animation start')" @animationiteration="log('animation iteration')" @animationend="log('animation end')"></wx-animation>
         </div>
+      </div>
+    </wx-view>
+    <wx-view class="item">
+      <div class="title">kbone-attribute-map</div>
+      <div class="comp-cnt">
+        <wx-input :kbone-attribute-map="kboneAttributeMap" class="wx-input"/>
+        <wx-button class="wx-button" type="default" @tap="onSetKboneAttributeMap1">操作1</wx-button>
+        <wx-button class="wx-button" type="default" @tap="onSetKboneAttributeMap2">操作2</wx-button>
+        <wx-button class="wx-button" type="default" @tap="onSetKboneAttributeMap3">reset</wx-button>
+      </div>
+    </wx-view>
+    <wx-view class="item">
+      <div class="title">kbone-event-map</div>
+      <div class="comp-cnt">
+        <wx-input placeholder="这是一个输入框" :kbone-event-map="kboneEventMap" class="wx-input"/>
+        <wx-button class="wx-button" type="default" @tap="onSetKboneEventMap1">操作1</wx-button>
+        <wx-button class="wx-button" type="default" @tap="onSetKboneEventMap2">操作2</wx-button>
+        <wx-button class="wx-button" type="default" @tap="onSetKboneEventMap3">reset</wx-button>
       </div>
     </wx-view>
     <wx-view class="item">
@@ -889,6 +907,12 @@ export default {
       wxAnimation: {
         transition: false,
       },
+      kboneAttributeMap: {
+        placeholder: '这是一个输入框',
+      },
+      kboneEventMap: {
+        input: this.log.bind(this, '[kbone-event-map] input')
+      },
     }
   },
   mounted() {
@@ -1045,6 +1069,49 @@ export default {
       const daytime = Math.random() >= 0.5 ? 1 : 0
       console.log('[wx-picker-view] will update value ->', [year, month, date, daytime])
       this.wxPickerView.value = JSON.stringify([year, month, date, daytime])
+    },
+
+    onSetKboneAttributeMap1() {
+      this.kboneAttributeMap = {
+        value: '焦点位置 -><- 在这里',
+        cursor: 7,
+        focus: true,
+      }
+    },
+
+    onSetKboneAttributeMap2() {
+      this.kboneAttributeMap = {
+        value: '后面这些文字：这些要被选中，到此就结束了',
+        'selection-start': 7,
+        'selection-end': 13,
+        focus: true,
+      }
+    },
+
+    onSetKboneAttributeMap3() {
+      this.kboneAttributeMap = {
+        placeholder: '这是一个输入框',
+      }
+    },
+
+    onSetKboneEventMap1() {
+      this.kboneEventMap = {
+        focus: this.log.bind(this, '[kbone-event-map] focus'),
+        blur: this.log.bind(this, '[kbone-event-map] blur'),
+      }
+    },
+
+    onSetKboneEventMap2() {
+      this.kboneEventMap = {
+        focus: this.log.bind(this, '[kbone-event-map] focus'),
+        change: this.log.bind(this, '[kbone-event-map] change'),
+      }
+    },
+
+    onSetKboneEventMap3() {
+      this.kboneEventMap = {
+        input: this.log.bind(this, '[kbone-event-map] input'),
+      }
     },
 
     do$$getBoundingClientRect(evt) {

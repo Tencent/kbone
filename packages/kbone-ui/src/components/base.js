@@ -56,6 +56,66 @@ export default class Base extends HTMLElement {
         // ignore
     }
 
+    setAttribute(name, value) {
+        if (name === 'kbone-attribute-map' || name === 'kbone-event-map') {
+            value = typeof value === 'object' ? value : this.filterObjectValue(value, {})
+            const oldValue = this[`__${name}__`]
+            const keys = Object.keys(value)
+            const oldKeys = oldValue ? Object.keys(oldValue) : null
+
+            if (name === 'kbone-attribute-map') {
+                // 特殊属性，用于批量设置属性
+                keys.forEach(key => this.setAttribute(key, value[key]))
+                if (oldKeys) {
+                    oldKeys.forEach(key => {
+                        if (!Object.prototype.hasOwnProperty.call(value, key)) this.removeAttribute(key)
+                    })
+                }
+            } else if (name === 'kbone-event-map') {
+                // 特殊属性，用于批量监听事件
+                if (oldKeys) {
+                    oldKeys.forEach(key => {
+                        // 先删除所有旧的 handler
+                        let handler = oldValue[key]
+                        handler = typeof handler !== 'function' ? window[handler] : handler
+                        this.removeEventListener(key, handler)
+                    })
+                }
+                keys.forEach(key => {
+                    let handler = value[key]
+                    handler = typeof handler !== 'function' ? window[handler] : handler
+                    this.addEventListener(key, handler)
+                })
+            }
+            this[`__${name}__`] = value
+        } else super.setAttribute(name, value)
+    }
+
+    setAttributeNS(ns, name, value) {
+        if (name === 'kbone-attribute-map' || name === 'kbone-event-map') this.setAttribute(name, value)
+        else super.setAttributeNS(ns, name, value)
+    }
+
+    getAttribute(name) {
+        if (name === 'kbone-attribute-map' || name === 'kbone-event-map') return this[`__${name}__`]
+        return super.getAttribute(name)
+    }
+
+    getAttributeNS(ns, name) {
+        if (name === 'kbone-attribute-map' || name === 'kbone-event-map') return this[`__${name}__`]
+        return super.getAttributeNS(ns, name)
+    }
+
+    removeAttribute(name) {
+        if (name === 'kbone-attribute-map' || name === 'kbone-event-map') delete this[`__${name}__`]
+        else super.removeAttribute(name)
+    }
+
+    removeAttributeNS(ns, name) {
+        if (name === 'kbone-attribute-map' || name === 'kbone-event-map') delete this[`__${name}__`]
+        else super.removeAttributeNS(ns, name)
+    }
+
     static get observedAttributes() {
         return ['disabled', 'hidden']
     }
@@ -318,7 +378,9 @@ export default class Base extends HTMLElement {
                         target.dispatchEvent(new CustomEvent('tap', {
                             bubbles: true,
                             cancelable: true,
-                            detail: {pageX, pageY, clientX, clientY}
+                            detail: {
+                                pageX, pageY, clientX, clientY
+                            }
                         }))
                     }
                 }
