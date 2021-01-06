@@ -140,6 +140,9 @@ function filterNodes(domNode, level, component) {
                         slot: slotDomInfo.slot,
                         nodeId: slotDomInfo.nodeId,
                         pageId: slotDomInfo.pageId,
+                        id: slotDomInfo.id,
+                        className: slotDomInfo.type === 'element' ? `h5-${slotDomInfo.tagName} node-${slotDomInfo.nodeId} ${slotDomInfo.className || ''}` : '',
+                        style: slotDomInfo.style,
                     }
                 }).filter(slot => !!slot.slot)
 

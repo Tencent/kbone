@@ -81,8 +81,8 @@ export default class WxRefresher extends Base {
         if (name === 'default-style') {
             const value = this.defaultStyle
             if (!value || value === 'none') this._defaultStyle = ''
-            if (value !== 'white' && value !== 'black') this._defaultStyle = ''
-            this._defaultStyle = value
+            else if (value !== 'white' && value !== 'black') this._defaultStyle = ''
+            else this._defaultStyle = value
 
             this.defaultStyleDom.classList.toggle('hidden', !this._defaultStyle)
             this.customStyleDom.classList.toggle('hidden', this._defaultStyle)

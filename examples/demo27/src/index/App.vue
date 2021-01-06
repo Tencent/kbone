@@ -157,11 +157,12 @@
           :scroll-y="true"
           :scroll-with-animation="wxScrollView.y.scrollWithAnimation"
           :refresher-enabled="wxScrollView.y.refresherEnabled"
+          :refresher-default-style="wxScrollView.y.refresherCustom ? 'none' : 'black'"
           @scroll="log('[wx-scroll-view scroll]', $event.detail)"
           @scrolltoupper="log('[wx-scroll-view scrolltoupper]', $event.detail)"
           @scrolltolower="log('[wx-scroll-view scrolltolower]', $event.detail)"
-          @refresherpulling="log('[wx-scroll-view refresherpulling]', $event.detail)"
-          @refresherrefresh="onScrollViewXRefresherRefresh"
+          @refresherpulling="onScrollViewYRefresherPulling"
+          @refresherrefresh="onScrollViewYRefresherRefresh"
           @refresherrestore="log('[wx-scroll-view refresherrestore]', $event.detail)"
           @refresherabort="log('[wx-scroll-view refresherabort]', $event.detail)"
         >
@@ -171,6 +172,9 @@
             <div id="yblock3" class="block block3"></div>
             <div id="yblock4" class="block block4"></div>
             <div id="yblock5" class="block block5"></div>
+          </div>
+          <div v-if="wxScrollView.y.refresherCustom" slot="refresher" ref="refresh-container" class="refresh-container">
+            <div class="refresh-container-text">下拉刷新</div>
           </div>
         </wx-scroll-view>
         <div class="opr-cnt opr-cnt-y">
@@ -185,6 +189,10 @@
         <div class="opr-cnt opr-cnt-y">
           <div class="opr-label">下拉刷新</div>
           <wx-switch @change="wxScrollView.y.refresherEnabled = $event.detail.value.toString()"></wx-switch>
+        </div>
+        <div class="opr-cnt opr-cnt-y">
+          <div class="opr-label">自定义下拉刷新</div>
+          <wx-switch @change="wxScrollView.y.refresherCustom = $event.detail.value.toString()"></wx-switch>
         </div>
         <wx-scroll-view
           ref="wx-scroll-view-x"
@@ -797,6 +805,7 @@ export default {
         y: {
           scrollWithAnimation: true,
           refresherEnabled: undefined,
+          refresherCustom: false,
         },
         x: {
           scrollWithAnimation: true,
@@ -950,7 +959,18 @@ export default {
       this.$refs['wx-movable-view'].setAttribute('scale-value', scale)
     },
 
-    onScrollViewXRefresherRefresh(evt) {
+    onScrollViewYRefresherPulling(evt) {
+      this.log('[wx-scroll-view refresherpulling]', evt.detail)
+      const refreshContainer = this.$refs['refresh-container']
+      if (refreshContainer) {
+        const p = Math.min(evt.detail.dy / 80, 1)
+        refreshContainer.style.opacity = p
+        refreshContainer.style.transform = `scale(${p})`
+        window.$$forceRender()
+      }
+    },
+
+    onScrollViewYRefresherRefresh(evt) {
       this.log('[wx-scroll-view refresherrefresh]', evt.detail)
       setTimeout(() => this.setAttribute('wx-scroll-view-y', 'refresher-triggered', false), 1000)
     },
@@ -1249,6 +1269,21 @@ export default {
 }
 .wx-scroll-view-cnt .block5 {
   background: #f2dede;
+}
+.refresh-container {
+  display: block;
+  width: 100%;
+  height: 80px;
+  line-height: 80px;
+  background: blue;
+  display: flex;
+  align-items: center;
+}
+.refresh-container-text {
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  color: white;
 }
 .wx-swiper {
   background-color: #BBB;

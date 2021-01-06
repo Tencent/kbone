@@ -150,7 +150,7 @@
         bindrefresherrefresh="onScrollViewRefresherRefresh"
         bindrefresherrestore="onScrollViewRefresherRestore"
         bindrefresherabort="onScrollViewRefresherAbort"
-    ><block wx:if="{{hasSlots}}"><element wx:for="{{slots}}" wx:key="nodeId" in-cover="{{inCover}}" slot="{{item.slot}}" data-private-node-id="{{item.nodeId}}" data-private-page-id="{{item.pageId}}" generic:custom-component="custom-component"></element></block><element-vhost wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element-vhost></scroll-view>
+    ><block wx:if="{{hasSlots}}"><element wx:for="{{slots}}" wx:key="nodeId" id="{{item.id}}" class="{{item.className}}" style="{{item.style}}" in-cover="{{inCover}}" slot="{{item.slot}}" data-private-node-id="{{item.nodeId}}" data-private-page-id="{{item.pageId}}" generic:custom-component="custom-component"></element></block><element-vhost wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element-vhost></scroll-view>
 </template>
 <template name="swiper">
     <!-- swiper-item 无法设置 style，不然会覆盖内置组件自己的滚动样式 -->
@@ -952,7 +952,7 @@
         bindupdated="onMapUpdated"
         bindregionchange="onMapRegionChange"
         bindpoitap="onMapPoiTap"
-    ><block wx:if="{{hasSlots}}"><element wx:for="{{slots}}" wx:key="nodeId" in-cover="{{inCover}}" slot="{{item.slot}}" data-private-node-id="{{item.nodeId}}" data-private-page-id="{{item.pageId}}" generic:custom-component="custom-component"></element></block><element-vhost wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element-vhost></map>
+    ><block wx:if="{{hasSlots}}"><element wx:for="{{slots}}" wx:key="nodeId" id="{{item.id}}" class="{{item.className}}" style="{{item.style}}" in-cover="{{inCover}}" slot="{{item.slot}}" data-private-node-id="{{item.nodeId}}" data-private-page-id="{{item.pageId}}" generic:custom-component="custom-component"></element></block><element-vhost wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element-vhost></map>
 </template>
 <!-- 画布 -->
 <template name="canvas">
