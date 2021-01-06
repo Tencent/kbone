@@ -30,7 +30,7 @@ function useGlobal() {
 
             if (!setter) {
                 descriptor.set = function(val) {
-                // 默认作为栈顶页面的 observer 存入
+                    // 默认作为栈顶页面的 observer 存入
                     const pages = getCurrentPages()
                     const page = pages[pages.length - 1]
                     const pageId = page && page.document && page.document.$$pageId
