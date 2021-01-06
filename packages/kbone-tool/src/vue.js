@@ -54,7 +54,7 @@ function useGlobal() {
             }
             if (!getter) {
                 descriptor.get = function() {
-                // 默认获取栈顶页面的 observer
+                    // 默认获取栈顶页面的 observer
                     const pages = getCurrentPages()
                     const page = pages[pages.length - 1]
                     const pageId = page && page.document && page.document.$$pageId
