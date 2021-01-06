@@ -79,6 +79,7 @@ class Element extends Node {
         this.$_attrs = null
 
         this._wxComponent = null
+        this._wxCustomComponent = null
 
         this.$$scrollTop = 0
         this.$$scrollTimeStamp = 0
@@ -335,6 +336,13 @@ class Element extends Node {
      */
     get $$wxComponent() {
         return this._wxComponent
+    }
+
+    /**
+     * 如果该节点是第三方自定义组件，返回对应的实例
+     */
+    get $$wxCustomComponent() {
+        return this._wxCustomComponent
     }
 
     /**

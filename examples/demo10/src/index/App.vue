@@ -11,6 +11,23 @@
       <div>comp-c slot</div>
     </comp-c>
     <button class="btn" @click="onClick">update</button>
+    <!-- weui 组件，补充配置后可直接使用 -->
+    <!-- <mp-msg type="success" title="操作成功" size="64">
+      <div slot="desc">内容详情，可根据实际需要安排，如果换行则不超过规定长度，居中展现</div>
+      <div slot="extend">
+        <div>1. 说明1</div>
+        <div>2. 说明2</div>
+      </div>
+      <div slot="handle">
+        <wx-button class="weui-btn" type="primary">主要操作</wx-button>
+        <wx-button class="weui-btn" type="default">辅助操作</wx-button>
+      </div>
+      <div slot="footer">
+        <div class="weui-footer__links">
+          <a href="" class="weui-footer__link">底部链接文本</a>
+        </div>
+      </div>
+    </mp-msg> -->
   </div>
 </template>
 

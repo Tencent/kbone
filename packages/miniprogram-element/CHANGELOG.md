@@ -7,6 +7,7 @@
 * 支持 swiper 的 snap-to-edge 属性
 * 修复 scroll-view 下拉刷新相关 bug
 * 支持 tap 事件
+* scroll-view 支持自定义下拉刷新 slot
 
 ## 2.1.16
 

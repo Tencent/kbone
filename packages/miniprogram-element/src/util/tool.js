@@ -133,7 +133,7 @@ function filterNodes(domNode, level, component) {
             }
 
             // 地图如果存在 slot 节点，需要特殊处理
-            if (templateName === 'map') {
+            if (templateName === 'map' || templateName === 'scroll-view') {
                 const slots = child.childNodes.map(childNode => {
                     const slotDomInfo = childNode.$$domInfo
                     return {

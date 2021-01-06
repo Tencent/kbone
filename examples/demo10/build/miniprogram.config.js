@@ -26,6 +26,7 @@ module.exports = {
 				'comp-c': 'comp-c',
 			},
 		},
+		// weui: true,
 	},
 	app: {
 		navigationBarTitleText: 'miniprogram-project',

@@ -47,7 +47,18 @@ function checkComponentAttr({props = []}, name, domNode, destData, oldData) {
     if (props.length) {
         for (const name of props) {
             let newValue = domNode.getAttribute(name)
+            if (newValue === undefined) newValue = domNode.getAttribute(tool.toDash(name)) // 转成连字符再拉取一次
+
             newValue = newValue !== undefined ? newValue : null
+            if (typeof newValue === 'string') {
+                // 可能传入 json 串
+                try {
+                    const parseValue = JSON.parse(newValue)
+                    if (typeof parseValue === 'object') newValue = parseValue
+                } catch (err) {
+                    // ignore
+                }
+            }
             if (!oldData || !isEqual(oldData[name], newValue)) destData[name] = newValue
         }
     }
@@ -59,6 +70,18 @@ function checkComponentAttr({props = []}, name, domNode, destData, oldData) {
     if (!oldData || oldData.className !== newClass) destData.className = newClass
     const newStyle = domNode.style.cssText
     if (!oldData || oldData.style !== newStyle) destData.style = newStyle
+
+    // 检查 slot
+    const slots = domNode.childNodes.map(childNode => {
+        const slotDomInfo = childNode.$$domInfo
+        return {
+            slot: slotDomInfo.slot,
+            nodeId: slotDomInfo.nodeId,
+            pageId: slotDomInfo.pageId,
+        }
+    }).filter(slot => !!slot.slot)
+    destData.hasSlots = slots.length
+    destData.slots = slots
 }
 
 Component({

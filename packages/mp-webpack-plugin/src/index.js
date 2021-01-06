@@ -7,6 +7,7 @@ const {RawSource} = require('webpack-sources')
 const pathToRegexp = require('path-to-regexp')
 const colors = require('colors/safe')
 const {setAdjustCssOptions, adjustCss} = require('./tool/adjust-css')
+const weuiList = require('./tool/weui-list')
 const _ = require('./tool/utils')
 
 const PluginName = 'MpPlugin'
@@ -113,6 +114,7 @@ class MpPlugin {
             const wxCustomComponentConfig = generateConfig.wxCustomComponent || {}
             const wxCustomComponentRoot = wxCustomComponentConfig.root
             const wxCustomComponents = wxCustomComponentConfig.usingComponents || {}
+            const useWeui = generateConfig.weui
             const pages = []
             const subpackagesMap = {} // 页面名-分包名
             const assetsMap = {} // 页面名-依赖
@@ -185,11 +187,22 @@ class MpPlugin {
             // 处理自定义组件字段
             Object.keys(wxCustomComponents).forEach(key => {
                 if (typeof wxCustomComponents[key] === 'string') {
-                    wxCustomComponents[key] = {
-                        path: wxCustomComponents[key],
-                    }
+                    wxCustomComponents[key] = {path: wxCustomComponents[key]}
                 }
             })
+
+            // 处理 weui
+            if (useWeui) {
+                weuiList.forEach(item => {
+                    const {name, props = [], events = []} = item
+                    wxCustomComponents[`mp-${name}`] = {
+                        path: `weui-miniprogram/${name}/${name}`,
+                        props,
+                        events,
+                        isWeui: true,
+                    }
+                })
+            }
 
             if (generateConfig.app === 'noemit') {
                 // generate.app 值为 noemit 且只有分包输出时，将 config.js 输出到分包内
@@ -237,7 +250,7 @@ class MpPlugin {
                 addFile(compilation, `../${pageRoute}.js`, pageJsContent)
 
                 // 页面 wxml
-                let pageWxmlContent = `<element wx:if="{{pageId}}" class="{{bodyClass}}" style="{{bodyStyle}}" data-private-node-id="e-body" data-private-page-id="{{pageId}}" ${wxCustomComponentRoot ? 'generic:custom-component="custom-component"' : ''}></element>`
+                let pageWxmlContent = `<element wx:if="{{pageId}}" class="{{bodyClass}}" style="{{bodyStyle}}" data-private-node-id="e-body" data-private-page-id="{{pageId}}" ${wxCustomComponentRoot || useWeui ? 'generic:custom-component="custom-component"' : ''}></element>`
                 if (loadingView) pageWxmlContent = `<loading-view wx:if="{{loading}}" class="miniprogram-loading-view" page-name="${entryName}"></loading-view>` + pageWxmlContent
                 if (rem || pageStyle) pageWxmlContent = `<page-meta ${rem ? 'root-font-size="{{rootFontSize}}"' : ''} ${pageStyle ? 'page-style="{{pageStyle}}"' : ''}></page-meta>` + pageWxmlContent
                 addFile(compilation, `../${pageRoute}.wxml`, pageWxmlContent)
@@ -257,7 +270,7 @@ class MpPlugin {
                     },
                 }
                 if (loadingView) pageJson.usingComponents['loading-view'] = `${assetPathPrefix}../../loading-view/${loadingViewName}`
-                if (wxCustomComponentRoot) pageJson.usingComponents['custom-component'] = `${assetPathPrefix}../../custom-component/index`
+                if (wxCustomComponentRoot || useWeui) pageJson.usingComponents['custom-component'] = `${assetPathPrefix}../../custom-component/index`
                 if (reachBottom && typeof reachBottomDistance === 'number') pageJson.onReachBottomDistance = reachBottomDistance
                 const pageJsonContent = JSON.stringify(pageJson, null, '\t')
                 addFile(compilation, `../${pageRoute}.json`, pageJsonContent)
@@ -374,6 +387,11 @@ class MpPlugin {
                     workersDir = typeof generateConfig.worker === 'string' ? generateConfig.worker : workersDir
                     appJson.workers = workersDir
                 }
+                if (useWeui) {
+                    // 使用 weui 扩展库
+                    appJson.useExtendedLib = appJson.useExtendedLib || {}
+                    if (appJson.useExtendedLib.weui === undefined) appJson.useExtendedLib.weui = true
+                }
                 const appJsonContent = JSON.stringify(appJson, null, '\t')
                 addFile(compilation, '../app.json', appJsonContent)
 
@@ -428,7 +446,7 @@ class MpPlugin {
                 runtime: Object.assign({
                     subpackagesMap,
                     tabBarMap,
-                    usingComponents: wxCustomComponentConfig.usingComponents || {},
+                    usingComponents: wxCustomComponents,
                 }, options.runtime || {}),
                 pages: pageConfigMap,
                 redirect: options.redirect || {},
@@ -463,13 +481,27 @@ class MpPlugin {
             addFile(compilation, '../node_modules/.miniprogram', '')
 
             // 自定义组件
-            if (wxCustomComponentRoot) {
-                compilation.contextDependencies.add(wxCustomComponentRoot) // 支持 watch
-                _.copyDir(wxCustomComponentRoot, path.resolve(outputPath, '../custom-component/components'))
-
+            if (wxCustomComponentRoot || useWeui) {
                 const realUsingComponents = {}
                 const names = Object.keys(wxCustomComponents)
-                names.forEach(key => realUsingComponents[key] = `components/${wxCustomComponents[key].path}`)
+
+                if (wxCustomComponentRoot) {
+                    // 包含第三方自定义组件
+                    compilation.contextDependencies.add(wxCustomComponentRoot) // 支持 watch
+                    _.copyDir(wxCustomComponentRoot, path.resolve(outputPath, '../custom-component/components'))
+
+                    // 转换路径
+                    names.forEach(key => {
+                        if (!wxCustomComponents[key].isWeui) realUsingComponents[key] = `components/${wxCustomComponents[key].path}`
+                    })
+                }
+
+                if (useWeui) {
+                    // 包含 weui
+                    names.forEach(key => {
+                        if (wxCustomComponents[key].isWeui) realUsingComponents[key] = wxCustomComponents[key].path
+                    })
+                }
 
                 // custom-component/index.js
                 addFile(compilation, '../custom-component/index.js', customComponentJsTmpl)
@@ -477,13 +509,15 @@ class MpPlugin {
                 // custom-component/index.wxml
                 addFile(compilation, '../custom-component/index.wxml', names.map((key, index) => {
                     const {props = [], events = []} = wxCustomComponents[key]
-                    return `<${key} wx:${index === 0 ? 'if' : 'elif'}="{{kboneCustomComponentName === '${key}'}}" id="{{id}}" class="{{className}}" style="{{style}}" ${props.map(name => name + '="{{' + name + '}}"').join(' ')} ${events.map(name => 'bind' + name + '="on' + name + '"').join(' ')}><slot/></${key}>`
+                    return `<${key} wx:${index === 0 ? 'if' : 'elif'}="{{kboneCustomComponentName === '${key}'}}" id="{{id}}" class="{{className}}" style="{{style}}" ${props.map(name => name + '="{{' + name + '}}"').join(' ')} ${events.map(name => 'bind' + name + '="on' + name + '"').join(' ')}><block wx:if="{{hasSlots}}"><element wx:for="{{slots}}" wx:key="nodeId" slot="{{item.slot}}" data-private-node-id="{{item.nodeId}}" data-private-page-id="{{item.pageId}}" generic:custom-component="custom-component"></element></block><slot/></${key}>`
                 }).join('\n'))
 
                 // custom-component/index.wxss
                 addFile(compilation, '../custom-component/index.wxss', '')
 
                 // custom-component/index.json
+                realUsingComponents['custom-component'] = './index'
+                realUsingComponents.element = 'miniprogram-element'
                 addFile(compilation, '../custom-component/index.json', JSON.stringify({
                     component: true,
                     usingComponents: realUsingComponents,
