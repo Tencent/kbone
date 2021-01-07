@@ -13,6 +13,7 @@ export default class WxPickerView extends Scroller {
         super()
 
         this.initShadowRoot(template, WxPickerView.observedAttributes, () => {
+            this.onTap = this.onTap.bind(this)
             this.onResize = this.onResize.bind(this)
             this.main = this.shadowRoot.querySelector('#main')
             this.mask = this.shadowRoot.querySelector('#mask')
@@ -44,7 +45,7 @@ export default class WxPickerView extends Scroller {
         this._resizeObserver = new ResizeObserver(this.onResize)
         this._resizeObserver.observe(this.indicator)
 
-        this.addEventListener('tap', this.onTap)
+        this.shadowRoot.addEventListener('tap', this.onTap)
         this.main.addEventListener('touchstart', this.onScrollerTouchStart)
         this.main.addEventListener('touchmove', this.onScrollerTouchMove)
         this.main.addEventListener('touchend', this.onScrollerTouchEnd)
@@ -64,7 +65,7 @@ export default class WxPickerView extends Scroller {
         this._resizeObserver = null
         this._parent = null
 
-        this.removeEventListener('tap', this.onTap)
+        this.shadowRoot.removeEventListener('tap', this.onTap)
         this.main.removeEventListener('touchstart', this.onScrollerTouchStart)
         this.main.removeEventListener('touchmove', this.onScrollerTouchMove)
         this.main.removeEventListener('touchend', this.onScrollerTouchEnd)

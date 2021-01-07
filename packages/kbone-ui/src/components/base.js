@@ -29,8 +29,8 @@ export default class Base extends HTMLElement {
             this.addEventListener('mousedown', this.onMouseDown)
             this.addEventListener('mousemove', this.onMouseMove)
             document.body.addEventListener('mouseup', this.onMouseUp)
+            this.addEventListener('blur', this.onBlur)
         }
-        this.addEventListener('blur', this.onBlur)
         this.shadowRoot.addEventListener('touchstart', this.onBaseTouchStart)
         this.shadowRoot.addEventListener('touchmove', this.onBaseTouchMove)
         this.shadowRoot.addEventListener('touchend', this.onBaseTouchEnd)
@@ -43,8 +43,8 @@ export default class Base extends HTMLElement {
             this.removeEventListener('mousedown', this.onMouseDown)
             this.removeEventListener('mousemove', this.onMouseMove)
             document.body.removeEventListener('mouseup', this.onMouseUp)
+            this.removeEventListener('blur', this.onBlur)
         }
-        this.removeEventListener('blur', this.onBlur)
         this.shadowRoot.removeEventListener('touchstart', this.onBaseTouchStart)
         this.shadowRoot.removeEventListener('touchmove', this.onBaseTouchMove)
         this.shadowRoot.removeEventListener('touchend', this.onBaseTouchEnd)

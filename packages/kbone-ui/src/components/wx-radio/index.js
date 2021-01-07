@@ -13,6 +13,7 @@ export default class WxRadio extends Base {
         super()
 
         this.initShadowRoot(template, WxRadio.observedAttributes, () => {
+            this.onTap = this.onTap.bind(this)
             this.input = this.shadowRoot.querySelector('#input')
         })
     }
@@ -26,7 +27,7 @@ export default class WxRadio extends Base {
 
         this._parent = findParent(this, parentNode => parentNode.tagName === 'WX-RADIO-GROUP')
         if (this._parent) this._parent.addItem(this)
-        this.addEventListener('tap', this.onTap)
+        this.shadowRoot.addEventListener('tap', this.onTap)
     }
 
     disconnectedCallback() {
@@ -34,7 +35,7 @@ export default class WxRadio extends Base {
 
         this._parent = null
         if (this._parent) this._parent.removeItem(this)
-        this.removeEventListener('tap', this.onTap)
+        this.shadowRoot.removeEventListener('tap', this.onTap)
     }
 
     attributeChangedCallback(name, oldValue, newValue) {

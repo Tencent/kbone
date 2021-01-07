@@ -691,6 +691,8 @@
         <wx-image class="wx-image" style="width: 200px; height: 200px; background-color: #eee;" mode="bottom right" src="https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg" @load="log('[wx-image] load', $event.detail)" @error="log('[wx-image] error', $event.detail)"></wx-image>
         <div>默认</div>
         <wx-image class="wx-image" style="width: 200px; height: 200px; background-color: #eee;" src="https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg" @load="log('[wx-image] load', $event.detail)" @error="log('[wx-image] error', $event.detail)"></wx-image>
+        <div>长按报错</div>
+        <wx-image class="wx-image" :show-menu-by-longpress="true" style="width: 200px; height: 200px; background-color: #eee;" src="https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg" @load="log('[wx-image] load', $event.detail)"></wx-image>
         <div>error</div>
         <wx-image class="wx-image" style="width: 200px; height: 200px; background-color: #eee;" src="https://june.haha/123456.jpg" @load="log('[wx-image] load', $event.detail)" @error="log('[wx-image] error', $event.detail)"></wx-image>
         <div>lazy-load</div>
@@ -1151,6 +1153,15 @@ export default {
 <style>
 .cnt {
   margin: 30px;
+}
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #222;
+    color: #fff;
+  }
+  .title {
+    color: #000;
+  }
 }
 .title {
   height: 40px;
