@@ -1,0 +1,25 @@
+<div class="weui-navigation-bar">
+  <div class="weui-navigation-bar__placeholder" style="visibility: hidden;"></div>
+  <div class="weui-navigation-bar__inner">
+
+    <div class="weui-navigation-bar__left">
+      <div class="weui-navigation-bar__buttons">
+        <wx-view bindtap="back" class="weui-navigation-bar__button weui-navigation-bar__btn_goback" hover-class="weui-active"></wx-view>
+      </div>
+      <slot id="slot-left" name="left"></slot>
+    </div>
+
+    <div class='weui-navigation-bar__center'>
+      <div class="weui-navigation-bar__loading">
+        <div class="weui-loading"></div>
+      </div>
+      <span id="title"></span>
+      <slot id="slot-center" name="center"></slot>
+    </div>
+
+    <div class='weui-navigation-bar__right'>
+      <slot name="right"></slot>
+    </div>
+  </div>
+</div>
+  

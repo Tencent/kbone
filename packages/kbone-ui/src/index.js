@@ -1,4 +1,6 @@
 import registerDomExtend from './utils/dom-extend'
+import weuiStyle from './styles/weui.less'
+
 import Base from './components/base'
 import WxRefresher from './inner-components/wx-refresher'
 
@@ -34,6 +36,7 @@ import WxCatch from './components/wx-catch'
 import WxAnimation from './components/wx-animation'
 
 import MpBadge from './weui-components/mp-badge'
+import MpNavigationBar from './weui-components/mp-navigation-bar'
 
 const COMPONENT_MAP = {
     'wx-movable-area': WxMovableArea,
@@ -68,6 +71,7 @@ const COMPONENT_MAP = {
     'wx-animation': WxAnimation,
 
     'mp-badge': MpBadge,
+    'mp-navigation-bar': MpNavigationBar,
 }
 const COMPONENT_LIST = Object.keys(COMPONENT_MAP)
 
@@ -80,6 +84,14 @@ export default {
             mode: options.mode || 'open',
             style: options.style || {},
         })
+
+        // 注册样式
+        if (components.some(item => item.indexOf('mp-') === 0)) {
+            // 包含 weui 组件
+            const style = document.createElement('style')
+            style.innerHTML = weuiStyle
+            document.head.appendChild(style)
+        }
 
         // 注册内部组件
         if (components.length) WxRefresher.register()

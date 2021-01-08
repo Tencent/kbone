@@ -5,13 +5,13 @@ const ua = window.navigator.userAgent
 const isSymbian = /(?:SymbianOS)/.test(ua) || /(?:Windows Phone)/.test(ua)
 const isAndroid = /(?:Android)/.test(ua)
 const isTablet = /(?:iPad|PlayBook)/.test(ua) || (isAndroid && !/(?:Mobile)/.test(ua)) || (/(?:Firefox)/.test(ua) && /(?:Tablet)/.test(ua))
-const isPhone = /(?:iPhone)/.test(ua) && !isTablet
-const isPc = !isPhone && !isAndroid && !isSymbian
+const isIPhone = /(?:iPhone)/.test(ua) && !isTablet
+const isPc = !isIPhone && !isAndroid && !isSymbian
 const isWeixin = ua.toLowerCase().indexOf('micromessenger') !== -1
 export const os = {
     isPc,
     isMobile: !isPc,
-    isPhone,
+    isIPhone,
     isTablet,
     isAndroid,
     isSymbian,

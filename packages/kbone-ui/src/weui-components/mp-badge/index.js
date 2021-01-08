@@ -1,11 +1,11 @@
-import Base from '../../components/base'
+import WeuiBase from '../weui-base'
 import tpl from './index.html'
 import style from './index.less'
 
 const template = document.createElement('template')
 template.innerHTML = `<style>${style}</style>${tpl}`
 
-export default class MpBadge extends Base {
+export default class MpBadge extends WeuiBase {
     constructor() {
         super()
 
@@ -23,18 +23,13 @@ export default class MpBadge extends Base {
 
         if (oldValue === newValue) return
         if (name === 'ext-class' || name === 'content') {
-            let className = 'weui-badge'
-            const extClass = this.extClass
-            if (extClass) className += ` ${extClass}`
-            if (this.content) className += ` weui-badge_dot`
-            this.badge.className = className
-
+            this.badge.className = `weui-badge ${this.extClass} ${this.content ? 'weui-badge_dot' : ''}`
             if (name === 'content') this.badge.innerText = this.content
         }
     }
 
     static get observedAttributes() {
-        return ['ext-class', 'content', ...Base.observedAttributes]
+        return ['ext-class', 'content', ...WeuiBase.observedAttributes]
     }
 
     /**
