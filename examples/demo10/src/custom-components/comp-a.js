@@ -18,6 +18,10 @@ Component({
             type: Array,
             value: [],
         },
+        testDefaultVal: {
+            type: String,
+            value: 'hello kbone',
+        },
     },
     data: {
         str: _.getWords() + 'comp-a',

@@ -43,11 +43,12 @@ function isEqual(a, b) {
 /**
  * 检查组件属性
  */
-function checkComponentAttr({props = []}, name, domNode, destData, oldData) {
+function checkComponentAttr({props = [], propsVal}, name, domNode, destData, oldData) {
     if (props.length) {
         for (const name of props) {
             let newValue = domNode.getAttribute(name)
             if (newValue === undefined) newValue = domNode.getAttribute(tool.toDash(name)) // 转成连字符再拉取一次
+            if (newValue === undefined && propsVal) newValue = propsVal[name]
 
             newValue = newValue !== undefined ? newValue : null
             if (typeof newValue === 'string') {

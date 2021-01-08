@@ -1,9 +1,6 @@
 import Base from '../base'
 import tpl from './index.html'
 import style from './index.less'
-import {
-    findParent,
-} from '../../utils/tool'
 
 const template = document.createElement('template')
 template.innerHTML = `<style>${style}</style>${tpl}`
@@ -24,12 +21,10 @@ export default class WxCanvas extends Base {
 
     connectedCallback() {
         super.connectedCallback()
-
     }
 
     disconnectedCallback() {
         super.disconnectedCallback()
-
     }
 
     static get observedAttributes() {

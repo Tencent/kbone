@@ -16,7 +16,8 @@ module.exports = {
 			usingComponents: {
 				'comp-a': {
 					path: 'comp-a',
-					props: ['prefix', 'suffix', 'testObj', 'testArr'],
+					props: ['prefix', 'suffix', 'testObj', 'testArr', 'testDefaultVal'],
+					propsVal: ['', '', {}, [], 'hello kbone'],
 					events: ['someevent'],
 				},
 				'comp-b': {

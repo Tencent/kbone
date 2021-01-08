@@ -1,17 +1,17 @@
 <template>
   <div class="cnt">
-    <mp-navigation-bar :show="true">
+    <mp-navigation-bar>
       <div slot="center">我是标题</div>
     </mp-navigation-bar>
     <button type="default" @click="dialogShow = true">确认取消按钮</button>
     <button type="default" @click="showOneButtonDialog = true">只有确认按钮</button>
-    <mp-dialog title="test" :mask="true" :show="dialogShow" @buttontap="dialogShow = false" :buttons="buttons">
+    <mp-dialog title="test" :show="dialogShow" @buttontap="dialogShow = false" :buttons="buttons">
       <view>test content</view>
     </mp-dialog>
-    <mp-dialog title="test1" :mask="true" :show="showOneButtonDialog" @buttontap="showOneButtonDialog = false" :buttons="oneButton">
+    <mp-dialog title="test1" :show="showOneButtonDialog" @buttontap="showOneButtonDialog = false" :buttons="oneButton">
       <view>test content1</view>
     </mp-dialog>
-    <mp-msg type="success" title="操作成功" size="64">
+    <mp-msg type="success" title="操作成功">
       <div slot="desc">内容详情，可根据实际需要安排，如果换行则不超过规定长度，居中展现</div>
       <div slot="extend">
         <div>1. 说明1</div>

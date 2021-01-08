@@ -88,7 +88,7 @@ export default class WxCheckbox extends Base {
         // 已经被底层组件处理过，就不再处理
         if (evt._isProcessed) return
         evt._isProcessed = true
-        
+
         if (this.disabled) return
 
         this.checked = !this.checked

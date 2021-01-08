@@ -189,15 +189,26 @@ class MpPlugin {
                 if (typeof wxCustomComponents[key] === 'string') {
                     wxCustomComponents[key] = {path: wxCustomComponents[key]}
                 }
+                const {props = [], propsVal = {}} = wxCustomComponents[key]
+                wxCustomComponents[key].propsVal = props.reduce((tempObj, item, index) => {
+                    tempObj[item] = propsVal[index] || null
+                    return tempObj
+                }, {})
             })
 
             // 处理 weui
             if (useWeui) {
                 weuiList.forEach(item => {
-                    const {name, props = [], events = []} = item
+                    const {
+                        name, props = [], propsVal = {}, events = []
+                    } = item
                     wxCustomComponents[`mp-${name}`] = {
                         path: `weui-miniprogram/${name}/${name}`,
                         props,
+                        propsVal: props.reduce((tempObj, item, index) => {
+                            tempObj[item] = propsVal[index] || null
+                            return tempObj
+                        }, {}),
                         events,
                         isWeui: true,
                     }
