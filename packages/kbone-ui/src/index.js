@@ -33,6 +33,8 @@ import WxCapture from './components/wx-capture'
 import WxCatch from './components/wx-catch'
 import WxAnimation from './components/wx-animation'
 
+import MpBadge from './weui-components/mp-badge'
+
 const COMPONENT_MAP = {
     'wx-movable-area': WxMovableArea,
     'wx-movable-view': WxMovableView,
@@ -64,6 +66,8 @@ const COMPONENT_MAP = {
     'wx-capture': WxCapture,
     'wx-catch': WxCatch,
     'wx-animation': WxAnimation,
+
+    'mp-badge': MpBadge,
 }
 const COMPONENT_LIST = Object.keys(COMPONENT_MAP)
 

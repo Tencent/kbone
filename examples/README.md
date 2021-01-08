@@ -72,5 +72,5 @@ npm install
 * demo24：react + 多页
 * demo25：vue + worker + sharedWorker
 * demo26：vue3（beta）
-* demo27：vue + kbone-ui@2.0
-* demo28：vue + weui
+* demo27：vue + kbone-ui
+* demo28：vue + weui + kbone-ui
