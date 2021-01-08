@@ -13,7 +13,6 @@ export default class WxPickerView extends Scroller {
         super()
 
         this.initShadowRoot(template, WxPickerView.observedAttributes, () => {
-            this.onTap = this.onTap.bind(this)
             this.onResize = this.onResize.bind(this)
             this.main = this.shadowRoot.querySelector('#main')
             this.mask = this.shadowRoot.querySelector('#mask')
@@ -45,7 +44,7 @@ export default class WxPickerView extends Scroller {
         this._resizeObserver = new ResizeObserver(this.onResize)
         this._resizeObserver.observe(this.indicator)
 
-        this.shadowRoot.addEventListener('tap', this.onTap)
+        this.addEventListener('tap', this.onTap)
         this.main.addEventListener('touchstart', this.onScrollerTouchStart)
         this.main.addEventListener('touchmove', this.onScrollerTouchMove)
         this.main.addEventListener('touchend', this.onScrollerTouchEnd)
@@ -65,7 +64,7 @@ export default class WxPickerView extends Scroller {
         this._resizeObserver = null
         this._parent = null
 
-        this.shadowRoot.removeEventListener('tap', this.onTap)
+        this.removeEventListener('tap', this.onTap)
         this.main.removeEventListener('touchstart', this.onScrollerTouchStart)
         this.main.removeEventListener('touchmove', this.onScrollerTouchMove)
         this.main.removeEventListener('touchend', this.onScrollerTouchEnd)
@@ -91,6 +90,10 @@ export default class WxPickerView extends Scroller {
      * 监听点击
      */
     onTap(evt) {
+        // 已经被底层组件处理过，就不再处理
+        if (evt._isProcessed) return
+        evt._isProcessed = true
+
         const target = this.shadowRoot.elementsFromPoint(evt.detail.clientX, evt.detail.clientY)
         if (target === evt.currentTarget || this._scroller.isScrolling()) return
 

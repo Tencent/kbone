@@ -14,7 +14,6 @@ export default class WxImage extends Base {
         this.initShadowRoot(template, WxImage.observedAttributes, () => {
             this._changeId = 0 // 记录不同 src 对应的 id
 
-            this.onLongPress = this.onLongPress.bind(this)
             this.onResize = this.onResize.bind(this)
             this.div = this.shadowRoot.querySelector('#div')
         })
@@ -35,7 +34,7 @@ export default class WxImage extends Base {
         this._resizeObserver = new ResizeObserver(this.onResize)
         this._resizeObserver.observe(this)
 
-        this.shadowRoot.addEventListener('longpress', this.onLongPress)
+        this.addEventListener('longpress', this.onLongPress)
     }
 
     disconnectedCallback() {
@@ -44,7 +43,7 @@ export default class WxImage extends Base {
         if (this._resizeObserver) this._resizeObserver.disconnect()
         this._resizeObserver = null
 
-        this.shadowRoot.removeEventListener('longpress', this.onLongPress)
+        this.removeEventListener('longpress', this.onLongPress)
     }
 
     attributeChangedCallback(name, oldValue, newValue) {

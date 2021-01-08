@@ -43,6 +43,10 @@ export default class WxLabel extends Base {
      * 监听点击事件
      */
     onTap(evt) {
+        // 已经被底层组件处理过，就不再处理
+        if (evt._isProcessed) return
+        evt._isProcessed = true
+
         if (evt.detail.source === 'label') return
 
         let relatedNode
@@ -55,20 +59,21 @@ export default class WxLabel extends Base {
             if (!relatedNode) relatedNode = this.querySelector('wx-switch')
         }
 
+        const customEvt = new CustomEvent('tap', {
+            bubbles: false,
+            cancelable: true,
+            detail: Object.assign({source: 'label'}, evt.detail)
+        })
         if (relatedNode.tagName === 'WX-BUTTON') {
             const targets = document.elementsFromPoint(evt.detail.clientX, evt.detail.clientY)
             if (targets && targets.indexOf(relatedNode) === -1) {
                 // 如果 tap 事件不是从 wx-button 触发出来
-                relatedNode.dispatchEvent(new CustomEvent('tap', {
-                    bubbles: false,
-                    cancelable: true,
-                    detail: Object.assign({source: 'label'}, evt.detail)
-                }))
+                relatedNode.dispatchEvent(customEvt)
             }
         } else if (relatedNode.tagName === 'WX-CHECKBOX' || relatedNode.tagName === 'WX-RADIO') {
-            relatedNode.onTap()
+            relatedNode.onTap(customEvt)
         } else if (relatedNode.tagName === 'WX-SWITCH') {
-            relatedNode.onInputTap()
+            relatedNode.onInputTap(customEvt)
         }
     }
 }

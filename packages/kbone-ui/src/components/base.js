@@ -316,18 +316,21 @@ export default class Base extends HTMLElement {
             this._preventTap = true
             if (this._longTapTimeout) this._longTapTimeout = clearTimeout(this._longTapTimeout)
         } else {
-            let target = evt.target
-            if (target === this.shadowRoot) {
-                // 如果是 shadowRoot，表示没有子节点触发事件，则换回 this
-                target = this
-            }
+            let targets = [evt.target]
+            if (targets[0] === this.shadowRoot) targets = [this] // 如果是 shadowRoot，表示没有子节点触发事件，则换回 this
+            else targets.push(this) // 有子节点触发事件，那么还需要补充 this，让事件冒泡出去，不然只会截停到 shadowRoot
+
             this._preventTap = false
             if (this._longTapTimeout) this._longTapTimeout = clearTimeout(this._longTapTimeout)
             this._longTapTimeout = setTimeout(() => {
                 // 触发 longpress 后不触发 tap
                 this._preventTap = true
-                // 模拟的 longpress 在有内部结构时，只在组件内部传递，不会冒泡出去；在没有内部结构时，则直接冒泡出去
-                if (target) target.dispatchEvent(new CustomEvent('longpress', {bubbles: true, cancelable: true}))
+                if (targets.length) {
+                    const customEvt = new CustomEvent('longpress', {bubbles: true, cancelable: true})
+                    targets.forEach(target => {
+                        if (target) target.dispatchEvent(customEvt)
+                    })
+                }
             }, 350)
         }
     }
@@ -361,28 +364,27 @@ export default class Base extends HTMLElement {
 
         if (this._longTapTimeout) this._longTapTimeout = clearTimeout(this._longTapTimeout)
         if ((this._baseX2 && Math.abs(this._baseX1 - this._baseX2) <= 30) && (this._baseY2 && Math.abs(this._baseY1 - this._baseY2) <= 30)) {
-            let target = evt.target
-            if (target === this.shadowRoot) {
-                // 如果是 shadowRoot，表示没有子节点触发事件，则换回 this
-                target = this
-            }
+            let targets = [evt.target]
+            if (targets[0] === this.shadowRoot) targets = [this] // 如果是 shadowRoot，表示没有子节点触发事件，则换回 this
+            else targets.push(this) // 有子节点触发事件，那么还需要补充 this，让事件冒泡出去，不然只会截停到 shadowRoot
+
             const pageX = evt.changedTouches[0].pageX
             const pageY = evt.changedTouches[0].pageY
             const clientX = evt.changedTouches[0].clientX
             const clientY = evt.changedTouches[0].clientY
             if (this._tapTimeout) this._tapTimeout = clearTimeout(this._tapTimeout)
             this._tapTimeout = setTimeout(() => {
-                if (!this._preventTap) {
-                    if (target) {
-                        // 模拟的 tap 在有内部结构时，只在组件内部传递，不会冒泡出去；在没有内部结构时，则直接冒泡出去
-                        target.dispatchEvent(new CustomEvent('tap', {
-                            bubbles: true,
-                            cancelable: true,
-                            detail: {
-                                pageX, pageY, clientX, clientY
-                            }
-                        }))
-                    }
+                if (!this._preventTap && targets.length) {
+                    const customEvt = new CustomEvent('tap', {
+                        bubbles: true,
+                        cancelable: true,
+                        detail: {
+                            pageX, pageY, clientX, clientY
+                        }
+                    })
+                    targets.forEach(target => {
+                        if (target) target.dispatchEvent(customEvt)
+                    })
                 }
             }, 0)
         }

@@ -45,7 +45,6 @@ export default class WxTextarea extends Base {
         this._resizeObserver = new ResizeObserver(this.updateTextarea)
         this._resizeObserver.observe(this)
 
-        this.shadowRoot.addEventListener('tap', this.onTextareaFocus)
         this.textarea.addEventListener('focus', this.onTextareaFocus)
         this.textarea.addEventListener('blur', this.onTextareaBlur)
         this.textarea.addEventListener('input', this.onTextareaInput)
@@ -77,7 +76,6 @@ export default class WxTextarea extends Base {
         if (this._resizeObserver) this._resizeObserver.disconnect()
         this._resizeObserver = null
 
-        this.shadowRoot.removeEventListener('tap', this.onTextareaFocus)
         this.textarea.removeEventListener('focus', this.onTextareaFocus)
         this.textarea.removeEventListener('blur', this.onTextareaBlur)
         this.textarea.removeEventListener('input', this.onTextareaInput)

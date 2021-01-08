@@ -13,7 +13,6 @@ export default class WxCheckbox extends Base {
         super()
 
         this.initShadowRoot(template, WxCheckbox.observedAttributes, () => {
-            this.onTap = this.onTap.bind(this)
             this.input = this.shadowRoot.querySelector('#input')
         })
     }
@@ -27,7 +26,7 @@ export default class WxCheckbox extends Base {
 
         this._parent = findParent(this, parentNode => parentNode.tagName === 'WX-CHECKBOX-GROUP')
         if (this._parent) this._parent.addItem(this)
-        this.shadowRoot.addEventListener('tap', this.onTap)
+        this.addEventListener('tap', this.onTap)
     }
 
     disconnectedCallback() {
@@ -35,7 +34,7 @@ export default class WxCheckbox extends Base {
 
         this._parent = null
         if (this._parent) this._parent.removeItem(this)
-        this.shadowRoot.removeEventListener('tap', this.onTap)
+        this.removeEventListener('tap', this.onTap)
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
@@ -85,7 +84,11 @@ export default class WxCheckbox extends Base {
     /**
      * 监听点击事件
      */
-    onTap() {
+    onTap(evt) {
+        // 已经被底层组件处理过，就不再处理
+        if (evt._isProcessed) return
+        evt._isProcessed = true
+        
         if (this.disabled) return
 
         this.checked = !this.checked

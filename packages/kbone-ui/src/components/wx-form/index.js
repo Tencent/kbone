@@ -31,8 +31,8 @@ export default class WxForm extends Base {
     disconnectedCallback() {
         super.disconnectedCallback()
 
-        this.removeEventListener('formsubmit', this.onFormSubmit)
-        this.removeEventListener('formreset', this.onFormReset)
+        this.shadowRoot.removeEventListener('formsubmit', this.onFormSubmit)
+        this.shadowRoot.removeEventListener('formreset', this.onFormReset)
     }
 
     static get observedAttributes() {

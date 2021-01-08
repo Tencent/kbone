@@ -42,7 +42,6 @@ export default class WxInput extends Base {
         this._resizeObserver = new ResizeObserver(this.updateInput)
         this._resizeObserver.observe(this)
 
-        this.shadowRoot.addEventListener('tap', this.onInputFocus)
         this.inputDom.addEventListener('focus', this.onInputFocus)
         this.inputDom.addEventListener('blur', this.onInputBlur)
         this.inputDom.addEventListener('input', this.onInputInput)
@@ -75,7 +74,6 @@ export default class WxInput extends Base {
         if (this._resizeObserver) this._resizeObserver.disconnect()
         this._resizeObserver = null
 
-        this.shadowRoot.removeEventListener('tap', this.onInputFocus)
         this.inputDom.removeEventListener('focus', this.onInputFocus)
         this.inputDom.removeEventListener('blur', this.onInputBlur)
         this.inputDom.removeEventListener('input', this.onInputInput)
