@@ -10,6 +10,7 @@ module.exports = {
 	},
 	generate: {
 		weui: true,
+		appWxss: 'display',
 	},
 	app: {
 		navigationStyle: "custom",

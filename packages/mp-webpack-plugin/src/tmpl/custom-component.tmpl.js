@@ -59,6 +59,11 @@ function checkComponentAttr({props = [], propsVal}, name, domNode, destData, old
                 } catch (err) {
                     // ignore
                 }
+
+                if (typeof newValue === 'string') {
+                    // 处理布尔值
+                    newValue = newValue === 'false' ? false : newValue
+                }
             }
             if (!oldData || !isEqual(oldData[name], newValue)) destData[name] = newValue
         }
