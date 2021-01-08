@@ -700,6 +700,33 @@
       </div>
     </wx-view>
     <wx-view class="item">
+      <div class="title">wx-canvas</div>
+      <div class="comp-cnt">
+        <div>2d Canvas</div>
+        <wx-canvas
+          ref="wx-canvas"
+          class="wx-canvas"
+          type="2d"
+          :disable-scroll="wxCanvas.disableScroll"
+          @canvastouchstart="log('[wx-canvas] touchstart', $event)"
+          @canvastouchmove="log('[wx-canvas] touchmove', $event)"
+          @canvastouchend="log('[wx-canvas] touchend', $event)"
+          @canvastouchcancel="log('[wx-canvas] touchcancel', $event)"
+          @longtap="log('[wx-canvas] longtap', $event)"
+          @error="log('[wx-canvas] error', $event)"
+        >
+          <Inner style="margin-top: 100px;"></Inner>
+        </wx-canvas>
+        <div class="opr-cnt">
+          <div class="opr-label">禁止滚动</div>
+          <wx-switch @change="wxCanvas.disableScroll = $event.detail.value.toString()"></wx-switch>
+        </div>
+        <div>2d Canvas 动画</div>
+        <wx-canvas ref="wx-canvas-animation" class="wx-canvas-2" type="2d"></wx-canvas>
+        <wx-canvas ref="wx-canvas-webgl" class="wx-canvas-2" type="webgl"></wx-canvas>
+      </div>
+    </wx-view>
+    <wx-view class="item">
       <div class="title">wx-capture</div>
       <div class="comp-cnt">
         <div @touchstart="log('root touchstart')" @touchend="log('root touchend')" @click="log('root click')">
@@ -771,8 +798,11 @@
   </div>
 </template>
 <script>
+import Inner from './Inner.vue'
+
 export default {
   name: 'App',
+  components: {Inner},
   data() {
     const now = new Date()
 
@@ -909,6 +939,9 @@ export default {
         month: wxPickerViewMonth,
         date: wxPickerViewDate,
       },
+      wxCanvas: {
+        disableScroll: undefined,
+      },
       wxCapture: {
         eventCount: 0,
       },
@@ -929,6 +962,147 @@ export default {
   mounted() {
     // wx-text
     this.$refs['wx-text1'].innerText = '&gt; this is first line\n&gt; this is second line'
+
+    // wx-canvas
+    this.$refs['wx-canvas'].$$prepare().then(domNode => {
+      domNode.width = 300
+      domNode.height = 200
+      const context = domNode.getContext('2d')
+
+      context.strokeStyle = '#00ff00'
+      context.lineWidth = 5
+      context.rect(0, 0, 200, 200)
+      context.stroke()
+      context.strokeStyle = '#ff0000'
+      context.lineWidth = 2
+      context.moveTo(160, 100)
+      context.arc(100, 100, 60, 0, 2 * Math.PI, true)
+      context.moveTo(140, 100)
+      context.arc(100, 100, 40, 0, Math.PI, false)
+      context.moveTo(85, 80)
+      context.arc(80, 80, 5, 0, 2 * Math.PI, true)
+      context.moveTo(125, 80)
+      context.arc(120, 80, 5, 0, 2 * Math.PI, true)
+      context.stroke()
+    }).catch(console.error)
+    this.$refs['wx-canvas-animation'].$$prepare().then(domNode => {
+      const context = domNode.getContext('2d')
+      const dpr = window.devicePixelRatio
+
+      domNode.width = 305 * dpr
+      domNode.height = 305 * dpr
+      context.scale(dpr, dpr)
+
+      const p = {
+        x: 150,
+        y: 150,
+        vx: 2,
+        vy: 2
+      }
+      const renderLoop = () => {
+        context.clearRect(0, 0, 305, 305)
+        
+        // 球
+        p.x += p.vx
+        p.y += p.vy
+        if (p.x >= 300) p.vx = -2
+        if (p.x <= 7) p.vx = 2
+        if (p.y >= 300) p.vy = -2
+        if (p.y <= 7) p.vy = 2
+
+        function ball(x, y) {
+          context.beginPath()
+          context.arc(x, y, 5, 0, Math.PI * 2)
+          context.fillStyle = '#1aad19'
+          context.strokeStyle = 'rgba(1,1,1,0)'
+          context.fill()
+          context.stroke()
+        }
+
+        ball(p.x, 150)
+        ball(150, p.y)
+        ball(300 - p.x, 150)
+        ball(150, 300 - p.y)
+        ball(p.x, p.y)
+        ball(300 - p.x, 300 - p.y)
+        ball(p.x, 300 - p.y)
+        ball(300 - p.x, p.y)
+
+        domNode.requestAnimationFrame(renderLoop)
+      }
+      domNode.requestAnimationFrame(renderLoop)
+    })
+    this.$refs['wx-canvas-webgl'].$$prepare().then(domNode => {
+      const vs = `
+        precision mediump float;
+
+        attribute vec2 vertPosition;
+        attribute vec3 vertColor;
+        varying vec3 fragColor;
+
+        void main() {
+          gl_Position = vec4(vertPosition, 0.0, 1.0);
+          fragColor = vertColor;
+        }
+      `
+
+      const fs = `
+        precision mediump float;
+
+        varying vec3 fragColor;
+        void main() {
+          gl_FragColor = vec4(fragColor, 1.0);
+        }
+      `
+
+      const triangleVertices = [
+        0.0, 0.5, 1.0, 1.0, 0.0,
+        -0.5, -0.5, 0.7, 0.0, 1.0,
+        0.5, -0.5, 0.1, 1.0, 0.6
+      ]
+
+      domNode.width = 305
+      domNode.height = 305
+      const gl = domNode.getContext('webgl')
+      if (!gl) {
+        console.error('gl init failed', gl)
+        return
+      }
+      gl.viewport(0, 0, 305, 305)
+      const vertShader = gl.createShader(gl.VERTEX_SHADER)
+      gl.shaderSource(vertShader, vs)
+      gl.compileShader(vertShader)
+
+      const fragShader = gl.createShader(gl.FRAGMENT_SHADER)
+      gl.shaderSource(fragShader, fs)
+      gl.compileShader(fragShader)
+
+      const prog = gl.createProgram()
+      gl.attachShader(prog, vertShader)
+      gl.attachShader(prog, fragShader)
+      gl.deleteShader(vertShader)
+      gl.deleteShader(fragShader)
+      gl.linkProgram(prog)
+      gl.useProgram(prog)
+
+      const draw = () => {
+        const triangleVertexBufferObject = gl.createBuffer()
+        gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexBufferObject)
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(triangleVertices), gl.STATIC_DRAW)
+
+        const positionAttribLocation = gl.getAttribLocation(prog, 'vertPosition')
+        const colorAttribLocation = gl.getAttribLocation(prog, 'vertColor')
+        gl.vertexAttribPointer(positionAttribLocation, 2, gl.FLOAT, gl.FALSE, 5 * Float32Array.BYTES_PER_ELEMENT, 0)
+        gl.vertexAttribPointer(colorAttribLocation, 3, gl.FLOAT, gl.FALSE, 5 * Float32Array.BYTES_PER_ELEMENT, 2 * Float32Array.BYTES_PER_ELEMENT)
+
+        gl.enableVertexAttribArray(positionAttribLocation)
+        gl.enableVertexAttribArray(colorAttribLocation)
+        gl.drawArrays(gl.TRIANGLES, 0, 3)
+        domNode.requestAnimationFrame(draw)
+      }
+
+      domNode.requestAnimationFrame(draw)
+    })
   },
   methods: {
     log(...args) {
@@ -1155,7 +1329,7 @@ export default {
   margin: 30px;
 }
 @media (prefers-color-scheme: dark) {
-  body {
+  html {
     background-color: #222;
     color: #fff;
   }
@@ -1374,6 +1548,14 @@ export default {
 }
 .wx-textarea {
   margin: 10px 0;
+}
+.wx-canvas {
+  width: 300px;
+  height: 200px;
+}
+.wx-canvas-2 {
+  width: 305px;
+  height: 305px;
 }
 .event-cnt {
   position: relative;

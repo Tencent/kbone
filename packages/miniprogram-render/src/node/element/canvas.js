@@ -134,6 +134,30 @@ class HTMLCanvasElement extends Element {
         }
         return this.$_node.getContext(type)
     }
+
+    createPath2D(...args) {
+        return this.$_node.createPath2D(...args)
+    }
+
+    createImage(...args) {
+        return this.$_node.createImage(...args)
+    }
+
+    createImageData(...args) {
+        return this.$_node.createImageData(...args)
+    }
+
+    requestAnimationFrame(...args) {
+        return this.$_node.requestAnimationFrame(...args)
+    }
+
+    cancelAnimationFrame(...args) {
+        return this.$_node.cancelAnimationFrame(...args)
+    }
+
+    toDataURL(...args) {
+        return this.$_node.toDataURL(...args)
+    }
 }
 
 module.exports = HTMLCanvasElement

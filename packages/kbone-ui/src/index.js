@@ -27,6 +27,7 @@ import WxSlider from './components/wx-slider'
 import WxSwitch from './components/wx-switch'
 import WxTextarea from './components/wx-textarea'
 import WxImage from './components/wx-image'
+import WxCanvas from './components/wx-canvas'
 
 import WxCapture from './components/wx-capture'
 import WxCatch from './components/wx-catch'
@@ -58,6 +59,7 @@ const COMPONENT_MAP = {
     'wx-switch': WxSwitch,
     'wx-textarea': WxTextarea,
     'wx-image': WxImage,
+    'wx-canvas': WxCanvas,
 
     'wx-capture': WxCapture,
     'wx-catch': WxCatch,

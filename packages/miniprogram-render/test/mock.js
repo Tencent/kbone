@@ -124,6 +124,7 @@ global.wx = {
             screenWidth: 200,
             windowHeight: 280,
             windowWidth: 190,
+            pixelRatio: 3,
         }
     },
     getStorageInfoSync() {

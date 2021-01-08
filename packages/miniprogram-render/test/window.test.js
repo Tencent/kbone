@@ -557,6 +557,10 @@ test('window: XMLHttpRequest', () => {
     expect(xmlHttpRequest).toBeInstanceOf(XMLHttpRequest)
 })
 
+test('window.devicePixelRatio', () => {
+    expect(window.devicePixelRatio).toBe(3)
+})
+
 test('window: open', () => {
     const location = window.location
 

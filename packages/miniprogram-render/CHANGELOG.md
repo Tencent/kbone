@@ -1,5 +1,10 @@
 # 更新日志
 
+## 2.2.1
+
+* 支持 window.devicePixelRatio
+* 支持 canvas 的 createPath2D、createImage、createImageData、requestAnimationFrame、cancelAnimationFrame、toDataURL 方法
+
 ## 2.2.0
 
 * innerHTML 补充 behavior 输出

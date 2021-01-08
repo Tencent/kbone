@@ -631,6 +631,10 @@ class Window extends EventTarget {
         return this.$_sharedWorkerConstructor
     }
 
+    get devicePixelRatio() {
+        return wx.getSystemInfoSync().pixelRatio
+    }
+
     open(url) {
         // 不支持 windowName 和 windowFeatures
         this.location.$$open(url)
