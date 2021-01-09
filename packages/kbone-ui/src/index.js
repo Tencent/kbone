@@ -42,6 +42,7 @@ import MpCell from './weui-components/mp-cell'
 import MpCells from './weui-components/mp-cells'
 import MpDialog from './weui-components/mp-dialog'
 import MpMsg from './weui-components/mp-msg'
+import MpToptips from './weui-components/mp-toptips'
 import MpNavigationBar from './weui-components/mp-navigation-bar'
 
 const COMPONENT_MAP = {
@@ -83,6 +84,7 @@ const COMPONENT_MAP = {
     'mp-cells': MpCells,
     'mp-dialog': MpDialog,
     'mp-msg': MpMsg,
+    'mp-toptips': MpToptips,
     'mp-navigation-bar': MpNavigationBar,
 }
 const COMPONENT_LIST = Object.keys(COMPONENT_MAP)
@@ -95,7 +97,6 @@ export default {
         Base.setGlobal({
             mode: options.mode || 'open',
             style: options.style || {},
-            weuiStyle,
         })
 
         // 注册样式

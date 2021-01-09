@@ -1,9 +1,10 @@
 import WeuiBase from '../weui-base'
 import tpl from './index.html'
 import style from './index.less'
+import weuiStyle from '../../styles/weui.less'
 
 const template = document.createElement('template')
-template.innerHTML = `<style>${style}</style>${tpl}`
+template.innerHTML = `<style>${weuiStyle}${style}</style>${tpl}`
 
 export default class MpCell extends WeuiBase {
     constructor() {
@@ -16,7 +17,6 @@ export default class MpCell extends WeuiBase {
             this.iconDom = this.shadowRoot.querySelector('#icon')
             this.slotIcon = this.shadowRoot.querySelector('#slot-icon')
             this.titleForm = this.shadowRoot.querySelector('#title-form')
-            this.slotTitleForm = this.shadowRoot.querySelector('#slot-title-form')
             this.titleDom = this.shadowRoot.querySelector('#title')
             this.slotTitle = this.shadowRoot.querySelector('#slot-title')
             this.valueDom = this.shadowRoot.querySelector('#value')
@@ -138,9 +138,8 @@ export default class MpCell extends WeuiBase {
         const inForm = this._inForm
         const title = this.title
         this.titleForm.classList.toggle('hide', !inForm || !title)
-        this.slotTitleForm.classList.toggle('hide', !inForm || !!title)
         this.titleDom.classList.toggle('hide', inForm || !title)
-        this.slotTitle.classList.toggle('hide', inForm || !!title)
+        this.slotTitle.classList.toggle('hide', !!title)
 
         this.titleForm.innerText = title
         this.titleDom.innerText = title

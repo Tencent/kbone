@@ -144,13 +144,6 @@ export default class Base extends HTMLElement {
     }
 
     /**
-     * 获取 weui 样式
-     */
-    getWeuiStyle() {
-        return globalConfig.weuiStyle || ''
-    }
-
-    /**
      * 初始化 shadowRoot
      */
     initShadowRoot(template, attributes, afterAttach) {

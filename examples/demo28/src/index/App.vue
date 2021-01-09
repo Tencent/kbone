@@ -13,12 +13,39 @@
     <div class="cnt">
       <wx-view class="item">
         <div class="title">mp-badge</div>
-        <div class="comp-cnt"></div>
+        <div class="comp-cnt">
+          <mp-cells title="新消息提示跟摘要信息后，统一在列表右侧">
+            <mp-cell title="单行列表" :link="true">
+              <div slot="footer">
+                <div style="display: inline-block;vertical-align:middle; font-size: 17px;">详细信息</div>
+                <mp-badge style="margin-left: 5px;margin-right: 5px;" ext-class="blue"/>
+              </div>
+            </mp-cell>
+          </mp-cells>
+          <mp-cells title="未读数红点跟在主题信息后，统一在列表左侧">
+            <mp-cell>
+              <div slot="title" style="position: relative;margin-right: 10px;">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKAAAACgCAIAAAAErfB6AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RUU3QzMwMDU3NEZGMTFFNkIwQzZDNTI2QjgwMzcwMzQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RUU3QzMwMDY3NEZGMTFFNkIwQzZDNTI2QjgwMzcwMzQiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpFRTdDMzAwMzc0RkYxMUU2QjBDNkM1MjZCODAzNzAzNCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpFRTdDMzAwNDc0RkYxMUU2QjBDNkM1MjZCODAzNzAzNCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PjSJHvsAAAU3SURBVHja7J3rThs7FEYphDshEBJAvP+jVREoCrdwv+l8hy19dcczJk2BFLLWr8ngeNJZ3tvbnpH6YzgcLsD3ZZFbgGBAMCAYEAwIBgQDghEMCAYEA4IBwYBgQDCCAcGAYEAwIBgQDAgGBCMYEAwIBgQDggHBgGAEA4IBwYBgQDAgGBCMYEAwIBgQDAgGBAOCAcEIBgQDggHBgGBAMCAYwYBgQDAgGBAMCAYEIxgQDAgGBMMsaH3alV5eXn4Nq8XFWTV+304K33qXX/WVBN/d3Z2ensbxwcHB8vJyU8vHx8eTkxPfmqOjo0K39/f3/j+u+/3+6urqdD9PF3U/5Z+Xon+R/l06WFtb6/V66Z8Gg0EcdDqddrv9/VN0est0N8v3Oo0DKSw0fnh4qL0EzECwM1VqJefm5qZJYW0Ex4FiaIaZEMH/s7Ky4nQ9YVCmCsuNp07OCH43NjY24uDp6SmtQSr5Of6kiPRoeLNx2h5mJjh10BTEPq/R4PZNc7bPKzkzAc9esDS0Wq3yzJrOqc66t7e35dnayT9fxmgQqFka66yDPzaIr66umiJYDuK8xoFGw5tztkeJk78Zj8fX19eaCypX16JlrmL9swXbWUzDlbrXKTeSsyJYDdSsqbGDsrIGG41GFbUeKOJvlsuk6D+YhvOZ1anY46AQxP66wt2CY5PEdiNkRXrd4XBYrsyJ4L+dhkOAEmwlkmzRPpR746Tm0Uoe9gScylPs+mS323XQt9tthbs3nuR48u0qInjKIK6EUaTiypaFG+dFmcPUUS7lcVJjqNfrVVK6PuqkqzzN0KToT93u8Mc0rF14Rz2cjwYPAp05Pz+PM7u7u01X39vbqyQABH/gNJwGcdOaJ93xyEdD1Ns6eH5+jppLHws1lNKyR8w8OG7NYEw1TMORhHM99q3R4Mcyztj5Zoh6KNdQvrrGBII/djVsZ17z5FsW5QheX1+PA9uSPD/4KzMPgmfz+MVWHIjpDmUe8ZW6LJ2AXQlPsfKpXSsv/P6sfroe5j2CbSVKJ31Mdyjz9kraMQIipaerKZfKLo91sLm5OcnPWFpaSofRFJHtoeCrI7g6DUuwbnSEsiumPEtfXFw4pdc+InRuVydTvEGRroknFPzySm1hOO8purLAzR8R5nc/xMejQ0dwelttaOq06SicMNun4yBNBgj+bRqWLUekT5ZXz6GwUm/7FuuvZUPHx8c/X6kskyxYl5jEcSSVPAEguBpw3lQq3Ca7vLy8rM2K8t3pdOL47OysqR9lC4+PSkGXfiz04CivLQUQXFMb5zuUhZTuDJzX26qtoge1UZjmxXD66mT+dZ3Z2tryVdRDUxyPx+N0JdbtdqmiFwq1cV4xNe1ApfNrPmHL7s7OTrycq5aDwSDeGlD21nyZxpy62t7ezq+ik8rbMTJiPa0e1Hjplejk6ZXU7r/8st8sBTdtSb65PVKotxWFMjEajUJSPADOi6n9/f3ar+tkv9/X5OpvFd4PjPGUZwIE1xQmk7xUpRLMggujQSF7eHioqdrlWEVJeS7Qz+j1eopU5eGCXSVzhfu//6Lujwl39b4osZGi1KqwTl/M/tOvB+pEWedrveDXWvjWlJ8sffTX57qKBgQDggHBCAYEA4IBwYBgQDAgGBCMYEAwIBgQDAgGBAOCEQwIBgQDggHBgGBAMCAYwYBgQDAgGBAMCAYEIxgQDAgGBAOCAcGAYAQDggHBgGBAMCAYEAwIRjAgGBAMCAYEA4IBwQgGBAOCAcGAYEAwIBjBgGBAMCAYPp//BBgAStflVPGsRa8AAAAASUVORK5CYII=" style="width: 50px; height: 50px; display: block"/>
+                <mp-badge content="99+" style="position: absolute;top: -.4em;right: -.4em;"/>
+              </div>
+              <div>联系人名称</div>
+              <div style="font-size: 13px;color: #888888;">摘要信息</div>
+            </mp-cell>
+            <mp-cell :link="true">
+              <div style="display: inline-block; vertical-align: middle">单行列表</div>
+              <mp-badge content="8" style="margin-left: 5px;"/>
+            </mp-cell>
+            <mp-cell :link="true">
+              <div style="display: inline-block; vertical-align: middle">单行列表</div>
+              <mp-badge style="margin-left: 5px;" content="New"/>
+            </mp-cell>
+          </mp-cells>
+        </div>
       </wx-view>
-      <wx-view class="item">
+      <!-- <wx-view class="item">
         <div class="title">mp-gallery</div>
         <div class="comp-cnt"></div>
-      </wx-view>
+      </wx-view> -->
       <wx-view class="item">
         <div class="title">mp-loading</div>
         <div class="comp-cnt">
@@ -46,14 +73,14 @@
           </div>
         </div>
       </wx-view>
-      <wx-view class="item">
+      <!-- <wx-view class="item">
         <div class="title">mp-form</div>
         <div class="comp-cnt"></div>
-      </wx-view>
-      <wx-view class="item">
+      </wx-view> -->
+      <!-- <wx-view class="item">
         <div class="title">mp-form-page</div>
         <div class="comp-cnt"></div>
-      </wx-view>
+      </wx-view> -->
       <wx-view class="item">
         <div class="title">mp-cells/mp-cell</div>
         <div class="comp-cnt">
@@ -79,22 +106,22 @@
           </mp-cells>
         </div>
       </wx-view>
-      <wx-view class="item">
+      <!-- <wx-view class="item">
         <div class="title">mp-checkbox-group</div>
         <div class="comp-cnt"></div>
-      </wx-view>
-      <wx-view class="item">
+      </wx-view> -->
+      <!-- <wx-view class="item">
         <div class="title">mp-checkbox</div>
         <div class="comp-cnt"></div>
-      </wx-view>
-      <wx-view class="item">
+      </wx-view> -->
+      <!-- <wx-view class="item">
         <div class="title">mp-slideview</div>
         <div class="comp-cnt"></div>
-      </wx-view>
-      <wx-view class="item">
+      </wx-view> -->
+      <!-- <wx-view class="item">
         <div class="title">mp-uploader</div>
         <div class="comp-cnt"></div>
-      </wx-view>
+      </wx-view> -->
       <wx-view class="item">
         <div class="title">mp-dialog</div>
         <div class="comp-cnt">
@@ -131,16 +158,22 @@
       </wx-view>
       <wx-view class="item">
         <div class="title">mp-toptips</div>
-        <div class="comp-cnt"></div>
+        <div class="comp-cnt">
+          <mp-toptips :msg="mpToptips.message" :type="mpToptips.type" :show="mpToptips.showTopTips" delay="3000" @hide="mpToptips.showTopTips = false"></mp-toptips>
+          <div class="opr-cnt">
+            <input class="weui-input" placeholder="输入文本" v-model="mpToptips.value"/>
+          </div>
+          <wx-button class="wx-button" type="default" @tap="showMpToptips">确认</wx-button>
+        </div>
       </wx-view>
-      <wx-view class="item">
+      <!-- <wx-view class="item">
         <div class="title">mp-half-screen-dialog</div>
         <div class="comp-cnt"></div>
-      </wx-view>
-      <wx-view class="item">
+      </wx-view> -->
+      <!-- <wx-view class="item">
         <div class="title">mp-actionsheet</div>
         <div class="comp-cnt"></div>
-      </wx-view>
+      </wx-view> -->
       <wx-view class="item">
         <div class="title">mp-navigation-bar</div>
         <div class="comp-cnt">
@@ -154,18 +187,18 @@
           </div>
         </div>
       </wx-view>
-          <wx-view class="item">
+      <!-- <wx-view class="item">
         <div class="title">mp-tabbar</div>
         <div class="comp-cnt"></div>
-      </wx-view>
-          <wx-view class="item">
+      </wx-view> -->
+      <!-- <wx-view class="item">
         <div class="title">mp-searchbar</div>
         <div class="comp-cnt"></div>
-      </wx-view>
-          <wx-view class="item">
+      </wx-view> -->
+      <!-- <wx-view class="item">
         <div class="title">mp-grids</div>
         <div class="comp-cnt"></div>
-      </wx-view>
+      </wx-view> -->
     </div>
   </div>
 </template>
@@ -191,6 +224,12 @@ export default {
         buttons: JSON.stringify([{text: '取消'}, {text: '确定'}]),
         oneButton: JSON.stringify([{text: '确定'}]), // 也支持传 json 串，用于对付某些会将属性值转成字符串的 Web 框架
       },
+      mpToptips: {
+        value: '',
+        showTopTips: false,
+        message: '请输入文本',
+        type: 'info',
+      },
       mpNavigationBar: {
         loading: false,
         color: '#000',
@@ -209,6 +248,18 @@ export default {
       const colorDark = 'rgba(255, 255, 255, .8)'
       const color = evt.detail.value ? colorDark : colorLight
       this.mpIcon.list.forEach(item => item.color = color)
+    },
+
+    showMpToptips() {
+      if (this.mpToptips.value) {
+        this.mpToptips.showTopTips = true
+        this.mpToptips.message = this.mpToptips.value
+        this.mpToptips.type = 'success'
+      } else {
+        this.mpToptips.showTopTips = true
+        this.mpToptips.message = '缺少内容'
+        this.mpToptips.type = 'error'
+      }
     },
   },
 }
@@ -261,5 +312,8 @@ export default {
 .demo1 {
   height: 60px;
   background: rgba(0,0,0,.1);
+}
+.blue {
+  background: blue;
 }
 </style>

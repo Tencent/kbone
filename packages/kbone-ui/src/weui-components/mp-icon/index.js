@@ -1,12 +1,13 @@
 import WeuiBase from '../weui-base'
 import tpl from './index.html'
 import style from './index.less'
+import weuiStyle from '../../styles/weui.less'
 
 import Base64 from './base64'
 import iconData from './icondata'
 
 const template = document.createElement('template')
-template.innerHTML = `<style>${style}</style>${tpl}`
+template.innerHTML = `<style>${weuiStyle}${style}</style>${tpl}`
 
 export default class MpIcon extends WeuiBase {
     constructor() {
