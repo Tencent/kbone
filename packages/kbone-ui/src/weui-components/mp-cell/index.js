@@ -1,0 +1,194 @@
+import WeuiBase from '../weui-base'
+import tpl from './index.html'
+import style from './index.less'
+
+const template = document.createElement('template')
+template.innerHTML = `<style>${style}</style>${tpl}`
+
+export default class MpCell extends WeuiBase {
+    constructor() {
+        super()
+
+        this._outerClass = ''
+
+        this.initShadowRoot(template, MpCell.observedAttributes, () => {
+            this.cell = this.shadowRoot.querySelector('#cell')
+            this.iconDom = this.shadowRoot.querySelector('#icon')
+            this.slotIcon = this.shadowRoot.querySelector('#slot-icon')
+            this.titleForm = this.shadowRoot.querySelector('#title-form')
+            this.slotTitleForm = this.shadowRoot.querySelector('#slot-title-form')
+            this.titleDom = this.shadowRoot.querySelector('#title')
+            this.slotTitle = this.shadowRoot.querySelector('#slot-title')
+            this.valueDom = this.shadowRoot.querySelector('#value')
+            this.slotValue = this.shadowRoot.querySelector('#slot-value')
+            this.footerCnt = this.shadowRoot.querySelector('#footer-cnt')
+            this.footerDom = this.shadowRoot.querySelector('#footer')
+            this.slotFooter = this.shadowRoot.querySelector('#slot-footer')
+            
+            this.errorDom = this.shadowRoot.querySelector('#error')
+
+            this.onTap = this.onTap.bind(this)
+        })
+    }
+
+    static register() {
+        customElements.define('mp-cell', MpCell)
+    }
+
+    connectedCallback() {
+        super.connectedCallback()
+
+        this.cell.addEventListener('tap', this.onTap)
+    }
+
+    disconnectedCallback() {
+        super.disconnectedCallback()
+
+        this.cell.removeEventListener('tap', this.onTap)
+    }
+
+    attributeChangedCallback(name, oldValue, newValue) {
+        super.attributeChangedCallback(name, oldValue, newValue)
+
+        if (oldValue === newValue) return
+        if (name === 'ext-class') {
+            this.updateClass()
+        } else if (name === 'icon') {
+            const icon = this.icon
+            this.iconDom.classList.toggle('hide', !icon)
+            this.iconDom.setAttribute('src', icon)
+            this.slotIcon.classList.toggle('hide', !!icon)
+        } else if (name === 'title') {
+            this.updateTitle()
+        } else if (name === 'hover') {
+            if (this.hover) {
+                this.cell.setAttribute('hover-class', 'weui-cell_active weui-active')
+            } else {
+                this.cell.setAttribute('hover-class', '')
+            }
+        } else if (name === 'link') {
+            this.updateClass()
+            this.updateForLink()
+        } else if (name === 'value') {
+            this.updateValue()
+        } else if (name === 'show-error') {
+            this.updateClass()
+            this.updateError()
+        } else if (name === 'footer') {
+            this.updateFooter()
+        } else if (name === 'inline') {
+            this.updateClass()
+        }
+    }
+
+    static get observedAttributes() {
+        return ['icon', 'title', 'hover', 'link', 'value', 'show-error', 'prop', 'footer', 'inline', ...WeuiBase.observedAttributes]
+    }
+
+    /**
+     * 属性
+     */
+    get icon() {
+        return this.getAttribute('icon')
+    }
+
+    get title() {
+        return this.getAttribute('title') || ''
+    }
+
+    get hover() {
+        return this.getBoolValue('hover')
+    }
+
+    get link() {
+        return this.getBoolValue('link')
+    }
+
+    get value() {
+        return this.getAttribute('value') || ''
+    }
+
+    get showError() {
+        return this.getBoolValue('show-error')
+    }
+
+    get prop() {
+        return this.getAttribute('prop')
+    }
+
+    get footer() {
+        return this.getAttribute('footer') || ''
+    }
+
+    get inline() {
+        return this.getBoolValue('inline', true)
+    }
+
+    updateClass() {
+        this.cell.className = `weui-cell ${this.link ? 'weui-cell_access': ''} ${this.showError && this._error ? 'weui-cell_warn' : ''} ${this._inForm ? 'weui-cell-inform' : ''} ${this.extClass} ${this.outerClass} ${this.inline ? '' : '.weui-cell_label-block'}`
+    }
+
+    updateForLink() {
+        const link = this.link
+        this.footerCnt.className = `weui-cell__ft ${link ? 'weui-cell__ft_in-access' : ''}`
+        this.updateError()
+    }
+
+    updateTitle() {
+        const inForm = this._inForm
+        const title = this.title
+        this.titleForm.classList.toggle('hide', !inForm || !title)
+        this.slotTitleForm.classList.toggle('hide', !inForm || !!title)
+        this.titleDom.classList.toggle('hide', inForm || !title)
+        this.slotTitle.classList.toggle('hide', inForm || !!title)
+
+        this.titleForm.innerText = title
+        this.titleDom.innerText = title
+    }
+
+    updateValue() {
+        const value = this.value
+        this.valueDom.classList.toggle('hide', !value)
+        this.slotValue.classList.toggle('hide', !!value)
+
+        this.valueDom.innerText = value
+    }
+
+    updateFooter() {
+        const footer = this.footer
+        this.footerDom.classList.toggle('hide', !footer)
+        this.slotFooter.classList.toggle('hide', !!footer)
+
+        this.footerDom.innerText = footer
+    }
+
+    updateError() {
+        this.errorDom.classList.toggle('hide', !this.showError || !error || this.link)
+    }
+
+    setError(error) {
+        this._error = error || false
+        this.updateClass()
+        this.updateError()
+    }
+
+    setInForm() {
+        this._inForm = true
+        this.updateClass()
+        this.updateTitle()
+    }
+
+    setOuterClass(className) {
+        this._outerClass = className
+        this.updateClass()
+    }
+
+    onTap() {
+        const url = this.url
+        const link = this.link
+        if (url && link) {
+            window.open(url)
+            this.dispatchEvent(new CustomEvent('navigatesuccess', {bubbles: true, cancelable: true}))
+        }
+    }
+}

@@ -36,6 +36,12 @@ import WxCatch from './components/wx-catch'
 import WxAnimation from './components/wx-animation'
 
 import MpBadge from './weui-components/mp-badge'
+import MpLoading from './weui-components/mp-loading'
+import MpIcon from './weui-components/mp-icon'
+import MpCell from './weui-components/mp-cell'
+import MpCells from './weui-components/mp-cells'
+import MpDialog from './weui-components/mp-dialog'
+import MpMsg from './weui-components/mp-msg'
 import MpNavigationBar from './weui-components/mp-navigation-bar'
 
 const COMPONENT_MAP = {
@@ -71,6 +77,12 @@ const COMPONENT_MAP = {
     'wx-animation': WxAnimation,
 
     'mp-badge': MpBadge,
+    'mp-loading': MpLoading,
+    'mp-icon': MpIcon,
+    'mp-cell': MpCell,
+    'mp-cells': MpCells,
+    'mp-dialog': MpDialog,
+    'mp-msg': MpMsg,
     'mp-navigation-bar': MpNavigationBar,
 }
 const COMPONENT_LIST = Object.keys(COMPONENT_MAP)
@@ -83,6 +95,7 @@ export default {
         Base.setGlobal({
             mode: options.mode || 'open',
             style: options.style || {},
+            weuiStyle,
         })
 
         // 注册样式

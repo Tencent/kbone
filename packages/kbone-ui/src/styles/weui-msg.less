@@ -1,0 +1,64 @@
+@import "variable";
+
+.weui-msg {
+  padding-top: @weuiMsgPaddingTop;
+  text-align: center;
+}
+
+.weui-msg__icon-area {
+  margin-bottom: @weuiMsgIconGap;
+}
+
+.weui-msg__text-area {
+  margin-bottom: @weuiMsgTextGap;
+}
+
+.weui-msg__text-area a {
+  color: @weuiLinkColorDefault;
+}
+
+.weui-msg__title {
+  margin-bottom: @weuiMsgTitleGap;
+  font-weight: 400;
+  font-size: 20px;
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
+.weui-msg__desc {
+  font-size: 14px;
+  color: @weuiTextColorGray;
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
+.weui-msg__opr-area {
+  margin-bottom: @weuiMsgOprGap;
+}
+
+.weui-msg__extra-area {
+  margin-bottom: @weuiMsgExtraAreaGap;
+  font-size: 14px;
+  color: @weuiTextColorGray;
+  a { color: @weuiLinkColorDefault; }
+}
+
+.weui-btn + .weui-btn {
+  margin-top: 15px;
+}
+
+@media screen and (min-height: @weuiMsgExtraAreaOfMinHeight) {
+  .weui-msg__extra-area {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) { // iPhoneX
+  .weui-msg__extra-area {
+    margin-bottom: @weuiMsgExtraAreaGap + 34;
+  }
+}

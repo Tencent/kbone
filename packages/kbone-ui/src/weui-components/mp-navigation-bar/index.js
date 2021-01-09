@@ -1,9 +1,6 @@
 import WeuiBase from '../weui-base'
 import tpl from './index.html'
 import style from './index.less'
-import {
-    os,
-} from '../../utils/tool'
 
 const template = document.createElement('template')
 template.innerHTML = `<style>${style}</style>${tpl}`

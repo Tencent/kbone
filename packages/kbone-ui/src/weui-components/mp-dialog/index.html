@@ -1,0 +1,18 @@
+<div class="weui-mask"></div>
+<div class="weui-dialog__wrp">
+  <div class="weui-dialog">
+    <div class="weui-dialog__hd">
+      <div class="weui-dialog__title">
+        <span></span>
+        <slot id="slot-title" name="title"></slot>
+      </div>
+    </div>
+    <div class="weui-dialog__bd">
+      <slot></slot>
+    </div>
+    <div id="footer" class="weui-dialog__ft"></div>
+    <div id="slot-footer" class="weui-dialog__ft">
+      <slot name="footer"></slot>
+    </div>
+  </div>
+</div>

@@ -11,4 +11,13 @@ export default class WeuiBase extends Base {
     get extClass() {
         return this.getAttribute('ext-class') || ''
     }
+
+    /**
+     * 初始化 shadowRoot
+     */
+    initShadowRoot(template, attributes, afterAttach) {
+        template.innerHTML = `<style>${this.getWeuiStyle()}</style>${template.innerHTML}`
+
+        super.initShadowRoot(template, attributes, afterAttach)
+    }
 }

@@ -1,0 +1,30 @@
+<div class="weui-msg">
+  <div class="weui-msg__icon-area">
+    <wx-icon id="icon"></wx-icon>
+    <img id="icon-img" class="weui-msg__icon-img" mode="aspectFit"/>
+  </div>
+  <div class="weui-msg__text-area">
+    <div class="weui-msg__title"></div>
+    <div class="weui-msg__desc">
+      <span><span>
+      <slot id="slot-desc" name="desc"></slot>
+    </div>
+    <slot name="extend"></slot>
+  </div>
+  <div class="weui-msg__opr-area">
+    <div class="weui-btn-area">
+      <slot name="handle"></slot>
+    </div>
+  </div>
+  <div class="weui-msg__tips-area">
+    <div class="weui-msg__tips">
+      <slot name="tips"></slot>
+    </div>
+  </div>
+  <div class="weui-msg__extra-area">
+    <div class="weui-footer">
+      <slot name="footer"></slot>
+    </div>
+  </div>
+</div>
+  

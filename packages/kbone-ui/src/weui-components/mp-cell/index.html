@@ -1,0 +1,24 @@
+<wx-view id="cell" class="weui-cell">
+  <!-- header -->
+  <div class="weui-cell__hd">
+    <!-- icon -->
+    <wx-image id="icon" class="weui-cell__icon hide" mode="aspectFit"></wx-image>
+    <slot id="slot-icon" class="hide" name="icon"></slot>
+    <!-- title -->
+    <div id="title-form" class="weui-label hide"></div>
+    <slot id="slot-title-form" class="hide" name="title"></slot>
+    <span id="title" class="hide"></span>
+    <slot id="slot-title" class="hide" name="title"></slot>
+  </div>
+  <!-- body -->
+  <div class="weui-cell__bd">
+    <span id="value" class="hide"></span>
+    <slot id="slot-value" class="hide"></slot>
+  </div>
+  <!-- footer -->
+  <div id="footer-cnt" class="weui-cell__ft">
+    <span id="footer" class="hide"></span>
+    <slot id="slot-footer" class="hide" name="footer"></slot>
+    <icon id="error" class="hide" type="warn" size="23" color="#E64340"></icon>
+  </div>
+</wx-view>
