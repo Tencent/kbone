@@ -24,7 +24,7 @@ export default class MpCell extends WeuiBase {
             this.footerCnt = this.shadowRoot.querySelector('#footer-cnt')
             this.footerDom = this.shadowRoot.querySelector('#footer')
             this.slotFooter = this.shadowRoot.querySelector('#slot-footer')
-            
+
             this.errorDom = this.shadowRoot.querySelector('#error')
 
             this.onTap = this.onTap.bind(this)
@@ -125,7 +125,7 @@ export default class MpCell extends WeuiBase {
     }
 
     updateClass() {
-        this.cell.className = `weui-cell ${this.link ? 'weui-cell_access': ''} ${this.showError && this._error ? 'weui-cell_warn' : ''} ${this._inForm ? 'weui-cell-inform' : ''} ${this.extClass} ${this.outerClass} ${this.inline ? '' : '.weui-cell_label-block'}`
+        this.cell.className = `weui-cell ${this.link ? 'weui-cell_access' : ''} ${this.showError && this._error ? 'weui-cell_warn' : ''} ${this._inForm ? 'weui-cell-inform' : ''} ${this.extClass} ${this.outerClass} ${this.inline ? '' : '.weui-cell_label-block'}`
     }
 
     updateForLink() {

@@ -31,7 +31,7 @@ export default class MpLoading extends WeuiBase {
             this.updateClass()
         } else if (name === 'show') {
             this.updateClass()
-        } else if (name === 'animated') {            
+        } else if (name === 'animated') {
             this.updateStyle()
             this.updateClass()
         } else if (name === 'duration') {

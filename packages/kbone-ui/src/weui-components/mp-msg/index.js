@@ -55,7 +55,7 @@ export default class MpMsg extends WeuiBase {
     static get observedAttributes() {
         return ['type', 'size', 'icon', 'title', 'desc', ...WeuiBase.observedAttributes]
     }
- 
+
     /**
      * 属性
      */

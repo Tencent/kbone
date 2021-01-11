@@ -102,7 +102,7 @@ export default class MpDialog extends WeuiBase {
     static get observedAttributes() {
         return ['title', 'buttons', 'mask', 'mask-closable', 'show', ...WeuiBase.observedAttributes]
     }
- 
+
     /**
      * 属性
      */

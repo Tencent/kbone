@@ -49,7 +49,7 @@ export default class MpToptips extends WeuiBase {
     static get observedAttributes() {
         return ['type', 'show', 'msg', 'delay', ...WeuiBase.observedAttributes]
     }
- 
+
     /**
      * 属性
      */
@@ -82,7 +82,7 @@ export default class MpToptips extends WeuiBase {
     }
 
     updateClass() {
-        this.toptips.className = `weui-toptips ${this._className} ${this.extClass} ${this.show ? 'weui-toptips_show' :  ''}`
+        this.toptips.className = `weui-toptips ${this._className} ${this.extClass} ${this.show ? 'weui-toptips_show' : ''}`
     }
 
     showToptips() {

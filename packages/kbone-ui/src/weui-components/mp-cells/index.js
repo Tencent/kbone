@@ -55,7 +55,7 @@ export default class MpCells extends WeuiBase {
             this.updateClass()
         } else if (name === 'title') {
             this.updateTitle()
-        } else if (name === 'footer') {            
+        } else if (name === 'footer') {
             this.updateFooter()
         }
     }

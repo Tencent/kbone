@@ -103,7 +103,7 @@ export default class WxCanvas extends Base {
     }
 
     onCanvasLongPress() {
-        this.dispatchEvent(new CustomEvent('longtap',  {bubbles: true, cancelable: true}))
+        this.dispatchEvent(new CustomEvent('longtap', {bubbles: true, cancelable: true}))
     }
 
     /**
