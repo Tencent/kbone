@@ -162,7 +162,7 @@ export default class MpCell extends WeuiBase {
     }
 
     updateError() {
-        this.errorDom.classList.toggle('hide', !this.showError || !error || this.link)
+        this.errorDom.classList.toggle('hide', !this.showError || !this._error || this.link)
     }
 
     setError(error) {

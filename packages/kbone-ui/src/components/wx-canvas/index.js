@@ -133,7 +133,7 @@ export default class WxCanvas extends Base {
         return window.requestAnimationFrame(...args)
     }
 
-    cancelAnimationFrame() {
+    cancelAnimationFrame(...args) {
         return window.cancelAnimationFrame(...args)
     }
 

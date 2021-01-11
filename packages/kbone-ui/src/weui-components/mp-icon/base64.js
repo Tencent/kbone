@@ -1,3 +1,4 @@
+/* eslint-disable no-bitwise, no-div-regex */
 const b64chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
 const cbEncode = ccc => {
     const padlen = [0, 2, 1][ccc.length % 3]
@@ -30,7 +31,7 @@ const _encode = u => {
     const isUint8Array = Object.prototype.toString.call(u) === '[object Uint8Array]'
     return isUint8Array ? u.toString('base64') : btoa(utob(String(u)))
 }
-const encode = (u, urisafe = false) => (!urisafe ? _encode(u) : _encode(String(u)).replace(/[+\/]/g, m0 => (m0 == '+' ? '-' : '_')).replace(/=/g, ''))
+const encode = (u, urisafe = false) => (!urisafe ? _encode(u) : _encode(String(u)).replace(/[+/]/g, m0 => (m0 === '+' ? '-' : '_')).replace(/=/g, ''))
 export default {
     encode
 }
