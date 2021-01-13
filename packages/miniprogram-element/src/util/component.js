@@ -2533,6 +2533,12 @@ const wxComponentMap = {
     },
     animation: {
         wxCompName: 'animation',
+        properties: [{
+            name: 'animation',
+            get(domNode) {
+                return dealWithObjectString(domNode.getAttribute('animation'))
+            },
+        }],
     },
     'not-support': {
         wxCompName: 'not-support',
