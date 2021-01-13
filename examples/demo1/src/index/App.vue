@@ -14,20 +14,6 @@
     <div style="margin: 20px;">
       <p style="width: 10rem;">这段看起来特别特别长的文字宽度是 10 rem，测试测试测试测试测试测试测试测试测试测试测试测试</p>
     </div>
-    <div style="margin: 20px; display: flex; justify-content: center;">
-      <div ref="animation-cnt" style="width: 200px; height: 30px; line-height: 30px; text-align: center; background: red; color: #fff;">关键帧动画元素</div>
-    </div>
-    <button class="btn" @click="startAnimation">开始关键帧动画</button>
-    <button class="btn" @click="stopAnimation">取消关键帧动画</button>
-    <wx-scroll-view id="scroller" :scroll-y="true" style="height: 200px; width: 100%;">
-      <div style="width: 100%; background: #ccc;">
-        <div>这是 scroll-view，请往下滚动</div>
-        <div style="margin: 80px; display: flex; justify-content: center;">
-          <div ref="animation-cnt-2" style="transform: sclae(0.2); border-radius: 15px; width: 200px; height: 30px; line-height: 30px; text-align: center; background: red; color: #fff;">滚动驱动动画元素</div>
-        </div>
-        <div style="height: 1000px;"></div>
-      </div>
-    </wx-scroll-view>
     <Footer/>
   </div>
 </template>
@@ -67,28 +53,6 @@ export default {
     console.log('before set cookie', document.cookie)
     document.cookie = `time=${+new Date()}; expires=Wed Jan 01 2220 00:00:00 GMT+0800; path=/`
     console.log('after set cookie', document.cookie)
-
-    // 滚动驱动动画
-    setTimeout(() => {
-      this.$refs['animation-cnt-2'].$$animate([{
-        borderRadius: '15px',
-        transform: 'scale(0.2)',
-        offset: 0,
-      }, {
-        borderRadius: '10px',
-        transform: 'scale(.5)',
-        offset: .5,
-      }, {
-        borderRadius: '0',
-        transform: `scale(1)`,
-        offset: 1
-      }], 2000, {
-        scrollSource: '#scroller',
-        timeRange: 2000,
-        startScrollOffset: 0,
-        endScrollOffset: 85,
-      })
-    }, 500)
   },
   methods: {
     consoleGlobal() {
@@ -109,25 +73,6 @@ export default {
         this.$refs.btn.style.backgroundColor = '#000'
         this.$refs.btn.style.color = '#fff'
       }
-    },
-
-    startAnimation() {
-      this.$refs['animation-cnt'].$$animate([
-        {scale: [1, 1], rotate: 0, ease: 'ease-out'},
-        {scale: [1.5, 1.5], rotate: 45, ease: 'ease-in', offset: 0.9},
-        {scale: [2, 2], rotate: 90},
-      ], 5000, () => {
-        console.log('动画正常结束')
-        this.$refs['animation-cnt'].$$clearAnimation({scale: true, rotate: true}, () => {
-          console.log('清除动画属性')
-        })
-      })
-    },
-
-    stopAnimation() {
-      this.$refs['animation-cnt'].$$clearAnimation({scale: true, rotate: true}, () => {
-        console.log('清除动画属性')
-      })
     },
   },
 }

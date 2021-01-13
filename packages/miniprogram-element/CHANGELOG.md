@@ -1,5 +1,9 @@
 # 更新日志
 
+## 2.2.1
+
+* wx-animation 节点支持 animation 属性
+
 ## 2.2.0
 
 * rich-text 的 nodes 支持 json 串

@@ -74,3 +74,4 @@ npm install
 * demo26：vue3（beta）
 * demo27：vue + kbone-ui
 * demo28：vue + weui + kbone-ui
+* demo29：vue + 小程序动画
