@@ -444,6 +444,38 @@ class Element extends Node {
     }
 
     /**
+     * 关键帧/滚动驱动动画接口
+     * https://developers.weixin.qq.com/miniprogram/dev/framework/view/animation.html
+     */
+    $$animate(...args) {
+        const wxComponent = this.$$wxCustomComponent || this.$$wxComponent
+        if (!wxComponent) {
+            console.error('this element has not been attached yet')
+        } else {
+            if (typeof args[2] === 'object' && args[2].scrollSource) {
+                args[2].scrollSource = `.miniprogram-root >>> ${args[2].scrollSource}`
+            }
+            wxComponent.animate(`.node-${this.$_nodeId}`, ...args)
+        }
+    }
+
+    /**
+     * 关键帧/滚动驱动动画清除接口
+     * https://developers.weixin.qq.com/miniprogram/dev/framework/view/animation.html
+     */
+    $$clearAnimation(...args) {
+        const wxComponent = this.$$wxCustomComponent || this.$$wxComponent
+        if (!wxComponent) {
+            console.error('this element has not been attached yet')
+        } else {
+            if (typeof args[2] === 'object' && args[2].scrollSource) {
+                args[2].scrollSource = `.miniprogram-root >>> ${args[2].scrollSource}`
+            }
+            wxComponent.clearAnimation(`.node-${this.$_nodeId}`, ...args)
+        }
+    }
+
+    /**
      * 对外属性和方法
      */
     get id() {

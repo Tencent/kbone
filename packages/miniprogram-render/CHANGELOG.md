@@ -1,5 +1,7 @@
 # 更新日志
 
+* 支持关键帧动画/滚动驱动动画接口
+
 ## 2.2.1
 
 * 支持 window.devicePixelRatio
