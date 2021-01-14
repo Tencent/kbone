@@ -1000,9 +1000,17 @@ class Element extends Node {
 
     getAttribute(name) {
         if (typeof name !== 'string') return ''
-        if (!this.$__attrs) return name === 'id' || name === 'style' || name === 'class' ? '' : undefined
+        if (name.indexOf('data-') === 0) {
+            // dataset 属性
+            const datasetName = tool.toCamel(name.substr(5))
+            if (!this.$__dataset) return undefined
 
-        return this.$_attrs.get(name)
+            return this.dataset[datasetName]
+        } else {
+            if (!this.$__attrs) return name === 'id' || name === 'style' || name === 'class' ? '' : undefined
+
+            return this.$_attrs.get(name)
+        }
     }
 
     hasAttribute(name) {

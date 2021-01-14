@@ -77,6 +77,7 @@ const html = `<div class="aa">
         <div>tail</div>
         <wx-component behavior="view">test wx-view</wx-component>
         <wx-component behavior="text">test wx-text</wx-component>
+        <div data-key="value"></div>
     </div>
 </div>`
 

@@ -188,6 +188,12 @@ test('parse html', () => {
                 attrs: [{name: 'behavior', value: 'text'}],
                 unary: false,
                 children: [{type: 'text', content: 'test wx-text'}],
+            }, {
+                type: 'element',
+                tagName: 'div',
+                attrs: [{name: 'data-key', value: 'value'}],
+                unary: false,
+                children: [],
             }],
         }],
     }])

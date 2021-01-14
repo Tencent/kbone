@@ -1,5 +1,9 @@
 # 更新日志
 
+## 2.2.3
+
+* 修复 querySelector/querySelectorAll 查找只拥有 dataset 属性的节点返回空的问题
+
 ## 2.2.2
 
 * 支持关键帧动画/滚动驱动动画接口

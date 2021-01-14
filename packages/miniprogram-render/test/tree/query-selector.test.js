@@ -132,6 +132,13 @@ test('query-selector: exec select', () => {
     expect(res3[0]).toBe(res4[0])
     expect(res3[1]).toBe(res4[1])
 
+    const res5 = querySelector.exec('[data-key]', getExtra(document))
+    const res6 = document.body.querySelector('[data-key]')
+    expect(res5[0]).toBe(res6)
+    const res7 = querySelector.exec('[data-key="value"]', getExtra(document))
+    const res8 = document.body.querySelector('[data-key="value"]')
+    expect(res7[0]).toBe(res8)
+
     // jsDom 的 dom 对象要手动设置 behavior 属性
     document.body.querySelector('.bb wx-component[behavior=view]').behavior = 'view'
     document.body.querySelector('.bb wx-component[behavior=text]').behavior = 'text'

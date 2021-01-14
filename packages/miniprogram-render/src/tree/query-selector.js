@@ -123,7 +123,7 @@ function checkHit(node, rule) {
         for (const {name, opr, val} of attr) {
             const nodeVal = node[name] || node.getAttribute(name)
 
-            if (nodeVal === undefined) return false
+            if (nodeVal === undefined || nodeVal === null) return false
             if (opr) {
                 // 存在操作符
                 const checkAttr = ATTR_CHECK[opr]
