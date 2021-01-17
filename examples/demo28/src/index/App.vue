@@ -179,18 +179,31 @@
         <div class="comp-cnt">
           <!-- 放到最顶端 -->
           <div class="opr-cnt">
-            <wx-button class="wx-button opr-button" @tap="mpNavigationBar.loading = !mpNavigationBar.loading">触发 loading</wx-button>
+            <div class="opr-label">
+              <div class="opr-label">触发 loading</div>
+              <wx-switch @change="mpNavigationBar.loading = $event.detail.value"></wx-switch>
+            </div>
             <wx-button class="wx-button opr-button" @tap="mpNavigationBar.color = '#07C160'">修改文字颜色</wx-button>
             <wx-button class="wx-button opr-button" @tap="mpNavigationBar.background = '#ededed'">修改背景颜色</wx-button>
-            <wx-button class="wx-button opr-button" @tap="mpNavigationBar.show = !mpNavigationBar.show">显示/隐藏</wx-button>
-            <wx-button class="wx-button opr-button" @tap="mpNavigationBar.animated = !mpNavigationBar.animated">设置显示/隐藏 opacity 动画</wx-button>
+            <div class="opr-cnt">
+              <div class="opr-label">显示/隐藏</div>
+              <wx-switch :checked="true" @change="mpNavigationBar.show = $event.detail.value"></wx-switch>
+            </div>
+            <div class="opr-cnt">
+              <div class="opr-label">动画</div>
+              <wx-switch @change="mpNavigationBar.animated = $event.detail.value"></wx-switch>
+            </div>
           </div>
         </div>
       </wx-view>
       <wx-view class="item">
         <div class="title">mp-tabbar</div>
         <div class="comp-cnt">
-          <mp-tabbar style="position:fixed;bottom:0;width:100%;left:0;right:0;" :list="mpTabbar.list" @change="log('[mp-tabbar] change', $event.detail)"></mp-tabbar>
+          <mp-tabbar v-if="mpTabbar.show" style="position:fixed;bottom:0;width:100%;left:0;right:0;" :list="mpTabbar.list" @change="log('[mp-tabbar] change', $event.detail)"></mp-tabbar>
+          <div class="opr-cnt">
+            <div class="opr-label">显示/隐藏</div>
+            <wx-switch :checked="true" @change="mpTabbar.show = $event.detail.value"></wx-switch>
+          </div>
         </div>
       </wx-view>
       <wx-view class="item" style="padding-bottom: 150px;">
@@ -244,6 +257,7 @@ export default {
         animated: false
       },
       mpTabbar: {
+        show: true,
         list: JSON.stringify([{
           text: '微信',
           iconPath: tabbarIcon,
