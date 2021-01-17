@@ -1,0 +1,21 @@
+@import "../../styles/variable";
+@import "../../styles/mixin";
+
+@media only screen and (min-width: 450px) {
+  .weui-tabbar {
+    flex-direction: column;
+    width: 60px;
+    height: 100%;
+
+    &::before {
+      left: unset;
+      height: unset;
+
+      .setRightLine(@weuiLineColorLight);
+    }
+  }
+
+  .weui-tabbar__item {
+    flex: none;
+  }
+}

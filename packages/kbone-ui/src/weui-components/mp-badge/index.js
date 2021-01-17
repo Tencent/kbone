@@ -35,23 +35,19 @@ export default class MpBadge extends WeuiBase {
     }
 
     static get observedAttributes() {
-        return ['ext-class', 'content', ...WeuiBase.observedAttributes]
+        return ['content', ...WeuiBase.observedAttributes]
     }
 
     /**
      * 属性
      */
-    get extClass() {
-        return this.getAttribute('ext-class')
-    }
-
     get content() {
-        return this.getAttribute('content')
+        return this.getAttribute('content') || ''
     }
 
     updateBadge() {
         const content = this.content
         this.badge.className = `weui-badge ${this.extClass} ${!content ? 'weui-badge_dot' : ''}`
-        if (content) this.badge.innerText = this.content
+        this.badge.innerText = content
     }
 }
