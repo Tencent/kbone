@@ -1,5 +1,9 @@
 # 更新日志
 
+## 2.2.4
+
+* 第三方自定义组件支持 kbone-func- 前缀
+
 ## 2.2.3
 
 * 修复 querySelector/querySelectorAll 查找只拥有 dataset 属性的节点返回空的问题

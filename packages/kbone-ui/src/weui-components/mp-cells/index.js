@@ -76,13 +76,13 @@ export default class MpCells extends WeuiBase {
     }
 
     checkChildNode() {
-        const cellList = this.querySelector('mp-cell')
+        const cellList = this.querySelectorAll('mp-cell')
         Array.prototype.slice.call(cellList, 0).forEach((item, index) => {
             if (index === 0) item.setOuterClass('')
             else item.setOuterClass('weui-cell_wxss')
         })
 
-        const checkboxGroupList = this.querySelector('mp-checkbox-group')
+        const checkboxGroupList = this.querySelectorAll('mp-checkbox-group')
         this._checkboxCount = checkboxGroupList.length
         checkboxGroupList.forEach(item => this._checkboxIsMulti = item.multi)
         this.updateInnerClass()

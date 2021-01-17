@@ -59,6 +59,8 @@ export default class WxLabel extends Base {
             if (!relatedNode) relatedNode = this.querySelector('wx-switch')
         }
 
+        if (!relatedNode) return
+
         const customEvt = new CustomEvent('tap', {
             bubbles: false,
             cancelable: true,

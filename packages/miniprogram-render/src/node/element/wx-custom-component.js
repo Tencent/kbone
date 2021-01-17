@@ -59,6 +59,21 @@ class WxCustomComponent extends Element {
     get behavior() {
         return this.$_behavior
     }
+
+    setAttribute(name, value) {
+        if (name.indexOf('kbone-func-') === 0) {
+            // 特殊属性，用于传入函数
+            const realName = name.slice('kbone-func-'.length)
+            if (typeof value === 'function') {
+                super.setAttribute(realName, value)
+            } else {
+                const window = cache.getWindow(this.$_pageId)
+                super.setAttribute(realName, window[value])
+            }
+        } else {
+            super.setAttribute(name, value)
+        }
+    }
 }
 
 module.exports = WxCustomComponent

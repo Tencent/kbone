@@ -44,6 +44,7 @@ import MpDialog from './weui-components/mp-dialog'
 import MpMsg from './weui-components/mp-msg'
 import MpToptips from './weui-components/mp-toptips'
 import MpNavigationBar from './weui-components/mp-navigation-bar'
+import MpSearchbar from './weui-components/mp-searchbar'
 
 const COMPONENT_MAP = {
     'wx-movable-area': WxMovableArea,
@@ -86,6 +87,7 @@ const COMPONENT_MAP = {
     'mp-msg': MpMsg,
     'mp-toptips': MpToptips,
     'mp-navigation-bar': MpNavigationBar,
+    'mp-searchbar': MpSearchbar,
 }
 const COMPONENT_LIST = Object.keys(COMPONENT_MAP)
 

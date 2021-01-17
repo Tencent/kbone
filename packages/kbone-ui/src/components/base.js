@@ -88,21 +88,25 @@ export default class Base extends HTMLElement {
                 })
             }
             this[`__${name}__`] = value
-        } else super.setAttribute(name, value)
+        } else if (typeof value === 'function') {
+            this[`__${name}__`] = value
+        } else {
+            super.setAttribute(name, value)
+        }
     }
 
     setAttributeNS(ns, name, value) {
-        if (name === 'kbone-attribute-map' || name === 'kbone-event-map') this.setAttribute(name, value)
+        if (name === 'kbone-attribute-map' || name === 'kbone-event-map' || typeof value === 'function') this.setAttribute(name, value)
         else super.setAttributeNS(ns, name, value)
     }
 
     getAttribute(name) {
-        if (name === 'kbone-attribute-map' || name === 'kbone-event-map') return this[`__${name}__`]
+        if (name === 'kbone-attribute-map' || name === 'kbone-event-map' || typeof this[`__${name}__`] === 'function') return this[`__${name}__`]
         return super.getAttribute(name)
     }
 
     getAttributeNS(ns, name) {
-        if (name === 'kbone-attribute-map' || name === 'kbone-event-map') return this[`__${name}__`]
+        if (name === 'kbone-attribute-map' || name === 'kbone-event-map' || typeof this[`__${name}__`] === 'function') return this[`__${name}__`]
         return super.getAttributeNS(ns, name)
     }
 

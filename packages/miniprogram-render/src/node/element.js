@@ -953,7 +953,7 @@ class Element extends Node {
 
         // 保留对象/数组/布尔值/undefined 原始内容，方便处理小程序内置组件的使用
         const valueType = typeof value
-        if (valueType !== 'object' && valueType !== 'boolean' && value !== undefined && !Array.isArray(value)) value = '' + value
+        if (valueType !== 'object' && valueType !== 'boolean' && valueType !== 'function' && value !== undefined && !Array.isArray(value)) value = '' + value
 
         if (name === 'kbone-attribute-map' || name === 'kbone-event-map') {
             value = value || {}

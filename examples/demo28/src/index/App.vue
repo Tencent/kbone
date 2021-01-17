@@ -191,10 +191,12 @@
         <div class="title">mp-tabbar</div>
         <div class="comp-cnt"></div>
       </wx-view> -->
-      <!-- <wx-view class="item">
+      <wx-view class="item" style="padding-bottom: 150px;">
         <div class="title">mp-searchbar</div>
-        <div class="comp-cnt"></div>
-      </wx-view> -->
+        <div class="comp-cnt">
+          <mp-searchbar @selectresult="log('[mp-searchbar] selectresult', $event.detail)" :search="onSearch"></mp-searchbar>
+        </div>
+      </wx-view>
       <!-- <wx-view class="item">
         <div class="title">mp-grids</div>
         <div class="comp-cnt"></div>
@@ -237,12 +239,19 @@ export default {
         show: true,
         animated: false
       },
+      mpSearchbar: {
+        i: 0,
+      },
     }
   },
   mounted() {
     setInterval(() => this.mpLoading.show = !this.mpLoading.show, 2000)
   },
   methods: {
+    log(...args) {
+      console.log.apply(console, args)
+    },
+
     onMpIconModeChange(evt) {
       const colorLight = 'rgba(0, 0, 0, .9)'
       const colorDark = 'rgba(255, 255, 255, .8)'
@@ -260,6 +269,17 @@ export default {
         this.mpToptips.message = '缺少内容'
         this.mpToptips.type = 'error'
       }
+    },
+
+    onSearch() {
+      return new Promise(resolve => {
+        if (this.mpSearchbar.i % 2 === 0) {
+          setTimeout(() => resolve([{text: '搜索结果', value: 1}, {text: '搜索结果2', value: 2}]), 200)
+        } else {
+          setTimeout(() => resolve([]), 200)
+        }
+        this.mpSearchbar.i = this.mpSearchbar.i + 1
+      })
     },
   },
 }
@@ -315,5 +335,12 @@ export default {
 }
 .blue {
   background: blue;
+}
+.searchbar-result{
+  margin-top: 0;
+  font-size: 14px;
+}
+.searchbar-result:before{
+  display: none;
 }
 </style>
