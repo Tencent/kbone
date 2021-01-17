@@ -360,9 +360,9 @@ button.weui-vcode-btn { background-color: transparent; border: 0; outline: 0; }
 .weui-msg__opr-area .weui-btn-area { margin: 0; }
 .weui-msg__opr-area .weui-btn + .weui-btn { margin-bottom: 16px; }
 .weui-msg__opr-area:last-child { margin-bottom: 96px; }
-.weui-msg__opr-area + .weui-msg__extra-area { margin-top: 48px; }
+.weui-msg__opr-area:not(.hide) + .weui-msg__extra-area { margin-top: 48px; }
 .weui-msg__tips-area { margin-bottom: 16px; padding: 0 40px; }
-.weui-msg__opr-area + .weui-msg__tips-area { margin-bottom: 48px; }
+.weui-msg__opr-area:not(.hide) + .weui-msg__tips-area { margin-bottom: 48px; }
 .weui-msg__tips-area:last-child { margin-bottom: 64px; }
 
 .weui-msg__extra-area,
@@ -558,9 +558,9 @@ a.weui-media-box.weui-active { background-color: var(--weui-BG-COLOR-ACTIVE); }
 .weui-half-screen-dialog__hd .weui-icon-btn.weui-active { opacity: 0.5; }
 .weui-half-screen-dialog__hd__side { position: relative; left: -8px; }
 .weui-half-screen-dialog__hd__main { -webkit-box-flex: 1; -webkit-flex: 1; flex: 1; }
-.weui-half-screen-dialog__hd__side + .weui-half-screen-dialog__hd__main { text-align: center; padding: 0 40px; }
-.weui-half-screen-dialog__hd__main + .weui-half-screen-dialog__hd__side { right: -8px; left: auto; }
-.weui-half-screen-dialog__hd__main + .weui-half-screen-dialog__hd__side .weui-icon-btn { right: 0; }
+.weui-half-screen-dialog__hd__side:not(.hide) + .weui-half-screen-dialog__hd__main { text-align: center; padding: 0 40px; }
+.weui-half-screen-dialog__hd__main:not(.hide) + .weui-half-screen-dialog__hd__side { right: -8px; left: auto; }
+.weui-half-screen-dialog__hd__main:not(.hide) + .weui-half-screen-dialog__hd__side .weui-icon-btn { right: 0; }
 .weui-half-screen-dialog__title { display: block; color: var(--weui-FG-0); font-weight: 700; font-size: 15px; }
 .weui-half-screen-dialog__subtitle { display: block; color: var(--weui-FG-1); font-size: 10px; }
 .weui-half-screen-dialog__bd { word-wrap: break-word; -webkit-hyphens: auto; hyphens: auto; overflow-y: auto; padding-top: 4px; padding-bottom: 40px; font-size: 14px; color: var(--weui-FG-0); }

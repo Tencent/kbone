@@ -1,0 +1,27 @@
+<div id="cnt">
+  <wx-view class="weui-mask init" data-type="tap"></wx-view>
+  <div class="weui-half-screen-dialog">
+    <div class="weui-half-screen-dialog__hd">
+      <wx-view class="weui-half-screen-dialog__hd__side" data-type="close">
+        <wx-view class="weui-icon-btn weui-icon-btn_close" hover-class="weui-active">关闭</wx-view>
+      </wx-view>
+      <div class="weui-half-screen-dialog__hd__main">
+        <span class="weui-half-screen-dialog__title default"></span>
+        <span class="weui-half-screen-dialog__subtitle default"></span>
+        <div class="weui-half-screen-dialog__title slot"><slot name="title"></slot></div>
+      </div>
+      <div class="weui-half-screen-dialog__hd__side">
+        <wx-view class="weui-icon-btn weui-icon-btn_more" hover-class="weui-active">更多</wx-view>
+      </div>
+    </div>
+    <div class="weui-half-screen-dialog__bd">
+      <div class="weui-half-screen-dialog__desc"></div>
+      <div class="weui-half-screen-dialog__tips"></div>
+      <slot id="slot-desc" name="desc"></slot>
+    </div>
+    <wx-view id="footer" class="weui-half-screen-dialog__ft"></wx-view>
+    <div id="slot-footer">
+      <slot name="footer"></slot>
+    </div>
+  </div>
+</div>

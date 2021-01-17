@@ -75,7 +75,7 @@ module.exports = [
     }, {
         name: 'half-screen-dialog',
         props: ['extClass', 'closabled', 'title', 'subTitle', 'desc', 'tips', 'maskClosable', 'mask', 'show', 'buttons'],
-        propsVal: ['', true, '', '', '', '', true, true, true, []],
+        propsVal: ['', true, '', '', '', '', true, true, false, []],
         events: ['buttontap', 'close'],
     }, {
         name: 'actionsheet',

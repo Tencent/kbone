@@ -43,6 +43,7 @@ import MpCells from './weui-components/mp-cells'
 import MpDialog from './weui-components/mp-dialog'
 import MpMsg from './weui-components/mp-msg'
 import MpToptips from './weui-components/mp-toptips'
+import MpHalfScreenDialog from './weui-components/mp-half-screen-dialog'
 import MpNavigationBar from './weui-components/mp-navigation-bar'
 import MpTabbar from './weui-components/mp-tabbar'
 import MpSearchbar from './weui-components/mp-searchbar'
@@ -87,6 +88,7 @@ const COMPONENT_MAP = {
     'mp-dialog': MpDialog,
     'mp-msg': MpMsg,
     'mp-toptips': MpToptips,
+    'mp-half-screen-dialog': MpHalfScreenDialog,
     'mp-navigation-bar': MpNavigationBar,
     'mp-tabbar': MpTabbar,
     'mp-searchbar': MpSearchbar,

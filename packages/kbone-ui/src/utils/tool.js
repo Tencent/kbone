@@ -36,7 +36,7 @@ export function toCamel(str) {
  * 查找符合条件的父节点
  */
 export function findParent(node, filter) {
-    let parentNode = node.parentNode
+    let parentNode = node
     while (parentNode && parentNode !== document.documentElement) {
         const test = filter(parentNode)
         if (test) return parentNode
