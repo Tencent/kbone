@@ -219,10 +219,13 @@
           </mp-half-screen-dialog>
         </div>
       </wx-view>
-      <!-- <wx-view class="item">
+      <wx-view class="item">
         <div class="title">mp-actionsheet</div>
-        <div class="comp-cnt"></div>
-      </wx-view> -->
+        <div class="comp-cnt">
+          <wx-button class="wx-button opr-button" @tap="mpActionSheet.show = true">模拟 ActionSheet</wx-button>
+          <mp-actionsheet :show="mpActionSheet.show" :actions="mpActionSheet.groups" title="这是一个标题，可以为一行或者两行。" @close="mpActionSheet.show = false" @actiontap="log('[mp-actionsheet] action tap', $event.detail)"></mp-actionsheet>
+        </div>
+      </wx-view>
       <wx-view class="item">
         <div class="title">mp-navigation-bar</div>
         <div class="comp-cnt">
@@ -331,6 +334,14 @@ export default {
           text: '主操作',
           value: 1
         }])
+      },
+      mpActionSheet: {
+        show: false,
+        groups: JSON.stringify([
+          {text: '示例菜单', value: 1},
+          {text: '示例菜单', value: 2},
+          {text: '负向菜单', type: 'warn', value: 3},
+        ]),
       },
       mpNavigationBar: {
         loading: false,
@@ -458,13 +469,6 @@ export default {
 .blue {
   background: blue;
 }
-.searchbar-result{
-  margin-top: 0;
-  font-size: 14px;
-}
-.searchbar-result:before{
-  display: none;
-}
 .weui-slidecell {
   background-color: #fff;
   border-radius: 8px;
@@ -480,6 +484,13 @@ export default {
 }
 .mp-slideview-2 {
   margin-top: 10px;
+}
+.searchbar-result{
+  margin-top: 0;
+  font-size: 14px;
+}
+.searchbar-result:before{
+  display: none;
 }
 @media (prefers-color-scheme: dark) {
   .weui-slidecell {

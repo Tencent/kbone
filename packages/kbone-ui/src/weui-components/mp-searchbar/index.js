@@ -155,7 +155,7 @@ export default class MpSearchbar extends WeuiBase {
         this.__result = value
         if (value.length) {
             this.resultCnt.innerHTML = value.map((item, index) => {
-                return `<mp-cell class="result" bindtap="selectResult" body-class="weui-cell_primary" data-index="${index}" hover="true">
+                return `<mp-cell class="result" body-class="weui-cell_primary" data-index="${index}" hover="true">
                     <div>${item.text}</div>
                 </mp-cell>`
             }).join('')

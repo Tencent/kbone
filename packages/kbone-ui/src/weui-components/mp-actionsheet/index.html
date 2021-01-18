@@ -1,0 +1,13 @@
+<wx-view class="weui-mask"></wx-view>
+<div class="weui-actionsheet">
+    <!-- 标题 -->
+    <div class="weui-actionsheet__title">
+        <div class="weui-actionsheet__title-text"></div>
+    </div>
+    <slot id="slot-title" name="title"></slot>
+    <div id="groups"></div>
+    <!-- 取消按钮 -->
+    <div class="weui-actionsheet__action cancel">
+        <wx-view class="weui-actionsheet__cell" hover-class="weui-active" data-type="close"></wx-view>
+    </div>
+</div>

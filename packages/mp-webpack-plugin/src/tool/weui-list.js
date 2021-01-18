@@ -79,8 +79,8 @@ module.exports = [
         events: ['buttontap', 'close'],
     }, {
         name: 'actionsheet',
-        props: ['title', 'showCancel', 'cancelText', 'maskClass', 'extClass', 'maskClosable', 'mask', 'show', 'actions'],
-        propsVal: ['', true, '', '', '', true, true, false, []],
+        props: ['extClass', 'title', 'showCancel', 'cancelText', 'maskClass', 'maskClosable', 'mask', 'show', 'actions'],
+        propsVal: ['', '', true, '', '', true, true, false, []],
         events: ['close', 'actiontap'],
     },
     // 导航组件
