@@ -40,6 +40,7 @@ import MpLoading from './weui-components/mp-loading'
 import MpIcon from './weui-components/mp-icon'
 import MpCell from './weui-components/mp-cell'
 import MpCells from './weui-components/mp-cells'
+import MpSlideview from './weui-components/mp-slideview'
 import MpDialog from './weui-components/mp-dialog'
 import MpMsg from './weui-components/mp-msg'
 import MpToptips from './weui-components/mp-toptips'
@@ -85,6 +86,7 @@ const COMPONENT_MAP = {
     'mp-icon': MpIcon,
     'mp-cell': MpCell,
     'mp-cells': MpCells,
+    'mp-slideview': MpSlideview,
     'mp-dialog': MpDialog,
     'mp-msg': MpMsg,
     'mp-toptips': MpToptips,
