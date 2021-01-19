@@ -35,10 +35,10 @@ export default class MpTabbar extends WeuiBase {
         this.tabbar.removeEventListener('tap', this.onTap)
     }
 
-    attributeChangedCallback(name, oldValue, newValue) {
+    attributeChangedCallback(name, oldValue, newValue, isInit) {
         super.attributeChangedCallback(name, oldValue, newValue)
 
-        if (oldValue === newValue) return
+        if (!isInit && oldValue === newValue) return
         if (name === 'ext-class') {
             const extClass = this.extClass
             this.tabbar.className = `weui-tabbar ${extClass}`

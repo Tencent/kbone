@@ -46,10 +46,10 @@ export default class MpDialog extends WeuiBase {
         this.dialogInner.removeEventListener('tap', this.stopEvent)
     }
 
-    attributeChangedCallback(name, oldValue, newValue) {
+    attributeChangedCallback(name, oldValue, newValue, isInit) {
         super.attributeChangedCallback(name, oldValue, newValue)
 
-        if (oldValue === newValue) return
+        if (!isInit && oldValue === newValue) return
         if (name === 'ext-class') {
             const hasHide = this.dialog.classList.contains('hide')
             this.dialog.className = `weui-dialog__wrp ${this.extClass} ${hasHide ? 'hide' : ''}`

@@ -40,10 +40,10 @@ export default class MpNavigationBar extends WeuiBase {
         this.backButtonInner.removeEventListener('tap', this.doBack)
     }
 
-    attributeChangedCallback(name, oldValue, newValue) {
+    attributeChangedCallback(name, oldValue, newValue, isInit) {
         super.attributeChangedCallback(name, oldValue, newValue)
 
-        if (oldValue === newValue) return
+        if (!isInit && oldValue === newValue) return
         if (name === 'ext-class') {
             this.navigationBar.className = `weui-navigation-bar ${this.extClass}`
         } else if (name === 'title') {

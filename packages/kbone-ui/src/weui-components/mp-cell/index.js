@@ -47,16 +47,16 @@ export default class MpCell extends WeuiBase {
         this.cell.removeEventListener('tap', this.onTap)
     }
 
-    attributeChangedCallback(name, oldValue, newValue) {
+    attributeChangedCallback(name, oldValue, newValue, isInit) {
         super.attributeChangedCallback(name, oldValue, newValue)
 
-        if (oldValue === newValue) return
+        if (!isInit && oldValue === newValue) return
         if (name === 'ext-class') {
             this.updateClass()
         } else if (name === 'icon') {
             const icon = this.icon
+            if (icon) this.iconDom.setAttribute('src', icon)
             this.iconDom.classList.toggle('hide', !icon)
-            this.iconDom.setAttribute('src', icon)
             this.slotIcon.classList.toggle('hide', !!icon)
         } else if (name === 'title') {
             this.updateTitle()

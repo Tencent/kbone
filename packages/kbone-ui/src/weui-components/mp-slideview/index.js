@@ -58,10 +58,10 @@ export default class MpSlideview extends WeuiBase {
         this.leftDom.removeEventListener('transitionend', this.onTransitionEnd)
     }
 
-    attributeChangedCallback(name, oldValue, newValue) {
+    attributeChangedCallback(name, oldValue, newValue, isInit) {
         super.attributeChangedCallback(name, oldValue, newValue)
 
-        if (oldValue === newValue) return
+        if (!isInit && oldValue === newValue) return
         if (name === 'ext-class') {
             this.updateClass()
         } else if (name === 'buttons') {

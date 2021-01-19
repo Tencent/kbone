@@ -42,10 +42,13 @@
           </mp-cells>
         </div>
       </wx-view>
-      <!-- <wx-view class="item">
+      <wx-view class="item">
         <div class="title">mp-gallery</div>
-        <div class="comp-cnt"></div>
-      </wx-view> -->
+        <div class="comp-cnt">
+          <wx-button class="wx-button" type="default" @click="mpGallery.show = true">显示 mp-gallery</wx-button>
+          <mp-gallery :show="mpGallery.show.toString()" @change="log('[mp-gallery] change', $event.detail)" @delete="log('[mp-gallery] delete', $event.detail)" @hide="mpGallery.show = false" :img-urls="mpGallery.imgUrls" delete="true" hide-on-click="true" current="1"></mp-gallery>
+        </div>
+      </wx-view>
       <wx-view class="item">
         <div class="title">mp-loading</div>
         <div class="comp-cnt">
@@ -239,7 +242,7 @@
             <wx-button class="wx-button opr-button" @tap="mpNavigationBar.background = '#ededed'">修改背景颜色</wx-button>
             <div class="opr-cnt">
               <div class="opr-label">显示/隐藏</div>
-              <wx-switch :checked="true" @change="mpNavigationBar.show = $event.detail.value"></wx-switch>
+              <wx-switch @change="mpNavigationBar.show = $event.detail.value"></wx-switch>
             </div>
             <div class="opr-cnt">
               <div class="opr-label">动画</div>
@@ -254,7 +257,7 @@
           <mp-tabbar v-if="mpTabbar.show" style="position:fixed;bottom:0;width:100%;left:0;right:0;z-index:100;" :list="mpTabbar.list" @change="log('[mp-tabbar] change', $event.detail)"></mp-tabbar>
           <div class="opr-cnt">
             <div class="opr-label">显示/隐藏</div>
-            <wx-switch :checked="true" @change="mpTabbar.show = $event.detail.value"></wx-switch>
+            <wx-switch @change="mpTabbar.show = $event.detail.value"></wx-switch>
           </div>
         </div>
       </wx-view>
@@ -278,6 +281,14 @@ export default {
     const tabbarIcon = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADYAAAA2CAMAAAC7m5rvAAAAllBMVEUAAAC/v7+qqqrHx8evr6/ExMS5ubmxsbGsrKysrKytra2pqam8vLy9vb2lpaXExMT////s7Oz8/Pz09PTu7u729vb5+fnp6enMzMzLy8vm5ub4+Pjj4+O3t7fx8fHb29vAwMDHx8ePj4/S0tLf39+rq6ulpaWSkpK7u7vY2NjR0dGnp6eenp6ampqysrLPz8+fn5+ioqKXtObzAAAAEHRSTlMA6wT4/e/f0KyZSy/z8mz4uKbH2gAAA6FJREFUSMellody2zAMhuXEGU6TVBgkbGp529np+79cKREUpbrxdfxnn7g+cYACkKku7m5vricPl4v5Yq5arWLJN14+TK5vbu8udLhCsyuHeY6QD0Q0rEHb765mA/DbJIw4j4XGybdIPV5q13lMC9NHnWvKpxhiAVBYPMX4ezffxSQnHmFoahFgkRpEmHCEMeWTdn8zygOnmAVhkxZZ1AImYdyOnvnJrrohrBiymF/3ZgGsYty1XV1kdy6MATKGnJRgoiAVuRRH/inhTe4uu9U1Q8MMmy0nOcdJ5bMwbEs9g9vsJg8yjq2UXxugdJYBtHKTXUeM64bO2c00bGP/dTbBIAIBERyIaFgTASHQyiS7hyC3KaHcQNSm2r2+vbwvBFRt91OjlfssXizZ+q2WjN3yqvXrcfWxmS/362lYGJfYjQm6zBah4InWbtRyy3UlGPaGvDxU6B8EvqVo9NgX2TwUGDosJzb7vQyPBHafxNSZ2zq9hXOdzYoJWM6Hyo5P0h4PkAcMwI5mAxOx/bvgGEOpfqBihoezoeSKLffWAA4xBLIvS8VywYR5RjFaix8PmDBs77+sa8XYDDA2ilVV9xbAiCF0cFUpZniASa6Yn0y5aICO8tMplkvCMGKbV8x7jqhbYSf8fI4YJgwUq46+FjmillIdK8UgYQUrtlvliaspUflqpxgXHbYiIhD/d77w+kG9oGkg1T5eiYhLImkbV2PsbUO96qcnStq8jbCwyFoX+TJPjhK8kpucv+gi66LfmwXF3peJMkQmcct3xcCeGmCxx55qDdBzuF8kA5yYW9bcUy3Wc7x2p+bOuQgYTJdKxctVBG65g4AVMMCoVgwOECjFlOMDKFbTbz+camcRilwxvS84rX79cPQztYrh51HM+DMtZPmGilkYOQUDiuX1iVPA44F7p2DGLghYZwP+8SJDjKdvADqbg+SCOtmyw9p94anDKwCDw7Pq8JJ7LduTga69rtaf0b3uIJyneAySe32AIPdc+r8D1bM6c23oulzvzB9S6BDnf1+HDifkUugYBCrT1OcCVd1QClQpLALQubDoHAGlsBiDMG3J0pMUthdzKhfw5LtLiUE4hnx0AgDNtnEQVZYQ5XyHf8jWasjXBAPBxgQDziQYFqwmGNmMlIrpDH+ZzihHs5A8+co4eeKUPEFKngKHIXnKvn0H++epmoWppoaP079JDL8//lsa+p9Jb0qx77sUexG0WmmhS7HvRyn2TxZ1zUyK+LY0AAAAAElFTkSuQmCC'
 
     return {
+      mpGallery: {
+        show: false,
+        imgUrls: JSON.stringify([
+          'https://res.wx.qq.com/op_res/0TZreUFL8sWsS1cFx5_f7MF5aY767_cWsd9JiKdHxL9Ktu6O6JLAJwvF-jLVxpB3',
+          'https://res.wx.qq.com/op_res/0TZreUFL8sWsS1cFx5_f7MF5aY767_cWsd9JiKdHxL9Ktu6O6JLAJwvF-jLVxpB3',
+          'https://res.wx.qq.com/op_res/0TZreUFL8sWsS1cFx5_f7MF5aY767_cWsd9JiKdHxL9Ktu6O6JLAJwvF-jLVxpB3'
+        ]),
+      },
       mpLoading: {
         show: true,
         animated: true,
@@ -347,11 +358,11 @@ export default {
         loading: false,
         color: '#000',
         background: '#f8f8f8',
-        show: true,
+        show: false,
         animated: false
       },
       mpTabbar: {
-        show: true,
+        show: false,
         list: JSON.stringify([{
           text: '微信',
           iconPath: tabbarIcon,

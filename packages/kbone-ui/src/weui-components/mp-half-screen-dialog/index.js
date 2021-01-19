@@ -57,10 +57,10 @@ export default class MpHalfScreenDialog extends WeuiBase {
         this.footerDom.removeEventListener('tap', this.onButtonTap)
     }
 
-    attributeChangedCallback(name, oldValue, newValue) {
+    attributeChangedCallback(name, oldValue, newValue, isInit) {
         super.attributeChangedCallback(name, oldValue, newValue)
 
-        if (oldValue === newValue) return
+        if (!isInit && oldValue === newValue) return
         if (name === 'ext-class') {
             const extClass = this.extClass
             this.dialog.className = `weui-half-screen-dialog ${extClass}`

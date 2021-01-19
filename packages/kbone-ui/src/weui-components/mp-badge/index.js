@@ -25,10 +25,10 @@ export default class MpBadge extends WeuiBase {
         this.updateBadge()
     }
 
-    attributeChangedCallback(name, oldValue, newValue) {
+    attributeChangedCallback(name, oldValue, newValue, isInit) {
         super.attributeChangedCallback(name, oldValue, newValue)
 
-        if (oldValue === newValue) return
+        if (!isInit && oldValue === newValue) return
         if (name === 'ext-class' || name === 'content') {
             this.updateBadge()
         }

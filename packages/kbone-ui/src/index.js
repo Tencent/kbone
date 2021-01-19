@@ -36,6 +36,7 @@ import WxCatch from './components/wx-catch'
 import WxAnimation from './components/wx-animation'
 
 import MpBadge from './weui-components/mp-badge'
+import MpGallery from './weui-components/mp-gallery'
 import MpLoading from './weui-components/mp-loading'
 import MpIcon from './weui-components/mp-icon'
 import MpCell from './weui-components/mp-cell'
@@ -83,6 +84,7 @@ const COMPONENT_MAP = {
     'wx-animation': WxAnimation,
 
     'mp-badge': MpBadge,
+    'mp-gallery': MpGallery,
     'mp-loading': MpLoading,
     'mp-icon': MpIcon,
     'mp-cell': MpCell,

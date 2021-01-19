@@ -24,10 +24,10 @@ export default class MpMsg extends WeuiBase {
         customElements.define('mp-msg', MpMsg)
     }
 
-    attributeChangedCallback(name, oldValue, newValue) {
+    attributeChangedCallback(name, oldValue, newValue, isInit) {
         super.attributeChangedCallback(name, oldValue, newValue)
 
-        if (oldValue === newValue) return
+        if (!isInit && oldValue === newValue) return
         if (name === 'ext-class') {
             this.msg.className = `weui-msg ${this.extClass}`
         } else if (name === 'type') {

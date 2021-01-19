@@ -30,10 +30,10 @@ export default class MpToptips extends WeuiBase {
         customElements.define('mp-toptips', MpToptips)
     }
 
-    attributeChangedCallback(name, oldValue, newValue) {
+    attributeChangedCallback(name, oldValue, newValue, isInit) {
         super.attributeChangedCallback(name, oldValue, newValue)
 
-        if (oldValue === newValue) return
+        if (!isInit && oldValue === newValue) return
         if (name === 'ext-class') {
             this.updateClass()
         } else if (name === 'type') {

@@ -7,7 +7,7 @@ module.exports = [
     }, {
         name: 'gallery',
         props: ['extClass', 'show', 'imgUrls', 'current', 'showDelete', 'hideOnClick'],
-        propsVal: ['', true, [], 0, true, true],
+        propsVal: ['', false, [], 0, true, true],
         events: ['change', 'delete', 'hide'],
     }, {
         name: 'loading',

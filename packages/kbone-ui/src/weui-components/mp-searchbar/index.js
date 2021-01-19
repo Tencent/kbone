@@ -65,10 +65,10 @@ export default class MpSearchbar extends WeuiBase {
         this.resultCnt.removeEventListener('tap', this.onSelectResult)
     }
 
-    attributeChangedCallback(name, oldValue, newValue) {
+    attributeChangedCallback(name, oldValue, newValue, isInit) {
         super.attributeChangedCallback(name, oldValue, newValue)
 
-        if (oldValue === newValue) return
+        if (!isInit && oldValue === newValue) return
         if (name === 'ext-class') {
             const extClass = this.extClass
             this.searchbar.className = `weui-search-bar ${extClass}`

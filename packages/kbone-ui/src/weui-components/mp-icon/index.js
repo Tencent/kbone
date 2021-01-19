@@ -22,10 +22,10 @@ export default class MpIcon extends WeuiBase {
         customElements.define('mp-icon', MpIcon)
     }
 
-    attributeChangedCallback(name, oldValue, newValue) {
+    attributeChangedCallback(name, oldValue, newValue, isInit) {
         super.attributeChangedCallback(name, oldValue, newValue)
 
-        if (oldValue === newValue) return
+        if (!isInit && oldValue === newValue) return
         if (name === 'ext-class') {
             this.iconDom.className = `weui-icon ${this.extClass}`
         } else if (name === 'type') {
