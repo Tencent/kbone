@@ -2,7 +2,6 @@ import WeuiBase from '../weui-base'
 import tpl from './index.html'
 import style from './index.less'
 import weuiStyle from '../../styles/weui.less'
-import { values } from '../../../../mp-webpack-plugin/src/tool/weui-list'
 
 const template = document.createElement('template')
 template.innerHTML = `<style>${weuiStyle}${style}</style>${tpl}`
@@ -118,11 +117,9 @@ export default class MpGallery extends WeuiBase {
     updateSwiper() {
         const imgUrls = this._currentImgs
         if (imgUrls.length) {
-            this.swiper.innerHTML = imgUrls.map(item => {
-                return `<wx-swiper-item>
+            this.swiper.innerHTML = imgUrls.map(item => `<wx-swiper-item>
                     <wx-image mode="aspectFit" class="weui-gallery__img" src="${item}"></wx-image>
-                </wx-swiper-item>`
-            }).join('')
+                </wx-swiper-item>`).join('')
         } else {
             this.swiper.innerHTML = ''
         }
@@ -148,7 +145,7 @@ export default class MpGallery extends WeuiBase {
         if (swiperItem) swiperItem.parentNode.removeChild(swiperItem)
 
         this.dispatchEvent(new CustomEvent('delete', {bubbles: true, cancelable: true, detail: {url: spliceImgUrls[0], index: current}}))
-        
+
         if (!imgUrls.length) this.hide()
         else {
             this.current = 0

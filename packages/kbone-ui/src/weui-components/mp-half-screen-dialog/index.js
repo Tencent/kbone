@@ -172,9 +172,7 @@ export default class MpHalfScreenDialog extends WeuiBase {
     updateButtons() {
         const buttons = this.buttons
         if (buttons.length) {
-            this.footerDom.innerHTML = buttons.map((item, index) => {
-                return `<wx-button type="${item.type}" class="weui-btn weui-btn_${item.type} ${item.className}" data-index="${index}">${item.text}</wx-button>`
-            }).join('')
+            this.footerDom.innerHTML = buttons.map((item, index) => `<wx-button type="${item.type}" class="weui-btn weui-btn_${item.type} ${item.className}" data-index="${index}">${item.text}</wx-button>`).join('')
 
             this.footerDom.classList.toggle('hide', false)
             this.slotFooter.classList.toggle('hide', true)

@@ -13,7 +13,7 @@ export default class MpActionsheet extends WeuiBase {
     constructor() {
         super()
 
-        this.initShadowRoot(template, MpActionsheet.observedAttributes, () => {            
+        this.initShadowRoot(template, MpActionsheet.observedAttributes, () => {
             this.onClose = this.onClose.bind(this)
             this.onGroupsTap = this.onGroupsTap.bind(this)
             this.maskDom = this.shadowRoot.querySelector('.weui-mask')
@@ -140,15 +140,13 @@ export default class MpActionsheet extends WeuiBase {
         if (actions.length) {
             const showCancel = this.showCancel
             this.groupsCnt.innerHTML = actions.map((item, index) => {
-                const inner = typeof item !== 'string' ? item.map((subItem, subIndex) => {
-                    return `<wx-view
-                        class="weui-actionsheet__cell ${subItem.type === 'warn' ? 'weui-actionsheet__cell_warn' : '' }"
+                const inner = typeof item !== 'string' ? item.map((subItem, subIndex) => `<wx-view
+                        class="weui-actionsheet__cell ${subItem.type === 'warn' ? 'weui-actionsheet__cell_warn' : ''}"
                         hover-class="weui-active"
                         data-groupindex="${index}"
                         data-index="${subIndex}" 
                         data-value="${subItem.value}"
-                    >${subItem.text}</wx-view>`
-                }).join('') : `<slot name="${item}"></slot>`
+                    >${subItem.text}</wx-view>`).join('') : `<slot name="${item}"></slot>`
                 return `<div class="${!showCancel && index === actions.length - 1 ? 'weui-actionsheet__action' : 'weui-actionsheet__menu'}">${inner}</div>`
             }).join('')
         } else {

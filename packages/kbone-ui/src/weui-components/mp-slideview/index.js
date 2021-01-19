@@ -9,7 +9,7 @@ import {
 const template = document.createElement('template')
 template.innerHTML = `<style>${weuiStyle}${style}</style>${tpl}`
 
-var REBOUNCE_TIME = 0.2
+const REBOUNCE_TIME = 0.2
 
 export default class MpSlideview extends WeuiBase {
     constructor() {
@@ -137,7 +137,7 @@ export default class MpSlideview extends WeuiBase {
 
         if (buttonsRect.length) {
             this._buttons = buttonsRect
-            
+
             let max = 0
             let total = 0
             for (let i = buttonsRect.length - 1; i >= 0; i--) {
@@ -200,7 +200,7 @@ export default class MpSlideview extends WeuiBase {
             const item = buttonsDom[i]
             const transform = this._buttons[i].width / this._max * moveX
             const transformX = (-(transform + transformTotal))
-    
+
             item.style.transform = `translate3d(${transformX}px, 0, 0)`
             item.style.webkitTransform = `translate3d(${transformX}px, 0, 0)`
             item.style.transition = `transform ${duration ? duration + rebounceTime : duration}s`
@@ -275,7 +275,7 @@ export default class MpSlideview extends WeuiBase {
         if (this._firstAngle === 0) this._firstAngle = Math.abs(pageX) - Math.abs(pageY)
         if (this._firstAngle < 0) return
 
-        const moveX = pageX > 0 ? Math.min(this._max, pageX) : Math.max(-this._max, pageX)
+        let moveX = pageX > 0 ? Math.min(this._max, pageX) : Math.max(-this._max, pageX)
         if (this._out) {
             // 往回滑动的情况
             if (moveX < 0) return // 已经是划出来了，还要往左滑动，忽略
@@ -336,7 +336,7 @@ export default class MpSlideview extends WeuiBase {
             this.leftDom.style.webkitTransform = 'translate3d(0px, 0, 0)'
             this.leftDom.style.transition = `transform ${duration}s`
             this.leftDom.style.webkitTransition = `transform ${duration}s`
- 
+
             const buttonsDom = this.shadowRoot.querySelectorAll('.btn')
             for (let i = buttonsDom.length - 1; i >= 0; i--) {
                 const item = buttonsDom[i]

@@ -88,36 +88,45 @@ export default class Base extends HTMLElement {
                 })
             }
             this[`__${name}__`] = value
-        } else if (typeof value === 'function') {
+            this.attributeChangedCallback(name, oldValue || null, value)
+        } else if (typeof value === 'function' || typeof value === 'object') {
+            const oldValue = this[`__${name}__`]
             this[`__${name}__`] = value
+            this.attributeChangedCallback(name, oldValue || null, value)
         } else {
             super.setAttribute(name, value)
         }
     }
 
     setAttributeNS(ns, name, value) {
-        if (name === 'kbone-attribute-map' || name === 'kbone-event-map' || typeof value === 'function') this.setAttribute(name, value)
+        if (name === 'kbone-attribute-map' || name === 'kbone-event-map' || typeof value === 'function' || typeof value === 'object') this.setAttribute(name, value)
         else super.setAttributeNS(ns, name, value)
     }
 
     getAttribute(name) {
-        if (name === 'kbone-attribute-map' || name === 'kbone-event-map' || typeof this[`__${name}__`] === 'function') return this[`__${name}__`]
+        if (name === 'kbone-attribute-map' || name === 'kbone-event-map' || typeof this[`__${name}__`] === 'function' || typeof this[`__${name}__`] === 'object') return this[`__${name}__`]
         return super.getAttribute(name)
     }
 
     getAttributeNS(ns, name) {
-        if (name === 'kbone-attribute-map' || name === 'kbone-event-map' || typeof this[`__${name}__`] === 'function') return this[`__${name}__`]
+        if (name === 'kbone-attribute-map' || name === 'kbone-event-map' || typeof this[`__${name}__`] === 'function' || typeof this[`__${name}__`] === 'object') return this[`__${name}__`]
         return super.getAttributeNS(ns, name)
     }
 
     removeAttribute(name) {
-        if (name === 'kbone-attribute-map' || name === 'kbone-event-map') delete this[`__${name}__`]
-        else super.removeAttribute(name)
+        if (name === 'kbone-attribute-map' || name === 'kbone-event-map' || typeof this[`__${name}__`] === 'function' || (typeof this[`__${name}__`] === 'object')) {
+            const oldValue = this[`__${name}__`]
+            delete this[`__${name}__`]
+            this.attributeChangedCallback(name, oldValue, null)
+        } else super.removeAttribute(name)
     }
 
     removeAttributeNS(ns, name) {
-        if (name === 'kbone-attribute-map' || name === 'kbone-event-map') delete this[`__${name}__`]
-        else super.removeAttributeNS(ns, name)
+        if (name === 'kbone-attribute-map' || name === 'kbone-event-map' || typeof this[`__${name}__`] === 'function' || typeof this[`__${name}__`] === 'object') {
+            const oldValue = this[`__${name}__`]
+            delete this[`__${name}__`]
+            this.attributeChangedCallback(name, oldValue, null)
+        } else super.removeAttributeNS(ns, name)
     }
 
     static get observedAttributes() {
@@ -210,10 +219,12 @@ export default class Base extends HTMLElement {
      */
     filterObjectValue(value, defaultValue) {
         if (value === null) return defaultValue
-        try {
-            value = JSON.parse(value)
-        } catch (err) {
-            value = defaultValue
+        if (typeof value === 'string') {
+            try {
+                value = JSON.parse(value)
+            } catch (err) {
+                value = defaultValue
+            }
         }
         return value
     }

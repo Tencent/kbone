@@ -113,12 +113,99 @@
         </div>
       </wx-view>
       <!-- <wx-view class="item">
-        <div class="title">mp-checkbox-group</div>
-        <div class="comp-cnt"></div>
-      </wx-view> -->
-      <!-- <wx-view class="item">
-        <div class="title">mp-checkbox</div>
-        <div class="comp-cnt"></div>
+        <div class="title">mp-form/mp-form-page/mp-checkbox-group/mp-checkbox</div>
+        <div class="comp-cnt">
+          <mp-toptips :msg="mpForm.error" type="error" :show="mpForm.error"></mp-toptips>
+          <mp-form-page title="表单结构" subtitle="展示表单页面的信息结构样式, 分别由头部区域/控件区域/提示区域/操作区域和底部信息区域组成。">
+            <mp-form id="form" :rules="mpForm.rules" :models="mpForm.formData">
+              <mp-cells title="单选列表项">
+                <mp-checkbox-group prop="radio" multi="false" @change="onFomrRadioChange">
+                  <mp-checkbox v-for="(item, index) in mpForm.radioItems" :key="index" :label="item.name" :value="item.value" :checked="item.checked.toString()"></mp-checkbox>
+                </mp-checkbox-group>
+              </mp-cells>
+              <mp-cells title="复选列表项">
+                <mp-checkbox-group prop="checkbox" multi="true" @change="onFormCheckBoxChange">
+                  <mp-checkbox v-for="(item, index) in mpForm.checkboxItems" :key="index" :label="item.name" :value="item.value" :checked="item.checked.toString()"></mp-checkbox>
+                </mp-checkbox-group>
+              </mp-cells>
+              <mp-cells title="表单" footer="底部说明文字底部说明文字">
+                <mp-cell prop="name" title="姓名">
+                  <wx-input @input="onFormInputChange" data-field="name" class="weui-input" placeholder="请输入姓名"></wx-input>
+                </mp-cell>
+                <mp-cell prop="qq" title="qq">
+                  <wx-input @input="onFormInputChange" data-field="qq" class="weui-input" placeholder="请输入qq"></wx-input>
+                </mp-cell>
+                <mp-cell prop="mobile" title="手机号" ext-class=" weui-cell_vcode">
+                  <wx-nput @input="onFormInputChange" data-field="mobile" class="weui-input" placeholder="请输入手机号"></wx-nput>
+                  <wx-button slot="footer" type="default" class="weui-vcode-btn">获取验证码</wx-button>
+                </mp-cell>
+                <mp-cell prop="date" title="日期">
+                  <wx-picker data-field="date" mode="date" :value="mpForm.date" start="2015-09-01" end="2017-09-01" @change="onFormDateChange">
+                    <div class="weui-input">{{date}}</div>
+                  </wx-picker>
+                </mp-cell>
+                <mp-cell prop="vcode" title="验证码" ext-class="weui-cell_vcode">
+                  <wx-input @input="onFormInputChange" data-field="vcode" class="weui-input" placeholder="请输入验证码"></wx-input>
+                  <wx-image slot="footer" class="weui-vcode-img" src="../../images/vcode.jpg" style="width: 108px"></wx-image>
+                </mp-cell>
+              </mp-cells>
+              <mp-cells title="提交后表单项报错">
+                <mp-cell show-error prop="idcard" title="卡号">
+                  <wx-input @input="onFormInputChange" data-field="idcard" class="weui-input" placeholder="请输入卡号"></wx-input>
+                </mp-cell>
+              </mp-cells>
+              <mp-cells title="开关">
+                <mp-cell title="标题文字">
+                  <wx-switch slot="footer" checked="true"></wx-switch>
+                </mp-cell>
+              </mp-cells>
+              <mp-cells title="文本框">
+                <mp-cell title="标题文字">
+                  <wx-input class="weui-input" placeholder="请输入文本"></wx-input>
+                </mp-cell>
+              </mp-cells>
+              <mp-cells title="文本域">
+                <mp-cell has-header="false" has-footer="false">
+                  <wx-textarea class="weui-textarea" placeholder="请输入文本" style="height: 3.3em"></wx-textarea>
+                  <div class="weui-textarea-counter">0/200</div>
+                </mp-cell>
+              </mp-cells>
+              <mp-cells title="选择">
+                <mp-cell ext-class="weui-cell_select weui-cell_select-before">
+                  <div slot="title" style="width: 105px">
+                    <wx-picker @change="mpForm.countryCodeIndex = $event.detail.value" :value="mpForm.countryCodeIndex" :range="mpForm.countryCodes">
+                      <div class="weui-select">{{mpForm.countryCodes[mpForm.countryCodeIndex]}}</div>
+                    </wx-picker>
+                  </div>
+                  <wx-input class="weui-input" placeholder="请输入号码"></wx-input>
+                </mp-cell>
+              </mp-cells>
+              <mp-cells title="选择">
+                <mp-cell has-header="false" ext-class="weui-cell_select">
+                  <picker @change="mpForm.accountIndex = $event.detail.value" :value="mpForm.accountIndex" :range="mpForm.accounts">
+                    <div class="weui-select">{{mpForm.accounts[mpForm.accountIndex]}}</div>
+                  </picker>
+                </mp-cell>
+                <mp-cell ext-class="weui-cell_select weui-cell_select-after">
+                  <div slot="title" class="weui-label">国家/地区</div>
+                  <wx-picker @change="mpForm.countryIndex = $event.detail.value" :value="mpForm.countryIndex" :range="mpForm.countries">
+                    <div class="weui-select">{{mpForm.countries[mpForm.countryIndex]}}</div>
+                  </wx-picker>
+                </mp-cell>
+              </mp-cells>
+            </mp-form>
+            <checkbox-group slot="tips" @change="mpForm.isAgree = !!$event.detail.value.length">
+              <wx-label class="weui-agree">
+                <wx-checkbox class="weui-agree__checkbox-check"></wx-checkbox>
+                <wx-text class="weui-agree__checkbox"></wx-text>
+                <div class="weui-agree__text">阅读并同意<a href="">《相关条款》</a></div>
+              </wx-label>
+            </checkbox-group>
+            <div slot="button">
+              <wx-button class="weui-btn" type="primary" @tap="doSubmitForm">确定</wx-button>
+            </div>
+          </mp-form-page>
+        </div>
       </wx-view> -->
       <wx-view class="item">
         <div class="title">mp-slideview</div>
@@ -283,11 +370,11 @@ export default {
     return {
       mpGallery: {
         show: false,
-        imgUrls: JSON.stringify([
+        imgUrls: [
           'https://res.wx.qq.com/op_res/0TZreUFL8sWsS1cFx5_f7MF5aY767_cWsd9JiKdHxL9Ktu6O6JLAJwvF-jLVxpB3',
           'https://res.wx.qq.com/op_res/0TZreUFL8sWsS1cFx5_f7MF5aY767_cWsd9JiKdHxL9Ktu6O6JLAJwvF-jLVxpB3',
           'https://res.wx.qq.com/op_res/0TZreUFL8sWsS1cFx5_f7MF5aY767_cWsd9JiKdHxL9Ktu6O6JLAJwvF-jLVxpB3'
-        ]),
+        ],
       },
       mpLoading: {
         show: true,
@@ -300,8 +387,64 @@ export default {
       mpCells: {
         icon: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAuCAMAAABgZ9sFAAAAVFBMVEXx8fHMzMzr6+vn5+fv7+/t7e3d3d2+vr7W1tbHx8eysrKdnZ3p6enk5OTR0dG7u7u3t7ejo6PY2Njh4eHf39/T09PExMSvr6+goKCqqqqnp6e4uLgcLY/OAAAAnklEQVRIx+3RSRLDIAxE0QYhAbGZPNu5/z0zrXHiqiz5W72FqhqtVuuXAl3iOV7iPV/iSsAqZa9BS7YOmMXnNNX4TWGxRMn3R6SxRNgy0bzXOW8EBO8SAClsPdB3psqlvG+Lw7ONXg/pTld52BjgSSkA3PV2OOemjIDcZQWgVvONw60q7sIpR38EnHPSMDQ4MjDjLPozhAkGrVbr/z0ANjAF4AcbXmYAAAAASUVORK5CYII=',
       },
+      // mpForm: {
+      //   showTopTips: false,
+      //   radioItems: [
+      //     {name: 'cell standard', value: '0', checked: true},
+      //     {name: 'cell standard', value: '1', checked: false},
+      //   ],
+      //   checkboxItems: [
+      //     {name: 'standard is dealt for u.', value: '0', checked: true},
+      //     {name: 'standard is dealicient for u.', value: '1', checked: false},
+      //   ],
+      //   items: [
+      //     {name: 'USA', value: '美国'},
+      //     {name: 'CHN', value: '中国', checked: 'true'},
+      //     {name: 'BRA', value: '巴西'},
+      //     {name: 'JPN', value: '日本'},
+      //     {name: 'ENG', value: '英国'},
+      //     {name: 'TUR', value: '法国'},
+      //   ],
+      //   date: '2016-09-01',
+      //   time: '12:01',
+      //   countryCodes: ['+86', '+80', '+84', '+87'],
+      //   countryCodeIndex: 0,
+      //   countries: ['中国', '美国', '英国'],
+      //   countryIndex: 0,
+      //   accounts: ['微信号', 'QQ', 'Email'],
+      //   accountIndex: 0,
+      //   isAgree: false,
+      //   formData: {},
+      //   rules: [{
+      //     name: 'radio',
+      //     rules: {required: false, message: '单选列表是必选项'},
+      //   }, {
+      //     name: 'checkbox',
+      //     rules: {required: true, message: '多选列表是必选项'},
+      //   }, {
+      //     name: 'name',
+      //     rules: {required: true, message: '请输入姓名'},
+      //   }, {
+      //     name: 'qq',
+      //     rules: {required: true, message: 'qq必填'},
+      //   }, {
+      //     name: 'mobile',
+      //     rules: [{required: true, message: 'mobile必填'}, {mobile: true, message: 'mobile 格式不对'}],
+      //   }, {
+      //     name: 'vcode',
+      //     rules: {required: true, message: '验证码必填'},
+      //   }, {
+      //     name: 'idcard',
+      //     rules: {
+      //       validator(rule, value) {
+      //         if (!value || value.length !== 18) return 'idcard 格式不正确'
+      //         return ''
+      //       }
+      //     },
+      //   }]
+      // },
       mpSlideView: {
-        buttons: JSON.stringify([{
+        buttons: [{
           text: '普通',
           src: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScyMicgaGVpZ2h0PScyMicgdmlld0JveD0nMCAwIDIyIDIyJz4gPHBhdGggZmlsbC1vcGFjaXR5PScuOScgZmlsbC1ydWxlPSdldmVub2RkJyBkPSdNMTcuNjc4IDExLjU5MWEzLjQ4MyAzLjQ4MyAwIDAgMC00Ljk2NC00Ljg4N2MtLjE3Ny4xNzYtLjQuMzkxLS42NzIuNjQ4bC0uNzU0LjcxLS43NTUtLjcxYTMyLjMzNyAzMi4zMzcgMCAwIDEtLjY3MS0uNjQ4IDMuNDgzIDMuNDgzIDAgMCAwLTQuOTI3IDAgMy40ODEgMy40ODEgMCAwIDAtLjA1IDQuODc2bDYuNDAzIDYuNDAyIDYuMzktNi4zOXpNNC4xNTggNS45MjZhNC41ODMgNC41ODMgMCAwIDEgNi40ODEgMGMuMTY4LjE2Ny4zODQuMzc2LjY0OS42MjUuMjY0LS4yNS40OC0uNDU4LjY0OC0uNjI1YTQuNTgzIDQuNTgzIDAgMCAxIDYuNTMxIDYuNDMxbC02LjUzMSA2LjUzMmEuOTE3LjkxNyAwIDAgMS0xLjI5NyAwbC02LjUzMS02LjUzMWE0LjU4NCA0LjU4NCAwIDAgMSAuMDUtNi40MzJ6Jy8+PC9zdmc+',
           data: {test: 'a'},
@@ -316,13 +459,13 @@ export default {
           extClass: 'test',
           src: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScyMicgaGVpZ2h0PScyMicgdmlld0JveD0nMCAwIDIyIDIyJz4gPHBhdGggZmlsbC1vcGFjaXR5PScuOScgZmlsbC1ydWxlPSdldmVub2RkJyBkPSdNNi4yMSA1Ljg2N2wuNzQ0IDEyLjUxYy4wMjMuMzg3LjM0NC42OS43MzIuNjloNi42MjhhLjczMy43MzMgMCAwIDAgLjczMi0uNjlsLjc0NS0xMi41MUg2LjIwOXptMTAuNjgzIDBsLS43NDkgMTIuNTc1YTEuODMzIDEuODMzIDAgMCAxLTEuODMgMS43MjVINy42ODZjLS45NyAwLTEuNzczLS43NTYtMS44My0xLjcyNUw1LjEwNyA1Ljg2N0gzLjIwOHYtLjY0MmMwLS4yNTMuMjA2LS40NTguNDU5LS40NThoMTQuNjY2Yy4yNTMgMCAuNDU5LjIwNS40NTkuNDU4di42NDJoLTEuOXptLTQuMDYtMy4xMTdjLjI1MyAwIC40NTkuMjA1LjQ1OS40NTh2LjY0Mkg4LjcwOHYtLjY0MmMwLS4yNTMuMjA2LS40NTguNDU5LS40NThoMy42NjZ6bS00LjEyNSA1LjVoMS4xbC40NTkgOC4yNWgtMS4xbC0uNDU5LTguMjV6bTMuNDg0IDBoMS4xbC0uNDU5IDguMjVoLTEuMWwuNDU5LTguMjV6Jy8+PC9zdmc+',
           data: {test: 'c'},
-        }]),
+        }],
       },
       mpDialog: {
         dialogShow: false,
         showOneButtonDialog: false,
-        buttons: JSON.stringify([{text: '取消'}, {text: '确定'}]),
-        oneButton: JSON.stringify([{text: '确定'}]), // 也支持传 json 串，用于对付某些会将属性值转成字符串的 Web 框架
+        buttons: [{text: '取消'}, {text: '确定'}],
+        oneButton: [{text: '确定'}], // 也支持传 json 串，用于对付某些会将属性值转成字符串的 Web 框架
       },
       mpToptips: {
         value: '',
@@ -334,7 +477,7 @@ export default {
         typeF: false,
         typeS: false,
         typeT: false,
-        buttons: JSON.stringify([{
+        buttons: [{
           type: 'default',
           className: '',
           text: '辅助操作',
@@ -344,15 +487,15 @@ export default {
           className: '',
           text: '主操作',
           value: 1
-        }])
+        }],
       },
       mpActionSheet: {
         show: false,
-        groups: JSON.stringify([
+        groups: [
           {text: '示例菜单', value: 1},
           {text: '示例菜单', value: 2},
           {text: '负向菜单', type: 'warn', value: 3},
-        ]),
+        ],
       },
       mpNavigationBar: {
         loading: false,
@@ -363,7 +506,7 @@ export default {
       },
       mpTabbar: {
         show: false,
-        list: JSON.stringify([{
+        list: [{
           text: '微信',
           iconPath: tabbarIcon,
           selectedIconPath: tabbarIcon,
@@ -381,7 +524,7 @@ export default {
           text: '我',
           iconPath: tabbarIcon,
           selectedIconPath: tabbarIcon,
-        }])
+        }],
       },
       mpSearchbar: {
         i: 0,
@@ -402,6 +545,57 @@ export default {
       const color = evt.detail.value ? colorDark : colorLight
       this.mpIcon.list.forEach(item => item.color = color)
     },
+
+    // onFomrRadioChange(evt) {
+    //   const radioItems = this.mpForm.radioItems
+    //   for (let i = 0, len = radioItems.length; i < len; ++i) {
+    //     radioItems[i].checked = (radioItems[i].value === evt.detail.value)
+    //   }
+
+    //   this.$set(this.mpForm.formData, 'radio', evt.detail.value)
+    // },
+
+    // onFormCheckBoxChange(evt) {
+    //   const checkboxItems = this.mpForm.checkboxItems
+    //   const values = evt.detail.value
+    //   for (let i = 0, lenI = checkboxItems.length; i < lenI; ++i) {
+    //     checkboxItems[i].checked = false
+
+    //     for (let j = 0, lenJ = values.length; j < lenJ; ++j) {
+    //       if (checkboxItems[i].value === values[j]) {
+    //         checkboxItems[i].checked = true
+    //         break
+    //       }
+    //     }
+    //   }
+
+    //   this.$set(this.mpForm.formData, 'checkbox', evt.detail.value)
+    // },
+
+    // onFormInputChange(evt) {
+    //   const {field} = evt.currentTarget.dataset
+    //   this.$set(this.mpForm.formData, field, evt.detail.value)
+    // },
+
+    // onFormDateChange(evt) {
+    //   const date = evt.detail.value
+    //   this.mpForm.date = date
+    //   this.$set(this.mpForm.formData, 'date', date)
+    // },
+
+    // doSubmitForm() {
+    //   document.querySelector('#form').$wxComponent.validate((valid, errors) => {
+    //     if (!valid) {
+    //       console.log('[mp-form] invalid', valid, errors)
+    //       const firstError = Object.keys(errors)
+    //       if (firstError.length) {
+    //         this.mpForm.error = errors[firstError[0]].message
+    //       }
+    //     } else {
+    //       console.log('[mp-form] valid success', this.mpForm.formData)
+    //     }
+    //   })
+    // },
 
     showMpToptips() {
       if (this.mpToptips.value) {
@@ -479,6 +673,9 @@ export default {
 }
 .blue {
   background: blue;
+}
+.weui-agree .weui-agree__text {
+  display: inline;
 }
 .weui-slidecell {
   background-color: #fff;

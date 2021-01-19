@@ -75,15 +75,13 @@ export default class MpTabbar extends WeuiBase {
         const list = this.list
         if (list.length) {
             const current = this.current
-            this.tabbar.innerHTML = list.map((item, index) => {
-                return `<div data-index='${index}' class="weui-tabbar__item ${current === index ? 'weui-bar__item_on' : ''}">
+            this.tabbar.innerHTML = list.map((item, index) => `<div data-index='${index}' class="weui-tabbar__item ${current === index ? 'weui-bar__item_on' : ''}">
                   <div style="position: relative;display:inline-block;">
                     <wx-image src="${current === index ? item.selectedIconPath : item.iconPath}" class="weui-tabbar__icon"></wx-image>
                     ${(item.badge || item.dot) ? '<mp-badge content="' + (item.badge || '') + '" style="position: absolute;top:-2px;left:calc(100% - 3px)"></mp-badge>' : ''}
                   </div>
                   <div class="weui-tabbar__label">${item.text}</div>
-                </div>`
-            }).join('')
+                </div>`).join('')
         } else {
             this.tabbar.innerHTML = ''
         }

@@ -338,18 +338,18 @@ export default class WxPicker extends Base {
         // 转化 wx-picker 的值为 wx-picker-view 的值
         const value = this.value
         const mode = this.mode
-        if (mode === 'selector') this.pickerView.setAttribute('value', JSON.stringify([value]))
-        else if (mode === 'multiSelector') this.pickerView.setAttribute('value', JSON.stringify(value))
+        if (mode === 'selector') this.pickerView.setAttribute('value', [value])
+        else if (mode === 'multiSelector') this.pickerView.setAttribute('value', value)
         else if (mode === 'time') {
             const time = (value || this.start || '00:00').split(':').map(item => +item || 0)
-            this.pickerView.setAttribute('value', JSON.stringify(this.getLimitTime(time)))
+            this.pickerView.setAttribute('value', this.getLimitTime(time))
         } else if (mode === 'date') {
             const date = this.getLimitDate(filterDate(value))
             this.adjustDateColumn(date)
-            this.pickerView.setAttribute('value', JSON.stringify(date))
+            this.pickerView.setAttribute('value', date)
         } else if (mode === 'region') {
             this.adjustRegionColumn(value)
-            this.pickerView.setAttribute('value', JSON.stringify(this.getLimitRegion(value)))
+            this.pickerView.setAttribute('value', this.getLimitRegion(value))
         }
 
         this._isPickerShow = true
@@ -375,7 +375,7 @@ export default class WxPicker extends Base {
         if (this._getFormValueCb) this._getFormValueCb(detail.value)
 
         const mode = this.mode
-        if (mode === 'multiSelector' || mode === 'region') this.setAttribute('value', JSON.stringify(detail.value))
+        if (mode === 'multiSelector' || mode === 'region') this.setAttribute('value', detail.value)
         else this.setAttribute('value', detail.value)
         this.dispatchEvent(new CustomEvent('change', {bubbles: true, cancelable: true, detail}))
         this.hidePickerView()
@@ -421,7 +421,7 @@ export default class WxPicker extends Base {
             if (needTriggerEvt) this.dispatchEvent(new CustomEvent('columnchange', {bubbles: true, cancelable: true, detail}))
         } else if (mode === 'time') {
             const time = this.getLimitTime(value)
-            if (!isEqual(time, value)) this.pickerView.setAttribute('value', JSON.stringify(time))
+            if (!isEqual(time, value)) this.pickerView.setAttribute('value', time)
             value = `${(time[0] < 10 ? '0' : '') + time[0]}:${(time[1] < 10 ? '0' : '') + time[1]}`
         } else if (mode === 'date') {
             const date = this.getLimitDate(value)
@@ -430,9 +430,9 @@ export default class WxPicker extends Base {
 
             if (date[0] !== lastDate[0] || date[1] !== lastDate[1]) {
                 this.adjustDateColumn(date)
-                this.pickerView.setAttribute('value', JSON.stringify(date))
+                this.pickerView.setAttribute('value', date)
             } else if (!isEqual(date, value)) {
-                this.pickerView.setAttribute('value', JSON.stringify(date))
+                this.pickerView.setAttribute('value', date)
             }
 
             const fields = this.fields
