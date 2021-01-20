@@ -91,8 +91,4 @@ export default {
   font-size: 20px;
   border: 1px solid #ddd;
 }
-
-.external-red {
-  color: red;
-}
 </style>

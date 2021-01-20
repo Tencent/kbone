@@ -162,12 +162,12 @@ class MpPlugin {
                 if (typeof wxCustomComponents[key] === 'string') {
                     wxCustomComponents[key] = {path: wxCustomComponents[key]}
                 }
-                const {props = [], propsVal = {}, externalWxss = []} = wxCustomComponents[key]
+                const {props = [], propsVal = {}, externalWxss} = wxCustomComponents[key]
                 wxCustomComponents[key].propsVal = props.reduce((tempObj, item, index) => {
                     tempObj[item] = propsVal[index] || null
                     return tempObj
                 }, {})
-                externalWxss.forEach(item => externalWxssMap[item] = true) // 标记页面样式需要被外面的自定义组件使用
+                if (Array.isArray(externalWxss) && externalWxss.length) externalWxss.forEach(item => externalWxssMap[item] = true) // 标记页面样式需要被外面的自定义组件使用
             })
 
             // 处理 weui
@@ -205,10 +205,7 @@ class MpPlugin {
 
                             // 检测该页面样式是否被外部依赖
                             const isWxss = /\.(css|wxss)(\?|$)/.test(filePath)
-                            let isExternalWxss = false
-                            if (isWxss) {
-                                isExternalWxss = requirePages.some(item => externalWxssMap[item])
-                            }
+                            const isExternalWxss = isWxss && (requirePages.some(item => externalWxssMap[item]))
 
                             // 检测该依赖为分包内页面私有
                             if (_.includes(pages, requirePages) && compilation.assets[filePath] && !isExternalWxss) {
@@ -536,7 +533,9 @@ class MpPlugin {
                 // custom-component/index.wxss
                 addFile(compilation, '../custom-component/index.wxss', names.map(key => {
                     const {externalWxss} = wxCustomComponents[key]
-                    if (externalWxss && externalWxss.length) {
+                    if (externalWxss && typeof externalWxss === 'string') {
+                        return externalWxss
+                    } else if (Array.isArray(externalWxss) && externalWxss.length) {
                         return externalWxss.map(entryName => {
                             const assets = assetsMap[entryName]
                             return assets.css.map(css => `@import "${getAssetPath('', css, assetsSubpackageMap, '../')}";`).join('\n')

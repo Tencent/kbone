@@ -34,6 +34,7 @@ module.exports = {
 					path: 'comp-e/index',
 					props: ['my-class'], // my-class 是 external-class
 					externalWxss: ['other'], // external-class 样式所在的页面，注意如果是在分包里面，该页面样式会被构建到主包
+					// externalWxss: `.external-red {color: red;}` // 也支持直接传内容
 				},
 			},
 		},
