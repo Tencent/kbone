@@ -120,6 +120,7 @@ class MpPlugin {
             const assetsMap = {} // 页面名-依赖
             const assetsReverseMap = {} // 依赖-页面名
             const assetsSubpackageMap = {} // 依赖-分包名
+            const externalWxssMap = {} // 样式被外部依赖的页面
             const tabBarMap = {}
             let needEmitConfigToSubpackage = false // 是否输出 config.js 到分包内
 
@@ -156,44 +157,17 @@ class MpPlugin {
                 assetsMap[entryName] = assets
             }
 
-            // 处理分包配置
-            Object.keys(subpackagesConfig).forEach(packageName => {
-                let pages = subpackagesConfig[packageName] || []
-                if (!Array.isArray(pages)) pages = pages.pages
-
-                pages.forEach(entryName => {
-                    subpackagesMap[entryName] = packageName
-
-                    // 寻找私有依赖，放入分包
-                    const assets = assetsMap[entryName]
-                    if (assets) {
-                        [...assets.js, ...assets.css].forEach(filePath => {
-                            const requirePages = assetsReverseMap[filePath] || []
-                            if (_.includes(pages, requirePages) && compilation.assets[filePath]) {
-                                // 该依赖为分包内页面私有
-                                assetsSubpackageMap[filePath] = packageName
-                                compilation.assets[`../${packageName}/common/${filePath}`] = compilation.assets[filePath]
-                                delete compilation.assets[filePath]
-                            }
-                        })
-                    }
-                })
-            })
-
-            // 剔除 app.js 入口
-            const appJsEntryIndex = entryNames.indexOf(appJsEntryName)
-            if (appJsEntryIndex >= 0) entryNames.splice(appJsEntryIndex, 1)
-
             // 处理自定义组件字段
             Object.keys(wxCustomComponents).forEach(key => {
                 if (typeof wxCustomComponents[key] === 'string') {
                     wxCustomComponents[key] = {path: wxCustomComponents[key]}
                 }
-                const {props = [], propsVal = {}} = wxCustomComponents[key]
+                const {props = [], propsVal = {}, externalWxss = []} = wxCustomComponents[key]
                 wxCustomComponents[key].propsVal = props.reduce((tempObj, item, index) => {
                     tempObj[item] = propsVal[index] || null
                     return tempObj
                 }, {})
+                externalWxss.forEach(item => externalWxssMap[item] = true) // 标记页面样式需要被外面的自定义组件使用
             })
 
             // 处理 weui
@@ -214,6 +188,42 @@ class MpPlugin {
                     }
                 })
             }
+
+            // 处理分包配置
+            Object.keys(subpackagesConfig).forEach(packageName => {
+                let pages = subpackagesConfig[packageName] || []
+                if (!Array.isArray(pages)) pages = pages.pages
+
+                pages.forEach(entryName => {
+                    subpackagesMap[entryName] = packageName
+
+                    // 寻找私有依赖，放入分包
+                    const assets = assetsMap[entryName]
+                    if (assets) {
+                        [...assets.js, ...assets.css].forEach(filePath => {
+                            const requirePages = assetsReverseMap[filePath] || []
+
+                            // 检测该页面样式是否被外部依赖
+                            const isWxss = /\.(css|wxss)(\?|$)/.test(filePath)
+                            let isExternalWxss = false
+                            if (isWxss) {
+                                isExternalWxss = requirePages.some(item => externalWxssMap[item])
+                            }
+
+                            // 检测该依赖为分包内页面私有
+                            if (_.includes(pages, requirePages) && compilation.assets[filePath] && !isExternalWxss) {
+                                assetsSubpackageMap[filePath] = packageName
+                                compilation.assets[`../${packageName}/common/${filePath}`] = compilation.assets[filePath]
+                                delete compilation.assets[filePath]
+                            }
+                        })
+                    }
+                })
+            })
+
+            // 剔除 app.js 入口
+            const appJsEntryIndex = entryNames.indexOf(appJsEntryName)
+            if (appJsEntryIndex >= 0) entryNames.splice(appJsEntryIndex, 1)
 
             if (generateConfig.app === 'noemit') {
                 // generate.app 值为 noemit 且只有分包输出时，将 config.js 输出到分包内
@@ -520,11 +530,21 @@ class MpPlugin {
                 // custom-component/index.wxml
                 addFile(compilation, '../custom-component/index.wxml', names.map((key, index) => {
                     const {props = [], events = []} = wxCustomComponents[key]
-                    return `<${key} wx:${index === 0 ? 'if' : 'elif'}="{{kboneCustomComponentName === '${key}'}}" id="{{id}}" class="{{className}}" style="{{style}}" ${props.map(name => name + '="{{' + name + '}}"').join(' ')} ${events.map(name => 'bind' + name + '="on' + name + '"').join(' ')}><block wx:if="{{hasSlots}}"><element wx:for="{{slots}}" wx:key="nodeId" id="{{item.id}}" class="{{item.className}}" style="{{item.style}}" slot="{{item.slot}}" data-private-node-id="{{item.nodeId}}" data-private-page-id="{{item.pageId}}" generic:custom-component="custom-component"></element></block><slot/></${key}>`
+                    return `<${key} wx:${index === 0 ? 'if' : 'elif'}="{{kboneCustomComponentName === '${key}'}}" id="{{id}}" class="{{className}}" style="{{style}}" ${props.map(name => name + '="{{' + (name.replace(/-([a-zA-Z])/g, (all, $1) => $1.toUpperCase())) + '}}"').join(' ')} ${events.map(name => 'bind' + name + '="on' + name + '"').join(' ')}><block wx:if="{{hasSlots}}"><element wx:for="{{slots}}" wx:key="nodeId" id="{{item.id}}" class="{{item.className}}" style="{{item.style}}" slot="{{item.slot}}" data-private-node-id="{{item.nodeId}}" data-private-page-id="{{item.pageId}}" generic:custom-component="custom-component"></element></block><slot/></${key}>`
                 }).join('\n'))
 
                 // custom-component/index.wxss
-                addFile(compilation, '../custom-component/index.wxss', '')
+                addFile(compilation, '../custom-component/index.wxss', names.map(key => {
+                    const {externalWxss} = wxCustomComponents[key]
+                    if (externalWxss && externalWxss.length) {
+                        return externalWxss.map(entryName => {
+                            const assets = assetsMap[entryName]
+                            return assets.css.map(css => `@import "${getAssetPath('', css, assetsSubpackageMap, '../')}";`).join('\n')
+                        }).join('\n\n')
+                    } else {
+                        return ''
+                    }
+                }).join('\n'))
 
                 // custom-component/index.json
                 realUsingComponents['custom-component'] = './index'

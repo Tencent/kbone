@@ -5,12 +5,16 @@ module.exports = {
 	entry: '/',
 	router: {
 		index: ['/'],
+		other: ['/other'],
 	},
 	redirect: {	
 		notFound: 'index',	
 		accessDenied: 'index',
 	},
 	generate: {
+		subpackages: {
+			package: ['other'],
+		},
 		wxCustomComponent: {
 			root: path.join(__dirname, '../src/custom-components'),
 			usingComponents: {
@@ -25,9 +29,15 @@ module.exports = {
 					props: ['prefix', 'name'],
 				},
 				'comp-c': 'comp-c',
+				// external-class 使用，建议使用 addGlobalClass 代替
+				'comp-e': {
+					path: 'comp-e/index',
+					props: ['my-class'], // my-class 是 external-class
+					externalWxss: ['other'], // external-class 样式所在的页面，注意如果是在分包里面，该页面样式会被构建到主包
+				},
 			},
 		},
-		// weui: true,
+		// weui: true, // 是否使用 weui
 	},
 	app: {
 		navigationBarTitleText: 'miniprogram-project',

@@ -4,13 +4,14 @@
     <comp-a ref="compA" class="block" :prefix="prefixA" :suffix="suffixA" :testObj="testObj" :testArr="testArr" @someevent="onEvent">
       <div>comp-a slot</div>
     </comp-a>
-    <comp-b class="block" :prefix="prefixB" name="test">
+    <comp-b class="block" :prefix="prefixB" name="test" my-class="external-red">
       <div>comp-b slot</div>
     </comp-b>
     <comp-c class="block" @touchstart="log('touchstart')" @touchend="log('touchend')" @click="log('click')">
       <div>comp-c slot</div>
     </comp-c>
     <button class="btn" @click="onClick">update</button>
+    <button class="btn" @click="goOther">进入 other 页面</button>
     <!-- weui 组件，补充配置后可直接使用 -->
     <!-- <mp-msg type="success" title="操作成功" size="64">
       <div slot="desc">内容详情，可根据实际需要安排，如果换行则不超过规定长度，居中展现</div>
@@ -52,6 +53,10 @@ export default {
       this.$refs.compA._wxCustomComponent.printf()
     },
 
+    goOther() {
+      window.open('/other')
+    },
+
     onEvent(evt) {
       console.log('someevent', evt)
     },
@@ -85,5 +90,9 @@ export default {
   text-align: center;
   font-size: 20px;
   border: 1px solid #ddd;
+}
+
+.external-red {
+  color: red;
 }
 </style>

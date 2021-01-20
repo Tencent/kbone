@@ -65,7 +65,8 @@ function checkComponentAttr({props = [], propsVal}, name, domNode, destData, old
                     newValue = newValue === 'false' ? false : newValue
                 }
             }
-            if (!oldData || !isEqual(oldData[name], newValue)) destData[name] = newValue
+            const camelName = tool.toCamel(name)
+            if (!oldData || !isEqual(oldData[camelName], newValue)) destData[camelName] = newValue
         }
     }
 
