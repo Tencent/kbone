@@ -146,10 +146,12 @@ export default class MpGallery extends WeuiBase {
 
         this.dispatchEvent(new CustomEvent('delete', {bubbles: true, cancelable: true, detail: {url: spliceImgUrls[0], index: current}}))
 
-        if (!imgUrls.length) this.hide()
-        else {
+        if (!imgUrls.length) {
+            this.hide()
+        } else {
             this.current = 0
             this._currentImgs = imgUrls
+            this.updateInfo()
         }
     }
 

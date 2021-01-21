@@ -1,0 +1,17 @@
+<div class="weui-uploader">
+  <div class="weui-uploader__hd">
+    <div class="weui-uploader__overview">
+      <div class="weui-uploader__title"></div>
+      <div class="weui-uploader__info"></div>
+    </div>
+    <div class="weui-uploader__tips"></div>
+    <div id="slot-tips"><slot name="tips"></slot></div>
+  </div>
+  <div class="weui-uploader__bd">
+    <div class="weui-uploader__files"></div>
+    <wx-view class="weui-uploader__input-box" hover-class="weui-active">
+      <div class="weui-uploader__input"></div>
+    </wx-view>
+  </div>
+</div>
+<mp-gallery class="gallery" hide-on-click="true"></mp-gallery>

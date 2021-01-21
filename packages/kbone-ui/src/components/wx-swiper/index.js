@@ -418,7 +418,7 @@ export default class WxSwiper extends Base {
             this._invalid = true
             this.updateViewport(-this.displayMultipleItems - 1, true)
 
-            if (type === 'subtree' && this.current > this._items.length - 1) {
+            if (type === 'subtree' && this._items.length && this.current > this._items.length - 1) {
                 this.current = 0
                 console.error('[wx-swiper] current 无效')
             }
