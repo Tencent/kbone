@@ -30,8 +30,8 @@ module.exports = [
         propsVal: ['', ''],
     }, {
         name: 'cell',
-        props: ['extClass', 'icon', 'title', 'hover', 'link', 'value', 'showError', 'prop', 'footer', 'inline'],
-        propsVal: ['', '', '', false, false, '', false, '', '', true],
+        props: ['extClass', 'icon', 'title', 'hover', 'link', 'value', 'showError', 'prop', 'footer', 'inline', 'hasHeader'],
+        propsVal: ['', '', '', false, false, '', false, '', '', true, true],
     }, {
         name: 'cells',
         props: ['extClass', 'title', 'footer'],
@@ -43,8 +43,8 @@ module.exports = [
         events: ['change'],
     }, {
         name: 'checkbox',
-        props: ['extClass', 'multi', 'checked', 'value'],
-        propsVal: ['', true, false, ''],
+        props: ['extClass', 'multi', 'checked', 'value', 'label'],
+        propsVal: ['', true, false, '', 'label'],
         events: ['change'],
     }, {
         name: 'slideview',

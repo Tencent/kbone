@@ -14,6 +14,7 @@ export default class MpCell extends WeuiBase {
 
         this.initShadowRoot(template, MpCell.observedAttributes, () => {
             this.cell = this.shadowRoot.querySelector('#cell')
+            this.headerCnt = this.shadowRoot.querySelector('.weui-cell__hd')
             this.iconDom = this.shadowRoot.querySelector('#icon')
             this.slotIcon = this.shadowRoot.querySelector('#slot-icon')
             this.titleForm = this.shadowRoot.querySelector('#title-form')
@@ -78,11 +79,13 @@ export default class MpCell extends WeuiBase {
             this.updateFooter()
         } else if (name === 'inline') {
             this.updateClass()
+        } else if (name === 'has-header') {
+            this.headerCnt.classList.toggle('hide', !this.hasHeader)
         }
     }
 
     static get observedAttributes() {
-        return ['icon', 'title', 'hover', 'link', 'value', 'show-error', 'prop', 'footer', 'inline', ...WeuiBase.observedAttributes]
+        return ['icon', 'title', 'hover', 'link', 'value', 'show-error', 'prop', 'footer', 'inline', 'has-header', ...WeuiBase.observedAttributes]
     }
 
     /**
@@ -122,6 +125,10 @@ export default class MpCell extends WeuiBase {
 
     get inline() {
         return this.getBoolValue('inline', true)
+    }
+
+    get hasHeader() {
+        return this.getBoolValue('has-header', true)
     }
 
     updateClass() {

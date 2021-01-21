@@ -40,3 +40,15 @@ const store = new Vuex.Store({
     },
 })
 ```
+
+### weui
+
+#### useForm
+
+因为原生小程序自定义组件的 relations 不支持跨自定义组件，而 form 表单相关组件用到了此特性，所以在此方法中直接在逻辑层实现 form 表单组件的 relations 逻辑。
+
+```js
+import * as kbone from 'kbone-tool'
+
+kbone.weui.useForm()
+```

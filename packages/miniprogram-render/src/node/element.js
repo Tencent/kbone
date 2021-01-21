@@ -178,7 +178,10 @@ class Element extends Node {
      * 更新父组件树
      */
     $_triggerParentUpdate() {
-        if (this.parentNode && !this.$_notTriggerUpdate) this.parentNode.$$trigger('$$childNodesUpdate')
+        if (this.parentNode && !this.$_notTriggerUpdate) {
+            this.parentNode.$$trigger('$$childNodesUpdate')
+            this.$_triggerWindowUpdate()
+        }
         if (!this.$_notTriggerUpdate) this.$$trigger('$$domNodeUpdate')
     }
 
@@ -186,7 +189,18 @@ class Element extends Node {
      * 更新子组件树
      */
     $_triggerMeUpdate() {
-        if (!this.$_notTriggerUpdate) this.$$trigger('$$childNodesUpdate')
+        if (!this.$_notTriggerUpdate) {
+            this.$$trigger('$$childNodesUpdate')
+            this.$_triggerWindowUpdate()
+        }
+    }
+
+    /**
+     * 触发全局更新事件
+     */
+    $_triggerWindowUpdate() {
+        const window = cache.getWindow(this.$_pageId)
+        window.$$trigger('$$domTreeUpdate')
     }
 
     /**

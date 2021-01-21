@@ -105,6 +105,8 @@ class EventTarget {
                 bubbles: true, // 默认都可以冒泡
                 $$extra: extra,
             })
+            // 保留原始事件的 detail
+            if (miniprogramEvent.detail) event.detail = Object.assign({}, miniprogramEvent.detail, event.detail || {})
         }
 
         // 捕获

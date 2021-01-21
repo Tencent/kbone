@@ -1,5 +1,10 @@
 # 更新日志
 
+## 2.2.5
+
+* 支持 window 的 $$domTreeUpdate 事件给 kbone-tool 使用
+* 修复部分事件没有携带原生小程序事件的 detail 对象问题
+
 ## 2.2.4
 
 * 第三方自定义组件支持 kbone-func- 前缀
