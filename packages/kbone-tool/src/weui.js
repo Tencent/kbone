@@ -81,6 +81,8 @@ function useForm() {
 
             item._linkCells = item._linkCells || {}
             if (!item._linkCells[nodeId]) {
+                item._linkCells[nodeId] = true
+
                 const target = item.$$wxCustomComponent
                 target.setData({
                     checkboxCount: source.data.checkboxCount + 1,
@@ -125,6 +127,8 @@ function useForm() {
 
             item._linkGroups = item._linkGroups || {}
             if (!item._linkGroups[nodeId]) {
+                item._linkGroups[nodeId] = true
+
                 const target = item.$$wxCustomComponent
                 source.data.targetList.push(target)
                 target.setMulti(source.data.multi)

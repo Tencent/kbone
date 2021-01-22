@@ -573,6 +573,8 @@ export default {
     },
 
     onFomrRadioChange(evt) {
+      console.log('[mp-checkbox] change', evt.detail)
+
       const radioItems = this.mpForm.radioItems
       for (let i = 0, len = radioItems.length; i < len; ++i) {
         radioItems[i].checked = (radioItems[i].value === evt.detail.value)
@@ -583,6 +585,8 @@ export default {
     },
 
     onFormCheckBoxChange(evt) {
+      console.log('[mp-checkbox] change', evt.detail)
+
       const checkboxItems = this.mpForm.checkboxItems
       const values = evt.detail.value
       for (let i = 0, lenI = checkboxItems.length; i < lenI; ++i) {
