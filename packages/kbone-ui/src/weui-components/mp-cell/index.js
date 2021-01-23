@@ -132,7 +132,7 @@ export default class MpCell extends WeuiBase {
     }
 
     updateClass() {
-        this.cell.className = `weui-cell ${this.link ? 'weui-cell_access' : ''} ${this.showError && this._error ? 'weui-cell_warn' : ''} ${this._inForm ? 'weui-cell-inform' : ''} ${this.extClass} ${this.outerClass} ${this.inline ? '' : '.weui-cell_label-block'}`
+        this.cell.className = `weui-cell ${this.link ? 'weui-cell_access' : ''} ${this.showError && this._error ? 'weui-cell_warn' : ''} ${this._inForm ? 'weui-cell-inform' : ''} ${this.extClass} ${this._outerClass} ${this.inline ? '' : 'weui-cell_label-block'} ${this._setInGroupForm ? 'in-group-form' : ''}`
     }
 
     updateForLink() {
@@ -184,8 +184,19 @@ export default class MpCell extends WeuiBase {
         this.updateTitle()
     }
 
+    /**
+     * 提供给外部设置样式的接口
+     */
     setOuterClass(className) {
         this._outerClass = className
+        className.split(/\s+/ig).forEach(item => {
+            if (item) this.classList.toggle(item, true)
+        })
+        this.updateClass()
+    }
+
+    setInGroupForm(isInGroupForm) {
+        this._setInGroupForm = isInGroupForm
         this.updateClass()
     }
 

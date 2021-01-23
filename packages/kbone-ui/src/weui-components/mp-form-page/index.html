@@ -1,0 +1,26 @@
+<div class="weui-form">
+  <div class="weui-form__text-area title">
+    <div class="weui-form__title"></div>
+    <div class="weui-form__desc"></div>
+  </div>
+  <div class="weui-form__text-area slot-title">
+    <slot name="title"></slot>
+  </div>
+  <div class="weui-form__control-area">
+    <slot></slot>
+  </div>
+  <div class="weui-form__tips-area">
+    <slot name="tips"></slot>
+  </div>
+  <div class="weui-form__opr-area">
+    <slot name="button"></slot>
+  </div>
+  <div class="weui-form__tips-area">
+    <slot name="suffixtips"></slot>
+  </div>
+  <div class="weui-form__extra-area">
+    <div class="weui-footer">
+      <slot name="footer"></slot>
+    </div>
+  </div>
+</div>

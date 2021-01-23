@@ -38,6 +38,8 @@ export default class MpCells extends WeuiBase {
             childList: true,
             subtree: true,
         })
+
+        this.checkChildNode()
     }
 
     disconnectedCallback() {
@@ -75,6 +77,9 @@ export default class MpCells extends WeuiBase {
         return this.getAttribute('footer') || ''
     }
 
+    /**
+     * 检查孩子节点
+     */
     checkChildNode() {
         const cellList = this.querySelectorAll('mp-cell')
         Array.prototype.slice.call(cellList, 0).forEach((item, index) => {
@@ -86,6 +91,15 @@ export default class MpCells extends WeuiBase {
         this._checkboxCount = checkboxGroupList.length
         checkboxGroupList.forEach(item => this._checkboxIsMulti = item.multi)
         this.updateInnerClass()
+    }
+
+    /**
+     * 检查 mp-checkbox-group
+     */
+    checkCheckBoxGroup() {
+        const child = this.querySelector('mp-checkbox-group')
+        this._childClass = child && child.multi ? 'weui-cells_checkbox' : ''
+        this.updateClass()
     }
 
     updateTitle() {
@@ -115,13 +129,11 @@ export default class MpCells extends WeuiBase {
         this.updateInnerClass()
     }
 
-    setCellsClass(className) {
-        this._childClass = className
-        this.updateClass()
-    }
-
     setOuterClass(className) {
         this._outerClass = className
+        className.split(/\s+/ig).forEach(item => {
+            if (item) this.classList.toggle(item, true)
+        })
         this.updateClass()
     }
 }

@@ -39,8 +39,12 @@ import MpBadge from './weui-components/mp-badge'
 import MpGallery from './weui-components/mp-gallery'
 import MpLoading from './weui-components/mp-loading'
 import MpIcon from './weui-components/mp-icon'
+import MpForm from './weui-components/mp-form'
+import MpFormPage from './weui-components/mp-form-page'
 import MpCell from './weui-components/mp-cell'
 import MpCells from './weui-components/mp-cells'
+import MpCheckboxGroup from './weui-components/mp-checkbox-group'
+import MpCheckbox from './weui-components/mp-checkbox'
 import MpSlideview from './weui-components/mp-slideview'
 import MpUploader from './weui-components/mp-uploader'
 import MpDialog from './weui-components/mp-dialog'
@@ -88,8 +92,12 @@ const COMPONENT_MAP = {
     'mp-gallery': MpGallery,
     'mp-loading': MpLoading,
     'mp-icon': MpIcon,
+    'mp-form': MpForm,
+    'mp-form-page': MpFormPage,
     'mp-cell': MpCell,
     'mp-cells': MpCells,
+    'mp-checkbox-group': MpCheckboxGroup,
+    'mp-checkbox': MpCheckbox,
     'mp-slideview': MpSlideview,
     'mp-uploader': MpUploader,
     'mp-dialog': MpDialog,
