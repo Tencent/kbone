@@ -146,6 +146,8 @@ function useForm() {
                 if (!tempMap[item.$$nodeId]) {
                     if (item._linkGroups) item._linkGroups[nodeId] = null
 
+                    const target = item.$$wxCustomComponent
+
                     let index = -1
                     source.data.targetList.forEach((item, i) => {
                         if (item === target) index = i
@@ -173,7 +175,7 @@ function useForm() {
 
             const checkboxGroupList = document.querySelectorAll('wx-custom-component[behavior=mp-checkbox-group]')
             checkboxGroupList.forEach(checkCheckboxGroup)
-        })
+        }).catch(console.error)
     }))
 }
 

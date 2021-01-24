@@ -1,3 +1,9 @@
+const mp = require('miniprogram-render')
+
+const {
+    tool,
+} = mp.$$adapter
+
 /**
  * 判断基础库版本
  */
@@ -25,6 +31,14 @@ function compareVersion(v1, v2) {
     }
 
     return 0
+}
+
+/**
+ * setData 封装
+ */
+function setData(instance, data) {
+    if (tool.setData) tool.setData(instance, data)
+    else instance.setData(data)
 }
 
 const version = wx.getSystemInfoSync().SDKVersion
@@ -154,11 +168,11 @@ module.exports = function(mp, config, init) {
                 if (pageConfig.rem) {
                     let rootFontSize = this.document.documentElement.style.fontSize
                     if (!rootFontSize) rootFontSize = wx.getSystemInfoSync().screenWidth / 16 + 'px'
-                    if (rootFontSize !== this.data.rootFontSize) this.setData({rootFontSize})
+                    if (rootFontSize !== this.data.rootFontSize) setData(this, {rootFontSize})
                 }
                 if (pageConfig.pageStyle) {
                     const pageStyle = this.document.documentElement.style.cssText
-                    if (pageStyle && pageStyle !== this.data.pageStyle) this.setData({pageStyle})
+                    if (pageStyle && pageStyle !== this.data.pageStyle) setData(this, {pageStyle})
                 }
             })
 
@@ -171,7 +185,7 @@ module.exports = function(mp, config, init) {
                 }
 
                 if (data.bodyClass !== this.data.bodyClass || data.bodyStyle !== this.data.bodyStyle) {
-                    this.setData(data)
+                    setData(this, data)
                 }
             })
 
@@ -187,8 +201,20 @@ module.exports = function(mp, config, init) {
             // 初始化页面显示状态
             this.document.$$visibilityState = 'prerender'
 
+            // 统计初始化耗时
+            this.window._startInit = true
+            this.window._iniCount = 0
+            this.window.addEventListener('load', () => {
+                if (this.window._startInit && this.window._initCbCount <= 0) {
+                    // 回调全部回来了，不过一般不会进入这里
+                    this.document.$$trigger('DOMContentLoaded')
+                    this.window._iniCount = 0
+                }
+                this.window._startInit = false
+            })
+
             init(this.window, this.document)
-            this.setData({pageId: this.pageId})
+            setData(this, {pageId: this.pageId})
             this.app = this.window.createApp()
             if (this.app && typeof this.app.then === 'function') {
                 // createApp 是一个 promise
@@ -214,7 +240,7 @@ module.exports = function(mp, config, init) {
         },
         onReady() {
             if (this.pageConfig.loadingText) wx.hideLoading()
-            if (this.pageConfig.loadingView) setTimeout(() => this.setData({loading: false}), 1000) // 1s 后再删除，确保页面初始渲染逻辑完成
+            if (this.pageConfig.loadingView) setTimeout(() => setData(this, {loading: false}), 1000) // 1s 后再删除，确保页面初始渲染逻辑完成
             this.window.$$trigger('wxready')
         },
         onHide() {

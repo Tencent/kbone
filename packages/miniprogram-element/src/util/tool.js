@@ -506,6 +506,14 @@ function compareVersion(v1, v2) {
     return 0
 }
 
+/**
+ * setData 封装
+ */
+function setData(instance, data) {
+    if (tool.setData) tool.setData(instance, data)
+    else instance.setData(data)
+}
+
 module.exports = {
     USE_TEMPLATE,
     filterNodes,
@@ -516,4 +524,5 @@ module.exports = {
     checkEventAccessDomNode,
     findParentNode,
     compareVersion,
+    setData,
 }

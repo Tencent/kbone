@@ -2,9 +2,6 @@ import WeuiBase from '../weui-base'
 import tpl from './index.html'
 import style from './index.less'
 import weuiStyle from '../../styles/weui.less'
-import {
-    findParent,
-} from '../../utils/tool'
 import FormValidator from './form-validator'
 
 const template = document.createElement('template')
@@ -133,7 +130,7 @@ export default class MpForm extends WeuiBase {
         props.forEach(prop => {
             if (!this.contains(formItems[prop]) || prop !== formItems[prop].prop) delete formItems[prop]
         })
-        
+
         // 补充新节点
         const cellsList = Array.prototype.slice.call(this.querySelectorAll('mp-cell'))
         const checkboxGroupList = Array.prototype.slice.call(this.querySelectorAll('mp-checkbox-group'))
@@ -177,10 +174,10 @@ export default class MpForm extends WeuiBase {
                 isValid ? 'success' : 'fail',
                 {bubbles: true, cancelable: true, detail: isValid ? {trigger: 'validate'} : {errors: handleError, trigger: 'validate'}}
             ))
-            cb && cb(isValid, handleError)
+            if (cb) cb(isValid, handleError)
         })
     }
-    
+
     /**
      * 校验表单项
      */
@@ -192,7 +189,7 @@ export default class MpForm extends WeuiBase {
                 isValid ? 'success' : 'fail',
                 {bubbles: true, cancelable: true, detail: isValid ? {trigger: 'validate'} : {errors: handleError, trigger: 'validate'}}
             ))
-            cb && cb(isValid, handleError)
+            if (cb) cb(isValid, handleError)
         })
     }
 

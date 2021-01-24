@@ -17,16 +17,16 @@ function sprintf(...args) {
     let i
     let result = args[0] || ''
     const length = args.length - 1
-    
+
     if (length < 1) return result
-    
+
     i = 1
     while (i < length + 1) {
         result = result.replace(/%s/, '{#' + i + '#}')
         i++
     }
     result.replace('%s', '')
-    
+
     i = 1
     // eslint-disable-next-line
     while (true) {

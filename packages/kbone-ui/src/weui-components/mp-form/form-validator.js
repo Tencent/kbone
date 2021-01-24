@@ -46,7 +46,6 @@ class FormValidator {
                     if (!valid) failCount++
                     if (diff(oldError, newError)) {
                         errors[fieldName] = newError
-                        errorChanged = true
                     }
                 })
             })
@@ -55,8 +54,8 @@ class FormValidator {
                 if (!errors[key]) delete errors[key]
             })
             // 先支持同步的接口吧
-            resolve({ isValid: !failCount, errors: failCount ? errors : undefined })
-            cb && cb(!failCount, failCount ? errors : undefined)
+            resolve({isValid: !failCount, errors: failCount ? errors : undefined})
+            if (cb) cb(!failCount, failCount ? errors : undefined)
         })
     }
 
@@ -65,8 +64,8 @@ class FormValidator {
             this._innerValidateField(name, value, (valid, error) => {
                 const errObj = {}
                 errObj[name] = error
-                resolve({ valid, error: valid ? undefined : error })
-                cb && cb(valid, valid ? undefined : errObj)
+                resolve({valid, error: valid ? undefined : error})
+                if (cb) cb(valid, valid ? undefined : errObj)
                 const oldError = this.errors[name]
                 const errorChanged = diff(oldError, error)
                 if (errorChanged) {
@@ -103,7 +102,7 @@ class FormValidator {
                 // 失败了直接中止
                 if (resMessage && !isFail) {
                     isFail = true
-                    const error = resMessage ? { message: resMessage, rule } : undefined
+                    const error = resMessage ? {message: resMessage, rule} : undefined
                     cb(false, error)
                 }
             })
@@ -115,7 +114,7 @@ class FormValidator {
             const rule = rules
             rule.name = name
             const resMessage = validateSingleRule(rule, value || models[name], rule.param, models)
-            const error = resMessage ? { message: resMessage, rule } : undefined
+            const error = resMessage ? {message: resMessage, rule} : undefined
             if (resMessage) {
                 isFail = true
             }

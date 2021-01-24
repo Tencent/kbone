@@ -82,32 +82,41 @@ export default class MpUploader extends WeuiBase {
     get title() {
         return this.getAttribute('title') || ''
     }
+
     get tips() {
         return this.getAttribute('tips') || ''
     }
+
     get showDelete() {
         return this.getBoolValue('show-delete', true)
     }
+
     get sizeType() {
         // size-type 不支持
         return null
     }
+
     get sourceType() {
         // source-type 不支持
         return null
     }
+
     get maxSize() {
         return this.getNumberValue('max-size', 5 * 1024 * 1024)
     }
+
     get maxCount() {
         return this.getNumberValue('max-count', 1)
     }
+
     get files() {
         return this.getObjectValue('files', [])
     }
+
     get select() {
         return this.getAttribute('select')
     }
+
     get upload() {
         return this.getAttribute('upload')
     }
@@ -127,7 +136,7 @@ export default class MpUploader extends WeuiBase {
      */
     updateFiles() {
         const files = this._currentFiles
-        
+
         this.filesCnt.innerHTML = ''
         if (files.length) {
             const documentFragment = document.createDocumentFragment()
@@ -217,54 +226,56 @@ export default class MpUploader extends WeuiBase {
                     tempFilePaths: [],
                     tempFiles: [],
                 }
-                const promiseList = tempFiles.map(file => {
-                    return new Promise((resolve, reject) => {
-                        const reader = new FileReader()
-                        reader.onload = () => {
-                            const base64 = reader.result
-                            let originalBase64 = base64
-                            if (base64.indexOf('data:') === 0 && base64.indexOf('base64') > 0) {
-                                originalBase64 = base64.slice(base64.indexOf(',') + 1)
-                            }
-                            res.tempFilePaths.push(base64)
-
-                            const binaryString =  window.atob(originalBase64)
-                            const len = binaryString.length
-                            const bytes = new Uint8Array(len)
-                            for (let i = 0; i < len; i++) bytes[i] = binaryString.charCodeAt(i)
-                            const buffer = bytes.buffer
-                            res.contents.push(buffer)
-
-                            res.tempFiles.push({path: base64, size: file.size})
-                            resolve()
+                const promiseList = tempFiles.map(file => new Promise((resolve, reject) => {
+                    const reader = new FileReader()
+                    reader.onload = () => {
+                        const base64 = reader.result
+                        let originalBase64 = base64
+                        if (base64.indexOf('data:') === 0 && base64.indexOf('base64') > 0) {
+                            originalBase64 = base64.slice(base64.indexOf(',') + 1)
                         }
-                        reader.onerror = err => reject(err)
-                        reader.onabort = () => reject()
-                        reader.readAsDataURL(file)
-                    })
-                })
+                        res.tempFilePaths.push(base64)
+
+                        const binaryString = window.atob(originalBase64)
+                        const len = binaryString.length
+                        const bytes = new Uint8Array(len)
+                        for (let i = 0; i < len; i++) bytes[i] = binaryString.charCodeAt(i)
+                        const buffer = bytes.buffer
+                        res.contents.push(buffer)
+
+                        res.tempFiles.push({path: base64, size: file.size})
+                        resolve()
+                    }
+                    reader.onerror = err => reject(err)
+                    reader.onabort = () => reject()
+                    reader.readAsDataURL(file)
+                }))
                 Promise.all(promiseList).then(() => {
                     // 过滤
                     if (typeof this.select === 'function') {
                         const ret = this.select(res)
                         if (ret === false) return
                     }
-    
+
                     // 检查大小
                     let invalidIndex = -1
                     res.tempFiles.forEach((item, index) => {
                         if (item.size > this.maxSize) invalidIndex = index
                     })
                     if (invalidIndex >= 0) {
-                        this.dispatchEvent(new CustomEvent('fail', {bubbles: true, cancelable: true, detail: {
-                            type: 1,
-                            errMsg: `chooseImage:fail size exceed ${this.maxSize}`,
-                            total: res.tempFilePaths.length,
-                            index: invalidIndex,
-                        }}))
+                        this.dispatchEvent(new CustomEvent('fail', {
+                            bubbles: true,
+                            cancelable: true,
+                            detail: {
+                                type: 1,
+                                errMsg: `chooseImage:fail size exceed ${this.maxSize}`,
+                                total: res.tempFilePaths.length,
+                                index: invalidIndex,
+                            }
+                        }))
                         return
                     }
-    
+
                     // 触发选中的事件，开发者根据内容来上传文件，上传了把上传的结果反馈到 files 属性里面
                     this.dispatchEvent(new CustomEvent('select', {bubbles: true, cancelable: true, detail: res}))
                     const files = res.tempFilePaths.map(item => ({
@@ -272,7 +283,7 @@ export default class MpUploader extends WeuiBase {
                         url: item
                     }))
                     if (!files || !files.length) return
-    
+
                     // 上传
                     if (typeof this.upload === 'function') {
                         // 追加内容到本地列表
@@ -280,7 +291,7 @@ export default class MpUploader extends WeuiBase {
                         const newFiles = this._currentFiles.concat(files)
                         this._currentFiles = newFiles
                         this.updateInfoAndAddDom()
-    
+
                         // 更新 dom
                         const documentFragment = document.createDocumentFragment()
                         files.forEach((item, index) => {
@@ -289,7 +300,7 @@ export default class MpUploader extends WeuiBase {
                             documentFragment.appendChild(wxView)
                         })
                         this.filesCnt.appendChild(documentFragment)
-    
+
                         // 调上传接口
                         this._loading = true
                         this.upload(res)
@@ -302,7 +313,7 @@ export default class MpUploader extends WeuiBase {
                                         const item = this._currentFiles[offsetIndex]
                                         item.url = url
                                         item.loading = false
-    
+
                                         // 更新 dom
                                         const child = children[offsetIndex]
                                         if (child) {
@@ -311,13 +322,17 @@ export default class MpUploader extends WeuiBase {
                                             this.filesCnt.replaceChild(wxView, child)
                                         }
                                     })
-    
+
                                     this.dispatchEvent(new CustomEvent('success', {bubbles: true, cancelable: true, detail: json}))
                                 } else {
-                                    this.dispatchEvent(new CustomEvent('fail', {bubbles: true, cancelable: true, detail: {
-                                        type: 3,
-                                        errMsg: 'upload file fail, urls not found',
-                                    }}))
+                                    this.dispatchEvent(new CustomEvent('fail', {
+                                        bubbles: true,
+                                        cancelable: true,
+                                        detail: {
+                                            type: 3,
+                                            errMsg: 'upload file fail, urls not found',
+                                        }
+                                    }))
                                 }
                             })
                             .catch(err => {
@@ -328,7 +343,7 @@ export default class MpUploader extends WeuiBase {
                                     const item = this._currentFiles[offsetIndex]
                                     item.error = true
                                     item.loading = false
-                                    
+
                                     // 更新 dom
                                     const child = children[offsetIndex]
                                     if (child) {
@@ -337,15 +352,19 @@ export default class MpUploader extends WeuiBase {
                                         this.filesCnt.replaceChild(wxView, child)
                                     }
                                 })
-    
-                                this.dispatchEvent(new CustomEvent('fail', {bubbles: true, cancelable: true, detail: {
-                                    type: 3,
-                                    errMsg: 'upload file fail',
-                                    error: err,
-                                }}))
+
+                                this.dispatchEvent(new CustomEvent('fail', {
+                                    bubbles: true,
+                                    cancelable: true,
+                                    detail: {
+                                        type: 3,
+                                        errMsg: 'upload file fail',
+                                        error: err,
+                                    }
+                                }))
                             })
                     }
-                })
+                }).catch(console.error)
             })
             this.shadowRoot.appendChild(fileInput)
         }

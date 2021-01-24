@@ -4,6 +4,11 @@ import App from './App.vue'
 import AAA from './AAA.vue'
 import BBB from './BBB.vue'
 
+const start = Date.now()
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('DOMContentLoaded', Date.now() - start)
+})
+
 export default function createApp() {
   const container = document.createElement('div')
   container.id = 'app'

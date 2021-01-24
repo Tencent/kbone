@@ -4,6 +4,8 @@
 
 * 支持 window 的 $$domTreeUpdate 事件给 kbone-tool 使用
 * 修复部分事件没有携带原生小程序事件的 detail 对象问题
+* 封装 setData
+* 支持 DOMContentLoaded 事件
 
 ## 2.2.4
 

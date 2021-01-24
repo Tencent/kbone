@@ -1,5 +1,9 @@
 # 更新日志
 
+## 2.2.2
+
+* 封装 setData
+
 ## 2.2.1
 
 * wx-animation 节点支持 animation 属性

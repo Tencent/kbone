@@ -94,6 +94,14 @@ function checkComponentAttr({props = [], propsVal}, name, domNode, destData, old
     destData.slots = slots
 }
 
+/**
+ * setData 封装
+ */
+function setData(instance, data) {
+    if (tool.setData) tool.setData(instance, data)
+    else instance.setData(data)
+}
+
 Component({
     properties: {
         kboneCustomComponentName: {
@@ -136,7 +144,7 @@ Component({
         checkComponentAttr(this.compConfig, this.domNode.behavior, this.domNode, data)
 
         // 执行一次 setData
-        if (Object.keys(data).length) this.setData(data)
+        if (Object.keys(data).length) setData(this, data)
 
         // 记录该 domNode 节点对应的自定义组件实例
         this.domNode._wxCustomComponent = this.selectComponent(`.node-${this.domNode.$$nodeId}`)
@@ -159,7 +167,7 @@ Component({
 
             checkComponentAttr(this.compConfig, this.domNode.behavior, this.domNode, newData, this.data)
 
-            this.setData(newData)
+            setData(this, newData)
 
             // 更新该 domNode 节点对应的自定义组件实例
             this.domNode._wxCustomComponent = this.selectComponent(`.node-${this.domNode.$$nodeId}`)

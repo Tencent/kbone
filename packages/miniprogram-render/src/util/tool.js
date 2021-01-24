@@ -145,6 +145,30 @@ function escapeForHtmlGeneration(value) {
     return value.replace(/"/g, '&quot;')
 }
 
+/**
+ * setData 封装
+ */
+function setData(instance, data) {
+    const pageId = instance.pageId
+    const window = pageId ? cache.getWindow(pageId) : null
+    if (window && window._startInit) {
+        // 统计 init 阶段的 setData
+        window._iniCount++
+        instance.setData(data, () => {
+            window._iniCount--
+            if (!window._startInit && window._iniCount <= 0) {
+                // 回调全部回来了
+                window.document.$$trigger('DOMContentLoaded')
+                window._iniCount = 0
+            }
+        })
+        return
+    }
+
+    // 普通 setData
+    instance.setData(data)
+}
+
 module.exports = {
     checkIsWxComponent,
     toDash,
@@ -158,4 +182,5 @@ module.exports = {
     decodeContent,
     isTagNameSupport,
     escapeForHtmlGeneration,
+    setData,
 }

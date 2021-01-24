@@ -51,7 +51,7 @@ export default class MpFormPage extends WeuiBase {
         if (!isInit && oldValue === newValue) return
         if (name === 'title' || name === 'subtitle') {
             const title = this.title
-            const subtitle =  this.subtitle
+            const subtitle = this.subtitle
             this.titleDom.innerText = title
             this.subtitleDom.innerText = subtitle
             this.titleCnt.classList.toggle('hide', !title && !subtitle)
@@ -83,7 +83,7 @@ export default class MpFormPage extends WeuiBase {
             if (index === 0) item.setOuterClass('weui-cells__group weui-cells__group_form weui-cells_form')
             else item.setOuterClass('weui-cells__group_wxss weui-cells__group weui-cells__group_form weui-cells_form')
         })
-        
+
         const cellList = Array.prototype.slice.call(this.querySelectorAll('mp-cell'))
         cellList.forEach(item => item.setInGroupForm(true))
 

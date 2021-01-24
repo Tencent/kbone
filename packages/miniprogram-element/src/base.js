@@ -86,7 +86,7 @@ module.exports = Behavior({
         if (data.wxCompName) this.domNode._wxComponent = this
 
         // 执行一次 setData
-        if (Object.keys(data).length) this.setData(data)
+        if (Object.keys(data).length) _.setData(this, data)
     },
     detached() {
         this.nodeId = null
@@ -125,7 +125,7 @@ module.exports = Behavior({
             if (isOriginalSetData) {
                 // 全量 setData
                 if (_.checkDiffChildNodes(childNodes, this.data.childNodes)) {
-                    this.setData({
+                    _.setData(this, {
                         childNodes: _.dealWithLeafAndSimple(childNodes, this.onChildNodesUpdate),
                     })
                 }
@@ -135,16 +135,16 @@ module.exports = Behavior({
                 const newChildNodes = _.dealWithLeafAndSimple(childNodes, this.onChildNodesUpdate)
 
                 if (!this.data.childNodes.length) {
-                    this.setData({childNodes: newChildNodes})
+                    _.setData(this, {childNodes: newChildNodes})
                 } else {
                     const isInterrupt = _.getDiffChildNodes(newChildNodes, this.data.childNodes, destData, 'childNodes')
 
                     if (isInterrupt) {
                         // key 数量超出阈值，转为 setData 完整数据
-                        this.setData({childNodes: newChildNodes})
+                        _.setData(this, {childNodes: newChildNodes})
                     } else if (destData.count) {
                         delete destData.count
-                        this.setData(destData)
+                        _.setData(this, destData)
                     }
                 }
             }
@@ -170,7 +170,7 @@ module.exports = Behavior({
 
                 if (data.wxCompName !== domNode.behavior) newData.wxCompName = domNode.behavior
                 if (wxCompName) _.checkComponentAttr(wxCompName, domNode, newData, data)
-                if (Object.keys(newData)) this.setData(newData)
+                if (Object.keys(newData)) _.setData(this, newData)
             }
         },
 
