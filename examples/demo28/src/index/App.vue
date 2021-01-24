@@ -135,7 +135,7 @@
                 <mp-cell prop="qq" title="qq">
                   <wx-input @input="onFormInputChange" data-field="qq" class="weui-input" placeholder="请输入qq"></wx-input>
                 </mp-cell>
-                <mp-cell prop="mobile" title="手机号" ext-class=" weui-cell_vcode">
+                <mp-cell prop="mobile" title="手机号" ext-class="weui-cell_vcode">
                   <wx-input @input="onFormInputChange" data-field="mobile" class="weui-input" placeholder="请输入手机号"></wx-input>
                   <wx-button slot="footer" type="default" class="weui-vcode-btn">获取验证码</wx-button>
                 </mp-cell>

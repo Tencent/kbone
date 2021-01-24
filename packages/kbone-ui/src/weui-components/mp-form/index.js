@@ -135,7 +135,7 @@ export default class MpForm extends WeuiBase {
         })
         
         // 补充新节点
-        const cellsList = Array.prototype.slice.call(this.querySelectorAll('mp-cells'))
+        const cellsList = Array.prototype.slice.call(this.querySelectorAll('mp-cell'))
         const checkboxGroupList = Array.prototype.slice.call(this.querySelectorAll('mp-checkbox-group'))
 
         cellsList.concat(checkboxGroupList).forEach(item => {
