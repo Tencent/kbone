@@ -1,6 +1,6 @@
 {
     "name": "kbone-ui",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "Weui component Library for kbone-ui",
     "main": "index.js",
     "scripts": {
