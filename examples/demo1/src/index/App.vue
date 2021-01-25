@@ -8,6 +8,7 @@
     <button class="btn" @click="consoleGlobal">console global</button>
     <button class="btn" @click="throwError">throw an error</button>
     <button class="btn" ref="btn" @click="updateStyle">update style</button>
+    <button class="btn" ref="btn" @tap="log('tap')" @click="log('click')" @longpress="log('longpress')">only click</button>
     <div style="margin-left: 20px;">
       <p>这是<span>1</span>段中间插入了span的文本</p>
     </div>
@@ -55,6 +56,10 @@ export default {
     console.log('after set cookie', document.cookie)
   },
   methods: {
+    log(...args) {
+      console.log(...args)
+    },
+  
     consoleGlobal() {
       console.log('global: ', global) // 如果配置了 node.global = false，则可以拿到小程序的 global，默认是 window 对象
     },

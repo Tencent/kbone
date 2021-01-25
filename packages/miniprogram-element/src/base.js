@@ -322,7 +322,9 @@ module.exports = Behavior({
                                     detail: {},
                                 }
                                 this.callEvent('click', clickEvt, {button: 0}) // 默认左键
-                                this.callEvent('tap', clickEvt)
+
+                                const config = cache.getConfig()
+                                if (!config.runtime.disableMpEvent) this.callEvent('tap', clickEvt)
                             }
                         }
                     } else if ((domNode.tagName === 'BUTTON' || (domNode.tagName === 'WX-COMPONENT' && domNode.behavior === 'button')) && evt.type === 'click' && !isCapture) {
@@ -365,7 +367,7 @@ module.exports = Behavior({
                                         try {
                                             value = JSON.parse(value)
                                         } catch (err) {
-                                        // ignore
+                                            // ignore
                                         }
                                     }
                                     formData[item.getAttribute('name')] = value
@@ -433,13 +435,16 @@ module.exports = Behavior({
         onTap(evt) {
             if (this.document && this.document.$$checkEvent(evt)) {
                 this.callEvent('click', evt, {button: 0}) // 默认左键
-                this.callEvent('tap', evt)
+
+                const config = cache.getConfig()
+                if (!config.runtime.disableMpEvent) this.callEvent('tap', evt)
             }
         },
 
         onLongPress(evt) {
             if (this.document && this.document.$$checkEvent(evt)) {
-                this.callEvent('longpress', evt)
+                const config = cache.getConfig()
+                if (!config.runtime.disableMpEvent) this.callEvent('longpress', evt)
             }
         },
 
@@ -475,10 +480,14 @@ module.exports = Behavior({
 
         onCaptureTap(evt) {
             this.callSingleEvent('click', evt)
+
+            const config = cache.getConfig()
+            if (!config.runtime.disableMpEvent) this.callSingleEvent('tap', evt)
         },
 
         onCaptureLongPress(evt) {
-            this.callSingleEvent('longpress', evt)
+            const config = cache.getConfig()
+            if (!config.runtime.disableMpEvent) this.callSingleEvent('longpress', evt)
         },
 
         /**
