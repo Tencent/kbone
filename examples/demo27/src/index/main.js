@@ -4,7 +4,6 @@ import KBoneUI from 'kbone-ui'
 
 KBoneUI.register({
   components: 'all',
-  mode: 'open',
   style: {
     'wx-input': `.green {color: green;}`, // 注入给 placeholder-class 使用
     'wx-textarea': `.green {color: green;}`, // 注入给 placeholder-class 使用

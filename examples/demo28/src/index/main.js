@@ -4,7 +4,6 @@ import KBoneUI from 'kbone-ui'
 
 KBoneUI.register({
   components: 'all',
-  mode: 'open',
   style: {
     'mp-badge': `.blue {background: blue;}`,
     'mp-loading': `.demo0 {height: 60px; background: white;} .demo1 {height: 60px; background: rgba(0,0,0,.1);}`,

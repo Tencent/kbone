@@ -148,6 +148,10 @@ export default class Base extends HTMLElement {
         return this.getAttribute('hidden')
     }
 
+    get $$wxCustomComponent() {
+        return this
+    }
+
     /**
      * 设置全局配置
      */

@@ -115,7 +115,7 @@
       <wx-view class="item">
         <div class="title">mp-form/mp-form-page/mp-checkbox-group/mp-checkbox</div>
         <div class="comp-cnt form-cnt">
-          <mp-toptips :msg="mpForm.error" type="error" :show="mpForm.error"></mp-toptips>
+          <mp-toptips :msg="mpForm.error" type="error" :show="!!mpForm.error" @hide="mpForm.error = ''"></mp-toptips>
           <mp-form-page title="表单结构" subtitle="展示表单页面的信息结构样式, 分别由头部区域/控件区域/提示区域/操作区域和底部信息区域组成。">
             <mp-form id="form" :rules="mpForm.rules" :models="mpForm.formData">
               <mp-cells title="单选列表项">
@@ -150,7 +150,7 @@
                 </mp-cell>
               </mp-cells>
               <mp-cells title="提交后表单项报错">
-                <mp-cell show-error prop="idcard" title="卡号">
+                <mp-cell show-error="true" prop="idcard" title="卡号">
                   <wx-input @input="onFormInputChange" data-field="idcard" class="weui-input" placeholder="请输入卡号"></wx-input>
                 </mp-cell>
               </mp-cells>
@@ -197,11 +197,11 @@
               </mp-cells>
             </mp-form>
             <div slot="tips">
-              <wx-label class="weui-agree">
-                <input type='checkbox' name="agree" class="weui-agree__checkbox-check" @change="mpForm.isAgree = !!$event.detail.value.length"/>
+              <label class="weui-agree">
+                <input type='checkbox' name="agree" class="weui-agree__checkbox-check" @change="mpForm.isAgree = !!$event.currentTarget.checked"/>
                 <wx-text class="weui-agree__checkbox" :class="mpForm.isAgree ? 'checked' : ''"></wx-text>
                 <div class="weui-agree__text">阅读并同意<a href="">《相关条款》</a></div>
-              </wx-label>
+              </label>
             </div>
             <div slot="button">
               <wx-button class="weui-btn" type="primary" @tap="doSubmitForm">确定</wx-button>
@@ -403,7 +403,7 @@ export default {
         icon: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAuCAMAAABgZ9sFAAAAVFBMVEXx8fHMzMzr6+vn5+fv7+/t7e3d3d2+vr7W1tbHx8eysrKdnZ3p6enk5OTR0dG7u7u3t7ejo6PY2Njh4eHf39/T09PExMSvr6+goKCqqqqnp6e4uLgcLY/OAAAAnklEQVRIx+3RSRLDIAxE0QYhAbGZPNu5/z0zrXHiqiz5W72FqhqtVuuXAl3iOV7iPV/iSsAqZa9BS7YOmMXnNNX4TWGxRMn3R6SxRNgy0bzXOW8EBO8SAClsPdB3psqlvG+Lw7ONXg/pTld52BjgSSkA3PV2OOemjIDcZQWgVvONw60q7sIpR38EnHPSMDQ4MjDjLPozhAkGrVbr/z0ANjAF4AcbXmYAAAAASUVORK5CYII=',
       },
       mpForm: {
-        showTopTips: false,
+        error: '',
         radioItems: [
           {name: 'cell standard', value: '0', checked: true},
           {name: 'cell standard', value: '1', checked: false},
