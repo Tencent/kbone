@@ -205,12 +205,7 @@ module.exports = function(mp, config, init) {
             this.window._startInit = true
             this.window._iniCount = 0
             this.window.addEventListener('load', () => {
-                if (this.window._startInit && this.window._initCbCount <= 0) {
-                    // 回调全部回来了，不过一般不会进入这里
-                    this.document.$$trigger('DOMContentLoaded')
-                    this.window._iniCount = 0
-                }
-                this.window._startInit = false
+                Promise.resolve().then(() => this.window._startInit = false).catch(console.error)
             })
 
             init(this.window, this.document)

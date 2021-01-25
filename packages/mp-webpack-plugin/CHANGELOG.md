@@ -1,5 +1,9 @@
 # 更新日志
 
+## 1.3.6
+
+* DOMContentLoaded 延迟到 throttle setData 之后
+
 ## 1.3.5
 
 * 修改默认基础库版本为 2.14.3
