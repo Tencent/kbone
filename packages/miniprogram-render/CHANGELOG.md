@@ -1,5 +1,9 @@
 # 更新日志
 
+## 2.2.6
+
+* $$trigger 事件补充默认 event 对象
+
 ## 2.2.5
 
 * 支持 window 的 $$domTreeUpdate 事件给 kbone-tool 使用

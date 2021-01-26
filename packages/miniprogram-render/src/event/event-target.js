@@ -212,6 +212,17 @@ class EventTarget {
         const handlers = this.$_getHandlers(eventName, isCapture)
         const onEventName = `on${eventName}`
 
+        if (!event) {
+            event = new Event({
+                timeStamp: Date.now(),
+                touches: [],
+                changedTouches: [],
+                name: eventName,
+                target: this,
+                eventPhase: Event.AT_TARGET,
+            })
+        }
+
         if ((!isCapture || !isTarget) && typeof this[onEventName] === 'function') {
             // 触发 onXXX 绑定的事件
             if (event && event.$$immediateStop) return

@@ -132,15 +132,19 @@ export default class MpCell extends WeuiBase {
     }
 
     updateClass() {
-        const extClass = this.extClass
+        const extClass = this.extClass || ''
         this.cell.className = `weui-cell ${this.link ? 'weui-cell_access' : ''} ${this.showError && this._error ? 'weui-cell_warn' : ''} ${this._inForm ? 'weui-cell-inform' : ''} ${extClass} ${this._outerClass} ${this.inline ? '' : 'weui-cell_label-block'} ${this._setInGroupForm ? 'in-group-form' : ''}`
 
         // 给当前 dom 也加上 extClass
-        if (this._oldExtClass) this.className = this.className.replace(this._oldExtClass, '')
-        if (extClass) {
-            this.className += ` ${extClass}`
-            this._oldExtClass = extClass
+        const extClassList = extClass.trim().split(/\s+/ig).filter(item => !!item)
+        if (this._extClassList && this._extClassList.length) {
+            this._extClassList.forEach(item => {
+                // 删掉不需要的 extClass
+                if (extClassList.indexOf(item) === -1) this.classList.toggle(item, false)
+            })
         }
+        if (extClassList.length) extClassList.forEach(item => this.classList.toggle(item, true))
+        this._extClassList = extClassList
     }
 
     updateForLink() {
