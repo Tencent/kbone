@@ -369,10 +369,12 @@
           <mp-searchbar @selectresult="log('[mp-searchbar] selectresult', $event.detail)" :search="onSearch"></mp-searchbar>
         </div>
       </wx-view>
-      <!-- <wx-view class="item">
+      <wx-view class="item">
         <div class="title">mp-grids</div>
-        <div class="comp-cnt"></div>
-      </wx-view> -->
+        <div class="comp-cnt" style="padding-bottom: 60px;">
+          <mp-grids :grids="mpGrids.grids" @gridtap="log('[mp-grids] tap', $event.detail)"></mp-grids>
+        </div>
+      </wx-view>
     </div>
   </div>
 </template>
@@ -555,6 +557,45 @@ export default {
       mpSearchbar: {
         i: 0,
       },
+      mpGrids: {
+        grids: [{
+          imgUrl: tabbarIcon,
+          url: '',
+          text: 'Grid'
+        }, {
+          imgUrl: tabbarIcon,
+          url: '',
+          text: 'Grid'
+        }, {
+          imgUrl: tabbarIcon,
+          url: '',
+          text: 'Grid'
+        }, {
+          imgUrl: tabbarIcon,
+          url: '',
+          text: 'Grid'
+        }, {
+          imgUrl: tabbarIcon,
+          url: '',
+          text: 'Grid'
+        }, {
+          imgUrl: tabbarIcon,
+          url: '',
+          text: 'Grid'
+        }, {
+          imgUrl: tabbarIcon,
+          url: '',
+          text: 'Grid'
+        }, {
+          imgUrl: tabbarIcon,
+          url: '',
+          text: 'Grid'
+        }, {
+          imgUrl: tabbarIcon,
+          url: '',
+          text: 'Grid'
+        }]
+      },
     }
   },
   mounted() {
@@ -580,7 +621,7 @@ export default {
         radioItems[i].checked = (radioItems[i].value === evt.detail.value)
       }
 
-      this.mpForm.formData = {...this.mpForm.formData} // 拷贝
+      this.mpForm.formData = Object.assign({}, this.mpForm.formData) // 拷贝
       this.mpForm.formData.radio = evt.detail.value
     },
 
@@ -600,20 +641,20 @@ export default {
         }
       }
 
-      this.mpForm.formData = {...this.mpForm.formData} // 拷贝
+      this.mpForm.formData = Object.assign({}, this.mpForm.formData) // 拷贝
       this.mpForm.formData.checkbox = evt.detail.value
     },
 
     onFormInputChange(evt) {
       const {field} = evt.currentTarget.dataset
-      this.mpForm.formData = {...this.mpForm.formData} // 拷贝
+      this.mpForm.formData = Object.assign({}, this.mpForm.formData) // 拷贝
       this.mpForm.formData[field] = evt.detail.value
     },
 
     onFormDateChange(evt) {
       const date = evt.detail.value
       this.mpForm.date = date
-      this.mpForm.formData = {...this.mpForm.formData} // 拷贝
+      this.mpForm.formData = Object.assign({}, this.mpForm.formData) // 拷贝
       this.mpForm.formData.date = evt.detail.value
     },
 

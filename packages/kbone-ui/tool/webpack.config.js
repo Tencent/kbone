@@ -1,8 +1,8 @@
 const path = require('path')
 const eslintFriendlyFormatter = require('eslint-friendly-formatter')
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const StylelintPlugin = require('stylelint-webpack-plugin')
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 const isDevelop = process.env.NODE_ENV === 'development'
 
@@ -10,6 +10,7 @@ module.exports = {
     mode: isDevelop ? 'development' : 'production',
     entry: {
         index: path.resolve(__dirname, '../src/index.js'),
+        'wx-components': path.resolve(__dirname, '../src/wx-components.js'),
     },
     output: {
         path: path.resolve(__dirname, '../dist'),
@@ -21,19 +22,6 @@ module.exports = {
     watch: isDevelop,
     optimization: {
         minimizer: isDevelop ? [] : [
-            // 压缩CSS
-            new OptimizeCSSAssetsPlugin({
-                assetNameRegExp: /\.css$/g,
-                cssProcessor: require('cssnano'),
-                cssProcessorPluginOptions: {
-                    preset: ['default', {
-                        discardComments: {
-                            removeAll: true,
-                        },
-                    }],
-                },
-                canPrint: false
-            }),
             // 压缩 js
             new TerserPlugin({
                 test: /\.js(\?.*)?$/i,
@@ -45,7 +33,12 @@ module.exports = {
         rules: [{
             // html
             test: /\.html$/,
-            loader: 'raw-loader',
+            use: [{
+                loader: 'html-loader',
+                options: {
+                    esModule: true,
+                },
+            }],
         }, {
             // css
             test: /\.(less|css)$/,
@@ -55,7 +48,10 @@ module.exports = {
                 loader: 'postcss-loader',
                 options: {
                     postcssOptions: {
-                        plugins: [['autoprefixer']],
+                        plugins: [
+                            ['autoprefixer'],
+                            ['cssnano', {preset: 'default'}],
+                        ],
                     }
                 }
             }, {
@@ -104,5 +100,8 @@ module.exports = {
             files: '**/*.less',
             fix: true,
         }),
+        // new BundleAnalyzerPlugin({
+        //     defaultSizes: 'stat',
+        // }),
     ],
 }

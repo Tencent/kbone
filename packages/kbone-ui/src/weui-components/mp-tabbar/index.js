@@ -40,8 +40,7 @@ export default class MpTabbar extends WeuiBase {
 
         if (!isInit && oldValue === newValue) return
         if (name === 'ext-class') {
-            const extClass = this.extClass
-            this.tabbar.className = `weui-tabbar ${extClass}`
+            this.tabbar.className = `weui-tabbar ${this.extClass}`
         } else if (name === 'list') {
             this.updateList()
         } else if (name === 'current') {

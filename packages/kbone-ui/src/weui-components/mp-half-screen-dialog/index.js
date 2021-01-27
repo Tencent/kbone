@@ -62,8 +62,7 @@ export default class MpHalfScreenDialog extends WeuiBase {
 
         if (!isInit && oldValue === newValue) return
         if (name === 'ext-class') {
-            const extClass = this.extClass
-            this.dialog.className = `weui-half-screen-dialog ${extClass}`
+            this.dialog.className = `weui-half-screen-dialog ${this.extClass}`
         } else if (name === 'closabled') {
             this.closeDom.classList.toggle('hide', !this.closabled)
         } else if (name === 'title') {

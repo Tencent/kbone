@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
-import KBoneUI from 'kbone-ui'
+// import KBoneUI from 'kbone-ui' // 引入完整 kbone-ui
+import KBoneUI from 'kbone-ui/wx-components' // 只引入内置组件
 
 KBoneUI.register({
   components: 'all',

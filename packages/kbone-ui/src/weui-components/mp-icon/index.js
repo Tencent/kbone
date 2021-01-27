@@ -4,7 +4,7 @@ import style from './index.less'
 import weuiStyle from '../../styles/weui.less'
 
 import Base64 from './base64'
-import iconData from './icondata'
+import iconData from './icondata.json'
 
 const template = document.createElement('template')
 template.innerHTML = `<style>${weuiStyle}${style}</style>${tpl}`

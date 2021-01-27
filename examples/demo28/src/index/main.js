@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-import KBoneUI from 'kbone-ui'
+import KBoneUI from 'kbone-ui' // 引入完整 kbone-ui
 
 KBoneUI.register({
   components: 'all',
