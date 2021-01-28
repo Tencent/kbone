@@ -1,10 +1,14 @@
 const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const {VueLoaderPlugin} = require('vue-loader')
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
+const isDev = process.env.NODE_ENV === 'development'
+
 module.exports = {
-  mode: 'development',
+  mode: isDev ? 'development' : 'production',
   entry: {
     index: path.resolve(__dirname, '../src/index/main.js'),
   },
@@ -20,6 +24,24 @@ module.exports = {
     port: 9900,
     hot: true,
     open: true,
+  },
+  optimization: {
+    minimizer: !isDev ? [
+      // 压缩CSS
+      new OptimizeCSSAssetsPlugin({
+        assetNameRegExp: /\.(css|wxss)$/g,
+        cssProcessor: require('cssnano'),
+        cssProcessorPluginOptions: {
+          preset: ['default'],
+        },
+        canPrint: false
+      }),
+      // 压缩 js
+      new TerserPlugin({
+        test: /\.js(\?.*)?$/i,
+        parallel: true,
+      })
+    ] : [],
   },
   module: {
     rules: [{

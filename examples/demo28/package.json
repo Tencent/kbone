@@ -1,9 +1,11 @@
 {
   "scripts": {
+    "build": "cross-env NODE_ENV=production webpack --config build/webpack.config.js --progress",
     "web": "cross-env NODE_ENV=development webpack serve --progress --config build/webpack.config.js",
     "mp": "cross-env NODE_ENV=production webpack --config build/webpack.mp.config.js --progress"
   },
   "dependencies": {
+    "vconsole": "^3.4.0",
     "vue": "^2.5.11",
     "vue-loader": "^15.9.6",
     "vue-router": "^3.0.1"
