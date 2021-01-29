@@ -14,6 +14,11 @@ module.exports = {
 	app: {
 		navigationBarTitleText: 'miniprogram-project',
 	},
+	global: {
+		extra: {
+			pageOrientation: 'auto',
+		},
+	},
 	projectConfig: {
 		appid: 'wx14c7c4cd189644a1',
         projectname: 'kbone-demo27',

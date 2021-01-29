@@ -1,5 +1,6 @@
 import registerFactory from './register'
 
+import WxMatchMedia from './components/wx-match-media'
 import WxMovableArea from './components/wx-movable-area'
 import WxMovableView from './components/wx-movable-view'
 import WxScrollView from './components/wx-scroll-view'
@@ -32,6 +33,7 @@ import WxCatch from './components/wx-catch'
 import WxAnimation from './components/wx-animation'
 
 const COMPONENT_MAP = {
+    'wx-match-media': WxMatchMedia,
     'wx-movable-area': WxMovableArea,
     'wx-movable-view': WxMovableView,
     'wx-scroll-view': WxScrollView,

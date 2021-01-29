@@ -12,7 +12,7 @@
 		"newFeature": true,
 		"nodeModules": true,
 		"autoAudits": false,
-		"uglifyFileName": true,
+		"uglifyFileName": false,
 		"checkInvalidKey": true,
 		"checkSiteMap": true,
 		"uploadWithSourceMap": true,
@@ -25,7 +25,7 @@
 		}
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.14.3",
+	"libVersion": "2.14.4",
 	"appid": "",
 	"projectname": "kbone-project",
 	"debugOptions": {

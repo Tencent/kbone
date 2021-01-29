@@ -1,6 +1,17 @@
 <template>
   <div v-if="show" class="cnt">
     <wx-view class="item">
+      <div class="title">wx-match-media</div>
+      <div class="comp-cnt">
+        <wx-match-media min-width="300" max-width="500">
+          <div>当页面宽度在 300 ~ 500 px 之间时展示这里</div>
+        </wx-match-media>
+        <wx-match-media min-height="300" orientation="landscape">
+          <div>当页面高度不小于 200 px 且屏幕方向为横向时展示这里</div>
+        </wx-match-media>
+      </div>
+    </wx-view>
+    <wx-view class="item">
       <div class="title">wx-movable-area/wx-movable-view</div>
       <div class="comp-cnt wx-movable-cnt">
         <wx-movable-area class="wx-movable-area">
