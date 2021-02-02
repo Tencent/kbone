@@ -40,6 +40,7 @@ const ELEMENT_PROTOTYPE_MAP = {
 }
 const subscribeMap = {}
 const globalObject = {}
+function noop() {}
 
 class Window extends EventTarget {
     constructor(pageId) {
@@ -538,7 +539,7 @@ class Window extends EventTarget {
     }
 
     get Image() {
-        return this.document.$$imageConstructor
+        return this.document ? this.document.$$imageConstructor : noop
     }
 
     get setTimeout() {
