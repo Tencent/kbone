@@ -895,6 +895,7 @@ const wxComponentMap = {
                 domNode._oldValues.focus = true
 
                 this.callSimpleEvent('focus', evt)
+                this.callEvent('focusin', evt)
             },
 
             onInputBlur(evt) {
@@ -912,6 +913,7 @@ const wxComponentMap = {
                     this.callEvent('change', evt)
                 }
                 this.callSimpleEvent('blur', evt)
+                this.callEvent('focusout', evt)
             },
 
             onInputConfirm(evt) {
@@ -1393,6 +1395,7 @@ const wxComponentMap = {
                 domNode._oldValues.focus = true
 
                 this.callSimpleEvent('focus', evt)
+                this.callEvent('focusin', evt)
             },
 
             onTextareaBlur(evt) {
@@ -1410,6 +1413,7 @@ const wxComponentMap = {
                     this.callEvent('change', evt)
                 }
                 this.callSimpleEvent('blur', evt)
+                this.callEvent('focusout', evt)
             },
 
             onTextareaLineChange(evt) {
