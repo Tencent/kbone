@@ -109,6 +109,7 @@ class HTMLCanvasElement extends Element {
     }
 
     set width(value) {
+        value = parseFloat(value)
         if (typeof value !== 'number' || !isFinite(value) || value < 0) return
 
         if (this.$_node) this.$_node.width = value
@@ -121,6 +122,7 @@ class HTMLCanvasElement extends Element {
     }
 
     set height(value) {
+        value = parseFloat(value)
         if (typeof value !== 'number' || !isFinite(value) || value < 0) return
 
         if (this.$_node) this.$_node.height = value

@@ -1,5 +1,9 @@
 # 更新日志
 
+## 2.2.8
+
+* 修复 canvas 给 width 和 height 设置字符串类型数值时不生效问题
+
 ## 2.2.7
 
 * window.Image 补充容错处理
