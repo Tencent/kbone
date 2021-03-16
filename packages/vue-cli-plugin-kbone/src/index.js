@@ -43,6 +43,7 @@ module.exports = (api, options) => {
             webpackConfig.plugins = webpackConfig.plugins.filter(plugin => [
                 'VueLoaderPlugin',
                 'MiniCssExtractPlugin',
+                'ESLintWebpackPlugin',
             ].indexOf(plugin.constructor.name) >= 0).concat([
                 new webpack.DefinePlugin({
                     'process.env.isMiniprogram': process.env.isMiniprogram, // 注入环境变量，用于业务代码判断
