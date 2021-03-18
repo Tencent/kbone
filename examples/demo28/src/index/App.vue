@@ -76,14 +76,6 @@
           </div>
         </div>
       </wx-view>
-      <!-- <wx-view class="item">
-        <div class="title">mp-form</div>
-        <div class="comp-cnt"></div>
-      </wx-view> -->
-      <!-- <wx-view class="item">
-        <div class="title">mp-form-page</div>
-        <div class="comp-cnt"></div>
-      </wx-view> -->
       <wx-view class="item">
         <div class="title">mp-cells/mp-cell</div>
         <div class="comp-cnt">
