@@ -1,5 +1,9 @@
 # 更新日志
 
+## 1.3.8
+
+* 支持 window 的 unhandledrejection 事件
+
 ## 1.3.6
 
 * DOMContentLoaded 延迟到 throttle setData 之后
