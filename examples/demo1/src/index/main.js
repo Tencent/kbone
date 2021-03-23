@@ -4,6 +4,11 @@ import App from './App.vue'
 import AAA from './AAA.vue'
 import BBB from './BBB.vue'
 
+const start = Date.now()
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('DOMContentLoaded', Date.now() - start)
+})
+
 // rem 和页面样式修改
 window.onload = function() {
   document.documentElement.style.fontSize = document.documentElement.getBoundingClientRect().width / 16 + 'px'
