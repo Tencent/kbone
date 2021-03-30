@@ -849,3 +849,21 @@ test('element: contains', () => {
     expect(node1.contains(node4)).toBe(false)
     expect(node1.contains(node5)).toBe(false)
 })
+
+test('element: handler error', () => {
+    const node = document.createElement('div')
+    node.addEventListener('nativeError', () => {
+        throw new Error('native error')
+    })
+
+    const errorList = []
+    const onError = type => evt => {
+        errorList.push(type)
+        errorList.push(evt.message)
+    }
+    window.onerror = onError('onerror')
+    window.addEventListener('error', onError('addEventListener'))
+
+    node.dispatchEvent(new window.CustomEvent('nativeError'))
+    expect(errorList).toEqual(['onerror', 'native error', 'addEventListener', 'native error'])
+})

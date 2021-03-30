@@ -230,6 +230,7 @@ class EventTarget {
                 this[onEventName].call(this || null, event, ...args)
             } catch (err) {
                 console.error(err)
+                this.$$triggerWindowError(err)
             }
         }
 
@@ -243,6 +244,7 @@ class EventTarget {
                     handler.call(this || null, event, ...args)
                 } catch (err) {
                     console.error(err)
+                    this.$$triggerWindowError(err)
                 }
             })
         }
@@ -258,6 +260,7 @@ class EventTarget {
                             handler.call(this || null, event, ...args)
                         } catch (err) {
                             console.error(err)
+                            this.$$triggerWindowError(err)
                         }
                     })
                 }
@@ -331,6 +334,19 @@ class EventTarget {
         const bubbleHandlers = this.$_getHandlers(eventName, false)
         const captureHandlers = this.$_getHandlers(eventName, true)
         return (bubbleHandlers && bubbleHandlers.length) || (captureHandlers && captureHandlers.length)
+    }
+
+    /**
+     * 触发 window error 事件
+     */
+    $$triggerWindowError(err) {
+        const document = this.ownerDocument
+        const window = document ? document.defaultView : null
+        if (window) {
+            window.$$trigger('error', {
+                event: err,
+            })
+        }
     }
 
     /**

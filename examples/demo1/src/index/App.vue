@@ -8,6 +8,7 @@
     <button class="btn" @click="consoleGlobal">console global</button>
     <button class="btn" @click="throwError">throw an error</button>
     <button class="btn" @click="throwPromiseError">throw an promise error</button>
+    <button class="btn" @click="throwNativeError">throw a native error</button>
     <button class="btn" ref="btn" @click="updateStyle">update style</button>
     <button class="btn" ref="btn" @tap="log('tap')" @click="log('click')" @longpress="log('longpress')">only click</button>
     <div style="margin-left: 20px;">
@@ -22,6 +23,11 @@
 
 <script>
 import Footer from '../common/Footer.vue'
+
+const tempDiv = document.createElement('div')
+tempDiv.addEventListener('nativeError', () => {
+  throw new Error('native error')
+})
 
 export default {
   name: 'App',
@@ -78,6 +84,10 @@ export default {
         })
         promise.then(() => {})
       }, 0)
+    },
+
+    throwNativeError() {
+      tempDiv.dispatchEvent(new CustomEvent('nativeError'))
     },
 
     updateStyle() {
