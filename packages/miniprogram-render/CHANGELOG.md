@@ -1,5 +1,9 @@
 # 更新日志
 
+## 2.2.10
+
+* 事件时间戳对齐 window.performance
+
 ## 2.2.9
 
 * 修复事件句柄异常没有抛出 window 的 error 事件问题

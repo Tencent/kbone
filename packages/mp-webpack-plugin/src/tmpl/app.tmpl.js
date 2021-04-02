@@ -36,7 +36,7 @@ App({
         const currentPage = pages[pages.length - 1]
         if (currentPage && currentPage.window) {
             const event = new currentPage.window.Event({
-                timeStamp: Date.now(),
+                timeStamp: currentPage.window.performance.now(),
                 touches: [],
                 changedTouches: [],
                 name: 'unhandledrejection',

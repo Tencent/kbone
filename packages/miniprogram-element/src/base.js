@@ -181,9 +181,11 @@ module.exports = Behavior({
             const domNode = this.getDomNodeFromEvt(evt)
             if (!domNode) return
 
+            const window = cache.getWindow(this.pageId)
+            if (!window) return
             domNode.$$trigger(eventName, {
                 event: new Event({
-                    timeStamp: evt && evt.timeStamp,
+                    timeStamp: window.performance.now(),
                     touches: evt && evt.touches,
                     changedTouches: evt && evt.changedTouches,
                     name: eventName,
@@ -278,7 +280,7 @@ module.exports = Behavior({
                                     this.callEvent('$$radioChange', {
                                         target,
                                         currentTarget: target,
-                                        timeStamp: evt.timeStamp,
+                                        timeStamp: window.performance.now(),
                                         touches: evt.touches,
                                         changedTouches: evt.changedTouches,
                                         detail: {},
@@ -294,7 +296,7 @@ module.exports = Behavior({
                                     this.callEvent('$$checkboxChange', {
                                         target,
                                         currentTarget: target,
-                                        timeStamp: evt.timeStamp,
+                                        timeStamp: window.performance.now(),
                                         touches: evt.touches,
                                         changedTouches: evt.changedTouches,
                                         detail: {},
@@ -316,7 +318,7 @@ module.exports = Behavior({
                                 const clickEvt = {
                                     target,
                                     currentTarget: target,
-                                    timeStamp: evt.timeStamp,
+                                    timeStamp: window.performance.now(),
                                     touches: evt.touches,
                                     changedTouches: evt.changedTouches,
                                     detail: {},

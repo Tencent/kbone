@@ -1,5 +1,9 @@
 # 更新日志
 
+## 1.3.9
+
+* 事件时间戳对齐 window.performance
+
 ## 1.3.8
 
 * 支持 window 的 unhandledrejection 事件

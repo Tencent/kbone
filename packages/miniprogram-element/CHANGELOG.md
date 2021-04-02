@@ -1,5 +1,9 @@
 # 更新日志
 
+## 2.2.5
+
+* 事件时间戳对齐 window.performance
+
 ## 2.2.4
 
 * 支持 input/textarea focusin/focusout 事件

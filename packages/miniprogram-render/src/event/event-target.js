@@ -96,10 +96,12 @@ class EventTarget {
 
         if (!event) {
             // 此处特殊处理，不直接返回小程序的 event 对象
+            const document = target.ownerDocument
+            const window = document ? document.defaultView : null
             event = new Event({
                 name: eventName,
                 target,
-                timeStamp: miniprogramEvent.timeStamp,
+                timeStamp: window ? window.performance.now() : miniprogramEvent.timeStamp,
                 touches: miniprogramEvent.touches,
                 changedTouches: miniprogramEvent.changedTouches,
                 bubbles: true, // 默认都可以冒泡
@@ -213,8 +215,10 @@ class EventTarget {
         const onEventName = `on${eventName}`
 
         if (!event) {
+            const document = this.ownerDocument
+            const window = document ? document.defaultView : null
             event = new Event({
-                timeStamp: Date.now(),
+                timeStamp: window ? window.performance.now() : Date.now(),
                 touches: [],
                 changedTouches: [],
                 name: eventName,
