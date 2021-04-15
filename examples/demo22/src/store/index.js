@@ -46,7 +46,7 @@ export function createStore() {
         },
     })
 
-    // 进入页面和退出页面时来一次 state 的深拷贝
+    // 退出页面时来一次 state 的深拷贝
     const onShow = () => {
         store.replaceState(window.$$global.state)
     }
