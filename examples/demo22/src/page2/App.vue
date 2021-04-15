@@ -5,6 +5,7 @@
     <a href="/page4" target="_blank">跳转页面4</a>
     <button @click="onClickBack">回到上一页</button>
     <button @click="sendPage1">发布消息给首页</button>
+    <button @click="updateFetchList">更新列表</button>
     <div>count: {{count}} - {{say && say.word || ''}} name: {{info.name || ''}}</div>
     <div>{{list.join(', ')}}</div>
     <Storage name="2"></Storage>
@@ -13,7 +14,7 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
+import {mapState, mapActions} from 'vuex'
 import Header from '../common/Header.vue'
 import Footer from '../common/Footer.vue'
 import Storage from '../common/Storage.vue'
@@ -43,6 +44,12 @@ export default {
     sendPage1() {
       window.$$publish('page1', {from: '页面2', to: '首页'})
     },
+
+    updateFetchList() {
+      this.FETCH_LIST()
+    },
+
+    ...mapActions(['FETCH_LIST'])
   },
 }
 </script>

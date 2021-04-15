@@ -5,7 +5,7 @@
     <a href="/page3" target="_blank">跳转页面3</a>
     <a href="/page4" target="_blank">跳转页面4</a>
     <button @click="startFetchData">开启数据更新</button>
-    <button @click="startFetchList">开启列表更新</button>
+    <button @click="updateFetchList">更新列表</button>
     <div>count: {{count}} - {{say && say.word || ''}} name: {{info.name || ''}}</div>
     <div>{{list.join(', ')}}</div>
     <Storage name="1"></Storage>
@@ -60,16 +60,8 @@ export default {
       }, 1000)
     },
 
-    startFetchList() {
-      let count = 0
-      
-      setInterval(() => {
-        count++
-
-        this.FETCH_LIST({
-          count,
-        })
-      }, 1000)
+    updateFetchList() {
+      this.FETCH_LIST()
     },
 
     ...mapActions(['FETCH_DATA', 'FETCH_LIST'])

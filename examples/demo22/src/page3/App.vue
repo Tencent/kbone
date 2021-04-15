@@ -5,15 +5,16 @@
     <button @click="onClickBack">回到上一页</button>
     <button @click="sendPage1">发布消息给首页</button>
     <button @click="sendPage2">发布消息给页面2</button>
+    <button @click="updateFetchList">更新列表</button>
     <div>count: {{count}} - {{say && say.word || ''}} name: {{info.name || ''}}</div>
-    <Storage name="3"></Storage>
     <div>{{list.join(', ')}}</div>
+    <Storage name="3"></Storage>
     <Footer></Footer>
   </div>
 </template>
 
 <script>
-import {mapState} from 'vuex'
+import {mapState, mapActions} from 'vuex'
 import Header from '../common/Header.vue'
 import Footer from '../common/Footer.vue'
 import Storage from '../common/Storage.vue'
@@ -46,6 +47,12 @@ export default {
     sendPage2() {
       window.$$publish('page2', {from: '页面3', to: '页面2'})
     },
+
+    updateFetchList() {
+      this.FETCH_LIST()
+    },
+
+    ...mapActions(['FETCH_LIST'])
   },
 }
 </script>

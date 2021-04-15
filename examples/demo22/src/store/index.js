@@ -12,10 +12,11 @@ export function createStore() {
         count: 0,
         info: {},
         list: [],
+        listCount: 0,
     }
     window.$$global.state = state
 
-    return new Vuex.Store({
+    const store = new Vuex.Store({
         state,
         actions: {
             FETCH_DATA({commit}, data) {
@@ -37,10 +38,24 @@ export function createStore() {
                 Vue.set(state.info, 'name', data.name)
             },
 
-            SET_LIST: (state, data) => {
-                state.list.push(data.count)
+            SET_LIST: state => {
+                state.listCount++
+                state.list.push(state.listCount)
                 if (state.list.length > 3) state.list.shift()
             },
         },
     })
+
+    // 进入页面和退出页面时来一次 state 的深拷贝
+    const onShow = () => {
+        store.replaceState(window.$$global.state)
+    }
+    const onHide = () => {
+        window.$$global.state = JSON.parse(JSON.stringify(store.state))
+    }
+    window.addEventListener('wxshow', onShow)
+    window.addEventListener('wxhide', onHide)
+    window.addEventListener('wxunload', onHide)
+
+    return store
 }
