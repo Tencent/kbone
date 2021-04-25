@@ -1,9 +1,8 @@
 const path = require('path')
 const fs = require('fs')
 const execa = require('execa')
-const ConcatSource = require('webpack-sources').ConcatSource
 const ModuleFilenameHelpers = require('webpack/lib/ModuleFilenameHelpers')
-const {RawSource} = require('webpack-sources')
+const {RawSource, ConcatSource} = require('webpack-sources')
 const pathToRegexp = require('path-to-regexp')
 const colors = require('colors/safe')
 const {setAdjustCssOptions, adjustCss} = require('./tool/adjust-css')

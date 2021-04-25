@@ -1,5 +1,9 @@
 # 更新日志
 
+## 1.4.0
+
+* 升级 webpack-source 依赖
+
 ## 1.3.9
 
 * 事件时间戳对齐 window.performance
