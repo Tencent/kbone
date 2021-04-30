@@ -1,5 +1,6 @@
 const Location = require('./location')
 const EventTarget = require('../event/event-target')
+const cache = require('../util/cache')
 
 const SUPPORT_METHOD = ['OPTIONS', 'GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'TRACE', 'CONNECT']
 const STATUS_TEXT_MAP = {
@@ -50,10 +51,10 @@ const STATUS_TEXT_MAP = {
 }
 
 class XMLHttpRequest extends EventTarget {
-    constructor(window) {
+    constructor(pageId) {
         super()
 
-        this.$_window = window
+        this.$_pageId = pageId
         this.$_method = ''
         this.$_url = ''
         this.$_data = null
@@ -90,7 +91,8 @@ class XMLHttpRequest extends EventTarget {
      * 执行请求
      */
     $_callRequest() {
-        if (!this.$_window || !this.$_window.document) {
+        const window = cache.getWindow(this.$_pageId)
+        if (!window || !window.document) {
             console.warn('this page has been unloaded, so this request will be canceled.')
             return
         }
@@ -117,15 +119,15 @@ class XMLHttpRequest extends EventTarget {
 
         // 补完 url
         let url = this.$_url
-        url = url.indexOf('//') === -1 ? this.$_window.location.origin + url : url
+        url = url.indexOf('//') === -1 ? window.location.origin + url : url
 
         // 头信息
         const header = Object.assign({}, this.$_header)
-        header.cookie = this.$_window.document.$$cookie
+        header.cookie = window.document.$$cookie
         if (!this.withCredentials) {
             // 不同源，要求 withCredentials 为 true 才携带 cookie
             const {origin} = Location.$$parse(url)
-            if (origin !== this.$_window.location.origin) delete header.cookie
+            if (origin !== window.location.origin) delete header.cookie
         }
 
         this.$_requestTask = wx.request({
@@ -145,7 +147,8 @@ class XMLHttpRequest extends EventTarget {
      * 请求成功
      */
     $_requestSuccess({data, statusCode, header}) {
-        if (!this.$_window || !this.$_window.document) {
+        const window = cache.getWindow(this.$_pageId)
+        if (!window || !window.document) {
             console.warn('this page has been unloaded, so this request will be canceled.')
             return
         }
@@ -156,11 +159,11 @@ class XMLHttpRequest extends EventTarget {
         this.$_callReadyStateChange(XMLHttpRequest.HEADERS_RECEIVED)
 
         // 处理 set-cookie
-        if (this.$_window) {
+        if (window) {
             const setCookie = header['Set-Cookie']
 
             if (setCookie && typeof setCookie === 'string') {
-                this.$_window.document.$$setCookie(setCookie)
+                window.document.$$setCookie(setCookie)
             }
         }
 

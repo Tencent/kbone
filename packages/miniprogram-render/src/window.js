@@ -48,7 +48,6 @@ class Window extends EventTarget {
 
         const config = cache.getConfig()
         const timeOrigin = +new Date()
-        const that = this
 
         this.$_pageId = pageId
 
@@ -62,8 +61,8 @@ class Window extends EventTarget {
         this.$_screen = new Screen()
         this.$_history = new History(this.$_location)
         this.$_miniprogram = new Miniprogram(pageId)
-        this.$_localStorage = new LocalStorage(this)
-        this.$_sessionStorage = new SessionStorage(this)
+        this.$_localStorage = new LocalStorage(pageId)
+        this.$_sessionStorage = new SessionStorage(pageId)
         this.$_performance = new Performance(timeOrigin)
 
         this.$_nowFetchingWebviewInfoPromise = null // 正在拉取 webview 端信息的 promise 实例
@@ -88,12 +87,12 @@ class Window extends EventTarget {
         }
 
         // XMLHttpRequest 构造器
-        this.$_xmlHttpRequestConstructor = class XMLHttpRequest extends OriginalXMLHttpRequest {constructor() { super(that) }}
+        this.$_xmlHttpRequestConstructor = class XMLHttpRequest extends OriginalXMLHttpRequest {constructor() { super(pageId) }}
 
         // Worker/SharedWorker 构造器
         if (config.generate && config.generate.worker) {
-            this.$_workerConstructor = class Worker extends WorkerImpl.Worker {constructor(url) { super(url, that) }}
-            this.$_sharedWorkerConstructor = class SharedWorker extends WorkerImpl.SharedWorker {constructor(url) { super(url, that) }}
+            this.$_workerConstructor = class Worker extends WorkerImpl.Worker {constructor(url) { super(url, pageId) }}
+            this.$_sharedWorkerConstructor = class SharedWorker extends WorkerImpl.SharedWorker {constructor(url) { super(url, pageId) }}
         }
 
         // react 环境兼容
@@ -671,6 +670,17 @@ class Window extends EventTarget {
     }
 
     cancelAnimationFrame(timeId) {
+        return clearTimeout(timeId)
+    }
+
+    // 引入 polyfill 实现可能会引发内存泄漏
+    setImmediate(callback, ...args) {
+        if (typeof callback !== 'function') return
+        return setTimeout(callback, 0, ...args)
+    }
+
+    // 引入 polyfill 实现可能会引发内存泄漏
+    clearImmediate(timeId) {
         return clearTimeout(timeId)
     }
 }

@@ -2,8 +2,8 @@ const Event = require('../event/event')
 const cache = require('../util/cache')
 
 class Storage {
-    constructor(window) {
-        this.$_window = window
+    constructor(pageId) {
+        this.$_pageId = pageId
         this.$_keys = []
     }
 
@@ -13,9 +13,10 @@ class Storage {
     $_triggerStorage(key, newValue, oldValue, force) {
         if (!force && newValue === oldValue) return
 
+        const currentWindow = cache.getWindow(this.$_pageId)
         const windowList = cache.getWindowList() || []
         windowList.forEach(window => {
-            if (window && window !== this.$_window) {
+            if (window && window !== currentWindow) {
                 window.$$trigger('storage', {
                     event: new Event({
                         name: 'storage',
@@ -25,7 +26,7 @@ class Storage {
                             newValue,
                             oldValue,
                             storageArea: this,
-                            url: this.$_window.location.href,
+                            url: currentWindow.location.href,
                         }
                     })
                 })
@@ -47,8 +48,8 @@ class Storage {
 }
 
 class SessionStorage extends Storage {
-    constructor(window) {
-        super(window)
+    constructor(pageId) {
+        super(pageId)
         this.$_map = {}
     }
 

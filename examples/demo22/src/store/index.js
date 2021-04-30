@@ -1,9 +1,5 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import * as kbone from 'kbone-tool'
-
-// 多页面共享 vuex state 的时候，vue 会在 state 上重复设置 observer 进行覆盖。此方法可保证逻辑中获取 observer 时始终是栈顶页面设置的 observer，同时确保每次修改数据可以将更新通知到所有页面
-kbone.vue.useGlobal()
 
 Vue.use(Vuex)
 

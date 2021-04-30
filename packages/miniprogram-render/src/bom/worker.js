@@ -43,7 +43,7 @@ function onWorkerMessage(worker, callback) {
 }
 
 class Worker extends EventTarget {
-    constructor(url, window, isSharedWorker) {
+    constructor(url, pageId, isSharedWorker) {
         super()
 
         const filePath = getWorkerUrl(url)
@@ -53,7 +53,7 @@ class Worker extends EventTarget {
             if (!isSharedWorker || (filePath !== wxWorkerPath)) throw new Error('exceed max concurrent workers limit')
         }
 
-        this.$_pageId = window.$_pageId
+        this.$_pageId = pageId
         this.isSharedWorker = isSharedWorker
         wxWorkerPath = filePath
         wxWorker = wxWorker || this.$_tryCatch(() => wx.createWorker(wxWorkerPath))
@@ -76,6 +76,7 @@ class Worker extends EventTarget {
 
             const navigator = {}
             const location = {}
+            const window = cache.getWindow(this.$_pageId)
             if (window && !isSharedWorker) {
                 ['userAgent', 'appCodeName', 'appName', 'language', 'languages', 'platform', 'product'].forEach(key => navigator[key] = window.navigator[key]);
                 ['protocol', 'host', 'hostname', 'port', 'origin', 'pathname', 'search', 'hash', 'href'].forEach(key => location[key] = window.location[key])
@@ -130,11 +131,10 @@ class Worker extends EventTarget {
 }
 
 class SharedWorker extends EventTarget {
-    constructor(url, window) {
+    constructor(url, pageId) {
         super()
 
-        const pageId = window.$_pageId
-        this.$_worker = new Worker(url, window, true)
+        this.$_worker = new Worker(url, pageId, true)
         this.$_worker.close = () => {
             sharedWorkerInstCount--
             callbackList.splice(callbackList.indexOf(this.$_worker.$_onMessage), 1)
