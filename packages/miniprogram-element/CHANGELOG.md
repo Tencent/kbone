@@ -1,5 +1,9 @@
 # 更新日志
 
+## 2.2.6
+
+* 补充 map 组件对 centerLocation 和 scale 的旧值比较
+
 ## 2.2.5
 
 * 事件时间戳对齐 window.performance

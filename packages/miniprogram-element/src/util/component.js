@@ -2148,22 +2148,19 @@ const wxComponentMap = {
         wxCompName: 'map',
         properties: [{
             name: 'longitude',
-            // TODO：需要客户端支持在 regionchange 中返回
-            // canBeUserChanged: true,
+            canBeUserChanged: true,
             get(domNode) {
                 return dealWithNumber(domNode, 'longitude', 39.92)
             },
         }, {
             name: 'latitude',
-            // TODO：需要客户端支持在 regionchange 中返回
-            // canBeUserChanged: true,
+            canBeUserChanged: true,
             get(domNode) {
                 return dealWithNumber(domNode, 'latitude', 116.46)
             },
         }, {
             name: 'scale',
-            // TODO：需要客户端支持在 regionchange 中返回
-            // canBeUserChanged: true,
+            canBeUserChanged: true,
             get(domNode) {
                 return dealWithNumber(domNode, 'scale', 16)
             },
@@ -2318,10 +2315,9 @@ const wxComponentMap = {
                 if (evt.type === 'end' || evt.detail.type === 'end') {
                     // 可被用户行为改变的值，需要记录
                     domNode._oldValues = domNode._oldValues || {}
-                    // 以下三项官方未支持
-                    // domNode._oldValues.longitude = evt.detail.centerLocation && evt.detail.centerLocation.longitude
-                    // domNode._oldValues.latitude = evt.detail.centerLocation && evt.detail.centerLocation.latitude
-                    // domNode._oldValues.scale = evt.detail.scale
+                    domNode._oldValues.longitude = evt.detail.centerLocation && evt.detail.centerLocation.longitude
+                    domNode._oldValues.latitude = evt.detail.centerLocation && evt.detail.centerLocation.latitude
+                    domNode._oldValues.scale = evt.detail.scale
                     domNode._oldValues.rotate = evt.detail.rotate
                     domNode._oldValues.skew = evt.detail.skew
                 }

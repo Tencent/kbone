@@ -431,8 +431,7 @@
             <Inner></Inner>
             <CustomCallout></CustomCallout>
           </map>
-          <!-- TODO：基础库不支持 -->
-          <!-- <button @click="resetMap">reset</button> -->
+          <button @click="resetMap">reset</button>
         </template>
         <template v-else-if="item === 'cover-view'">
           <wx-compoennt v-if="!wxPrefix" :behavior="item">测试 cover-view</wx-compoennt>
