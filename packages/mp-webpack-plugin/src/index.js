@@ -66,7 +66,7 @@ function wrapChunks(compilation, chunks, globalVarsConfig, workerConfig) {
             }
             if (workerConfig && ModuleFilenameHelpers.matchObject({test: new RegExp(`${workerConfig}/(.)*.js$`)}, fileName)) {
                 // web worker js
-                const headerContent = workerJsTmpl.replace(/[\r\n\t\s]+/, ' ')
+                const headerContent = workerJsTmpl.replace(/[\r\n\t\s]+/ig, ' ')
 
                 compilation.assets[fileName] = new ConcatSource('(function(){', headerContent, compilation.assets[fileName], '})()')
             } else if (ModuleFilenameHelpers.matchObject({test: /\.js$/}, fileName)) {
