@@ -19,6 +19,10 @@ export default {
     Header,
     Footer
   },
+  mounted() {
+    // 测试注入的变量
+    console.log(INJECT_NAME)
+  },
   methods: {
     onClickJump() {
       window.location.href = '/page2'

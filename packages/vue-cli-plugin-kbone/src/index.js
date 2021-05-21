@@ -59,6 +59,10 @@ module.exports = (api, options) => {
                 return true
             })
 
+
+            const configureMpWebpack = options.pluginOptions && options.pluginOptions.kbone && options.pluginOptions.kbone.configureWebpack
+            if (typeof configureMpWebpack === 'function') configureMpWebpack(webpackConfig)
+
             return {
                 entry,
                 devtool: 'node',

@@ -7,8 +7,8 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "build:mp": "cross-env MP_ENV=miniprogram vue-cli-service build --mode production --dest ./dist/mp/common",
-    "dev:mp": "npm run mp",
-    "mp": "cross-env MP_ENV=miniprogram vue-cli-service build --mode development --dest ./dist/mp/common --watch"
+    "dev:mp": "cross-env MP_ENV=miniprogram vue-cli-service build --mode development --dest ./dist/mp/common --watch",
+    "mp": "cross-env MP_ENV=miniprogram vue-cli-service build --mode development --dest ./dist/mp/common"
   },
   "dependencies": {
     "core-js": "^2.6.5",
