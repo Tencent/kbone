@@ -79,11 +79,16 @@ class Image extends Element {
      * 初始化长宽
      */
     $_initRect() {
-        const width = parseInt(this.$_attrs.get('width'), 10)
-        const height = parseInt(this.$_attrs.get('height'), 10)
+        const width = this.$_attrs.get('width')
+        const height = this.$_attrs.get('height')
 
-        if (typeof width === 'number' && width >= 0) this.$_style.width = `${width}px`
-        if (typeof height === 'number' && height >= 0) this.$_style.height = `${height}px`
+        const widthNum = +width
+        if (!isNaN(+widthNum) && +widthNum >= 0) this.$_style.width = `${width}px`
+        else if (width && typeof width === 'string') this.$_style.width = width // 可能设置 width="100%"
+
+        const heightNum = +height
+        if (!isNaN(+heightNum) && +heightNum >= 0) this.$_style.height = `${height}px`
+        else if (height && typeof height === 'string') this.$_style.height = height // 可能设置 width="100%"
     }
 
     /**
@@ -144,7 +149,7 @@ class Image extends Element {
     }
 
     get width() {
-        return +this.$_attrs.get('width') || 0
+        return parseFloat(this.$_attrs.get('width'), 10) || 0
     }
 
     set width(value) {
@@ -155,7 +160,7 @@ class Image extends Element {
     }
 
     get height() {
-        return +this.$_attrs.get('height') || 0
+        return parseFloat(this.$_attrs.get('height'), 10) || 0
     }
 
     set height(value) {
