@@ -130,7 +130,6 @@ class Document extends EventTarget {
             tagName: 'html',
             attrs: {},
             nodeId: `a-${tool.getId()}`, // 运行前生成，使用 a- 前缀
-            type: Node.DOCUMENT_NODE,
         })
         this.$_node.$$updateParent(this) // documentElement 的 parentNode 是 document
 
