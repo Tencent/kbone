@@ -16,9 +16,14 @@ export default class WxIcon extends Base {
     }
 
     static register() {
-        const fontStyleDom = document.createElement('style')
-        fontStyleDom.innerHTML = fontStyle
-        document.head.appendChild(fontStyleDom)
+        // 异步插入字体
+        const insertFontStyle = () => {
+            const fontStyleDom = document.createElement('style')
+            fontStyleDom.innerHTML = fontStyle
+            document.head.appendChild(fontStyleDom)
+        }
+        if (window._isLoaded) insertFontStyle()
+        else window.addEventListener('windowload', insertFontStyle)
 
         customElements.define('wx-icon', WxIcon)
     }

@@ -47,6 +47,7 @@ export default function(COMPONENT_MAP, weuiStyle) {
         })
         window.addEventListener('load', () => {
             window._isLoaded = true
+            window.dispatchEvent(new CustomEvent('windowload'))
         })
     }
 }
