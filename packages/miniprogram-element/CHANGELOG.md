@@ -1,5 +1,9 @@
 # 更新日志
 
+## 2.2.7
+
+* 支持 page-container 内置组件
+
 ## 2.2.6
 
 * 补充 map 组件对 centerLocation 和 scale 的旧值比较

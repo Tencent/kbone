@@ -1,5 +1,9 @@
 # 更新日志
 
+## 2.2.13
+
+* 支持 page-container 内置组件
+
 ## 2.2.12
 
 * 修复 innerHTML 渲染 img 标签，设置 width/height 为百分比数值不生效问题

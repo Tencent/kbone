@@ -153,6 +153,90 @@ const wxComponentMap = {
             },
         }],
     },
+    'page-container': {
+        wxCompName: 'page-container',
+        properties: [{
+            name: 'show',
+            get(domNode) {
+                return dealWithBoolValue(domNode, 'show')
+            },
+        }, {
+            name: 'duration',
+            get(domNode) {
+                return dealWithNumber(domNode, 'duration', 300)
+            },
+        }, {
+            name: 'zIndex',
+            get(domNode) {
+                return dealWithNumber(domNode, 'z-index', 100)
+            },
+        }, {
+            name: 'overlay',
+            get(domNode) {
+                return dealWithBoolValue(domNode, 'overlay', true)
+            },
+        }, {
+            name: 'position',
+            get(domNode) {
+                return domNode.getAttribute('position') || 'bottom'
+            },
+        }, {
+            name: 'round',
+            get(domNode) {
+                return dealWithBoolValue(domNode, 'round')
+            },
+        }, {
+            name: 'closeOnSlideDown',
+            get(domNode) {
+                return dealWithBoolValue(domNode, 'close-on-slideDown')
+            },
+        }, {
+            name: 'overlayStyle',
+            get(domNode) {
+                return domNode.getAttribute('overlay-style') || ''
+            },
+        }, {
+            name: 'customStyle',
+            get(domNode) {
+                return domNode.getAttribute('custom-style') || ''
+            },
+        }],
+        handles: {
+            onPageContainerBeforeenter(evt) {
+                this.callSingleEvent('beforeenter', evt)
+
+                const domNode = this.getDomNodeFromEvt(evt)
+                if (domNode) domNode.$$setAttributeWithoutUpdate('show', true)
+            },
+
+            onPageContainerEnter(evt) {
+                this.callSingleEvent('enter', evt)
+            },
+
+            onPageContainerAfterenter(evt) {
+                this.callSingleEvent('afterenter', evt)
+            },
+
+            onPageContainerBeforeleave(evt) {
+                this.callSingleEvent('beforeleave', evt)
+
+                const domNode = this.getDomNodeFromEvt(evt)
+                if (domNode) domNode.$$setAttributeWithoutUpdate('show', false)
+            },
+
+            onPageContainerLeave(evt) {
+                this.callSingleEvent('leave', evt)
+            },
+
+            onPageContainerAfterleave(evt) {
+                this.callSingleEvent('afterleave', evt)
+            },
+
+            onPageContainerClickoverlay(evt) {
+                this.callSingleEvent('clickoverlay', evt)
+            },
+        },
+    },
     'scroll-view': {
         wxCompName: 'scroll-view',
         properties: [{

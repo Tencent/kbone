@@ -7,6 +7,9 @@ module.exports = {
 		index: [
 			'/',
 		],
+		pageContainer: [
+			'/page-container'
+		],
 	},	
 	redirect: {		
 		notFound: 'index',		

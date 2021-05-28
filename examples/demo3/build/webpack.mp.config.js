@@ -12,6 +12,7 @@ module.exports = {
     mode: 'production',
     entry: {
         index: path.resolve(__dirname, '../src/index/main.mp.js'),
+        pageContainer: path.resolve(__dirname, '../src/page-container/main.mp.js'),
     },
     output: {
         path: path.resolve(__dirname, '../dist/mp/common'), // 放到小程序代码目录中的 common 目录下

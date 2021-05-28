@@ -5,7 +5,7 @@ const cache = require('./cache')
  */
 const WX_COMPONENT_MAP = {}
 const WX_COMPONENT_LIST = [
-    'cover-image', 'cover-view', 'match-media', 'movable-area', 'movable-view', 'scroll-view', 'swiper', 'swiper-item', 'view',
+    'cover-image', 'cover-view', 'match-media', 'movable-area', 'movable-view', 'page-container', 'scroll-view', 'swiper', 'swiper-item', 'view',
     'icon', 'progress', 'rich-text', 'text',
     'button', 'checkbox', 'checkbox-group', 'editor', 'form', 'input', 'label', 'picker', 'picker-view', 'picker-view-column', 'radio', 'radio-group', 'slider', 'switch', 'textarea',
     'functional-page-navigator', 'navigator',

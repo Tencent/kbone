@@ -113,6 +113,39 @@
         bindvtouchmove="onMovableViewVtouchmove"
     ><element-vhost wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{item.nodeId}}" data-private-page-id="{{item.pageId}}" generic:custom-component="custom-component"></element-vhost></movable-view></movable-area>
 </template>
+<template name="page-container">
+    <page-container
+        id="{{id}}"
+        class="{{className}}"
+        style="{{style}}"
+        hidden="{{hidden}}"
+        data-private-node-id="{{nodeId}}"
+        data-private-page-id="{{pageId}}"
+        bindtouchstart="onTouchStart"
+        bindtouchmove="onTouchMove"
+        bindtouchend="onTouchEnd"
+        bindtouchcancel="onTouchCancel"
+        bindtap="onTap"
+        bindlongpress="onLongPress"
+
+        show="{{show}}"
+        duration="{{duration}}"
+        z-index="{{zIndex}}"
+        overlay="{{overlay}}"
+        position="{{position}}"
+        round="{{round}}"
+        close-on-slideDown="{{closeOnSlideDown}}"
+        overlay-style="{{overlayStyle}}"
+        custom-style="{{customStyle}}"
+        bindbeforeenter="onPageContainerBeforeenter"
+        bindenter="onPageContainerEnter"
+        bindafterenter="onPageContainerAfterenter"
+        bindbeforeleave="onPageContainerBeforeleave"
+        bindleave="onPageContainerLeave"
+        bindafterleave="onPageContainerAfterleave"
+        bindclickoverlay="onPageContainerClickoverlay"
+    ><element-vhost wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element-vhost></page-container>
+</template>
 <template name="scroll-view">
     <scroll-view
         id="{{id}}"

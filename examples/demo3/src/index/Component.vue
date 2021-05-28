@@ -128,9 +128,12 @@
           <text v-else-if="wxPrefix === 2" :selectable="true">{{'this is first line\nthis is second line'}}</text>
         </template>
         <template v-else-if="item === 'match-media'">
-          <wx-component v-if="!wxPrefix" :behavior="item" min-width="300" max-width="600"><view>当页面宽度在 300 ~ 500 px 之间时展示这里</view></wx-component>
-          <wx-match-media v-else-if="wxPrefix === 1" min-width="300" max-width="600"><view>当页面宽度在 300 ~ 500 px 之间时展示这里</view></wx-match-media>
-          <match-media v-else-if="wxPrefix === 2" min-width="300" max-width="600"><view>当页面宽度在 300 ~ 500 px 之间时展示这里</view></match-media>
+          <wx-component v-if="!wxPrefix" :behavior="item" min-width="300" max-width="600"><div>当页面宽度在 300 ~ 500 px 之间时展示这里</div></wx-component>
+          <wx-match-media v-else-if="wxPrefix === 1" min-width="300" max-width="600"><div>当页面宽度在 300 ~ 500 px 之间时展示这里</div></wx-match-media>
+          <match-media v-else-if="wxPrefix === 2" min-width="300" max-width="600"><div>当页面宽度在 300 ~ 500 px 之间时展示这里</div></match-media>
+        </template>
+        <template v-else-if="item === 'page-container'">
+          <wx-button @click="goPageContainer">进入 page-container 页面</wx-button>
         </template>
         <template v-else-if="item === 'rich-text'">
           <wx-component v-if="!wxPrefix" :behavior="item" :nodes="richText.nodes"></wx-component>
@@ -582,6 +585,7 @@ export default {
       list: [
         'normal',
         'event',
+        'page-container',
         'img',
         'input',
         'textarea',
@@ -925,6 +929,10 @@ export default {
     onScrollViewScroll(evt) {
       this.log('onScrollViewScroll', evt.detail)
       this.scrollView.count++
+    },
+
+    goPageContainer() {
+      window.open('/page-container')
     },
   }
 }
