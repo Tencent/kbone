@@ -475,9 +475,9 @@
           </live-pusher>
         </template>
         <template v-else-if="item === 'editor'">
-          <wx-component v-if="!wxPrefix" :behavior="item" placeholder="请输入内容" :show-img-size="true" :show-img-toolbar="true" :show-img-resize="true" @statuschange="log('onEditorStatusChange', $event.detail)" @ready="log('onEditorReady', $event.detail)"></wx-component>
-          <wx-editor v-else-if="wxPrefix === 1" placeholder="请输入内容" :show-img-size="true" :show-img-toolbar="true" :show-img-resize="true" @statuschange="log('onEditorStatusChange', $event.detail)" @ready="log('onEditorReady', $event.detail)"></wx-editor>
-          <editor v-else-if="wxPrefix === 2" placeholder="请输入内容" :show-img-size="true" :show-img-toolbar="true" :show-img-resize="true" @statuschange="log('onEditorStatusChange', $event.detail)" @ready="log('onEditorReady', $event.detail)"></editor>
+          <wx-component v-if="!wxPrefix" :class="item" :behavior="item" placeholder="请输入内容" :show-img-size="true" :show-img-toolbar="true" :show-img-resize="true" @statuschange="log('onEditorStatusChange', $event.detail)" @ready="log('onEditorReady', $event.detail)" @input="log('onEditorInput', $event.detail)"></wx-component>
+          <wx-editor v-else-if="wxPrefix === 1" :class="item" placeholder="请输入内容" :show-img-size="true" :show-img-toolbar="true" :show-img-resize="true" @statuschange="log('onEditorStatusChange', $event.detail)" @ready="log('onEditorReady', $event.detail)" @input="log('onEditorInput', $event.detail)"></wx-editor>
+          <editor v-else-if="wxPrefix === 2" :class="item" placeholder="请输入内容" :show-img-size="true" :show-img-toolbar="true" :show-img-resize="true" @statuschange="log('onEditorStatusChange', $event.detail)" @ready="log('onEditorReady', $event.detail)" @input="log('onEditorInput', $event.detail)"></editor>
         </template>
         <template v-else-if="item === 'camera'">
           <wx-component v-if="!wxPrefix" :behavior="item" :class="item">
@@ -1111,5 +1111,10 @@ textarea .wx-comp-textarea {
   height: 100px;
   background: #1AAD19;
   border-radius: 50%;
+}
+
+.editor {
+  min-height: 100px;
+  height: 100px;
 }
 </style>
