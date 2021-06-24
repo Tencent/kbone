@@ -25,6 +25,11 @@ module.exports = {
 	app: {
 		navigationBarTitleText: 'miniprogram-project',
 	},
+	// appExtraConfig: {
+	// 	useExtendedLib: {
+	// 		kbone: true,
+	// 	},
+	// },
 	runtime: {
 		disableMpEvent: true, // 禁止抛出 tap、longpress 事件
 	},
