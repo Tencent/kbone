@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 class View3 extends React.Component {
     render() {

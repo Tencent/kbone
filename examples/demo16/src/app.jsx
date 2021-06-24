@@ -7,6 +7,7 @@ import PickerView from './picker-view'
 import View1 from './view1'
 import View2 from './view2'
 import View3 from './view3'
+import TestFragment from './fragment'
 
 const App = (props, store) => {
     const inputProps = {
@@ -154,9 +155,9 @@ const App = (props, store) => {
             <Router>
                 <div>react-router</div>
                 <ul>
-                    <li><Link to="/view1">view1</Link></li>
-                    <li><Link to="/view2">view2</Link></li>
-                    <li><Link to="/view3">view3</Link></li>
+                    <li><Link to="/view1"><button>view1</button></Link></li>
+                    <li><Link to="/view2"><button>view2</button></Link></li>
+                    <li><Link to="/view3"><button>view3</button></Link></li>
                 </ul>
                 <Switch>
                     <Route path="/view1" component={View1}></Route>
@@ -164,6 +165,7 @@ const App = (props, store) => {
                     <Route path="/:view" component={View3}></Route>
                 </Switch>
             </Router>
+            <TestFragment></TestFragment>
         </div>
     )
 }

@@ -41,3 +41,11 @@ button {
     font-size: 20px;
     border: 1px solid #ddd;
 }
+
+ul {
+    padding: 0;
+}
+
+li {
+    list-style-type: none;
+}
