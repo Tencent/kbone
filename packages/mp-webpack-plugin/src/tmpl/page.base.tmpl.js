@@ -277,7 +277,7 @@ module.exports = function(mp, config, init) {
                 if (shareOptions.miniprogramPath) {
                     shareOptions.path = shareOptions.miniprogramPath
                 } else {
-                    const query = Object.assign({}, this.query || {})
+                    let query = {}
                     let route = this.route
 
                     if (shareOptions.path) {
@@ -289,6 +289,7 @@ module.exports = function(mp, config, init) {
                         // 组装当前页面路径
                         const location = window.location
 
+                        query = Object.assign(query, this.query || {})
                         query.targeturl = encodeURIComponent(location.href)
                         query.search = encodeURIComponent(location.search)
                         query.hash = encodeURIComponent(location.hash)
