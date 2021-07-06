@@ -47,8 +47,8 @@ function tokenize(content, handler) {
                 const index = content.indexOf('-->')
 
                 if (index >= 0) {
+                    if (handler.comment) handler.comment(content.substring(4, index))
                     content = content.substring(index + 3)
-                    if (handler.comment) handler.comment(content)
                     isText = false
                 }
             } else if (content.indexOf('</') === 0) {
