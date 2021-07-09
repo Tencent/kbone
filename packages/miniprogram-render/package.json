@@ -26,8 +26,8 @@
 	"author": "wechat-miniprogram",
 	"license": "MIT",
 	"devDependencies": {
-		"jest": "^24.8.0",
 		"jsdom": "^15.1.1",
+		"jest": "^24.8.0",
 		"rimraf": "^3.0.2",
 		"terser-webpack-plugin": "^3.0.6",
 		"webpack": "^4.43.0"
