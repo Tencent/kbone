@@ -16,7 +16,7 @@
 		"execa": "^3.4.0",
 		"path-to-regexp": "^3.0.0",
 		"postcss": "^7.0.17",
-		"webpack": "^4.41.6",
+		"webpack": "^5.44.0",
 		"webpack-sources": "^2.2.0"
 	},
 	"gitHead": "335714e2b6cd9c12d159dfc0753c697e800974a4"
