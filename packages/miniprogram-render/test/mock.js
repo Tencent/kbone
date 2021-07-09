@@ -62,7 +62,7 @@ const config = {
     },
 }
 
-const html = `<div class="aa">
+const html = `<!-- comment test --><div class="aa">
     <div id="bb" class="bb">
         <header>
             <div class="bb1" name="n1">123</div>
