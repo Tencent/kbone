@@ -113,9 +113,9 @@ test('parse html', () => {
     const res = parser.parse(mock.html)
 
     expect(res).toEqual([{
-        "type": "comment",
-        "content": "comment test"
-      },{
+        type: 'comment',
+        content: 'comment test',
+    }, {
         type: 'element',
         tagName: 'div',
         attrs: [{name: 'class', value: 'aa'}],
