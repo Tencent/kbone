@@ -1,6 +1,6 @@
 {
 	"name": "miniprogram-render",
-	"version": "2.2.14",
+	"version": "2.2.13",
 	"description": "web's adapter for miniprogram",
 	"main": "src/index.js",
 	"miniprogram": "dist",
@@ -26,8 +26,8 @@
 	"author": "wechat-miniprogram",
 	"license": "MIT",
 	"devDependencies": {
-		"jsdom": "^15.1.1",
 		"jest": "^24.8.0",
+		"jsdom": "^15.1.1",
 		"rimraf": "^3.0.2",
 		"terser-webpack-plugin": "^3.0.6",
 		"webpack": "^4.43.0"
