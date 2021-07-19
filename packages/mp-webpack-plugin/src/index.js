@@ -381,12 +381,14 @@ class MpPlugin {
                         if (selectedIconPathName) _.copyFile(item.selectedIconPath, path.resolve(outputPath, `../images/${selectedIconPathName}`))
                         tabBarMap[`/pages/${item.pageName}/index`] = true
 
-                        return {
+                        const tabBarItem = {
                             pagePath: `pages/${item.pageName}/index`,
                             text: item.text,
-                            iconPath: iconPathName ? `./images/${iconPathName}` : '',
-                            selectedIconPath: selectedIconPathName ? `./images/${selectedIconPathName}` : '',
                         }
+                        if (iconPathName) tabBarItem.iconPath = `./images/${iconPathName}`
+                        if (selectedIconPathName) tabBarItem.selectedIconPath = `./images/${selectedIconPathName}`
+
+                        return tabBarItem
                     })
 
                     if (tabBar.custom) {
