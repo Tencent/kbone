@@ -816,7 +816,7 @@ class Element extends Node {
         // 触发 webview 端更新
         if (hasUpdate) this.$_triggerMeUpdate()
 
-        return this
+        return node
     }
 
     removeChild(node) {

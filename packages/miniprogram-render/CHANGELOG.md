@@ -1,5 +1,9 @@
 # 更新日志
 
+## 2.2.15
+
+* 修复 appendChild 返回值错误问题
+* 补充 document.location
 ## 2.2.14
 
 * 修复 html 解析器解析注释失败问题

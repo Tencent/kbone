@@ -335,6 +335,12 @@ class Document extends EventTarget {
         return this.$_visibilityState === 'visible'
     }
 
+    get location() {
+        if (this.defaultView) return this.defaultView.location
+
+        return null
+    }
+
     getElementById(id) {
         if (typeof id !== 'string') return
 
