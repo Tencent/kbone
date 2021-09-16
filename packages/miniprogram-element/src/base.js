@@ -222,6 +222,7 @@ module.exports = Behavior({
          */
         callEvent(eventName, evt, extra) {
             const domNode = this.getDomNodeFromEvt(evt)
+            const miniprogramEvent = evt
 
             if (!domNode) return
 
@@ -404,7 +405,36 @@ module.exports = Behavior({
                         }
                     }
                 }, 0)
+
+                // 补充 tap 事件
+                if (eventName === 'touchend' && domNode._needCallTap) {
+                    // 需要手动触发 tap
+                    domNode._needCallTap = false
+                    const evt = {
+                        target: miniprogramEvent.target,
+                        currentTarget: miniprogramEvent.currentTarget,
+                    }
+                    this.callEvent('click', evt, {button: 0}) // 默认左键
+
+                    const config = cache.getConfig()
+                    if (!config.runtime.disableMpEvent) this.callEvent('tap', evt)
+                }
             })
+
+            // 对齐小程序实现，如果 longpress 没有触发，需要在 touchend 时触发 tap 事件
+            if (eventName === 'longpress') {
+                let needCallTap = true
+                let parentNode = domNode.parentNode
+
+                while (parentNode) {
+                    if (parentNode.$$hasEventHandler(eventName) || typeof parentNode[`on${eventName}`] === 'function') {
+                        needCallTap = false
+                    }
+                    parentNode = parentNode.parentNode
+                }
+
+                domNode._needCallTap = needCallTap
+            }
         },
 
         /**

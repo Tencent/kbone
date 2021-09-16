@@ -31,7 +31,7 @@ module.exports = {
 	// 	},
 	// },
 	runtime: {
-		disableMpEvent: true, // 禁止抛出 tap、longpress 事件
+		disableMpEvent: false, // 禁止抛出 tap、longpress 事件
 	},
 	global: {
 		rem: true, // 是否支持 rem

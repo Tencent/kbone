@@ -17,6 +17,13 @@
     <div style="margin: 20px;">
       <p style="width: 10rem;">这段看起来特别特别长的文字宽度是 10 rem，测试测试测试测试测试测试测试测试测试测试测试测试</p>
     </div>
+    <div @click="log('tap')" @longpress="log('longpress')">
+      <div @click="log('tap')">
+        <div @click="log('tap')" @longpress="log('longpress')">测试点击1</div>
+        <div @click="log('tap')">测试点击2</div>
+      </div>
+    </div>
+    <div @click="log('tap')">测试点击3</div>
     <Footer/>
   </div>
 </template>
