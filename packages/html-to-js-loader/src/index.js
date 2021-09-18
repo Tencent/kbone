@@ -19,6 +19,7 @@ module.exports = function(source) {
                     type,
                     tagName = '',
                     attrs = [],
+                    events = [],
                     children = [],
                     content = '',
                 } = node
@@ -36,7 +37,11 @@ module.exports = function(source) {
                             element.setAttribute(name, value)
                         }
                     }
-        
+
+                    for (const evt of events) {
+                        element.addEventListener(evt.name, evtMap[evt.value].bind(element))
+                    }
+
                     for (let child of children) {
                         child = generateDomTree(child)
                         if (child) element.appendChild(child)
@@ -66,28 +71,53 @@ module.exports = function(source) {
     const dealWithAstNode = node => {
         if (node.type === 'element') {
             if (node.attrs) {
-                // 处理 onxxx 事件句柄
+                const events = []
+
                 for (const attr of node.attrs) {
-                if (attr.name.indexOf('on') === 0) {
-                    const currentId = ++id;
-                    const value = attr.value.trim().replace(/^javascript:(void)?(\(0?\))?;?/ig, '')
-                    code.push(`evtMap[${currentId}] = function() {${value}}`);
-                    attr.value = `${currentId}`;
+                    // 处理 onxxx 事件句柄
+                    if (attr.name.indexOf('on') === 0) {
+                        const value = attr.value.trim().replace(/^javascript:(void)?(\(0?\))?;?/ig, '')
+                        const currentId = ++id
+                        code.push(`evtMap['${currentId}'] = function() {${value}}`)
+                        attr.value = currentId.toString()
+                    }
+
+                    // 处理 href
+                    if (attr.name === 'href') {
+                        let value = attr.value.trim()
+                        if (/^javascript:(void)?(\(0?\))?;?/ig.test(value)) {
+                            // 需要将 href 转成 onclick
+                            value = value.replace(/^javascript:(void)?(\(0?\))?;?/ig, '').trim()
+                            if (value) {
+                                const currentId = ++id
+                                code.push(`evtMap['${currentId}'] = function() {${value}}`)
+                                attr.ignore = true
+                                events.push({
+                                    name: 'click',
+                                    value: currentId.toString()
+                                })
+                            } else {
+                                attr.value = ''
+                            }
+                        }
+                    }
                 }
-                }
+
+                node.attrs = node.attrs.filter(attr => !attr.ignore)
+                if (events.length) node.events = events
             }
 
             if (node.children) {
                 for (let child of node.children) {
-                    dealWithAstNode(child);
+                    dealWithAstNode(child)
                 }
             }
         }
     }
     ast.forEach((item) => {
-        dealWithAstNode(item);
-        code.push(`node = generateDomTree(${JSON.stringify(item)})`);
-        code.push(`if (node) fragment.appendChild(node)`);
+        dealWithAstNode(item)
+        code.push(`node = generateDomTree(${JSON.stringify(item)})`)
+        code.push(`if (node) fragment.appendChild(node)`)
     })
 
     return `
