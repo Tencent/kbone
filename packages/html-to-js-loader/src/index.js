@@ -13,7 +13,7 @@ module.exports = function(source) {
     if (!ast) return source
 
     const code = [
-        `const evtMap = {}`,
+        'const evtMap = {}',
         `const generateDomTree = node => {
                 const {
                     type,
@@ -62,8 +62,8 @@ module.exports = function(source) {
                     return document.createComment()
                 }
             }`,
-        `const fragment = document.createDocumentFragment()`,
-        `let node = null`,
+        'const fragment = document.createDocumentFragment()',
+        'let node = null',
     ]
 
     // 生成 dom 树
@@ -108,7 +108,7 @@ module.exports = function(source) {
             }
 
             if (node.children) {
-                for (let child of node.children) {
+                for (const child of node.children) {
                     dealWithAstNode(child)
                 }
             }
@@ -117,12 +117,12 @@ module.exports = function(source) {
     ast.forEach((item) => {
         dealWithAstNode(item)
         code.push(`node = generateDomTree(${JSON.stringify(item)})`)
-        code.push(`if (node) fragment.appendChild(node)`)
+        code.push('if (node) fragment.appendChild(node)')
     })
 
     return `
         module.exports = function () {
-            ${code.join("\n")}
+            ${code.join('\n')}
             return fragment
         }
     `

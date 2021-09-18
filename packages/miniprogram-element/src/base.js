@@ -229,7 +229,7 @@ module.exports = Behavior({
             EventTarget.$$process(domNode, eventName, evt, extra, (domNode, evt, isCapture) => {
                 // 延迟触发跳转，先等所有同步回调处理完成
                 setTimeout(() => {
-                    if (evt.cancelable) return
+                    if (evt.$$preventDefault) return
                     const window = cache.getWindow(this.pageId)
 
                     // 处理特殊节点事件

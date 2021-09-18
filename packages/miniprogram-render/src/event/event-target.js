@@ -231,7 +231,7 @@ class EventTarget {
             // 触发 onXXX 绑定的事件
             if (event && event.$$immediateStop) return
             try {
-                this[onEventName].call(this || null, event, ...args)
+                event.returnValue = this[onEventName].call(this || null, event, ...args)
             } catch (err) {
                 console.error(err)
                 this.$$triggerWindowError(err)

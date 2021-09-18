@@ -1,5 +1,9 @@
 # 更新日志
 
+## 2.2.16
+
+* 支持 event.returnValue
+
 ## 2.2.15
 
 * 修复 appendChild 返回值错误问题

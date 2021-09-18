@@ -211,6 +211,34 @@ test('event', () => {
     b.removeEventListener('click', onBEvent5)
     b.removeEventListener('click', onBEvent6)
     c.removeEventListener('click', onCEvent4)
+
+    // returnValue
+    seqList.length = 0
+    a.onclick = evt => {
+        seqList.push(evt.$$preventDefault)
+        seqList.push(evt.returnValue)
+    }
+    EventTarget.$$process(a, 'click', miniprogramEvent)
+    expect(seqList).toEqual([false, true])
+    seqList.length = 0
+    a.onclick = evt => {
+        evt.returnValue = false
+        seqList.push(evt.$$preventDefault)
+        seqList.push(evt.returnValue)
+    }
+    EventTarget.$$process(a, 'click', miniprogramEvent)
+    expect(seqList).toEqual([true, false])
+    seqList.length = 0
+    let tempEvt = null
+    a.onclick = evt => {
+        tempEvt = evt
+        return false
+    }
+    EventTarget.$$process(a, 'click', miniprogramEvent)
+    seqList.push(tempEvt.$$preventDefault)
+    seqList.push(tempEvt.returnValue)
+    expect(seqList).toEqual([true, false])
+    a.onclick = null
 })
 
 test('event: CustomEvent/dispatchEvent', () => {

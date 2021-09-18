@@ -27,7 +27,8 @@ class Event {
         this.$_touches = null
         this.$_targetTouches = null
         this.$_changedTouches = null
-        this.$_cancelable = false
+        this.$_cancelable = true
+        this.$_preventDefault = false
 
         // 补充字段
         const extra = options.$$extra
@@ -67,6 +68,13 @@ class Event {
      */
     get $$canBubble() {
         return this.$_canBubble
+    }
+
+    /**
+     * 返回事件是否阻止默认行为
+     */
+    get $$preventDefault() {
+        return this.$_preventDefault
     }
 
     /**
@@ -151,9 +159,19 @@ class Event {
         return this.$_detail
     }
 
+    get returnValue() {
+        return !this.$_preventDefault
+    }
+
+    set returnValue(value) {
+        if (value !== undefined) {
+            this.$_preventDefault = !value
+        }
+    }
+
     preventDefault() {
         // 目前仅支持 a 标签的点击阻止
-        this.$_cancelable = true
+        this.$_preventDefault = true
     }
 
     stopPropagation() {

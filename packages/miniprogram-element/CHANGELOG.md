@@ -1,5 +1,9 @@
 # 更新日志
 
+## 2.2.9
+
+* 修复 a 标签处理默认点击时错误判断 cancelable 的问题
+
 ## 2.2.8
 
 * tap/click/longpress 事件触发机制对齐小程序端：当 longpress 在一个事件流程中没有句柄触发，则会在 touchend 的时候触发 tap/click 事件

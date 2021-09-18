@@ -81,7 +81,7 @@ node = generateDomTree({"type":"element","tagName":"div","attrs":[{"name":"id","
 ${defaultEndCode}`)
 
     // 无效点击
-    res = loader(`<div onclick="javascript:;"></div>`)
+    res = loader('<div onclick="javascript:;"></div>')
     res = res.replace(/[\d]{13}/ig, '1111111111111')
     let checkResCode = `${defaultStartCode}
 evtMap['1111111111111'] = function() {}
@@ -90,22 +90,22 @@ ${defaultEndCode}`
     expect(res).toBe(checkResCode)
 
     // 无效点击2
-    res = loader(`<div onclick="javascript:void;"></div>`)
+    res = loader('<div onclick="javascript:void;"></div>')
     res = res.replace(/[\d]{13}/ig, '1111111111111')
     expect(res).toBe(checkResCode)
 
     // 无效点击3
-    res = loader(`<div onclick="javascript:void(0);"></div>`)
+    res = loader('<div onclick="javascript:void(0);"></div>')
     res = res.replace(/[\d]{13}/ig, '1111111111111')
     expect(res).toBe(checkResCode)
 
     // 无效点击4
-    res = loader(`<div onclick="javascript:void(0)"></div>`)
+    res = loader('<div onclick="javascript:void(0)"></div>')
     res = res.replace(/[\d]{13}/ig, '1111111111111')
     expect(res).toBe(checkResCode)
 
     // 点击前缀处理
-    res = loader(`<div onclick="javascript:console.log('hahaha')"></div>`)
+    res = loader('<div onclick="javascript:console.log(\'hahaha\')"></div>')
     res = res.replace(/[\d]{13}/ig, '1111111111111')
     expect(res).toBe(`${defaultStartCode}
 evtMap['1111111111111'] = function() {console.log('hahaha')}
@@ -113,7 +113,7 @@ node = generateDomTree({"type":"element","tagName":"div","attrs":[{"name":"oncli
 ${defaultEndCode}`)
 
     // href 处理
-    res = loader(`<a href="javascript:console.log('hahaha')"></a>`)
+    res = loader('<a href="javascript:console.log(\'hahaha\')"></a>')
     res = res.replace(/[\d]{13}/ig, '1111111111111')
     expect(res).toBe(`${defaultStartCode}
 evtMap['1111111111111'] = function() {console.log('hahaha')}
@@ -121,21 +121,21 @@ node = generateDomTree({"type":"element","tagName":"a","attrs":[],"unary":false,
 ${defaultEndCode}`)
 
     // href 处理2
-    res = loader(`<a href="javascript:;"></a>`)
+    res = loader('<a href="javascript:;"></a>')
     checkResCode = `${defaultStartCode}
 node = generateDomTree({"type":"element","tagName":"a","attrs":[{"name":"href","value":""}],"unary":false,"children":[]})
 ${defaultEndCode}`
     expect(res).toBe(checkResCode)
 
     // href 处理3
-    res = loader(`<a href="javascript:void(0);"></a>`)
+    res = loader('<a href="javascript:void(0);"></a>')
     checkResCode = `${defaultStartCode}
 node = generateDomTree({"type":"element","tagName":"a","attrs":[{"name":"href","value":""}],"unary":false,"children":[]})
 ${defaultEndCode}`
     expect(res).toBe(checkResCode)
 
     // href 处理4
-    res = loader(`<a href="www.qq.com"></a>`)
+    res = loader('<a href="www.qq.com"></a>')
     expect(res).toBe(`${defaultStartCode}
 node = generateDomTree({"type":"element","tagName":"a","attrs":[{"name":"href","value":"www.qq.com"}],"unary":false,"children":[]})
 ${defaultEndCode}`)
