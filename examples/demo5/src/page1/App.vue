@@ -9,6 +9,7 @@
     <button @click="onClickSpa">打开 spa 页面</button>
     <button @click="onClickPromiseReject">promise reject 模拟</button>
     <a href="/waterfall">前往瀑布流页面</a>
+    <a href="/b"><div @click.prevent="log('不会跳转')">不会跳转</div></a>
     <Footer></Footer>
   </div>
 </template>
@@ -90,6 +91,10 @@ export default {
       (new Promise(resolve => {
         throw new Error('err')
       })).then(() => {})
+    },
+
+    log(...args) {
+      console.log(...args)
     },
   },
 }
