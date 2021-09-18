@@ -1,6 +1,6 @@
 {
 	"name": "html-to-js-loader",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "a loader to transform html to js",
 	"main": "src/index.js",
 	"miniprogram": "src",
