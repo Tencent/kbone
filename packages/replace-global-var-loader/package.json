@@ -1,21 +1,21 @@
 {
 	"name": "replace-global-var-loader",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "a tool to replace global var",
 	"main": "src/index.js",
 	"miniprogram": "src",
 	"scripts": {
-        "test": "jest --bail",
+		"test": "jest --bail",
 		"test-debug": "node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand --bail",
 		"coverage": "jest --coverage --bail"
-    },
+	},
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/wechat-miniprogram/kbone.git"
 	},
 	"author": "wechat-miniprogram",
 	"license": "MIT",
-    "jest": {
+	"jest": {
 		"testEnvironment": "node",
 		"testMatch": [
 			"**/test/**/*.test.js"
