@@ -1,0 +1,21 @@
+{
+	"name": "html-to-js-loader",
+	"version": "0.0.1",
+	"description": "a loader to transform html to js",
+	"main": "src/index.js",
+	"miniprogram": "src",
+	"scripts": {
+		"test": "jest --bail",
+		"test-debug": "node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand --bail",
+		"coverage": "jest --coverage --bail"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/wechat-miniprogram/kbone.git"
+	},
+	"author": "wechat-miniprogram",
+	"license": "MIT",
+	"devDependencies": {
+		"jest": "^27.2.0"
+	}
+}
