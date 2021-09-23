@@ -1,7 +1,9 @@
 const vueTools = require('./vue')
-const WeuiTools = require('./weui')
+const weuiTools = require('./weui')
+const jqueryTools = require('./jquery')
 
 module.exports = {
     vue: vueTools,
-    weui: WeuiTools,
+    weui: weuiTools,
+    jquery: jqueryTools,
 }

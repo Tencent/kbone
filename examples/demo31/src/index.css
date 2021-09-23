@@ -1,0 +1,136 @@
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#spin {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.news-list {
+  overflow-x: hidden;
+  width: 100%;
+}
+/** 修改1px边框颜色 */
+.title {
+  margin: 8px 0 8px 14px;
+  font-size: 15px;
+  color: #777;
+}
+.item::after {
+  border-top: 1px solid #dedfe0;
+  border-bottom: 1px solid #dedfe0;
+}
+.item + .item::after {
+  border-top: 0 none;
+}
+.item .item-inner {
+  position: relative;
+  display: flex;
+  padding: 14px 23px 10px 14px;
+  box-sizing: border-box;
+  line-height: 33px;
+  cursor: pointer;
+  background-color: #fff;
+}
+.item .info-wrap {
+  display: flex;
+  padding-left: 11px;
+  flex: 1;
+}
+.item .info-name-text,
+.item .info-wrap p {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  word-wrap: normal;
+}
+.item .info-name {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  margin-bottom: 2px;
+  box-sizing: border-box;
+  font-size: 16px;
+  vertical-align: middle;
+}
+.item .info-name-text {
+  line-height: 16px;
+}
+.item .info-wrap p {
+  line-height: 1.2;
+}
+.item .info-content {
+  margin-bottom: 3px;
+  font-size: 13px;
+  color: #808080;
+}
+.item .icon {
+  flex-basis: 75px;
+  width: 75px;
+  height: 60px;
+  border-radius: 3px;
+  background-size: 100%;
+}
+.item .list--ellipsis .item,
+.item .item--ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.item .info-left {
+  padding-right: 5px;
+  margin-top: -8px;
+  flex: 1;
+  width: 0;
+}
+
+.cm-tabs {
+  position: fixed;
+  top: 0;
+  z-index: 99;
+  width: 100%;
+}
+.nav {
+  position: relative;
+  line-height: 45px;
+  background-color: #fff;
+}
+.nav::after {
+  border-bottom: 1px solid #dbdbdb;
+}
+.nav .title-list {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+.nav .title-list li {
+  display: table-cell;
+  box-sizing: border-box;
+  font-size: 16px;
+  text-align: center;
+  color: #777;
+}
+.nav .title-list li.active {
+  color: #00a5e0;
+}
+.nav .icon-active {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 50%;
+  height: 4px;
+  transform: left 0.3s ease-in-out;
+  background-color: #00a5e0;
+}
+.nav .icon-active.pull-right {
+  right: 0;
+  left: initial;
+}

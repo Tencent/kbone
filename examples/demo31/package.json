@@ -1,0 +1,27 @@
+{
+    "scripts": {
+        "mp": "cross-env NODE_ENV=production webpack --config build/webpack.mp.config.js --progress"
+    },
+    "browserslist": [
+        "> 1%",
+        "last 2 versions",
+        "not ie <= 8"
+    ],
+    "devDependencies": {
+        "cross-env": "^7.0.3",
+        "css-loader": "^5.2.4",
+        "extract-text-webpack-plugin": "^3.0.2",
+        "file-loader": "^6.2.0",
+        "html-to-js-loader": "^0.0.3",
+        "mini-css-extract-plugin": "^1.5.0",
+        "mp-webpack-plugin": "latest",
+        "optimize-css-assets-webpack-plugin": "^5.0.4",
+        "replace-global-var-loader": "^0.0.2",
+        "stylehacks": "^5.0.0",
+        "webpack": "^5.35.1",
+        "webpack-cli": "^4.6.0"
+    },
+    "dependencies": {
+        "kbone-tool": "^0.0.7"
+    }
+}
