@@ -76,3 +76,4 @@ npm install
 * demo28：vue + weui + kbone-ui
 * demo29：vue + 小程序动画
 * demo30：vue + 多页 + webpack5
+* demo31：jquery
