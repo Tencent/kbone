@@ -45,3 +45,16 @@ import * as kbone from 'kbone-tool'
 
 kbone.weui.useForm()
 ```
+
+### jQuery
+
+#### compat
+
+jQuery 兼容接口。
+
+```js
+const kbone = require('kbone-tool')
+kbone.jquery.compat() // 要先于 jQuery 引入调用
+
+const $ = require('./jquery-3.6.0')
+```
