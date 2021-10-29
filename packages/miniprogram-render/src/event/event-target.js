@@ -242,7 +242,7 @@ class EventTarget {
 
         // 触发 addEventListener 绑定的事件
         if (handlers.length) {
-            handlers.forEach(handler => {
+            [...handlers].forEach(handler => {
                 if (event && event.$$immediateStop) return
                 try {
                     handler.call(this || null, event, ...args)
@@ -257,8 +257,8 @@ class EventTarget {
         if (handlers._namespace) {
             Object.keys(handlers._namespace).forEach(namespace => {
                 const namespaceHandlers = handlers._namespace[namespace]
-                if (namespaceHandlers) {
-                    namespaceHandlers.forEach(handler => {
+                if (namespaceHandlers && namespaceHandlers.length) {
+                    [...namespaceHandlers].forEach(handler => {
                         if (event && event.$$immediateStop) return
                         try {
                             handler.call(this || null, event, ...args)
