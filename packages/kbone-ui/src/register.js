@@ -1,3 +1,4 @@
+import './utils/polyfill'
 import registerDomExtend from './utils/dom-extend'
 
 import Base from './components/base'
