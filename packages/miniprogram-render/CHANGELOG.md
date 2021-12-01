@@ -2,7 +2,7 @@
 
 ## 2.2.18
 
-* 支持nth-of-type
+* querySelector/querySelectorAll 支持 nth-of-type
 
 ## 2.2.17
 

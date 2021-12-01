@@ -88,17 +88,17 @@ test('query-selector: parse selector', () => {
 
     expect(querySelector.parse('#id .class:nth-of-type(even)')).toEqual([
         {tag: '*', id: 'id', kinship: ' '},
-        {tag: '*', class: ['class'], pseudo: [{name: 'nth-of-type', param: 'even'}]}
+        {tag: '*', class: ['class'], pseudo: [{name: 'nth-of-type', param: {a: 2, b: 2}}]}
     ])
 
     expect(querySelector.parse('#id .class:nth-of-type(3)')).toEqual([
         {tag: '*', id: 'id', kinship: ' '},
-        {tag: '*', class: ['class'], pseudo: [{name: 'nth-of-type', param: '3'}]}
+        {tag: '*', class: ['class'], pseudo: [{name: 'nth-of-type', param: {a: 0, b: 3}}]}
     ])
 
     expect(querySelector.parse('#id .class:nth-of-type(2n+1)')).toEqual([
         {tag: '*', id: 'id', kinship: ' '},
-        {tag: '*', class: ['class'], pseudo: [{name: 'nth-of-type', param: '2n+1'}]}
+        {tag: '*', class: ['class'], pseudo: [{name: 'nth-of-type', param: {a: 2, b: 1}}]}
     ])
 
     // 属性选择器
@@ -156,6 +156,8 @@ test('query-selector: exec select', () => {
 
     const res9 = querySelector.exec('.bb footer > .bb4:nth-of-type(2n+1)', getExtra(document))
     const res10 = document.body.querySelectorAll('.bb footer > .bb4:nth-of-type(2n+1)')
+    expect(res9[0].innerHTML).toBe('1')
+    expect(res9[1].innerHTML).toBe('3')
     expect(res9[0]).toBe(res10[0])
     expect(res9[1]).toBe(res10[1])
 

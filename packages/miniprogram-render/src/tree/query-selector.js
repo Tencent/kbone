@@ -14,57 +14,18 @@ const PSEUDO_CHECK = {
         const {a, b} = param
         const index = children.indexOf(node) + 1
 
-        if (a) {
-            return (index - b) % a === 0
-        } else {
-            return index === b
-        }
+        return a ? ((index - b) % a === 0) : (index === b)
     },
     'nth-of-type': (node, param, rule) => {
-        const ruleCopy = {...rule}
-        ruleCopy.pseudo = undefined
-        // 除了nth-of-type规则之外 其他全部规则匹配上的兄弟元素
-        // ruleCopy.pseudo = undefined 保证这里不会调用循环
-        const children = Array.from(node.parentNode.children).filter(child => checkHit(child, ruleCopy))
+        const copyRule = Object.assign({}, rule)
+        copyRule.pseudo = undefined
+
+        // 找出所有命中除了 nth-of-type 规则之外其他全部规则的兄弟元素
+        const children = Array.from(node.parentNode.children).filter(child => checkHit(child, copyRule))
+        const {a, b} = param
         const index = children.indexOf(node) + 1
-        if (param === 'even') {
-            return index % 2 === 0
-        } else if (param === 'odd') {
-            return index % 2 === 1
-        }
-        // 处理计算表达式 an+b
-        else if (/^-?\d+n((\+|\-)\d+)?$/.test(param)) {
-            const getCalc = (n) => {
-                // 完整数学表达式
-                const expression = param.replace('n', `*${n}`)
-                // 计算数学表达式的值
-                return tool.calculate(expression)
-            }
-            if (param[0] === '-') {
-                let res = getCalc(0)
-                for (let i = 1; res > 0; i++) {
-                    if (res === index) {
-                        return true
-                    }
-                    res = getCalc(i)
-                }
-            } else {
-                let res = getCalc(0)
-                for (let i = 1; res <= children.length; i++) {
-                    if (res === index) {
-                        return true
-                    }
-                    res = getCalc(i)
-                }
-            }
-            return false
-        }
-        // 处理全数字
-        else if (/^[\d]+$/.test(param)) {
-            return index === Number(param)
-        } else {
-            return false
-        }
+
+        return a ? ((index - b) % a === 0) : (index === b)
     }
 }
 
@@ -301,7 +262,7 @@ class QuerySelector {
                 const pseudo = {name: pseudoName}
 
                 if (pseudoParam) pseudoParam = pseudoParam.trim()
-                if (pseudoName === 'nth-child') {
+                if (pseudoName === 'nth-child' || pseudoName === 'nth-of-type') {
                     // 处理 nth-child 伪类，参数统一处理成 an + b 的格式
                     pseudoParam = pseudoParam.replace(/\s+/g, '')
 
