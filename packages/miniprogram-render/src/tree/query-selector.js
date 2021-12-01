@@ -20,6 +20,52 @@ const PSEUDO_CHECK = {
             return index === b
         }
     },
+    'nth-of-type': (node, param, rule) => {
+        const ruleCopy = {...rule}
+        ruleCopy.pseudo = undefined
+        // 除了nth-of-type规则之外 其他全部规则匹配上的兄弟元素
+        // ruleCopy.pseudo = undefined 保证这里不会调用循环
+        const children = Array.from(node.parentNode.children).filter(child => checkHit(child, ruleCopy))
+        const index = children.indexOf(node) + 1
+        if (param === 'even') {
+            return index % 2 === 0
+        } else if (param === 'odd') {
+            return index % 2 === 1
+        }
+        // 处理计算表达式 an+b
+        else if (/^-?\d+n((\+|\-)\d+)?$/.test(param)) {
+            const getCalc = (n) => {
+                // 完整数学表达式
+                const expression = param.replace('n', `*${n}`)
+                // 计算数学表达式的值
+                return tool.calculate(expression)
+            }
+            if (param[0] === '-') {
+                let res = getCalc(0)
+                for (let i = 1; res > 0; i++) {
+                    if (res === index) {
+                        return true
+                    }
+                    res = getCalc(i)
+                }
+            } else {
+                let res = getCalc(0)
+                for (let i = 1; res <= children.length; i++) {
+                    if (res === index) {
+                        return true
+                    }
+                    res = getCalc(i)
+                }
+            }
+            return false
+        }
+        // 处理全数字
+        else if (/^[\d]+$/.test(param)) {
+            return index === Number(param)
+        } else {
+            return false
+        }
+    }
 }
 
 const ATTR_CHECK = {
@@ -114,7 +160,7 @@ function checkHit(node, rule) {
     if (pseudo) {
         for (const {name, param} of pseudo) {
             const checkPseudo = PSEUDO_CHECK[name]
-            if (!checkPseudo || !checkPseudo(node, param)) return false
+            if (!checkPseudo || !checkPseudo(node, param, rule)) return false
         }
     }
 

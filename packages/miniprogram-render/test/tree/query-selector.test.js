@@ -86,6 +86,21 @@ test('query-selector: parse selector', () => {
         {tag: '*', class: ['class'], pseudo: [{name: 'nth-child', param: {a: 2, b: -1}}]}
     ])
 
+    expect(querySelector.parse('#id .class:nth-of-type(even)')).toEqual([
+        {tag: '*', id: 'id', kinship: ' '},
+        {tag: '*', class: ['class'], pseudo: [{name: 'nth-of-type', param: 'even'}]}
+    ])
+
+    expect(querySelector.parse('#id .class:nth-of-type(3)')).toEqual([
+        {tag: '*', id: 'id', kinship: ' '},
+        {tag: '*', class: ['class'], pseudo: [{name: 'nth-of-type', param: '3'}]}
+    ])
+
+    expect(querySelector.parse('#id .class:nth-of-type(2n+1)')).toEqual([
+        {tag: '*', id: 'id', kinship: ' '},
+        {tag: '*', class: ['class'], pseudo: [{name: 'nth-of-type', param: '2n+1'}]}
+    ])
+
     // 属性选择器
     expect(querySelector.parse('#id .class[name=value]')).toEqual([
         {tag: '*', id: 'id', kinship: ' '},
@@ -138,6 +153,11 @@ test('query-selector: exec select', () => {
     const res7 = querySelector.exec('[data-key="value"]', getExtra(document))
     const res8 = document.body.querySelector('[data-key="value"]')
     expect(res7[0]).toBe(res8)
+
+    const res9 = querySelector.exec('.bb footer > .bb4:nth-of-type(2n+1)', getExtra(document))
+    const res10 = document.body.querySelectorAll('.bb footer > .bb4:nth-of-type(2n+1)')
+    expect(res9[0]).toBe(res10[0])
+    expect(res9[1]).toBe(res10[1])
 
     // jsDom 的 dom 对象要手动设置 behavior 属性
     document.body.querySelector('.bb wx-component[behavior=view]').behavior = 'view'
