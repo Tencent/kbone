@@ -116,6 +116,13 @@ test('query-selector: parse selector', () => {
         {tag: '*', id: 'id', kinship: ' '},
         {tag: 'wx-xxx'}
     ])
+
+    // 其他组合
+    expect(querySelector.parse('#id .class > :last-child')).toEqual([
+        {tag: '*', id: 'id', kinship: ' '},
+        {tag: '*', class: ['class'], kinship: '>'},
+        {tag: '*', pseudo: [{name: 'last-child'}]}
+    ])
 })
 
 test('query-selector: exec select', () => {
@@ -160,6 +167,11 @@ test('query-selector: exec select', () => {
     expect(res9[1].innerHTML).toBe('3')
     expect(res9[0]).toBe(res10[0])
     expect(res9[1]).toBe(res10[1])
+
+    const res11 = querySelector.exec('.bb footer > :last-child', getExtra(document))
+    const res12 = querySelector.exec('.bb footer > :last-child', getExtra(document))
+    expect(res11[0].innerHTML).toBe('3')
+    expect(res11[0]).toBe(res12[0])
 
     // jsDom 的 dom 对象要手动设置 behavior 属性
     document.body.querySelector('.bb wx-component[behavior=view]').behavior = 'view'
