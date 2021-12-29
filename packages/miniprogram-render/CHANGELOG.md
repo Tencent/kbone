@@ -1,5 +1,9 @@
 # 更新日志
 
+## 2.2.19
+
+* 修复部分场景 querySelector/querySelectorAll 使用伪类选择器会报错的问题
+
 ## 2.2.18
 
 * querySelector/querySelectorAll 支持 nth-of-type

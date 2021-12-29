@@ -341,6 +341,14 @@ class Document extends EventTarget {
         return null
     }
 
+    get children() {
+        return [this.$_node]
+    }
+
+    get childNodes() {
+        return [this.$_node]
+    }
+
     getElementById(id) {
         if (typeof id !== 'string') return
 

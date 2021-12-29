@@ -24,10 +24,17 @@ test('document: nodeType', () => {
     expect(document.nodeType).toBe(Node.DOCUMENT_NODE)
 })
 
-test('document: documentElement', () => {
+test('document: documentElement/children/childNodes', () => {
     expect(document.documentElement).toBeInstanceOf(Element)
     expect(document.documentElement.tagName).toBe('HTML')
     expect(document.documentElement.parentNode).toBe(document)
+
+    const children = document.children
+    expect(children.length).toBe(1)
+    expect(children[0]).toBe(document.documentElement)
+    const childNodes = document.childNodes
+    expect(childNodes.length).toBe(1)
+    expect(childNodes[0]).toBe(document.documentElement)
 })
 
 test('document: body', () => {
