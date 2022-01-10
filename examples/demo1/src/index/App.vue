@@ -10,7 +10,8 @@
     <button class="btn" @click="throwPromiseError">throw an promise error</button>
     <button class="btn" @click="throwNativeError">throw a native error</button>
     <button class="btn" ref="btn" @click="updateStyle">update style</button>
-    <button class="btn" ref="btn" @tap="log('tap')" @click="log('click')" @longpress="log('longpress')">only click</button>
+    <button class="btn" @tap="log('tap')" @click="log('click')" @longpress="log('longpress')">only click</button>
+    <button class="btn css-var" ref="btn2" @click="updateCssVar">更新文本颜色（css 变量）</button>
     <div style="margin-left: 20px;">
       <p>这是<span>1</span>段中间插入了span的文本</p>
     </div>
@@ -106,6 +107,11 @@ export default {
         this.$refs.btn.style.color = '#fff'
       }
     },
+
+    updateCssVar() {
+      const dom = this.$refs.btn2
+      dom.style.setProperty('--red-text', 'red')
+    },
   },
 }
 </script>
@@ -145,5 +151,9 @@ export default {
   font-size: 16px;
   background: #dff1e7;
   border-radius: 5px;
+}
+.css-var {
+  --red-text: blue;
+  color: var(--red-text);
 }
 </style>

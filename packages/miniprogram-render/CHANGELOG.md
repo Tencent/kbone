@@ -1,5 +1,10 @@
 # 更新日志
 
+## 2.2.20
+
+* 支持 style.setProperty
+* 支持通过 style.setProperty 设置 css 变量
+
 ## 2.2.19
 
 * 修复部分场景 querySelector/querySelectorAll 使用伪类选择器会报错的问题
