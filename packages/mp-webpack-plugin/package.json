@@ -12,7 +12,7 @@
 	"author": "wechat-miniprogram",
 	"license": "MIT",
 	"dependencies": {
-		"colors": "^1.4.0",
+		"colors": "1.4.0",
 		"execa": "^3.4.0",
 		"path-to-regexp": "^3.0.0",
 		"postcss": "^7.0.17",
