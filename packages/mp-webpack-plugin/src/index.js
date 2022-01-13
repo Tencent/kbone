@@ -246,6 +246,7 @@ class MpPlugin {
 
                 // 页面 js
                 let pageJsContent = pageJsTmpl
+                    .replace('/* ROUTE_PATH */', `const route = "${entryName}";`)
                     .replace('/* CONFIG_PATH */', `${assetPathPrefix}../../config`)
                     .replace('/* INIT_FUNCTION */', `function init(window, document) {${assets.js.map(js => 'require(\'' + getAssetPath(assetPathPrefix, js, assetsSubpackageMap) + '\')(window, document)').join(';')}}`)
                 let pageScrollFunction = ''
