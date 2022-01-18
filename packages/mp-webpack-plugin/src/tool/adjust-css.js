@@ -35,6 +35,10 @@ const replaceTagNamePlugin = postcss.plugin('replaceTagName', () => root => {
                     return
                 }
 
+                // 特殊处理 :root 选择器
+                if (selector === ':root') {
+                    selector = 'page';
+                }
                 // 处理标签名选择器
                 selector = selector.replace(replaceRegexp, (all, $1, tagName, $2, offset, string) => {
                     // 非标签选择器，调整 \b 匹配的情况
