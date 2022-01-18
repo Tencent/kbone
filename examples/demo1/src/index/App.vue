@@ -117,6 +117,9 @@ export default {
 </script>
 
 <style>
+:root {
+  --red-text: blue;
+}
 .tabbar {
   margin-top: 20px;
   padding: 0;
@@ -153,7 +156,6 @@ export default {
   border-radius: 5px;
 }
 .css-var {
-  --red-text: blue;
   color: var(--red-text);
 }
 </style>
