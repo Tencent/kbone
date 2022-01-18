@@ -37,7 +37,7 @@ const replaceTagNamePlugin = postcss.plugin('replaceTagName', () => root => {
 
                 // 特殊处理 :root 选择器
                 if (selector === ':root') {
-                    selector = 'page';
+                    selector = 'page'
                 }
                 // 处理标签名选择器
                 selector = selector.replace(replaceRegexp, (all, $1, tagName, $2, offset, string) => {
