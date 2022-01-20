@@ -1,1 +1,2 @@
-<kbone-page id="kbone-page" wx:if="route" route="{{route}}"></kbone-page>
+<kbone-page id="kbone-page" wx:if="{{route}}" route="{{route}}"></kbone-page>
+<button wx:else bindtap="onTap">载入 kbone page</button>

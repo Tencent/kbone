@@ -34,6 +34,7 @@
   "useExtendedLib": {
     "kbone": true
   },
+  "lazyCodeLoading": "requiredComponents",
   "subpackages": [{
     "root": "kbone/package1",
     "pages": []
