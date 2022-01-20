@@ -12,8 +12,6 @@ function setData(instance, data) {
     else instance.setData(data)
 }
 
-const version = wx.getSystemInfoSync().SDKVersion
-
 module.exports = function(mp, config, init) {
     /**
      * 处理一些特殊的页面
