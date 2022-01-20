@@ -242,11 +242,12 @@ class MpPlugin {
                 const pageExtraConfig = pageConfig && pageConfig.extra || {}
                 const packageName = subpackagesMap[entryName]
                 const pageRoute = `${packageName ? packageName + '/' : ''}pages/${entryName}/index`
-                const assetPathPrefix = packageName && !needEmitConfigToSubpackage ? '../' : ''
+                const configPathPrefix = packageName && !needEmitConfigToSubpackage ? '../' : ''
+                const assetPathPrefix = packageName ? '../' : ''
 
                 // 页面 js
                 let pageJsContent = pageJsTmpl
-                    .replace('/* CONFIG_PATH */', `${assetPathPrefix}../../config`)
+                    .replace('/* CONFIG_PATH */', `${configPathPrefix}../../config`)
                     .replace('/* INIT_FUNCTION */', `function init(window, document) {${assets.js.map(js => 'require(\'' + getAssetPath(assetPathPrefix, js, assetsSubpackageMap) + '\')(window, document)').join(';')}}`)
                 let pageScrollFunction = ''
                 let reachBottomFunction = ''

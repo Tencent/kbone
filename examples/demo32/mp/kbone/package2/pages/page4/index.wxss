@@ -1,0 +1,2 @@
+@import "../../../common/default~page2~page3~page4.wxss";
+@import "../../common/page4.wxss";

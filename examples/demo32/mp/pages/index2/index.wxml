@@ -1,0 +1,1 @@
+<kbone-page id="kbone-page" wx:if="route" route="{{route}}"></kbone-page>

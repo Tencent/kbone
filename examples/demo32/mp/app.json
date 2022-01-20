@@ -1,0 +1,44 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/index2/index",
+    "pages/index3/index",
+    "pages/index4/index"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "tabBar": {
+    "list": [{
+      "pagePath": "pages/index/index",
+      "text": "页面1",
+      "iconPath": "img/page.png",
+      "selectedIconPath": "img/page-sel.png"
+    }, {
+      "pagePath": "pages/index2/index",
+      "text": "页面2",
+      "iconPath": "img/page.png",
+      "selectedIconPath": "img/page-sel.png"
+    }, {
+      "pagePath": "pages/index3/index",
+      "text": "页面3",
+      "iconPath": "img/page.png",
+      "selectedIconPath": "img/page-sel.png"
+    }]
+  },
+  "useExtendedLib": {
+    "kbone": true
+  },
+  "subpackages": [{
+    "root": "kbone/package1",
+    "pages": []
+  }, {
+    "root": "kbone/package2",
+    "pages": []
+  }]
+}

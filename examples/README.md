@@ -77,3 +77,4 @@ npm install
 * demo29：vue + 小程序动画
 * demo30：vue + 多页 + webpack5
 * demo31：jquery
+* demo32：vue + tabBar + kbone 混合原生小程序开发 + 异步化分包

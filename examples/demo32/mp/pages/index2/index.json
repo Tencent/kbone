@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "kbone-page": "/kbone/package1/pages/page2/index"
+  },
+  "componentPlaceholder": {
+    "kbone-page": "view"
+  }
+}

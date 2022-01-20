@@ -1,0 +1,5 @@
+<view class="container">
+  <button bindtap="page2">page2</button>
+  <button bindtap="page3">page3</button>
+  <button bindtap="page4">page4</button>
+</view>
