@@ -114,6 +114,8 @@ npm run build
             src="https://avatars1.githubusercontent.com/u/11658803?s=60&amp;v=4"></a></td>
       <td><a target="_blank" href="https://github.com/jayjliang"><img width="60px"
             src="https://avatars1.githubusercontent.com/u/9363437?s=60&amp;v=4"></a></td>
+      <td><a target="_blank" href="https://github.com/ylx911229"><img width="60px"
+            src="https://avatars1.githubusercontent.com/u/18202235?s=60&amp;v=4"></a></td>
       <td width="92px"><a target="_blank" href="https://github.com/wechat-miniprogram/kbone/graphs/contributors">感谢你们</a></td>
     </tr>
   </tbody>
