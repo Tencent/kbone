@@ -10,7 +10,6 @@
     "devDependencies": {
         "cross-env": "^7.0.3",
         "css-loader": "^5.2.4",
-        "extract-text-webpack-plugin": "^3.0.2",
         "file-loader": "^6.2.0",
         "html-to-js-loader": "^0.0.3",
         "mini-css-extract-plugin": "^1.5.0",
