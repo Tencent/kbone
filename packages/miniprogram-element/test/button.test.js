@@ -85,7 +85,7 @@ test('button', async() => {
     await _.checkArray(body, node, 'shareMode', 'share-mode', undefined, ['qq', 'qzone'])
 
     // event
-    await _.checkEvent(body.querySelector('.h5-wx-component'), node, ['getuserinfo', 'contact', 'getphonenumber', 'error', 'opensetting', 'launchapp', 'getrealnameauthinfo'])
+    await _.checkEvent(body.querySelector('.h5-wx-component'), node, ['getuserinfo', 'contact', 'getphonenumber', 'error', 'opensetting', 'launchapp', 'getrealnameauthinfo', 'chooseavatar'])
 
     page.document.body.removeChild(node)
     document.body.removeChild(wrapper)

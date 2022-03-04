@@ -239,9 +239,12 @@
           <wx-component v-if="!wxPrefix" :behavior="item" className="wx-button-custom" open-type="share">分享</wx-component>
           <wx-button v-else-if="wxPrefix === 1" className="wx-button-custom" open-type="share">分享</wx-button>
           <button v-else-if="wxPrefix === 2" className="wx-button-custom" open-type="share">分享</button>
-          <wx-component v-if="!wxPrefix" :behavior="item" open-type="getPhoneNumber" @getphonenumber="log('onGetPhoneNumber', $event)">获取手机号</wx-component>
-          <wx-button v-else-if="wxPrefix === 1" open-type="getPhoneNumber" @getphonenumber="log('onGetPhoneNumber', $event)">获取手机号</wx-button>
-          <button v-else-if="wxPrefix === 2" open-type="getPhoneNumber" @getphonenumber="log('onGetPhoneNumber', $event)">获取手机号</button>
+          <wx-component v-if="!wxPrefix" :behavior="item" open-type="getPhoneNumber" @getphonenumber="log('onGetPhoneNumber', $event.detail)">获取手机号</wx-component>
+          <wx-button v-else-if="wxPrefix === 1" open-type="getPhoneNumber" @getphonenumber="log('onGetPhoneNumber', $event.detail)">获取手机号</wx-button>
+          <button v-else-if="wxPrefix === 2" open-type="getPhoneNumber" @getphonenumber="log('onGetPhoneNumber', $event.detail)">获取手机号</button>
+          <wx-component v-if="!wxPrefix" :behavior="item" open-type="chooseAvatar" @chooseavatar="log('onChooseAvatar', $event.detail)">获取用户头像</wx-component>
+          <wx-button v-else-if="wxPrefix === 1" open-type="chooseAvatar" @chooseavatar="log('onChooseAvatar', $event.detail)">获取用户头像</wx-button>
+          <button v-else-if="wxPrefix === 2" open-type="chooseAvatar" @chooseavatar="log('onChooseAvatar', $event.detail)">获取用户头像</button>
           <wx-component v-if="!wxPrefix" :behavior="item">
             <span>span1</span>
             <input type="checkbox"/>

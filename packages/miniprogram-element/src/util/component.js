@@ -765,9 +765,8 @@ const wxComponentMap = {
                 // 已废弃，建议使用：https://developers.weixin.qq.com/miniprogram/dev/framework/cityservice/cityservice-checkrealnameinfo.html
                 this.callSingleEvent('getrealnameauthinfo', evt)
             },
-            onChooseAvatar(evt){
-                // https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/userProfile.html
-                this.callSingleEvent('chooseavatar',evt)
+            onButtonChooseAvatar(evt) {
+                this.callSingleEvent('chooseavatar', evt)
             }
         },
     },
