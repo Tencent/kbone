@@ -368,6 +368,7 @@
         bindopensetting="onButtonOpenSetting"
         bindlaunchapp="onButtonLaunchApp"
         bindgetrealnameauthinfo = "onButtonGetRealnameAuthInfo"
+        bindchooseavatar = "onChooseAvatar"
 
         share-type="{{shareType}}"
         share-mode="{{shareMode}}"
