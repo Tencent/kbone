@@ -3,7 +3,7 @@
     "mp": "cross-env NODE_ENV=production webpack --config build/webpack.mp.config.js --progress --hide-modules"
   },
   "dependencies": {
-    "vue": "^3.0.11"
+    "vue": "^3.2.31"
   },
   "browserslist": [
     "> 1%",
