@@ -215,6 +215,13 @@ class Window extends EventTarget {
     }
 
     /**
+     * 是否是 window 对象
+     */
+    get $$isWindow() {
+        return true
+    }
+
+    /**
      * 销毁实例
      */
     $$destroy() {

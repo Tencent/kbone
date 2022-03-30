@@ -1,5 +1,9 @@
 # 更新日志
 
+## 2.2.21
+
+* touch 系列事件支持冒泡到 window
+
 ## 2.2.20
 
 * 支持 style.setProperty

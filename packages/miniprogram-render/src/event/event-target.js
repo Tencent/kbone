@@ -81,6 +81,8 @@ class EventTarget {
 
         eventName = eventName.toLowerCase()
 
+        const document = target.ownerDocument
+        const window = document ? document.defaultView : null
         const path = [target]
         let parentNode = target.parentNode
 
@@ -92,12 +94,15 @@ class EventTarget {
         if (path[path.length - 1].tagName === 'BODY') {
             // 如果最后一个节点是 document.body，则追加 document.documentElement
             path.push(parentNode)
+
+            if (eventName.indexOf('touch') === 0) {
+                // touch 系列事件冒泡到 window
+                path.push(window)
+            }
         }
 
         if (!event) {
             // 此处特殊处理，不直接返回小程序的 event 对象
-            const document = target.ownerDocument
-            const window = document ? document.defaultView : null
             event = new Event({
                 name: eventName,
                 target,

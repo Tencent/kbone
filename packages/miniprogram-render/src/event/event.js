@@ -2,7 +2,7 @@
  * 检查节点间的关系
  */
 function checkRelation(node1, node2) {
-    if (node1 === node2) return true
+    if ((node2 && node2.$$isWindow) || node1 === node2) return true
 
     while (node1) {
         if (node1 === node2) return true
