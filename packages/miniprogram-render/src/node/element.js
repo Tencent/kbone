@@ -335,6 +335,7 @@ class Element extends Node {
             className: this.className,
             style: this.$__style ? this.style.cssText : '',
             slot: this.getAttribute('slot'),
+            h5TagClass: this.getAttribute('h5TagClass'),
         }
     }
 

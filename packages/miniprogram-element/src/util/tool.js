@@ -52,7 +52,8 @@ function filterNodes(domNode, level, component) {
         // 挂载该节点所处的自定义组件实例
         child._wxComponent = component
 
-        domInfo.className = domInfo.type === 'element' ? `h5-${domInfo.tagName} node-${domInfo.nodeId} ${domInfo.className || ''}` : '' // 增加默认 class
+        const h5TagClass = domInfo.h5TagClass === undefined ? `h5-${domInfo.tagName}` : domInfo.h5TagClass
+        domInfo.className = domInfo.type === 'element' ? `${h5TagClass} node-${domInfo.nodeId} ${domInfo.className || ''}` : '' // 增加默认 class
         domInfo.domNode = child
 
         // 特殊节点
@@ -84,7 +85,7 @@ function filterNodes(domNode, level, component) {
             }
 
             // 不需要处理 id 和样式
-            domInfo.className = `h5-${domInfo.tagName} ${domInfo.tagName === 'wx-component' ? 'wx-' + child.behavior : ''}`
+            domInfo.className = `${h5TagClass} ${domInfo.tagName === 'wx-component' ? 'wx-' + child.behavior : ''}`
             domInfo.id = ''
             domInfo.style = ''
         }
@@ -107,7 +108,7 @@ function filterNodes(domNode, level, component) {
             const wxCompName = wxCompNameMap[templateName]
             const extra = {}
 
-            if (wxCompName) checkComponentAttr(wxCompName, child, extra, null, `h5-${domInfo.tagName} ${domInfo.tagName === 'wx-component' ? 'wx-' + child.behavior : ''}`)
+            if (wxCompName) checkComponentAttr(wxCompName, child, extra, null, `${h5TagClass} ${domInfo.tagName === 'wx-component' ? 'wx-' + child.behavior : ''}`)
 
             extra.pageId = domInfo.pageId
             extra.nodeId = domInfo.nodeId
@@ -136,12 +137,13 @@ function filterNodes(domNode, level, component) {
             if (templateName === 'map' || templateName === 'scroll-view') {
                 const slots = child.childNodes.map(childNode => {
                     const slotDomInfo = childNode.$$domInfo
+                    const sloth5TagClass = slotDomInfo.h5TagClass ? slotDomInfo.h5TagClass : `h5-${slotDomInfo.tagName}`
                     return {
                         slot: slotDomInfo.slot,
                         nodeId: slotDomInfo.nodeId,
                         pageId: slotDomInfo.pageId,
                         id: slotDomInfo.id,
-                        className: slotDomInfo.type === 'element' ? `h5-${slotDomInfo.tagName} node-${slotDomInfo.nodeId} ${slotDomInfo.className || ''}` : '',
+                        className: slotDomInfo.type === 'element' ? `${sloth5TagClass} node-${slotDomInfo.nodeId} ${slotDomInfo.className || ''}` : '',
                         style: slotDomInfo.style,
                     }
                 }).filter(slot => !!slot.slot)
