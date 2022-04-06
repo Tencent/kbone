@@ -134,7 +134,10 @@ class Style {
     set cssText(styleText) {
         if (typeof styleText !== 'string') return
 
-        styleText = styleText.replace(/"/g, '\'')
+        // 当既有单引号又有双引号时不进行替换
+        if (!(styleText.indexOf('\"') > -1 && styleText.indexOf('\'') > -1)) {
+            styleText = styleText.replace(/"/g, '\'')
+        }
 
         // 解析样式
         const rules = parse(styleText)
