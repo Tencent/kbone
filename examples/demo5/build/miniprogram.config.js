@@ -21,6 +21,7 @@ module.exports = {
 	},
 	runtime: {
 		cookieStore: 'memory',
+		extraStyleList: ['webkitMask'],
 	},
 	app: {
 		navigationBarTitleText: 'miniprogram-project',

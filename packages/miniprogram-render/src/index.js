@@ -4,10 +4,14 @@ const Window = require('./window')
 const Document = require('./document')
 const EventTarget = require('./event/event-target')
 const Event = require('./event/event')
+const Style = require('./node/style')
 
 module.exports = {
     createPage(route, config) {
         if (config) cache.setConfig(config)
+
+        const runtime = config && config.runtime || {}
+        Style.$$initStyleList(runtime.extraStyleList)
 
         const pageId = `p-${tool.getId()}-/${route}`
         const window = new Window(pageId)

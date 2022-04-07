@@ -25,6 +25,4 @@ module.exports = [
     'boxShadow', 'boxSizing', 'content', 'cursor', 'direction', 'listStyle', 'objectFit', 'pointerEvents', 'resize', 'verticalAlign', 'willChange', 'clip', 'clipPath', 'fill',
 
     'touchAction', 'WebkitAppearance',
-
-    'WebkitLineClamp', 'WebkitBoxOrient', 'WebkitMask', 'WebkitMaskSize'
 ]

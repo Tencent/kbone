@@ -1,9 +1,27 @@
-const styleList = require('./style-list')
+const originalStyleList = require('./style-list')
 const tool = require('../util/tool')
 const Pool = require('../util/pool')
 const cache = require('../util/cache')
 
 const pool = new Pool()
+let styleList = [].concat(originalStyleList)
+let isInitStyleList = false
+
+/**
+ * 样式名转连接符
+ */
+function toDash(name) {
+    if (name.indexOf('webkit') === 0) name = name.replace('webkit', 'Webkit')
+    return tool.toDash(name)
+}
+
+/**
+ * 样式名转驼峰
+ */
+function toCamel(name) {
+    if (name.indexOf('-webkit-') === 0) name = name.replace('-webkit-', 'webkit-')
+    return tool.toCamel(name)
+}
 
 /**
  * 解析样式串
@@ -21,7 +39,7 @@ function parse(styleText) {
             const split = rule.indexOf(':')
             if (split === -1) return
 
-            const name = tool.toCamel(rule.substr(0, split).trim())
+            const name = toCamel(rule.substr(0, split).trim())
             rules[name] = rule.substr(split + 1).replace(/:#\|\|#:/ig, ';').trim()
         })
     }
@@ -32,6 +50,41 @@ function parse(styleText) {
 class Style {
     constructor(onUpdate) {
         this.$$init(onUpdate)
+    }
+
+    /**
+     * 初始化 style 列表
+     */
+    static $$initStyleList(extraStyleList = []) {
+        if (isInitStyleList) return
+
+        isInitStyleList = true
+        styleList = styleList.concat(extraStyleList)
+
+        // 设置各个属性的 getter、setter
+        const properties = {}
+        styleList.forEach(name => {
+            properties[name] = {
+                get() {
+                    return this[`$_${name}`] || ''
+                },
+                set(value) {
+                    const config = cache.getConfig()
+                    const oldValue = this[`$_${name}`]
+                    value = value !== undefined ? '' + value : undefined
+
+                    // 判断 value 是否需要删减
+                    if (value && config.optimization.styleValueReduce && value.length > config.optimization.styleValueReduce) {
+                        console.warn(`property "${name}" will be deleted, because it's greater than ${config.optimization.styleValueReduce}`)
+                        value = undefined
+                    }
+
+                    this[`$_${name}`] = value
+                    if (oldValue !== value) this.$_checkUpdate()
+                },
+            }
+        })
+        Object.defineProperties(Style.prototype, properties)
     }
 
     /**
@@ -112,7 +165,7 @@ class Style {
     get cssText() {
         let joinText = styleList
             .filter(name => this[`$_${name}`])
-            .map(name => `${tool.toDash(name)}:${this['$_' + name]}`)
+            .map(name => `${toDash(name)}:${this['$_' + name]}`)
             .join(';')
             .trim()
         joinText = joinText ? `${joinText};` : ''
@@ -135,7 +188,7 @@ class Style {
         if (typeof styleText !== 'string') return
 
         // 当既有单引号又有双引号时不进行替换
-        if (!(styleText.indexOf('\"') > -1 && styleText.indexOf('\'') > -1)) {
+        if (!(styleText.indexOf('"') > -1 && styleText.indexOf('\'') > -1)) {
             styleText = styleText.replace(/"/g, '\'')
         }
 
@@ -163,35 +216,8 @@ class Style {
         if (typeof name !== 'string') return ''
 
         if (name.indexOf('--') === 0) return this.$_vars[name] || ''
-        else return this[tool.toCamel(name)] || ''
+        else return this[toCamel(name)] || ''
     }
 }
-
-/**
- * 设置各个属性的 getter、setter
- */
-const properties = {}
-styleList.forEach(name => {
-    properties[name] = {
-        get() {
-            return this[`$_${name}`] || ''
-        },
-        set(value) {
-            const config = cache.getConfig()
-            const oldValue = this[`$_${name}`]
-            value = value !== undefined ? '' + value : undefined
-
-            // 判断 value 是否需要删减
-            if (value && config.optimization.styleValueReduce && value.length > config.optimization.styleValueReduce) {
-                console.warn(`property "${name}" will be deleted, because it's greater than ${config.optimization.styleValueReduce}`)
-                value = undefined
-            }
-
-            this[`$_${name}`] = value
-            if (oldValue !== value) this.$_checkUpdate()
-        },
-    }
-})
-Object.defineProperties(Style.prototype, properties)
 
 module.exports = Style

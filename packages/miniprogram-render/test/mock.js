@@ -24,6 +24,7 @@ const config = {
     },
     runtime: {
         subpackagesMap: {},
+        extraStyleList: ['webkitMask'],
     },
     pages: {
         home: {
