@@ -2237,13 +2237,13 @@ const wxComponentMap = {
             name: 'longitude',
             canBeUserChanged: true,
             get(domNode) {
-                return dealWithNumber(domNode, 'longitude', 39.92)
+                return dealWithNumber(domNode, 'longitude', 116.46)
             },
         }, {
             name: 'latitude',
             canBeUserChanged: true,
             get(domNode) {
-                return dealWithNumber(domNode, 'latitude', 116.46)
+                return dealWithNumber(domNode, 'latitude', 39.92)
             },
         }, {
             name: 'scale',
