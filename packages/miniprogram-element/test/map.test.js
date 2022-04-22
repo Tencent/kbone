@@ -22,10 +22,10 @@ test('map', async() => {
     await _.sleep(10)
 
     // longitude
-    await _.checkNumber(body, node, 'longitude', 'longitude', 39.92)
+    await _.checkNumber(body, node, 'longitude', 'longitude', 116.46)
 
     // latitude
-    await _.checkNumber(body, node, 'latitude', 'latitude', 116.46)
+    await _.checkNumber(body, node, 'latitude', 'latitude', 39.92)
 
     // scale
     await _.checkNumber(body, node, 'scale', 'scale', 16)
