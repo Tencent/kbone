@@ -15,6 +15,7 @@ let negz = 'https://res.wx.qq.com/op_res/m_LtPXT7r0J-oE8bg_b-feNKHxp4vipZ2zANFe7
 let posx = 'https://res.wx.qq.com/op_res/CHdJxEMpxQxLqpWVe01CQh7aQ8Fs3NuzPmJXJoJU7pnprB5gxQ4xIrr0uojukw9JTzbpU_TyrOl-AI4O7JrDaA'
 let posy = 'https://res.wx.qq.com/op_res/CHdJxEMpxQxLqpWVe01CQvnpGYq24F7r_CJVbCIeHHRpkiWxOFpbDAAbJcNZvUsZhg5oEZtC4fHVS9DIf1du7g'
 let posz = 'https://res.wx.qq.com/op_res/CHdJxEMpxQxLqpWVe01CQi9lxEWNS6GM5J7hpXBkGe8v3NfCRzm9d0prT9fCVL36TmcSKtFmTH6IXtaxt6pKIw'
+let total360 = 'https://res.wx.qq.com/op_res/jhgYUBa8GgeG9mV42CtwLmWCGHIvCb-6k3_lWjKB4FCydOsLyfq2U9PD4MSK2IDhLz9rrHAwS6Qtjb4W69KsmA'
 let width = 0
 let height = 0
 let devicePixelRatio = 2
@@ -54,6 +55,7 @@ export default {
           canvas.addEventListener('canvastouchcancel', evt => node.dispatchTouchEvent(transEvt(node, 'touchcancel', evt)))
 
           const node = res.node
+
           node.width = width
           node.height = height
           THREE = threeModule.createScopedThreejs(node)
@@ -69,6 +71,7 @@ export default {
       posx = '/res/posx.jpg'
       posy = '/res/posy.jpg'
       posz = '/res/posz.jpg'
+      total360 = '/res/total360.jpg'
       width = window.innerWidth
       height = window.innerHeight
       devicePixelRatio = window.devicePixelRatio
@@ -94,13 +97,46 @@ export default {
       const ambient = new THREE.AmbientLight(0xffffff)
       scene.add(ambient)
 
-      // skybox
-      const loader = new THREE.CubeTextureLoader()
-      const textureCube = loader.load([posx, negx, posy, negy, posz, negz])
+      // 立方体
+      const textureCube = new THREE.CubeTextureLoader().load([posx, negx, posy, negy, posz, negz])
       textureCube.format = THREE.RGBFormat
       textureCube.mapping = THREE.CubeReflectionMapping
       textureCube.encoding = THREE.sRGBEncoding
       scene.background = textureCube
+
+      // 球体
+      // const textureEquirec = new THREE.TextureLoader().load(total360, res => console.log('@@@@@@@', res), undefined, err => console.log('#########', err))
+      // textureEquirec.needsUpdate = true
+      // textureEquirec.updateMatrix()
+      // const equirectGeometry = new THREE.SphereGeometry(100, 32, 16)
+      // const equirectMaterial = new THREE.ShaderMaterial({
+      //   wireframe: false,
+      //   side: THREE.DoubleSide,
+      //   uniforms: {
+      //     tex_0: new THREE.Uniform(textureEquirec),
+      //   },
+      //   vertexShader: `
+      //     precision highp float;
+      //     varying vec2 v_uv;
+      //     void main() {
+      //         gl_Position = projectionMatrix *
+      //             modelViewMatrix *
+      //             vec4(position.xyz, 1.0);
+      //         v_uv = uv;
+      //     }
+      //   `,
+      //   fragmentShader: `
+      //     precision highp float;
+      //     varying vec2 v_uv;
+      //     uniform sampler2D tex_0;
+      //     void main() {
+      //         vec4 texColor = texture2D(tex_0, vec2(1. - v_uv.x, v_uv.y));
+      //         gl_FragColor = texColor;
+      //     }
+      //   `,
+      // })
+      // const mesh = new THREE.Mesh(equirectGeometry, equirectMaterial)
+      // scene.add(mesh)
 
       // renderer
       const renderer = new THREE.WebGLRenderer({canvas})
@@ -110,8 +146,8 @@ export default {
 
       // 手势控制
       const controls = new OrbitControls(camera, renderer.domElement)
-      controls.minDistance = 500
-      controls.maxDistance = 2500
+      controls.maxDistance = 100
+      controls.update()
 
       // 渲染
       const onUpdate = () => {
