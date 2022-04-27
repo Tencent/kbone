@@ -78,3 +78,4 @@ npm install
 * demo30：vue + 多页 + webpack5
 * demo31：jquery
 * demo32：vue + tabBar + kbone 混合原生小程序开发 + 懒注入 + 异步化分包
+* demo33：vue + threejs + 全景图片
