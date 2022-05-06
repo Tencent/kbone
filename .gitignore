@@ -17,3 +17,5 @@ examples/**/dist
 examples/demo21/mp/common
 examples/demo21/mp/miniprogram_npm
 examples/demo21/mp/package1
+
+.vscode
