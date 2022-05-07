@@ -4,7 +4,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic'
 import { AppModule } from './app/app.module'
 
 export default function createApp() {
-  const container = document.createElement('div')
+  const container = document.createElement('app-root')
   container.id = 'app'
   document.body.appendChild(container)
 

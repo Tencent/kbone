@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 module.exports = {
   mode: 'production',
   entry: {
-    index: path.resolve(__dirname, '../src/index/main.js'),
+    index: path.resolve(__dirname, '../src/main.ts'),
   },
   output: {
     path: path.resolve(__dirname, '../dist/web'),
@@ -16,6 +16,10 @@ module.exports = {
   devtool: 'source-map',
   module: {
     rules: [
+      {
+        test: /\.html$/,
+        loader: 'html-loader',
+      },
       {
         test: /\.css$/,
         use: [
@@ -34,13 +38,18 @@ module.exports = {
         exclude: /node_modules/
       },
       {
+        test: /\.mjs$/,
+        include: /node_modules/,
+        type: 'javascript/auto'
+      },
+      {
         test: /\.(png|jpg|gif|svg)$/,
         loader: 'file-loader',
       }
     ]
   },
   resolve: {
-    extensions: ['*', '.js', '.json'],
+    extensions: ['*', '.js', '.ts', '.mjs', '.json'],
   },
   plugins: [
     new MiniCssExtractPlugin({
