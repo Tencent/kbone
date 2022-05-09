@@ -1,11 +1,14 @@
 import { Component } from '@angular/core'
-import template from './app.component.html'
-import './app.component.css'
+import template from './index.html'
+import './index.css'
 
 @Component({
   selector: 'app-root',
   template,
 })
 export class AppComponent {
-  title = 'demo34';
+  title = 'demo34'
+  back(): void {
+    window.history.back()
+  }
 }
