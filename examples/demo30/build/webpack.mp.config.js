@@ -2,7 +2,7 @@ const path = require('path')
 const webpack = require('webpack')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const MpPlugin = require('mp-webpack-plugin') // 用于构建小程序代码的 webpack 插件
 
@@ -48,10 +48,9 @@ module.exports = {
 
         minimizer: isOptimize ? [
             // 压缩CSS
-            new OptimizeCSSAssetsPlugin({
-                assetNameRegExp: /\.(css|wxss)$/g,
-                cssProcessor: require('cssnano'),
-                cssProcessorPluginOptions: {
+            new CssMinimizerPlugin({
+                test: /\.(css|wxss)$/g,
+                minimizerOptions: {
                     preset: ['default', {
                         discardComments: {
                             removeAll: true,
@@ -59,7 +58,6 @@ module.exports = {
                         minifySelectors: false, // 因为 wxss 编译器不支持 .some>:first-child 这样格式的代码，所以暂时禁掉这个
                     }],
                 },
-                canPrint: false
             }),
             // 压缩 js
             new TerserPlugin({
