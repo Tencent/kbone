@@ -320,6 +320,41 @@ class MpPlugin {
             const isEmitProjectConfig = appConfig !== 'noconfig'
             let workersDir = 'common/workers'
 
+            // tabbar
+            let tabBar
+            if (tabBarConfig.list && tabBarConfig.list.length) {
+                tabBar = Object.assign({}, tabBarConfig)
+                tabBar.list = tabBarConfig.list.map(item => {
+                    const iconPathName = item.iconPath ? _.md5File(item.iconPath) + path.extname(item.iconPath) : ''
+                    if (iconPathName) _.copyFile(item.iconPath, path.resolve(outputPath, `../images/${iconPathName}`))
+                    const selectedIconPathName = item.selectedIconPath ? _.md5File(item.selectedIconPath) + path.extname(item.selectedIconPath) : ''
+                    if (selectedIconPathName) _.copyFile(item.selectedIconPath, path.resolve(outputPath, `../images/${selectedIconPathName}`))
+                    tabBarMap[`/pages/${item.pageName}/index`] = true
+
+                    const tabBarItem = {
+                        pagePath: `pages/${item.pageName}/index`,
+                        text: item.text,
+                    }
+                    if (iconPathName) tabBarItem.iconPath = `./images/${iconPathName}`
+                    if (selectedIconPathName) tabBarItem.selectedIconPath = `./images/${selectedIconPathName}`
+
+                    return tabBarItem
+                })
+
+                if (tabBar.custom) {
+                    // 自定义 tabBar
+                    const customTabBarDir = tabBar.custom
+                    tabBar.custom = true
+                    compilation.contextDependencies.add(customTabBarDir) // 支持 watch
+                    _.copyDir(customTabBarDir, path.resolve(outputPath, '../custom-tab-bar'))
+                }
+            }
+
+            // worker
+            if (generateConfig.worker) {
+                workersDir = typeof generateConfig.worker === 'string' ? generateConfig.worker : workersDir
+            }
+
             if (isEmitApp) {
                 // app js
                 const appAssets = assetsMap[appJsEntryName] || {js: [], css: []}
@@ -372,41 +407,10 @@ class MpPlugin {
                     preloadRule,
                     ...userAppJson,
                 }
-                if (tabBarConfig.list && tabBarConfig.list.length) {
-                    // tabBar
-                    const tabBar = Object.assign({}, tabBarConfig)
-                    tabBar.list = tabBarConfig.list.map(item => {
-                        const iconPathName = item.iconPath ? _.md5File(item.iconPath) + path.extname(item.iconPath) : ''
-                        if (iconPathName) _.copyFile(item.iconPath, path.resolve(outputPath, `../images/${iconPathName}`))
-                        const selectedIconPathName = item.selectedIconPath ? _.md5File(item.selectedIconPath) + path.extname(item.selectedIconPath) : ''
-                        if (selectedIconPathName) _.copyFile(item.selectedIconPath, path.resolve(outputPath, `../images/${selectedIconPathName}`))
-                        tabBarMap[`/pages/${item.pageName}/index`] = true
 
-                        const tabBarItem = {
-                            pagePath: `pages/${item.pageName}/index`,
-                            text: item.text,
-                        }
-                        if (iconPathName) tabBarItem.iconPath = `./images/${iconPathName}`
-                        if (selectedIconPathName) tabBarItem.selectedIconPath = `./images/${selectedIconPathName}`
+                if (tabBar) appJson.tabBar = tabBar
+                if (generateConfig.worker) appJson.workers = workersDir
 
-                        return tabBarItem
-                    })
-
-                    if (tabBar.custom) {
-                        // 自定义 tabBar
-                        const customTabBarDir = tabBar.custom
-                        tabBar.custom = true
-                        compilation.contextDependencies.add(customTabBarDir) // 支持 watch
-                        _.copyDir(customTabBarDir, path.resolve(outputPath, '../custom-tab-bar'))
-                    }
-
-                    appJson.tabBar = tabBar
-                }
-                if (generateConfig.worker) {
-                    // workers
-                    workersDir = typeof generateConfig.worker === 'string' ? generateConfig.worker : workersDir
-                    appJson.workers = workersDir
-                }
                 if (useWeui) {
                     // 使用 weui 扩展库
                     appJson.useExtendedLib = appJson.useExtendedLib || {}
