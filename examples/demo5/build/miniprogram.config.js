@@ -1,6 +1,6 @@
 module.exports = {	
 	origin: 'https://test.miniprogram.com',	
-	entry: '/',	
+	entry: '/a',
 	router: {		
 		page1: ['/a'],
 		page2: ['/b'],
