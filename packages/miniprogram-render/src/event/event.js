@@ -13,6 +13,9 @@ function checkRelation(node1, node2) {
     return false
 }
 
+/**
+ * 因为一些历史遗留原因，此处 Event 入参并未对齐标准实现，开发者如有需要可使用 CustomEvent 来代替
+ */
 class Event {
     constructor(options) {
         this.$_name = options.name.toLowerCase()
