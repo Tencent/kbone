@@ -322,6 +322,7 @@
         bindlongpress="onLongPress"
 
         selectable="{{selectable}}"
+        user-select="{{userSelect}}"
         space="{{space}}"
         decode="{{decode}}"
     >{{content}}</text>

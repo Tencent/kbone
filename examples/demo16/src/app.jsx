@@ -152,6 +152,10 @@ const App = (props, store) => {
                 我是 picker-view：
                 <PickerView></PickerView>
             </div>
+            <div>
+                我是 text：
+                <wx-text user-select={true}>测试是否可选中</wx-text>
+            </div>
             <Router>
                 <div>react-router</div>
                 <ul>

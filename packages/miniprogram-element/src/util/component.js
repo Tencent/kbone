@@ -613,6 +613,11 @@ const wxComponentMap = {
                 return dealWithBoolValue(domNode, 'selectable')
             },
         }, {
+            name: 'userSelect',
+            get(domNode) {
+                return dealWithBoolValue(domNode, 'user-select')
+            },
+        }, {
             name: 'space',
             get(domNode) {
                 return domNode.getAttribute('space') || ''
