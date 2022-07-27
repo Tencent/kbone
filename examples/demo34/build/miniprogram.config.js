@@ -18,7 +18,7 @@ module.exports = {
 		navigationBarTitleText: "App"
 	},
 	projectConfig: {
-		appid: "your appid",
+		appid: "wx14c7c4cd189644a1",
 		projectname: "kbone-vue3"
 	}
 };
