@@ -758,8 +758,6 @@ class Element extends Node {
             tagName: this.$_tagName,
             attrs: {
                 id: this.id,
-                class: this.className,
-                style: this.style.cssText,
                 src: this.src,
 
                 ...dataset,
@@ -768,6 +766,9 @@ class Element extends Node {
             nodeType: this.$_nodeType,
             nodeId: `b-${tool.getId()}`, // 运行时生成，使用 b- 前缀
         })
+
+        newNode.$_style.$$clone(this.$_style)
+        newNode.$_classList.$$clone(this.$_classList)
 
         // 属性
         if (this.$__attrs) {
