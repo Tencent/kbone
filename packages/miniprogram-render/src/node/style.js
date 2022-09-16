@@ -62,29 +62,17 @@ class Style {
         styleList = styleList.concat(extraStyleList)
 
         // 设置各个属性的 getter、setter
-        const properties = {}
+        // const properties = {}
         styleList.forEach(name => {
-            properties[name] = {
+            Object.defineProperty(Style.prototype, name, {
                 get() {
-                    return this[`$_${name}`] || ''
+                    return this.getPropertyValue(name)
                 },
                 set(value) {
-                    const config = cache.getConfig()
-                    const oldValue = this[`$_${name}`]
-                    value = value !== undefined ? '' + value : undefined
-
-                    // 判断 value 是否需要删减
-                    if (value && config.optimization.styleValueReduce && value.length > config.optimization.styleValueReduce) {
-                        console.warn(`property "${name}" will be deleted, because it's greater than ${config.optimization.styleValueReduce}`)
-                        value = undefined
-                    }
-
-                    this[`$_${name}`] = value
-                    if (oldValue !== value) this.$_checkUpdate()
-                },
-            }
+                    this.setProperty(name, value)
+                }
+            })
         })
-        Object.defineProperties(Style.prototype, properties)
     }
 
     /**
@@ -112,7 +100,9 @@ class Style {
     $$init(onUpdate) {
         this.$_doUpdate = onUpdate || (() => {})
         this.$_disableCheckUpdate = false // 是否禁止检查更新
-        this.$__vars = null
+        this.$__cssTextCache = ''
+        this.$__vars = {}
+        this.$__style = {}
     }
 
     /**
@@ -121,11 +111,9 @@ class Style {
     $$destroy() {
         this.$_doUpdate = null
         this.$_disableCheckUpdate = false
+        this.$__cssTextCache = null
         this.$__vars = null
-
-        styleList.forEach(name => {
-            this[`$_${name}`] = undefined
-        })
+        this.$__style = null
     }
 
     /**
@@ -143,49 +131,60 @@ class Style {
     }
 
     /**
-     * css 变量存储
+     * 克隆实例
      */
-    get $_vars() {
-        if (!this.$__vars) this.$__vars = {}
-        return this.$__vars
+    $$clone(style) {
+        this.$__cssTextCache = style.$__cssTextCache
+        this.$__vars = Object.assign({}, style.$__vars)
+        this.$__style = Object.assign({}, style.$__style)
     }
 
     /**
      * 检查更新
      */
     $_checkUpdate() {
-        if (!this.$_disableCheckUpdate) {
-            this.$_doUpdate()
-        }
+        this.$__cssTextCache = null // 清除 cssText 缓存
+        if (this.$_disableCheckUpdate) return
+        this.$_doUpdate()
     }
 
     /**
      * 对外属性和方法
      */
     get cssText() {
-        let joinText = styleList
-            .filter(name => this[`$_${name}`])
-            .map(name => `${toDash(name)}:${this['$_' + name]}`)
-            .join(';')
-            .trim()
-        joinText = joinText ? `${joinText};` : ''
+        if (this.$__cssTextCache !== null) return this.$__cssTextCache
 
-        if (this.$__vars) {
-            const vars = this.$_vars
-            const varsText = Object
-                .keys(vars)
-                .filter(name => vars[name])
-                .map(name => `${name}:${vars[name]}`)
-                .join(';')
-                .trim()
-            joinText = varsText ? `${joinText}${varsText};` : joinText
+        const joinTextArr = []
+        const style = this.$__style
+        const styleNames = Object.keys(style)
+        for (let i = 0; i < styleNames.length; i += 1) {
+            const name = styleNames[i]
+            const styleContent = style[name]
+            if (!styleContent) continue
+
+            joinTextArr.push(`${toDash(name)}:${styleContent}`)
         }
+
+        const vars = this.$__vars
+        const varNames = Object.keys(vars)
+        for (let i = 0; i < varNames.length; i += 1) {
+            const name = varNames[i]
+            const varContent = vars[name]
+            if (!varContent) continue
+
+            joinTextArr.push(`${name}:${varContent}`)
+        }
+
+        const joinText = joinTextArr.length ? `${joinTextArr.join(';')};` : ''
+
+        this.$__cssTextCache = joinText
 
         return joinText
     }
 
     set cssText(styleText) {
         if (typeof styleText !== 'string') return
+        if (styleText === this.$__cssTextCache) return
 
         // 当既有单引号又有双引号时不进行替换
         if (!(styleText.indexOf('"') > -1 && styleText.indexOf('\'') > -1)) {
@@ -196,7 +195,11 @@ class Style {
         const rules = parse(styleText)
 
         this.$_disableCheckUpdate = true // 将每条规则的设置合并为一次更新
-        for (const name of styleList) {
+        this.$__vars = {}
+        this.$__style = {}
+        const ruleNames = Object.keys(rules)
+        for (let i = 0; i < ruleNames.length; i += 1) {
+            const name = ruleNames[i]
             this.setProperty(name, rules[name])
         }
         this.$_disableCheckUpdate = false
@@ -204,19 +207,37 @@ class Style {
     }
 
     setProperty(name, value) {
-        if (typeof name !== 'string') return ''
+        if (typeof name !== 'string') return
+        value = value !== undefined ? '' + value : undefined
 
-        if (name.indexOf('--') === 0) {
-            this.$_vars[name] = value // css 变量
-            this.$_checkUpdate()
-        } else this[name] = value
+        const config = cache.getConfig()
+
+        const isVar = name.startsWith('--')
+        const container = isVar ? this.$__vars : this.$__style
+        const oldValue = container[name]
+
+        if (oldValue === value) return
+
+        // 判断 value 是否需要删减
+        if (value && config.optimization.styleValueReduce && value.length > config.optimization.styleValueReduce) {
+            console.warn(`property "${name}" will be deleted, because it's greater than ${config.optimization.styleValueReduce}`)
+            value = undefined
+        }
+
+        container[name] = value
+        this.$_checkUpdate()
     }
 
     getPropertyValue(name) {
         if (typeof name !== 'string') return ''
 
-        if (name.indexOf('--') === 0) return this.$_vars[name] || ''
-        else return this[toCamel(name)] || ''
+        const isVar = name.startsWith('--')
+
+        if (isVar) {
+            return this.$__vars[name] || ''
+        } else {
+            return this.$__style[toCamel(name)] || ''
+        }
     }
 }
 
