@@ -7,8 +7,12 @@ const cache = require('../util/cache')
 const pool = new Pool()
 
 function ClassList(onUpdate) {
-    this.$$init(onUpdate)
+    const self = Reflect.construct(Array, [], ClassList)
+    self.$$init(onUpdate)
+    return self
 }
+
+Object.setPrototypeOf(ClassList, Array)
 
 /**
  * 创建实例
@@ -29,19 +33,22 @@ ClassList.$$create = function(onUpdate) {
     return new ClassList(onUpdate)
 }
 
+const onUpdateMap = new WeakMap()
+
 ClassList.prototype = Object.assign([], {
     /**
      * 初始化实例
      */
     $$init(onUpdate) {
-        this.$_doUpdate = onUpdate
+        // 不直接设置在 this 上防止 array 退化
+        onUpdateMap.set(this, onUpdate)
     },
 
     /**
      * 销毁实例
      */
     $$destroy() {
-        this.$_doUpdate = null
+        onUpdateMap.delete(this)
         this.length = 0
     },
 
@@ -56,6 +63,21 @@ ClassList.prototype = Object.assign([], {
         if (config.optimization.domExtendMultiplexing) {
             // 复用 dom 扩展对象
             pool.add(this)
+        }
+    },
+
+    $_doUpdate() {
+        const onUpdate = onUpdateMap.get(this)
+        onUpdate()
+    },
+
+    /**
+     * 克隆实例
+     */
+    $$clone(classList) {
+        this.length = 0
+        for (const item of classList) {
+            this.push(item)
         }
     },
 
