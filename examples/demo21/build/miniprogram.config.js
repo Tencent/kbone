@@ -11,13 +11,16 @@ module.exports = {
 	},
 	generate: {
 		app: 'noemit',
+		subpackages: {
+			package1: ['page1', 'page2'],
+		},
 	},
 	app: {
 		navigationBarTitleText: 'miniprogram-project',
 	},
 	projectConfig: {
 		appid: 'wx14c7c4cd189644a1',
-        projectname: 'kbone-demo21',
+		projectname: 'kbone-demo21',
 	},
 	packageConfig: {
 		author: 'wechat-miniprogram',

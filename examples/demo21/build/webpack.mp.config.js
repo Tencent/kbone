@@ -15,7 +15,7 @@ module.exports = {
         page2: path.resolve(__dirname, '../src/page2/main.mp.js'),
     },
     output: {
-        path: path.resolve(__dirname, '../mp/package1/common'), // 放到小程序代码目录中的 common 目录下
+        path: path.resolve(__dirname, '../mp/common'), // 放到小程序代码目录中的 common 目录下
         filename: '[name].js', // 必需字段，不能修改
         library: 'createApp', // 必需字段，不能修改
         libraryExport: 'default', // 必需字段，不能修改
