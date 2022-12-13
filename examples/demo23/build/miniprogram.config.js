@@ -11,6 +11,11 @@ module.exports = {
 	app: {
 		navigationBarTitleText: 'miniprogram-project',
 	},
+	pages: {
+		index: {
+			defaultTargetUrl: '/test#/ccc'
+		},
+	},
 	projectConfig: {
 		appid: 'wx14c7c4cd189644a1',
         projectname: 'kbone-demo23',

@@ -1,5 +1,9 @@
 # 更新日志
 
+## 1.6.2
+
+* 支持页面的默认 targeturl，用于兼容不支持通过参数打开页面的场景
+
 ## 1.6.1
 
 * 修复 generate.app 值为 noemit 时没有处理 tabbar 和 worker 的问题

@@ -175,7 +175,7 @@ module.exports = function(mp, config, init) {
                     if (query.search) this.window.location.search = decodeURIComponent(query.search)
                     if (query.hash) this.window.location.hash = decodeURIComponent(query.hash)
                 } else {
-                    this.window.$$miniprogram.init()
+                    this.window.$$miniprogram.init(pageConfig.defaultTargetUrl || null)
                 }
 
                 // 处理分享显示
