@@ -168,14 +168,16 @@ module.exports = function(mp, config, init) {
 
                 if (query.type === 'open' || query.type === 'jump' || query.type === 'share') {
                     // 处理页面参数，只有当页面是其他页面打开或跳转时才处理
-                    let targetUrl = decodeURIComponent(query.targeturl)
+                    let targetUrl = decodeURIComponent(query.targeturl || pageConfig.defaultTargetUrl)
                     targetUrl = targetUrl.indexOf('://') >= 0 ? targetUrl : (config.origin + targetUrl)
-                    this.window.$$miniprogram.init(targetUrl || pageConfig.defaultTargetUrl || null)
+                    this.window.$$miniprogram.init(targetUrl || null)
 
                     if (query.search) this.window.location.search = decodeURIComponent(query.search)
                     if (query.hash) this.window.location.hash = decodeURIComponent(query.hash)
                 } else {
-                    this.window.$$miniprogram.init(pageConfig.defaultTargetUrl || null)
+                    let targetUrl = decodeURIComponent(pageConfig.defaultTargetUrl || '')
+                    targetUrl = targetUrl.indexOf('://') >= 0 ? targetUrl : (config.origin + targetUrl)
+                    this.window.$$miniprogram.init(targetUrl || null)
                 }
 
                 // 处理分享显示
