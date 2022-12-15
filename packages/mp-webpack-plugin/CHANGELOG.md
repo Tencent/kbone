@@ -1,5 +1,9 @@
 # 更新日志
 
+## 1.6.5
+
+* 修复 targeturl 为空时仍旧自动拼接 origin 的问题
+
 ## 1.6.4
 
 * 修复 defaultTargetUrl 参数不会自动拼接 origin 的问题
