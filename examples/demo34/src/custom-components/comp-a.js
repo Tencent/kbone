@@ -13,6 +13,9 @@ Component({
         testObj: {
             type: Object,
             value: {},
+            observer(newVal) {
+                console.log('observer testObj', newVal)
+            },
         },
         testArr: {
             type: Array,
