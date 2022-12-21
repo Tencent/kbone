@@ -1,13 +1,11 @@
-import Vue from 'vue'
-import App from './App.vue'
+import React from 'react'
+import {render, h} from 'react-dom'
+import App from './App'
 
 export default function createApp() {
   const container = document.createElement('div')
   container.id = 'app'
   document.body.appendChild(container)
 
-  return new Vue({
-    el: '#app',
-    render: h => h(App)
-  })
+  render(<App />, container)
 }

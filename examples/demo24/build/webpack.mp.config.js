@@ -45,7 +45,6 @@ module.exports = {
                 }
             }
         },
-
         minimizer: isOptimize ? [
             // 压缩CSS
             new OptimizeCSSAssetsPlugin({

@@ -38,7 +38,6 @@ module.exports = {
 				},
 			},
 		},
-		// weui: true, // 是否使用 weui
 	},
 	app: {
 		navigationBarTitleText: 'miniprogram-project',

@@ -78,18 +78,18 @@ const App = (props, store) => {
                 我是输入框：
                 <input
                     {...inputProps}
-                    onClick={e => console.log('click', e)}
-                    onInput={e => console.log('input', e)}
-                    onFocus={e => console.log('focus', e)}
-                    onBlur={e => console.log('blur', e)}
-                    onChange={e => console.log('change', e)}
+                    onClick={evt => console.log('click', evt)}
+                    onInput={evt => console.log('input', evt)}
+                    onFocus={evt => console.log('focus', evt)}
+                    onBlur={evt => console.log('blur', evt)}
+                    onChange={evt => console.log('change', evt)}
                 />
             </div>
             <div>
                 我是 checkbox：
                 <input
                     type="checkbox"
-                    onChange={e => console.log('change', e)}
+                    onChange={evt => console.log('change', evt)}
                 />
             </div>
             <div>
@@ -98,23 +98,23 @@ const App = (props, store) => {
                     type="radio"
                     name="radio"
                     value="1"
-                    onChange={e => console.log('change', e)}
+                    onChange={evt => console.log('change', evt)}
                 />
                 <input
                     type="radio"
                     name="radio"
                     value="2"
-                    onChange={e => console.log('change', e)}
+                    onChange={evt => console.log('change', evt)}
                 />
             </div>
             <div>
                 我是 picker
-                <wx-picker range={pickerRange1} onChange={e => console.log('change', e)}>选择国家1</wx-picker>
-                <wx-picker range={pickerRange2} range-key="name" onChange={e => console.log('change', e)}>选择国家2</wx-picker>
+                <wx-picker range={pickerRange1} onChange={evt => console.log('change', evt)}>选择国家1</wx-picker>
+                <wx-picker range={pickerRange2} range-key="name" onChange={evt => console.log('change', evt)}>选择国家2</wx-picker>
             </div>
             <div>
                 选择你喜欢的风味:
-                <select value={favorite} defaultValue="coconut" onChange={e => {console.log('change', e), setFavorite(e.target.value)}}>
+                <select value={favorite} defaultValue="coconut" onChange={evt => {console.log('change', evt), setFavorite(evt.target.value)}}>
                     {
                         selectOptions.map(opt => {
                             return <option value={opt.value}>{opt.name}</option>
