@@ -1,0 +1,3 @@
+<view>comp-e</view>
+<view class="my-class">external-classes</view>
+<slot></slot>

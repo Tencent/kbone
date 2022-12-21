@@ -1,0 +1,7 @@
+<view>comp-a</view>
+<button class="btn" bindtap="onTap">comp-a button</button>
+<view><text class="prefix">{{prefix}}</text>-{{str}}-<text class="suffix">{{suffix}}</text></view>
+<slot></slot>
+<view>testObj: {{testObj.a}} - {{testObj.b}}</view>
+<view>testArr: <text wx:for="{{testArr}}" wx:key="*this">{{item}}</text></view>
+<view>testDefaultVal: {{testDefaultVal}}</view>

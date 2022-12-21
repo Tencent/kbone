@@ -24,7 +24,7 @@ module.exports = {
 	},
 	projectConfig: {
 		appid: 'wx14c7c4cd189644a1',
-        projectname: 'kbone-demo25',
+		projectname: 'kbone-demo25',
 	},
 	packageConfig: {
 		author: 'wechat-miniprogram',

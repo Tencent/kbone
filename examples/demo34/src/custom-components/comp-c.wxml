@@ -1,0 +1,5 @@
+<view>comp-c</view>
+<comp-d>
+    <view>comp-d slot</view>
+</comp-d>
+<slot></slot>

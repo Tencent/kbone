@@ -1,0 +1,3 @@
+<view>comp-b</view>
+<view><text class="prefix">{{prefix}}</text>-{{str}}-<text class="suffix">{{suffix}}</text>-{{name}}</view>
+<slot></slot>

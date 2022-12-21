@@ -13,10 +13,10 @@ module.exports = {
 	},
 	generate: {
 		globalVars: [
-            ['TEST_VAR_STRING', '\'miniprogram\''],
-            ['TEST_VAR_NUMBER', '123'],
-            ['TEST_VAR_BOOL', 'true'],
-            ['TEST_VAR_FUNCTION', 'function() {return \'I am function\'}'],
+			['TEST_VAR_STRING', '\'miniprogram\''],
+			['TEST_VAR_NUMBER', '123'],
+			['TEST_VAR_BOOL', 'true'],
+			['TEST_VAR_FUNCTION', 'function() {return \'I am function\'}'],
 			['TEST_VAR_OTHERS', 'window.document'],
 			['open'],
 		],
@@ -35,11 +35,11 @@ module.exports = {
 	},
 	global: {
 		rem: true, // 是否支持 rem
-        pageStyle: true, // 是否支持修改页面样式
+		pageStyle: true, // 是否支持修改页面样式
 	},
 	projectConfig: {
 		appid: 'wx14c7c4cd189644a1',
-        projectname: 'kbone-demo1',
+		projectname: 'kbone-demo1',
 	},
 	packageConfig: {
 		author: 'wechat-miniprogram',
