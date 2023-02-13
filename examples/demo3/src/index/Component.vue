@@ -248,16 +248,19 @@
           <wx-component v-if="!wxPrefix" :behavior="item">
             <span>span1</span>
             <input type="checkbox"/>
+            <img src="https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg" width="50" height="50" @load="log('onImgLoad', $event)" />
             <span>span2</span>
           </wx-component>
           <wx-button v-else-if="wxPrefix === 1">
             <span>span1</span>
             <input type="checkbox"/>
+            <img src="https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg" width="50" height="50" @load="log('onImgLoad', $event)" />
             <span>span2</span>
           </wx-button>
           <button v-else-if="wxPrefix === 2">
             <span>span1</span>
             <input type="checkbox"/>
+            <img src="https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg" width="50" height="50" @load="log('onImgLoad', $event)" />
             <span>span2</span>
           </button>
         </template>
