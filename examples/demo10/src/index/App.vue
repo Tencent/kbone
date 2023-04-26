@@ -1,7 +1,7 @@
 <template>
   <div class="cnt">
     <h2>kbone</h2>
-    <comp-a ref="compA" class="block" :prefix="prefixA" :suffix="suffixA" :testObj="testObj" :testArr="testArr" @someevent="onEvent">
+    <comp-a ref="compA" class="block" :prefix="prefixA" :suffix="suffixA" :testObj="testObj" :testArr="testArr" @someevent="onEvent" @some-event="onEvent2">
       <div>comp-a slot</div>
     </comp-a>
     <comp-b class="block" :prefix="prefixB" name="test" my-class="external-red">
@@ -59,6 +59,10 @@ export default {
 
     onEvent(evt) {
       console.log('someevent', evt)
+    },
+
+    onEvent2(evt) {
+      console.log('some-event', evt)
     },
 
     log(str) {

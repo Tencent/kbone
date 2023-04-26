@@ -35,6 +35,14 @@ Component({
             })
         },
 
+        onTap2() {
+            this.triggerEvent('some-event', {
+                detail: {
+                    from: 'comp-a',
+                },
+            })
+        },
+
         printf() {
             console.log('I am comp-a')
         },

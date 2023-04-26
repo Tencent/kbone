@@ -22,7 +22,7 @@ module.exports = {
 					path: 'comp-a',
 					props: ['prefix', 'suffix', 'testObj', 'testArr', 'testDefaultVal'],
 					propsVal: ['', '', {}, [], 'hello kbone'],
-					events: ['someevent'],
+					events: ['someevent', 'some-event'],
 				},
 				'comp-b': {
 					path: 'comp-b/index',

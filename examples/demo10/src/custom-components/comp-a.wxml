@@ -1,5 +1,6 @@
 <view>comp-a</view>
 <button class="btn" bindtap="onTap">comp-a button</button>
+<button class="btn" bindtap="onTap2">comp-a button2</button>
 <view><text class="prefix">{{prefix}}</text>-{{str}}-<text class="suffix">{{suffix}}</text></view>
 <slot></slot>
 <view>testObj: {{testObj.a}} - {{testObj.b}}</view>
