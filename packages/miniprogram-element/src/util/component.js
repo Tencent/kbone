@@ -2405,10 +2405,19 @@ const wxComponentMap = {
 
                 if (!evt.detail.causedBy) evt.detail.causedBy = evt.causedBy
                 if (evt.type === 'end' || evt.detail.type === 'end') {
+                    const longitude = evt.detail.centerLocation && evt.detail.centerLocation.longitude
+                    const latitude = evt.detail.centerLocation && evt.detail.centerLocation.latitude
+
+                    domNode.$$setAttributeWithoutUpdate('longitude', longitude)
+                    domNode.$$setAttributeWithoutUpdate('latitude', latitude)
+                    domNode.$$setAttributeWithoutUpdate('scale', evt.detail.scale)
+                    domNode.$$setAttributeWithoutUpdate('rotate', evt.detail.rotate)
+                    domNode.$$setAttributeWithoutUpdate('skew', evt.detail.skew)
+
                     // 可被用户行为改变的值，需要记录
                     domNode._oldValues = domNode._oldValues || {}
-                    domNode._oldValues.longitude = evt.detail.centerLocation && evt.detail.centerLocation.longitude
-                    domNode._oldValues.latitude = evt.detail.centerLocation && evt.detail.centerLocation.latitude
+                    domNode._oldValues.longitude = longitude
+                    domNode._oldValues.latitude = latitude
                     domNode._oldValues.scale = evt.detail.scale
                     domNode._oldValues.rotate = evt.detail.rotate
                     domNode._oldValues.skew = evt.detail.skew

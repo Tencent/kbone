@@ -440,7 +440,10 @@
             <Inner></Inner>
             <CustomCallout></CustomCallout>
           </map>
+          <div>地图 count: {{map.count}}</div>
           <button @click="resetMap">reset</button>
+          <button @click="updateMap">update</button>
+          <button @click="updateMapCount">update count</button>
         </template>
         <template v-else-if="item === 'cover-view'">
           <wx-compoennt v-if="!wxPrefix" :behavior="item">测试 cover-view</wx-compoennt>
@@ -716,7 +719,7 @@ export default {
         longitude: 113.324520,
         latitude: 23.099994,
         scale: 14,
-      
+        count: 0,
       },
       scrollView: {
         yDest: '',
@@ -930,6 +933,16 @@ export default {
       this.map.longitude = 113.324520
       this.map.latitude = 23.099994
       this.map.scale = 14
+    },
+
+    updateMap() {
+      this.map.longitude = 116.46
+      this.map.latitude = 39.92
+      this.map.scale = 8
+    },
+
+    updateMapCount() {
+      this.map.count++
     },
 
     onScrollViewScroll(evt) {
