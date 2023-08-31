@@ -370,6 +370,7 @@
         bindlaunchapp="onButtonLaunchApp"
         bindgetrealnameauthinfo = "onButtonGetRealnameAuthInfo"
         bindchooseavatar = "onButtonChooseAvatar"
+        bindagreeprivacyauthorization="onButtonAgreePrivacyAuthorization"
 
         share-type="{{shareType}}"
         share-mode="{{shareMode}}"

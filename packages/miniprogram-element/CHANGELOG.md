@@ -1,5 +1,9 @@
 # 更新日志
 
+## 2.2.15
+
+* button 组件 open-type 属性支持 agreePrivacyAuthorization 值和支持 agreeprivacyauthorization 事件
+
 ## 2.2.14
 
 * 修复 map 内置组件经纬度等字段被用户修改后可能会被重置回去的问题

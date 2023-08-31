@@ -772,7 +772,10 @@ const wxComponentMap = {
             },
             onButtonChooseAvatar(evt) {
                 this.callSingleEvent('chooseavatar', evt)
-            }
+            },
+            onButtonAgreePrivacyAuthorization(evt) {
+                this.callSingleEvent('agreeprivacyauthorization', evt)
+            },
         },
     },
     editor: {

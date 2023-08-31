@@ -245,6 +245,9 @@
           <wx-component v-if="!wxPrefix" :behavior="item" open-type="chooseAvatar" @chooseavatar="log('onChooseAvatar', $event.detail)">获取用户头像</wx-component>
           <wx-button v-else-if="wxPrefix === 1" open-type="chooseAvatar" @chooseavatar="log('onChooseAvatar', $event.detail)">获取用户头像</wx-button>
           <button v-else-if="wxPrefix === 2" open-type="chooseAvatar" @chooseavatar="log('onChooseAvatar', $event.detail)">获取用户头像</button>
+          <wx-component v-if="!wxPrefix" :behavior="item" id="agree-btn" open-type="agreePrivacyAuthorization" @agreeprivacyauthorization="log('onAgreeprivacyauthorization', $event.detail)">同意隐私协议按钮</wx-component>
+          <wx-button v-else-if="wxPrefix === 1" id="agree-btn" open-type="agreePrivacyAuthorization" @agreeprivacyauthorization="log('onAgreeprivacyauthorization', $event.detail)">同意隐私协议按钮</wx-button>
+          <button v-else-if="wxPrefix === 2" id="agree-btn" open-type="agreePrivacyAuthorization" @agreeprivacyauthorization="log('onAgreeprivacyauthorization', $event.detail)">同意隐私协议按钮</button>
           <wx-component v-if="!wxPrefix" :behavior="item">
             <span>span1</span>
             <input type="checkbox"/>
