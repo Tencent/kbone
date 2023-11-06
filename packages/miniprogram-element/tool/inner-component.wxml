@@ -93,7 +93,7 @@
         bindtouchcancel="onTouchCancel"
         bindtap="onTap"
         bindlongpress="onLongPress"
-        
+
         direction="{{item.extra.direction}}"
         inertia="{{item.extra.inertia}}"
         out-of-bounds="{{item.extra.outOfBounds}}"
@@ -176,6 +176,11 @@
         refresher-default-style="{{refresherDefaultStyle}}"
         refresher-background="{{refresherBackground}}"
         refresher-triggered="{{refresherTriggered}}"
+        enhanced="{{enhanced}}"
+        bounces="{{bounces}}"
+        show-scrollbar="{{showScrollbar}}"
+        fast-deceleration="{{fastDeceleration}}"
+        paging-enabled="{{pagingEnabled}}"
         bindscrolltoupper="onScrollViewScrolltoupper"
         bindscrolltolower="onScrollViewScrolltolower"
         bindscroll="onScrollViewScroll"
@@ -183,6 +188,9 @@
         bindrefresherrefresh="onScrollViewRefresherRefresh"
         bindrefresherrestore="onScrollViewRefresherRestore"
         bindrefresherabort="onScrollViewRefresherAbort"
+        binddragstart="onScrollViewDragStart"
+        binddragging="onScrollViewDragging"
+        binddragend="onScrollViewDragEnd"
     ><block wx:if="{{hasSlots}}"><element wx:for="{{slots}}" wx:key="nodeId" id="{{item.id}}" class="{{item.className}}" style="{{item.style}}" in-cover="{{inCover}}" slot="{{item.slot}}" data-private-node-id="{{item.nodeId}}" data-private-page-id="{{item.pageId}}" generic:custom-component="custom-component"></element></block><element-vhost wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element-vhost></scroll-view>
 </template>
 <template name="swiper">
@@ -490,7 +498,7 @@
         bindtouchcancel="onTouchCancel"
         bindtap="onTap"
         bindlongpress="onLongPress"
-        
+
         value="{{value}}"
         type="{{type}}"
         password="{{password}}"
@@ -859,7 +867,7 @@
 </template>
 <template name="video">
     <!-- pictureInPictureShowProgress 因为编译器限制了属性长度，所以暂时用驼峰式写法 -->
-    <video 
+    <video
         id="{{id}}"
         class="{{className}}"
         style="{{style}}"
@@ -955,7 +963,7 @@
         bindtouchend="onTouchEnd"
         bindtouchcancel="onTouchCancel"
         bindlongpress="onLongPress"
-        
+
         longitude="{{longitude}}"
         latitude="{{latitude}}"
         scale="{{scale}}"
@@ -1003,7 +1011,7 @@
         data-private-page-id="{{pageId}}"
         bindtap="onTap"
         bindlongpress="onLongPress"
-        
+
         type="{{type}}"
         canvas-id="{{canvasId}}"
         disable-scroll="{{disableScroll}}"
@@ -1024,7 +1032,7 @@
         data-private-page-id="{{pageId}}"
         bindtap="onTap"
         bindlongpress="onLongPress"
-        
+
         type="{{type}}"
         canvas-id="{{canvasId}}"
         disable-scroll="{{disableScroll}}"
@@ -1046,7 +1054,7 @@
         bindtouchcancel="onTouchCancel"
         bindtap="onTap"
         bindlongpress="onLongPress"
-        
+
         unit-id="{{unitId}}"
         ad-intervals="{{adIntervals}}"
         ad-type="{{adType}}"
@@ -1070,7 +1078,7 @@
         bindtouchcancel="onTouchCancel"
         bindtap="onTap"
         bindlongpress="onLongPress"
-        
+
         unit-id="{{unitId}}"
         ad-intervals="{{adIntervals}}"
         bindload="onAdCustomLoad"
@@ -1133,7 +1141,7 @@
         bindtouchcancel="onTouchCancel"
         bindtap="onTap"
         bindlongpress="onLongPress"
-        
+
         src="{{src}}"
         bindmessage="onWebviewMessage"
         bindload="onWebviewLoad"
@@ -1225,7 +1233,7 @@
         bindtouchcancel="onTouchCancel"
         bindtap="onTap"
         bindlongpress="onLongPress"
-        
+
         src="{{src}}"
         rendering-mode="{{mode ? 'backgroundImage' : 'img'}}"
         mode="{{mode}}"

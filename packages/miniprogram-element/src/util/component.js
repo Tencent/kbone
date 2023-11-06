@@ -325,6 +325,31 @@ const wxComponentMap = {
 
                 return value
             },
+        }, {
+            name: 'enhanced',
+            get(domNode) {
+                return dealWithBoolValue(domNode, 'enhanced')
+            }
+        }, {
+            name: 'bounces',
+            get(domNode) {
+                return dealWithBoolValue(domNode, 'bounces', true)
+            }
+        }, {
+            name: 'showScrollbar',
+            get(domNode) {
+                return dealWithBoolValue(domNode, 'show-scrollbar', true)
+            }
+        }, {
+            name: 'fastDeceleration',
+            get(domNode) {
+                return dealWithBoolValue(domNode, 'fast-deceleration')
+            }
+        }, {
+            name: 'pagingEnabled',
+            get(domNode) {
+                return dealWithBoolValue(domNode, 'paging-enabled')
+            }
         }],
         handles: {
             onScrollViewScrolltoupper(evt) {
@@ -377,6 +402,17 @@ const wxComponentMap = {
                 this.callSingleEvent('refresherabort', evt)
             },
 
+            onScrollViewDragStart(evt) {
+                this.callSingleEvent('dragstart', evt)
+            },
+
+            onScrollViewDragging(evt) {
+                this.callSingleEvent('dragging', evt)
+            },
+
+            onScrollViewDragEnd(evt) {
+                this.callSingleEvent('dragend', evt)
+            }
         },
     },
     swiper: {
