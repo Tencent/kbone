@@ -282,14 +282,9 @@ const wxComponentMap = {
                 return dealWithBoolValue(domNode, 'enable-back-to-top')
             },
         }, {
-            name: 'enableFlex',
+            name: 'enablePassive',
             get(domNode) {
-                return dealWithBoolValue(domNode, 'enable-flex')
-            },
-        }, {
-            name: 'scrollAnchoring',
-            get(domNode) {
-                return dealWithBoolValue(domNode, 'scroll-anchoring')
+                return dealWithBoolValue(domNode, 'enable-passive')
             },
         }, {
             name: 'refresherEnabled',
@@ -325,8 +320,57 @@ const wxComponentMap = {
 
                 return value
             },
+        }, {
+            name: 'bounces',
+            get(domNode) {
+                return dealWithBoolValue(domNode, 'bounces', true)
+            },
+        }, {
+            name: 'showScrollbar',
+            get(domNode) {
+                return dealWithBoolValue(domNode, 'show-scrollbar', true)
+            },
+        }, {
+            name: 'fastDeceleration',
+            get(domNode) {
+                return dealWithBoolValue(domNode, 'fast-deceleration')
+            },
+        }, {
+            name: 'enableFlex',
+            get(domNode) {
+                return dealWithBoolValue(domNode, 'enable-flex')
+            },
+        }, {
+            name: 'scrollAnchoring',
+            get(domNode) {
+                return dealWithBoolValue(domNode, 'scroll-anchoring')
+            },
+        }, {
+            name: 'enhanced',
+            get(domNode) {
+                return dealWithBoolValue(domNode, 'enhanced')
+            },
+        }, {
+            name: 'pagingEnabled',
+            get(domNode) {
+                return dealWithBoolValue(domNode, 'paging-enabled')
+            },
+        }, {
+            name: 'usingSticky',
+            get(domNode) {
+                return dealWithBoolValue(domNode, 'using-sticky')
+            },
         }],
         handles: {
+            onScrollViewDragstart(evt) {
+                this.callSingleEvent('dragstart', evt)
+            },
+            onScrollViewDragging(evt) {
+                this.callSingleEvent('dragging', evt)
+            },
+            onScrollViewDragend(evt) {
+                this.callSingleEvent('dragend', evt)
+            },
             onScrollViewScrolltoupper(evt) {
                 this.callSingleEvent('scrolltoupper', evt)
             },

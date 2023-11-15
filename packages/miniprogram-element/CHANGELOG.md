@@ -1,5 +1,9 @@
 # 更新日志
 
+## 2.2.16
+
+* scroll-view 组件对齐 v3.2.0 基础库
+
 ## 2.2.15
 
 * button 组件 open-type 属性支持 agreePrivacyAuthorization 值和支持 agreeprivacyauthorization 事件

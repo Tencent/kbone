@@ -45,11 +45,8 @@ test('scroll-view', async() => {
     // enableBackToTop
     await _.checkBoolean(body, node, 'enableBackToTop', 'enable-back-to-top', false)
 
-    // enableFlex
-    await _.checkBoolean(body, node, 'enableFlex', 'enable-flex', false)
-
-    // scrollAnchoring
-    await _.checkBoolean(body, node, 'scrollAnchoring', 'scroll-anchoring', false)
+    // enablePassive
+    await _.checkBoolean(body, node, 'enablePassive', 'enable-passive', false)
 
     // refresherEnabled
     await _.checkBoolean(body, node, 'refresherEnabled', 'refresher-enabled', false)
@@ -67,8 +64,32 @@ test('scroll-view', async() => {
     node.setAttribute('refresher-enabled', true)
     await _.checkBoolean(body, node, 'refresherTriggered', 'refresher-triggered', false)
 
+    // bounces
+    await _.checkBoolean(body, node, 'bounces', 'bounces', true)
+
+    // showScrollbar
+    await _.checkBoolean(body, node, 'showScrollbar', 'show-scrollbar', true)
+
+    // fastDeceleration
+    await _.checkBoolean(body, node, 'fastDeceleration', 'fast-deceleration', false)
+
+    // enableFlex
+    await _.checkBoolean(body, node, 'enableFlex', 'enable-flex', false)
+
+    // scrollAnchoring
+    await _.checkBoolean(body, node, 'scrollAnchoring', 'scroll-anchoring', false)
+
+    // enhanced
+    await _.checkBoolean(body, node, 'enhanced', 'enhanced', false)
+
+    // pagingEnabled
+    await _.checkBoolean(body, node, 'pagingEnabled', 'paging-enabled', false)
+
+    // usingSticky
+    await _.checkBoolean(body, node, 'usingSticky', 'using-sticky', false)
+
     // event
-    await _.checkEvent(body.querySelector('.h5-wx-component'), node, ['scrolltoupper', 'scrolltolower', 'refresherpulling', 'refresherrefresh', 'refresherrestore', 'refresherabort'])
+    await _.checkEvent(body.querySelector('.h5-wx-component'), node, ['dragstart', 'dragging', 'dragend', 'scrolltoupper', 'scrolltolower', 'refresherpulling', 'refresherrefresh', 'refresherrestore', 'refresherabort'])
 
     page.document.body.removeChild(node)
     document.body.removeChild(wrapper)
