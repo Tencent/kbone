@@ -1,6 +1,6 @@
 # 更新日志
 
-## 2.2.17
+## 2.2.18
 
 * 支持 channel-live 和 channel-video 内置组件
 
