@@ -522,6 +522,16 @@
           <wx-voip-room v-else-if="wxPrefix === 1" :class="item" @error="log('onVoipRoomError', $event.detail)"><Inner></Inner></wx-voip-room>
           <voip-room v-else-if="wxPrefix === 2" :class="item" @error="log('onVoipRoomError', $event.detail)"><Inner></Inner></voip-room>
         </template>
+        <template v-else-if="item === 'channel-live'">
+          <wx-component v-if="!wxPrefix" :behavior="item" :class="item" :feed-id="channel.feedId" :finder-user-name="channel.finderUserName"></wx-component>
+          <wx-channel-live v-else-if="wxPrefix === 1" :class="item" :feed-id="channel.feedId" :finder-user-name="channel.finderUserName"></wx-channel-live>
+          <channel-live v-else-if="wxPrefix === 2" :class="item" :feed-id="channel.feedId" :finder-user-name="channel.finderUserName"></channel-live>
+        </template>
+        <template v-else-if="item === 'channel-video'">
+          <wx-component v-if="!wxPrefix" :behavior="item" :class="item" :feed-id="channel.feedId" :finder-user-name="channel.finderUserName" @error="log('onChannelVideoError', $event.detail)"></wx-component>
+          <wx-channel-video v-else-if="wxPrefix === 1" :class="item" :feed-id="channel.feedId" :finder-user-name="channel.finderUserName" @error="log('onChannelVideoError', $event.detail)"></wx-channel-video>
+          <channel-video v-else-if="wxPrefix === 2" :class="item" :feed-id="channel.feedId" :finder-user-name="channel.finderUserName" @error="log('onChannelVideoError', $event.detail)"></channel-video>
+        </template>
         <template v-else-if="item === 'web-view'">
           <wx-component v-if="!wxPrefix" :behavior="item" :class="item" src="https://www.qq.com/"></wx-component>
           <wx-web-view v-else-if="wxPrefix === 1" :class="item" src="https://www.qq.com/"></wx-web-view>
@@ -634,6 +644,8 @@ export default {
         'ad-custom',
         'official-account',
         'voip-room',
+        'channel-live',
+        'channel-video',
         'scroll-view',
         // 'web-view',
         'xxxx',
@@ -764,6 +776,10 @@ export default {
       },
       intersection: {
         appear: false,
+      },
+      channel: {
+        feedId: 'export/UzFfAgtgekIEAQAAAAAA98AjpA5RnAAAAAstQy6ubaLX4KHWvLEZgBPEvKIEN1R9FYCHzNPgMJq8iVzTJ1eXsPhVM100Gbud',
+        finderUserName: 'sph/AEjd0P',
       },
     }
   },
