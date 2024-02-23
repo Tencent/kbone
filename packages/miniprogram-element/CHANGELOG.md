@@ -1,5 +1,9 @@
 # 更新日志
 
+## 2.2.17
+
+* 支持 channel-live 和 channel-video 内置组件
+
 ## 2.2.16
 
 * scroll-view 组件对齐 v3.2.0 基础库

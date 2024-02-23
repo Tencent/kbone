@@ -756,6 +756,50 @@
         bindscancode="onCameraScanCode"
     ><element-vhost wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{inCover}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element-vhost></camera>
 </template>
+<template name="channel-live">
+    <channel-live
+        id="{{id}}"
+        class="{{className}}"
+        style="{{style}}"
+        hidden="{{hidden}}"
+        data-private-node-id="{{nodeId}}"
+        data-private-page-id="{{pageId}}"
+        bindtouchstart="onTouchStart"
+        bindtouchmove="onTouchMove"
+        bindtouchend="onTouchEnd"
+        bindtouchcancel="onTouchCancel"
+        bindtap="onTap"
+        bindlongpress="onLongPress"
+
+        feed-id="{{feedId}}"
+        finder-user-name="{{finderUserName}}"
+    ></channel-live>
+</template>
+<template name="channel-video">
+    <channel-video
+        id="{{id}}"
+        class="{{className}}"
+        style="{{style}}"
+        hidden="{{hidden}}"
+        data-private-node-id="{{nodeId}}"
+        data-private-page-id="{{pageId}}"
+        bindtouchstart="onTouchStart"
+        bindtouchmove="onTouchMove"
+        bindtouchend="onTouchEnd"
+        bindtouchcancel="onTouchCancel"
+        bindtap="onTap"
+        bindlongpress="onLongPress"
+
+        feed-id="{{feedId}}"
+        finder-user-name="{{finderUserName}}"
+        feed-token="{{feedToken}}"
+        autoplay="{{autoplay}}"
+        loop="{{loop}}"
+        muted="{{muted}}"
+        object-fit="{{objectFit}}"
+        binderror="onChannelVideoError"
+    ></channel-video>
+</template>
 <template name="image">
     <image
         id="{{id}}"

@@ -1707,6 +1707,64 @@ const wxComponentMap = {
             },
         },
     },
+    'channel-live': {
+        wxCompName: 'channel-live',
+        properties: [{
+            name: 'feedId',
+            get(domNode) {
+                return domNode.getAttribute('feed-id') || ''
+            },
+        }, {
+            name: 'finderUserName',
+            get(domNode) {
+                return domNode.getAttribute('finder-user-name') || ''
+            },
+        }],
+    },
+    'channel-video': {
+        wxCompName: 'channel-video',
+        properties: [{
+            name: 'feedId',
+            get(domNode) {
+                return domNode.getAttribute('feed-id') || ''
+            },
+        }, {
+            name: 'finderUserName',
+            get(domNode) {
+                return domNode.getAttribute('finder-user-name') || ''
+            },
+        }, {
+            name: 'feedToken',
+            get(domNode) {
+                return domNode.getAttribute('feed-token') || ''
+            },
+        }, {
+            name: 'autoplay',
+            get(domNode) {
+                return dealWithBoolValue(domNode, 'autoplay')
+            },
+        }, {
+            name: 'loop',
+            get(domNode) {
+                return dealWithBoolValue(domNode, 'loop')
+            },
+        }, {
+            name: 'muted',
+            get(domNode) {
+                return dealWithBoolValue(domNode, 'muted')
+            },
+        }, {
+            name: 'objectFit',
+            get(domNode) {
+                return domNode.getAttribute('object-fit') || 'contain'
+            },
+        }],
+        handles: {
+            onChannelVideoError(evt) {
+                this.callSingleEvent('error', evt)
+            },
+        },
+    },
     image: {
         wxCompName: 'image',
         properties: [{
