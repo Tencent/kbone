@@ -1,5 +1,6 @@
 const mp = require('miniprogram-render')
 const component = require('./component')
+const extraProps = require('../extra-props')
 
 const {
     cache,
@@ -17,7 +18,9 @@ const ELEMENT_DIFF_KEYS = [
     'isImage', 'src', 'mode', 'webp', 'lazyLoad', 'showMenuByLongpress', // image
     'useTemplate', 'extra', 'compName', // template 渲染
     'isLeaf', 'content', // leaf
-    'isSimple' // 普通节点
+    'isSimple', // 普通节点
+
+    ...extraProps.map(item => item.dataName), // 额外追加字段
 ]
 const TEXT_NODE_DIFF_KEYS = ['nodeId', 'pageId', 'content']
 const NEET_SPLIT_CLASS_STYLE_FROM_CUSTOM_ELEMENT = ['WX-COMPONENT', 'WX-CUSTOM-COMPONENT'] // 需要分离 class 和 style 的节点
@@ -174,6 +177,7 @@ function filterNodes(domNode, level, component) {
         domInfo.isLeaf = !domInfo.isImage && !domInfo.useTemplate && domInfo.type === 'element' && !child.children.length && NEET_RENDER_TO_CUSTOM_ELEMENT.indexOf(child.tagName) === -1
         if (domInfo.isLeaf) {
             domInfo.content = child.childNodes.map(childNode => (childNode.$$domInfo.type === 'text' ? childNode.textContent : '')).join('')
+            if (extraProps.length) extraProps.forEach(item => domInfo[item.dataName] = child.getAttribute(item.propName)) // 额外追加属性
         }
 
         // 判断可直接用 view 渲染的简单子节点
@@ -181,6 +185,7 @@ function filterNodes(domNode, level, component) {
         if (domInfo.isSimple) {
             domInfo.content = ''
             domInfo.childNodes = filterNodes(child, level - 1, component)
+            if (extraProps.length) extraProps.forEach(item => domInfo[item.dataName] = child.getAttribute(item.propName)) // 额外追加属性
         }
 
         return domInfo

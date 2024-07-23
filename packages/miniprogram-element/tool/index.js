@@ -2,9 +2,31 @@ const path = require('path')
 const fs = require('fs')
 const webpack = require('webpack')
 const webpackConfig = require('./webpack.config')
+const extraProps = require('../src/extra-props')
 
 const domSubTreeLevel = 10
 const destDir = path.resolve(__dirname, '../src/template')
+
+// 需要固定生成在模板中 view 组件的通用属性
+const commonProperties = [
+    ['data-private-node-id', 'nodeId'],
+    ['data-private-page-id', 'pageId'],
+    ['id', 'id'],
+    ['class', 'className'],
+    ['style', 'style'],
+
+    ...extraProps.map(item => ([item.propName, item.dataName])),
+]
+
+// 需要固定生成在模板中 view 组件的通用事件
+const commonEvents = [
+    ['bindtouchstart', 'onTouchStart'],
+    ['bindtouchmove', 'onTouchMove'],
+    ['bindtouchend', 'onTouchEnd'],
+    ['bindtouchcancel', 'onTouchCancel'],
+    ['bindtap', 'onTap'],
+    ['bindlongpress', 'onLongPress'],
+]
 
 /**
  * 移除注释
@@ -32,7 +54,7 @@ function getSubtreeSimple(i) {
         `<block wx:if="{{${itemName}.type === 'text'}}">{{${itemName}.content}}</block>`,
         `<template wx:elif="{{${itemName}.isImage}}" is="img" data="{{...${itemName}}}"/>`,
         `<template wx:elif="{{${itemName}.useTemplate}}" is="{{${itemName}.extra.wxCompName}}" data="{{...${itemName}.extra}}"/>`,
-        `<view wx:elif="{{${itemName}.isLeaf${isLast ? '' : ' || ' + itemName + '.isSimple'}}}" data-private-node-id="{{${itemName}.nodeId}}" data-private-page-id="{{${itemName}.pageId}}" id="{{${itemName}.id}}" class="{{${itemName}.className}}" style="{{${itemName}.style}}" bindtouchstart="onTouchStart" bindtouchmove="onTouchMove" bindtouchend="onTouchEnd" bindtouchcancel="onTouchCancel" bindtap="onTap" bindlongpress="onLongPress">{{${itemName}.content}}${isLast ? '</view>' : ''}`
+        `<view wx:elif="{{${itemName}.isLeaf${isLast ? '' : ' || ' + itemName + '.isSimple'}}}" ${commonProperties.map(prop => prop[0] + '="{{' + itemName + '.' + prop[1] + '}}"').join(' ')} ${commonEvents.map(event => event[0] + '="' + event[1] + '"').join(' ')}>{{${itemName}.content}}${isLast ? '</view>' : ''}`
     ]
 
     // 递归下一层
@@ -41,7 +63,7 @@ function getSubtreeSimple(i) {
     }
 
     // 补充自定义组件
-    subContent.push(`<element wx:elif="{{${itemName}.type === 'element'}}" in-cover="{{inCover}}" data-private-node-id="{{${itemName}.nodeId}}" data-private-page-id="{{${itemName}.pageId}}" id="{{${itemName}.id}}" class="{{${itemName}.className}}" style="{{${itemName}.style}}" bindtouchstart="onTouchStart" bindtouchmove="onTouchMove" bindtouchend="onTouchEnd" bindtouchcancel="onTouchCancel" bindtap="onTap" bindlongpress="onLongPress" generic:custom-component="custom-component"></element>`)
+    subContent.push(`<element wx:elif="{{${itemName}.type === 'element'}}" in-cover="{{inCover}}" ${commonProperties.map(prop => prop[0] + '="{{' + itemName + '.' + prop[1] + '}}"').join(' ')} ${commonEvents.map(event => event[0] + '="' + event[1] + '"').join(' ')} generic:custom-component="custom-component"></element>`)
 
     // 补充头尾
     const outputContent = [
@@ -68,7 +90,7 @@ function getSubtreeCoverSimple(i) {
     const subContent = [
         `<template wx:if="{{${itemName}.isImage}}" is="cover-img" data="{{...${itemName}}}"/>`,
         `<template wx:elif="{{${itemName}.useTemplate}}" is="{{${itemName}.extra.wxCompName}}" data="{{...${itemName}.extra}}"/>`,
-        `<cover-view wx:elif="{{${itemName}.type === 'text' || ${itemName}.isLeaf || ${itemName}.isSimple}}" data-private-node-id="{{${itemName}.nodeId}}" data-private-page-id="{{${itemName}.pageId}}" id="{{${itemName}.id}}" class="{{${itemName}.className}}" style="{{${itemName}.style}}" bindtouchstart="onTouchStart" bindtouchmove="onTouchMove" bindtouchend="onTouchEnd" bindtouchcancel="onTouchCancel" bindtap="onTap" bindlongpress="onLongPress">{{${itemName}.content}}${isLast ? '</cover-view>' : ''}`
+        `<cover-view wx:elif="{{${itemName}.type === 'text' || ${itemName}.isLeaf || ${itemName}.isSimple}}" ${commonProperties.map(prop => prop[0] + '="{{' + itemName + '.' + prop[1] + '}}"').join(' ')} ${commonEvents.map(event => event[0] + '="' + event[1] + '"').join(' ')}>{{${itemName}.content}}${isLast ? '</cover-view>' : ''}`
     ]
 
     // 递归下一层
@@ -77,7 +99,7 @@ function getSubtreeCoverSimple(i) {
     }
 
     // 补充自定义组件
-    subContent.push(`<element wx:elif="{{${itemName}.type === 'element'}}" in-cover="{{true}}" data-private-node-id="{{${itemName}.nodeId}}" data-private-page-id="{{${itemName}.pageId}}" id="{{${itemName}.id}}" class="{{${itemName}.className}}" style="{{${itemName}.style}}" bindtouchstart="onTouchStart" bindtouchmove="onTouchMove" bindtouchend="onTouchEnd" bindtouchcancel="onTouchCancel" bindtap="onTap" bindlongpress="onLongPress" generic:custom-component="custom-component"></element>`)
+    subContent.push(`<element wx:elif="{{${itemName}.type === 'element'}}" in-cover="{{true}}" ${commonProperties.map(prop => prop[0] + '="{{' + itemName + '.' + prop[1] + '}}"').join(' ')} ${commonEvents.map(event => event[0] + '="' + event[1] + '"').join(' ')} generic:custom-component="custom-component"></element>`)
 
     // 补充头尾
     const outputContent = [
