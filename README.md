@@ -125,13 +125,7 @@ npm run build
 
 ## 交流
 
-QQ 交流群：926335938
-
 使用相关问题可在 [Kbone社区](https://developers.weixin.qq.com/community/minihome/mixflow/1213301129006825473) 发帖
-
-## 案例
-
-![微信开放社区](./docs/images/code1.jpg)
 
 ## License
 
