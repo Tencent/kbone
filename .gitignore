@@ -1,6 +1,7 @@
 .idea
 .DS_Store
 yarn.lock
+package-lock.json
 
 logs
 *.log
