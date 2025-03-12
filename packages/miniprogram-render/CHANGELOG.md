@@ -3,6 +3,7 @@
 ## 2.2.27
 
 * 支持 store-home 和 store-product 内置组件
+* 兼容 setData 回调回来时页面已销毁导致 window.document.$$trigger 调用报错的问题
 
 ## 2.2.26
 

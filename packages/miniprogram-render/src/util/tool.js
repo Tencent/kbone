@@ -158,7 +158,7 @@ function setData(instance, data) {
             window._iniCount--
             if (!window._startInit && window._iniCount <= 0) {
                 // 回调全部回来了
-                window.document.$$trigger('DOMContentLoaded')
+                if (window.document) window.document.$$trigger('DOMContentLoaded') // 注意此时可能页面已经销毁了，所以需要判断下 window.document
                 window._iniCount = 0
             }
         })
