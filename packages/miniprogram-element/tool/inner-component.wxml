@@ -1173,6 +1173,51 @@
         binderror="onOpenDataError"
     ></open-data>
 </template>
+<template name="store-home">
+    <store-home
+        id="{{id}}"
+        class="{{className}}"
+        style="{{style}}"
+        hidden="{{hidden}}"
+        data-private-node-id="{{nodeId}}"
+        data-private-page-id="{{pageId}}"
+        bindtouchstart="onTouchStart"
+        bindtouchmove="onTouchMove"
+        bindtouchend="onTouchEnd"
+        bindtouchcancel="onTouchCancel"
+        bindtap="onTap"
+        bindlongpress="onLongPress"
+
+        appid="{{appid}}"
+    ></store-home>
+</template>
+<template name="store-product">
+    <store-product
+        id="{{id}}"
+        class="{{className}}"
+        style="{{style}}"
+        hidden="{{hidden}}"
+        data-private-node-id="{{nodeId}}"
+        data-private-page-id="{{pageId}}"
+        bindtouchstart="onTouchStart"
+        bindtouchmove="onTouchMove"
+        bindtouchend="onTouchEnd"
+        bindtouchcancel="onTouchCancel"
+        bindtap="onTap"
+        bindlongpress="onLongPress"
+
+        appid="{{appid}}"
+        product-id="{{productId}}"
+        product-promotion-link="{{productPromotionLink}}"
+        media-id="{{mediaId}}"
+        custom-style="{{customStyle}}"
+        custom-content="{{customContent}}"
+        open-page="{{openPage}}"
+        logo-position="{{logoPosition}}"
+        bindentersuccess="onStoreProductEnterSuccess"
+        bindentererror="onStoreProductEnterError"
+    ><element-vhost wx:if="{{hasChildren}}" class="h5-virtual" in-cover="{{true}}" data-private-node-id="{{nodeId}}" data-private-page-id="{{pageId}}" generic:custom-component="custom-component"></element-vhost></store-product>
+</template>
 <template name="web-view">
     <web-view
         id="{{id}}"

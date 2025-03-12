@@ -12,7 +12,7 @@ const WX_COMPONENT_LIST = [
     'audio', 'camera', 'channel-live', 'channel-video', 'image', 'live-player', 'live-pusher', 'video', 'voip-room',
     'map',
     'canvas',
-    'ad', 'ad-custom', 'official-account', 'open-data', 'web-view',
+    'ad', 'ad-custom', 'official-account', 'open-data', 'store-home', 'store-product', 'web-view',
     // 特殊补充
     'capture', 'catch', 'animation'
 ]

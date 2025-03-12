@@ -2707,6 +2707,68 @@ const wxComponentMap = {
             },
         },
     },
+    'store-home': {
+        wxCompName: 'store-home',
+        properties: [{
+            name: 'appid',
+            get(domNode) {
+                return domNode.getAttribute('appid') || ''
+            },
+        }],
+    },
+    'store-product': {
+        wxCompName: 'store-product',
+        properties: [{
+            name: 'appid',
+            get(domNode) {
+                return domNode.getAttribute('appid') || ''
+            },
+        }, {
+            name: 'productId',
+            get(domNode) {
+                return domNode.getAttribute('product-id') || ''
+            },
+        }, {
+            name: 'productPromotionLink',
+            get(domNode) {
+                return domNode.getAttribute('product-promotion-link') || ''
+            },
+        }, {
+            name: 'mediaId',
+            get(domNode) {
+                return domNode.getAttribute('media-id') || ''
+            },
+        }, {
+            name: 'customStyle',
+            get(domNode) {
+                return dealWithObjectString(domNode.getAttribute('custom-style')) || {}
+            },
+        }, {
+            name: 'customContent',
+            get(domNode) {
+                return dealWithBoolValue(domNode, 'custom-content')
+            },
+        }, {
+            name: 'openPage',
+            get(domNode) {
+                return domNode.getAttribute('open-page') || 'product-detail'
+            },
+        }, {
+            name: 'logoPosition',
+            get(domNode) {
+                return domNode.getAttribute('logo-position') || 'bottom-left'
+            },
+        }],
+        handles: {
+            onStoreProductEnterSuccess(evt) {
+                this.callSingleEvent('entersuccess', evt)
+            },
+
+            onStoreProductEnterError(evt) {
+                this.callSingleEvent('entererror', evt)
+            },
+        },
+    },
     'web-view': {
         wxCompName: 'web-view',
         properties: [{

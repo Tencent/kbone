@@ -517,6 +517,16 @@
           <wx-official-account v-else-if="wxPrefix === 1" :class="item" @error="log('onOfficialAccountError', $event.detail)"></wx-official-account>
           <official-account v-else-if="wxPrefix === 2" :class="item" @error="log('onOfficialAccountError', $event.detail)"></official-account>
         </template>
+        <template v-else-if="item === 'store-home'">
+          <wx-component v-if="!wxPrefix" :behavior="item" :class="item" appid="wx1234567890"></wx-component>
+          <wx-store-home v-else-if="wxPrefix === 1" :class="item" appid="wx1234567890"></wx-store-home>
+          <store-home v-else-if="wxPrefix === 2" :class="item" appid="wx1234567890"></store-home>
+        </template>
+        <template v-else-if="item === 'store-product'">
+          <wx-component v-if="!wxPrefix" :behavior="item" :class="item" appid="wx1234567890" :custom-content="true"><Inner></Inner></wx-component>
+          <wx-store-product v-else-if="wxPrefix === 1" :class="item" appid="wx1234567890" :custom-content="true"><Inner></Inner></wx-store-product>
+          <store-product v-else-if="wxPrefix === 2" :class="item" appid="wx1234567890" :custom-content="true"><Inner></Inner></store-product>
+        </template>
         <template v-else-if="item === 'voip-room'">
           <wx-component v-if="!wxPrefix" :behavior="item" :class="item" @error="log('onVoipRoomError', $event.detail)"><Inner></Inner></wx-component>
           <wx-voip-room v-else-if="wxPrefix === 1" :class="item" @error="log('onVoipRoomError', $event.detail)"><Inner></Inner></wx-voip-room>
@@ -643,6 +653,8 @@ export default {
         'ad',
         'ad-custom',
         'official-account',
+        'store-home',
+        'store-product',
         'voip-room',
         'channel-live',
         'channel-video',

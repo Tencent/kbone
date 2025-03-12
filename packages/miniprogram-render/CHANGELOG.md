@@ -1,5 +1,9 @@
 # 更新日志
 
+## 2.2.27
+
+* 支持 store-home 和 store-product 内置组件
+
 ## 2.2.26
 
 * 支持 channel-live 和 channel-video 内置组件
