@@ -187,21 +187,25 @@ global.wx = {
         const complete = options.complete
 
         if (global.testXHRData.res === 'fail') {
-            fail({
-                errMsg: 'some error',
-            })
-            complete()
+            if (typeof fail === 'function') {
+                fail({
+                    errMsg: 'some error',
+                })
+            }
+            if (typeof complete === 'function') complete()
         } else if (global.testXHRData.res === 'timeout') {
             // ignore
         } else {
-            success({
-                data: global.testXHRData.data,
-                statusCode: 200,
-                header: {
-                    'Content-Type': 'application/javascript',
-                },
-            })
-            complete()
+            if (typeof success === 'function') {
+                success({
+                    data: global.testXHRData.data,
+                    statusCode: 200,
+                    header: {
+                        'Content-Type': 'application/javascript',
+                    },
+                })
+            }
+            if (typeof complete === 'function') complete()
         }
     },
     pageScrollTo(options) {

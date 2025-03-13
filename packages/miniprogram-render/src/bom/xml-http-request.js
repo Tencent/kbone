@@ -72,9 +72,6 @@ class XMLHttpRequest extends EventTarget {
         this.$_withCredentials = true // 向前兼容，默认为 true
 
         this.$_requestTask = null
-        this.$_requestSuccess = this.$_requestSuccess.bind(this)
-        this.$_requestFail = this.$_requestFail.bind(this)
-        this.$_requestComplete = this.$_requestComplete.bind(this)
     }
 
     /**
@@ -130,6 +127,7 @@ class XMLHttpRequest extends EventTarget {
             if (origin !== window.location.origin) delete header.cookie
         }
 
+        // 此处不使用 complete 参数，基础库存在 complete 可能在 success/fail 之前被回调的 bug
         this.$_requestTask = wx.request({
             url,
             data: this.$_data || {},
@@ -137,9 +135,14 @@ class XMLHttpRequest extends EventTarget {
             method: this.$_method,
             dataType: this.$_responseType === 'json' ? 'json' : 'text',
             responseType: this.$_responseType === 'arraybuffer' ? 'arraybuffer' : 'text',
-            success: this.$_requestSuccess,
-            fail: this.$_requestFail,
-            complete: this.$_requestComplete,
+            success: res => {
+                this.$_requestSuccess(res)
+                this.$_requestComplete(res)
+            },
+            fail: res => {
+                this.$_requestFail(res)
+                this.$_requestComplete(res)
+            },
         })
     }
 
