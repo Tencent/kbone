@@ -18,7 +18,6 @@ import Footer from '../common/Footer.vue'
 
 const canvasRef = ref(null)
 const inputValue = defineModel({ type: String, default: 'test' })
-console.log('@@@@@@@@@@@@@@', inputValue)
 
 onMounted(() => {
   console.log('page1 mounted')
