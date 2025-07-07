@@ -1,6 +1,6 @@
 Tencent is pleased to support the open source community by making Kbone available.
 
-Copyright (C) 2020 THL A29 Limited, a Tencent company. All rights reserved.
+Copyright (C) 2020 Tencent, a Tencent company. All rights reserved.
 
 Kbone is licensed under the BSD 3-Clause License, except for the third-party components listed below. 
 
@@ -40,9 +40,23 @@ Copyright (c) 2019 wechat-miniprogram
 6. vue-cli-plugin-kbone
 Copyright (c) 2019 wechat-miniprogram
 
-7.vue-improve-loader
+7. vue-improve-loader
 Copyright (c) 2019 wechat-miniprogram
 
+8. replace-global-var-loader
+Copyright (c) 2019 wechat-miniprogram
+
+9. file-wrapper-loader
+Copyright (c) 2019 wechat-miniprogram
+
+10. html-to-js-loader
+Copyright (c) 2019 wechat-miniprogram
+
+11. kbone-tool
+Copyright (c) 2019 wechat-miniprogram
+
+12. kbone-ui
+Copyright (c) 2019 wechat-miniprogram
 
 Terms of the MIT License:
 ---------------------------------------------------
