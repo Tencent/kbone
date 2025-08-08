@@ -1,5 +1,9 @@
 # 更新日志
 
+## 2.2.21
+
+* 支持 store-coupon 和 store-gift 内置组件
+
 ## 2.2.20
 
 * 支持 store-home 和 store-product 内置组件

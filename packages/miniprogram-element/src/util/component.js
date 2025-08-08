@@ -2707,6 +2707,67 @@ const wxComponentMap = {
             },
         },
     },
+    'store-coupon': {
+        wxCompName: 'store-coupon',
+        properties: [{
+            name: 'appid',
+            get(domNode) {
+                return domNode.getAttribute('appid') || ''
+            },
+        }, {
+            name: 'couponId',
+            get(domNode) {
+                return domNode.getAttribute('coupon-id') || ''
+            },
+        }, {
+            name: 'customStyle',
+            get(domNode) {
+                return dealWithObjectString(domNode.getAttribute('custom-style')) || {}
+            },
+        }, {
+            name: 'promoterShareLink',
+            get(domNode) {
+                return domNode.getAttribute('promoter-share-link') || ''
+            },
+        }],
+        handles: {
+            onStoreCouponEnterSuccess(evt) {
+                this.callSingleEvent('entersuccess', evt)
+            },
+
+            onStoreCouponEnterError(evt) {
+                this.callSingleEvent('entererror', evt)
+            },
+        },
+    },
+    'store-gift': {
+        wxCompName: 'store-gift',
+        properties: [{
+            name: 'presentOrderId',
+            get(domNode) {
+                return domNode.getAttribute('present-order-id') || ''
+            },
+        }, {
+            name: 'openId',
+            get(domNode) {
+                return domNode.getAttribute('open-id') || ''
+            },
+        }, {
+            name: 'showGiftCard',
+            get(domNode) {
+                return dealWithBoolValue(domNode, 'show-gift-card', true)
+            },
+        }],
+        handles: {
+            onStoreGiftSuccess(evt) {
+                this.callSingleEvent('success', evt)
+            },
+
+            onStoreGiftError(evt) {
+                this.callSingleEvent('error', evt)
+            },
+        },
+    },
     'store-home': {
         wxCompName: 'store-home',
         properties: [{

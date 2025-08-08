@@ -517,6 +517,16 @@
           <wx-official-account v-else-if="wxPrefix === 1" :class="item" @error="log('onOfficialAccountError', $event.detail)"></wx-official-account>
           <official-account v-else-if="wxPrefix === 2" :class="item" @error="log('onOfficialAccountError', $event.detail)"></official-account>
         </template>
+        <template v-else-if="item === 'store-coupon'">
+          <wx-component v-if="!wxPrefix" :behavior="item" :class="item" appid="wx1234567890" coupon-id="12345" promoter-share-link="xxxx"></wx-component>
+          <wx-store-coupon v-else-if="wxPrefix === 1" :class="item" appid="wx1234567890" coupon-id="12345" promoter-share-link="xxxx"></wx-store-coupon>
+          <store-coupon v-else-if="wxPrefix === 2" :class="item" appid="wx1234567890" coupon-id="12345" promoter-share-link="xxxx"></store-coupon>
+        </template>
+        <template v-else-if="item === 'store-gift'">
+          <wx-component v-if="!wxPrefix" :behavior="item" :class="item" present-order-id="1234567890" open-id="xxxxxx"></wx-component>
+          <wx-store-gift v-else-if="wxPrefix === 1" :class="item" present-order-id="1234567890" open-id="xxxxxx"></wx-store-gift>
+          <store-gift v-else-if="wxPrefix === 2" :class="item" present-order-id="1234567890" open-id="xxxxxx"></store-gift>
+        </template>
         <template v-else-if="item === 'store-home'">
           <wx-component v-if="!wxPrefix" :behavior="item" :class="item" appid="wx1234567890"></wx-component>
           <wx-store-home v-else-if="wxPrefix === 1" :class="item" appid="wx1234567890"></wx-store-home>
@@ -653,6 +663,8 @@ export default {
         'ad',
         'ad-custom',
         'official-account',
+        'store-coupon',
+        // 'store-gift',
         'store-home',
         'store-product',
         'voip-room',

@@ -1,5 +1,9 @@
 # 更新日志
 
+## 2.2.29
+
+* 支持 store-coupon 和 store-gift 内置组件
+
 ## 2.2.28
 
 * XMLHttpRequest 兼容基础库 wx.request 的 complete 回调可能比 success/fail 早触发的问题

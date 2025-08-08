@@ -1173,6 +1173,55 @@
         binderror="onOpenDataError"
     ></open-data>
 </template>
+<template name="store-coupon">
+    <store-coupon
+        id="{{id}}"
+        class="{{className}}"
+        style="{{style}}"
+        hidden="{{hidden}}"
+        data-private-node-id="{{nodeId}}"
+        data-private-page-id="{{pageId}}"
+        bindtouchstart="onTouchStart"
+        bindtouchmove="onTouchMove"
+        bindtouchend="onTouchEnd"
+        bindtouchcancel="onTouchCancel"
+        bindtap="onTap"
+        bindlongpress="onLongPress"
+
+        appid="{{appid}}"
+        product-id="{{productId}}"
+        product-promotion-link="{{productPromotionLink}}"
+        media-id="{{mediaId}}"
+        custom-style="{{customStyle}}"
+        custom-content="{{customContent}}"
+        open-page="{{openPage}}"
+        logo-position="{{logoPosition}}"
+        bindentersuccess="onStoreProductEnterSuccess"
+        bindentererror="onStoreProductEnterError"
+    ></store-coupon>
+</template>
+<template name="store-gift">
+    <store-gift
+        id="{{id}}"
+        class="{{className}}"
+        style="{{style}}"
+        hidden="{{hidden}}"
+        data-private-node-id="{{nodeId}}"
+        data-private-page-id="{{pageId}}"
+        bindtouchstart="onTouchStart"
+        bindtouchmove="onTouchMove"
+        bindtouchend="onTouchEnd"
+        bindtouchcancel="onTouchCancel"
+        bindtap="onTap"
+        bindlongpress="onLongPress"
+
+        present-order-id="{{presentOrderId}}"
+        open-id="{{openId}}"
+        show-gift-card="{{showGiftCard}}"
+        bindsuccess="onStoreGiftSuccess"
+        binderror="onStoreGiftError"
+    ></store-gift>
+</template>
 <template name="store-home">
     <store-home
         id="{{id}}"
