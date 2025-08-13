@@ -1,5 +1,9 @@
 # 更新日志
 
+## 2.2.22
+
+* 修复 store-coupon 丢失参数的问题
+
 ## 2.2.21
 
 * 支持 store-coupon 和 store-gift 内置组件

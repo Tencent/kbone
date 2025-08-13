@@ -1189,13 +1189,9 @@
         bindlongpress="onLongPress"
 
         appid="{{appid}}"
-        product-id="{{productId}}"
-        product-promotion-link="{{productPromotionLink}}"
-        media-id="{{mediaId}}"
+        coupon-id="{{couponId}}"
         custom-style="{{customStyle}}"
-        custom-content="{{customContent}}"
-        open-page="{{openPage}}"
-        logo-position="{{logoPosition}}"
+        promoter-share-link="{{promoterShareLink}}"
         bindentersuccess="onStoreProductEnterSuccess"
         bindentererror="onStoreProductEnterError"
     ></store-coupon>
