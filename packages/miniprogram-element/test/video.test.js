@@ -106,6 +106,9 @@ test('video', async() => {
     // vslideGestureInFullscreen
     await _.checkBoolean(body, node, 'vslideGestureInFullscreen', 'vslide-gesture-in-fullscreen', true)
 
+    // showBottomProgress
+    await _.checkBoolean(body, node, 'showBottomProgress', 'show-bottom-progress', true)
+
     // adUnitId
     await _.checkString(body, node, 'adUnitId', 'ad-unit-id', '')
 
@@ -139,8 +142,38 @@ test('video', async() => {
     // showScreenLockButton
     await _.checkBoolean(body, node, 'showScreenLockButton', 'show-screen-lock-button', false)
 
+    // showSnapshotButton
+    await _.checkBoolean(body, node, 'showSnapshotButton', 'show-snapshot-button', false)
+
+    // showBackgroundPlaybackButton
+    await _.checkBoolean(body, node, 'showBackgroundPlaybackButton', 'show-background-playback-button', true)
+
+    // backgroundPoster
+    await _.checkString(body, node, 'backgroundPoster', 'background-poster', '')
+
+    // referrerPolicy
+    await _.checkString(body, node, 'referrerPolicy', 'referrer-policy', 'no-referrer')
+
+    // isDrm
+    await _.checkBoolean(body, node, 'isDrm', 'is-drm', false)
+
+    // isLive
+    await _.checkBoolean(body, node, 'isLive', 'is-live', false)
+
+    // provisionUrl
+    await _.checkString(body, node, 'provisionUrl', 'provision-url', '')
+
+    // certificateUrl
+    await _.checkString(body, node, 'certificateUrl', 'certificate-url', '')
+
+    // licenseUrl
+    await _.checkString(body, node, 'licenseUrl', 'license-url', '')
+
+    // preferredPeakBitRate
+    await _.checkNumber(body, node, 'preferredPeakBitRate', 'preferred-peak-bit-rate', -1)
+
     // event
-    await _.checkEvent(body.querySelector('.h5-video'), node, ['play', 'pause', 'ended', 'timeupdate', 'fullscreenchange', 'waiting', 'error', 'progress', 'loadedmetadata', 'controlstoggle', 'enterpictureinpicture', 'leavepictureinpicture'])
+    await _.checkEvent(body.querySelector('.h5-video'), node, ['play', 'pause', 'ended', 'timeupdate', 'fullscreenchange', 'waiting', 'error', 'progress', 'loadedmetadata', 'controlstoggle', 'enterpictureinpicture', 'leavepictureinpicture', 'seekcomplete', 'castinguserselect', 'castingstatechange', 'castinginterrupt'])
 
     page.document.body.removeChild(node)
     document.body.removeChild(wrapper)

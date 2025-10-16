@@ -2215,6 +2215,11 @@ const wxComponentMap = {
                 return dealWithBoolValue(domNode, 'vslide-gesture-in-fullscreen', true)
             },
         }, {
+            name: 'showBottomProgress',
+            get(domNode) {
+                return dealWithBoolValue(domNode, 'show-bottom-progress', true)
+            },
+        }, {
             name: 'adUnitId',
             get(domNode) {
                 return domNode.getAttribute('ad-unit-id') || ''
@@ -2256,6 +2261,56 @@ const wxComponentMap = {
             name: 'showScreenLockButton',
             get(domNode) {
                 return dealWithBoolValue(domNode, 'show-screen-lock-button')
+            },
+        }, {
+            name: 'showSnapshotButton',
+            get(domNode) {
+                return dealWithBoolValue(domNode, 'show-snapshot-button')
+            },
+        }, {
+            name: 'showBackgroundPlaybackButton',
+            get(domNode) {
+                return dealWithBoolValue(domNode, 'show-background-playback-button', true)
+            },
+        }, {
+            name: 'backgroundPoster',
+            get(domNode) {
+                return domNode.getAttribute('background-poster') || ''
+            },
+        }, {
+            name: 'referrerPolicy',
+            get(domNode) {
+                return domNode.getAttribute('referrer-policy') || 'no-referrer'
+            },
+        }, {
+            name: 'isDrm',
+            get(domNode) {
+                return dealWithBoolValue(domNode, 'is-drm')
+            },
+        }, {
+            name: 'isLive',
+            get(domNode) {
+                return dealWithBoolValue(domNode, 'is-live')
+            },
+        }, {
+            name: 'provisionUrl',
+            get(domNode) {
+                return domNode.getAttribute('provision-url') || ''
+            },
+        }, {
+            name: 'certificateUrl',
+            get(domNode) {
+                return domNode.getAttribute('certificate-url') || ''
+            },
+        }, {
+            name: 'licenseUrl',
+            get(domNode) {
+                return domNode.getAttribute('license-url') || ''
+            },
+        }, {
+            name: 'preferredPeakBitRate',
+            get(domNode) {
+                return dealWithNumber(domNode, 'preferred-peak-bit-rate', -1)
             },
         }],
         handles: {
@@ -2313,6 +2368,22 @@ const wxComponentMap = {
 
             onVideoLeavePictureInPicture(evt) {
                 this.callSingleEvent('leavepictureinpicture', evt)
+            },
+
+            onVideoSeekComplete(evt) {
+                this.callSingleEvent('seekcomplete', evt)
+            },
+
+            onVideoCastingUserSelect(evt) {
+                this.callSingleEvent('castinguserselect', evt)
+            },
+
+            onVideoCastingStateChange(evt) {
+                this.callSingleEvent('castingstatechange', evt)
+            },
+
+            onVideoCastingInterrupt(evt) {
+                this.callSingleEvent('castinginterrupt', evt)
             },
         },
     },
